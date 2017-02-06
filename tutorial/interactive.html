@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13. 対話入力編集とヒストリ置換 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python チュートリアル" href="index.html" />
+    <link rel="next" title="14. 浮動小数点演算、その問題と制限" href="floatingpoint.html" />
+    <link rel="prev" title="12. さあ何を？" href="whatnow.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="floatingpoint.html" title="14. 浮動小数点演算、その問題と制限"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="whatnow.html" title="12. さあ何を？"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="interactive-input-editing-and-history-substitution">
+<span id="tut-interacting"></span><h1>13. 対話入力編集とヒストリ置換<a class="headerlink" href="#interactive-input-editing-and-history-substitution" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>あるバージョンの Python インタプリタでは、Korn シェルや GNU Bash シェルに見られる機能に似た、現在の入力行に対する編集機能やヒストリ置換機能をサポートしています。この機能は <a class="reference external" href="http://tiswww.case.edu/php/chet/readline/rltop.html">GNU Readline</a> ライブラリを使って実装されています。このライブラリは Emacs スタイルと vi スタイルの編集をサポートしています。ライブラリには独自のドキュメントがあり、ここでそれを繰り返すつもりはありません。とはいえ、基本について簡単に解説することにします。ここで述べる対話的な編集とヒストリについては、 Unix 版と Cygwin 版のインタプリタでオプションとして利用することができます。</p>
+<p>この章では、Mark Hammond の PythonWin パッケージや、 Python とともに配布される Tk ベースの環境である IDLE にある編集機能については解説 <em>しません</em> 。 NT 上の DOS ボックスやその他の DOS および Windows 類で働くコマンド行ヒストリ呼出しもまた別のものです。</p>
+<div class="section" id="line-editing">
+<span id="tut-lineediting"></span><h2>13.1. 行編集<a class="headerlink" href="#line-editing" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>入力行の編集がサポートされている場合、インタプリタが一次または二次プロンプトを出力している際にはいつでも有効になっています。現在の行は、慣例的な Emacs 制御文字を使って編集することができます。そのうち最も重要なものとして、次のようなキーがあります。 <code class="kbd docutils literal"><span class="pre">C-A</span></code> (Control-A)はカーソルを行の先頭へ移動させます。 <code class="kbd docutils literal"><span class="pre">C-E</span></code> は末尾へ移動させます。 <code class="kbd docutils literal"><span class="pre">C-B</span></code> は逆方向へ一つ移動させます。 <code class="kbd docutils literal"><span class="pre">C-F</span></code> は順方向へ移動させます。 Backspace は逆方向に向かって文字を消します。 <code class="kbd docutils literal"><span class="pre">C-D</span></code> は順方向に向かって消します。 <code class="kbd docutils literal"><span class="pre">C-K</span></code> は順方向に向かって行の残りを kill し (消し) ます、 <code class="kbd docutils literal"><span class="pre">C-Y</span></code> は最後に kill された文字列を再び yank し (取り出し) ます。 <code class="kbd docutils literal"><span class="pre">C-underscore</span></code> 最後の変更を元に戻します。これは、繰り返してどんどんさかのぼることができます。</p>
+</div>
+<div class="section" id="history-substitution">
+<span id="tut-history"></span><h2>13.2. ヒストリ置換<a class="headerlink" href="#history-substitution" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ヒストリ置換は次のように働きます。入力された行のうち、空行でない実行された行はすべてヒストリバッファに保存されます。そして、プロンプトが提示されるときには、ヒストリバッファの最も下の新たな行に移動します。 <code class="kbd docutils literal"><span class="pre">C-P</span></code> はヒストリバッファの中を一行だけ上に移動し (戻し) ます。 <code class="kbd docutils literal"><span class="pre">C-N</span></code> は 1 行だけ下に移動します。ヒストリバッファのどの行も編集することができます。行が編集されると、それを示すためにプロンプトの前にアスタリスクが表示されます。 <code class="kbd docutils literal"><span class="pre">Return</span></code> キーを押すと現在行がインタプリタへ渡されます。 <code class="kbd docutils literal"><span class="pre">C-R</span></code> はインクリメンタルな逆方向サーチ (reverse search) を開始し、 <code class="kbd docutils literal"><span class="pre">C-S</span></code> は順方向サーチ (forward search)を開始します。</p>
+</div>
+<div class="section" id="key-bindings">
+<span id="tut-keybindings"></span><h2>13.3. キー割り当て<a class="headerlink" href="#key-bindings" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Readline ライブラリのキー割り当て (key binding) やその他のパラメタは、 <code class="file docutils literal"><span class="pre">~/.inputrc</span></code> という初期化ファイルにコマンドを置くことでカスタマイズできます。キー割り当ての形式は</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">key</span><span class="o">-</span><span class="n">name</span><span class="p">:</span> <span class="n">function</span><span class="o">-</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>もしくは</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="n">function</span><span class="o">-</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>で、オプションの設定方法は</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">option</span><span class="o">-</span><span class="n">name</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>例えば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># I prefer vi-style editing:</span>
+<span class="nb">set</span> <span class="n">editing</span><span class="o">-</span><span class="n">mode</span> <span class="n">vi</span>
+
+<span class="c1"># Edit using a single line:</span>
+<span class="nb">set</span> <span class="n">horizontal</span><span class="o">-</span><span class="n">scroll</span><span class="o">-</span><span class="n">mode</span> <span class="n">On</span>
+
+<span class="c1"># Rebind some keys:</span>
+<span class="n">Meta</span><span class="o">-</span><span class="n">h</span><span class="p">:</span> <span class="n">backward</span><span class="o">-</span><span class="n">kill</span><span class="o">-</span><span class="n">word</span>
+<span class="s2">&quot;\C-u&quot;</span><span class="p">:</span> <span class="n">universal</span><span class="o">-</span><span class="n">argument</span>
+<span class="s2">&quot;\C-x\C-r&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">init</span><span class="o">-</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>Python では、 <code class="kbd docutils literal"><span class="pre">Tab</span></code> に対するデフォルトの割り当ては TAB の挿入です。 Readline のデフォルトであるファイル名補完関数ではないので注意してください。もし、どうしても Readline のデフォルトを割り当てたいのなら、 <code class="file docutils literal"><span class="pre">~/.inputrc</span></code> に</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tab</span><span class="p">:</span> <span class="n">complete</span>
+</pre></div>
+</div>
+<p>を入れれば設定を上書きすることができます。 (もちろん、 <code class="kbd docutils literal"><span class="pre">Tab</span></code> を使ってインデントするのに慣れている場合、この設定を行うとインデントされた継続行を入力しにくくなります。)</p>
+<p id="index-0">変数名とモジュール名の自動的な補完がオプションとして利用できます。補完をインタプリタの対話モードで有効にするには、以下の設定をスタートアップファイルに追加します。 <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlcompleter</span><span class="o">,</span> <span class="nn">readline</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s1">&#39;tab: complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>この設定は、 <code class="kbd docutils literal"><span class="pre">Tab</span></code> キーを補完関数に束縛します。従って、 <code class="kbd docutils literal"><span class="pre">Tab</span></code> キーを二回たたくと補完候補が示されます。補完機能は Python の文の名前、現在のローカル変数、および利用可能なモジュール名を検索します。 <code class="docutils literal"><span class="pre">string.a</span></code> のようなドットで区切られた式については、最後の <code class="docutils literal"><span class="pre">'.'</span></code> までの式を評価し、結果として得られたオブジェクトの属性から補完候補を示します。 <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> メソッドを持ったオブジェクトが式に含まれている場合、 <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> がアプリケーション定義のコードを実行するかもしれないので注意してください。</p>
+<p>より良くできたスタートアップファイルは以下例のようになります。この例では、作成した名前が不要になると削除されるのに注目してください。これは、スタートアップファイルが対話コマンドと同じ名前空間で実行されているので、不要な名前を除去して対話環境に副作用を生まないようにするためです。 import されたモジュールのうち、 <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> のようなインタプリタのほとんどのセッションで必要なものについては、残しておくと便利に思うかもしれません。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Add auto-completion and a stored history file of commands to your Python</span>
+<span class="c1"># interactive interpreter. Requires Python 2.0+, readline. Autocomplete is</span>
+<span class="c1"># bound to the Esc key by default (you can change it - see readline docs).</span>
+<span class="c1">#</span>
+<span class="c1"># Store the file in ~/.pystartup, and set an environment variable to point</span>
+<span class="c1"># to it:  &quot;export PYTHONSTARTUP=~/.pystartup&quot; in bash.</span>
+
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">rlcompleter</span>
+
+<span class="n">historyPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.pyhistory&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">save_history</span><span class="p">(</span><span class="n">historyPath</span><span class="o">=</span><span class="n">historyPath</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">readline</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">write_history_file</span><span class="p">(</span><span class="n">historyPath</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">historyPath</span><span class="p">):</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">read_history_file</span><span class="p">(</span><span class="n">historyPath</span><span class="p">)</span>
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">save_history</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">os</span><span class="p">,</span> <span class="n">atexit</span><span class="p">,</span> <span class="n">readline</span><span class="p">,</span> <span class="n">rlcompleter</span><span class="p">,</span> <span class="n">save_history</span><span class="p">,</span> <span class="n">historyPath</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternatives-to-the-interactive-interpreter">
+<span id="tut-commentary"></span><h2>13.4. インタラクティブインタプタの代替<a class="headerlink" href="#alternatives-to-the-interactive-interpreter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>この機能は、初期の版のインタプリタに比べれば大きな進歩です。とはいえ、まだいくつかの要望が残されています。例えば、行を継続するときに正しいインデントが提示されたら快適でしょう (パーサは次の行でインデントトークンが必要かどうかを知っています)。補完機構がインタプリタのシンボルテーブルを使ってもよいかもしれません。括弧やクォートなどの対応をチェックする (あるいは指示する) コマンドも有用でしょう。</p>
+<p>より優れたインタラクティブインタプリタの代替の一つに <a class="reference external" href="http://ipython.scipy.org/">IPython</a> があります。このインタプリタは、様々なところで使われていて、タブ補完、オブジェクト探索や先進的な履歴管理といった機能を持っています。他のアプリケーションにカスタマイズされたり、組込まれこともあります。別の優れたインタラクティブ環境としては <a class="reference external" href="http://www.bpython-interpreter.org/">bpython</a> があります。</p>
+<p class="rubric">注記</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">Python は、対話インタプリタを開始する時に <span class="target" id="index-3"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSTARTUP"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONSTARTUP</span></code></a> 環境変数が指定するファイルの内容を実行します。非対話モードでも Pytohn をカスタマイズするには、 <a class="reference internal" href="appendix.html#tut-customize"><span class="std std-ref">カスタマイズ用モジュール</span></a> を参照してください。</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">13. 対話入力編集とヒストリ置換</a><ul>
+<li><a class="reference internal" href="#line-editing">13.1. 行編集</a></li>
+<li><a class="reference internal" href="#history-substitution">13.2. ヒストリ置換</a></li>
+<li><a class="reference internal" href="#key-bindings">13.3. キー割り当て</a></li>
+<li><a class="reference internal" href="#alternatives-to-the-interactive-interpreter">13.4. インタラクティブインタプタの代替</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="whatnow.html"
+                        title="前の章へ">12. さあ何を？</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="floatingpoint.html"
+                        title="次の章へ">14. 浮動小数点演算、その問題と制限</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/tutorial/interactive.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="floatingpoint.html" title="14. 浮動小数点演算、その問題と制限"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="whatnow.html" title="12. さあ何を？"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

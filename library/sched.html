@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.8. sched — イベントスケジューラ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="8. データ型" href="datatypes.html" />
+    <link rel="next" title="8.9. mutex — 排他制御" href="mutex.html" />
+    <link rel="prev" title="8.7. sets — 重複のない要素の順序なしコレクション" href="sets.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mutex.html" title="8.9. mutex — 排他制御"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="sets.html" title="8.7. sets — 重複のない要素の順序なしコレクション"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">8. データ型</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sched">
+<span id="sched-event-scheduler"></span><h1>8.8. <a class="reference internal" href="#module-sched" title="sched: General purpose event scheduler."><code class="xref py py-mod docutils literal"><span class="pre">sched</span></code></a> &#8212; イベントスケジューラ<a class="headerlink" href="#module-sched" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/sched.py">Lib/sched.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-sched" title="sched: General purpose event scheduler."><code class="xref py py-mod docutils literal"><span class="pre">sched</span></code></a> モジュールは一般的な目的のためのイベントスケジューラを実装するクラスを定義します:</p>
+<dl class="class">
+<dt id="sched.scheduler">
+<em class="property">class </em><code class="descclassname">sched.</code><code class="descname">scheduler</code><span class="sig-paren">(</span><em>timefunc</em>, <em>delayfunc</em><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#sched.scheduler" title="sched.scheduler"><code class="xref py py-class docutils literal"><span class="pre">scheduler</span></code></a> クラスはイベントをスケジュールするための一般的なインタフェースを定義します。それは &#8220;外の世界&#8221; を実際に扱うための2つの関数を必要とします &#8212; <em>timefunc</em> は引数なしで呼ばれて 1 つの数値を返す callable オブジェクトでなければなりません (戻り値は任意の単位で「時間」を表します)。 <em>delayfunc</em> は 1 つの引数を持つ callable オブジェクトでなければならず、その時間だけ遅延する必要があります (引数は <em>timefunc</em> の出力と互換)。 <em>delayfunc</em> は、各々のイベントが実行された後に引数 <code class="docutils literal"><span class="pre">0</span></code> で呼ばれることがあります。これは、マルチスレッドアプリケーションの中で他のスレッドが実行する機会を与えるためです。</p>
+</dd></dl>
+
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sched</span><span class="o">,</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">sched</span><span class="o">.</span><span class="n">scheduler</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_time</span><span class="p">():</span> <span class="nb">print</span> <span class="s2">&quot;From print_time&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_some_times</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">s</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">())</span>
+<span class="gp">... </span>    <span class="n">s</span><span class="o">.</span><span class="n">enter</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">())</span>
+<span class="gp">... </span>    <span class="n">s</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_some_times</span><span class="p">()</span>
+<span class="go">930343690.257</span>
+<span class="go">From print_time 930343695.274</span>
+<span class="go">From print_time 930343700.273</span>
+<span class="go">930343700.276</span>
+</pre></div>
+</div>
+<p>マルチスレッド環境において、 <a class="reference internal" href="#sched.scheduler" title="sched.scheduler"><code class="xref py py-class docutils literal"><span class="pre">scheduler</span></code></a> クラスにはスレッドセーフのための制限があります。イベントキューが空になるまでは、実行中のスケジューラで現在中断中でメインスレッドを足止めしているタスクの前に、新しいタスクを挿入することはできません。代わりに、より推奨される方法として、 <a class="reference internal" href="threading.html#threading.Timer" title="threading.Timer"><code class="xref py py-class docutils literal"><span class="pre">threading.Timer</span></code></a> クラスを利用してください。</p>
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Timer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_time</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="s2">&quot;From print_time&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_some_times</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">Timer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">())</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">Timer</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">())</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>  <span class="c1"># sleep while time-delay events execute</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_some_times</span><span class="p">()</span>
+<span class="go">930343690.257</span>
+<span class="go">From print_time 930343695.274</span>
+<span class="go">From print_time 930343700.273</span>
+<span class="go">930343701.301</span>
+</pre></div>
+</div>
+<div class="section" id="scheduler-objects">
+<span id="id1"></span><h2>8.8.1. スケジューラオブジェクト<a class="headerlink" href="#scheduler-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#sched.scheduler" title="sched.scheduler"><code class="xref py py-class docutils literal"><span class="pre">scheduler</span></code></a> インスタンスは以下のメソッドと属性を持っています:</p>
+<dl class="method">
+<dt id="sched.scheduler.enterabs">
+<code class="descclassname">scheduler.</code><code class="descname">enterabs</code><span class="sig-paren">(</span><em>time</em>, <em>priority</em>, <em>action</em>, <em>argument</em><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler.enterabs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しいイベントをスケジュールします。引数 <em>time</em> は、コンストラクタへ渡された <em>timefunc</em> の戻り値と互換な数値型でなければいけません。同じ <em>time</em> によってスケジュールされたイベントは、それらの <em>priority</em> によって実行されるでしょう。</p>
+<p>イベントを実行することは、 <code class="docutils literal"><span class="pre">action(*argument)</span></code> を実行することを意味します。 <em>argument</em> は <em>action</em> のためのパラメータを保持するシーケンスでなければいけません。</p>
+<p>戻り値は、イベントのキャンセル後に使われるかもしれないイベントです (<a class="reference internal" href="#sched.scheduler.cancel" title="sched.scheduler.cancel"><code class="xref py py-meth docutils literal"><span class="pre">cancel()</span></code></a> を見よ)。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sched.scheduler.enter">
+<code class="descclassname">scheduler.</code><code class="descname">enter</code><span class="sig-paren">(</span><em>delay</em>, <em>priority</em>, <em>action</em>, <em>argument</em><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler.enter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>時間単位以上の <em>delay</em> でイベントをスケジュールします。相対的時間以外の、引数、効果、戻り値は、 <a class="reference internal" href="#sched.scheduler.enterabs" title="sched.scheduler.enterabs"><code class="xref py py-meth docutils literal"><span class="pre">enterabs()</span></code></a> に対するものと同じです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sched.scheduler.cancel">
+<code class="descclassname">scheduler.</code><code class="descname">cancel</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler.cancel" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューからイベントを消去します。もし <em>event</em> がキューにある現在のイベントでないならば、このメソッドは <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sched.scheduler.empty">
+<code class="descclassname">scheduler.</code><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler.empty" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>もしイベントキューが空ならば、Trueを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sched.scheduler.run">
+<code class="descclassname">scheduler.</code><code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sched.scheduler.run" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>すべてのスケジュールされたイベントを実行します。この関数は次のイベントを (コンストラクタへ渡された関数 <code class="xref py py-func docutils literal"><span class="pre">delayfunc()</span></code> を使うことで) 待ち、そしてそれを実行し、スケジュールされたイベントがなくなるまで同じことを繰り返します。</p>
+<p><em>action</em> あるいは <em>delayfunc</em> は例外を投げることができます。いずれの場合も、スケジューラは一貫した状態を維持し、例外を伝播するでしょう。例外が <em>action</em> によって投げられる場合、イベントは <a class="reference internal" href="#sched.scheduler.run" title="sched.scheduler.run"><code class="xref py py-meth docutils literal"><span class="pre">run()</span></code></a> への呼出しを未来に行なわないでしょう。</p>
+<p>イベントのシーケンスが、次イベントの前に、利用可能時間より実行時間が長いと、スケジューラは単に遅れることになるでしょう。イベントが落ちることはありません; 呼出しコードはもはや適切でないキャンセルイベントに対して責任があります。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sched.scheduler.queue">
+<code class="descclassname">scheduler.</code><code class="descname">queue</code><a class="headerlink" href="#sched.scheduler.queue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>読み取り専用の属性で、これから起こるイベントが実行される順序で格納されたリストを返します。各イベントは、次の属性 time, priority, action, argument を持った <a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a> の形式になります。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8.8. <code class="docutils literal"><span class="pre">sched</span></code> &#8212; イベントスケジューラ</a><ul>
+<li><a class="reference internal" href="#scheduler-objects">8.8.1. スケジューラオブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="sets.html"
+                        title="前の章へ">8.7. <code class="docutils literal"><span class="pre">sets</span></code> &#8212; 重複のない要素の順序なしコレクション</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mutex.html"
+                        title="次の章へ">8.9. <code class="docutils literal"><span class="pre">mutex</span></code> &#8212; 排他制御</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/sched.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mutex.html" title="8.9. mutex — 排他制御"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="sets.html" title="8.7. sets — 重複のない要素の順序なしコレクション"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >8. データ型</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

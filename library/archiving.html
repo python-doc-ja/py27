@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>12. データ圧縮とアーカイブ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
+    <link rel="next" title="12.1. zlib — gzip 互換の圧縮" href="zlib.html" />
+    <link rel="prev" title="11.13. sqlite3 — SQLite データベースに対する DB-API 2.0 インタフェース" href="sqlite3.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="zlib.html" title="12.1. zlib — gzip 互換の圧縮"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="sqlite3.html" title="11.13. sqlite3 — SQLite データベースに対する DB-API 2.0 インタフェース"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-compression-and-archiving">
+<span id="archiving"></span><h1>12. データ圧縮とアーカイブ<a class="headerlink" href="#data-compression-and-archiving" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章で説明されるモジュールは zlib, gzip, bzip2 アルゴリズムによるデータの圧縮と、
+ZIP, tar フォーマットのアーカイブ作成をサポートします。 <a class="reference internal" href="shutil.html#module-shutil" title="shutil: High-level file operations, including copying."><code class="xref py py-mod docutils literal"><span class="pre">shutil</span></code></a> モジュールで提供されている <a class="reference internal" href="shutil.html#archiving-operations"><span class="std std-ref">アーカイブ化操作</span></a> も参照してください。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="zlib.html">12.1. <code class="docutils literal"><span class="pre">zlib</span></code> &#8212; <strong class="program">gzip</strong> 互換の圧縮</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gzip.html">12.2. <code class="docutils literal"><span class="pre">gzip</span></code> &#8212; <strong class="program">gzip</strong> ファイルのサポート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gzip.html#examples-of-usage">12.2.1. 使い方の例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bz2.html">12.3. <code class="docutils literal"><span class="pre">bz2</span></code> &#8212; <strong class="program">bzip2</strong> 互換の圧縮ライブラリ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bz2.html#de-compression-of-files">12.3.1. ファイルの圧縮/解凍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bz2.html#sequential-de-compression">12.3.2. 逐次的な圧縮/解凍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bz2.html#one-shot-de-compression">12.3.3. 一括圧縮/解凍</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zipfile.html">12.4. <code class="docutils literal"><span class="pre">zipfile</span></code> &#8212; ZIP アーカイブの処理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zipfile.html#zipfile-objects">12.4.1. ZipFile オブジェクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zipfile.html#pyzipfile-objects">12.4.2. PyZipFile オブジェクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zipfile.html#zipinfo-objects">12.4.3. ZipInfo オブジェクト</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tarfile.html">12.5. <code class="docutils literal"><span class="pre">tarfile</span></code> &#8212; tar アーカイブファイルの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tarfile.html#tarfile-objects">12.5.1. TarFile オブジェクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tarfile.html#tarinfo-objects">12.5.2. TarInfo オブジェクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tarfile.html#examples">12.5.3. 例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tarfile.html#supported-tar-formats">12.5.4. サポートしている tar フォーマット</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tarfile.html#unicode-issues">12.5.5. Unicode に関する問題</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="sqlite3.html"
+                        title="前の章へ">11.13. <code class="docutils literal"><span class="pre">sqlite3</span></code> &#8212; SQLite データベースに対する DB-API 2.0 インタフェース</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="zlib.html"
+                        title="次の章へ">12.1. <code class="docutils literal"><span class="pre">zlib</span></code> &#8212; <strong class="program">gzip</strong> 互換の圧縮</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/archiving.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="zlib.html" title="12.1. zlib — gzip 互換の圧縮"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="sqlite3.html" title="11.13. sqlite3 — SQLite データベースに対する DB-API 2.0 インタフェース"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

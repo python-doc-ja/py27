@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>オブジェクトプロトコル (object protocol) &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="抽象オブジェクトレイヤ (abstract objects layer)" href="abstract.html" />
+    <link rel="next" title="数値型プロトコル (number protocol)" href="number.html" />
+    <link rel="prev" title="抽象オブジェクトレイヤ (abstract objects layer)" href="abstract.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="number.html" title="数値型プロトコル (number protocol)"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="abstract.html" title="抽象オブジェクトレイヤ (abstract objects layer)"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="abstract.html" accesskey="U">抽象オブジェクトレイヤ (abstract objects layer)</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="object-protocol">
+<span id="object"></span><h1>オブジェクトプロトコル (object protocol)<a class="headerlink" href="#object-protocol" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="function">
+<dt id="c.PyObject_Print">
+int <code class="descname">PyObject_Print</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, FILE<em>&nbsp;*fp</em>, int<em>&nbsp;flags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Print" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> をファイル <em>fp</em> に出力します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 <em>flags</em> 引数は何らかの出力オプションを有効にする際に使います。現在サポートされている唯一のオプションは <code class="xref py py-const docutils literal"><span class="pre">Py_PRINT_RAW</span></code> です; このオプションを指定すると、 <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> の代わりに <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> を使ってオブジェクトを書き込みます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_HasAttr">
+int <code class="descname">PyObject_HasAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_HasAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が属性 <em>attr_name</em> を持つときに <code class="docutils literal"><span class="pre">1</span></code> を、それ以外のときに <code class="docutils literal"><span class="pre">0</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">hasattr(o,</span> <span class="pre">attr_name)</span></code> と同じです。この関数は常に成功します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_HasAttrString">
+int <code class="descname">PyObject_HasAttrString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, const char<em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_HasAttrString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が属性 <em>attr_name</em> を持つときに <code class="docutils literal"><span class="pre">1</span></code> を、それ以外のときに <code class="docutils literal"><span class="pre">0</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">hasattr(o,</span> <span class="pre">attr_name)</span></code> と同じです。この関数は常に成功します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GetAttr">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_GetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GetAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>オブジェクト <em>o</em> から、名前 <em>attr_name</em> の属性を取得します。成功すると属性値を返し失敗すると <em>NULL</em> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GetAttrString">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_GetAttrString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, const char<em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GetAttrString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>オブジェクト <em>o</em> から、名前 <em>attr_name</em> の属性を取得します。成功すると属性値を返し失敗すると <em>NULL</em> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GenericGetAttr">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_GenericGetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GenericGetAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>型オブジェクトの <code class="docutils literal"><span class="pre">tp_getattro</span></code> スロットに置かれる、属性を取得する総称的な関数です。この関数は、 (もし存在すれば) オブジェクトの <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性に加え、オブジェクトの MRO にあるクラスの辞書にあるデスクリプタを探します。 <a class="reference internal" href="../reference/datamodel.html#descriptors"><span class="std std-ref">デスクリプタ (descriptor) の実装</span></a> で概要が述べられている通り、データのデスクリプタはインスタンスの属性より優先され、非データデスクリプタは後回しにされます。見付からなかった場合は <a class="reference internal" href="../library/exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_SetAttr">
+int <code class="descname">PyObject_SetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*attr_name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性に、値 <em>v</em> を設定します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_SetAttrString">
+int <code class="descname">PyObject_SetAttrString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, const char<em>&nbsp;*attr_name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetAttrString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性に、値 <em>v</em> を設定します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GenericSetAttr">
+int <code class="descname">PyObject_GenericSetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GenericSetAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>型オブジェクトの <code class="docutils literal"><span class="pre">tp_setattro</span></code> スロットに置かれる、属性を設定する総称的な関数です。この関数は、オブジェクトの MRO にあるクラスの辞書からデータデスクリプタを探し、見付かった場合は、インスタンスの辞書の属性への設定よりも優先されます。そうでない場合は、(もし存在すれば) オブジェクトの <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> に属性を設定します。存在しない場合は、 <a class="reference internal" href="../library/exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> が送出され、 <code class="docutils literal"><span class="pre">-1</span></code> が返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_DelAttr">
+int <code class="descname">PyObject_DelAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_DelAttr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性を削除します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の文 <code class="docutils literal"><span class="pre">del</span> <span class="pre">o.attr_name</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_DelAttrString">
+int <code class="descname">PyObject_DelAttrString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, const char<em>&nbsp;*attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_DelAttrString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性を削除します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の文 <code class="docutils literal"><span class="pre">del</span> <span class="pre">o.attr_name</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_RichCompare">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_RichCompare</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o1</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o2</em>, int<em>&nbsp;opid</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_RichCompare" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>o1</em> と <em>o2</em> を <em>opid</em> に指定した演算によって比較します。 <em>opid</em> は <code class="xref py py-const docutils literal"><span class="pre">Py_LT</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_LE</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_EQ</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_NE</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_GT</span></code>, または <code class="xref py py-const docutils literal"><span class="pre">Py_GE</span></code>, のいずれかでなければならず、それぞれ <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">==</span></code>, <code class="docutils literal"><span class="pre">!=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, および <code class="docutils literal"><span class="pre">&gt;=</span></code> に対応します。この関数は Python の式 <code class="docutils literal"><span class="pre">o1</span> <span class="pre">op</span> <span class="pre">o2</span></code> と同じで、 <code class="docutils literal"><span class="pre">op</span></code> が <em>opid</em> に対応する演算子です。成功すると比較結果の値を返し失敗すると <em>NULL</em> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_RichCompareBool">
+int <code class="descname">PyObject_RichCompareBool</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o1</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o2</em>, int<em>&nbsp;opid</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_RichCompareBool" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o1</em> と <em>o2</em> を <em>opid</em> に指定した演算によって比較します。 <em>opid</em> は <code class="xref py py-const docutils literal"><span class="pre">Py_LT</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_LE</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_EQ</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_NE</span></code>, <code class="xref py py-const docutils literal"><span class="pre">Py_GT</span></code>, または <code class="xref py py-const docutils literal"><span class="pre">Py_GE</span></code>, のいずれかでなければならず、それぞれ <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">==</span></code>, <code class="docutils literal"><span class="pre">!=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, および <code class="docutils literal"><span class="pre">&gt;=</span></code> に対応します。比較結果が真ならば <code class="docutils literal"><span class="pre">1</span></code> を、偽ならば <code class="docutils literal"><span class="pre">0</span></code> を、エラーが発生すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o1</span> <span class="pre">op</span> <span class="pre">o2</span></code> と同じで、 <code class="docutils literal"><span class="pre">op</span></code> が <em>opid</em> に対応する演算子です。</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><em>o1</em> と <em>o2</em> が同一のオブジェクトである場合、 <a class="reference internal" href="#c.PyObject_RichCompareBool" title="PyObject_RichCompareBool"><code class="xref c c-func docutils literal"><span class="pre">PyObject_RichCompareBool()</span></code></a> は <code class="xref py py-const docutils literal"><span class="pre">Py_EQ</span></code> に対して常に <code class="docutils literal"><span class="pre">1</span></code> を返し、 <code class="xref py py-const docutils literal"><span class="pre">Py_NE</span></code> に対して常に <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
+</div>
+<dl class="function">
+<dt id="c.PyObject_Cmp">
+int <code class="descname">PyObject_Cmp</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o1</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o2</em>, int<em>&nbsp;*result</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Cmp" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-0"><em>o1</em> と <em>o2</em> の値を比較します。このとき <em>o1</em> が比較ルーチンを持っていればそれを使い、なければ <em>o2</em> のルーチンを使います。比較結果は <em>result</em> に返されます。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python 文 <code class="docutils literal"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">cmp(o1,</span> <span class="pre">o2)</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Compare">
+int <code class="descname">PyObject_Compare</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o1</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o2</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Compare" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-1"><em>o1</em> と <em>o2</em> の値を比較します。このとき <em>o1</em> が比較ルーチンを持っていればそれを使い、なければ <em>o2</em> のルーチンを使います。成功すると比較結果を返します。エラーが生じた場合の戻り値は未定義です; <a class="reference internal" href="exceptions.html#c.PyErr_Occurred" title="PyErr_Occurred"><code class="xref c c-func docutils literal"><span class="pre">PyErr_Occurred()</span></code></a> を使ってエラー検出を行って下さい。Python 式 <code class="docutils literal"><span class="pre">cmp(o1,</span> <span class="pre">o2)</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Repr">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Repr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Repr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-2"><em>o</em> の文字列表現を計算します。成功すると文字列表現を返し、失敗すると <em>NULL</em> を返します。Python 式 <code class="docutils literal"><span class="pre">repr(o)</span></code> と同じです。この関数は組み込み関数 <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> や逆クオート表記の処理で呼び出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Str">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Str</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Str" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-3"><em>o</em> の文字列表現を計算します。成功すると文字列表現を返し、失敗すると <em>NULL</em> を返します。Python 式 <code class="docutils literal"><span class="pre">str(o)</span></code> と同じです。この関数は組み込み関数 <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> や <a class="reference internal" href="../reference/simple_stmts.html#print"><code class="xref std std-keyword docutils literal"><span class="pre">print</span></code></a> 文の処理で呼び出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Bytes">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Bytes</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Bytes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-4"><em>o</em> オブジェクトの bytes 表現を計算します。 2.x では、単に <a class="reference internal" href="#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> のエイリアスです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Unicode">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Unicode</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Unicode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-5"><em>o</em> の Unicode 文字列表現を計算します。成功すると Unicode 文字列表現を返し失敗すると <em>NULL</em> を返します。 Python 式 <code class="docutils literal"><span class="pre">unicode(o)</span></code> と同じです。この関数は組み込み関数 <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> の処理で呼び出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_IsInstance">
+int <code class="descname">PyObject_IsInstance</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*inst</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*cls</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_IsInstance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>inst</em> が <em>cls</em> のインスタンスか、 <em>cls</em> のサブクラスのインスタンスの場合に <code class="docutils literal"><span class="pre">1</span></code> を返し、そうでなければ <code class="docutils literal"><span class="pre">0</span></code> を 返します。エラーの時には <code class="docutils literal"><span class="pre">-1</span></code> を返し、例外をセットします。
+<em>cls</em> がクラスオブジェクトではなく型オブジェクトの場合、 <a class="reference internal" href="#c.PyObject_IsInstance" title="PyObject_IsInstance"><code class="xref c c-func docutils literal"><span class="pre">PyObject_IsInstance()</span></code></a> は <em>inst</em> が <em>cls</em> であるときに <code class="docutils literal"><span class="pre">1</span></code> を返します。
+<em>cls</em> をタプルで指定した場合、 <em>cls</em> に指定した全てのエントリについてチェックを行います。少なくとも一つのエントリに対するチェックが <code class="docutils literal"><span class="pre">1</span></code> を返せば結果は <code class="docutils literal"><span class="pre">1</span></code> になり、そうでなければ <code class="docutils literal"><span class="pre">0</span></code> になります。
+<em>inst</em> がクラスインスタンスでなく、かつ <em>cls</em> が 型オブジェクトでもクラスオブジェクトでもタプルでもない場合、 <em>inst</em> には <code class="xref py py-attr docutils literal"><span class="pre">__class__</span></code> 属性がなくてはなりません</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span>二つ目の引数にタプルのサポートを追加しました。</p>
+</div>
+</dd></dl>
+
+<p>サブクラスの決定はかなり素直な方法で行いますが、クラスシステムの拡張を実装する人たちに知っておいて欲しいちょっとした問題点があります。
+<code class="xref py py-class docutils literal"><span class="pre">A</span></code> と <code class="xref py py-class docutils literal"><span class="pre">B</span></code> がクラスオブジェクトの場合、 <code class="xref py py-class docutils literal"><span class="pre">B</span></code> が <code class="xref py py-class docutils literal"><span class="pre">A</span></code> のサブクラスとなるのは、 <code class="xref py py-class docutils literal"><span class="pre">B</span></code> が <code class="xref py py-class docutils literal"><span class="pre">A</span></code> を直接的あるいは間接的に継承 (inherit) している場合です。両方がクラスオブジェクトでない場合、二つのオブジェクト間のクラス関係を決めるには、より汎用的な機構を使います。
+<em>B</em> が <em>A</em> のサブクラスであるか調べたとき、 <em>A</em> が <em>B</em> と等しければ、 <a class="reference internal" href="#c.PyObject_IsSubclass" title="PyObject_IsSubclass"><code class="xref c c-func docutils literal"><span class="pre">PyObject_IsSubclass()</span></code></a> は真を返します。
+<em>A</em> および <em>B</em> が異なるオブジェクトなら、 <em>B</em> の <a class="reference internal" href="../library/stdtypes.html#class.__bases__" title="class.__bases__"><code class="xref py py-attr docutils literal"><span class="pre">__bases__</span></code></a> 属性から深さ優先探索 (depth-first search)で <em>A</em> を探索します</p>
+<dl class="function">
+<dt id="c.PyObject_IsSubclass">
+int <code class="descname">PyObject_IsSubclass</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*derived</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*cls</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_IsSubclass" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クラス <em>derived</em> が <em>cls</em> と同じクラスか、 <em>cls</em> の派生クラスの場合に <code class="docutils literal"><span class="pre">1</span></code> を返し、それ以外の場合には <code class="docutils literal"><span class="pre">0</span></code> を返します。エラーが生じると <code class="docutils literal"><span class="pre">-1</span></code> を返します。  <em>cls</em> をタプルで指定した場合、 <em>cls</em> に指定した全てのエントリについてチェックを行います。少なくとも一つのエントリに対するチェックが <code class="docutils literal"><span class="pre">1</span></code> を返せば結果は <code class="docutils literal"><span class="pre">1</span></code> になり、そうでなければ <code class="docutils literal"><span class="pre">0</span></code> になります。 <em>derived</em> または <em>cls</em> のいずれかが実際のクラスオブジェクト (あるいはタプル) でない場合、上で述べた汎用アルゴリズムを使います。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>以前の Python のバージョンは、二つ目の引数にタプルをサポートしていませんでした。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyCallable_Check">
+int <code class="descname">PyCallable_Check</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCallable_Check" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> が呼び出し可能オブジェクトかどうか調べます。オブジェクトが呼び出し可能であるときに <code class="docutils literal"><span class="pre">1</span></code> を返し、そうでないときには <code class="docutils literal"><span class="pre">0</span></code> を返します。この関数呼び出しは常に成功します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Call">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Call</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*callable_object</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*args</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*kw</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-6">呼び出し可能な Python オブジェクト <em>callable_object</em> をタプルで指定された引数 <em>args</em> および辞書で指定された名前つき引数 (named argument) <em>kw</em> とともに呼び出します。名前つき引数を必要としない場合、 <em>kw</em> を <em>NULL</em> にしてもかまいません。 <em>args</em> は <em>NULL</em> であってはなりません。引数が全く必要ない場合には空のタプルを使ってください。成功すると呼び出し結果として得られたオブジェクトを返し、失敗すると <em>NULL</em> を返します。 Python の式  <code class="docutils literal"><span class="pre">apply(callable_object,</span> <span class="pre">args,</span> <span class="pre">kw)</span></code> あるいは <code class="docutils literal"><span class="pre">callable_object(*args,</span> <span class="pre">**kw)</span></code> と同じです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_CallObject">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_CallObject</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*callable_object</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*args</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CallObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-7">呼び出し可能な Python オブジェクト <em>callable_object</em> をタプルで指定された引数 <em>args</em> とともに呼び出します。  引数を必要としない場合、 <em>args</em> を <em>NULL</em> にしてもかまいません。成功すると呼び出し結果として得られたオブジェクトを返し、失敗すると <em>NULL</em> を返します。 Python の式 <code class="docutils literal"><span class="pre">apply(callable_object,</span> <span class="pre">args)</span></code> あるいは <code class="docutils literal"><span class="pre">callable_object(*args)</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_CallFunction">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_CallFunction</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*callable</em>, char<em>&nbsp;*format</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CallFunction" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-8">呼び出し可能な Python オブジェクト <em>callable_object</em> を可変数個の C 引数とともに呼び出します。C 引数は <a class="reference internal" href="arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> 形式のフォーマット文字列を使って記述します。 <em>format</em> は <em>NULL</em> にしてもよく、与える引数がないことを表します。成功すると呼び出し結果として得られたオブジェクトを返し、失敗すると <em>NULL</em> を返します。 Python の式 <code class="docutils literal"><span class="pre">apply(callable,</span> <span class="pre">args)</span></code> あるいは <code class="docutils literal"><span class="pre">callable(*args)</span></code> と同じです。もしも、 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject</span> <span class="pre">*</span></code></a> args だけを引数に渡す場合は、 <a class="reference internal" href="#c.PyObject_CallFunctionObjArgs" title="PyObject_CallFunctionObjArgs"><code class="xref c c-func docutils literal"><span class="pre">PyObject_CallFunctionObjArgs()</span></code></a> がより速い方法であることを覚えておいてください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_CallMethod">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_CallMethod</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, char<em>&nbsp;*method</em>, char<em>&nbsp;*format</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CallMethod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>オブジェクト <em>o</em> の <em>method</em> という名前のメソッドを、可変数個の C 引数とともに呼び出します。C 引数はタプルを生成するような <a class="reference internal" href="arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> 形式のフォーマット文字列を使って記述します。 <em>format</em> は <em>NULL</em> にしてもよく、与える引数がないことを表します。成功すると呼び出し結果として得られたオブジェクトを返し、失敗すると <em>NULL</em> を返します。 Python の式 <code class="docutils literal"><span class="pre">o.method(args)</span></code> と同じです。もしも、 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject</span> <span class="pre">*</span></code></a> args だけを引数に渡す場合は、 <a class="reference internal" href="#c.PyObject_CallMethodObjArgs" title="PyObject_CallMethodObjArgs"><code class="xref c c-func docutils literal"><span class="pre">PyObject_CallMethodObjArgs()</span></code></a> がより速い方法であることを覚えておいてください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_CallFunctionObjArgs">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_CallFunctionObjArgs</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*callable</em>, ..., NULL<span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CallFunctionObjArgs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>呼び出し可能な Python オブジェクト <em>callable</em> を可変数個の <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject*</span></code></a> 引数とともに呼び出します。引数列は末尾に <em>NULL</em> がついた可変数個のパラメタとして与えます。成功すると呼び出し結果として得られたオブジェクトを返し失敗すると <em>NULL</em> を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_CallMethodObjArgs">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_CallMethodObjArgs</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*name</em>, ..., NULL<span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CallMethodObjArgs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>オブジェクト <em>o</em> のメソッドを呼び出します、メソッド名は Python 文字列オブジェクト <em>name</em> で与えます。可変数個の <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject*</span></code></a> 引数と共に呼び出されます. 引数列は末尾に <em>NULL</em> がついた可変数個のパラメタとして与えます。成功すると呼び出し結果として得られたオブジェクトを返し失敗すると <em>NULL</em> を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Hash">
+long <code class="descname">PyObject_Hash</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Hash" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-9">オブジェクト <em>o</em> のハッシュ値を計算して返します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python の式 <code class="docutils literal"><span class="pre">hash(o)</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_HashNotImplemented">
+long <code class="descname">PyObject_HashNotImplemented</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_HashNotImplemented" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">type(o)</span></code> がハッシュ不可能であることを示す <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を設定し、 <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は <code class="docutils literal"><span class="pre">tp_hash</span></code> スロットに格納されたときには特別な扱いを受け、その type がハッシュ不可能であることをインタプリタに明示的に示します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_IsTrue">
+int <code class="descname">PyObject_IsTrue</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_IsTrue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が真を表すとみなせる場合には <code class="docutils literal"><span class="pre">1</span></code> を、そうでないときには <code class="docutils literal"><span class="pre">0</span></code> を返します。   Python の式 <code class="docutils literal"><span class="pre">not</span> <span class="pre">not</span> <span class="pre">o</span></code> と同じです。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Not">
+int <code class="descname">PyObject_Not</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Not" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が真を表すとみなせる場合には <code class="docutils literal"><span class="pre">0</span></code> を、そうでないときには <code class="docutils literal"><span class="pre">1</span></code> を返します。   Python の式 <code class="docutils literal"><span class="pre">not</span> <span class="pre">o</span></code> と同じです。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Type">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Type</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-10"><em>o</em> が <em>NULL</em> でない場合、オブジェクト <em>o</em> のオブジェクト型に相当する型オブジェクトを返します。失敗すると <a class="reference internal" href="../library/exceptions.html#exceptions.SystemError" title="exceptions.SystemError"><code class="xref py py-exc docutils literal"><span class="pre">SystemError</span></code></a> を送出して <em>NULL</em> を返します。 Python の式 <code class="docutils literal"><span class="pre">type(o)</span></code> と同じです。  この関数は戻り値の参照カウントをインクリメントします。参照カウントのインクリメントが必要でない限り、広く使われていて <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject*</span></code></a> 型のポインタを返す表記法 <code class="docutils literal"><span class="pre">o-&gt;ob_type</span></code> の代わりに使う理由は全くありません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_TypeCheck">
+int <code class="descname">PyObject_TypeCheck</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em>&nbsp;*type</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_TypeCheck" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> が、 <em>type</em> か <em>type</em> のサブタイプであるときに真を返します。どちらのパラメタも <em>NULL</em> であってはなりません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Length">
+Py_ssize_t <code class="descname">PyObject_Length</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Length" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="c.PyObject_Size">
+Py_ssize_t <code class="descname">PyObject_Size</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Size" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-11"><em>o</em> の長さを返します。ただしオブジェクト <em>o</em> がシーケンス型プロトコルとマップ型プロトコルの両方を提供している場合、シーケンスとしての長さを返します。エラーが生じると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python の式 <code class="docutils literal"><span class="pre">len(o)</span></code> と同じです。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>これらの関数は以前は <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を返していました。この変更により、 64bit システムを正しくサポートするには修正が必要になります。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GetItem">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_GetItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*key</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GetItem" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>オブジェクト <em>key</em> に対応する <em>o</em> の要素を返します。失敗すると <em>NULL</em> を返します。Python の式 <code class="docutils literal"><span class="pre">o[key]</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_SetItem">
+int <code class="descname">PyObject_SetItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*key</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetItem" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>key</em> を値 <em>v</em> に対応付けます。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python の文 <code class="docutils literal"><span class="pre">o[key]</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_DelItem">
+int <code class="descname">PyObject_DelItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*key</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_DelItem" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>o</em> から <em>key</em> に関する対応付けを削除します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python の文 <code class="docutils literal"><span class="pre">del</span> <span class="pre">o[key]</span></code> と同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_AsFileDescriptor">
+int <code class="descname">PyObject_AsFileDescriptor</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_AsFileDescriptor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Python オブジェクトからファイル記述子を取り出します。オブジェクトが整数か長整数なら、その値を返します。 (長)整数でない場合、オブジェクトに <code class="xref py py-meth docutils literal"><span class="pre">fileno()</span></code> メソッドがあれば呼び出します; この場合、 <code class="xref py py-meth docutils literal"><span class="pre">fileno()</span></code> メソッドは整数または長整数をファイル記述子の値として返さなければなりません。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Dir">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Dir</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Dir" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>この関数は Python の式 <code class="docutils literal"><span class="pre">dir(o)</span></code> と同じで、オブジェクトの変数名に割り当てている文字列からなるリスト (空の場合もあります) を返します。エラーの場合には <em>NULL</em> を返します。引数を <em>NULL</em> にすると、Python における <code class="docutils literal"><span class="pre">dir()</span></code> と同様に、現在のローカルな名前を返します; この場合、アクティブな実行フレームがなければ <em>NULL</em> を返しますが、 <a class="reference internal" href="exceptions.html#c.PyErr_Occurred" title="PyErr_Occurred"><code class="xref c c-func docutils literal"><span class="pre">PyErr_Occurred()</span></code></a> は偽を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_GetIter">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_GetIter</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GetIter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>Python の式 <code class="docutils literal"><span class="pre">iter(o)</span></code> と同じです。引数にとったオブジェクトに対する新たなイテレータか、オブジェクトがすでにイテレータの場合にはオブジェクト自身を返します。オブジェクトが反復処理不可能であった場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出して <em>NULL</em> を返します。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="abstract.html"
+                        title="前の章へ">抽象オブジェクトレイヤ (abstract objects layer)</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="number.html"
+                        title="次の章へ">数値型プロトコル (number protocol)</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/c-api/object.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="number.html" title="数値型プロトコル (number protocol)"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="abstract.html" title="抽象オブジェクトレイヤ (abstract objects layer)"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="abstract.html" >抽象オブジェクトレイヤ (abstract objects layer)</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

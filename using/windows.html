@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Windows で Python を使う &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python のセットアップと利用" href="index.html" />
+    <link rel="next" title="4. Macintosh で Python を使う" href="mac.html" />
+    <link rel="prev" title="2. Unix プラットフォームで Python を使う" href="unix.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mac.html" title="4. Macintosh で Python を使う"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="unix.html" title="2. Unix プラットフォームで Python を使う"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python のセットアップと利用</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-python-on-windows">
+<span id="using-on-windows"></span><h1>3. Windows で Python を使う<a class="headerlink" href="#using-python-on-windows" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このドキュメントは、 Python を Microsoft Windows で使うときに知っておくべき、 Windows 独特の動作についての概要を伝えることを目的としています。</p>
+<div class="section" id="installing-python">
+<h2>3.1. Python のインストール<a class="headerlink" href="#installing-python" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ほとんどの Unix システムやサービスと異なり、Windows は Python に依存しておらず、プリインストールの Python はありません。しかし、CPython チームは長年にわたり、コンパイル済みの Windows インストーラ (MSI パッケージ)を <a class="reference external" href="https://www.python.org/download/releases/">リリース</a> 毎に用意しています。</p>
+<p>Python の継続的な開発の中で、過去にサポートされていた幾つかのプラットフォームが (ユーザーや開発者の不足のために) サポートされなくなっています。全てのサポートされないプラットフォームについての詳細は <span class="target" id="index-10"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0011"><strong>PEP 11</strong></a> をチェックしてください。</p>
+<ul class="simple">
+<li><p class="first">DOS と Windows 3.x は Python 2.0 から廃止予定になり、Python 2.1 でこれらのシステム専用のコードは削除されました。</p>
+</li>
+<li><p class="first">2.5 まで、 Python は Windows 95, 98, ME で動きました (ですが、すでにインストール時に廃止予定の警告を出していました)。 Python 2.6 (とその後の全てのリリース) は、これらの OS のサポートが止められ、新しいリリースは Windows NT ファミリーしか考慮されていません。</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://pythonce.sourceforge.net/">Windows CE</a> は今でもサポートされています。</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://cygwin.com/">Cygwin</a> インストーラも Python インタープリタのインストールを提供しています。(cf. <a class="reference external" href="ftp://ftp.uni-erlangen.de/pub/pc/gnuwin32/cygwin/mirrors/cygnus/release/python">Cygwin package source</a>, <a class="reference external" href="http://www.tishler.net/jason/software/python/">Maintainer releases</a>)</p>
+</li>
+</ul>
+<p>コンパイル済みインストーラが提供されているプラットフォームについての詳細な情報は <a class="reference external" href="https://www.python.org/download/windows/">Python for Windows (and DOS)</a> を参照してください。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://www.richarddooling.com/index.php/2006/03/14/python-on-xp-7-minutes-to-hello-world/">Python on XP</a></dt>
+<dd>&#8220;7 Minutes to &#8220;Hello World!&#8221;&#8221;
+by Richard Dooling, 2006</dd>
+<dt><a class="reference external" href="http://www.diveintopython.net/installing_python/windows.html">Installing on Windows</a></dt>
+<dd>in &#8220;<a class="reference external" href="http://www.diveintopython.net/">Dive into Python: Python from novice to pro</a>&#8221;
+by Mark Pilgrim, 2004,
+ISBN 1-59059-356-1</dd>
+<dt><a class="reference external" href="http://www.swaroopch.com/notes/python/#install_windows">For Windows users</a></dt>
+<dd>in &#8220;Installing Python&#8221;
+in &#8220;<a class="reference external" href="http://www.swaroopch.com/notes/python/">A Byte of Python</a>&#8221;
+by Swaroop C H, 2003</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="alternative-bundles">
+<h2>3.2. 別のバンドル<a class="headerlink" href="#alternative-bundles" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>標準の CPython の配布物の他に、追加の機能を持っている修正されたパッケージがあります。以下は人気のあるバージョンとそのキーとなる機能です:</p>
+<dl class="docutils">
+<dt><a class="reference external" href="http://www.activestate.com/Products/activepython/">ActivePython</a></dt>
+<dd><p class="first last">マルチプラットフォーム互換のインストーラー、ドキュメント、 PyWin32</p>
+</dd>
+<dt><a class="reference external" href="https://www.enthought.com/products/epd/">Enthought Python Distribution</a></dt>
+<dd><p class="first last">(PyWin32 などの) 人気のあるモジュールとそのドキュメント、 Python の拡張をビルドするためのツールスイート</p>
+</dd>
+</dl>
+<p>これらのパッケージは <em>古い</em> バージョンの Python をインストールするかもしれないことに気をつけてください。</p>
+</div>
+<div class="section" id="configuring-python">
+<h2>3.3. Python を構成する<a class="headerlink" href="#configuring-python" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python を完全に動かすために、幾つかの環境設定を変更しなければならないかもしれません。</p>
+<div class="section" id="excursus-setting-environment-variables">
+<span id="setting-envvars"></span><h3>3.3.1. 補足: 環境変数の設定<a class="headerlink" href="#excursus-setting-environment-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windows は環境変数を変更するためのビルトインのダイアログを持っています。 (以降のガイドは XP のクラシカルビューに適用されます。) マシンのアイコン(たいていデスクトップにあって &#8220;マイコンピュータ&#8221; と呼ばれます) を右クリックして、そこにある <span class="menuselection">プロパティ</span> を選択します。 <span class="guilabel">詳細設定</span> タブを開いて、 <span class="guilabel">環境変数</span> ボタンをクリックします。</p>
+<p>ここまでのパスをまとめると:</p>
+<blockquote>
+<div><p><span class="menuselection">マイコンピュータ ‣ プロパティ ‣ 詳細設定 ‣ 環境変数</span></p>
+</div></blockquote>
+<p>このダイアログで、ユーザーとシステムの環境変数を追加したり修正できます。システム変数を変更するには、マシンへの無制限アクセス(管理者権限)が必要です。</p>
+<p>環境に変数を追加するもう一つの方法は、 <strong class="command">set</strong> コマンドを使うことです:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>set PYTHONPATH=%PYTHONPATH%;C:\My_python_lib
+</pre></div>
+</div>
+<p>この設定を永続化するために、このコマンドラインを <code class="file docutils literal"><span class="pre">autoexec.bat</span></code> に追加することができます。 <strong class="program">msconfig</strong> はこのファイルを編集するGUIです。</p>
+<p>もっと直接的な方法で環境変数を見ることができます。コマンドプロンプトはパーセント記号で囲まれた文字列を自動的に展開します:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>echo %PATH%
+</pre></div>
+</div>
+<p>この動作についての詳細は <strong class="command">set /?</strong> を見てください。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://support.microsoft.com/kb/100843">http://support.microsoft.com/kb/100843</a></dt>
+<dd><p class="first last">Windows NT の環境変数</p>
+</dd>
+<dt><a class="reference external" href="http://support.microsoft.com/kb/310519">http://support.microsoft.com/kb/310519</a></dt>
+<dd><p class="first last">Windows XP での環境変数の管理方法</p>
+</dd>
+<dt><a class="reference external" href="http://www.chem.gla.ac.uk/~louis/software/faq/q1.html">http://www.chem.gla.ac.uk/~louis/software/faq/q1.html</a></dt>
+<dd>Setting Environment variables, Louis J. Farrugia</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="finding-the-python-executable">
+<h3>3.3.2. Python 実行ファイルを見つける<a class="headerlink" href="#finding-the-python-executable" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>スタートメニューに自動的に作られた Python interpreter のメニューエントリを使うのと別に、DOSプロンプトから Python を実行したいかもしれません。そのためには、 <span class="target" id="index-11"></span><code class="xref std std-envvar docutils literal"><span class="pre">%PATH%</span></code> 環境変数に Python ディストリビューションのディレクトリを、セミコロンで他のエントリと区切って含めるように設定する必要があります。変数の設定例は次のようになります (最初の2つのエントリが Windows のデフォルトだと仮定します):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>C:\WINDOWS\system32;C:\WINDOWS;C:\Python25
+</pre></div>
+</div>
+<p>コマンドプロンプトから <strong class="command">python</strong> をタイプすると、 Python インタプリタを起動します。これで、スクリプトをコマンドラインオプション付きで実行することも可能です。 <a class="reference internal" href="cmdline.html#using-on-cmdline"><span class="std std-ref">コマンドライン</span></a> ドキュメントを参照してください。</p>
+</div>
+<div class="section" id="finding-modules">
+<h3>3.3.3. モジュールの検索<a class="headerlink" href="#finding-modules" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Python は通常そのライブラリ (と site-packages フォルダ) をインストールしたディレクトリに格納します。そのため、 Python を <code class="file docutils literal"><span class="pre">C:\Python\</span></code> ディレクトリにインストールしたとすると、デフォルトのライブラリは <code class="file docutils literal"><span class="pre">C:\Python\Lib\</span></code> に存在し、サードパーティーのモジュールは <code class="file docutils literal"><span class="pre">C:\Python\Lib\site-packages\</span></code> に格納することになります。</p>
+<p>以下は、 Windows で <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> が構築される方法です:</p>
+<ul class="simple">
+<li><p class="first">最初に空のエントリが追加されます。これはカレントディレクトリを指しています。</p>
+</li>
+<li><p class="first">その次に、 <span class="target" id="index-12"></span><a class="reference internal" href="cmdline.html#envvar-PYTHONPATH"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONPATH</span></code></a> 環境変数が存在するとき、 <a class="reference internal" href="cmdline.html#using-on-envvars"><span class="std std-ref">環境変数</span></a> で解説されているように追加されます。 Windows ではドライブ識別子 (<code class="docutils literal"><span class="pre">C:\</span></code> など)と区別するために、この環境変数に含まれるパスの区切り文字はセミコロンでなければならない事に注意してください。</p>
+</li>
+<li><p class="first">追加で &#8220;アプリケーションのパス&#8221; を <code class="docutils literal"><span class="pre">HKEY_CURRENT_USER</span></code> か <code class="docutils literal"><span class="pre">HKEY_LOCAL_MACHINE</span></code> の中の <code class="samp docutils literal"><span class="pre">\SOFTWARE\Python\PythonCore\</span><em><span class="pre">version</span></em><span class="pre">\PythonPath</span></code> のサブキーとして登録することができます。サブキーはデフォルト値としてセミコロンで区切られたパス文字列を持つことができ、書くパスが <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> に追加されます。 (既存のインストーラーは全て HKLM しか利用しないので、 HKCU は通常空です)</p>
+</li>
+<li><p class="first"><span class="target" id="index-13"></span><a class="reference internal" href="cmdline.html#envvar-PYTHONHOME"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHOME</span></code></a> が設定されている場合、それは &#8220;Python Home&#8221; として扱われます。それ以外の場合、 &#8220;Python Home&#8221; を推定するために Python の実行ファイルのパスから &#8220;目標ファイル&#8221; (<code class="docutils literal"><span class="pre">Lib\os.py</span></code>) が探されます。 Python home が見つかった場合、そこからいくつかのサブディレクトリ (<code class="docutils literal"><span class="pre">Lib</span></code>, <code class="docutils literal"><span class="pre">plat-win</span></code>, など) が <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> に追加されます。見つからなかった場合、 core Python path はレジストリに登録された PythonPath から構築されます。</p>
+</li>
+<li><p class="first">Python Home が見つからず、環境変数 <span class="target" id="index-14"></span><a class="reference internal" href="cmdline.html#envvar-PYTHONPATH"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONPATH</span></code></a> が指定されず、レジストリエントリが見つからなかった場合、関連するデフォルトのパスが利用されます (例: <code class="docutils literal"><span class="pre">.\Lib;.\plat-win</span></code> など)。</p>
+</li>
+</ul>
+<p>結果としてこうなります:</p>
+<ul class="simple">
+<li><p class="first"><code class="file docutils literal"><span class="pre">python.exe</span></code> かそれ以外の Python ディレクトリにある .exe ファイルを実行したとき (インストールされている場合でも PCbuild から直接実行されている場合でも) core path が利用され、レジストリ内の core path は無視されます。それ以外のレジストリの &#8220;application paths&#8221; は常に読み込まれます。</p>
+</li>
+<li><p class="first">Python が他の .exe ファイル (他のディレクトリに存在する場合や、COM経由で組み込まれる場合など) にホストされている場合は、 &#8220;Python Home&#8221; は推定されず、レジストリにある core path が利用されます。それ以外のレジストリの &#8220;application paths&#8221; は常に読み込まれます。</p>
+</li>
+<li><p class="first">Python が Python home ディレクトリを見つけられずレジストリも存在しない場合 (例: freeze された .exe, いくつかのとても奇妙なインストール構成)、デフォルトの、ただし相対パスが利用されます。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="executing-scripts">
+<h3>3.3.4. スクリプトを実行する<a class="headerlink" href="#executing-scripts" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Python スクリプト (<code class="docutils literal"><span class="pre">.py</span></code> 拡張子を持ったファイル) はデフォルトで <strong class="program">python.exe</strong> に起動されます。この実行ファイルは、プログラムがGUIを使う場合でもターミナルを開きます。ターミナル無しでスクリプトを実行したい場合は、拡張子 <code class="docutils literal"><span class="pre">.pyw</span></code> を使うとそのスクリプトがデフォルトでは <strong class="program">pythonw.exe</strong> で実行されるようになります。 (2つの実行ファイルは両方とも Python をインストールしたディレクトリの直下にあります。) <strong class="program">pythonw.exe</strong> は起動時にターミナルを開きません。</p>
+<p>全ての <code class="docutils literal"><span class="pre">.py</span></code> スクリプトを <strong class="program">pythonw.exe</strong> で実行するように設定することもできます。例えば (管理者権限が必要):</p>
+<ol class="arabic">
+<li><p class="first">コマンドプロンプトを起動する。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">.py</span></code> スクリプトに正しいファイルグループを関連付ける:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>assoc .py=Python.File
+</pre></div>
+</div>
+</li>
+<li><p class="first">全ての Python ファイルを新しい実行ファイルにリダイレクトする:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>ftype Python.File=C:\Path\to\pythonw.exe &quot;%1&quot; %*
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="additional-modules">
+<h2>3.4. 追加のモジュール<a class="headerlink" href="#additional-modules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python は全プラットフォーム互換を目指していますが、 Windows にしかないユニークな機能もあります。標準ライブラリと外部のライブラリの両方で、幾つかのモジュールと、そういった機能を使うためのスニペットがあります。</p>
+<p>Windows 固有の標準モジュールは、 <a class="reference internal" href="../library/windows.html#mswin-specific-services"><span class="std std-ref">MS Windows 固有のサービス</span></a> に書かれています。</p>
+<div class="section" id="pywin32">
+<h3>3.4.1. PyWin32<a class="headerlink" href="#pywin32" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Mark Hammond によって開発された <a class="reference external" href="http://python.net/crew/mhammond/win32/">PyWin32</a> モジュールは、進んだ Windows 専用のサポートをするモジュール群です。このモジュールは以下のユーティリティを含んでいます:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.microsoft.com/com/">Component Object Model</a> (COM)</li>
+<li><p class="first">Win32 API 呼び出し</p>
+</li>
+<li><p class="first">レジストリ</p>
+</li>
+<li><p class="first">イベントログ</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://msdn.microsoft.com/en-us/library/fe1cf721%28VS.80%29.aspx">Microsoft Foundation Classes</a> (MFC) ユーザーインターフェイス</p>
+</li>
+</ul>
+<p><a class="reference external" href="http://web.archive.org/web/20060524042422/https://www.python.org/windows/pythonwin/">PythonWin</a> は PyWin32 に付属している、サンプルのMFCアプリケーションです。これはビルトインのデバッガを含む、組み込み可能なIDEです。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://timgolden.me.uk/python/win32_how_do_i.html">Win32 How Do I...?</a></dt>
+<dd>by Tim Golden</dd>
+<dt><a class="reference external" href="http://www.boddie.org.uk/python/COM.html">Python and COM</a></dt>
+<dd>by David and Paul Boddie</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="py2exe">
+<h3>3.4.2. Py2exe<a class="headerlink" href="#py2exe" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="http://www.py2exe.org/">Py2exe</a> は <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> 拡張 (<a class="reference internal" href="../distutils/extending.html#extending-distutils"><span class="std std-ref">Distutilsの拡張</span></a> を参照) で、 Python スクリプトを Windows 実行可能プログラム (<code class="file docutils literal"><em><span class="pre">*</span></em><span class="pre">.exe</span></code> ファイル) にラップします。これを使えば、ユーザーに Python のインストールをさせなくても、アプリケーションを配布することができます。</p>
+</div>
+<div class="section" id="wconio">
+<h3>3.4.3. WConio<a class="headerlink" href="#wconio" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Python の進んだターミナル制御レイヤである <a class="reference internal" href="../library/curses.html#module-curses" title="curses: An interface to the curses library, providing portable terminal handling. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">curses</span></code></a> は、 Unix ライクシステムでしか使うことができません。逆に Windows 専用のライブラリ、 Windows Console I/O for Python があります。</p>
+<p><a class="reference external" href="http://newcenturycomputers.net/projects/wconio.html">WConio</a> は Turbo-C の <code class="file docutils literal"><span class="pre">CONIO.H</span></code> のラッパーで、テキストユーザーインタフェースを作成するために利用することができます。</p>
+</div>
+</div>
+<div class="section" id="compiling-python-on-windows">
+<h2>3.5. Windows 上で Python をコンパイルする<a class="headerlink" href="#compiling-python-on-windows" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>CPython を自分でコンパイルしたい場合、最初にするべきことは <a class="reference external" href="https://www.python.org/download/source/">ソース</a> を取得することです。最新リリース版のソースか、新しい <a class="reference external" href="https://docs.python.org/devguide/setup.html#getting-the-source-code">チェックアウト</a> をダウンロードすることができます。</p>
+<p>公式の Python リリースをビルドするのに使われている Microsoft Visual C++ コンパイラのために、ソースツリーはソリューション・プロジェクトファイルを含んでいます。適切なディレクトリにある <code class="file docutils literal"><span class="pre">readme.txt</span></code> を参照してください。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">ディレクトリ</p>
+</th>
+<th class="head"><p class="first last">MSVC バージョン</p>
+</th>
+<th class="head"><p class="first last">Visual Studio バージョン</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="file docutils literal"><span class="pre">PC/VC6/</span></code></td>
+<td>6.0</td>
+<td>97</td>
+</tr>
+<tr class="row-odd"><td><code class="file docutils literal"><span class="pre">PC/VS7.1/</span></code></td>
+<td>7.1</td>
+<td>2003</td>
+</tr>
+<tr class="row-even"><td><code class="file docutils literal"><span class="pre">PC/VS8.0/</span></code></td>
+<td>8.0</td>
+<td>2005</td>
+</tr>
+<tr class="row-odd"><td><code class="file docutils literal"><span class="pre">PCbuild/</span></code></td>
+<td>9.0</td>
+<td>2008</td>
+</tr>
+</tbody>
+</table>
+<p>これらのビルドディレクトリの全てが完全にサポートされているわけではありません。使用しているバージョンの公式リリースが利用しているコンパイラのバージョンについては、リリースノートを参照してください。</p>
+<p>ビルドプロセスに関する一般的な情報は <code class="file docutils literal"><span class="pre">PC/readme.txt</span></code> をチェックしてください。</p>
+<p>拡張モジュールについては、 <a class="reference internal" href="../extending/windows.html#building-on-windows"><span class="std std-ref">Windows 上での C および C++ 拡張モジュールのビルド</span></a> を参照してください。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://sebsauvage.net/python/mingw.html">Python + Windows + distutils + SWIG + gcc MinGW</a></dt>
+<dd>or &#8220;Creating Python extensions in C/C++ with SWIG and compiling them with
+MinGW gcc under Windows&#8221; or &#8220;Installing Python extension with distutils
+and without Microsoft Visual C++&#8221; by Sébastien Sauvage, 2003</dd>
+<dt><a class="reference external" href="http://oldwiki.mingw.org/index.php/Python%20extensions">MingW &#8211; Python extensions</a></dt>
+<dd>by Trent Apted et al, 2007</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="other-resources">
+<h2>3.6. その他のリソース<a class="headerlink" href="#other-resources" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://shop.oreilly.com/product/9781565926219.do">Python Programming On Win32</a></dt>
+<dd>&#8220;Help for Windows Programmers&#8221;
+by Mark Hammond and Andy Robinson, O&#8217;Reilly Media, 2000,
+ISBN 1-56592-621-8</dd>
+<dt><a class="reference external" href="http://www.imladris.com/Scripts/PythonForWindows.html">A Python for Windows Tutorial</a></dt>
+<dd>by Amanda Birmingham, 2004</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Windows で Python を使う</a><ul>
+<li><a class="reference internal" href="#installing-python">3.1. Python のインストール</a></li>
+<li><a class="reference internal" href="#alternative-bundles">3.2. 別のバンドル</a></li>
+<li><a class="reference internal" href="#configuring-python">3.3. Python を構成する</a><ul>
+<li><a class="reference internal" href="#excursus-setting-environment-variables">3.3.1. 補足: 環境変数の設定</a></li>
+<li><a class="reference internal" href="#finding-the-python-executable">3.3.2. Python 実行ファイルを見つける</a></li>
+<li><a class="reference internal" href="#finding-modules">3.3.3. モジュールの検索</a></li>
+<li><a class="reference internal" href="#executing-scripts">3.3.4. スクリプトを実行する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-modules">3.4. 追加のモジュール</a><ul>
+<li><a class="reference internal" href="#pywin32">3.4.1. PyWin32</a></li>
+<li><a class="reference internal" href="#py2exe">3.4.2. Py2exe</a></li>
+<li><a class="reference internal" href="#wconio">3.4.3. WConio</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compiling-python-on-windows">3.5. Windows 上で Python をコンパイルする</a></li>
+<li><a class="reference internal" href="#other-resources">3.6. その他のリソース</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="unix.html"
+                        title="前の章へ">2. Unix プラットフォームで Python を使う</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mac.html"
+                        title="次の章へ">4. Macintosh で Python を使う</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/using/windows.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mac.html" title="4. Macintosh で Python を使う"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="unix.html" title="2. Unix プラットフォームで Python を使う"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python のセットアップと利用</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

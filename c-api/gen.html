@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ジェネレータオブジェクト &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
+    <link rel="next" title="DateTime オブジェクト" href="datetime.html" />
+    <link rel="prev" title="セルオブジェクト (cell object)" href="cell.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="DateTime オブジェクト"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="cell.html" title="セルオブジェクト (cell object)"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="generator-objects">
+<span id="gen-objects"></span><h1>ジェネレータオブジェクト<a class="headerlink" href="#generator-objects" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ジェネレータ (generator) オブジェクトは、 Python がジェネレータ型イテレータを実装するために使っているオブジェクトです。ジェネレータオブジェクトは、通常、 <a class="reference internal" href="#c.PyGen_New" title="PyGen_New"><code class="xref c c-func docutils literal"><span class="pre">PyGen_New()</span></code></a> で明示的に生成されることはなく、値を逐次生成するような関数に対してイテレーションを行うときに生成されます。</p>
+<dl class="type">
+<dt id="c.PyGenObject">
+<code class="descname">PyGenObject</code><a class="headerlink" href="#c.PyGenObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ジェネレータオブジェクトに使われている C 構造体です。</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyGen_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="descname">PyGen_Type</code><a class="headerlink" href="#c.PyGen_Type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ジェネレータオブジェクトに対応する型オブジェクトです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyGen_Check">
+int <code class="descname">PyGen_Check</code><span class="sig-paren">(</span>ob<span class="sig-paren">)</span><a class="headerlink" href="#c.PyGen_Check" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>ob</em> がジェネレータオブジェクトの場合に真を返します。<em>ob</em> が <em>NULL</em> であってはなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyGen_CheckExact">
+int <code class="descname">PyGen_CheckExact</code><span class="sig-paren">(</span>ob<span class="sig-paren">)</span><a class="headerlink" href="#c.PyGen_CheckExact" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>ob</em> の型が <em>PyGen_Type</em> の場合に真を返します。<em>ob</em> が <em>NULL</em> であってはなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyGen_New">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyGen_New</code><span class="sig-paren">(</span>PyFrameObject<em>&nbsp;*frame</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyGen_New" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>frame</em> オブジェクトに基づいて新たなジェネレータオブジェクトを生成して返します。この関数は <em>frame</em> への参照を盗みます。パラメタが <em>NULL</em> であってはなりません。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="cell.html"
+                        title="前の章へ">セルオブジェクト (cell object)</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="datetime.html"
+                        title="次の章へ">DateTime オブジェクト</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/c-api/gen.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="DateTime オブジェクト"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="cell.html" title="セルオブジェクト (cell object)"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

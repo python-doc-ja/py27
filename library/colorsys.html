@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>21.7. colorsys — 色体系間の変換 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="21. マルチメディアサービス" href="mm.html" />
+    <link rel="next" title="21.8. imghdr — 画像の形式を決定する" href="imghdr.html" />
+    <link rel="prev" title="21.6. chunk — IFFチャンクデータの読み込み" href="chunk.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="imghdr.html" title="21.8. imghdr — 画像の形式を決定する"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="chunk.html" title="21.6. chunk — IFFチャンクデータの読み込み"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mm.html" accesskey="U">21. マルチメディアサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-colorsys">
+<span id="colorsys-conversions-between-color-systems"></span><h1>21.7. <a class="reference internal" href="#module-colorsys" title="colorsys: Conversion functions between RGB and other color systems."><code class="xref py py-mod docutils literal"><span class="pre">colorsys</span></code></a> &#8212; 色体系間の変換<a class="headerlink" href="#module-colorsys" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/colorsys.py">Lib/colorsys.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-colorsys" title="colorsys: Conversion functions between RGB and other color systems."><code class="xref py py-mod docutils literal"><span class="pre">colorsys</span></code></a> モジュールは、計算機のディスプレイモニタで使われている RGB (Red Green Blue) 色空間で表された色と、他の 3 種類の色座標系: YIQ, HLS (Hue Lightness Saturation: 色相、彩度、飽和) および HSV (Hue Saturation Value: 色相、彩度、明度) との間の双方向の色値変換を定義します。これらの色空間における色座標系は全て浮動小数点数で表されます。 YIQ 空間では、Y 軸は 0 から 1 ですが、 I および Q 軸は正の値も負の値もとり得ます。他の色空間では、各軸は全て 0 から 1 の値をとります。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<p class="last">色空間に関するより詳細な情報は <a class="reference external" href="http://www.poynton.com/ColorFAQ.html">http://www.poynton.com/ColorFAQ.html</a> と <a class="reference external" href="http://www.cambridgeincolour.com/tutorials/color-spaces.htm">http://www.cambridgeincolour.com/tutorials/color-spaces.htm</a> にあります。</p>
+</div>
+<p><a class="reference internal" href="#module-colorsys" title="colorsys: Conversion functions between RGB and other color systems."><code class="xref py py-mod docutils literal"><span class="pre">colorsys</span></code></a> モジュールでは、以下の関数が定義されています:</p>
+<dl class="function">
+<dt id="colorsys.rgb_to_yiq">
+<code class="descclassname">colorsys.</code><code class="descname">rgb_to_yiq</code><span class="sig-paren">(</span><em>r</em>, <em>g</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.rgb_to_yiq" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>RGB から YIQ に変換します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="colorsys.yiq_to_rgb">
+<code class="descclassname">colorsys.</code><code class="descname">yiq_to_rgb</code><span class="sig-paren">(</span><em>y</em>, <em>i</em>, <em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.yiq_to_rgb" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>YIQ から RGB に変換します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="colorsys.rgb_to_hls">
+<code class="descclassname">colorsys.</code><code class="descname">rgb_to_hls</code><span class="sig-paren">(</span><em>r</em>, <em>g</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.rgb_to_hls" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>RGB から HLS に変換します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="colorsys.hls_to_rgb">
+<code class="descclassname">colorsys.</code><code class="descname">hls_to_rgb</code><span class="sig-paren">(</span><em>h</em>, <em>l</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.hls_to_rgb" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HLS から RGB に変換します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="colorsys.rgb_to_hsv">
+<code class="descclassname">colorsys.</code><code class="descname">rgb_to_hsv</code><span class="sig-paren">(</span><em>r</em>, <em>g</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.rgb_to_hsv" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>RGB から HSV に変換します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="colorsys.hsv_to_rgb">
+<code class="descclassname">colorsys.</code><code class="descname">hsv_to_rgb</code><span class="sig-paren">(</span><em>h</em>, <em>s</em>, <em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#colorsys.hsv_to_rgb" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HSV から RGB に変換します。</p>
+</dd></dl>
+
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">colorsys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">colorsys</span><span class="o">.</span><span class="n">rgb_to_hsv</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="go">(0.5, 0.5, 0.4)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">colorsys</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="go">(0.2, 0.4, 0.4)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="chunk.html"
+                        title="前の章へ">21.6. <code class="docutils literal"><span class="pre">chunk</span></code> &#8212; IFFチャンクデータの読み込み</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="imghdr.html"
+                        title="次の章へ">21.8. <code class="docutils literal"><span class="pre">imghdr</span></code> &#8212; 画像の形式を決定する</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/colorsys.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="imghdr.html" title="21.8. imghdr — 画像の形式を決定する"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="chunk.html" title="21.6. chunk — IFFチャンクデータの読み込み"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mm.html" >21. マルチメディアサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

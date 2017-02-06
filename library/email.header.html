@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.1.5. email.header: 国際化されたヘッダ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
+    <link rel="next" title="18.1.6. email.charset: 文字集合の表現" href="email.charset.html" />
+    <link rel="prev" title="18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成" href="email.mime.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.charset.html" title="18.1.6. email.charset: 文字集合の表現"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="email.mime.html" title="18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-email.header">
+<span id="email-header-internationalized-headers"></span><h1>18.1.5. <a class="reference internal" href="#module-email.header" title="email.header: Representing non-ASCII headers"><code class="xref py py-mod docutils literal"><span class="pre">email.header</span></code></a>: 国際化されたヘッダ<a class="headerlink" href="#module-email.header" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><span class="target" id="index-28"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> は電子メールメッセージの形式を規定する基本規格です。これはほとんどの電子メールが ASCII 文字のみで構成されていたころ普及した <span class="target" id="index-29"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> 標準から発展したものです。 <span class="target" id="index-30"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> は電子メールがすべて 7-bit ASCII 文字のみから構成されていると仮定して作られた仕様です。</p>
+<p>もちろん、電子メールが世界的に普及するにつれ、この仕様は国際化されてきました。今では電子メールに言語依存の文字セットを使うことができます。基本規格では、まだ電子メールメッセージを 7-bit ASCII 文字のみを使って転送するよう要求していますので、多くの RFC でどうやって非ASCII の電子メールを <span class="target" id="index-31"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 準拠な形式にエンコードするかが記述されています。これらの RFC は以下のものを含みます: <span class="target" id="index-32"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2045.html"><strong>RFC 2045</strong></a> 、 <span class="target" id="index-33"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2046.html"><strong>RFC 2046</strong></a> 、 <span class="target" id="index-34"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2047.html"><strong>RFC 2047</strong></a> 、および <span class="target" id="index-35"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2231.html"><strong>RFC 2231</strong></a> 。 <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージは、 <a class="reference internal" href="#module-email.header" title="email.header: Representing non-ASCII headers"><code class="xref py py-mod docutils literal"><span class="pre">email.header</span></code></a> および <a class="reference internal" href="email.charset.html#module-email.charset" title="email.charset: Character Sets"><code class="xref py py-mod docutils literal"><span class="pre">email.charset</span></code></a> モジュールでこれらの規格をサポートしています。</p>
+<p>ご自分の電子メールヘッダ、たとえば <em class="mailheader">Subject</em> や <em class="mailheader">To</em> などのフィールドに非ASCII文字を入れたい場合、 <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスを使う必要があります。 <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> オブジェクトの該当フィールドに文字列ではなく、 <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスを使うのです。 <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスは <a class="reference internal" href="#module-email.header" title="email.header: Representing non-ASCII headers"><code class="xref py py-mod docutils literal"><span class="pre">email.header</span></code></a> モジュールからインポートしてください。たとえば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">email.message</span> <span class="k">import</span> <span class="n">Message</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">email.header</span> <span class="k">import</span> <span class="n">Header</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="s1">&#39;p</span><span class="se">\xf6</span><span class="s1">stal&#39;</span><span class="p">,</span> <span class="s1">&#39;iso-8859-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span>
+<span class="go">Subject: =?iso-8859-1?q?p=F6stal?=</span>
+</pre></div>
+</div>
+<p><em class="mailheader">Subject</em> フィールドに非ASCII文字をふくめていることに注目してください。ここでは、含めたいバイト列がエンコードされている文字セットを指定して <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスを作成することによって実現しています。のちにこの <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> インスタンスからフラットなテキストを生成するさいに、この <em class="mailheader">Subject</em> フィールドは <span class="target" id="index-36"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2047.html"><strong>RFC 2047</strong></a> 準拠の適切な形式にエンコードされます。MIME 機能のついているメーラなら、このヘッダに埋めこまれた ISO-8859-1 文字をただしく表示するでしょう。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2.2 で追加.</span></p>
+</div>
+<p>以下は <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスの説明です:</p>
+<dl class="class">
+<dt id="email.header.Header">
+<em class="property">class </em><code class="descclassname">email.header.</code><code class="descname">Header</code><span class="sig-paren">(</span><span class="optional">[</span><em>s</em><span class="optional">[</span>, <em>charset</em><span class="optional">[</span>, <em>maxlinelen</em><span class="optional">[</span>, <em>header_name</em><span class="optional">[</span>, <em>continuation_ws</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>別の文字セットの文字列をふくむ MIME準拠なヘッダを作成します。</p>
+<p>オプション引数 <em>s</em> はヘッダの値の初期値です。これが <code class="docutils literal"><span class="pre">None</span></code> の場合 (デフォルト)、ヘッダの初期値は設定されません。この値はあとから <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> メソッドを呼びだすことによって追加することができます。 <em>s</em> はバイト文字列か、あるいは Unicode 文字列でもかまいませんが、この意味については <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> の項を参照してください。</p>
+<p>オプション引数 <em>charset</em> には 2つの目的があります。ひとつは <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> メソッドにおける <em>charset</em> 引数と同じものです。もうひとつの目的は、これ以降 <em>charset</em> 引数を省略した <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> メソッド呼び出しすべてにおける、デフォルト文字セットを決定するものです。コンストラクタに <em>charset</em> が与えられない場合 (デフォルト)、初期値の <em>s</em> および以後の <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> 呼び出しにおける文字セットとして <code class="docutils literal"><span class="pre">us-ascii</span></code> が使われます。</p>
+<p>行の最大長は <em>maxlinelen</em> によって明示的に指定できます。最初の行を (<em class="mailheader">Subject</em> などの <em>s</em> に含まれないフィールドヘッダの責任をとるため) 短く切りとる場合、 <em>header_name</em> にそのフィールド名を指定してください。 <em>maxlinelen</em> のデフォルト値は 76 であり、 <em>header_name</em> のデフォルト値は <code class="docutils literal"><span class="pre">None</span></code> です。これはその最初の行を長い、切りとられたヘッダとして扱わないことを意味します。</p>
+<p>オプション引数 <em>continuation_ws</em> は <span class="target" id="index-37"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 準拠の折り返し用余白文字で、ふつうこれは空白か、ハードタブ文字 (hard tab) である必要があります。ここで指定された文字は複数にわたる行の行頭に挿入されます。 <em>continuation_ws</em> のデフォルト値は 1 つのスペース文字です (&#8221; &#8221;)。</p>
+<p>オプション引数 <em>errors</em> は、 <a class="reference internal" href="#email.header.Header.append" title="email.header.Header.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> メソッドにそのまま渡されます。</p>
+<dl class="method">
+<dt id="email.header.Header.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>charset</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.append" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この MIME ヘッダに文字列 <em>s</em> を追加します。</p>
+<p>オプション引数 <em>charset</em> がもし与えられた場合、これは <a class="reference internal" href="email.charset.html#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンス (<a class="reference internal" href="email.charset.html#module-email.charset" title="email.charset: Character Sets"><code class="xref py py-mod docutils literal"><span class="pre">email.charset</span></code></a> を参照) か、あるいは文字セットの名前でなければなりません。この場合は <a class="reference internal" href="email.charset.html#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスに変換されます。この値が <code class="docutils literal"><span class="pre">None</span></code> の場合 (デフォルト)、コンストラクタで与えられた <em>charset</em> が使われます。</p>
+<p><em>s</em> はバイト文字列か、Unicode 文字列です。これがバイト文字列 (<code class="docutils literal"><span class="pre">isinstance(s,</span> <span class="pre">str)</span></code> が真) の場合、 <em>charset</em> はその文字列のエンコーディングであり、これが与えられた文字セットでうまくデコードできないときは <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> が発生します。</p>
+<p>一方 <em>s</em> が Unicode 文字列の場合、 <em>charset</em> はその文字列の文字セットを決定するためのヒントとして使われます。この場合、 <span class="target" id="index-38"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 準拠のヘッダを <span class="target" id="index-39"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2047.html"><strong>RFC 2047</strong></a> の規則を用いて生成する際、 Unicode 文字列は以下の文字セットを (この優先順位で) 適用してエンコードされます: <code class="docutils literal"><span class="pre">us-ascii</span></code> 、 <em>charset</em> で与えられたヒント、それもなければ <code class="docutils literal"><span class="pre">utf-8</span></code> 。最初の文字セットは <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> をなるべく防ぐために使われます。</p>
+<p>オプション引数 <em>errors</em> は <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> または <code class="xref py py-func docutils literal"><span class="pre">unicode.encode()</span></code> の呼び出し時に使用し、デフォルト値は &#8220;strict&#8221; です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.header.Header.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><span class="optional">[</span><em>splitchars</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メッセージヘッダを RFC に沿ったやり方でエンコードします。おそらく長い行は折り返され、非 ASCII 部分は base64 または quoted-printable エンコーディングで包含されるでしょう。オプション引数 <em>splitchars</em> には長い ASCII 行を分割する区切り文字群を文字列として指定し、 <span class="target" id="index-40"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> の <em>highest level syntactic breaks</em> の大まかなサポートの為に使用します。この引数は <span class="target" id="index-41"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2047.html"><strong>RFC 2047</strong></a> でエンコードされた行には影響しません。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスは、標準の演算子や組み込み関数をサポートするためのメソッドもいくつか提供しています。</p>
+<dl class="method">
+<dt id="email.header.Header.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.__str__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.header.Header.encode" title="email.header.Header.encode"><code class="xref py py-meth docutils literal"><span class="pre">Header.encode()</span></code></a> と同じです。 <code class="docutils literal"><span class="pre">str(aHeader)</span></code> などとすると有用でしょう。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.header.Header.__unicode__">
+<code class="descname">__unicode__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.__unicode__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>組み込みの <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> 関数の補助です。ヘッダを Unicode 文字列として返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.header.Header.__eq__">
+<code class="descname">__eq__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.__eq__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは、ふたつの <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスどうしが等しいかどうか判定するのに使えます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.header.Header.__ne__">
+<code class="descname">__ne__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#email.header.Header.__ne__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは、ふたつの <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスどうしが異なっているかどうかを判定するのに使えます。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>さらに、 <a class="reference internal" href="#module-email.header" title="email.header: Representing non-ASCII headers"><code class="xref py py-mod docutils literal"><span class="pre">email.header</span></code></a> モジュールは以下のような便宜的な関数も提供しています。</p>
+<dl class="function">
+<dt id="email.header.decode_header">
+<code class="descclassname">email.header.</code><code class="descname">decode_header</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#email.header.decode_header" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字セットを変換することなしに、メッセージのヘッダをデコードします。ヘッダの値は <em>header</em> に渡します。</p>
+<p>この関数はヘッダのそれぞれのデコードされた部分ごとに、<code class="docutils literal"><span class="pre">(decoded_string,</span> <span class="pre">charset)</span></code> という形式の 2要素タプルからなるリストを返します。<em>charset</em> はヘッダのエンコードされていない部分に対しては <code class="docutils literal"><span class="pre">None</span></code> を、それ以外の場合はエンコードされた文字列が指定している文字セットの名前を小文字からなる文字列で返します。</p>
+<p>以下はこの使用例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">email.header</span> <span class="k">import</span> <span class="n">decode_header</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decode_header</span><span class="p">(</span><span class="s1">&#39;=?iso-8859-1?q?p=F6stal?=&#39;</span><span class="p">)</span>
+<span class="go">[(&#39;p\xf6stal&#39;, &#39;iso-8859-1&#39;)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="email.header.make_header">
+<code class="descclassname">email.header.</code><code class="descname">make_header</code><span class="sig-paren">(</span><em>decoded_seq</em><span class="optional">[</span>, <em>maxlinelen</em><span class="optional">[</span>, <em>header_name</em><span class="optional">[</span>, <em>continuation_ws</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.header.make_header" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.header.decode_header" title="email.header.decode_header"><code class="xref py py-func docutils literal"><span class="pre">decode_header()</span></code></a> によって返される 2要素タプルのリストから <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスを作成します。</p>
+<p><a class="reference internal" href="#email.header.decode_header" title="email.header.decode_header"><code class="xref py py-func docutils literal"><span class="pre">decode_header()</span></code></a> はヘッダの値をとってきて、 <code class="docutils literal"><span class="pre">(decoded_string,</span> <span class="pre">charset)</span></code> という形式の 2要素タプルからなるリストを返します。ここで <em>decoded_string</em> はデコードされた文字列、 <em>charset</em> はその文字セットです。</p>
+<p>この関数はこれらのリストの項目から、 <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> インスタンスを返します。オプション引数 <em>maxlinelen</em> 、 <em>header_name</em> および <em>continuation_ws</em> は <a class="reference internal" href="#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> コンストラクタに与えるものと同じです。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="email.mime.html"
+                        title="前の章へ">18.1.4. <code class="docutils literal"><span class="pre">email.mime</span></code>: ゼロからのメールと MIME オブジェクトの作成</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="email.charset.html"
+                        title="次の章へ">18.1.6. <code class="docutils literal"><span class="pre">email.charset</span></code>: 文字集合の表現</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/email.header.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.charset.html" title="18.1.6. email.charset: 文字集合の表現"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="email.mime.html" title="18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

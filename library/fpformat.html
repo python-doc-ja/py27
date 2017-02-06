@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.11. fpformat — 浮動小数点数の変換 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="7. 文字列処理" href="strings.html" />
+    <link rel="next" title="8. データ型" href="datatypes.html" />
+    <link rel="prev" title="7.10. stringprep — インターネットのための文字列調製" href="stringprep.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="datatypes.html" title="8. データ型"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="stringprep.html" title="7.10. stringprep — インターネットのための文字列調製"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" accesskey="U">7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-fpformat">
+<span id="fpformat-floating-point-conversions"></span><h1>7.11. <a class="reference internal" href="#module-fpformat" title="fpformat: General floating point formatting functions. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">fpformat</span></code></a> &#8212; 浮動小数点数の変換<a class="headerlink" href="#module-fpformat" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-fpformat" title="fpformat: General floating point formatting functions. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">fpformat</span></code></a> は Python 3 で削除されました。</p>
+</div>
+<p><a class="reference internal" href="#module-fpformat" title="fpformat: General floating point formatting functions. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">fpformat</span></code></a> モジュールは浮動小数点数の表示を 100% 純粋に Python だけで行うための関数を定義しています。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このモジュールは必要ありません: このモジュールのすべてのことは、 <a class="reference internal" href="stdtypes.html#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> 節で説明されている <code class="docutils literal"><span class="pre">%</span></code> を使った文字列の補間演算により実現可能です。</p>
+</div>
+<p><a class="reference internal" href="#module-fpformat" title="fpformat: General floating point formatting functions. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">fpformat</span></code></a> モジュールは次にあげる関数と例外を定義しています。</p>
+<dl class="function">
+<dt id="fpformat.fix">
+<code class="descclassname">fpformat.</code><code class="descname">fix</code><span class="sig-paren">(</span><em>x</em>, <em>digs</em><span class="sig-paren">)</span><a class="headerlink" href="#fpformat.fix" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>x</em> を <code class="docutils literal"><span class="pre">[-]ddd.ddd</span></code> の形にフォーマットします。小数点の後ろに <em>digs</em> 桁と、小数点の前に少なくとも 1 桁です。 <code class="docutils literal"><span class="pre">digs</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> の場合、小数点以下は切り捨てられます。</p>
+<p><em>x</em> は数字か数字を表した文字列です。 <em>digs</em> は整数です。</p>
+<p>返り値は文字列です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fpformat.sci">
+<code class="descclassname">fpformat.</code><code class="descname">sci</code><span class="sig-paren">(</span><em>x</em>, <em>digs</em><span class="sig-paren">)</span><a class="headerlink" href="#fpformat.sci" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>x</em> を <code class="docutils literal"><span class="pre">[-]d.dddE[+-]ddd</span></code> の形にフォーマットします。小数点の後ろに <em>digs</em> 桁と、小数点の前に 1 桁だけです。 <code class="docutils literal"><span class="pre">digs</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> の場合、1 桁だけ残され、小数点以下は切り捨てられます。</p>
+<p><em>x</em> は実数か実数を表した文字列です。 <em>digs</em> は整数です。</p>
+<p>返り値は文字列です。</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="fpformat.NotANumber">
+<em class="property">exception </em><code class="descclassname">fpformat.</code><code class="descname">NotANumber</code><a class="headerlink" href="#fpformat.NotANumber" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#fpformat.fix" title="fpformat.fix"><code class="xref py py-func docutils literal"><span class="pre">fix()</span></code></a> や <a class="reference internal" href="#fpformat.sci" title="fpformat.sci"><code class="xref py py-func docutils literal"><span class="pre">sci()</span></code></a> にパラメータとして渡された文字列 <em>x</em> が数字として認識できなかった場合、例外が発生します。標準の例外が文字列の頃から、この例外は <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> のサブクラスです。例外値は、例外を発生させた不適切にフォーマットされた文字列です。</p>
+</dd></dl>
+
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fpformat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpformat</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="mf">1.23</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;1.2&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="stringprep.html"
+                        title="前の章へ">7.10. <code class="docutils literal"><span class="pre">stringprep</span></code> &#8212; インターネットのための文字列調製</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="datatypes.html"
+                        title="次の章へ">8. データ型</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/fpformat.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="datatypes.html" title="8. データ型"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="stringprep.html" title="7.10. stringprep — インターネットのための文字列調製"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" >7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

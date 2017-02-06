@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>26.5. hotshot — ハイパフォーマンス・ロギング・プロファイラ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="26. デバッグとプロファイル" href="debug.html" />
+    <link rel="next" title="26.6. timeit — 小さなコード断片の実行時間計測" href="timeit.html" />
+    <link rel="prev" title="26.4. Python プロファイラ" href="profile.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="timeit.html" title="26.6. timeit — 小さなコード断片の実行時間計測"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="profile.html" title="26.4. Python プロファイラ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="debug.html" accesskey="U">26. デバッグとプロファイル</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hotshot">
+<span id="hotshot-high-performance-logging-profiler"></span><h1>26.5. <a class="reference internal" href="#module-hotshot" title="hotshot: High performance logging profiler, mostly written in C."><code class="xref py py-mod docutils literal"><span class="pre">hotshot</span></code></a> &#8212; ハイパフォーマンス・ロギング・プロファイラ<a class="headerlink" href="#module-hotshot" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<p>このモジュールは <code class="xref py py-mod docutils literal"><span class="pre">_hotshot</span></code> C モジュールへのより良いインターフェースを提供します。Hotshot は既存の <a class="reference internal" href="profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> に置き換わるものです。その大半が C で書かれているため、 <a class="reference internal" href="profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> に比べパフォーマンス上の影響がはるかに少なく済みます。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-hotshot" title="hotshot: High performance logging profiler, mostly written in C."><code class="xref py py-mod docutils literal"><span class="pre">hotshot</span></code></a> は C モジュールでプロファイル中のオーバーヘッドを極力小さくすることに焦点を絞っており、その代わりに後処理時間の長さというつけを払います。通常の使用法についてはこのモジュールではなく <a class="reference internal" href="profile.html#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal"><span class="pre">cProfile</span></code></a> を使うことを推奨します。 <a class="reference internal" href="#module-hotshot" title="hotshot: High performance logging profiler, mostly written in C."><code class="xref py py-mod docutils literal"><span class="pre">hotshot</span></code></a> は保守されておらず、将来的には標準ライブラリから外されるかもしれません。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>以前より意味のある結果が得られているはずです。かつては時間計測の中核部分に致命的なバグがありました.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-hotshot" title="hotshot: High performance logging profiler, mostly written in C."><code class="xref py py-mod docutils literal"><span class="pre">hotshot</span></code></a> プロファイラはまだスレッド環境ではうまく動作しません。測定したいコード上でプロファイラを実行するためにスレッドを使わない版のスクリプトを使う方法が有用です。</p>
+</div>
+<dl class="class">
+<dt id="hotshot.Profile">
+<em class="property">class </em><code class="descclassname">hotshot.</code><code class="descname">Profile</code><span class="sig-paren">(</span><em>logfile</em><span class="optional">[</span>, <em>lineevents</em><span class="optional">[</span>, <em>linetimings</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイラ・オブジェクト。引数 <em>logfile</em> はプロファイル・データのログを保存するファイル名です。引数 <em>lineevents</em> はソースコードの1 行ごとにイベントを発生させるか、関数の呼び出し/リターンのときだけ発生させるかを指定します。デフォルトの値は <code class="docutils literal"><span class="pre">0</span></code> (関数の呼び出し/ リターンのときだけログを残す) です。引数 <em>linetimings</em> は時間情報を記録するかどうかを指定します。デフォルトの値は <code class="docutils literal"><span class="pre">1</span></code> (時間情報を記録する) です。</p>
+</dd></dl>
+
+<div class="section" id="profile-objects">
+<span id="hotshot-objects"></span><h2>26.5.1. Profile オブジェクト<a class="headerlink" href="#profile-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Profile オブジェクトには以下のメソッドがあります:</p>
+<dl class="method">
+<dt id="hotshot.Profile.addinfo">
+<code class="descclassname">Profile.</code><code class="descname">addinfo</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.addinfo" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイル出力の際、任意のラベル名を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.close">
+<code class="descclassname">Profile.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ログファイルを閉じ、プロファイラを終了します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.fileno">
+<code class="descclassname">Profile.</code><code class="descname">fileno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.fileno" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイラのログファイルのファイル・デスクリプタを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.run">
+<code class="descclassname">Profile.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.run" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>スクリプト環境で <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 互換文字列のプロファイルをおこないます。 <a class="reference internal" href="__main__.html#module-__main__" title="__main__: The environment where the top-level script is run."><code class="xref py py-mod docutils literal"><span class="pre">__main__</span></code></a> モジュールのグローバル変数は、スクリプトのグローバル変数、ローカル変数の両方に使われます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.runcall">
+<code class="descclassname">Profile.</code><code class="descname">runcall</code><span class="sig-paren">(</span><em>func</em>, <em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.runcall" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>単一の呼び出し可能オブジェクトのプロファイルをおこないます。位置依存引数やキーワード引数を追加して呼び出すオブジェクトに渡すこともできます。呼び出しの結果はそのまま返されます。例外が発生したときはプロファイリングが無効になり、例外をそのまま伝えるようになっています。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.runctx">
+<code class="descclassname">Profile.</code><code class="descname">runctx</code><span class="sig-paren">(</span><em>cmd</em>, <em>globals</em>, <em>locals</em><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.runctx" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定した環境で <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 互換文字列の評価をおこないます。文字列のコンパイルはプロファイルを開始する前におこなわれます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.start">
+<code class="descclassname">Profile.</code><code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.start" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイラを開始します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hotshot.Profile.stop">
+<code class="descclassname">Profile.</code><code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.Profile.stop" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイラを停止します。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hotshot.stats">
+<span id="using-hotshot-data"></span><h2>26.5.2. hotshot データの利用<a class="headerlink" href="#module-hotshot.stats" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<p>このモジュールは hotshot プロファイル・データを標準の <a class="reference internal" href="profile.html#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal"><span class="pre">pstats</span></code></a> Stats オブジェクトにロードします。</p>
+<dl class="function">
+<dt id="hotshot.stats.load">
+<code class="descclassname">hotshot.stats.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#hotshot.stats.load" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>filename</em> から hotshot データを読み込み、 <a class="reference internal" href="profile.html#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal"><span class="pre">pstats.Stats</span></code></a> クラスのインスタンスを返します。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a></dt>
+<dd><p class="first last"><a class="reference internal" href="profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> モジュールの <code class="xref py py-class docutils literal"><span class="pre">Stats</span></code> クラス</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="example-usage">
+<span id="hotshot-example"></span><h2>26.5.3. 使用例<a class="headerlink" href="#example-usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>これは Python の &#8220;ベンチマーク&#8221; pystone を使った例です。実行にはやや時間がかかり、巨大な出力ファイルを生成するので注意してください。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hotshot</span><span class="o">,</span> <span class="nn">hotshot.stats</span><span class="o">,</span> <span class="nn">test.pystone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prof</span> <span class="o">=</span> <span class="n">hotshot</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span><span class="s2">&quot;stones.prof&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">benchtime</span><span class="p">,</span> <span class="n">stones</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">runcall</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">pystone</span><span class="o">.</span><span class="n">pystones</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prof</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span> <span class="o">=</span> <span class="n">hotshot</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;stones.prof&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;calls&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">         850004 function calls in 10.090 CPU seconds</span>
+
+<span class="go">   Ordered by: internal time, call count</span>
+
+<span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+<span class="go">        1    3.295    3.295   10.090   10.090 pystone.py:79(Proc0)</span>
+<span class="go">   150000    1.315    0.000    1.315    0.000 pystone.py:203(Proc7)</span>
+<span class="go">    50000    1.313    0.000    1.463    0.000 pystone.py:229(Func2)</span>
+<span class="go"> .</span>
+<span class="go"> .</span>
+<span class="go"> .</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">26.5. <code class="docutils literal"><span class="pre">hotshot</span></code> &#8212; ハイパフォーマンス・ロギング・プロファイラ</a><ul>
+<li><a class="reference internal" href="#profile-objects">26.5.1. Profile オブジェクト</a></li>
+<li><a class="reference internal" href="#module-hotshot.stats">26.5.2. hotshot データの利用</a></li>
+<li><a class="reference internal" href="#example-usage">26.5.3. 使用例</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="profile.html"
+                        title="前の章へ">26.4. Python プロファイラ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="timeit.html"
+                        title="次の章へ">26.6. <code class="docutils literal"><span class="pre">timeit</span></code> &#8212; 小さなコード断片の実行時間計測</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/hotshot.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="timeit.html" title="26.6. timeit — 小さなコード断片の実行時間計測"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="profile.html" title="26.4. Python プロファイラ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="debug.html" >26. デバッグとプロファイル</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

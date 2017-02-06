@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>28.7. contextlib — with 文コンテキスト用ユーティリティ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
+    <link rel="next" title="28.8. abc — 抽象基底クラス" href="abc.html" />
+    <link rel="prev" title="28.6. warnings — 警告の制御" href="warnings.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="abc.html" title="28.8. abc — 抽象基底クラス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="warnings.html" title="28.6. warnings — 警告の制御"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" accesskey="U">28. Python ランタイムサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-contextlib">
+<span id="contextlib-utilities-for-with-statement-contexts"></span><h1>28.7. <a class="reference internal" href="#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> &#8212; <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文コンテキスト用ユーティリティ<a class="headerlink" href="#module-contextlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/contextlib.py">Lib/contextlib.py</a></p>
+<hr class="docutils" />
+<p>このモジュールは <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文に関わる一般的なタスクのためのユーティリティを提供します。詳しい情報は、 <a class="reference internal" href="stdtypes.html#typecontextmanager"><span class="std std-ref">コンテキストマネージャ型</span></a> と <a class="reference internal" href="../reference/datamodel.html#context-managers"><span class="std std-ref">with文とコンテキストマネージャ</span></a> を参照してください。</p>
+<p>提供されている関数:</p>
+<dl class="function">
+<dt id="contextlib.contextmanager">
+<code class="descclassname">contextlib.</code><code class="descname">contextmanager</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#contextlib.contextmanager" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文コンテキストマネージャのファクトリ関数を定義するために利用できる <a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">デコレータ</span></a> です。新しいクラスや <a class="reference internal" href="../reference/datamodel.html#object.__enter__" title="object.__enter__"><code class="xref py py-meth docutils literal"><span class="pre">__enter__()</span></code></a> と <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドを別々に定義しなくても、ファクトリ関数を定義することができます。</p>
+<p>簡単な例（実際に HTML を生成する方法としてはお勧めできません!）:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="n">name</span>
+    <span class="k">yield</span>
+    <span class="nb">print</span> <span class="s2">&quot;&lt;/</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="n">name</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">):</span>
+<span class="o">...</span>    <span class="nb">print</span> <span class="s2">&quot;foo&quot;</span>
+<span class="o">...</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="n">foo</span>
+<span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>デコレート対象の関数は呼び出されたときに <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">ジェネレータ</span></a>-イテレータを返す必要があります。このイテレータは必ず値を1つ yield しなければなりません。 <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の <a class="reference internal" href="../reference/compound_stmts.html#as"><code class="xref std std-keyword docutils literal"><span class="pre">as</span></code></a> 節が存在するなら、その値は as 節のターゲットへ束縛されることになります。</p>
+<p>ジェネレータが yield を実行した箇所で <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文のネストされたブロックが実行されます。ブロックから抜けた後でジェネレータは再開されます。ブロック内で処理されない例外が発生した場合は、ジェネレータ内部の yield を実行した箇所で例外が再送出されます。なので、(もしあれば) エラーを捕捉したり、クリーンアップ処理を確実に実行したりするために、<a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>...<a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>...<a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 構文を使用できます。例外を捕捉する目的が、(完全に例外を抑制してしまうのではなく) 単に例外のログをとるため、もしくはあるアクションを実行するためなら、ジェネレータはその例外を再送出しなければなりません。例外を再送出しない場合、ジェネレータのコンテキストマネージャは <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文に対して例外が処理されたことを示し、<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の直後の文から実行を再開します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="contextlib.nested">
+<code class="descclassname">contextlib.</code><code class="descname">nested</code><span class="sig-paren">(</span><em>mgr1</em><span class="optional">[</span>, <em>mgr2</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#contextlib.nested" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>複数のコンテキストマネージャを一つのネストされたコンテキストマネージャへ結合します。</p>
+<p>この関数は、 <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文にマルチマネージャー形式ができたために非推奨になりました。</p>
+<p>この関数の <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文のマルチマネージャー形式に対する唯一の利点は、引数のアンパックによって、次の例のように可変数個のコンテキストマネージャーを扱えることです。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">nested</span>
+
+<span class="k">with</span> <span class="n">nested</span><span class="p">(</span><span class="o">*</span><span class="n">managers</span><span class="p">):</span>
+    <span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ネストされたコンテキストマネージャのうちのいずれかの <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドが例外を抑制すべきと判断した場合、外側にある残りのすべてのコンテキストマネージャに例外情報が渡されないということに注意してください。同様に、ネストされたコンテキストマネージャのうちのいずれかの <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドが例外を送出したならば、それ以前の例外状態は失われ、新しい例外が外側にある残りのすべてのコンテキストマネージャの <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドに渡されます。一般的に <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドが例外を送出することは避けるべきであり、特に渡された例外を再送出すべきではありません。</p>
+<p>この関数が非推奨になった理由に、2つの大きな問題があります。 1つ目は、全てのコンテキストマネージャーが関数が呼び出される前に構築されることです。内側のコンテキストマネージャーの <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> と <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> メソッドは外側のコンテキストマネージャーの内側に入っていません。つまり、例えば <a class="reference internal" href="#contextlib.nested" title="contextlib.nested"><code class="xref py py-func docutils literal"><span class="pre">nested()</span></code></a> を2つのファイルを開くために利用した場合、 2つめのファイルを開くのに失敗すると1つめのファイルが正しく close されないというプログラムエラーになります。</p>
+<p>2つ目の問題は、内側のコンテキストマネージャーの1つの <a class="reference internal" href="../reference/datamodel.html#object.__enter__" title="object.__enter__"><code class="xref py py-meth docutils literal"><span class="pre">__enter__()</span></code></a> メソッドが例外を発生させたときに、外側のコンテキストマネージャーの <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドがその例外を捕まえて抑制させてしまうことで、この場合に <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> の body 部分の実行がスキップされるのではなく <a class="reference internal" href="exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> が発生する恐れがあります。</p>
+<p>可変数個のコンテキストマネージャーのネストをサポートしなければならない場合、 <a class="reference internal" href="warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal"><span class="pre">warnings</span></code></a> モジュールを利用してこの関数が発生させる DeprecationWarning を抑制するか、この関数を参考にしてアプリケーション独自の実装をすることができます。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7 で撤廃: </span>with 文がこの関数の機能を(この関数と違って奇妙なエラーを発生させることなしに) 直接サポートしました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="contextlib.closing">
+<code class="descclassname">contextlib.</code><code class="descname">closing</code><span class="sig-paren">(</span><em>thing</em><span class="sig-paren">)</span><a class="headerlink" href="#contextlib.closing" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ブロックの完了時に <em>thing</em> を close するコンテキストマネージャを返します。これは基本的に以下と等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">closing</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">thing</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">thing</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>そして、明示的に <code class="docutils literal"><span class="pre">page</span></code> を close する必要なしに、次のように書くことができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">closing</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;http://www.python.org&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">page</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">page</span></code> を明示的に close する必要は無く、エラーが発生した場合でも、 <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> ブロックを出るときに <code class="docutils literal"><span class="pre">page.close()</span></code> が呼ばれます。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 0343</strong></a> - The &#8220;with&#8221; statement</dt>
+<dd><p class="first last">仕様、背景、および、Python <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の例。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="warnings.html"
+                        title="前の章へ">28.6. <code class="docutils literal"><span class="pre">warnings</span></code> &#8212; 警告の制御</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="abc.html"
+                        title="次の章へ">28.8. <code class="docutils literal"><span class="pre">abc</span></code> &#8212; 抽象基底クラス</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/contextlib.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="abc.html" title="28.8. abc — 抽象基底クラス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="warnings.html" title="28.6. warnings — 警告の制御"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" >28. Python ランタイムサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

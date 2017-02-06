@@ -1,0 +1,838 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.7. httplib — HTTP プロトコルクライアント &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
+    <link rel="next" title="20.8. ftplib — FTPプロトコルクライアント" href="ftplib.html" />
+    <link rel="prev" title="20.6. urllib2 — URL を開くための拡張可能なライブラリ" href="urllib2.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="ftplib.html" title="20.8. ftplib — FTPプロトコルクライアント"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="urllib2.html" title="20.6. urllib2 — URL を開くための拡張可能なライブラリ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-httplib">
+<span id="httplib-http-protocol-client"></span><h1>20.7. <a class="reference internal" href="#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> &#8212; HTTP プロトコルクライアント<a class="headerlink" href="#module-httplib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> モジュールは、Python 3.0 では <code class="xref py py-mod docutils literal"><span class="pre">http.client</span></code> にリネームされました。<a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードのimportを修正します。</p>
+</div>
+<span class="target" id="index-0"></span><p id="index-1"><strong>Source code:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/httplib.py">Lib/httplib.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは HTTP および HTTPS プロトコルのクライアント側を実装しているクラスを定義しています。通常、このモジュールは直接使いません &#8212; <a class="reference internal" href="urllib.html#module-urllib" title="urllib: Open an arbitrary network resource by URL (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">urllib</span></code></a> モジュールが HTTP や HTTPS を使った URL を扱う上でこのモジュールを使います。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<p class="last">より高いレベルの http クライアントインターフェイスとしては、 <a class="reference external" href="http://requests.readthedocs.org/">Requests package</a> がお奨めです。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">HTTPS のサポートは、<a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールが SSL サポート付きでコンパイルされている場合にのみ利用できます。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このモジュールは Python 2.0 で大幅に公開インターフェイスを変更しました。 <code class="xref py py-class docutils literal"><span class="pre">HTTP</span></code> クラスは 1.5.2 との後方互換性のためだけに残されています。新しいコードではこれは使ってはいけません。このドキュメントでは説明しないので、docstring をみてください。</p>
+</div>
+<p>このモジュールでは以下のクラスを提供しています:</p>
+<dl class="class">
+<dt id="httplib.HTTPConnection">
+<em class="property">class </em><code class="descclassname">httplib.</code><code class="descname">HTTPConnection</code><span class="sig-paren">(</span><em>host</em><span class="optional">[</span>, <em>port</em><span class="optional">[</span>, <em>strict</em><span class="optional">[</span>, <em>timeout</em><span class="optional">[</span>, <em>source_address</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPConnection" title="httplib.HTTPConnection"><code class="xref py py-class docutils literal"><span class="pre">HTTPConnection</span></code></a> インスタンスは、HTTP サーバとの一回のトランザクションを表現します。インスタンスの生成はホスト名とオプションのポート番号を与えて行います。ポート番号を指定しなかった場合、ホスト名文字列が <code class="docutils literal"><span class="pre">host:port</span></code> の形式であれば、ホスト名からポート番号を導き、そうでない場合には標準の HTTP ポート番号 (80) を使います。オプションパラメータ <em>strict</em> (デフォルトは偽) を真にすると、ステータス行が HTTP/1.0 あるいは HTTP/1.1 として解釈出来ない場合に <a class="reference internal" href="#httplib.BadStatusLine" title="httplib.BadStatusLine"><code class="xref py py-exc docutils literal"><span class="pre">BadStatusLine</span></code></a> を送出します。オプションの引数 <em>timeout</em> が渡された場合、ブロックする処理(コネクション接続など) のタイムアウト時間(秒数)として利用されます。(渡されなかった場合は、グローバルのデフォルトタイムアウト設定が利用されます。)オプションの引数 <em>source_address</em> を (host, port) という形式のタプルにすると HTTP 接続の接続元アドレスとして使用します。</p>
+<p>例えば、以下の呼び出しは全て同じサーバの同じポートに接続するインスタンスを生成します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h1</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;www.cwi.nl&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h2</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;www.cwi.nl:80&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h3</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;www.cwi.nl&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h3</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;www.cwi.nl&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><em>timeout</em> が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><em>source_address</em> が追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="httplib.HTTPSConnection">
+<em class="property">class </em><code class="descclassname">httplib.</code><code class="descname">HTTPSConnection</code><span class="sig-paren">(</span><em>host</em><span class="optional">[</span>, <em>port</em><span class="optional">[</span>, <em>key_file</em><span class="optional">[</span>, <em>cert_file</em><span class="optional">[</span>, <em>strict</em><span class="optional">[</span>, <em>timeout</em><span class="optional">[</span>, <em>source_address</em><span class="optional">[</span>, <em>context</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPSConnection" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPConnection" title="httplib.HTTPConnection"><code class="xref py py-class docutils literal"><span class="pre">HTTPConnection</span></code></a> のサブクラスはセキュア・サーバとやりとりする為の SSL を使う場合に用います。デフォルトのポート番号は <code class="docutils literal"><span class="pre">443</span></code> です。<em>context</em> が指定されれば、それは様々な SSL オプションを記述する <a class="reference internal" href="ssl.html#ssl.SSLContext" title="ssl.SSLContext"><code class="xref py py-class docutils literal"><span class="pre">ssl.SSLContext</span></code></a> インスタンスでなければなりません。</p>
+<p><em>key_file</em> と <em>cert_file</em> は廃止されたので、代わりに <a class="reference internal" href="ssl.html#ssl.SSLContext.load_cert_chain" title="ssl.SSLContext.load_cert_chain"><code class="xref py py-meth docutils literal"><span class="pre">ssl.SSLContext.load_cert_chain()</span></code></a> を使うか、または  <a class="reference internal" href="ssl.html#ssl.create_default_context" title="ssl.create_default_context"><code class="xref py py-func docutils literal"><span class="pre">ssl.create_default_context()</span></code></a> が、システムが信頼する CA 証明書をあなたのために選んでくれます。</p>
+<p>ベストプラクティスに関するより良い情報が <a class="reference internal" href="ssl.html#ssl-security"><span class="std std-ref">セキュリティで考慮すべき点</span></a> にありますのでお読みください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><em>timeout</em> が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><em>source_address</em> が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7.9 で変更: </span><em>context</em> が追加されました。</p>
+<p>このクラスは今や全ての必要な証明書とホスト名の検証をデフォルトで行うようになりました。昔の、検証を行わない振る舞いに戻したければ、 <em>context</em> に <code class="xref py py-func docutils literal"><span class="pre">ssl._create_unverified_context()</span></code> を渡すことで出来ます。</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="httplib.HTTPResponse">
+<em class="property">class </em><code class="descclassname">httplib.</code><code class="descname">HTTPResponse</code><span class="sig-paren">(</span><em>sock</em>, <em>debuglevel=0</em>, <em>strict=0</em><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPResponse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>コネクションに成功したときに、このクラスのインスタンスが返されます。ユーザーから直接利用されることはありません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="httplib.HTTPMessage">
+<em class="property">class </em><code class="descclassname">httplib.</code><code class="descname">HTTPMessage</code><a class="headerlink" href="#httplib.HTTPMessage" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPMessage" title="httplib.HTTPMessage"><code class="xref py py-class docutils literal"><span class="pre">HTTPMessage</span></code></a> のインスタンスは、 HTTP レスポンスヘッダを格納するために利用されます。 <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> クラスを利用して実装されていて、 HTTP ヘッダを扱うための便利な関数を提供しています。このクラスはユーザーが直接インスタンス生成するものではありません。</p>
+</dd></dl>
+
+<p>必要に応じて以下の例外が送出されます:</p>
+<dl class="exception">
+<dt id="httplib.HTTPException">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">HTTPException</code><a class="headerlink" href="#httplib.HTTPException" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このモジュールにおける他の例外クラスの基底クラスです。 <a class="reference internal" href="exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> のサブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.NotConnected">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">NotConnected</code><a class="headerlink" href="#httplib.NotConnected" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.InvalidURL">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">InvalidURL</code><a class="headerlink" href="#httplib.InvalidURL" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> のサブクラスです。ポート番号を指定したものの、その値が数字でなかったり空のオブジェクトであった場合に送出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.UnknownProtocol">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">UnknownProtocol</code><a class="headerlink" href="#httplib.UnknownProtocol" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.UnknownTransferEncoding">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">UnknownTransferEncoding</code><a class="headerlink" href="#httplib.UnknownTransferEncoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.UnimplementedFileMode">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">UnimplementedFileMode</code><a class="headerlink" href="#httplib.UnimplementedFileMode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.IncompleteRead">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">IncompleteRead</code><a class="headerlink" href="#httplib.IncompleteRead" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.ImproperConnectionState">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">ImproperConnectionState</code><a class="headerlink" href="#httplib.ImproperConnectionState" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> サブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.CannotSendRequest">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">CannotSendRequest</code><a class="headerlink" href="#httplib.CannotSendRequest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.ImproperConnectionState" title="httplib.ImproperConnectionState"><code class="xref py py-exc docutils literal"><span class="pre">ImproperConnectionState</span></code></a> のサブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.CannotSendHeader">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">CannotSendHeader</code><a class="headerlink" href="#httplib.CannotSendHeader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.ImproperConnectionState" title="httplib.ImproperConnectionState"><code class="xref py py-exc docutils literal"><span class="pre">ImproperConnectionState</span></code></a> のサブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.ResponseNotReady">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">ResponseNotReady</code><a class="headerlink" href="#httplib.ResponseNotReady" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.ImproperConnectionState" title="httplib.ImproperConnectionState"><code class="xref py py-exc docutils literal"><span class="pre">ImproperConnectionState</span></code></a> のサブクラスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="httplib.BadStatusLine">
+<em class="property">exception </em><code class="descclassname">httplib.</code><code class="descname">BadStatusLine</code><a class="headerlink" href="#httplib.BadStatusLine" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#httplib.HTTPException" title="httplib.HTTPException"><code class="xref py py-exc docutils literal"><span class="pre">HTTPException</span></code></a> のサブクラスです。サーバが理解できない HTTP 状態コードで応答した場合に送出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p>このモジュールで定義されている定数は以下の通りです:</p>
+<dl class="data">
+<dt id="httplib.HTTP_PORT">
+<code class="descclassname">httplib.</code><code class="descname">HTTP_PORT</code><a class="headerlink" href="#httplib.HTTP_PORT" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTTP プロトコルの標準のポート (通常は <code class="docutils literal"><span class="pre">80</span></code>) です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="httplib.HTTPS_PORT">
+<code class="descclassname">httplib.</code><code class="descname">HTTPS_PORT</code><a class="headerlink" href="#httplib.HTTPS_PORT" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTTPS プロトコルの標準のポート (通常は <code class="docutils literal"><span class="pre">443</span></code>) です。</p>
+</dd></dl>
+
+<p>また、整数の状態コードについて以下の定数が定義されています:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="7%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">定数</p>
+</th>
+<th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
+</th>
+<th class="head"><p class="first last">定義</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">CONTINUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">100</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.1.1">RFC 2616, Section
+10.1.1</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">SWITCHING_PROTOCOLS</span></code></td>
+<td><code class="docutils literal"><span class="pre">101</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.1.2">RFC 2616, Section
+10.1.2</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">PROCESSING</span></code></td>
+<td><code class="docutils literal"><span class="pre">102</span></code></td>
+<td>WEBDAV, <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_102">RFC 2518, Section 10.1</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">OK</span></code></td>
+<td><code class="docutils literal"><span class="pre">200</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">RFC 2616, Section
+10.2.1</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">CREATED</span></code></td>
+<td><code class="docutils literal"><span class="pre">201</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">RFC 2616, Section
+10.2.2</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">ACCEPTED</span></code></td>
+<td><code class="docutils literal"><span class="pre">202</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">RFC 2616, Section
+10.2.3</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">NON_AUTHORITATIVE_INFORMATION</span></code></td>
+<td><code class="docutils literal"><span class="pre">203</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.4">RFC 2616, Section
+10.2.4</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">NO_CONTENT</span></code></td>
+<td><code class="docutils literal"><span class="pre">204</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">RFC 2616, Section
+10.2.5</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">RESET_CONTENT</span></code></td>
+<td><code class="docutils literal"><span class="pre">205</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">RFC 2616, Section
+10.2.6</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">PARTIAL_CONTENT</span></code></td>
+<td><code class="docutils literal"><span class="pre">206</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">RFC 2616, Section
+10.2.7</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">MULTI_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">207</span></code></td>
+<td>WEBDAV <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_207">RFC 2518, Section 10.2</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">IM_USED</span></code></td>
+<td><code class="docutils literal"><span class="pre">226</span></code></td>
+<td>Delta encoding in HTTP,
+<span class="target" id="index-2"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3229.html"><strong>RFC 3229</strong></a>, Section 10.4.1</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">MULTIPLE_CHOICES</span></code></td>
+<td><code class="docutils literal"><span class="pre">300</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.1">RFC 2616, Section
+10.3.1</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">MOVED_PERMANENTLY</span></code></td>
+<td><code class="docutils literal"><span class="pre">301</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">RFC 2616, Section
+10.3.2</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">FOUND</span></code></td>
+<td><code class="docutils literal"><span class="pre">302</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">RFC 2616, Section
+10.3.3</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">SEE_OTHER</span></code></td>
+<td><code class="docutils literal"><span class="pre">303</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">RFC 2616, Section
+10.3.4</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">NOT_MODIFIED</span></code></td>
+<td><code class="docutils literal"><span class="pre">304</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">RFC 2616, Section
+10.3.5</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">USE_PROXY</span></code></td>
+<td><code class="docutils literal"><span class="pre">305</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">RFC 2616, Section
+10.3.6</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">TEMPORARY_REDIRECT</span></code></td>
+<td><code class="docutils literal"><span class="pre">307</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">RFC 2616, Section
+10.3.8</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">BAD_REQUEST</span></code></td>
+<td><code class="docutils literal"><span class="pre">400</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">RFC 2616, Section
+10.4.1</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">UNAUTHORIZED</span></code></td>
+<td><code class="docutils literal"><span class="pre">401</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">RFC 2616, Section
+10.4.2</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">PAYMENT_REQUIRED</span></code></td>
+<td><code class="docutils literal"><span class="pre">402</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.3">RFC 2616, Section
+10.4.3</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">FORBIDDEN</span></code></td>
+<td><code class="docutils literal"><span class="pre">403</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">RFC 2616, Section
+10.4.4</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">NOT_FOUND</span></code></td>
+<td><code class="docutils literal"><span class="pre">404</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">RFC 2616, Section
+10.4.5</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">METHOD_NOT_ALLOWED</span></code></td>
+<td><code class="docutils literal"><span class="pre">405</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">RFC 2616, Section
+10.4.6</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">NOT_ACCEPTABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">406</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">RFC 2616, Section
+10.4.7</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">PROXY_AUTHENTICATION_REQUIRED</span></code></td>
+<td><code class="docutils literal"><span class="pre">407</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">RFC 2616, Section
+10.4.8</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">REQUEST_TIMEOUT</span></code></td>
+<td><code class="docutils literal"><span class="pre">408</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">RFC 2616, Section
+10.4.9</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">CONFLICT</span></code></td>
+<td><code class="docutils literal"><span class="pre">409</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">RFC 2616, Section
+10.4.10</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">GONE</span></code></td>
+<td><code class="docutils literal"><span class="pre">410</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.11">RFC 2616, Section
+10.4.11</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">LENGTH_REQUIRED</span></code></td>
+<td><code class="docutils literal"><span class="pre">411</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">RFC 2616, Section
+10.4.12</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">PRECONDITION_FAILED</span></code></td>
+<td><code class="docutils literal"><span class="pre">412</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">RFC 2616, Section
+10.4.13</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">REQUEST_ENTITY_TOO_LARGE</span></code></td>
+<td><code class="docutils literal"><span class="pre">413</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">RFC 2616, Section
+10.4.14</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">REQUEST_URI_TOO_LONG</span></code></td>
+<td><code class="docutils literal"><span class="pre">414</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">RFC 2616, Section
+10.4.15</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">UNSUPPORTED_MEDIA_TYPE</span></code></td>
+<td><code class="docutils literal"><span class="pre">415</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">RFC 2616, Section
+10.4.16</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">REQUESTED_RANGE_NOT_SATISFIABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">416</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">RFC 2616, Section
+10.4.17</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">EXPECTATION_FAILED</span></code></td>
+<td><code class="docutils literal"><span class="pre">417</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">RFC 2616, Section
+10.4.18</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">UNPROCESSABLE_ENTITY</span></code></td>
+<td><code class="docutils literal"><span class="pre">422</span></code></td>
+<td>WEBDAV, <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_422">RFC 2518, Section 10.3</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">LOCKED</span></code></td>
+<td><code class="docutils literal"><span class="pre">423</span></code></td>
+<td>WEBDAV <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_423">RFC 2518, Section 10.4</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">FAILED_DEPENDENCY</span></code></td>
+<td><code class="docutils literal"><span class="pre">424</span></code></td>
+<td>WEBDAV, <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_424">RFC 2518, Section 10.5</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">UPGRADE_REQUIRED</span></code></td>
+<td><code class="docutils literal"><span class="pre">426</span></code></td>
+<td>HTTP Upgrade to TLS,
+<span class="target" id="index-3"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2817.html"><strong>RFC 2817</strong></a>, Section 6</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">INTERNAL_SERVER_ERROR</span></code></td>
+<td><code class="docutils literal"><span class="pre">500</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">RFC 2616, Section
+10.5.1</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">NOT_IMPLEMENTED</span></code></td>
+<td><code class="docutils literal"><span class="pre">501</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">RFC 2616, Section
+10.5.2</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">BAD_GATEWAY</span></code></td>
+<td><code class="docutils literal"><span class="pre">502</span></code></td>
+<td>HTTP/1.1 <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">RFC 2616, Section
+10.5.3</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">SERVICE_UNAVAILABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">503</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">RFC 2616, Section
+10.5.4</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">GATEWAY_TIMEOUT</span></code></td>
+<td><code class="docutils literal"><span class="pre">504</span></code></td>
+<td>HTTP/1.1 <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">RFC 2616, Section
+10.5.5</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">HTTP_VERSION_NOT_SUPPORTED</span></code></td>
+<td><code class="docutils literal"><span class="pre">505</span></code></td>
+<td>HTTP/1.1, <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">RFC 2616, Section
+10.5.6</a></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">INSUFFICIENT_STORAGE</span></code></td>
+<td><code class="docutils literal"><span class="pre">507</span></code></td>
+<td>WEBDAV, <a class="reference external" href="http://www.webdav.org/specs/rfc2518.html#STATUS_507">RFC 2518, Section 10.6</a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">NOT_EXTENDED</span></code></td>
+<td><code class="docutils literal"><span class="pre">510</span></code></td>
+<td>An HTTP Extension Framework,
+<span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2774.html"><strong>RFC 2774</strong></a>, Section 7</td>
+</tr>
+</tbody>
+</table>
+<dl class="data">
+<dt id="httplib.responses">
+<code class="descclassname">httplib.</code><code class="descname">responses</code><a class="headerlink" href="#httplib.responses" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このディクショナリは、HTTP 1.1ステータスコードをW3Cの名前にマップしたものです。</p>
+<p>例: <code class="docutils literal"><span class="pre">httplib.responses[httplib.NOT_FOUND]</span></code> は <code class="docutils literal"><span class="pre">'Not</span> <span class="pre">Found'</span></code> を示します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<div class="section" id="httpconnection-objects">
+<span id="id1"></span><h2>20.7.1. HTTPConnection オブジェクト<a class="headerlink" href="#httpconnection-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#httplib.HTTPConnection" title="httplib.HTTPConnection"><code class="xref py py-class docutils literal"><span class="pre">HTTPConnection</span></code></a> インスタンスには以下のメソッドがあります:</p>
+<dl class="method">
+<dt id="httplib.HTTPConnection.request">
+<code class="descclassname">HTTPConnection.</code><code class="descname">request</code><span class="sig-paren">(</span><em>method</em>, <em>url</em><span class="optional">[</span>, <em>body</em><span class="optional">[</span>, <em>headers</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.request" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは、 HTTP 要求メソッド <em>method</em> およびセレクタ <em>url</em> を使って、要求をサーバに送ります。<em>body</em> 引数を指定する場合、ヘッダが終了した後に送信する文字列データでなければなりません。もしくは、開いているファイルオブジェクトを <em>body</em> に渡すこともできます。その場合、そのファイルの内容が送信されます。このファイルオブジェクトは、 <code class="docutils literal"><span class="pre">fileno()</span></code> と <code class="docutils literal"><span class="pre">read()</span></code> メソッドをサポートしている必要があります。<em>headers</em> 引数は要求と同時に送信される拡張 HTTP ヘッダの内容からなるマップ型でなくてはなりません。</p>
+<p><em>headers</em> で Content-Length が提供されない場合、全てのメソッドにおいて、body の長さがわかるならば、つまり <code class="docutils literal"><span class="pre">str</span></code> としての長さあるいはファイルのディスク上のサイズをもとに、Content-Length ヘッダは自動的に正しい値にセットされます。 <em>body</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合はそのヘッダは、body がないメソッドではセットされず、body が期待されているメソッド(<code class="docutils literal"><span class="pre">PUT</span></code>, <code class="docutils literal"><span class="pre">POST</span></code>, <code class="docutils literal"><span class="pre">PATCH</span></code>)では <code class="docutils literal"><span class="pre">0</span></code> にセットします。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><em>body</em> にファイルオブジェクトを渡せるようになりました</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.getresponse">
+<code class="descclassname">HTTPConnection.</code><code class="descname">getresponse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.getresponse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバに対して HTTP 要求を送り出した後に呼び出されなければりません。要求に対する応答を取得します。 <a class="reference internal" href="#httplib.HTTPResponse" title="httplib.HTTPResponse"><code class="xref py py-class docutils literal"><span class="pre">HTTPResponse</span></code></a> インスタンスを返します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">すべての応答を読み込んでからでなければ新しい要求をサーバに送ることはできないことに注意しましょう。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.set_debuglevel">
+<code class="descclassname">HTTPConnection.</code><code class="descname">set_debuglevel</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.set_debuglevel" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>デバッグレベル (印字されるデバッグ出力の量) を設定します。デフォルトのデバッグレベルは <code class="docutils literal"><span class="pre">0</span></code> で、デバッグ出力を全く印字しません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.set_tunnel">
+<code class="descclassname">HTTPConnection.</code><code class="descname">set_tunnel</code><span class="sig-paren">(</span><em>host</em>, <em>port=None</em>, <em>headers=None</em><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.set_tunnel" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTTP トンネリング接続のホスト名とポート番号を設定します。通常はプロキシサーバを通して HTTPS 接続を行うときに必要になります。</p>
+<p>ヘッダのパラメータは CONNECT リクエストで送信するために他の HTTP ヘッダにマッピングされます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.connect">
+<code class="descclassname">HTTPConnection.</code><code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.connect" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトを生成するときに指定したサーバに接続します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.close">
+<code class="descclassname">HTTPConnection.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバへの接続を閉じます。</p>
+</dd></dl>
+
+<p>上で説明した <code class="xref py py-meth docutils literal"><span class="pre">request()</span></code> メソッドを使うかわりに、以下の4つの関数を使用して要求をステップバイステップで送信することもできます。</p>
+<dl class="method">
+<dt id="httplib.HTTPConnection.putrequest">
+<code class="descclassname">HTTPConnection.</code><code class="descname">putrequest</code><span class="sig-paren">(</span><em>request</em>, <em>selector</em><span class="optional">[</span>, <em>skip_host</em><span class="optional">[</span>, <em>skip_accept_encoding</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.putrequest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバへの接続が確立したら、最初にこのメソッドを呼び出さなくてはなりません。このメソッドは <em>request</em> 文字列、<em>selector</em> 文字列、そして HTTP バージョン (<code class="docutils literal"><span class="pre">HTTP/1.1</span></code>) からなる一行を送信します。<code class="docutils literal"><span class="pre">Host:</span></code> や <code class="docutils literal"><span class="pre">Accept-Encoding:</span></code> ヘッダの自動送信を無効にしたい場合 (例えば別のコンテンツエンコーディングを受け入れたい場合) には、<em>skip_host</em> や <em>skip_accept_encoding</em> を偽でない値に設定してください。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span><em>skip_accept_encoding</em> 引数が追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.putheader">
+<code class="descclassname">HTTPConnection.</code><code class="descname">putheader</code><span class="sig-paren">(</span><em>header</em>, <em>argument</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.putheader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> 形式のヘッダをサーバに送ります。この処理では、 <em>header</em> 、コロンとスペース、そして最初の引数からなる 1 行をサーバに送ります。追加の引数を指定した場合、継続して各行にタブ一つと引数の入った引数行が送信されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.endheaders">
+<code class="descclassname">HTTPConnection.</code><code class="descname">endheaders</code><span class="sig-paren">(</span><em>message_body=None</em><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.endheaders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバに空行を送り、ヘッダ部が終了したことを通知します。オプションの <em>message_body</em> 引数を、リクエストに関連したメッセージボディを渡すのに使うことが出来ます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><em>message_body</em> が追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPConnection.send">
+<code class="descclassname">HTTPConnection.</code><code class="descname">send</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPConnection.send" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバにデータを送ります。このメソッドは <a class="reference internal" href="#httplib.HTTPConnection.endheaders" title="httplib.HTTPConnection.endheaders"><code class="xref py py-meth docutils literal"><span class="pre">endheaders()</span></code></a>  が呼び出された直後で、かつ <a class="reference internal" href="#httplib.HTTPConnection.getresponse" title="httplib.HTTPConnection.getresponse"><code class="xref py py-meth docutils literal"><span class="pre">getresponse()</span></code></a> が呼び出される前に使わなければなりません。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="httpresponse-objects">
+<span id="id2"></span><h2>20.7.2. HTTPResponse オブジェクト<a class="headerlink" href="#httpresponse-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#httplib.HTTPResponse" title="httplib.HTTPResponse"><code class="xref py py-class docutils literal"><span class="pre">HTTPResponse</span></code></a>  インスタンスは以下のメソッドと属性を持っています:</p>
+<dl class="method">
+<dt id="httplib.HTTPResponse.read">
+<code class="descclassname">HTTPResponse.</code><code class="descname">read</code><span class="sig-paren">(</span><span class="optional">[</span><em>amt</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPResponse.read" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>応答の本体全体か、<em>amt</em> バイトまで読み出して返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPResponse.getheader">
+<code class="descclassname">HTTPResponse.</code><code class="descname">getheader</code><span class="sig-paren">(</span><em>name</em><span class="optional">[</span>, <em>default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPResponse.getheader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ヘッダ <em>name</em> の内容を取得して返すか、該当するヘッダがない場合には <em>default</em> を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPResponse.getheaders">
+<code class="descclassname">HTTPResponse.</code><code class="descname">getheaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPResponse.getheaders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>(header, value) のタプルからなるリストを返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="httplib.HTTPResponse.fileno">
+<code class="descclassname">HTTPResponse.</code><code class="descname">fileno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#httplib.HTTPResponse.fileno" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>下層のソケットの <code class="docutils literal"><span class="pre">fileno</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httplib.HTTPResponse.msg">
+<code class="descclassname">HTTPResponse.</code><code class="descname">msg</code><a class="headerlink" href="#httplib.HTTPResponse.msg" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>応答ヘッダを含む <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> インスタンスです。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httplib.HTTPResponse.version">
+<code class="descclassname">HTTPResponse.</code><code class="descname">version</code><a class="headerlink" href="#httplib.HTTPResponse.version" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバが使用した HTTP プロトコルバージョンです。10 は HTTP/1.0 を、11 は HTTP/1.1 を表します。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httplib.HTTPResponse.status">
+<code class="descclassname">HTTPResponse.</code><code class="descname">status</code><a class="headerlink" href="#httplib.HTTPResponse.status" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバから返される状態コードです。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="httplib.HTTPResponse.reason">
+<code class="descclassname">HTTPResponse.</code><code class="descname">reason</code><a class="headerlink" href="#httplib.HTTPResponse.reason" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバから返される応答の理由文です。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<span id="httplib-examples"></span><h2>20.7.3. 例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下は <code class="docutils literal"><span class="pre">GET</span></code> リクエストの送信方法を示した例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">httplib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s2">&quot;www.python.org&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">r1</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">r1</span><span class="o">.</span><span class="n">reason</span>
+<span class="go">200 OK</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="n">r1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">r2</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">r2</span><span class="o">.</span><span class="n">reason</span>
+<span class="go">404 Not Found</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="n">r2</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>次の例のセッションでは、<code class="docutils literal"><span class="pre">HEAD</span></code> メソッドを利用しています。<code class="docutils literal"><span class="pre">HEAD</span></code> メソッドは全くデータを返さないことに注目してください。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">httplib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s2">&quot;www.python.org&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;HEAD&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">reason</span>
+<span class="go">200 OK</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>以下は <code class="docutils literal"><span class="pre">POST</span></code> リクエストの送信方法を示した例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">httplib</span><span class="o">,</span> <span class="nn">urllib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s1">&#39;@number&#39;</span><span class="p">:</span> <span class="mi">12524</span><span class="p">,</span> <span class="s1">&#39;@type&#39;</span><span class="p">:</span> <span class="s1">&#39;issue&#39;</span><span class="p">,</span> <span class="s1">&#39;@action&#39;</span><span class="p">:</span> <span class="s1">&#39;show&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s2">&quot;bugs.python.org&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span>
+<span class="go">302 Found</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">&#39;Redirecting to &lt;a href=&quot;http://bugs.python.org/issue12524&quot;&gt;http://bugs.python.org/issue12524&lt;/a&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">HTTP</span> <span class="pre">PUT</span></code> リクエストは <code class="docutils literal"><span class="pre">POST</span></code> リクエストととても似ています。違いは、HTTP サーバが <code class="docutils literal"><span class="pre">PUT</span></code> リクエストによりリソースの作成をサーバ側にすることだけです。httplib を使って <code class="docutils literal"><span class="pre">PUT</span></code> リクエストを行うセッションの例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This creates an HTTP message</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># with the content of BODY as the enclosed representation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># for the resource http://localhost:8080/foobar</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">httplib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BODY</span> <span class="o">=</span> <span class="s2">&quot;***filecontents***&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="s2">&quot;/file&quot;</span><span class="p">,</span> <span class="n">BODY</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span>
+<span class="go">200, OK</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">20.7. <code class="docutils literal"><span class="pre">httplib</span></code> &#8212; HTTP プロトコルクライアント</a><ul>
+<li><a class="reference internal" href="#httpconnection-objects">20.7.1. HTTPConnection オブジェクト</a></li>
+<li><a class="reference internal" href="#httpresponse-objects">20.7.2. HTTPResponse オブジェクト</a></li>
+<li><a class="reference internal" href="#examples">20.7.3. 例</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="urllib2.html"
+                        title="前の章へ">20.6. <code class="docutils literal"><span class="pre">urllib2</span></code> &#8212; URL を開くための拡張可能なライブラリ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="ftplib.html"
+                        title="次の章へ">20.8. <code class="docutils literal"><span class="pre">ftplib</span></code> &#8212; FTPプロトコルクライアント</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/httplib.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="ftplib.html" title="20.8. ftplib — FTPプロトコルクライアント"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="urllib2.html" title="20.6. urllib2 — URL を開くための拡張可能なライブラリ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

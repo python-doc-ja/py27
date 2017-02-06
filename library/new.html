@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.16. new — ランタイム内部オブジェクトの作成 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="8. データ型" href="datatypes.html" />
+    <link rel="next" title="8.17. copy — 浅いコピーおよび深いコピー操作" href="copy.html" />
+    <link rel="prev" title="8.15. types — 組み込み型の名前" href="types.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="copy.html" title="8.17. copy — 浅いコピーおよび深いコピー操作"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="types.html" title="8.15. types — 組み込み型の名前"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">8. データ型</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-new">
+<span id="new-creation-of-runtime-internal-objects"></span><h1>8.16. <a class="reference internal" href="#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">new</span></code></a> &#8212; ランタイム内部オブジェクトの作成<a class="headerlink" href="#module-new" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">new</span></code></a> モジュールは Python 3 で削除されました。代わりに、 <a class="reference internal" href="types.html#module-types" title="types: Names for built-in types."><code class="xref py py-mod docutils literal"><span class="pre">types</span></code></a> モジュールのクラスを利用してください。</p>
+</div>
+<p><a class="reference internal" href="#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">new</span></code></a> モジュールはインタプリタオブジェクト作成関数へのインターフェイスを与えます。新しいオブジェクトを &#8220;魔法を使ったように&#8221; 作り出す必要がある、通常の作成関数が使えないときに、これは主にマーシャル型関数で使われます。このモジュールはインタプリタへの低レベルインターフェイスを提供します。したがって、このモジュールを使うときには注意しなければなりません。オブジェクトが利用される時にインタプリタをクラッシュさせるような引数を与えることもできてしまいます。</p>
+<p><a class="reference internal" href="#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">new</span></code></a> モジュールは次の関数を定義しています:</p>
+<dl class="function">
+<dt id="new.instance">
+<code class="descclassname">new.</code><code class="descname">instance</code><span class="sig-paren">(</span><em>class</em><span class="optional">[</span>, <em>dict</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#new.instance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> コンストラクタを呼び出さずに辞書 <em>dict</em> をもつ <em>class</em> のインスタンスを作り出します。 <em>dict</em> が省略されるか、 <code class="docutils literal"><span class="pre">None</span></code> である場合は、新しいインスタンスのために新しい空の辞書が作られます。オブジェクトが一貫した状態であるという保証はないことに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new.instancemethod">
+<code class="descclassname">new.</code><code class="descname">instancemethod</code><span class="sig-paren">(</span><em>function</em>, <em>instance</em>, <em>class</em><span class="sig-paren">)</span><a class="headerlink" href="#new.instancemethod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <em>instance</em> に束縛されたメソッドオブジェクトか、あるいは <em>instance</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合に束縛されていないメソッドオブジェクトを返します。 <em>function</em> は呼び出し可能でなければなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new.function">
+<code class="descclassname">new.</code><code class="descname">function</code><span class="sig-paren">(</span><em>code</em>, <em>globals</em><span class="optional">[</span>, <em>name</em><span class="optional">[</span>, <em>argdefs</em><span class="optional">[</span>, <em>closure</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#new.function" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたコードとグローバル変数をもつ (Python) 関数を返します。 <em>name</em> を与えるならば、文字列か <code class="docutils literal"><span class="pre">None</span></code> でなければなりません。文字列の場合は、関数は与えられた名前をもちます。そうでなければ、関数名は <code class="docutils literal"><span class="pre">code.co_name</span></code> から取られます。 <em>argdefs</em> を与える場合はタプルでなければならず、パラメータのデフォルト値を決めるために使われます。 <em>closure</em> を与える場合は <code class="docutils literal"><span class="pre">None</span></code> または名前を <code class="docutils literal"><span class="pre">code.co_freevars</span></code> に束縛するセルオブジェクトのタプルである必要があります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new.code">
+<code class="descclassname">new.</code><code class="descname">code</code><span class="sig-paren">(</span><em>argcount</em>, <em>nlocals</em>, <em>stacksize</em>, <em>flags</em>, <em>codestring</em>, <em>constants</em>, <em>names</em>, <em>varnames</em>, <em>filename</em>, <em>name</em>, <em>firstlineno</em>, <em>lnotab</em><span class="sig-paren">)</span><a class="headerlink" href="#new.code" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <a class="reference internal" href="../c-api/code.html#c.PyCode_New" title="PyCode_New"><code class="xref c c-func docutils literal"><span class="pre">PyCode_New()</span></code></a> という C 関数へのインターフェイスです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new.module">
+<code class="descclassname">new.</code><code class="descname">module</code><span class="sig-paren">(</span><em>name</em><span class="optional">[</span>, <em>doc</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#new.module" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <em>name</em> という名前の新しいモジュールオブジェクトを返します。 <em>name</em> は文字列でなければなりません。省略可能な <em>doc</em> 引数は任意の型を取ることができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new.classobj">
+<code class="descclassname">new.</code><code class="descname">classobj</code><span class="sig-paren">(</span><em>name</em>, <em>baseclasses</em>, <em>dict</em><span class="sig-paren">)</span><a class="headerlink" href="#new.classobj" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は新しいクラスオブジェクトを返します。そのクラスオブジェクトは (クラスのタプルであるべき) <em>baseclasses</em> から派生し、名前空間 <em>dict</em> を持ち、 <em>name</em> という名前です。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="types.html"
+                        title="前の章へ">8.15. <code class="docutils literal"><span class="pre">types</span></code> &#8212; 組み込み型の名前</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="copy.html"
+                        title="次の章へ">8.17. <code class="docutils literal"><span class="pre">copy</span></code> &#8212; 浅いコピーおよび深いコピー操作</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/new.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="copy.html" title="8.17. copy — 浅いコピーおよび深いコピー操作"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="types.html" title="8.15. types — 組み込み型の名前"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >8. データ型</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

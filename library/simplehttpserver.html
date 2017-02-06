@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.19. SimpleHTTPServer — 簡潔な HTTP リクエストハンドラ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
+    <link rel="next" title="20.20. CGIHTTPServer — CGI 実行機能付き HTTP リクエスト処理機構" href="cgihttpserver.html" />
+    <link rel="prev" title="20.18. BaseHTTPServer — 基本的な機能を持つ HTTP サーバ" href="basehttpserver.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="cgihttpserver.html" title="20.20. CGIHTTPServer — CGI 実行機能付き HTTP リクエスト処理機構"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="basehttpserver.html" title="20.18. BaseHTTPServer — 基本的な機能を持つ HTTP サーバ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-SimpleHTTPServer">
+<span id="simplehttpserver-simple-http-request-handler"></span><h1>20.19. <a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> &#8212; 簡潔な HTTP リクエストハンドラ<a class="headerlink" href="#module-SimpleHTTPServer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールは、Python 3では <code class="xref py py-mod docutils literal"><span class="pre">http.server</span></code> モジュールに統合されました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコード内の import を修正します。</p>
+</div>
+<p><a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールは、 <a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler" title="SimpleHTTPServer.SimpleHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">SimpleHTTPRequestHandler</span></code></a> クラス 1 つを提供しています。このクラスは、 <a class="reference internal" href="basehttpserver.html#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPServer.BaseHTTPRequestHandler</span></code></a> に対して互換性のあるインタフェースを持っています。</p>
+<p><a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールは以下のクラスを定義します:</p>
+<dl class="class">
+<dt id="SimpleHTTPServer.SimpleHTTPRequestHandler">
+<em class="property">class </em><code class="descclassname">SimpleHTTPServer.</code><code class="descname">SimpleHTTPRequestHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#SimpleHTTPServer.SimpleHTTPRequestHandler" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このクラスは、現在のディレクトリ以下にあるファイルを、HTTP リクエストにおけるディレクトリ構造に直接対応付けて提供します。</p>
+<p>リクエストの解釈のような、多くの作業は基底クラス <a class="reference internal" href="basehttpserver.html#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPServer.BaseHTTPRequestHandler</span></code></a> で行われます。このクラスは関数 <a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET" title="SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET"><code class="xref py py-func docutils literal"><span class="pre">do_GET()</span></code></a> および <a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.do_HEAD" title="SimpleHTTPServer.SimpleHTTPRequestHandler.do_HEAD"><code class="xref py py-func docutils literal"><span class="pre">do_HEAD()</span></code></a> を実装しています。</p>
+<p><a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler" title="SimpleHTTPServer.SimpleHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">SimpleHTTPRequestHandler</span></code></a> では以下のメンバ変数を定義しています:</p>
+<dl class="attribute">
+<dt id="SimpleHTTPServer.SimpleHTTPRequestHandler.server_version">
+<code class="descname">server_version</code><a class="headerlink" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.server_version" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<p>この値は <code class="docutils literal"><span class="pre">&quot;SimpleHTTP/&quot;</span> <span class="pre">+</span> <span class="pre">__version__</span></code> になります。<code class="docutils literal"><span class="pre">__version__</span></code> はこのモジュールで定義されている値です。</p>
+<dl class="attribute">
+<dt id="SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map">
+<code class="descname">extensions_map</code><a class="headerlink" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>拡張子を MIME 型指定子に対応付ける辞書です。標準の型指定は空文字列で表され、この値は <code class="docutils literal"><span class="pre">application/octet-stream</span></code> と見なされます。対応付けは大小文字の区別をするので、小文字のキーのみを入れるべきです。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler" title="SimpleHTTPServer.SimpleHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">SimpleHTTPRequestHandler</span></code></a> では以下のメソッドを定義しています:</p>
+<dl class="method">
+<dt id="SimpleHTTPServer.SimpleHTTPRequestHandler.do_HEAD">
+<code class="descname">do_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.do_HEAD" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは <code class="docutils literal"><span class="pre">'HEAD'</span></code> 型のリクエスト処理を実行します: すなわち、 <code class="docutils literal"><span class="pre">GET</span></code> リクエストの時に送信されるものと同じヘッダを送信します。送信される可能性のあるヘッダについての完全な説明は <a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET" title="SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET"><code class="xref py py-meth docutils literal"><span class="pre">do_GET()</span></code></a> メソッドを参照してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET">
+<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リクエストを現在の作業ディレクトリからの相対的なパスとして解釈することで、リクエストをローカルシステム上のファイルと対応付けます。</p>
+<p>リクエストがディレクトリに対応付けられた場合、 <code class="docutils literal"><span class="pre">index.html</span></code> または <code class="docutils literal"><span class="pre">index.htm</span></code> を (この順序で) チェックします。もしファイルを発見できればその内容を、そうでなければディレクトリ一覧を <code class="xref py py-meth docutils literal"><span class="pre">list_directory()</span></code> メソッドで生成して、返します。このメソッドは <a class="reference internal" href="os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></code></a> をディレクトリのスキャンに用いており、 <code class="xref py py-func docutils literal"><span class="pre">listdir()</span></code> が失敗した場合には <code class="docutils literal"><span class="pre">404</span></code> 応答が返されます。</p>
+<p>リクエストがファイルに対応付けられた場合、そのファイルを開いて内容を返します。要求されたファイルを開く際に何らかの <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> 例外が送出された場合、リクエストは <code class="docutils literal"><span class="pre">404</span></code> 、 <code class="docutils literal"><span class="pre">'File</span> <span class="pre">not</span> <span class="pre">found'</span></code> エラーに対応づけられます。そうでない場合、 <em>extensions_map</em> 変数を用いて <code class="xref py py-meth docutils literal"><span class="pre">guess_type()</span></code>  メソッドにより content-type が推測されます。</p>
+<p>出力は <code class="docutils literal"><span class="pre">'Content-type:'</span></code> と推測されたコンテントタイプで、その後にファイルサイズを示す <code class="docutils literal"><span class="pre">'Content-Length;'</span></code> ヘッダと、ファイルの更新日時を示す <code class="docutils literal"><span class="pre">'Last-Modified:'</span></code> ヘッダが続きます。</p>
+<p>そしてヘッダの終了を示す空白行が続き、さらにその後にファイルの内容が続きます。このファイルはコンテントタイプが <code class="docutils literal"><span class="pre">text/</span></code> で始まっている場合はテキストモードで、そうでなければバイナリモードで開かれます。</p>
+<p><a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールの <a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-func docutils literal"><span class="pre">test()</span></code></a> 関数は <a class="reference internal" href="#SimpleHTTPServer.SimpleHTTPRequestHandler" title="SimpleHTTPServer.SimpleHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">SimpleHTTPRequestHandler</span></code></a> をハンドラとして使うサーバを作る例になっています。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加: </span><code class="docutils literal"><span class="pre">'Last-Modified'</span></code> ヘッダ.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p><a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールを使って現在のディレクトリ以下にあるファイルにアクセスできるだけの、非常に初歩的な Web サーバを立ち上げる方法は以下の通りです。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">SimpleHTTPServer</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="n">Handler</span> <span class="o">=</span> <span class="n">SimpleHTTPServer</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span>
+
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">Handler</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="s2">&quot;serving at port&quot;</span><span class="p">,</span> <span class="n">PORT</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>インタプリタの <a class="reference internal" href="../using/cmdline.html#cmdoption-m"><code class="xref std std-option docutils literal"><span class="pre">-m</span></code></a> スイッチで <a class="reference internal" href="#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> モジュールと <code class="docutils literal"><span class="pre">ポート番号</span></code> を指定して直接実行することもできます。上の例と同じように、ここで立ち上がったサーバは現在のディレクトリ以下のファイルへのアクセスを提供します。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">SimpleHTTPServer</span> <span class="mi">8000</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="basehttpserver.html#module-BaseHTTPServer" title="BaseHTTPServer: Basic HTTP server (base class for SimpleHTTPServer and CGIHTTPServer)."><code class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></code></a></dt>
+<dd><p class="first last">Web サーバとリクエスト処理機構を実装した基底クラスです。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="basehttpserver.html"
+                        title="前の章へ">20.18. <code class="docutils literal"><span class="pre">BaseHTTPServer</span></code> &#8212; 基本的な機能を持つ HTTP サーバ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="cgihttpserver.html"
+                        title="次の章へ">20.20. <code class="docutils literal"><span class="pre">CGIHTTPServer</span></code> &#8212; CGI 実行機能付き HTTP リクエスト処理機構</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/simplehttpserver.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="cgihttpserver.html" title="20.20. CGIHTTPServer — CGI 実行機能付き HTTP リクエスト処理機構"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="basehttpserver.html" title="20.18. BaseHTTPServer — 基本的な機能を持つ HTTP サーバ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

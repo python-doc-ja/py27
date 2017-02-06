@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ファイルオブジェクト &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
+    <link rel="next" title="モジュールオブジェクト (module object)" href="module.html" />
+    <link rel="prev" title="メソッドオブジェクト" href="method.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="module.html" title="モジュールオブジェクト (module object)"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="method.html" title="メソッドオブジェクト"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="file-objects">
+<span id="fileobjects"></span><h1>ファイルオブジェクト<a class="headerlink" href="#file-objects" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">Python の組み込みファイルオブジェクトは、全て標準 C ライブラリの <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> サポートの上に実装されています。以下の詳細説明は一実装に関するもので、将来の Python のリリースで変更されるかもしれません。</p>
+<dl class="type">
+<dt id="c.PyFileObject">
+<code class="descname">PyFileObject</code><a class="headerlink" href="#c.PyFileObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject</span></code></a> のサブタイプは Python のファイル型オブジェクトを表現します。</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyFile_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="descname">PyFile_Type</code><a class="headerlink" href="#c.PyFile_Type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-1">この <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a> のインスタンスは Python のファイル型を表現します。このオブジェクトは <a class="reference internal" href="../library/functions.html#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> および <code class="docutils literal"><span class="pre">types.FileType</span></code> として Python プログラムで公開されています。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_Check">
+int <code class="descname">PyFile_Check</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_Check" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数が <a class="reference internal" href="#c.PyFileObject" title="PyFileObject"><code class="xref c c-type docutils literal"><span class="pre">PyFileObject</span></code></a> か <a class="reference internal" href="#c.PyFileObject" title="PyFileObject"><code class="xref c c-type docutils literal"><span class="pre">PyFileObject</span></code></a> のサブタイプのときに真を返します。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span>サブタイプを引数にとれるようになりました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_CheckExact">
+int <code class="descname">PyFile_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_CheckExact" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数が <a class="reference internal" href="#c.PyFileObject" title="PyFileObject"><code class="xref c c-type docutils literal"><span class="pre">PyFileObject</span></code></a> 型で、かつ <a class="reference internal" href="#c.PyFileObject" title="PyFileObject"><code class="xref c c-type docutils literal"><span class="pre">PyFileObject</span></code></a> 型のサブタイプでないときに真を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_FromString">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyFile_FromString</code><span class="sig-paren">(</span>char<em>&nbsp;*filename</em>, char<em>&nbsp;*mode</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_FromString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-2">成功すると、 <em>filename</em> に指定した名前のファイルを <em>mode</em> に指定したファイルモードで開いて得た新たなファイルオブジェクトを返します。 <em>mode</em> のセマンティクスは標準 C ルーチン <code class="xref c c-func docutils literal"><span class="pre">fopen()</span></code> と同じです。失敗すると <em>NULL</em> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_FromFile">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyFile_FromFile</code><span class="sig-paren">(</span>FILE<em>&nbsp;*fp</em>, char<em>&nbsp;*name</em>, char<em>&nbsp;*mode</em>, int (<em>*close</em>)(FILE*)<span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_FromFile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>すでに開かれている標準 C ファイルポインタ <em>fp</em> から新たな <a class="reference internal" href="#c.PyFileObject" title="PyFileObject"><code class="xref c c-type docutils literal"><span class="pre">PyFileObject</span></code></a> を生成します。この関数で生成したファイルオブジェクトは、閉じる際に <em>close</em> に指定した関数を呼び出します。失敗すると <em>close</em> を使ってファイルをクローズし、 <em>NULL</em> を返します。 <em>close</em> の指定は任意で、 <em>NULL</em> にもできます。(&#8212;訳注: 失敗時に <em>close</em> を呼び出すのは <a class="reference external" href="http://bugs.python.org/issue7732">issue #7732</a> に関係した仕様です。今ここで説明している「失敗時」はコードを読む限り PyString_FromString の失敗時だけです、今のところ。 &#8212;)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_AsFile">
+FILE* <code class="descname">PyFile_AsFile</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_AsFile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>p</em> に関連付けられたファイルオブジェクトを <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> で返します。</p>
+<p>呼び出し側が <a class="reference internal" href="../glossary.html#term-gil"><span class="xref std std-term">GIL</span></a> を解放している間もこの関数が返した <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> オブジェクトを使うのであれば、以下に解説されている <a class="reference internal" href="#c.PyFile_IncUseCount" title="PyFile_IncUseCount"><code class="xref c c-func docutils literal"><span class="pre">PyFile_IncUseCount()</span></code></a> と <a class="reference internal" href="#c.PyFile_DecUseCount" title="PyFile_DecUseCount"><code class="xref c c-func docutils literal"><span class="pre">PyFile_DecUseCount()</span></code></a> 関数を適切に呼び出さなければなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_IncUseCount">
+void <code class="descname">PyFile_IncUseCount</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyFileObject" title="PyFileObject">PyFileObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_IncUseCount" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>PyFileObject 内部の、 <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> が使用中であることを示す使用数カウントをインクリメントします。これは、別のスレッドで使用中の <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> に対して Python が fclose() を呼び出すことを防ぎます。この関数の呼び出し側は、 <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> を使い終わったときに必ず <a class="reference internal" href="#c.PyFile_DecUseCount" title="PyFile_DecUseCount"><code class="xref c c-func docutils literal"><span class="pre">PyFile_DecUseCount()</span></code></a> を呼び出さなければなりません。そうしなければ、 Python はそのファイルオブジェクトを永遠に閉じません。</p>
+<p>この関数を呼び出すときは、 <a class="reference internal" href="../glossary.html#term-gil"><span class="xref std std-term">GIL</span></a> を取得していなければなりません。</p>
+<p>例えば、 <a class="reference internal" href="#c.PyFile_AsFile" title="PyFile_AsFile"><code class="xref c c-func docutils literal"><span class="pre">PyFile_AsFile()</span></code></a> を呼び出した後、GILを解放する前にこの関数を呼び出します。</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">PyFile_AsFile</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+<span class="n">PyFile_IncUseCount</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+<span class="cm">/* ... */</span>
+<span class="n">Py_BEGIN_ALLOW_THREADS</span>
+<span class="nf">do_something</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+<span class="n">Py_END_ALLOW_THREADS</span>
+<span class="cm">/* ... */</span>
+<span class="n">PyFile_DecUseCount</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_DecUseCount">
+void <code class="descname">PyFile_DecUseCount</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyFileObject" title="PyFileObject">PyFileObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_DecUseCount" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>PyFileObject 内部の、 <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> が使用中であることを示す unlocked_count メンバーをデクリメントして、呼び出し元が <code class="xref c c-type docutils literal"><span class="pre">FILE*</span></code> を使い終わったことを示します。これは、先に行った <a class="reference internal" href="#c.PyFile_IncUseCount" title="PyFile_IncUseCount"><code class="xref c c-func docutils literal"><span class="pre">PyFile_IncUseCount()</span></code></a> の呼び出しを取り消すためだけに呼び出されるでしょう。</p>
+<p>この関数を呼び出すときは、 <a class="reference internal" href="../glossary.html#term-gil"><span class="xref std std-term">GIL</span></a> を取得していなければなりません。 (上の例を参照してください)</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_GetLine">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyFile_GetLine</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em>, int<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_GetLine" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-3"><code class="docutils literal"><span class="pre">p.readline([n])</span></code> と同じで、この関数はオブジェクト <em>p</em> の各行を読み出します。 <em>p</em> はファイルオブジェクトか、 <a class="reference internal" href="../library/io.html#io.IOBase.readline" title="io.IOBase.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> メソッドを持つ何らかのオブジェクトでかまいません。 <em>n</em> が <code class="docutils literal"><span class="pre">0</span></code> の場合、行の長さに関係なく正確に 1 行だけ読み出します。 <em>n</em> が <code class="docutils literal"><span class="pre">0</span></code> より大きければ、 <em>n</em> バイト以上のデータは読み出しません; 従って、行の一部だけが返される場合があります。 どちらの場合でも、読み出し後すぐにファイルの終端に到達した場合には空文字列を 返します。 <em>n</em> が <code class="docutils literal"><span class="pre">0</span></code> より小さければ、長さに関わらず 1 行だけを 読み出しますが、すぐにファイルの終端に到達した場合には <a class="reference internal" href="../library/exceptions.html#exceptions.EOFError" title="exceptions.EOFError"><code class="xref py py-exc docutils literal"><span class="pre">EOFError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_Name">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyFile_Name</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_Name" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p><em>p</em> に指定したファイルの名前を文字列オブジェクトで返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_SetBufSize">
+void <code class="descname">PyFile_SetBufSize</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyFileObject" title="PyFileObject">PyFileObject</a><em>&nbsp;*p</em>, int<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_SetBufSize" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-4"><code class="xref c c-func docutils literal"><span class="pre">setvbuf()</span></code> があるシステムでのみ利用できます。この関数を呼び出してよいのはファイルオブジェクトの生成直後のみです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_SetEncoding">
+int <code class="descname">PyFile_SetEncoding</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyFileObject" title="PyFileObject">PyFileObject</a><em>&nbsp;*p</em>, const char<em>&nbsp;*enc</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_SetEncoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode オブジェクトをファイルに出力するときにのエンコーディングを <em>enc</em> にします。成功すると <code class="docutils literal"><span class="pre">1</span></code> を、失敗すると <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_SetEncodingAndErrors">
+int <code class="descname">PyFile_SetEncodingAndErrors</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyFileObject" title="PyFileObject">PyFileObject</a><em>&nbsp;*p</em>, const char<em>&nbsp;*enc</em>, *errors<span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_SetEncodingAndErrors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode オブジェクトをファイルに出力するときにのエンコーディングを <em>enc</em> に設定し、そのエラーモードを <em>err</em> に設定します。成功すると <code class="docutils literal"><span class="pre">1</span></code> を、失敗すると <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_SoftSpace">
+int <code class="descname">PyFile_SoftSpace</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em>, int<em>&nbsp;newflag</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_SoftSpace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-5">この関数はインタプリタの内部的な利用のために存在します。この関数は <em>p</em> の <code class="xref py py-attr docutils literal"><span class="pre">softspace</span></code> 属性を <em>newflag</em> に設定し、以前の設定値を返します。この関数を正しく動作させるために、 <em>p</em> がファイルオブジェクトである必然性はありません; 任意のオブジェクトをサポートします (<code class="xref py py-attr docutils literal"><span class="pre">softspace</span></code> 属性が設定されているかどうかのみが問題だと思ってください)。この関数は全てのエラーを解消し、属性値が存在しない場合や属性値を取得する際にエラーが生じると、 <code class="docutils literal"><span class="pre">0</span></code> を以前の値として返します。この関数からはエラーを検出できませんが、そもそもそういう必要はありません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_WriteObject">
+int <code class="descname">PyFile_WriteObject</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em>, int<em>&nbsp;flags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_WriteObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-6">オブジェクト <em>obj</em> をファイルオブジェクト <em>p</em> に書き込みます。 <em>flags</em> がサポートするフラグは <code class="xref py py-const docutils literal"><span class="pre">Py_PRINT_RAW</span></code> だけです; このフラグを指定すると、オブジェクトに <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> ではなく <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> を適用した結果をファイルに書き出します。成功した場合には <code class="docutils literal"><span class="pre">0</span></code> を返し、失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返して適切な例外をセットします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyFile_WriteString">
+int <code class="descname">PyFile_WriteString</code><span class="sig-paren">(</span>const char<em>&nbsp;*s</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyFile_WriteString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>s</em> をファイルオブジェクト <em>p</em> に書き出します。成功した場合には <code class="docutils literal"><span class="pre">0</span></code> を返し、失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返して適切な例外をセットします。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="method.html"
+                        title="前の章へ">メソッドオブジェクト</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="module.html"
+                        title="次の章へ">モジュールオブジェクト (module object)</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/c-api/file.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="module.html" title="モジュールオブジェクト (module object)"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="method.html" title="メソッドオブジェクト"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

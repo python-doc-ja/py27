@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11.11. bsddb — Berkeley DB ライブラリへのインタフェース &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="11. データの永続化" href="persistence.html" />
+    <link rel="next" title="11.12. dumbdbm — 可搬性のある DBM 実装" href="dumbdbm.html" />
+    <link rel="prev" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース" href="dbhash.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dumbdbm.html" title="11.12. dumbdbm — 可搬性のある DBM 実装"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="dbhash.html" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" accesskey="U">11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bsddb">
+<span id="bsddb-interface-to-berkeley-db-library"></span><h1>11.11. <a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> &#8212; Berkeley DB ライブラリへのインタフェース<a class="headerlink" href="#module-bsddb" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールは、 Python 3 で削除されました。</p>
+</div>
+<p><a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールは Berkeley DB ライブラリへのインタフェースを提供します。ユーザは適当な <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 呼び出しを使うことで、ハッシュ、B-Tree、またはレコードに基づくデータベースファイルを生成することができます。bsddb オブジェクトは辞書と大体同じように振る舞います。しかし、キー及び値は文字列でなければならないので、他のオブジェクトをキーとして使ったり、他の種のオブジェクトを記録したい場合、それらのデータを何らかの方法で直列化しなければなりません。これには通常 <a class="reference internal" href="marshal.html#marshal.dumps" title="marshal.dumps"><code class="xref py py-func docutils literal"><span class="pre">marshal.dumps()</span></code></a> や <a class="reference internal" href="pickle.html#pickle.dumps" title="pickle.dumps"><code class="xref py py-func docutils literal"><span class="pre">pickle.dumps()</span></code></a> が使われます。</p>
+<p><a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールは、バージョン 4.0 から 4.7 までの間の Berkeley DB ライブラリを必要とします。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://www.jcea.es/programacion/pybsddb.htm">http://www.jcea.es/programacion/pybsddb.htm</a></dt>
+<dd><p class="first last">Python Berkeley DBインターフェース <code class="xref py py-mod docutils literal"><span class="pre">bsddb.db</span></code> のドキュメント。インターフェースは、Berkeley DB 4.x が提供しているオブジェクト指向インターフェースとほぼ同じインターフェースとなっています。</p>
+</dd>
+<dt><a class="reference external" href="http://www.oracle.com/database/berkeley-db/">http://www.oracle.com/database/berkeley-db/</a></dt>
+<dd>The Berkeley DB library.</dd>
+</dl>
+</div>
+<p>より新しい DB である DBEnv や DBSequence オブジェクトのインターフェースも <code class="xref py py-mod docutils literal"><span class="pre">bsddb.db</span></code> モジュールで使用できます。これは、上の URL で説明されている Berkeley DB C API によりマッチしています。 <code class="xref py py-mod docutils literal"><span class="pre">bsddb.db</span></code> API が提供する追加機能には、チューニングやトランザクション、ログ出力、マルチプロセス環境でのデータベースへの同時アクセスなどがあります。</p>
+<p>以下では、従来のbsddbモジュールと互換性のある、古いインターフェースを解説しています。Python 2.5 以降、このインターフェースはマルチスレッドに対応しています。マルチスレッドを使用する場合は <code class="xref py py-mod docutils literal"><span class="pre">bsddb.db</span></code> API を推奨します。こちらのほうがスレッドをよりうまく制御できるからです。</p>
+<p><a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールでは、適切な形式の Berkeley DB ファイルにアクセスするオブジェクトを生成する以下の関数を定義しています。各関数の最初の二つの引数は同じです。可搬性のために、ほとんどのインスタンスでは最初の二つの引数だけが使われているはずです。</p>
+<dl class="function">
+<dt id="bsddb.hashopen">
+<code class="descclassname">bsddb.</code><code class="descname">hashopen</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>flag</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>pgsize</em><span class="optional">[</span>, <em>ffactor</em><span class="optional">[</span>, <em>nelem</em><span class="optional">[</span>, <em>cachesize</em><span class="optional">[</span>, <em>lorder</em><span class="optional">[</span>, <em>hflags</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.hashopen" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>filename</em> と名づけられたハッシュ形式のファイルを開きます。 <em>filename</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定することで、ディスクに保存するつもりがないファイルを生成することもできます。オプションの <em>flag</em> には、ファイルを開くためのモードを指定します。このモードは <code class="docutils literal"><span class="pre">'r'</span></code> (読み出し専用), <code class="docutils literal"><span class="pre">'w'</span></code> (読み書き可能)、 <code class="docutils literal"><span class="pre">'c'</span></code> (読み書き可能 - 必要ならファイルを生成…これがデフォルトです) または <code class="docutils literal"><span class="pre">'n'</span></code> (読み書き可能 - ファイル長を 0 に切り詰め)、にすることができます。他の引数はほとんど使われることはなく、下位レベルの <code class="xref c c-func docutils literal"><span class="pre">dbopen()</span></code> 関数に渡されるだけです。他の引数の使い方およびその解釈については Berkeley DB のドキュメントを読んで下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bsddb.btopen">
+<code class="descclassname">bsddb.</code><code class="descname">btopen</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>flag</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>btflags</em><span class="optional">[</span>, <em>cachesize</em><span class="optional">[</span>, <em>maxkeypage</em><span class="optional">[</span>, <em>minkeypage</em><span class="optional">[</span>, <em>pgsize</em><span class="optional">[</span>, <em>lorder</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.btopen" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>filename</em> と名づけられた B-Tree 形式のファイルを開きます。 <em>filename</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定することで、ディスクに保存するつもりがないファイルを生成することもできます。オプションの <em>flag</em> には、ファイルを開くためのモードを指定します。このモードは <code class="docutils literal"><span class="pre">'r'</span></code> (読み出し専用)、 <code class="docutils literal"><span class="pre">'w'</span></code> (読み書き可能)、 <code class="docutils literal"><span class="pre">'c'</span></code> (読み書き可能 - 必要ならファイルを生成…これがデフォルトです)、または <code class="docutils literal"><span class="pre">'n'</span></code> (読み書き可能 - ファイル長を 0 に切り詰め)、にすることができます。他の引数はほとんど使われることはなく、下位レベルの <code class="xref c c-func docutils literal"><span class="pre">dbopen()</span></code> 関数に渡されるだけです。他の引数の使い方およびその解釈については Berkeley DB のドキュメントを読んで下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bsddb.rnopen">
+<code class="descclassname">bsddb.</code><code class="descname">rnopen</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>flag</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>rnflags</em><span class="optional">[</span>, <em>cachesize</em><span class="optional">[</span>, <em>pgsize</em><span class="optional">[</span>, <em>lorder</em><span class="optional">[</span>, <em>rlen</em><span class="optional">[</span>, <em>delim</em><span class="optional">[</span>, <em>source</em><span class="optional">[</span>, <em>pad</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.rnopen" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>filename</em> と名づけられた DB レコード形式のファイルを開きます、 <em>filename</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定することで、ディスクに保存するつもりがないファイルを生成することもできます、オプションの <em>flag</em> には、ファイルを開くためのモードを指定します、このモードは <code class="docutils literal"><span class="pre">'r'</span></code> (読み出し専用), <code class="docutils literal"><span class="pre">'w'</span></code> (読み書き可能)、 <code class="docutils literal"><span class="pre">'c'</span></code> (読み書き可能 - 必要ならファイルを生成…これがデフォルトです)、または <code class="docutils literal"><span class="pre">'n'</span></code> (読み書き可能 - ファイル長を 0 に切り詰め)、にすることができます。他の引数はほとんど使われることはなく、下位レベルの <code class="xref c c-func docutils literal"><span class="pre">dbopen()</span></code> 関数に渡されるだけです、他の引数の使い方およびその解釈については Berkeley DB のドキュメントを読んで下さい。</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">2.3 以降の Unix 版 Python には、 <code class="xref py py-mod docutils literal"><span class="pre">bsddb185</span></code> モジュールが存在する場合があります。このモジュールは古い Berkeley DB 1.85 データベースライブラリを持つシステムをサポートするため <em>だけ</em> に存在しています。新規に開発するコードでは、 <code class="xref py py-mod docutils literal"><span class="pre">bsddb185</span></code> を直接使用しないで下さい。このモジュールは Python 3 で削除されます。必要であれば、PyPI にあるかもしれません。</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="dbhash.html#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a></dt>
+<dd><p class="first last"><a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> への DBM 形式のインタフェース</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="hash-btree-and-record-objects">
+<span id="bsddb-objects"></span><h2>11.11.1. ハッシュ、BTree、およびレコードオブジェクト<a class="headerlink" href="#hash-btree-and-record-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>インスタンス化したハッシュ、B-Tree, およびレコードオブジェクトは辞書型と同じメソッドをサポートするようになります。加えて、以下に列挙したメソッドもサポートします。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3.1 で変更: </span>辞書型メソッドを追加しました.</p>
+</div>
+<dl class="method">
+<dt id="bsddb.bsddbobject.close">
+<code class="descclassname">bsddbobject.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベースの背後にあるファイルを閉じます。オブジェクトはアクセスできなくなります。これらのオブジェクトには <code class="xref py py-meth docutils literal"><span class="pre">oepn()</span></code> メソッドがないため、再度ファイルを開くためには、新たな <a class="reference internal" href="#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールを開く関数を呼び出さなくてはなりません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.keys">
+<code class="descclassname">bsddbobject.</code><code class="descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.keys" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>DB ファイルに収められているキーからなるリストを返します。リスト内のキーの順番は決まっておらず、あてにはなりません。特に、異なるファイル形式の DB 間では返されるリストの順番が異なります。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.has_key">
+<code class="descclassname">bsddbobject.</code><code class="descname">has_key</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.has_key" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>key</em> が DB ファイルにキーとして含まれている場合 <code class="docutils literal"><span class="pre">1</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.set_location">
+<code class="descclassname">bsddbobject.</code><code class="descname">set_location</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.set_location" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カーソルを <em>key</em> で示される要素に移動し、キー及び値からなるタプルを返します。(<code class="xref py py-func docutils literal"><span class="pre">bopen()</span></code> を使って開かれる) B-Tree データベースでは、 <em>key</em> が実際にはデータベース内に存在しなかった場合、カーソルは並び順が <em>key</em> の次に来るような要素を指し、その場所のキー及び値が返されます。他のデータベースでは、データベース中に <em>key</em> が見つからなかった場合 <a class="reference internal" href="exceptions.html#exceptions.KeyError" title="exceptions.KeyError"><code class="xref py py-exc docutils literal"><span class="pre">KeyError</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.first">
+<code class="descclassname">bsddbobject.</code><code class="descname">first</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.first" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カーソルを DB ファイルの最初の要素に設定し、その要素を返します。 B-Tree データベースの場合を除き、ファイル中のキーの順番は決まっていません。データベースが空の場合、このメソッドは <code class="xref py py-exc docutils literal"><span class="pre">bsddb.error</span></code> を発生させます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.next">
+<code class="descclassname">bsddbobject.</code><code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.next" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カーソルを DB ファイルの次の要素に設定し、その要素を返します。 B-Tree データベースの場合を除き、ファイル中のキーの順番は決まっていません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.previous">
+<code class="descclassname">bsddbobject.</code><code class="descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.previous" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カーソルを DB ファイルの直前の要素に設定し、その要素を返します。 B-Tree データベースの場合を除き、ファイル中のキーの順番は決まっていません。 (<a class="reference internal" href="#bsddb.hashopen" title="bsddb.hashopen"><code class="xref py py-func docutils literal"><span class="pre">hashopen()</span></code></a> で開かれるような) ハッシュ表データベースではサポートされていません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.last">
+<code class="descclassname">bsddbobject.</code><code class="descname">last</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.last" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カーソルを DB ファイルの最後の要素に設定し、その要素を返します。ファイル中のキーの順番は決まっていません。 (<a class="reference internal" href="#bsddb.hashopen" title="bsddb.hashopen"><code class="xref py py-func docutils literal"><span class="pre">hashopen()</span></code></a> で開かれるような) ハッシュ表データベースではサポートされていません。データベースが空の場合、このメソッドは <code class="xref py py-exc docutils literal"><span class="pre">bsddb.error</span></code> を発生させます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bsddb.bsddbobject.sync">
+<code class="descclassname">bsddbobject.</code><code class="descname">sync</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bsddb.bsddbobject.sync" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ディスク上のファイルをデータベースに同期させます。</p>
+</dd></dl>
+
+<p>以下はプログラム例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">bsddb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">bsddb</span><span class="o">.</span><span class="n">btopen</span><span class="p">(</span><span class="s1">&#39;spam.db&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="p">[</span><span class="s1">&#39;3&#39;</span><span class="p">]</span>
+<span class="go">&#39;9&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="go">(&#39;0&#39;, &#39;0&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">(&#39;1&#39;, &#39;1&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+<span class="go">(&#39;9&#39;, &#39;81&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">set_location</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="go">(&#39;2&#39;, &#39;4&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">previous</span><span class="p">()</span>
+<span class="go">(&#39;1&#39;, &#39;1&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+<span class="go">0 0</span>
+<span class="go">1 1</span>
+<span class="go">2 4</span>
+<span class="go">3 9</span>
+<span class="go">4 16</span>
+<span class="go">5 25</span>
+<span class="go">6 36</span>
+<span class="go">7 49</span>
+<span class="go">8 64</span>
+<span class="go">9 81</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;8&#39;</span> <span class="ow">in</span> <span class="n">db</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">11.11. <code class="docutils literal"><span class="pre">bsddb</span></code> &#8212; Berkeley DB ライブラリへのインタフェース</a><ul>
+<li><a class="reference internal" href="#hash-btree-and-record-objects">11.11.1. ハッシュ、BTree、およびレコードオブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="dbhash.html"
+                        title="前の章へ">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="dumbdbm.html"
+                        title="次の章へ">11.12. <code class="docutils literal"><span class="pre">dumbdbm</span></code> &#8212; 可搬性のある DBM 実装</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/bsddb.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dumbdbm.html" title="11.12. dumbdbm — 可搬性のある DBM 実装"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="dbhash.html" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" >11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

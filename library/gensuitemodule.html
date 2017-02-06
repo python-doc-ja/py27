@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>38.1. gensuitemodule — OSA スタブ作成パッケージ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="38. MacPython OSA モジュール" href="macosa.html" />
+    <link rel="next" title="38.2. aetools — OSA クライアントのサポート" href="aetools.html" />
+    <link rel="prev" title="38. MacPython OSA モジュール" href="macosa.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="aetools.html" title="38.2. aetools — OSA クライアントのサポート"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="macosa.html" title="38. MacPython OSA モジュール"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="macosa.html" accesskey="U">38. MacPython OSA モジュール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-gensuitemodule">
+<span id="gensuitemodule-generate-osa-stub-packages"></span><h1>38.1. <a class="reference internal" href="#module-gensuitemodule" title="gensuitemodule: Create a stub package from an OSA dictionary (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">gensuitemodule</span></code></a> &#8212; OSA スタブ作成パッケージ<a class="headerlink" href="#module-gensuitemodule" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference internal" href="#module-gensuitemodule" title="gensuitemodule: Create a stub package from an OSA dictionary (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">gensuitemodule</span></code></a> モジュールは AppleScript 辞書によって特定のアプリケーションに実装されている AppleScript 群のためのスタブコードを実装した Python パッケージを作成します。</p>
+<p>このモジュールは、通常は <strong class="program">PythonIDE</strong> からユーザによって起動されますが、コマンドラインからスクリプトとして実行する (オプションとしてヘルプに <a class="reference internal" href="../using/cmdline.html#cmdoption--help"><code class="xref std std-option docutils literal"><span class="pre">--help</span></code></a> を与えてみてください) こともできますし、Python コードでインポートして利用する事もできます。使用例として、どのようにして標準ライブラリに含まれているスタブパッケージを生成するか、 <code class="file docutils literal"><span class="pre">Mac/scripts/genallsuites.py</span></code> にあるソースを見てください。</p>
+<p>このモジュールは次の公開関数を定義しています。</p>
+<dl class="function">
+<dt id="gensuitemodule.is_scriptable">
+<code class="descclassname">gensuitemodule.</code><code class="descname">is_scriptable</code><span class="sig-paren">(</span><em>application</em><span class="sig-paren">)</span><a class="headerlink" href="#gensuitemodule.is_scriptable" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">application</span></code> としてパス名を与えたアプリケーションがスクリプト可能でありそうな場合、真を返します。返り値はやや不確実な場合があります。 <strong class="program">Internet Explorer</strong> はスクリプト不可能なように見えてしまいますが、実際はスクリプト可能です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gensuitemodule.processfile">
+<code class="descclassname">gensuitemodule.</code><code class="descname">processfile</code><span class="sig-paren">(</span><em>application</em><span class="optional">[</span>, <em>output</em>, <em>basepkgname</em>, <em>edit_modnames</em>, <em>creatorsignature</em>, <em>dump</em>, <em>verbose</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gensuitemodule.processfile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フルパス名として渡された <code class="docutils literal"><span class="pre">application</span></code> のためのスタブパッケージを作成します。 <code class="file docutils literal"><span class="pre">.app</span></code> として一つのパッケージにまとめてあるプログラム群のために内部の実行プログラムそのものではなくパッケージへのパス名を渡すだけでよくなっています。パッケージ化されていないCFM アプリケーションではアプリケーションバイナリのファイル名を渡す事もできます。</p>
+<p>この関数は、アプリケーションの OSA 用語リソースを捜し、これらのリソースを読み取り、その結果データをクライアントスタブを実装した Python コードパッケージを作成するために使用します。</p>
+<p><code class="docutils literal"><span class="pre">output</span></code> は作成結果のパッケージを保存するパス名で、指定しない場合は標準の「別名で保存(save file as)」ダイアログが表示されます。 <code class="docutils literal"><span class="pre">basepkgname</span></code> はこのパッケージの基盤となるパッケージを指定します。デフォルトは <code class="xref py py-mod docutils literal"><span class="pre">StdSuites</span></code> になります。 <code class="xref py py-mod docutils literal"><span class="pre">StdSuites</span></code> 自体を生成する場合だけ、このオプションを指定する必要があります。 <code class="docutils literal"><span class="pre">edit_modnames</span></code> は自動生成によって作成されてあまり綺麗ではないモジュール名を変更するために使用することができる辞書です。 <code class="docutils literal"><span class="pre">creator_signature</span></code> はパッケージ中の <code class="file docutils literal"><span class="pre">PkgInfo</span></code> ファイル、あるいは CFM ファイルクリエータ署名から通常得られる 4 文字クリエータコードを上書きするために使用することができます。 <code class="docutils literal"><span class="pre">dump</span></code> にはファイルオブジェクトを与え、これを指定すると  <code class="docutils literal"><span class="pre">processfile</span></code> はリソースを読取った後に停止し、コード化した用語リソースの Python 表現をダンプします。 <code class="docutils literal"><span class="pre">verbose</span></code> にもまたファイルオブジェクトを与え、これを指定すると <code class="docutils literal"><span class="pre">processfile</span></code> の行なっている処理の詳細を出力します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gensuitemodule.processfile_fromresource">
+<code class="descclassname">gensuitemodule.</code><code class="descname">processfile_fromresource</code><span class="sig-paren">(</span><em>application</em><span class="optional">[</span>, <em>output</em>, <em>basepkgname</em>, <em>edit_modnames</em>, <em>creatorsignature</em>, <em>dump</em>, <em>verbose</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gensuitemodule.processfile_fromresource" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は、用語リソースを得るのに異なる方法を使用する以外は、 <code class="docutils literal"><span class="pre">processfile</span></code> と同じです。この関数では、リソースファイルとして <code class="docutils literal"><span class="pre">application</span></code> を開き、このファイルから <code class="docutils literal"><span class="pre">&quot;aete&quot;</span></code> および <code class="docutils literal"><span class="pre">&quot;aeut&quot;</span></code> リソースをすべて読み込む事で、AppleScript 用語リソース読み込みを行ないます。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="macosa.html"
+                        title="前の章へ">38. MacPython OSA モジュール</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="aetools.html"
+                        title="次の章へ">38.2. <code class="docutils literal"><span class="pre">aetools</span></code> &#8212; OSA クライアントのサポート</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/gensuitemodule.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="aetools.html" title="38.2. aetools — OSA クライアントのサポート"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="macosa.html" title="38. MacPython OSA モジュール"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="macosa.html" >38. MacPython OSA モジュール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

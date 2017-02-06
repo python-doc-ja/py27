@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="11. データの永続化" href="persistence.html" />
+    <link rel="next" title="11.11. bsddb — Berkeley DB ライブラリへのインタフェース" href="bsddb.html" />
+    <link rel="prev" title="11.9. gdbm — GNU による dbm の再実装" href="gdbm.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="bsddb.html" title="11.11. bsddb — Berkeley DB ライブラリへのインタフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="gdbm.html" title="11.9. gdbm — GNU による dbm の再実装"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" accesskey="U">11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dbhash">
+<span id="dbhash-dbm-style-interface-to-the-bsd-database-library"></span><h1>11.10. <a class="reference internal" href="#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース<a class="headerlink" href="#module-dbhash" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p id="index-0"><a class="reference internal" href="#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a> モジュールでは BSD <code class="docutils literal"><span class="pre">db</span></code> ライブラリを使ってデータベースを開くための関数を提供します。このモジュールは、 DBM 形式のデータベースへのアクセスを提供する他の Python データベースモジュールのインタフェースをそのまま反映しています。 <a class="reference internal" href="#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a> を使うには <a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールが必要です。</p>
+<p>このモジュールは 1 つの例外と 1 つの関数を提供しています:</p>
+<dl class="exception">
+<dt id="dbhash.error">
+<em class="property">exception </em><code class="descclassname">dbhash.</code><code class="descname">error</code><a class="headerlink" href="#dbhash.error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="exceptions.html#exceptions.KeyError" title="exceptions.KeyError"><code class="xref py py-exc docutils literal"><span class="pre">KeyError</span></code></a> 以外のデータベースのエラーで送出されます。 <code class="xref py py-exc docutils literal"><span class="pre">bsddb.error</span></code> の別名です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dbhash.open">
+<code class="descclassname">dbhash.</code><code class="descname">open</code><span class="sig-paren">(</span><em>path</em><span class="optional">[</span>, <em>flag</em><span class="optional">[</span>, <em>mode</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベース <code class="docutils literal"><span class="pre">db</span></code> を開き、データベースオブジェクトを返します。引数 <em>path</em> はデータベースファイルの名前です。</p>
+<p><em>flag</em> 引数は、次のいずれかの値になります:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'r'</span></code></td>
+<td><p class="first last">既存のデータベースを読み込み専用で開く (デフォルト)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'w'</span></code></td>
+<td><p class="first last">既存のデータベースを読み書き用に開く</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'c'</span></code></td>
+<td><p class="first last">データベースを読み書き用に開く。ただし存在しない場合には新たに作成する</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'n'</span></code></td>
+<td><p class="first last">常に新たに読み書き用の新規のデータベースを作成する</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>BSD <code class="docutils literal"><span class="pre">db</span></code> ライブラリがロックをサポートしているプラットフォームでは、 flag に <code class="docutils literal"><span class="pre">'l'</span></code> を追加して、ロックを利用することを指定できます。</p>
+<p>オプションの <em>mode</em> 引数は、新たにデータベースを作成しなければならないときにデータベースファイルに設定すべき Unix ファイル権限ビットを表すために使われます; この値はプロセスの現在の umask 値でマスクされます。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="anydbm.html#module-anydbm" title="anydbm: Generic interface to DBM-style database modules."><code class="xref py py-mod docutils literal"><span class="pre">anydbm</span></code></a></dt>
+<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</p>
+</dd>
+<dt>Module <a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a></dt>
+<dd><p class="first last">BSD <code class="docutils literal"><span class="pre">db</span></code> ライブラリへの低レベルインタフェース。</p>
+</dd>
+<dt>Module <a class="reference internal" href="whichdb.html#module-whichdb" title="whichdb: Guess which DBM-style module created a given database."><code class="xref py py-mod docutils literal"><span class="pre">whichdb</span></code></a></dt>
+<dd><p class="first last">既存のデータベースがどの形式のデータベースか判定するユーティリティモジュール。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="database-objects">
+<span id="dbhash-objects"></span><h2>11.10.1. データベースオブジェクト<a class="headerlink" href="#database-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#dbhash.open" title="dbhash.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> によって返されるデータベースオブジェクトは、全ての DBM 形式データベースやマップ型オブジェクトで共通のメソッドを提供します。それら標準のメソッドに加えて、以下のメソッドが利用可能です。</p>
+<dl class="method">
+<dt id="dbhash.dbhash.first">
+<code class="descclassname">dbhash.</code><code class="descname">first</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.dbhash.first" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドと  <code class="xref py py-meth docutils literal"><span class="pre">next()</span></code> メソッドを使って、データベースの全てのキー/値のペアにわたってループ処理を行えます。探索はデータベースの内部ハッシュ値の順番に行われ、キーの値に順に並んでいるとは限りません。このメソッドは最初のキーを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dbhash.dbhash.last">
+<code class="descclassname">dbhash.</code><code class="descname">last</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.dbhash.last" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベース探索における最後のキー/値を返します。逆順探索を開始する際に使うことができます; <a class="reference internal" href="#dbhash.dbhash.previous" title="dbhash.dbhash.previous"><code class="xref py py-meth docutils literal"><span class="pre">previous()</span></code></a> を参照してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dbhash.dbhash.next">
+<code class="descclassname">dbhash.</code><code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.dbhash.next" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベースの順方向探索において、次のキー/値のペアを返します。以下のコードはデータベース <code class="docutils literal"><span class="pre">db</span></code> について、キー全てを含むリストをメモリ上に生成することなく全てのキーを出力します。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">db</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">db</span><span class="p">)):</span>
+    <span class="nb">print</span> <span class="n">db</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dbhash.dbhash.previous">
+<code class="descclassname">dbhash.</code><code class="descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.dbhash.previous" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベースの順方向探索において、一つ前のキー/値のペアを返します。 <a class="reference internal" href="#dbhash.dbhash.last" title="dbhash.dbhash.last"><code class="xref py py-meth docutils literal"><span class="pre">last()</span></code></a> と併せて、逆方向の探索に用いられます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dbhash.dbhash.sync">
+<code class="descclassname">dbhash.</code><code class="descname">sync</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbhash.dbhash.sync" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドはディスクにまだ書き込まれていないデータを全て書き込ませます。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース</a><ul>
+<li><a class="reference internal" href="#database-objects">11.10.1. データベースオブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="gdbm.html"
+                        title="前の章へ">11.9. <code class="docutils literal"><span class="pre">gdbm</span></code> &#8212; GNU による dbm の再実装</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="bsddb.html"
+                        title="次の章へ">11.11. <code class="docutils literal"><span class="pre">bsddb</span></code> &#8212; Berkeley DB ライブラリへのインタフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/dbhash.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="bsddb.html" title="11.11. bsddb — Berkeley DB ライブラリへのインタフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="gdbm.html" title="11.9. gdbm — GNU による dbm の再実装"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" >11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unicode HOWTO &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python HOWTO" href="index.html" />
+    <link rel="next" title="urllib2 を使ってインターネット上のリソースを取得するには" href="urllib2.html" />
+    <link rel="prev" title="ソート HOW TO" href="sorting.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="urllib2.html" title="urllib2 を使ってインターネット上のリソースを取得するには"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="sorting.html" title="ソート HOW TO"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unicode-howto">
+<h1>Unicode HOWTO<a class="headerlink" href="#unicode-howto" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Release:</th><td class="field-body">1.03</td>
+</tr>
+</tbody>
+</table>
+<p>この HOWTO 文書は Python 2.x の Unicode サポートについて論じ、さらに Unicode を使おうというときによくでくわす多くの問題について説明します。この文書の Python 3 版は &lt;<a class="reference external" href="https://docs.python.org/3/howto/unicode.html">https://docs.python.org/3/howto/unicode.html</a>&gt; をご覧ください。</p>
+<div class="section" id="introduction-to-unicode">
+<h2>Unicode 入門<a class="headerlink" href="#introduction-to-unicode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="history-of-character-codes">
+<h3>文字コードの歴史<a class="headerlink" href="#history-of-character-codes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1968年に American Standard Code for Information Interchange が標準化されました。これは頭文字の ASCII でよく知られています。ASCII は0から127までの、異なる文字の数値コードを定義していて、例えば、小文字の &#8216;a&#8217; にはコード値 97 が割り当てられています。</p>
+<p>ASCII はアメリカの開発標準だったのでアクセント無しの文字のみを定義していて、 &#8216;e&#8217; はありましたが、 &#8216;é&#8217; や &#8216;Í&#8217; はありませんでした。つまり、アクセント付きの文字を必要とする言語は ASCII できちんと表現するとができません。 (実際には英語でもアクセントが無いために起きる問題がありました、 &#8216;naïve&#8217; や &#8216;café&#8217; のようなアクセントを含む単語や、いくつかの出版社は &#8216;coöperate&#8217; のような独自のスタイルのつづりを必要とするなど)</p>
+<p>しばらくの間は単にアクセントが表示されないプログラムを書きました。 1980年半ばのフランス語で出版された Apple ][ の BASIC プログラムを見た記憶を辿ると、そこにはこんな行が含まれていました:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PRINT</span> <span class="s2">&quot;MISE A JOUR TERMINEE&quot;</span>
+<span class="n">PRINT</span> <span class="s2">&quot;PARAMETRES ENREGISTRES&quot;</span>
+</pre></div>
+</div>
+<p>これらのメッセージはアクセントを含むべきで、フランス語を読める人から見ると単に間違いとみなされます。</p>
+<p>1980年代には、多くのパーソナルコンピューターは 8-bit で、つまり 8-bit で 0-255 までの値を確保することができました。 ASCII コードは 127 までだったので、いくつかのマシンは 128 から 255 の値をアクセント付きの文字に割り当てました。マシン毎に異なる文字コードがあり、そのためにファイル交換の問題が起きることとなりました。結局、128-255 の間の値は多くのよく使われる集合が現われることになりました。そのうちいくつかは International Standards Organzation の定める本当の標準になり、またいくつかは一社で開発され、別の会社へと流行することで <strong>事実上の</strong> 慣習となりました。</p>
+<p>255文字というのは十分多い数ではありません。例えば、西ヨーロッパで使われるアクセント付き文字とロシアで使われるキリルアルファベットの両方は 128文字以上あるので、128-255の間におさめることはできません。</p>
+<p>異なる文字コードを使ってファイルを作成することは可能です (持っているロシア語のファイル全てを KOI8 と呼ばれるコーディングシステムで、持っているフランス語のファイル全てを別の Latin1 と呼ばれるコーディングシステムにすることで)、しかし、ロシア語の文章を引用するフランス語の文章を書きたい場合にはどうでしょう? 1989年代にこの問題を解決したいという要望が上って、Unicode 標準化の努力が始まりました。</p>
+<p>Unicode は 8-bit の文字の代わりに 16-bit の文字を使うことにとりかかりました。 16bit 使うということは 2^16 = 65,536 の異なる値が利用可能だということを意味します、これによって多くの異なるアルファベット上の多くの異なる文字を表現することができます; 最初の目標は Unicode が人間が使う個々の言語のアルファベットを含むことでした。あとになってこの目標を達成するには 16bit でさえも不十分であることがわかりました、そして最新の Unicode 規格は 0-1,114,111 (16進表記で 0x10ffff) までのより広い文字コードの幅を使っています。</p>
+<p>関連する ISO 標準も ISO 10646 があります。Unicode と ISO 10646 は元々独立した成果でしたが、 Unicode の 1.1 リビジョンで仕様を併合しました。</p>
+<p>(この Unicode の歴史についての解説は非常に単純化しています。平均的な Python プログラマは歴史的な詳細を気にする必要は無いと考えています; より詳しい情報は参考文献に載せた Unicode コンソーシアムのサイトを参考にして下さい。)</p>
+</div>
+<div class="section" id="definitions">
+<h3>定義<a class="headerlink" href="#definitions" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><strong>文字</strong> は文章の構成要素の中の最小のものです。&#8217;A&#8217;, &#8216;B&#8217;, &#8216;C&#8217; などは全て異なる文字です。 &#8216;È&#8217; や &#8216;Í&#8217; も同様に異なる文字です。文字は抽象的な概念で、言語や文脈に依存してさまざまに変化します。例えば、オーム(Ω) はふつう大文字ギリシャ文字のオメガ (Ω) で書かれますが (これらはいくつかのフォントで全く同じ書体かもしれません) しかし、これらは異なる意味を持つ異なる文字とみなされます。</p>
+<p>Unicode 標準は文字が <strong>コードポイント (code points)</strong> でどう表現するかを記述しています。コードポイントは整数値で、ふつう16進表記で書かれます。標準的にはコードポイントは U+12ca のような表記を使って書かれます、 U+12ca は 0x12ca (10進表記で 4810) を意味しています。 Unicode 標準は文字とコードポイントを対応させる多くのテーブルを含んでいます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0061</span>    <span class="s1">&#39;a&#39;</span><span class="p">;</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">A</span>
+<span class="mi">0062</span>    <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">B</span>
+<span class="mi">0063</span>    <span class="s1">&#39;c&#39;</span><span class="p">;</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">C</span>
+<span class="o">...</span>
+<span class="mi">007</span><span class="n">B</span>    <span class="s1">&#39;{&#39;</span><span class="p">;</span> <span class="n">LEFT</span> <span class="n">CURLY</span> <span class="n">BRACKET</span>
+</pre></div>
+</div>
+<p>厳密にいうとこれらの定義は「この文字は U+12ca です」ということを意味していません。 U+12ca はコードポイントで、特定の文字を示しています; この場合では、&#8217;ETHIOPIC SYLLABLE WI&#8217; を示しています。細かく気にしない文脈の中ではコードポイントと文字の区別は忘れられることがよくあります。</p>
+<p>文字は画面や紙面上では <strong>グリフ (glyph)</strong> と呼ばれるグラフィック要素の組で表示されます。大文字の A のグリフは例えば、厳密な形は使っているフォントによって異なりますが、斜めの線と水平の線です。たいていの Python コードではグリフの心配をする必要はありません; 一般的には表示する正しいグリフを見付けることは GUI toolkit や端末のフォントレンダラーの仕事です。</p>
+</div>
+<div class="section" id="encodings">
+<h3>エンコーディング<a class="headerlink" href="#encodings" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>前の節をまとめると: Unicode 文字列は 0 から 0x10ffff までの数値であるコードポイントのシーケンスで、シーケンスはメモリ上でバイト (0 から 255 までの値) の組として表現される必要があります。バイト列を Unicode 文字列に変換する規則を <strong>エンコーディング (encoding)</strong> と呼びます。</p>
+<p>最初に考えるであろうエンコーディングは 32-bit 整数の配列でしょう。この表示では、&#8221;Python&#8221; という文字列はこうみえます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>   <span class="n">P</span>           <span class="n">y</span>           <span class="n">t</span>           <span class="n">h</span>           <span class="n">o</span>           <span class="n">n</span>
+<span class="mh">0x50</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">79</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">74</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">68</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">6</span><span class="n">f</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">6</span><span class="n">e</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>
+   <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span>
+</pre></div>
+</div>
+<p>この表現は直接的でわかりやすい方法ですが、この表現を使うにはいくつかの問題があります。</p>
+<ol class="arabic simple">
+<li><p class="first">可搬性がない; プロセッサが異なるとバイトの順序づけも変わってしまいます。</p>
+</li>
+<li><p class="first">空間を無駄に使ってしまいます。多くの文書では、コードポイントの多くは 127 か 255 より小さいため多くの空間がゼロバイトに占有されます。上の文字列はASCII表示では6バイトを必要だったのに対して24バイトを必要としています。 RAM の使用料の増加はたいした問題ではありませんが (デスクトップコンピュータは RAM をメガバイト単位で持っていますし、文字列はそこまで大きい容量にはなりません)、しかし、ディスクとネットワークの帯域が4倍増えることはとても我慢できるものではありません。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">strlen()</span></code> のような現存する C 関数と互換性がありません、そのためワイド文字列関数一式が新たに必要となります。</p>
+</li>
+<li><p class="first">多くのインターネット標準がテキストデータとして定義されていて、それらはゼロバイトの埋め込まれた内容を扱うことができません。</p>
+</li>
+</ol>
+<p>一般的にこのエンコーディングは使わず、変わりにより効率的で便利な他のエンコーディングが選ばれています。 UTF-8 はたぶん最も一般的にサポートされているエンコーディングです。このエンコーディングについては後で説明します。</p>
+<p>エンコーディングは全ての Unicode 文字を扱う必要はありませんし、多くのエンコーディングはそれをしません。例えば Python のデフォルトエンコーディングの &#8216;ascii&#8217; エンコーディング。 Unicode 文字列を ASCII エンコーディングに変換する規則は単純です; それぞれのコードポイントに対して:</p>
+<ol class="arabic simple">
+<li><p class="first">コードポイントは128より小さい場合、コードポイントと同じ値です。</p>
+</li>
+<li><p class="first">コードポイントが128以上の場合、Unicode 文字列はエンコーディングで表示することができません。 (この場合 Python は <a class="reference internal" href="../library/exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> 例外を送出します。)</p>
+</li>
+</ol>
+<p>Latin-1, ISO-8859-1 として知られるエンコーディングも同様のエンコーディングです。 Unicode コードポイントの 0-255 は Latin-1 の値と等価なので、このエンコーディングの変換するには、単純にコードポイントをバイト値に変換する必要があります; もしコードポイントが255より大きい場合に遭遇した場合、文字列は Latin-1 にエンコードできません。</p>
+<p>エンコーディングは Latin-1 のように単純な一対一対応を持っていません。 IBM メインフレームで使われていた IBM の EBCDIC で考えてみます。文字は一つのブロックに収められていませんでした: &#8216;a&#8217; から &#8216;i&#8217; は 129 から 137 まででしたが、 &#8216;j&#8217; から &#8216;r&#8217; までは 145 から 153 までした。 EBICIC を使いたいと思ったら、おそらく変換を実行するルックアップテーブルの類を使う必要があるでしょう、これは内部の詳細のことになりますが。</p>
+<p>UTF-8 は最もよく使われるエンコーディングの一つです. UTF は &#8220;Unicode Transformation Format&#8221; からとられていて、 8 はエンコーディングに 8-bit の数字を使うことを意味しています。 (同じく UTF-16 エンコーディングもあります、しかしこちらは UTF-8 ほど頻繁に使われていません。) UTF-8 は以下の規則を利用します:</p>
+<ol class="arabic simple">
+<li><p class="first">コードポイントが128より小さい場合、対応するバイト値で表現。</p>
+</li>
+<li><p class="first">コードポイントは128から0x7ff の間の場合、128から255までの2バイト値に変換。</p>
+</li>
+<li><p class="first">0x7ff より大きいコードポイントは3か4バイト列に変換し、バイト列のそれぞれのバイトは128から255の間をとる。</p>
+</li>
+</ol>
+<p>UTF-8 はいくつかの便利な性質を持っています:</p>
+<ol class="arabic simple">
+<li><p class="first">任意の Unicode コードポイントを扱うことができる。</p>
+</li>
+<li><p class="first">Unicode 文字列をゼロバイトで埋めないバイト文字列に変換する。これによってバイト順の問題を解決し、UTF-8 文字列を <code class="docutils literal"><span class="pre">strcpy()</span></code> のような C 関数で処理することができ、そしてゼロバイトを扱うことができないプロトコル経由で送信することができます。</p>
+</li>
+<li><p class="first">ASCII テキストの文字列は UTF-8 テキストとしても有効です。</p>
+</li>
+<li><p class="first">UTF-8 はかなりコンパクトです; コードポイントの多くは2バイトに変換され、値が128より小さければ、1バイトしか占有しません。</p>
+</li>
+<li><p class="first">バイトが欠落したり、失われた場合、次の UTF-8 でエンコードされたコードポイントの開始を決定し、再同期することができる可能性があります。同様の理由でランダムな 8-bit データは正当な UTF-8 とみなされにくくなっています。</p>
+</li>
+</ol>
+</div>
+<div class="section" id="references">
+<h3>参考資料<a class="headerlink" href="#references" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Unicode コンソーシアムのサイト &lt;<a class="reference external" href="http://www.unicode.org">http://www.unicode.org</a>&gt; には文字の図表や用語辞典、そして Unicode 仕様の PDF があります。読むのは簡単ではないので覚悟して下さい。 &lt;<a class="reference external" href="http://www.unicode.org/history/">http://www.unicode.org/history/</a>&gt; は Unicode の起源と発展の年表です。</p>
+<p>標準についての理解を助けるために Jukka Korpela が Unicode の文字表を読むための導入ガイドを書いています、 &lt;<a class="reference external" href="http://www.cs.tut.fi/~jkorpela/unicode/guide.html">http://www.cs.tut.fi/~jkorpela/unicode/guide.html</a>&gt; から入手可能です。</p>
+<p>もう一つのよい入門記事 &lt;<a class="reference external" href="http://www.joelonsoftware.com/articles/Unicode.html">http://www.joelonsoftware.com/articles/Unicode.html</a>&gt; を Joel Spolsky が書いています。もしこの HOWTO の入門が明解に感じなかった場合には、続きを読む前にこの記事を読んでみるべきです。</p>
+<p>Wikipedia の記事はしばしば役に立ちます; 試しに &#8220;character encoding&#8221; &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Character_encoding">http://en.wikipedia.org/wiki/Character_encoding</a>&gt; の記事と UTF-8 &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/UTF-8">http://en.wikipedia.org/wiki/UTF-8</a>&gt; の記事を読んでみて下さい。</p>
+</div>
+</div>
+<div class="section" id="python-2-x-s-unicode-support">
+<h2>Python 2.x の Unicode サポート<a class="headerlink" href="#python-2-x-s-unicode-support" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ここまでで Unicode の基礎を学びました、ここから Python の Unicode 機能に触れます。</p>
+<div class="section" id="the-unicode-type">
+<h3>Unicode 型<a class="headerlink" href="#the-unicode-type" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Unicode 文字列は Python の組み込み型の一つ <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> 型のインスタンスとして表現されます。 <a class="reference internal" href="../library/functions.html#basestring" title="basestring"><code class="xref py py-class docutils literal"><span class="pre">basestring</span></code></a> と呼ばれる抽象クラスから派生しています、 <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> 型の親戚でもあります; そのため <code class="docutils literal"><span class="pre">isinstance(value,</span> <span class="pre">basestring)</span></code> で文字列型かどうか調べることができます。 Python 内部では Unicode 文字列は16-bit, 32-bit 整数のどちらかで表現され、どちらが使われるかは Python インタプリタがどうコンパイルされたかに依存します。</p>
+<p><a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> コンストラクタは <code class="docutils literal"><span class="pre">unicode(string[,</span> <span class="pre">encoding,</span> <span class="pre">errors])</span></code> という用法を持っています。この引数は全て 8-bit 文字列でなければいけません。最初の引数は指定したエンコーディングを使って Unicode に変換されます; <code class="docutils literal"><span class="pre">encoding</span></code> 引数を渡さない場合、変換には ASCII エンコーディングが使われます、そのため 127 より大きい文字はエラーとして扱われます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;abcdef&#39;</span><span class="p">)</span>
+<span class="go">u&#39;abcdef&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;abcdef&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;type &#39;unicode&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;abcdef&#39;</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">255</span><span class="p">))</span>    
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">UnicodeDecodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t decode byte 0xff in position 6:</span>
+<span class="go">ordinal not in range(128)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">errors</span></code> 引数は入力文字列がエンコーディング規則に従って変換できないときの対応を指定します。この引数に有効な値は &#8216;strict&#8217; (<code class="docutils literal"><span class="pre">UnicodeDecodeError</span></code> を送出する)、 &#8216;replace&#8217; (U+FFFD, &#8216;REPLACEMENT CHARACTER&#8217; を追加する)、または &#8216;ignore&#8217; (結果の Unicode 文字列から文字を除くだけ) です。以下の例で違いを示します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x80</span><span class="s1">abc&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span><span class="p">)</span>     
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">UnicodeDecodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t decode byte 0x80 in position 0:</span>
+<span class="go">ordinal not in range(128)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x80</span><span class="s1">abc&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<span class="go">u&#39;\ufffdabc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicode</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x80</span><span class="s1">abc&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="go">u&#39;abc&#39;</span>
+</pre></div>
+</div>
+<p>エンコーディングはエンコーディング名を含む文字列によって指定されます。 Python 2.7 ではエンコーディングはおよそ100に及びます; 一覧は Python ライブラリレファレンスの <a class="reference internal" href="../library/codecs.html#standard-encodings"><span class="std std-ref">標準エンコーディング</span></a> を参照して下さい。いくつかのエンコーディングは複数の名前を持っています; 例えば &#8216;latin-1&#8217;, &#8216;iso_8859_1&#8217;, そして &#8216;8859&#8217; これらは全て同じエンコーディングの別称です。</p>
+<p>Unicode 文字列の一つの文字は <a class="reference internal" href="../library/functions.html#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a> 組み込み関数で作成することができます、この関数は整数を引数にとり、対応するコードポイントを含む長さ1の Unicode 文字列を返します。逆の操作は <a class="reference internal" href="../library/functions.html#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a> 組み込み関数です、この関数は一文字の Unicode 文字列を引数にとり、コードポイント値を返します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span>
+<span class="go">u&#39;\ua000&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">u&#39;</span><span class="se">\ua000</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">40960</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> 型のインスタンスは多くの 8-bit 文字列型と同じ検索や書式指定のためのメソッドを持っています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s1">u&#39;Was ever feather so lightly blown to and fro as this multitude?&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;feather&#39;</span><span class="p">)</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;bird&#39;</span><span class="p">)</span>
+<span class="go">-1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;feather&#39;</span><span class="p">,</span> <span class="s1">&#39;sand&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Was ever sand so lightly blown to and fro as this multitude?&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">u&#39;WAS EVER FEATHER SO LIGHTLY BLOWN TO AND FRO AS THIS MULTITUDE?&#39;</span>
+</pre></div>
+</div>
+<p>これらのメソッドの引数は Unicode 文字列または 8-bit 文字列が使えることに注意して下さい。 8-bit 文字列は操作に使われる前に Unicode に変換されます; Python デフォルトの ASCII エンコーディングが利用されるため、127より大きい文字列は例外を引き起します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Was</span><span class="se">\x9f</span><span class="s1">&#39;</span><span class="p">)</span>                   
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">UnicodeDecodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t decode byte 0x9f in position 3:</span>
+<span class="go">ordinal not in range(128)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">u&#39;Was</span><span class="se">\x9f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+<p>文字列操作を行なう多くの Python コードはコードの変更無しに Unicode 文字列を扱うことができるでしょう。 (入出力に関しては Unicode のための更新が必要になります; 詳しくは後で述べます。)</p>
+<p>別の重要なメソッドは <code class="docutils literal"><span class="pre">.encode([encoding],</span> <span class="pre">[errors='strict'])</span></code> があります、このメソッドは Unicode 文字列を要求したエンコーディングでエンコードされた 8-bit 文字列を返します。 <code class="docutils literal"><span class="pre">errors</span></code> パラメータは <code class="docutils literal"><span class="pre">unicode()</span></code> コンストラクタのパラメータと同様ですが、もう一つ可能性が追加されています; 同様のものとして &#8216;strict&#8217;, &#8216;ignore&#8217;, そして &#8216;replace&#8217; があり、さらに XML 文字参照を使う &#8216;xmlcharrefreplace&#8217; を渡すことができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="s1">u&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="go">&#39;\xea\x80\x80abcd\xde\xb4&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>                       
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">UnicodeEncodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t encode character u&#39;\ua000&#39; in</span>
+<span class="go">position 0: ordinal not in range(128)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="go">&#39;abcd&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<span class="go">&#39;?abcd?&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="s1">&#39;xmlcharrefreplace&#39;</span><span class="p">)</span>
+<span class="go">&#39;&amp;#40960;abcd&amp;#1972;&#39;</span>
+</pre></div>
+</div>
+<p>Python の 8-bit 文字列は <code class="docutils literal"><span class="pre">.decode([encoding],</span> <span class="pre">[errors])</span></code> メソッドを持っています、これは与えたエンコーディングを使って文字列を解釈します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="s1">u&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>   <span class="c1"># Assemble a string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utf8_version</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>             <span class="c1"># Encode as UTF-8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">utf8_version</span><span class="p">),</span> <span class="n">utf8_version</span>
+<span class="go">(&lt;type &#39;str&#39;&gt;, &#39;\xea\x80\x80abcd\xde\xb4&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u2</span> <span class="o">=</span> <span class="n">utf8_version</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>            <span class="c1"># Decode using UTF-8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">==</span> <span class="n">u2</span>                                      <span class="c1"># The two strings match</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールに利用可能なエンコーディングを登録したり、アクセスする低レベルルーチンがあります。しかし、このモジュールが返すエンコーディングとデコーディング関数はふつう低レベルすぎて快適とはいえません、そのためここで <a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールについて述べないことにします。もし、全く新しいエンコーディングを実装する必要があれば、 <a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールのインターフェースについて学ぶ必要があります、しかし、エンコーディングの実装は特殊な作業なので、ここでは扱いません。このモジュールについて学ぶには Python ドキュメントを参照して下さい。</p>
+<p><a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールの中で最も使われるのは <a class="reference internal" href="../library/codecs.html#codecs.open" title="codecs.open"><code class="xref py py-func docutils literal"><span class="pre">codecs.open()</span></code></a> 関数です、この関数は入出力の節で議題に挙げます。</p>
+</div>
+<div class="section" id="unicode-literals-in-python-source-code">
+<h3>Python ソースコード内の Unicode リテラル<a class="headerlink" href="#unicode-literals-in-python-source-code" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Python のソースコード内では Unicode リテラルは &#8216;u&#8217; または &#8216;U&#8217; の文字を最初に付けた文字列として書かれます: <code class="docutils literal"><span class="pre">u'abcdefghijk'</span></code> 。特定のコードポイントはエスケープシーケンス <code class="docutils literal"><span class="pre">\u</span></code> を使い、続けてコードポイントを4桁の16進数を書きます。エスケープシーケンス <code class="docutils literal"><span class="pre">\U</span></code> も同様です、ただし4桁ではなく8桁の16進数を使います。</p>
+<p>Unicode リテラルは 8-bit 文字列と同じエスケープシーケンスを使うことができます、使えるエスケープシーケンスには <code class="docutils literal"><span class="pre">\x</span></code> も含みます、ただし <code class="docutils literal"><span class="pre">\x</span></code> は2桁の16進数しかとることができないので任意のコードポイントを表現することはできません。 8進エスケープは8進数の777を示す U+01ff まで使うことができます。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s2">u&quot;a</span><span class="se">\xac\u1234\u20ac\U00008000</span><span class="s2">&quot;</span>
+<span class="gp">... </span><span class="c1">#      ^^^^ two-digit hex escape</span>
+<span class="gp">... </span><span class="c1">#          ^^^^^^ four-digit Unicode escape</span>
+<span class="gp">... </span><span class="c1">#                      ^^^^^^^^^^ eight-digit Unicode escape</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>  <span class="nb">print</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+<span class="gp">...</span>
+<span class="go">97 172 4660 8364 32768</span>
+</pre></div>
+</div>
+<p>127 より大きいコードポイントに対してエスケープシーケンスを使うのは、エスケープシーケンスがあまり多くないうちは有効ですが、フランス語等のアクセントを使う言語でメッセージのような多くのアクセント文字を使う場合には邪魔になります。文字を <a class="reference internal" href="../library/functions.html#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a> 組み込み関数を使って組み上げることもできますが、それはさらに長くなってしまうでしょう。</p>
+<p>理想的にはあなたの言語の自然なエンコーディングでリテラルを書くことでしょう。そうなれば、Python のソースコードをアクセント付きの文字を自然に表示するお気に入りのエディタで編集し、実行時に正しい文字が得られます。</p>
+<p>Python は Unicode 文字列を任意のエンコーディングで書くことができます、ただしどのエンコーディングを使うかを宣言しなければいけません。それはソースファイルの一行目や二行目に特別なコメントを含めることによってできます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: latin-1 -*-</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="s1">u&#39;abcdé&#39;</span>
+<span class="nb">print</span> <span class="nb">ord</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>この構文は Emacs のファイル固有の変数を指定する表記から影響を受けています。Emacs は様々な変数をサポートしていますが、Python がサポートしているのは &#8216;coding&#8217; のみです。 <code class="docutils literal"><span class="pre">-*-</span></code> の記法はコメントが特別であることを示します; これは Python にとって意味はありませんが慣習です。 Python はコメント中に <code class="docutils literal"><span class="pre">coding:</span> <span class="pre">name</span></code> または <code class="docutils literal"><span class="pre">coding=name</span></code> を探します。</p>
+<p>このコメントを含まない場合には、デフォルトエンコーディングとして ASCII が利用されます。 Python のバージョンが 2.4 より前の場合には Euro-centric と Latin-1 が文字列リテラルのデフォルトエンコーディングであると仮定されていました; Python 2.4 では 127 より大きい文字でも動作しますが、警告を発することになります。例えば、以下のエンコーディング宣言のないプログラムは:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="n">u</span> <span class="o">=</span> <span class="s1">u&#39;abcdé&#39;</span>
+<span class="nb">print</span> <span class="nb">ord</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>これを Python 2.4 で動作させたときには、以下の警告が出力されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>amk:~$ python2.4 p263.py
+sys:1: DeprecationWarning: Non-ASCII character &#39;\xe9&#39;
+     in file p263.py on line 2, but no encoding declared;
+     see https://www.python.org/peps/pep-0263.html for details
+</pre></div>
+</div>
+<p>Python 2.5 以降ではより厳格になり、文法エラーになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>amk:~$ python2.5 p263.py
+File &quot;/tmp/p263.py&quot;, line 2
+SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
+  on line 2, but no encoding declared; see
+  https://www.python.org/peps/pep-0263.html for details
+</pre></div>
+</div>
+</div>
+<div class="section" id="unicode-properties">
+<h3>Unicode プロパティ<a class="headerlink" href="#unicode-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Unicode 仕様はコードポイントについての情報データベースを含んでいます。定義された各コードポイントに対して、情報は文字の名前、カテゴリ、適用可能ならば数値 (Unicode にはローマ数字や 1/3 や 4/5 のような分数などの文字があります)を含んでいます。コードポイントを左右どちらから読むのか等表示に関連したプロパティもあります。</p>
+<p>以下のプログラムはいくつかの文字に対する情報を表示し、特定の文字の数値を印字します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unicodedata</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">233</span><span class="p">)</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mh">0x0bf2</span><span class="p">)</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">3972</span><span class="p">)</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">6000</span><span class="p">)</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">13231</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%04x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">category</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+    <span class="nb">print</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># Get numeric value of second character</span>
+<span class="nb">print</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>実行時には、このように印字されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">00</span><span class="n">e9</span> <span class="n">Ll</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">E</span> <span class="n">WITH</span> <span class="n">ACUTE</span>
+<span class="mi">1</span> <span class="mi">0</span><span class="n">bf2</span> <span class="n">No</span> <span class="n">TAMIL</span> <span class="n">NUMBER</span> <span class="n">ONE</span> <span class="n">THOUSAND</span>
+<span class="mi">2</span> <span class="mi">0</span><span class="n">f84</span> <span class="n">Mn</span> <span class="n">TIBETAN</span> <span class="n">MARK</span> <span class="n">HALANTA</span>
+<span class="mi">3</span> <span class="mi">1770</span> <span class="n">Lo</span> <span class="n">TAGBANWA</span> <span class="n">LETTER</span> <span class="n">SA</span>
+<span class="mi">4</span> <span class="mi">33</span><span class="n">af</span> <span class="n">So</span> <span class="n">SQUARE</span> <span class="n">RAD</span> <span class="n">OVER</span> <span class="n">S</span> <span class="n">SQUARED</span>
+<span class="mf">1000.0</span>
+</pre></div>
+</div>
+<p>カテゴリコードは文字の性質を簡単に説明するものです。カテゴリの分類は &#8220;Letter&#8221;, &#8220;Number&#8221;, &#8220;Punctuation&#8221; または &#8220;Symbol&#8221; で、さらにサブカテゴリに分かれます。上に出ている出力結果を例にとると <code class="docutils literal"><span class="pre">'Ll'</span></code> は &#8216;Letter, lowercase&#8217; を意味していて、 <code class="docutils literal"><span class="pre">'No'</span></code> は &#8220;Number, other&#8221; を意味しています、 <code class="docutils literal"><span class="pre">'Mn'</span></code> は &#8220;Mark, nonspacing&#8221; で <code class="docutils literal"><span class="pre">'So'</span></code> は &#8220;Symbol, other&#8221; です。カテゴリコードの一覧は &lt;<a class="reference external" href="http://www.unicode.org/reports/tr44/#General_Category_Values">http://www.unicode.org/reports/tr44/#General_Category_Values</a>&gt; を参照して下さい。</p>
+</div>
+<div class="section" id="id1">
+<h3>参考資料<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Unicode と 8-bit 文字型については Python ライブラリレファレンスの <a class="reference internal" href="../library/stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> に記述があります。</p>
+<p><a class="reference internal" href="../library/unicodedata.html#module-unicodedata" title="unicodedata: Access the Unicode Database."><code class="xref py py-mod docutils literal"><span class="pre">unicodedata</span></code></a> モジュールについてのドキュメント。</p>
+<p><a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールについてのドキュメント。</p>
+<p>Marc-André Lemburg は EuroPython 2002 で &#8220;Python and Unicode&#8221; という題のプレゼンテーションを行ないました。彼のスライドの PDF バージョンが &lt;<a class="reference external" href="https://downloads.egenix.com/python/Unicode-EPC2002-Talk.pdf">https://downloads.egenix.com/python/Unicode-EPC2002-Talk.pdf</a>&gt; から入手できます。これは、Python の Unicode 機能のデザインの素晴しい概観になっています。</p>
+</div>
+</div>
+<div class="section" id="reading-and-writing-unicode-data">
+<h2>Unicode データを読み書きする<a class="headerlink" href="#reading-and-writing-unicode-data" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>一旦 Unicode データに対してコードが動作するように書き終えたら、次の問題は入出力です。プログラムは Unicode 文字列をどう受けとり、どう Unicode を外部記憶装置や送受信装置に適した形式に変換するのでしょう?</p>
+<p>入力ソースと出力先に依存しないような方法は可能です; アプリケーションに利用されているライブラリが Unicode をそのままサポートしているかを調べなければいけません。例えば XML パーサーは大抵 Unicode データを返します。多くのリレーショナルデータベースも Unicode 値の入ったコラムをサポートしていますし、 SQL の問い合わせで Unicode 値を返すことができます。</p>
+<p>Unicode データは大抵の場合、ディスクに書き込んだりソケットを通して送られる前に特定のエンコーディングに変換されます。それらを自分自身で行なうことは可能です: ファイルを開いて、8-bit 文字列を読み、文字列を <code class="docutils literal"><span class="pre">unicode(str,</span> <span class="pre">encoding)</span></code> で変換します。しかし、この手動での操作は推奨できません。</p>
+<p>問題はエンコーディングがマルチバイトであるという性質からきています; 一つの Unicode 文字は数バイトで表現されます。ファイルを任意のサイズ (1K または 4K) を単位 (chunk) として読みたい場合、読み込みの単位 (chunk) の最後にエンコーディングされた一つの Unicode 文字のバイト列の一部のみだった状況に対するエラー処理コードを書く必要がでます。一つの解決策としてはメモリ上にファイル全体を読み込んでから、デコードを実行するという方法があります、しかし巨大なファイルを扱うときに問題が起きます; 2Gb のファイルを読む場合、2Gb の RAM が必要です。 (正確にいうとより多くの RAM が必要です、少なくともある時点ではエンコードする文字列と Unicode に変換した文字列の両方がメモリ上に必要とされるために)</p>
+<p>解決策は文字コードのシーケンスが途中で切れる問題を捉える低レベルのデコーディングインターフェースを使うことです。このインターフェースの実装は既に行なわれています: <a class="reference internal" href="../library/codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールは <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 関数を含んでいます、この関数はファイルの内容が指定したエンコーディングであると仮定されるファイルオブジェクトを返し、 <code class="docutils literal"><span class="pre">.read()</span></code> and <code class="docutils literal"><span class="pre">.write()</span></code> のようなメソッドに対して Unicode パラメータを受けつけます。</p>
+<p>関数の引数は <code class="docutils literal"><span class="pre">open(filename,</span> <span class="pre">mode='rb',</span> <span class="pre">encoding=None,</span> <span class="pre">errors='strict',</span> <span class="pre">buffering=1)</span></code> です。 <code class="docutils literal"><span class="pre">mode</span></code> は <code class="docutils literal"><span class="pre">'r'</span></code>, <code class="docutils literal"><span class="pre">'w'</span></code>, または <code class="docutils literal"><span class="pre">'a'</span></code> が受け付けられ、通常の組み込み関数 <code class="docutils literal"><span class="pre">open()</span></code> 関数の引数と同様です; ファイルを更新するには <code class="docutils literal"><span class="pre">'+'</span></code> を加えます。 <code class="docutils literal"><span class="pre">buffering</span></code> は標準の関数の引数と同様です。 <code class="docutils literal"><span class="pre">encoding</span></code> は使うエンコーディングを文字列で与えます; もし <code class="docutils literal"><span class="pre">None</span></code> にした場合は 8-bit 文字列を受け付ける通常の Python のファイルオブジェクトが返されます。それ以外の引数の場合には、ラップされたオブジェクトが返され、データは必要に応じて変換されたラッパーオブジェクトから読み書きされます。 <code class="docutils literal"><span class="pre">errors</span></code> はエンコーディイングエラーに対する動作を指定します、これは例の如く &#8216;strict&#8217;, &#8216;ignore&#8217; そして &#8216;replace&#8217; のうちのどれかをとります。</p>
+<p>そのためファイルから Unicode を読むのは単純です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;unicode.rst&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>読み書きの両方ができる update モードでファイルを開くことも可能です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w+&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">u&#39;</span><span class="se">\u4500</span><span class="s1"> blah blah blah</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Unicode 文字 U+FEFF は byte-order-mark (BOM) として利用されます、そしてファイルのバイト順の自動判定の役立てるためにファイルの最初の文字として書かれます。いくつかのエンコーディング、たとえば UTF-16 では BOM がファイルの最初に存在することになっています; そのようなエンコーディングが利用されるときには BOM は最初の文字として自動的に書き込まれ、ファイルの読み込み時には暗黙の内に除かれます。これらのエンコーディングにはリトルエンディアン (little-endian) とビッグエンディアン (big-endian) に対して &#8216;utf-16-le&#8217; と &#8216;utf-16-be&#8217; のようにエンコーディングの変種が存在します、これらは特定のバイト順を示すもので、BOM をスキップしません。</p>
+<div class="section" id="unicode-filenames">
+<h3>Unicode ファイル名<a class="headerlink" href="#unicode-filenames" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>多くの OS では現在任意の Unicode 文字を含むファイル名をサポートしています。通常 Unicode 文字列をシステム依存のエンコーディングに変換することによって実装されています。例えば、Mac OS X は UTF-8 を利用し、Windows ではエンコーディングが設定で変更することが可能です; Windows では Python は &#8220;mbcs&#8221; という名前に現在設定されているエンコーディングを問い合わせて利用します。 Unix システムでは <code class="docutils literal"><span class="pre">LANG</span></code> や <code class="docutils literal"><span class="pre">LC_CTYPE</span></code> 環境変数を設定していれば、それだけがファイルシステムのエンコーディングとなります; もしエンコーディングを設定しなければ、デフォルトエンコーディングは ASCII になります。</p>
+<p><a class="reference internal" href="../library/sys.html#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><code class="xref py py-func docutils literal"><span class="pre">sys.getfilesystemencoding()</span></code></a> 関数は現在のシステムで利用するエンコーディングを返し、エンコーディングを手動で設定したい場合利用します、ただしわざわざそうする積極的な理由はありません。読み書きのためにファイルを開く時には、ファイル名を Unicode 文字列として渡すだけで正しいエンコーディングに自動的に変更されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">u&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;blah</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../library/os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal"><span class="pre">os.stat()</span></code></a> のような <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールの関数も Unicode のファイル名を受け付けます。</p>
+<p>ファイル名を返す <a class="reference internal" href="../library/os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></code></a> は問題を引き起こします: この関数はファイル名を返すべきでしょうか、それともエンコードされた内容の 8-bit 文字列を返すべきでしょうか? <a class="reference internal" href="../library/os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></code></a> は与えられたデイレクトリへのパスが 8-bit 文字列か Unicode 文字列で与えたかに応じてその両方を返します。パスを Unicode 文字列で与えた場合、ファイル名はファイルシステムのエンコーディングを利用してデコードされ、 Unicode 文字列のリストが返されます、8-bit パスを与えるとファイル名は 8-bit 文字列で返されます。例えば、デフォルトのファイルシステムエンコーディングが UTF-8 と仮定される場合、以下のプログラムを実行すると:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="o">=</span> <span class="s1">u&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">u&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>以下の出力結果が生成されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>amk:~$ python t.py
+[&#39;.svn&#39;, &#39;filename\xe4\x94\x80abc&#39;, ...]
+[u&#39;.svn&#39;, u&#39;filename\u4500abc&#39;, ...]
+</pre></div>
+</div>
+<p>最初のリストは UTF-8 でエンコーディングされたファイル名を含み、第二のリストは Unicode 版を含んでいます。</p>
+</div>
+<div class="section" id="tips-for-writing-unicode-aware-programs">
+<h3>Unicode 対応のプログラムを書くための Tips<a class="headerlink" href="#tips-for-writing-unicode-aware-programs" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>この章では Unicode を扱うプログラムを書くためのいくつかの提案を紹介します。</p>
+<p>最も重要な助言としては:</p>
+<blockquote>
+<div><p>ソフトウェア内部の動作には Unicode 文字列のみを利用し、出力時に特定のエンコーディングに変換する。</p>
+</div></blockquote>
+<p>UTF-8 と 8-bit 文字列の両方を処理する関数を書こうとすると、異なる種類の文字列を結合する際にバグが生じやすいことに気づくでしょう。 Python のデフォルトエンコーディングは ASCII なので、 ASCII の値 127 より大きい文字が入力データにあった場合、これは ASCII エンコーディングで扱えないために、 <a class="reference internal" href="../library/exceptions.html#exceptions.UnicodeDecodeError" title="exceptions.UnicodeDecodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeDecodeError</span></code></a> が発生します。</p>
+<p>この問題を見逃がすのは簡単です、ソフトウェアに対してアクセントを含まないデータのみでテストを行なえばよいのです; 全てはうまく動作しているように見えます、しかし実際には最初に 127 より大きい文字を試みたユーザにバグが待ち構えていることになります。第二の助言は:</p>
+<blockquote>
+<div><p>テストデータには 127 より大きい文字を含み、さらに 255 より大きい文字を含むことが望ましい。</p>
+</div></blockquote>
+<p>Web ブラウザからのデータやその他の信用できないところからのデータを使う場合には、コマンド行の生成やデータベースへの記録の前に不正な文字に対するチェックを行なうことが一般的です。もしコマンド行生成やデータベース記録を行なう場合には、文字列が利用または保存できる形式になっているかを一度は注意深く確かめる必要があります; 文字を偽装するためにエンコーディングを利用することは可能です。このことは入力データのエンコーディングが指定されている場合にも可能です; 多くのエンコーディングはチェック用の文字単独をそのままにしておきますが、 Python は <code class="docutils literal"><span class="pre">'base64'</span></code> のような単独の文字を変更するエンコーディングも含んでいます。</p>
+<p>例えば、Unicode のファイル名を取るコンテキストマネージメントシステムがあるとします、そして &#8216;/&#8217; 文字を含むパスを拒否したいとします。するとこのコードのように書くでしょう:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_file</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;/&#39; not allowed in filenames&quot;</span><span class="p">)</span>
+    <span class="n">unicode_name</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">unicode_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c1"># ... return contents of file ...</span>
+</pre></div>
+</div>
+<p>しかし、攻撃者が <code class="docutils literal"><span class="pre">'base64'</span></code> エンコーディングを指定できる場合、攻撃者はシステムファイルを読むために <code class="docutils literal"><span class="pre">'/etc/passwd'</span></code> の文字列を base-64 でエンコードした <code class="docutils literal"><span class="pre">'L2V0Yy9wYXNzd2Q='</span></code> を渡すことができます。上のコードは文字 <code class="docutils literal"><span class="pre">'/'</span></code> をエンコードした形式で探し、デコードした結果が危険な文字となる場合を見逃してしまいます。</p>
+</div>
+<div class="section" id="id2">
+<h3>参考資料<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Marc-André Lemburg のプレゼンテーション &#8220;Writing Unicode-aware Applications in Python&#8221; の PDF スライドが &lt;<a class="reference external" href="https://downloads.egenix.com/python/LSM2005-Developing-Unicode-aware-applications-in-Python.pdf">https://downloads.egenix.com/python/LSM2005-Developing-Unicode-aware-applications-in-Python.pdf</a>&gt; から入手可能です、そして文字エンコーディングの問題と同様にアプリケーションの国際化やローカライズについても議論されています。</p>
+</div>
+</div>
+<div class="section" id="revision-history-and-acknowledgements">
+<h2>更新履歴と謝辞<a class="headerlink" href="#revision-history-and-acknowledgements" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>この記事中の誤りの指摘や提案を申し出てくれた以下の人々に感謝します: Nicholas Bastin, Marius Gedminas, Kent Johnson, Ken Krugler, Marc-André Lemburg, Martin von Löwis, Chad Whitacre.</p>
+<p>Version 1.0: posted August 5 2005.</p>
+<p>Version 1.01: posted August 7 2005.  Corrects factual and markup errors; adds
+several links.</p>
+<p>Version 1.02: posted August 16 2005.  Corrects factual errors.</p>
+<p>Version 1.03: posted June 20 2010.  Notes that Python 3.x is not covered,
+and that the HOWTO only covers 2.x.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Unicode HOWTO</a><ul>
+<li><a class="reference internal" href="#introduction-to-unicode">Unicode 入門</a><ul>
+<li><a class="reference internal" href="#history-of-character-codes">文字コードの歴史</a></li>
+<li><a class="reference internal" href="#definitions">定義</a></li>
+<li><a class="reference internal" href="#encodings">エンコーディング</a></li>
+<li><a class="reference internal" href="#references">参考資料</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-2-x-s-unicode-support">Python 2.x の Unicode サポート</a><ul>
+<li><a class="reference internal" href="#the-unicode-type">Unicode 型</a></li>
+<li><a class="reference internal" href="#unicode-literals-in-python-source-code">Python ソースコード内の Unicode リテラル</a></li>
+<li><a class="reference internal" href="#unicode-properties">Unicode プロパティ</a></li>
+<li><a class="reference internal" href="#id1">参考資料</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reading-and-writing-unicode-data">Unicode データを読み書きする</a><ul>
+<li><a class="reference internal" href="#unicode-filenames">Unicode ファイル名</a></li>
+<li><a class="reference internal" href="#tips-for-writing-unicode-aware-programs">Unicode 対応のプログラムを書くための Tips</a></li>
+<li><a class="reference internal" href="#id2">参考資料</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#revision-history-and-acknowledgements">更新履歴と謝辞</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="sorting.html"
+                        title="前の章へ">ソート HOW TO</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="urllib2.html"
+                        title="次の章へ">urllib2 を使ってインターネット上のリソースを取得するには</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/howto/unicode.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="urllib2.html" title="urllib2 を使ってインターネット上のリソースを取得するには"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="sorting.html" title="ソート HOW TO"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

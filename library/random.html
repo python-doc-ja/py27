@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9.6. random — 擬似乱数を生成する &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="9. 数値と数学モジュール" href="numeric.html" />
+    <link rel="next" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数" href="itertools.html" />
+    <link rel="prev" title="9.5. fractions — 有理数" href="fractions.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="fractions.html" title="9.5. fractions — 有理数"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="numeric.html" accesskey="U">9. 数値と数学モジュール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-random">
+<span id="random-generate-pseudo-random-numbers"></span><h1>9.6. <a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal"><span class="pre">random</span></code></a> &#8212; 擬似乱数を生成する<a class="headerlink" href="#module-random" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/random.py">Lib/random.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは様々な分布をもつ擬似乱数生成器を実装しています。</p>
+<p>整数用では、ある値域内の数の選択を一様にします。シーケンス用には、シーケンスからのランダムな要素の一様な選択、リストの要素の順列をランダムに置き換える関数、順列を入れ替えずにランダムに取り出す関数があります。</p>
+<p>実数用としては、一様分布、正規分布 (ガウス分布)、対数正規分布、負の指数分布、ガンマおよびベータ分布を計算する関数があります。角度分布の生成用には、フォンミーゼス分布が利用できます。</p>
+<p>ほとんど全てのモジュール関数は、基礎となる関数 <a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a> に依存します。この関数はランダムな浮動小数点数を半開区間 [0.0, 1.0) から一様に生成します。Python は中心となる乱数生成器としてメルセンヌツイスタを使います。これは 53 ビット精度の浮動小数点を生成し、周期は 2**19937-1 です、本体は C で実装されていて、高速でスレッドセーフです。メルセンヌツイスタは、現存する中で、最も大規模にテストされた乱数生成器のひとつです。しかし、完全に決定論的であるため、この乱数生成器は全ての目的に合致しているわけではなく、暗号化の目的には全く向いていません。</p>
+<p>このモジュールで提供されている関数は、実際には <code class="xref py py-class docutils literal"><span class="pre">random.Random</span></code> クラスの隠蔽されたインスタンスのメソッドにバインドされています。内部状態を共有しない生成器を取得するため、自分で <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを生成することができます。異なる <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを各スレッド毎に生成し、 <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> メソッドを使うことで各々のスレッドにおいて生成された乱数列ができるだけ重複しないようにすれば、マルチスレッドプログラムを作成する上で特に便利になります。</p>
+<p>自分で考案した基本乱数生成器を使いたいなら、クラス <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> をサブクラス化することもできます: この場合、メソッド <a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-meth docutils literal"><span class="pre">random()</span></code></a> 、 <a class="reference internal" href="#random.seed" title="random.seed"><code class="xref py py-meth docutils literal"><span class="pre">seed()</span></code></a> 、 <a class="reference internal" href="#random.getstate" title="random.getstate"><code class="xref py py-meth docutils literal"><span class="pre">getstate()</span></code></a> 、 <a class="reference internal" href="#random.setstate" title="random.setstate"><code class="xref py py-meth docutils literal"><span class="pre">setstate()</span></code></a> 、および <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> をオーバライドしてください。オプションとして、新しいジェネレータは <a class="reference internal" href="#random.getrandbits" title="random.getrandbits"><code class="xref py py-meth docutils literal"><span class="pre">getrandbits()</span></code></a> メソッドを提供できます &#8212; これにより <a class="reference internal" href="#random.randrange" title="random.randrange"><code class="xref py py-meth docutils literal"><span class="pre">randrange()</span></code></a> メソッドが任意に大きな範囲から選択を行えるようになります。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加: </span><a class="reference internal" href="#random.getrandbits" title="random.getrandbits"><code class="xref py py-meth docutils literal"><span class="pre">getrandbits()</span></code></a> メソッド.</p>
+</div>
+<p>サブクラス化の例として、 <a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal"><span class="pre">random</span></code></a> モジュールは <a class="reference internal" href="#random.WichmannHill" title="random.WichmannHill"><code class="xref py py-class docutils literal"><span class="pre">WichmannHill</span></code></a> クラスを提供します。このクラスは Python だけで書かれた代替生成器を実装しています。このクラスは、乱数生成器に Wichmann-Hill 法を使っていた古いバージョンの Python から得られた結果を再現するための、後方互換の手段になります。ただし、この Wichmann-Hill 生成器はもはや推奨することができないということに注意してください。現在の水準では生成される周期が短すぎ、また厳密な乱数性試験に合格しないことが知られています。こうした欠点を修正した最近の改良についてはページの最後に挙げた参考文献を参照してください。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>メルセンヌツイスタが Wichmann-Hill の代わりにデフォルト生成器になりました。</p>
+</div>
+<p><a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal"><span class="pre">random</span></code></a> モジュールは <a class="reference internal" href="#random.SystemRandom" title="random.SystemRandom"><code class="xref py py-class docutils literal"><span class="pre">SystemRandom</span></code></a> クラスも提供していて、このクラスは OS が提供している乱数発生源を利用して乱数を生成するシステム関数 <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> を使うものです。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">このモジュールの擬似乱数生成器はセキュリティ上の手段に使うべきではありません。暗号学的にセキュアな疑似乱数生成器が必要なら、 <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> や <a class="reference internal" href="#random.SystemRandom" title="random.SystemRandom"><code class="xref py py-class docutils literal"><span class="pre">SystemRandom</span></code></a> を使ってください。</p>
+</div>
+<p>保守(bookkeeping)関数:</p>
+<dl class="function">
+<dt id="random.seed">
+<code class="descclassname">random.</code><code class="descname">seed</code><span class="sig-paren">(</span><span class="optional">[</span><em>x</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.seed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>基本乱数生成器を初期化します。オプション引数 <em>x</em> はハッシュ可能(<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a>)な任意のオブジェクトをとり得ます。 <em>x</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> の場合、現在のシステム時間が使われます; 現在のシステム時間はモジュールが最初にインポートされた時に乱数生成器を初期化するためにも使われます。乱数の発生源をオペレーティングシステムが提供している場合、システム時刻の代わりにその発生源が使われます（詳細については <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> 関数を参照）。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は、オペレーティングシステムのリソースは使われませんでした。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.getstate">
+<code class="descclassname">random.</code><code class="descname">getstate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#random.getstate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>乱数生成器の現在の内部状態を記憶したオブジェクトを返します。このオブジェクトを <a class="reference internal" href="#random.setstate" title="random.setstate"><code class="xref py py-func docutils literal"><span class="pre">setstate()</span></code></a> に渡して内部状態を復帰することができます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span>Python 2.6 が作り出す状態オブジェクトは以前のバージョンには読み込めません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.setstate">
+<code class="descclassname">random.</code><code class="descname">setstate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#random.setstate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>state</em> は予め <a class="reference internal" href="#random.getstate" title="random.getstate"><code class="xref py py-func docutils literal"><span class="pre">getstate()</span></code></a> を呼び出して得ておかなくてはなりません。 <a class="reference internal" href="#random.setstate" title="random.setstate"><code class="xref py py-func docutils literal"><span class="pre">setstate()</span></code></a> は <a class="reference internal" href="#random.getstate" title="random.getstate"><code class="xref py py-func docutils literal"><span class="pre">getstate()</span></code></a> が呼び出された時の乱数生成器の内部状態を復帰します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.jumpahead">
+<code class="descclassname">random.</code><code class="descname">jumpahead</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#random.jumpahead" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>内部状態を、現在の状態から、非常に離れているであろう状態に変更します。 <em>n</em> は非負の整数です。これはマルチスレッドのプログラムが複数の <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> クラスのインスタンスと結合されている場合に非常に便利です: <a class="reference internal" href="#random.setstate" title="random.setstate"><code class="xref py py-meth docutils literal"><span class="pre">setstate()</span></code></a> や <a class="reference internal" href="#random.seed" title="random.seed"><code class="xref py py-meth docutils literal"><span class="pre">seed()</span></code></a> は全てのインスタンスを同じ内部状態にするのに使うことができ、その後 <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> を使って各インスタンスの内部状態を引き離すことができます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span><em>n</em> ステップ先の特定の状態になるのではなく、 <code class="docutils literal"><span class="pre">jumpahead(n)</span></code> は何ステップも離れているであろう別の状態にする。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.getrandbits">
+<code class="descclassname">random.</code><code class="descname">getrandbits</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#random.getrandbits" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>k</em> ビット分の乱数ビットを納めた Python の <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> 整数を返します。このメソッドは MersenneTwister 生成器で提供されており、その他の乱数生成器でもオプションのAPIとして提供されているかもしれません。このメソッドが使えるとき、 <a class="reference internal" href="#random.randrange" title="random.randrange"><code class="xref py py-meth docutils literal"><span class="pre">randrange()</span></code></a> メソッドは大きな範囲を扱えるようになります。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p>整数用の関数:</p>
+<dl class="function">
+<dt id="random.randrange">
+<code class="descclassname">random.</code><code class="descname">randrange</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#random.randrange" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descclassname">random.</code><code class="descname">randrange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p><code class="docutils literal"><span class="pre">range(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></code> の要素からランダムに選ばれた要素を返します。この関数は <code class="docutils literal"><span class="pre">choice(range(start,</span> <span class="pre">stop,</span> <span class="pre">step))</span></code> と等価ですが、実際には range オブジェクトを生成しません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 1.5.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.randint">
+<code class="descclassname">random.</code><code class="descname">randint</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#random.randint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">b</span></code> であるようなランダムな整数 <em>N</em> を返します。</p>
+</dd></dl>
+
+<p>シーケンス用の関数:</p>
+<dl class="function">
+<dt id="random.choice">
+<code class="descclassname">random.</code><code class="descname">choice</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#random.choice" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>空でないシーケンス <em>seq</em> からランダムに要素を返します。 <em>seq</em> が空のときは、 <a class="reference internal" href="exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.shuffle">
+<code class="descclassname">random.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>x</em><span class="optional">[</span>, <em>random</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.shuffle" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>シーケンス <em>x</em> をインプレースに混ぜます。オプションの引数 <em>random</em> は、引数を持たず、 [0.0, 1.0) のランダムな浮動小数点数を返すような関数です; 標準では、これは関数 <a class="reference internal" href="#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a> です。</p>
+<p>やや小さい <code class="docutils literal"><span class="pre">len(x)</span></code> であっても、 <em>x</em> の順列の総数はほとんどの乱数生成器の周期よりも大きくなるので注意してください; このことは長いシーケンスに対してはほとんどの順列は生成されないことを意味します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.sample">
+<code class="descclassname">random.</code><code class="descname">sample</code><span class="sig-paren">(</span><em>population</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#random.sample" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>母集団のシーケンスから選ばれた長さ <em>k</em> の一意な要素からなるリストを返します。値の置換を行わないランダムサンプリングに用いられます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+<p>母集団自体を変更せずに、母集団内の要素を含む新たなリストを返します。返されたリストは選択された順に並んでいるので、このリストの部分スライスもランダムなサンプルになります。これにより、くじの当選者 (サンプル) を1等賞と2等賞（の部分スライス）に分けることも可能です。</p>
+<p>母集団の要素はハッシュ可能 (<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a>) でなくても、ユニークでなくても、かまいません。母集団が繰り返しを含む場合、出現するそれぞれがサンプルに選択されえます。</p>
+<p>整数の並びからサンプルを選ぶには、引数に <a class="reference internal" href="functions.html#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a> オブジェクトを使いましょう。特に、巨大な母集団からサンプルを取るとき、速度と空間効率が上がります。 <code class="docutils literal"><span class="pre">sample(xrange(10000000),</span> <span class="pre">60)</span></code></p>
+</dd></dl>
+
+<p>以下の関数は特定の実数値分布を生成します。関数の引数の名前は、一般的な数学の慣例で使われている分布の公式の対応する変数から取られています; これらの公式のほとんどはどんな統計学のテキストにも載っています。</p>
+<dl class="function">
+<dt id="random.random">
+<code class="descclassname">random.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#random.random" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>値域 [0.0, 1.0) の次のランダムな浮動小数点数を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.uniform">
+<code class="descclassname">random.</code><code class="descname">uniform</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#random.uniform" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">b</span></code> であれば <code class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">b</span></code> 、<code class="docutils literal"><span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">a</span></code> であれば <code class="docutils literal"><span class="pre">b</span> <span class="pre">&lt;=</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">a</span></code> であるようなランダムな浮動小数点数 <em>N</em> を返します。</p>
+<p>端点の値 <code class="docutils literal"><span class="pre">b</span></code> が範囲に含まれるかどうかは、等式 <code class="docutils literal"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">(b-a)</span> <span class="pre">*</span> <span class="pre">random()</span></code> における浮動小数点の丸めに依存します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.triangular">
+<code class="descclassname">random.</code><code class="descname">triangular</code><span class="sig-paren">(</span><em>low</em>, <em>high</em>, <em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#random.triangular" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">low</span> <span class="pre">&lt;=</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">high</span></code> でありこれら境界値の間に指定された最頻値 <em>mode</em> を持つようなランダムな浮動小数点数 <em>N</em> を返します。境界 <em>low</em> と <em>high</em> のデフォルトは 0 と 1 です。最頻値 <em>mode</em> 引数のデフォルトは両境界値の中点になり、対称な分布を与えます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.betavariate">
+<code class="descclassname">random.</code><code class="descname">betavariate</code><span class="sig-paren">(</span><em>alpha</em>, <em>beta</em><span class="sig-paren">)</span><a class="headerlink" href="#random.betavariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベータ分布です。引数の満たすべき条件は <code class="docutils literal"><span class="pre">alpha</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> および <code class="docutils literal"><span class="pre">beta</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> です。範囲 0 から 1 の値を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.expovariate">
+<code class="descclassname">random.</code><code class="descname">expovariate</code><span class="sig-paren">(</span><em>lambd</em><span class="sig-paren">)</span><a class="headerlink" href="#random.expovariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指数分布です。<em>lambd</em> は平均にしたい値の逆数です。(この引数は &#8220;lambda&#8221; と呼ぶべきなのですが、Python の予約語なので使えません。) 返される値の範囲は <em>lambd</em> が正なら 0 から正の無限大、<em>lambd</em> が負なら負の無限大から 0 です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.gammavariate">
+<code class="descclassname">random.</code><code class="descname">gammavariate</code><span class="sig-paren">(</span><em>alpha</em>, <em>beta</em><span class="sig-paren">)</span><a class="headerlink" href="#random.gammavariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ガンマ分布です。 (ガンマ関数 <em>ではありません</em> ！) 引数の満たすべき条件は <code class="docutils literal"><span class="pre">alpha</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> および <code class="docutils literal"><span class="pre">beta</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> です。</p>
+<p>確率分布関数は:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>          <span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span> <span class="o">/</span> <span class="n">beta</span><span class="p">)</span>
+<span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span>  <span class="o">--------------------------------------</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">**</span> <span class="n">alpha</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.gauss">
+<code class="descclassname">random.</code><code class="descname">gauss</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#random.gauss" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ガウス分布です。 <em>mu</em> は平均であり、 <em>sigma</em> は標準偏差です。この関数は後で定義する関数 <a class="reference internal" href="#random.normalvariate" title="random.normalvariate"><code class="xref py py-func docutils literal"><span class="pre">normalvariate()</span></code></a> より少しだけ高速です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.lognormvariate">
+<code class="descclassname">random.</code><code class="descname">lognormvariate</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#random.lognormvariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>対数正規分布です。この分布を自然対数を用いた分布にした場合、平均 <em>mu</em> で標準偏差 <em>sigma</em> の正規分布になります。 <em>mu</em> は任意の値を取ることができ、<em>sigma</em> はゼロより大きくなければなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.normalvariate">
+<code class="descclassname">random.</code><code class="descname">normalvariate</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#random.normalvariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>正規分布です。 <em>mu</em> は平均で、 <em>sigma</em> は標準偏差です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.vonmisesvariate">
+<code class="descclassname">random.</code><code class="descname">vonmisesvariate</code><span class="sig-paren">(</span><em>mu</em>, <em>kappa</em><span class="sig-paren">)</span><a class="headerlink" href="#random.vonmisesvariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>mu</em> は平均の角度で、0 から 2*<em>pi</em> までのラジアンで表されます。 <em>kappa</em> は濃度パラメタで、ゼロ以上でなければなりません。<em>kappa</em> がゼロに等しい場合、この分布は範囲 0 から 2*<em>pi</em> の一様でランダムな角度の分布に退化します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.paretovariate">
+<code class="descclassname">random.</code><code class="descname">paretovariate</code><span class="sig-paren">(</span><em>alpha</em><span class="sig-paren">)</span><a class="headerlink" href="#random.paretovariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パレート分布です。 <em>alpha</em> は形状パラメタです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.weibullvariate">
+<code class="descclassname">random.</code><code class="descname">weibullvariate</code><span class="sig-paren">(</span><em>alpha</em>, <em>beta</em><span class="sig-paren">)</span><a class="headerlink" href="#random.weibullvariate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ワイブル分布です。 <em>alpha</em> は尺度パラメタで、 <em>beta</em> は形状パラメタです。</p>
+</dd></dl>
+
+<p>代替の乱数生成器:</p>
+<dl class="class">
+<dt id="random.WichmannHill">
+<em class="property">class </em><code class="descclassname">random.</code><code class="descname">WichmannHill</code><span class="sig-paren">(</span><span class="optional">[</span><em>seed</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.WichmannHill" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>乱数生成器として Wichmann-Hill アルゴリズムを実装するクラスです。 <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> クラスと同じメソッド全てと、下で説明する <a class="reference internal" href="#random.whseed" title="random.whseed"><code class="xref py py-meth docutils literal"><span class="pre">whseed()</span></code></a> メソッドを持ちます。このクラスは、Python だけで実装されているので、スレッドセーフではなく、呼び出しと呼び出しの間にロックが必要です。また、周期が 6,953,607,871,644 と短く、独立した2つの乱数列が重複しないように注意が必要です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="random.whseed">
+<code class="descclassname">random.</code><code class="descname">whseed</code><span class="sig-paren">(</span><span class="optional">[</span><em>x</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.whseed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これは obsolete で、バージョン 2.1 以前の Python と、ビット・レベルの互換性のために提供されてます。詳細は <a class="reference internal" href="#random.seed" title="random.seed"><code class="xref py py-func docutils literal"><span class="pre">seed()</span></code></a> を参照してください。 <a class="reference internal" href="#random.whseed" title="random.whseed"><code class="xref py py-func docutils literal"><span class="pre">whseed()</span></code></a> は、引数に与えた整数が異なっても、内部状態が異なることを保障しません。取り得る内部状態の個数が 2**24 以下になる場合もあります。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="random.SystemRandom">
+<em class="property">class </em><code class="descclassname">random.</code><code class="descname">SystemRandom</code><span class="sig-paren">(</span><span class="optional">[</span><em>seed</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.SystemRandom" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オペレーティングシステムの提供する発生源によって乱数を生成する <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> 関数を使うクラスです。すべてのシステムで使えるメソッドではありません。ソフトウェアの状態に依存してはいけませんし、一連の操作は再現不能です。それに応じて、 <a class="reference internal" href="#random.seed" title="random.seed"><code class="xref py py-meth docutils literal"><span class="pre">seed()</span></code></a> と <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> メソッドは何の影響も及ぼさず、無視されます。 <a class="reference internal" href="#random.getstate" title="random.getstate"><code class="xref py py-meth docutils literal"><span class="pre">getstate()</span></code></a> と <a class="reference internal" href="#random.setstate" title="random.setstate"><code class="xref py py-meth docutils literal"><span class="pre">setstate()</span></code></a> メソッドが呼び出されると、例外 <a class="reference internal" href="exceptions.html#exceptions.NotImplementedError" title="exceptions.NotImplementedError"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code></a> が送出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p>基本使用例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>        <span class="c1"># Random float x, 0.0 &lt;= x &lt; 1.0</span>
+<span class="go">0.37444887175646646</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Random float x, 1.0 &lt;= x &lt; 10.0</span>
+<span class="go">1.1800146073117523</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Integer from 1 to 10, endpoints included</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Even integer from 0 to 100</span>
+<span class="go">26</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">)</span>  <span class="c1"># Choose a random element</span>
+<span class="go">&#39;c&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">items</span>
+<span class="go">[7, 3, 2, 5, 6, 4, 1]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>  <span class="mi">3</span><span class="p">)</span>  <span class="c1"># Choose 3 elements</span>
+<span class="go">[4, 1, 5]</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<p>M. Matsumoto and T. Nishimura, &#8220;Mersenne Twister: A 623-dimensionally
+equidistributed uniform pseudorandom number generator&#8221;, ACM Transactions on
+Modeling and Computer Simulation Vol. 8, No. 1, January pp.3-30 1998.</p>
+<p>Wichmann, B. A. &amp; Hill, I. D., &#8220;Algorithm AS 183: An efficient and portable
+pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
+<p class="last"><a class="reference external" href="http://code.activestate.com/recipes/576707/">Complementary-Multiply-with-Carry recipe</a>  長い周期と比較的シンプルな更新操作を備えた互換性のある別の乱数生成器。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="fractions.html"
+                        title="前の章へ">9.5. <code class="docutils literal"><span class="pre">fractions</span></code> &#8212; 有理数</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="itertools.html"
+                        title="次の章へ">9.7. <code class="docutils literal"><span class="pre">itertools</span></code> &#8212; 効率的なループ実行のためのイテレータ生成関数</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/random.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="fractions.html" title="9.5. fractions — 有理数"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="numeric.html" >9. 数値と数学モジュール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

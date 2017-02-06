@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>37.8. Mac OS ツールボックスモジュール &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="37. Mac OS X 固有のサービス" href="mac.html" />
+    <link rel="next" title="37.9. ColorPicker — 色選択ダイアログ" href="colorpicker.html" />
+    <link rel="prev" title="37.7. autoGIL — イベントループ中のグローバルインタープリタの取り扱い" href="autogil.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="colorpicker.html" title="37.9. ColorPicker — 色選択ダイアログ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="autogil.html" title="37.7. autoGIL — イベントループ中のグローバルインタープリタの取り扱い"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mac.html" accesskey="U">37. Mac OS X 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mac-os-toolbox-modules">
+<span id="toolbox"></span><h1>37.8. Mac OS ツールボックスモジュール<a class="headerlink" href="#mac-os-toolbox-modules" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>各種のレガシーな Mac OS ツールボックスへのインターフェースを与えるモジュール群があります。対応するモジュールがあるなら、そのモジュールではツールボックスで宣言された各種の構造体の Python オブジェクトが定義され、操作は定義されたオブジェクトのメソッドとして実装されています。その他の操作はモジュールの関数として実装されています。 C で可能な操作がすべて Python で可能なわけではありませんし (コールバックはよく問題になります)、パラメータが Python だと違ってしまうことはよくあります (特に入力バッファや出力バッファ)。全てのメソッドと関数は <code class="xref py py-attr docutils literal"><span class="pre">__doc__</span></code> 文字列があるので、引数と返り値の説明を得る事ができます。他の情報源としては、 <a class="reference external" href="http://developer.apple.com/legacy/mac/library/#documentation/macos8/mac8.html">Inside Macintosh</a> などを参照してください。</p>
+<p>これらのモジュールは全て <code class="xref py py-mod docutils literal"><span class="pre">Carbon</span></code> パッケージに含まれています。この名前にもかかわらずそれら全てが Carbon フレームワークの一部なわけではありません。CF は、CoreFoundation フレームワークの中に実際はありますし、Qt は QuickTime フレームワークにあります。ツールボックスモジュールは普通以下のようにして利用します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Carbon</span> <span class="k">import</span> <span class="n">AE</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">最新バージョンの OS X では、このモジュールが使っている OS X API のほとんどが非推奨になっているか、もしくは削除されています。多くは Python が 64 ビットモードで動作している場合には利用出来ません。Carbon モジュール群は Python 3 では削除済みです。Python 2 でもこれらのモジュールの利用は避けるべきです。</p>
+</div>
+<div class="section" id="module-Carbon.AE">
+<span id="carbon-ae-apple-events"></span><h2>37.8.1. <a class="reference internal" href="#module-Carbon.AE" title="Carbon.AE: Interface to the Apple Events toolbox. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.AE</span></code></a> &#8212; Apple Events<a class="headerlink" href="#module-Carbon.AE" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.AH">
+<span id="carbon-ah-apple-help"></span><h2>37.8.2. <a class="reference internal" href="#module-Carbon.AH" title="Carbon.AH: Interface to the Apple Help manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.AH</span></code></a> &#8212; Apple ヘルプ<a class="headerlink" href="#module-Carbon.AH" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.App">
+<span id="carbon-app-appearance-manager"></span><h2>37.8.3. <a class="reference internal" href="#module-Carbon.App" title="Carbon.App: Interface to the Appearance Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.App</span></code></a> &#8212; Appearance Manager<a class="headerlink" href="#module-Carbon.App" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Appearance">
+<span id="carbon-appearance-appearance-manager-constants"></span><h2>37.8.4. <a class="reference internal" href="#module-Carbon.Appearance" title="Carbon.Appearance: Constant definitions for the interface to the Appearance Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Appearance</span></code></a> &#8212; Appearance Manager 定数<a class="headerlink" href="#module-Carbon.Appearance" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.CF">
+<span id="carbon-cf-core-foundation"></span><h2>37.8.5. <a class="reference internal" href="#module-Carbon.CF" title="Carbon.CF: Interface to the Core Foundation. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CF</span></code></a> &#8212; Core Foundation<a class="headerlink" href="#module-Carbon.CF" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">CFBase</span></code>, <code class="docutils literal"><span class="pre">CFArray</span></code>, <code class="docutils literal"><span class="pre">CFData</span></code>, <code class="docutils literal"><span class="pre">CFDictionary</span></code>, <code class="docutils literal"><span class="pre">CFString</span></code> と <code class="docutils literal"><span class="pre">CFURL</span></code> オブジェクトがいくらか部分的にサポートされています。</p>
+</div>
+<div class="section" id="module-Carbon.CG">
+<span id="carbon-cg-core-graphics"></span><h2>37.8.6. <a class="reference internal" href="#module-Carbon.CG" title="Carbon.CG: Interface to Core Graphics. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CG</span></code></a> &#8212; Core Graphics<a class="headerlink" href="#module-Carbon.CG" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.CarbonEvt">
+<span id="carbon-carbonevt-carbon-event-manager"></span><h2>37.8.7. <a class="reference internal" href="#module-Carbon.CarbonEvt" title="Carbon.CarbonEvt: Interface to the Carbon Event Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CarbonEvt</span></code></a> &#8212; Carbon Event Manager<a class="headerlink" href="#module-Carbon.CarbonEvt" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.CarbonEvents">
+<span id="carbon-carbonevents-carbon-event-manager-constants"></span><h2>37.8.8. <a class="reference internal" href="#module-Carbon.CarbonEvents" title="Carbon.CarbonEvents: Constants for the interface to the Carbon Event Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CarbonEvents</span></code></a> &#8212; Carbon Event Manager 定数<a class="headerlink" href="#module-Carbon.CarbonEvents" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Cm">
+<span id="carbon-cm-component-manager"></span><h2>37.8.9. <a class="reference internal" href="#module-Carbon.Cm" title="Carbon.Cm: Interface to the Component Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Cm</span></code></a> &#8212; Component Manager<a class="headerlink" href="#module-Carbon.Cm" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Components">
+<span id="carbon-components-component-manager-constants"></span><h2>37.8.10. <a class="reference internal" href="#module-Carbon.Components" title="Carbon.Components: Constants for the interface to the Component Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Components</span></code></a> &#8212; Component Manager 定数<a class="headerlink" href="#module-Carbon.Components" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.ControlAccessor">
+<span id="carbon-controlaccessor-control-manager-accssors"></span><h2>37.8.11. <a class="reference internal" href="#module-Carbon.ControlAccessor" title="Carbon.ControlAccessor: Accessor functions for the interface to the Control Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.ControlAccessor</span></code></a> &#8212; Control Manager アクセッサ<a class="headerlink" href="#module-Carbon.ControlAccessor" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Controls">
+<span id="carbon-controls-control-manager-constants"></span><h2>37.8.12. <a class="reference internal" href="#module-Carbon.Controls" title="Carbon.Controls: Constants for the interface to the Control Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Controls</span></code></a> &#8212; Control Manager 定数<a class="headerlink" href="#module-Carbon.Controls" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.CoreFounation">
+<span id="carbon-corefounation-corefounation-constants"></span><h2>37.8.13. <a class="reference internal" href="#module-Carbon.CoreFounation" title="Carbon.CoreFounation: Constants for the interface to CoreFoundation. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CoreFounation</span></code></a> &#8212; CoreFounation 定数<a class="headerlink" href="#module-Carbon.CoreFounation" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.CoreGraphics">
+<span id="carbon-coregraphics-coregraphics-constants"></span><h2>37.8.14. <a class="reference internal" href="#module-Carbon.CoreGraphics" title="Carbon.CoreGraphics: Constants for the interface to CoreGraphics. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.CoreGraphics</span></code></a> &#8212; CoreGraphics 定数<a class="headerlink" href="#module-Carbon.CoreGraphics" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Ctl">
+<span id="carbon-ctl-control-manager"></span><h2>37.8.15. <a class="reference internal" href="#module-Carbon.Ctl" title="Carbon.Ctl: Interface to the Control Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Ctl</span></code></a> &#8212; Control Manager<a class="headerlink" href="#module-Carbon.Ctl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Dialogs">
+<span id="carbon-dialogs-dialog-manager-constants"></span><h2>37.8.16. <a class="reference internal" href="#module-Carbon.Dialogs" title="Carbon.Dialogs: Constants for the interface to the Dialog Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Dialogs</span></code></a> &#8212; Dialog Manager 定数<a class="headerlink" href="#module-Carbon.Dialogs" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Dlg">
+<span id="carbon-dlg-dialog-manager"></span><h2>37.8.17. <a class="reference internal" href="#module-Carbon.Dlg" title="Carbon.Dlg: Interface to the Dialog Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Dlg</span></code></a> &#8212; Dialog Manager<a class="headerlink" href="#module-Carbon.Dlg" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Drag">
+<span id="carbon-drag-drag-and-drop-manager"></span><h2>37.8.18. <a class="reference internal" href="#module-Carbon.Drag" title="Carbon.Drag: Interface to the Drag and Drop Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Drag</span></code></a> &#8212; Drag and Drop Manager<a class="headerlink" href="#module-Carbon.Drag" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Dragconst">
+<span id="carbon-dragconst-drag-and-drop-manager-constants"></span><h2>37.8.19. <a class="reference internal" href="#module-Carbon.Dragconst" title="Carbon.Dragconst: Constants for the interface to the Drag and Drop Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Dragconst</span></code></a> &#8212; Drag and Drop Manager 定数<a class="headerlink" href="#module-Carbon.Dragconst" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Events">
+<span id="carbon-events-event-manager-constants"></span><h2>37.8.20. <a class="reference internal" href="#module-Carbon.Events" title="Carbon.Events: Constants for the interface to the classic Event Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Events</span></code></a> &#8212; Event Manager 定数<a class="headerlink" href="#module-Carbon.Events" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Evt">
+<span id="carbon-evt-event-manager"></span><h2>37.8.21. <a class="reference internal" href="#module-Carbon.Evt" title="Carbon.Evt: Interface to the classic Event Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Evt</span></code></a> &#8212; Event Manager<a class="headerlink" href="#module-Carbon.Evt" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.File">
+<span id="carbon-file-file-manager"></span><h2>37.8.22. <a class="reference internal" href="#module-Carbon.File" title="Carbon.File: Interface to the File Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.File</span></code></a> &#8212; File Manager<a class="headerlink" href="#module-Carbon.File" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Files">
+<span id="carbon-files-file-manager-constants"></span><h2>37.8.23. <a class="reference internal" href="#module-Carbon.Files" title="Carbon.Files: Constants for the interface to the File Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Files</span></code></a> &#8212; File Manager 定数<a class="headerlink" href="#module-Carbon.Files" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Fm">
+<span id="carbon-fm-font-manager"></span><h2>37.8.24. <a class="reference internal" href="#module-Carbon.Fm" title="Carbon.Fm: Interface to the Font Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Fm</span></code></a> &#8212; Font Manager<a class="headerlink" href="#module-Carbon.Fm" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Folder">
+<span id="carbon-folder-folder-manager"></span><h2>37.8.25. <a class="reference internal" href="#module-Carbon.Folder" title="Carbon.Folder: Interface to the Folder Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Folder</span></code></a> &#8212; Folder Manager<a class="headerlink" href="#module-Carbon.Folder" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Folders">
+<span id="carbon-folders-folder-manager-constants"></span><h2>37.8.26. <a class="reference internal" href="#module-Carbon.Folders" title="Carbon.Folders: Constants for the interface to the Folder Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Folders</span></code></a> &#8212; Folder Manager 定数<a class="headerlink" href="#module-Carbon.Folders" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Fonts">
+<span id="carbon-fonts-font-manager-constants"></span><h2>37.8.27. <a class="reference internal" href="#module-Carbon.Fonts" title="Carbon.Fonts: Constants for the interface to the Font Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Fonts</span></code></a> &#8212; Font Manager 定数<a class="headerlink" href="#module-Carbon.Fonts" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Help">
+<span id="carbon-help-help-manager"></span><h2>37.8.28. <a class="reference internal" href="#module-Carbon.Help" title="Carbon.Help: Interface to the Carbon Help Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Help</span></code></a> &#8212; Help Manager<a class="headerlink" href="#module-Carbon.Help" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.IBCarbon">
+<span id="carbon-ibcarbon-carbon-interfacebuilder"></span><h2>37.8.29. <a class="reference internal" href="#module-Carbon.IBCarbon" title="Carbon.IBCarbon: Interface to the Carbon InterfaceBuilder support libraries. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.IBCarbon</span></code></a> &#8212; Carbon InterfaceBuilder<a class="headerlink" href="#module-Carbon.IBCarbon" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.IBCarbonRuntime">
+<span id="carbon-ibcarbonruntime-carbon-interfacebuilder-constants"></span><h2>37.8.30. <a class="reference internal" href="#module-Carbon.IBCarbonRuntime" title="Carbon.IBCarbonRuntime: Constants for the interface to the Carbon InterfaceBuilder support libraries. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.IBCarbonRuntime</span></code></a> &#8212; Carbon InterfaceBuilder 定数<a class="headerlink" href="#module-Carbon.IBCarbonRuntime" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Icns">
+<span id="carbon-icn-carbon-icon-manager"></span><h2>37.8.31. <code class="xref py py-mod docutils literal"><span class="pre">Carbon.Icn</span></code> &#8212; Carbon Icon Manager<a class="headerlink" href="#module-Carbon.Icns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Icons">
+<span id="carbon-icons-carbon-icon-manager-constants"></span><h2>37.8.32. <a class="reference internal" href="#module-Carbon.Icons" title="Carbon.Icons: Constants for the interface to the Carbon Icon Manager (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Icons</span></code></a> &#8212; Carbon Icon Manager 定数<a class="headerlink" href="#module-Carbon.Icons" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Launch">
+<span id="carbon-launch-carbon-launch-services"></span><h2>37.8.33. <a class="reference internal" href="#module-Carbon.Launch" title="Carbon.Launch: Interface to the Carbon Launch Services. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Launch</span></code></a> &#8212; Carbon Launch Services<a class="headerlink" href="#module-Carbon.Launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.LaunchServices">
+<span id="carbon-launchservices-carbon-launch-services-constants"></span><h2>37.8.34. <a class="reference internal" href="#module-Carbon.LaunchServices" title="Carbon.LaunchServices: Constants for the interface to the Carbon Launch Services. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.LaunchServices</span></code></a> &#8212; Carbon Launch Services 定数<a class="headerlink" href="#module-Carbon.LaunchServices" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.List">
+<span id="carbon-list-list-manager"></span><h2>37.8.35. <a class="reference internal" href="#module-Carbon.List" title="Carbon.List: Interface to the List Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.List</span></code></a> &#8212; List Manager<a class="headerlink" href="#module-Carbon.List" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Lists">
+<span id="carbon-lists-list-manager-constants"></span><h2>37.8.36. <a class="reference internal" href="#module-Carbon.Lists" title="Carbon.Lists: Constants for the interface to the List Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Lists</span></code></a> &#8212; List Manager 定数<a class="headerlink" href="#module-Carbon.Lists" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.MacHelp">
+<span id="carbon-machelp-help-manager-constants"></span><h2>37.8.37. <a class="reference internal" href="#module-Carbon.MacHelp" title="Carbon.MacHelp: Constants for the interface to the Carbon Help Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.MacHelp</span></code></a> &#8212; Help Manager 定数<a class="headerlink" href="#module-Carbon.MacHelp" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.MediaDescr">
+<span id="carbon-mediadescr-parsers-and-generators-for-quicktime-media-descriptors"></span><h2>37.8.38. <a class="reference internal" href="#module-Carbon.MediaDescr" title="Carbon.MediaDescr: Parsers and generators for Quicktime Media descriptors (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.MediaDescr</span></code></a> &#8212; Parsers and generators for Quicktime Media descriptors<a class="headerlink" href="#module-Carbon.MediaDescr" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Menu">
+<span id="carbon-menu-menu-manager"></span><h2>37.8.39. <a class="reference internal" href="#module-Carbon.Menu" title="Carbon.Menu: Interface to the Menu Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Menu</span></code></a> &#8212; Menu Manager<a class="headerlink" href="#module-Carbon.Menu" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Menus">
+<span id="carbon-menus-menu-manager-constants"></span><h2>37.8.40. <a class="reference internal" href="#module-Carbon.Menus" title="Carbon.Menus: Constants for the interface to the Menu Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Menus</span></code></a> &#8212; Menu Manager 定数<a class="headerlink" href="#module-Carbon.Menus" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Mlte">
+<span id="carbon-mlte-multilingual-text-editor"></span><h2>37.8.41. <a class="reference internal" href="#module-Carbon.Mlte" title="Carbon.Mlte: Interface to the MultiLingual Text Editor. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Mlte</span></code></a> &#8212; MultiLingual Text Editor<a class="headerlink" href="#module-Carbon.Mlte" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.OSA">
+<span id="carbon-osa-carbon-osa-interface"></span><h2>37.8.42. <a class="reference internal" href="#module-Carbon.OSA" title="Carbon.OSA: Interface to the Carbon OSA Library. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.OSA</span></code></a> &#8212; Carbon OSA Interface<a class="headerlink" href="#module-Carbon.OSA" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.OSAconst">
+<span id="carbon-osaconst-carbon-osa-interface-constants"></span><h2>37.8.43. <a class="reference internal" href="#module-Carbon.OSAconst" title="Carbon.OSAconst: Constants for the interface to the Carbon OSA Library. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.OSAconst</span></code></a> &#8212; Carbon OSA Interface 定数<a class="headerlink" href="#module-Carbon.OSAconst" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.QDOffscreen">
+<span id="carbon-qdoffscreen-quickdraw-offscreen-constants"></span><h2>37.8.44. <a class="reference internal" href="#module-Carbon.QDOffscreen" title="Carbon.QDOffscreen: Constants for the interface to the QuickDraw Offscreen APIs. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.QDOffscreen</span></code></a> &#8212; QuickDraw Offscreen 定数<a class="headerlink" href="#module-Carbon.QDOffscreen" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Qd">
+<span id="carbon-qd-quickdraw"></span><h2>37.8.45. <a class="reference internal" href="#module-Carbon.Qd" title="Carbon.Qd: Interface to the QuickDraw toolbox. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Qd</span></code></a> &#8212; QuickDraw<a class="headerlink" href="#module-Carbon.Qd" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Qdoffs">
+<span id="carbon-qdoffs-quickdraw-offscreen"></span><h2>37.8.46. <a class="reference internal" href="#module-Carbon.Qdoffs" title="Carbon.Qdoffs: Interface to the QuickDraw Offscreen APIs. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Qdoffs</span></code></a> &#8212; QuickDraw Offscreen<a class="headerlink" href="#module-Carbon.Qdoffs" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Qt">
+<span id="carbon-qt-quicktime"></span><h2>37.8.47. <a class="reference internal" href="#module-Carbon.Qt" title="Carbon.Qt: Interface to the QuickTime toolbox. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Qt</span></code></a> &#8212; QuickTime<a class="headerlink" href="#module-Carbon.Qt" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.QuickDraw">
+<span id="carbon-quickdraw-quickdraw-constants"></span><h2>37.8.48. <a class="reference internal" href="#module-Carbon.QuickDraw" title="Carbon.QuickDraw: Constants for the interface to the QuickDraw toolbox. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.QuickDraw</span></code></a> &#8212; QuickDraw 定数<a class="headerlink" href="#module-Carbon.QuickDraw" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.QuickTime">
+<span id="carbon-quicktime-quicktime-constants"></span><h2>37.8.49. <a class="reference internal" href="#module-Carbon.QuickTime" title="Carbon.QuickTime: Constants for the interface to the QuickTime toolbox. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.QuickTime</span></code></a> &#8212; QuickTime 定数<a class="headerlink" href="#module-Carbon.QuickTime" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Res">
+<span id="carbon-res-resource-manager-and-handles"></span><h2>37.8.50. <a class="reference internal" href="#module-Carbon.Res" title="Carbon.Res: Interface to the Resource Manager and Handles. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Res</span></code></a> &#8212; Resource Manager and Handles<a class="headerlink" href="#module-Carbon.Res" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Resources">
+<span id="carbon-resources-resource-manager-and-handles-constants"></span><h2>37.8.51. <a class="reference internal" href="#module-Carbon.Resources" title="Carbon.Resources: Constants for the interface to the Resource Manager and Handles. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Resources</span></code></a> &#8212; Resource Manager and Handles 定数<a class="headerlink" href="#module-Carbon.Resources" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Scrap">
+<span id="carbon-scrap-scrap-manager"></span><h2>37.8.52. <a class="reference internal" href="#module-Carbon.Scrap" title="Carbon.Scrap: The Scrap Manager provides basic services for implementing cut &amp; paste and clipboard operations. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Scrap</span></code></a> &#8212; スクラップマネージャ<a class="headerlink" href="#module-Carbon.Scrap" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このモジュールは Mac OS 9 とそれ以前の OS 上の Classic PPC MacPython で完全に利用可能です。 Carbon 版の MacPython ではほんの限られた機能だけが利用可能です。</p>
+<p id="index-0">スクラップマネージャは Macintosh 上でのカット &amp; ペースト操作の最もシンプルな形式をサポートします。アプリケーション間とアプリケーション内での両方のクリップボード操作が可能です。</p>
+<p><code class="xref py py-mod docutils literal"><span class="pre">Scrap</span></code> モジュールはスクラップマネージャの関数へのローレベルでのアクセスを提供します。以下の関数が定義されています:</p>
+<dl class="function">
+<dt id="Carbon.Scrap.InfoScrap">
+<code class="descclassname">Carbon.Scrap.</code><code class="descname">InfoScrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Carbon.Scrap.InfoScrap" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>スクラップについて現在の情報を返します。この情報は <code class="docutils literal"><span class="pre">(size,</span> <span class="pre">handle,</span> <span class="pre">count,</span> <span class="pre">state,</span> <span class="pre">path)</span></code> を含むタプルでエンコードされます。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">フィールド</p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>size</em></td>
+<td><p class="first last">スクラップのサイズをバイト数で示したもの。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><em>handle</em></td>
+<td><p class="first last">スクラップを表現するリソースオブジェクト。</p>
+</td>
+</tr>
+<tr class="row-even"><td><em>count</em></td>
+<td><p class="first last">スクラップの内容のシリアルナンバー。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><em>state</em></td>
+<td><p class="first last">整数。メモリー内にあるなら正、ディスク上にあるなら <code class="docutils literal"><span class="pre">0</span></code> 、初期化されていないなら負。</p>
+</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td><p class="first last">ディスク上に保存されているなら、そのスクラップのファイルネーム。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://developer.apple.com/legacy/mac/library/documentation/mac/MoreToolbox/MoreToolbox-109.html">Scrap Manager</a></dt>
+<dd><p class="first last">Apple のスクラップマネージャに関する文書には、アプリケーションでスクラップマネージャを使用する上での便利な情報がたくさんあります。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="module-Carbon.Snd">
+<span id="carbon-snd-sound-manager"></span><h2>37.8.53. <a class="reference internal" href="#module-Carbon.Snd" title="Carbon.Snd: Interface to the Sound Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Snd</span></code></a> &#8212; Sound Manager<a class="headerlink" href="#module-Carbon.Snd" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Sound">
+<span id="carbon-sound-sound-manager-constants"></span><h2>37.8.54. <a class="reference internal" href="#module-Carbon.Sound" title="Carbon.Sound: Constants for the interface to the Sound Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Sound</span></code></a> &#8212; Sound Manager 定数<a class="headerlink" href="#module-Carbon.Sound" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.TE">
+<span id="carbon-te-textedit"></span><h2>37.8.55. <a class="reference internal" href="#module-Carbon.TE" title="Carbon.TE: Interface to TextEdit. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.TE</span></code></a> &#8212; TextEdit<a class="headerlink" href="#module-Carbon.TE" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.TextEdit">
+<span id="carbon-textedit-textedit-constants"></span><h2>37.8.56. <a class="reference internal" href="#module-Carbon.TextEdit" title="Carbon.TextEdit: Constants for the interface to TextEdit. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.TextEdit</span></code></a> &#8212; TextEdit 定数<a class="headerlink" href="#module-Carbon.TextEdit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Win">
+<span id="carbon-win-window-manager"></span><h2>37.8.57. <a class="reference internal" href="#module-Carbon.Win" title="Carbon.Win: Interface to the Window Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Win</span></code></a> &#8212; Window Manager<a class="headerlink" href="#module-Carbon.Win" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-Carbon.Windows">
+<span id="carbon-windows-window-manager-constants"></span><h2>37.8.58. <a class="reference internal" href="#module-Carbon.Windows" title="Carbon.Windows: Constants for the interface to the Window Manager. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">Carbon.Windows</span></code></a> &#8212; Window Manager 定数<a class="headerlink" href="#module-Carbon.Windows" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">37.8. Mac OS ツールボックスモジュール</a><ul>
+<li><a class="reference internal" href="#module-Carbon.AE">37.8.1. <code class="docutils literal"><span class="pre">Carbon.AE</span></code> &#8212; Apple Events</a></li>
+<li><a class="reference internal" href="#module-Carbon.AH">37.8.2. <code class="docutils literal"><span class="pre">Carbon.AH</span></code> &#8212; Apple ヘルプ</a></li>
+<li><a class="reference internal" href="#module-Carbon.App">37.8.3. <code class="docutils literal"><span class="pre">Carbon.App</span></code> &#8212; Appearance Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Appearance">37.8.4. <code class="docutils literal"><span class="pre">Carbon.Appearance</span></code> &#8212; Appearance Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.CF">37.8.5. <code class="docutils literal"><span class="pre">Carbon.CF</span></code> &#8212; Core Foundation</a></li>
+<li><a class="reference internal" href="#module-Carbon.CG">37.8.6. <code class="docutils literal"><span class="pre">Carbon.CG</span></code> &#8212; Core Graphics</a></li>
+<li><a class="reference internal" href="#module-Carbon.CarbonEvt">37.8.7. <code class="docutils literal"><span class="pre">Carbon.CarbonEvt</span></code> &#8212; Carbon Event Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.CarbonEvents">37.8.8. <code class="docutils literal"><span class="pre">Carbon.CarbonEvents</span></code> &#8212; Carbon Event Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Cm">37.8.9. <code class="docutils literal"><span class="pre">Carbon.Cm</span></code> &#8212; Component Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Components">37.8.10. <code class="docutils literal"><span class="pre">Carbon.Components</span></code> &#8212; Component Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.ControlAccessor">37.8.11. <code class="docutils literal"><span class="pre">Carbon.ControlAccessor</span></code> &#8212; Control Manager アクセッサ</a></li>
+<li><a class="reference internal" href="#module-Carbon.Controls">37.8.12. <code class="docutils literal"><span class="pre">Carbon.Controls</span></code> &#8212; Control Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.CoreFounation">37.8.13. <code class="docutils literal"><span class="pre">Carbon.CoreFounation</span></code> &#8212; CoreFounation 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.CoreGraphics">37.8.14. <code class="docutils literal"><span class="pre">Carbon.CoreGraphics</span></code> &#8212; CoreGraphics 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Ctl">37.8.15. <code class="docutils literal"><span class="pre">Carbon.Ctl</span></code> &#8212; Control Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Dialogs">37.8.16. <code class="docutils literal"><span class="pre">Carbon.Dialogs</span></code> &#8212; Dialog Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Dlg">37.8.17. <code class="docutils literal"><span class="pre">Carbon.Dlg</span></code> &#8212; Dialog Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Drag">37.8.18. <code class="docutils literal"><span class="pre">Carbon.Drag</span></code> &#8212; Drag and Drop Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Dragconst">37.8.19. <code class="docutils literal"><span class="pre">Carbon.Dragconst</span></code> &#8212; Drag and Drop Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Events">37.8.20. <code class="docutils literal"><span class="pre">Carbon.Events</span></code> &#8212; Event Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Evt">37.8.21. <code class="docutils literal"><span class="pre">Carbon.Evt</span></code> &#8212; Event Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.File">37.8.22. <code class="docutils literal"><span class="pre">Carbon.File</span></code> &#8212; File Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Files">37.8.23. <code class="docutils literal"><span class="pre">Carbon.Files</span></code> &#8212; File Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Fm">37.8.24. <code class="docutils literal"><span class="pre">Carbon.Fm</span></code> &#8212; Font Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Folder">37.8.25. <code class="docutils literal"><span class="pre">Carbon.Folder</span></code> &#8212; Folder Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Folders">37.8.26. <code class="docutils literal"><span class="pre">Carbon.Folders</span></code> &#8212; Folder Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Fonts">37.8.27. <code class="docutils literal"><span class="pre">Carbon.Fonts</span></code> &#8212; Font Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Help">37.8.28. <code class="docutils literal"><span class="pre">Carbon.Help</span></code> &#8212; Help Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.IBCarbon">37.8.29. <code class="docutils literal"><span class="pre">Carbon.IBCarbon</span></code> &#8212; Carbon InterfaceBuilder</a></li>
+<li><a class="reference internal" href="#module-Carbon.IBCarbonRuntime">37.8.30. <code class="docutils literal"><span class="pre">Carbon.IBCarbonRuntime</span></code> &#8212; Carbon InterfaceBuilder 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Icns">37.8.31. <code class="docutils literal"><span class="pre">Carbon.Icn</span></code> &#8212; Carbon Icon Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Icons">37.8.32. <code class="docutils literal"><span class="pre">Carbon.Icons</span></code> &#8212; Carbon Icon Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Launch">37.8.33. <code class="docutils literal"><span class="pre">Carbon.Launch</span></code> &#8212; Carbon Launch Services</a></li>
+<li><a class="reference internal" href="#module-Carbon.LaunchServices">37.8.34. <code class="docutils literal"><span class="pre">Carbon.LaunchServices</span></code> &#8212; Carbon Launch Services 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.List">37.8.35. <code class="docutils literal"><span class="pre">Carbon.List</span></code> &#8212; List Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Lists">37.8.36. <code class="docutils literal"><span class="pre">Carbon.Lists</span></code> &#8212; List Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.MacHelp">37.8.37. <code class="docutils literal"><span class="pre">Carbon.MacHelp</span></code> &#8212; Help Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.MediaDescr">37.8.38. <code class="docutils literal"><span class="pre">Carbon.MediaDescr</span></code> &#8212; Parsers and generators for Quicktime Media descriptors</a></li>
+<li><a class="reference internal" href="#module-Carbon.Menu">37.8.39. <code class="docutils literal"><span class="pre">Carbon.Menu</span></code> &#8212; Menu Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Menus">37.8.40. <code class="docutils literal"><span class="pre">Carbon.Menus</span></code> &#8212; Menu Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Mlte">37.8.41. <code class="docutils literal"><span class="pre">Carbon.Mlte</span></code> &#8212; MultiLingual Text Editor</a></li>
+<li><a class="reference internal" href="#module-Carbon.OSA">37.8.42. <code class="docutils literal"><span class="pre">Carbon.OSA</span></code> &#8212; Carbon OSA Interface</a></li>
+<li><a class="reference internal" href="#module-Carbon.OSAconst">37.8.43. <code class="docutils literal"><span class="pre">Carbon.OSAconst</span></code> &#8212; Carbon OSA Interface 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.QDOffscreen">37.8.44. <code class="docutils literal"><span class="pre">Carbon.QDOffscreen</span></code> &#8212; QuickDraw Offscreen 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Qd">37.8.45. <code class="docutils literal"><span class="pre">Carbon.Qd</span></code> &#8212; QuickDraw</a></li>
+<li><a class="reference internal" href="#module-Carbon.Qdoffs">37.8.46. <code class="docutils literal"><span class="pre">Carbon.Qdoffs</span></code> &#8212; QuickDraw Offscreen</a></li>
+<li><a class="reference internal" href="#module-Carbon.Qt">37.8.47. <code class="docutils literal"><span class="pre">Carbon.Qt</span></code> &#8212; QuickTime</a></li>
+<li><a class="reference internal" href="#module-Carbon.QuickDraw">37.8.48. <code class="docutils literal"><span class="pre">Carbon.QuickDraw</span></code> &#8212; QuickDraw 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.QuickTime">37.8.49. <code class="docutils literal"><span class="pre">Carbon.QuickTime</span></code> &#8212; QuickTime 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Res">37.8.50. <code class="docutils literal"><span class="pre">Carbon.Res</span></code> &#8212; Resource Manager and Handles</a></li>
+<li><a class="reference internal" href="#module-Carbon.Resources">37.8.51. <code class="docutils literal"><span class="pre">Carbon.Resources</span></code> &#8212; Resource Manager and Handles 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Scrap">37.8.52. <code class="docutils literal"><span class="pre">Carbon.Scrap</span></code> &#8212; スクラップマネージャ</a></li>
+<li><a class="reference internal" href="#module-Carbon.Snd">37.8.53. <code class="docutils literal"><span class="pre">Carbon.Snd</span></code> &#8212; Sound Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Sound">37.8.54. <code class="docutils literal"><span class="pre">Carbon.Sound</span></code> &#8212; Sound Manager 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.TE">37.8.55. <code class="docutils literal"><span class="pre">Carbon.TE</span></code> &#8212; TextEdit</a></li>
+<li><a class="reference internal" href="#module-Carbon.TextEdit">37.8.56. <code class="docutils literal"><span class="pre">Carbon.TextEdit</span></code> &#8212; TextEdit 定数</a></li>
+<li><a class="reference internal" href="#module-Carbon.Win">37.8.57. <code class="docutils literal"><span class="pre">Carbon.Win</span></code> &#8212; Window Manager</a></li>
+<li><a class="reference internal" href="#module-Carbon.Windows">37.8.58. <code class="docutils literal"><span class="pre">Carbon.Windows</span></code> &#8212; Window Manager 定数</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="autogil.html"
+                        title="前の章へ">37.7. <code class="docutils literal"><span class="pre">autoGIL</span></code> &#8212; イベントループ中のグローバルインタープリタの取り扱い</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="colorpicker.html"
+                        title="次の章へ">37.9. <code class="docutils literal"><span class="pre">ColorPicker</span></code> &#8212; 色選択ダイアログ</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/carbon.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="colorpicker.html" title="37.9. ColorPicker — 色選択ダイアログ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="autogil.html" title="37.7. autoGIL — イベントループ中のグローバルインタープリタの取り扱い"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mac.html" >37. Mac OS X 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

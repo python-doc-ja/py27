@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.1.6. email.charset: 文字集合の表現 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
+    <link rel="next" title="18.1.7. email.encoders: エンコーダ" href="email.encoders.html" />
+    <link rel="prev" title="18.1.5. email.header: 国際化されたヘッダ" href="email.header.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.encoders.html" title="18.1.7. email.encoders: エンコーダ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="email.header.html" title="18.1.5. email.header: 国際化されたヘッダ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-email.charset">
+<span id="email-charset-representing-character-sets"></span><h1>18.1.6. <a class="reference internal" href="#module-email.charset" title="email.charset: Character Sets"><code class="xref py py-mod docutils literal"><span class="pre">email.charset</span></code></a>: 文字集合の表現<a class="headerlink" href="#module-email.charset" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このモジュールは文字セットを表現する <a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> クラスと電子メールメッセージにふくまれる文字セット間の変換、および文字セットのレジストリとこのレジストリを操作するためのいくつかの便宜的なメソッドを提供します。 <a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスは <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージ中にあるほかのいくつかのモジュールで使用されます。</p>
+<p>このクラスは <a class="reference internal" href="#module-email.charset" title="email.charset: Character Sets"><code class="xref py py-mod docutils literal"><span class="pre">email.charset</span></code></a> モジュールから import してください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2.2 で追加.</span></p>
+</div>
+<dl class="class">
+<dt id="email.charset.Charset">
+<em class="property">class </em><code class="descclassname">email.charset.</code><code class="descname">Charset</code><span class="sig-paren">(</span><span class="optional">[</span><em>input_charset</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字セットを email のプロパティに写像する。</p>
+<p>このクラスはある特定の文字セットに対し、電子メールに課される制約の情報を提供します。また、与えられた適用可能な codec をつかって、文字セット間の変換をおこなう便宜的なルーチンも提供します。またこれは、ある文字セットが与えられたときに、その文字セットを電子メールメッセージのなかでどうやって RFC に準拠したやり方で使用するかに関する、できうるかぎりの情報も提供します。</p>
+<p>文字セットによっては、それらの文字を電子メールのヘッダあるいはメッセージ本体で使う場合は quoted-printable 形式あるいは base64形式でエンコードする必要があります。またある文字セットはむきだしのまま変換する必要があり、電子メールの中では使用できません。</p>
+<p>以下ではオプション引数 <em>input_charset</em> について説明します。この値はつねに小文字に強制的に変換されます。そして文字セットの別名が正規化されたあと、この値は文字セットのレジストリ内を検索し、ヘッダのエンコーディングとメッセージ本体のエンコーディング、および出力時の変換に使われる codec をみつけるのに使われます。たとえば <em>input_charset</em> が <code class="docutils literal"><span class="pre">iso-8859-1</span></code> の場合、ヘッダおよびメッセージ本体は quoted-printable でエンコードされ、出力時の変換用 codec は必要ありません。もし <em>input_charset</em> が <code class="docutils literal"><span class="pre">euc-jp</span></code> ならば、ヘッダは base64 でエンコードされ、メッセージ本体はエンコードされませんが、出力されるテキストは <code class="docutils literal"><span class="pre">euc-jp</span></code> 文字セットから <code class="docutils literal"><span class="pre">iso-2022-jp</span></code> 文字セットに変換されます。</p>
+<p><a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスは以下のようなデータ属性をもっています:</p>
+<dl class="attribute">
+<dt id="email.charset.Charset.input_charset">
+<code class="descname">input_charset</code><a class="headerlink" href="#email.charset.Charset.input_charset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最初に指定される文字セットです。一般に通用している別名は、<em>正式な</em> 電子メール用の名前に変換されます (たとえば、<code class="docutils literal"><span class="pre">latin_1</span></code> は <code class="docutils literal"><span class="pre">iso-8859-1</span></code> に変換されます)。デフォルトは 7-bit の <code class="docutils literal"><span class="pre">us-ascii</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="email.charset.Charset.header_encoding">
+<code class="descname">header_encoding</code><a class="headerlink" href="#email.charset.Charset.header_encoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この文字セットが電子メールヘッダに使われる前にエンコードされる必要がある場合、この属性は <code class="docutils literal"><span class="pre">Charset.QP</span></code> (quoted-printable エンコーディング)、<code class="docutils literal"><span class="pre">Charset.BASE64</span></code> (base64 エンコーディング)、あるいは最短の QP または BASE64 エンコーディングである <code class="docutils literal"><span class="pre">Charset.SHORTEST</span></code> に設定されます。そうでない場合、この値は <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="email.charset.Charset.body_encoding">
+<code class="descname">body_encoding</code><a class="headerlink" href="#email.charset.Charset.body_encoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>header_encoding</em> と同じですが、この値はメッセージ本体のためのエンコーディングを記述します。これはヘッダ用のエンコーディングとは違うかもしれません。<em>body_encoding</em> では、<code class="docutils literal"><span class="pre">Charset.SHORTEST</span></code> を使うことはできません。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="email.charset.Charset.output_charset">
+<code class="descname">output_charset</code><a class="headerlink" href="#email.charset.Charset.output_charset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字セットによっては、電子メールのヘッダあるいはメッセージ本体に使う前にそれを変換する必要があります。もし <em>input_charset</em> がそれらの文字セットのどれかをさしていたら、この <em>output_charset</em> 属性はそれが出力時に変換される文字セットの名前をあらわしています。それ以外の場合、この値は <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="email.charset.Charset.input_codec">
+<code class="descname">input_codec</code><a class="headerlink" href="#email.charset.Charset.input_codec" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>input_charset</em> を Unicode に変換するための Python 用 codec 名です。変換用の codec が必要ないときは、この値は <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="email.charset.Charset.output_codec">
+<code class="descname">output_codec</code><a class="headerlink" href="#email.charset.Charset.output_codec" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode を <em>output_charset</em> に変換するための Python 用 codec 名です。変換用の codec が必要ないときは、この値は <code class="docutils literal"><span class="pre">None</span></code> になります。この属性は <em>input_codec</em> と同じ値をもつことになるでしょう。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスは、以下のメソッドも持っています:</p>
+<dl class="method">
+<dt id="email.charset.Charset.get_body_encoding">
+<code class="descname">get_body_encoding</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.get_body_encoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メッセージ本体のエンコードに使われる content-transfer-encoding の値を返します。</p>
+<p>この値は使用しているエンコーディングの文字列 <code class="docutils literal"><span class="pre">quoted-printable</span></code> または <code class="docutils literal"><span class="pre">base64</span></code> か、あるいは関数のどちらかです。後者の場合、これはエンコードされる Message オブジェクトを単一の引数として取るような関数である必要があります。この関数は変換後 <em class="mailheader">Content-Transfer-Encoding</em> ヘッダ自体を、なんであれ適切な値に設定する必要があります。</p>
+<p>このメソッドは <em>body_encoding</em> が <code class="docutils literal"><span class="pre">QP</span></code> の場合 <code class="docutils literal"><span class="pre">quoted-printable</span></code> を返し、<em>body_encoding</em> が <code class="docutils literal"><span class="pre">BASE64</span></code> の場合 <code class="docutils literal"><span class="pre">base64</span></code> を返します。それ以外の場合は文字列 <code class="docutils literal"><span class="pre">7bit</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.convert">
+<code class="descname">convert</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.convert" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>s</em> を <em>input_codec</em> から <em>output_codec</em> に変換します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.to_splittable">
+<code class="descname">to_splittable</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.to_splittable" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>マルチバイトの可能性がある文字列を、安全に split できる形式に変換します。 <em>s</em> には split する文字列を渡します。</p>
+<p>これは <em>input_codec</em> を使って文字列を Unicode にすることで、文字と文字の境界で (たとえそれがマルチバイト文字であっても) 安全に split できるようにします。</p>
+<p><em>input_charset</em> の文字列 <em>s</em> をどうやって Unicode に変換すればいいかが不明な場合、このメソッドは与えられた文字列そのものを返します。</p>
+<p>Unicode に変換できなかった文字は、Unicode 置換文字 (Unicode replacement character) <code class="docutils literal"><span class="pre">'U+FFFD'</span></code> に置換されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.from_splittable">
+<code class="descname">from_splittable</code><span class="sig-paren">(</span><em>ustr</em><span class="optional">[</span>, <em>to_output</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.from_splittable" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>split できる文字列をエンコードされた文字列に変換しなおします。 <em>ustr</em> は &#8220;unsplit&#8221; するための Unicode 文字列です。</p>
+<p>このメソッドでは、文字列を Unicode からエンコード形式に戻すために適切な codec を使用します。与えられた文字列が Unicode ではなかった場合、あるいはそれをどうやって Unicode から変換するか不明だった場合は、与えられた文字列そのものが返されます。</p>
+<p>Unicode から正しく変換できなかった文字については、適当な文字 (通常は <code class="docutils literal"><span class="pre">'?'</span></code>) に置き換えられます。</p>
+<p><em>to_output</em> が <code class="docutils literal"><span class="pre">True</span></code> の場合 (デフォルト)、このメソッドは <em>output_codec</em> をエンコードの形式として使用します。 <em>to_output</em> が <code class="docutils literal"><span class="pre">False</span></code> の場合、これは <em>input_codec</em> を使用します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.get_output_charset">
+<code class="descname">get_output_charset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.get_output_charset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>出力用の文字セットを返します。</p>
+<p>これは <em>output_charset</em> 属性が <code class="docutils literal"><span class="pre">None</span></code> でなければその値になります。それ以外の場合、この値は <em>input_charset</em> と同じです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.encoded_header_len">
+<code class="descname">encoded_header_len</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.encoded_header_len" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンコードされたヘッダ文字列の長さを返します。これは quoted-printable エンコーディングあるいは base64 エンコーディングに対しても正しく計算されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.header_encode">
+<code class="descname">header_encode</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>convert</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.header_encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>s</em> をヘッダ用にエンコードします。</p>
+<p><em>convert</em> が <code class="docutils literal"><span class="pre">True</span></code> の場合、文字列は入力用文字セットから出力用文字セットに自動的に変換されます。これは行の長さ問題のあるマルチバイトの文字セットに対しては役に立ちません (マルチバイト文字はバイト境界ではなく、文字ごとの境界で split する必要があります)。これらの問題を扱うには、高水準のクラスである <a class="reference internal" href="email.header.html#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスを使ってください (<a class="reference internal" href="email.header.html#module-email.header" title="email.header: Representing non-ASCII headers"><code class="xref py py-mod docutils literal"><span class="pre">email.header</span></code></a> を参照)。 <em>convert</em> の値はデフォルトでは <code class="docutils literal"><span class="pre">False</span></code> です。</p>
+<p>エンコーディングの形式 (base64 または quoted-printable) は、<em>header_encoding</em> 属性に基づきます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.body_encode">
+<code class="descname">body_encode</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>convert</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.body_encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>s</em> をメッセージ本体用にエンコードします。</p>
+<p><em>convert</em> が <code class="docutils literal"><span class="pre">True</span></code> の場合 (デフォルト)、文字列は入力用文字セットから出力用文字セットに自動的に変換されます。 <a class="reference internal" href="#email.charset.Charset.header_encode" title="email.charset.Charset.header_encode"><code class="xref py py-meth docutils literal"><span class="pre">header_encode()</span></code></a> とは異なり、メッセージ本体にはふつうバイト境界の問題やマルチバイト文字セットの問題がないので、これはきわめて安全におこなえます。</p>
+<p>エンコーディングの形式 (base64 または quoted-printable) は、<em>body_encoding</em> 属性に基づきます。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> クラスには、標準的な演算と組み込み関数をサポートするいくつかのメソッドがあります。</p>
+<dl class="method">
+<dt id="email.charset.Charset.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.__str__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>input_charset</em> を小文字に変換された文字列型として返します。 <a class="reference internal" href="../reference/datamodel.html#object.__repr__" title="object.__repr__"><code class="xref py py-meth docutils literal"><span class="pre">__repr__()</span></code></a> は、 <a class="reference internal" href="#email.charset.Charset.__str__" title="email.charset.Charset.__str__"><code class="xref py py-meth docutils literal"><span class="pre">__str__()</span></code></a> の別名となっています。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.__eq__">
+<code class="descname">__eq__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.__eq__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは、2つの <a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスが同じかどうかをチェックするのに使います。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.charset.Charset.__ne__">
+<code class="descname">__ne__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.Charset.__ne__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは、2つの <a class="reference internal" href="#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal"><span class="pre">Charset</span></code></a> インスタンスが異なるかどうかをチェックするのに使います。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>また、 <a class="reference internal" href="#module-email.charset" title="email.charset: Character Sets"><code class="xref py py-mod docutils literal"><span class="pre">email.charset</span></code></a> モジュールには、グローバルな文字セット、文字セットの別名(エイリアス) および codec 用のレジストリに新しいエントリを追加する以下の関数もふくまれています:</p>
+<dl class="function">
+<dt id="email.charset.add_charset">
+<code class="descclassname">email.charset.</code><code class="descname">add_charset</code><span class="sig-paren">(</span><em>charset</em><span class="optional">[</span>, <em>header_enc</em><span class="optional">[</span>, <em>body_enc</em><span class="optional">[</span>, <em>output_charset</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.add_charset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字の属性をグローバルなレジストリに追加します。</p>
+<p><em>charset</em> は入力用の文字セットで、その文字セットの正式名称を指定する必要があります。</p>
+<p>オプション引数 <em>header_enc</em> および <em>body_enc</em> は quoted-printable エンコーディングをあらわす <code class="docutils literal"><span class="pre">Charset.QP</span></code> か、base64 エンコーディングをあらわす <code class="docutils literal"><span class="pre">Charset.BASE64</span></code>、最短の quoted-printable または base64 エンコーディングをあらわす <code class="docutils literal"><span class="pre">Charset.SHORTEST</span></code>、あるいはエンコーディングなしの <code class="docutils literal"><span class="pre">None</span></code> のどれかになります。<code class="docutils literal"><span class="pre">SHORTEST</span></code> が使えるのは <em>header_enc</em> だけです。デフォルトの値はエンコーディングなしの <code class="docutils literal"><span class="pre">None</span></code> になっています。</p>
+<p>オプション引数 <em>output_charset</em> には出力用の文字セットが入ります。 <a class="reference internal" href="#email.charset.Charset.convert" title="email.charset.Charset.convert"><code class="xref py py-meth docutils literal"><span class="pre">Charset.convert()</span></code></a> が呼ばれたときの変換はまず入力用の文字セットを Unicode に変換し、それから出力用の文字セットに変換されます。デフォルトでは、出力は入力と同じ文字セットになっています。</p>
+<p><em>input_charset</em> および <em>output_charset</em> はこのモジュール中の文字セット-codec 対応表にある Unicode codec エントリである必要があります。モジュールがまだ対応していない codec を追加するには、 <a class="reference internal" href="#email.charset.add_codec" title="email.charset.add_codec"><code class="xref py py-func docutils literal"><span class="pre">add_codec()</span></code></a> を使ってください。より詳しい情報については <a class="reference internal" href="codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールの文書を参照してください。</p>
+<p>グローバルな文字セット用のレジストリは、モジュールの global 辞書 <code class="docutils literal"><span class="pre">CHARSETS</span></code> 内に保持されています。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="email.charset.add_alias">
+<code class="descclassname">email.charset.</code><code class="descname">add_alias</code><span class="sig-paren">(</span><em>alias</em>, <em>canonical</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.add_alias" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字セットの別名 (エイリアス) を追加します。<em>alias</em> はその別名で、たとえば <code class="docutils literal"><span class="pre">latin-1</span></code> のように指定します。<em>canonical</em> はその文字セットの正式名称で、たとえば <code class="docutils literal"><span class="pre">iso-8859-1</span></code> のように指定します。</p>
+<p>文字セットのグローバルな別名用レジストリは、モジュールの global 辞書 <code class="docutils literal"><span class="pre">ALIASES</span></code> 内に保持されています。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="email.charset.add_codec">
+<code class="descclassname">email.charset.</code><code class="descname">add_codec</code><span class="sig-paren">(</span><em>charset</em>, <em>codecname</em><span class="sig-paren">)</span><a class="headerlink" href="#email.charset.add_codec" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられた文字セットの文字と Unicode との変換をおこなう codec を追加します。</p>
+<p><em>charset</em> はある文字セットの正式名称、 <em>codecname</em> は Python 用 codec の名前です。後者は組み込み関数 <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> の第 2 引数か、あるいは Unicode 文字列型の <code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code> メソッドに適した形式になっていなければなりません。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="email.header.html"
+                        title="前の章へ">18.1.5. <code class="docutils literal"><span class="pre">email.header</span></code>: 国際化されたヘッダ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="email.encoders.html"
+                        title="次の章へ">18.1.7. <code class="docutils literal"><span class="pre">email.encoders</span></code>: エンコーダ</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/email.charset.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.encoders.html" title="18.1.7. email.encoders: エンコーダ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="email.header.html" title="18.1.5. email.header: 国際化されたヘッダ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

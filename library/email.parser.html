@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.1.2. email.parser: 電子メールメッセージを解析(パース)する &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
+    <link rel="next" title="18.1.3. email.generator: MIME 文書を生成する" href="email.generator.html" />
+    <link rel="prev" title="18.1.1. email.message: 電子メールメッセージの表現" href="email.message.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.generator.html" title="18.1.3. email.generator: MIME 文書を生成する"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="email.message.html" title="18.1.1. email.message: 電子メールメッセージの表現"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-email.parser">
+<span id="email-parser-parsing-email-messages"></span><h1>18.1.2. <a class="reference internal" href="#module-email.parser" title="email.parser: Parse flat text email messages to produce a message object structure."><code class="xref py py-mod docutils literal"><span class="pre">email.parser</span></code></a>: 電子メールメッセージを解析(パース)する<a class="headerlink" href="#module-email.parser" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>メッセージオブジェクト構造体をつくるには 2つの方法があります。ひとつはまったくのスクラッチから <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> を生成して、これを <a class="reference internal" href="email.message.html#email.message.Message.attach" title="email.message.Message.attach"><code class="xref py py-meth docutils literal"><span class="pre">attach()</span></code></a> と <a class="reference internal" href="email.message.html#email.message.Message.set_payload" title="email.message.Message.set_payload"><code class="xref py py-meth docutils literal"><span class="pre">set_payload()</span></code></a> 呼び出しを介してつなげていく方法で、もうひとつは電子メールメッセージのフラットなテキスト表現を解析 (parse、パーズ) する方法です。</p>
+<p><a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージでは、MIME 文書をふくむ、ほとんどの電子メールの文書構造に対応できる標準的なパーザ (解析器) を提供しています。このパーザに文字列あるいはファイルオブジェクトを渡せば、パーザはそのオブジェクト構造の基底となる (root の) <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> インスタンスを返します。簡単な非MIMEメッセージであれば、この基底オブジェクトのペイロードはたんにメッセージのテキストを格納する文字列になるでしょう。 MIMEメッセージであれば、基底オブジェクトはその <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドに対して <code class="docutils literal"><span class="pre">True</span></code> を返します。そして、その各 subpart に <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドおよび <a class="reference internal" href="email.message.html#email.message.Message.walk" title="email.message.Message.walk"><code class="xref py py-meth docutils literal"><span class="pre">walk()</span></code></a> メソッドを介してアクセスすることができます。</p>
+<p>実際には 2つのパーザインターフェイスが使用可能です。ひとつは旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> API であり、もうひとつはインクリメンタルな <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> API です。旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> API はメッセージ全体のテキストが文字列としてすでにメモリ上にあるか、それがローカルなファイルシステム上に存在しているときには問題ありません。 <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> はメッセージを読み込むときに、そのストリームが入力待ちのためにブロックされるような場合 (ソケットから email メッセージを読み込む時など) に、より有効です。 <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> はインクリメンタルにメッセージを読み込み、解析します。パーザを close したときには根っこ (root) のオブジェクトのみが返されます <a class="footnote-reference" href="#id2" id="id1">[1]</a> 。</p>
+<p>このパーザは、ある制限された方法で拡張できます。また、もちろん自分でご自分のパーザを完全に無から実装することもできます。 <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージについているパーザと <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> クラスの間に隠された秘密の関係はなにもありませんので、ご自分で実装されたパーザも、それが必要とするやりかたでメッセージオブジェクトツリーを作成することができます。</p>
+<div class="section" id="feedparser-api">
+<h2>18.1.2.1. FeedParser API<a class="headerlink" href="#feedparser-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+<p><code class="xref py py-mod docutils literal"><span class="pre">email.feedparser</span></code> モジュールからインポートされる <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> は email メッセージをインクリメンタルに解析するのに向いた API を提供します。これは email メッセージのテキストを (ソケットなどの) 読み込みがブロックされる可能性のある情報源から入力するときに必要となります。もちろん <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> は文字列またはファイルにすべて格納されている email メッセージを解析するのにも使うことができますが、このような場合には旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> API のほうが便利かもしれません。これら 2つのパーザ API の意味論と得られる結果は同一です。</p>
+<p><a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> API は簡単です。まずインスタンスをつくり、それにテキストを (それ以上テキストが必要なくなるまで) 流しこみます。その後パーザを close すると根っこ (root) のメッセージオブジェクトが返されます。標準に従ったメッセージを解析する場合、 <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> は非常に正確であり、標準に従っていないメッセージでもちゃんと動きます。そのさい、これはメッセージがどのように壊れていると認識されたかについての情報を残します。これはメッセージオブジェクトの <em>defects</em> 属性にリストとして現れ、メッセージ中に発見された問題が記録されます。パーザが検出できる障害 (defect) については <a class="reference internal" href="email.errors.html#module-email.errors" title="email.errors: The exception classes used by the email package."><code class="xref py py-mod docutils literal"><span class="pre">email.errors</span></code></a> モジュールを参照してください。</p>
+<p>以下は <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> の API です:</p>
+<dl class="class">
+<dt id="email.parser.FeedParser">
+<em class="property">class </em><code class="descclassname">email.parser.</code><code class="descname">FeedParser</code><span class="sig-paren">(</span><span class="optional">[</span><em>_factory</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.FeedParser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> インスタンスを作成します。オプション引数 <em>_factory</em> には引数なしの callable を指定し、これはつねに新しいメッセージオブジェクトの作成が必要になったときに呼び出されます。デフォルトでは、これは <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">email.message.Message</span></code></a> クラスになっています。</p>
+<dl class="method">
+<dt id="email.parser.FeedParser.feed">
+<code class="descname">feed</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.FeedParser.feed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> にデータを供給します。 <em>data</em> は 1行または複数行からなる文字列を渡します。渡される行は完結していなくてもよく、その場合 <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> は部分的な行を適切につなぎ合わせます。文字列中の各行は標準的な 3種類の行末文字 (復帰 CR、改行 LF、または CR+LF) どれかの組み合わせでよく、これらが混在してもかまいません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.parser.FeedParser.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.FeedParser.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> を close し、それまでに渡されたすべてのデータの解析を完了させ根っこ (root) のメッセージオブジェクトを返します。 <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> を close したあとにさらにデータを feed した場合の挙動は未定義です。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="parser-class-api">
+<h2>18.1.2.2. Parser クラス API<a class="headerlink" href="#parser-class-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-email.parser" title="email.parser: Parse flat text email messages to produce a message object structure."><code class="xref py py-mod docutils literal"><span class="pre">email.parser</span></code></a> モジュールからインポートされる <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> クラスは、メッセージを表すテキストが文字列またはファイルの形で完全に使用可能なときメッセージを解析するのに使われる API を提供します。 <code class="xref py py-mod docutils literal"><span class="pre">email.Parser</span></code> モジュールはまた、 <code class="xref py py-class docutils literal"><span class="pre">HeaderParser</span></code> と呼ばれる2番目のクラスも提供しています。これはメッセージのヘッダのみを処理したい場合に使うことができ、ずっと高速な処理がおこなえます。なぜならこれはメッセージ本体を解析しようとはしないからです。かわりに、そのペイロードにはメッセージ本体の生の文字列が格納されます。 <code class="xref py py-class docutils literal"><span class="pre">HeaderParser</span></code> クラスは <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> クラスと同じ API をもっています。</p>
+<dl class="class">
+<dt id="email.parser.Parser">
+<em class="property">class </em><code class="descclassname">email.parser.</code><code class="descname">Parser</code><span class="sig-paren">(</span><span class="optional">[</span><em>_class</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.Parser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> クラスのコンストラクタです。オプション引数 <em>_class</em> をとることができます。これは呼び出し可能なオブジェクト (関数やクラス) でなければならず、メッセージ内コンポーネント (sub-message object) が作成されるときは常にそのファクトリクラスとして使用されます。デフォルトではこれは <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> になっています (<a class="reference internal" href="email.message.html#module-email.message" title="email.message: The base class representing email messages."><code class="xref py py-mod docutils literal"><span class="pre">email.message</span></code></a> 参照)。このファクトリクラスは引数なしで呼び出されます。</p>
+<p>オプション引数 <em>strict</em> は無視されます。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.4 で撤廃: </span><a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> は Python 2.4 で新しく導入された <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> の後方互換性のための API ラッパで、 <em>すべての</em> 解析が事実上 non-strict です。 <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> コンストラクタに <em>strict</em> フラグを渡す必要はありません。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2.2 で変更: </span><em>strict</em> フラグが追加されました.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span><em>strict</em> フラグは推奨されなくなりました.</p>
+</div>
+<p>それ以外の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> メソッドは以下のとおりです:</p>
+<dl class="method">
+<dt id="email.parser.Parser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>fp</em><span class="optional">[</span>, <em>headersonly</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.Parser.parse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイルなどストリーム形式 (file-like) のオブジェクト <em>fp</em> からすべてのデータを読み込み、得られたテキストを解析して基底 (root) メッセージオブジェクト構造を返します。 <em>fp</em> はストリーム形式のオブジェクトで <a class="reference internal" href="io.html#io.TextIOBase.readline" title="io.TextIOBase.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> および <a class="reference internal" href="io.html#io.TextIOBase.read" title="io.TextIOBase.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> 両方のメソッドをサポートしている必要があります。</p>
+<p><em>fp</em> に格納されているテキスト文字列は、一連の <span class="target" id="index-2"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 形式のヘッダおよびヘッダ継続行 (header continuation lines) によって構成されている必要があります。オプションとして、最初にエンペローブヘッダが来ることもできます。ヘッダ部分はデータの終端か、ひとつの空行によって終了したとみなされます。ヘッダ部分に続くデータはメッセージ本体となります (MIME エンコードされた subpart を含んでいるかもしれません)。</p>
+<p>オプション引数 <em>headersonly</em> はヘッダを読み終えた後にパースを止めるかを指定するフラグです。デフォルトは <code class="docutils literal"><span class="pre">False</span></code> で、ファイルの内容全体をパースします。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2.2 で変更: </span><em>headersonly</em> フラグが追加されました.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="email.parser.Parser.parsestr">
+<code class="descname">parsestr</code><span class="sig-paren">(</span><em>text</em><span class="optional">[</span>, <em>headersonly</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.Parser.parsestr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#email.parser.Parser.parse" title="email.parser.Parser.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> メソッドに似ていますが、ファイルなどのストリーム形式のかわりに文字列を引数としてとるところが違います。文字列に対してこのメソッドを呼ぶことは、 <em>text</em> を <a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> インスタンスとして作成して <a class="reference internal" href="#email.parser.Parser.parse" title="email.parser.Parser.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> を適用するのと同じです。</p>
+<p>オプション引数 <em>headersonly</em> は <a class="reference internal" href="#email.parser.Parser.parse" title="email.parser.Parser.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> メソッドと同じです。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2.2 で変更: </span><em>headersonly</em> フラグが追加されました.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p>ファイルや文字列からメッセージオブジェクト構造を作成するのはかなりよくおこなわれる作業なので、便宜上次のような 2つの関数が提供されています。これらは <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージのトップレベルの名前空間で使用できます。</p>
+<dl class="function">
+<dt id="email.message_from_string">
+<code class="descclassname">email.</code><code class="descname">message_from_string</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>_class</em><span class="optional">[</span>, <em>strict</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_string" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列からメッセージオブジェクト構造を作成し返します。これは <code class="docutils literal"><span class="pre">Parser().parsestr(s)</span></code> とまったく同じです。オプション引数 <em>_class</em> および <em>strict</em> は <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> クラスのコンストラクタと同様に解釈されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2.2 で変更: </span><em>strict</em> フラグが追加されました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="email.message_from_file">
+<code class="descclassname">email.</code><code class="descname">message_from_file</code><span class="sig-paren">(</span><em>fp</em><span class="optional">[</span>, <em>_class</em><span class="optional">[</span>, <em>strict</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_file" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Open されたファイルオブジェクトからメッセージオブジェクト構造を作成し返します。これは <code class="docutils literal"><span class="pre">Parser().parse(fp)</span></code> とまったく同じです。オプション引数 <em>_class</em> および <em>strict</em> は <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> クラスのコンストラクタと同様に解釈されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2.2 で変更: </span><em>strict</em> フラグが追加されました.</p>
+</div>
+</dd></dl>
+
+<p>対話的な Python プロンプトでこの関数を使用するとすれば、このようになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">email</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_string</span><span class="p">(</span><span class="n">myString</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-notes">
+<h2>18.1.2.3. 追記事項<a class="headerlink" href="#additional-notes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下はテキスト解析の際に適用されるいくつかの規約です:</p>
+<ul class="simple">
+<li><p class="first">ほとんどの非 <em class="mimetype">multipart</em> 形式のメッセージは単一の文字列ペイロードをもつ単一のメッセージオブジェクトとして解析されます。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">False</span></code> を返します。このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは文字列オブジェクトを返します。</p>
+</li>
+<li><p class="first"><em class="mimetype">multipart</em> 形式のメッセージはすべてメッセージ内コンポーネント (sub-message object) のリストとして解析されます。外側のコンテナメッセージオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">True</span></code> を返し、このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> subpart のリストを返します。</p>
+</li>
+<li><p class="first"><em class="mimetype">message/*</em> の Content-Type をもつほとんどのメッセージ (例: <em class="mimetype">message/delivery-status</em> や <em class="mimetype">message/rfc822</em> など) もコンテナメッセージオブジェクトとして解析されますが、ペイロードのリストの長さは 1 になります。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドに対して <code class="docutils literal"><span class="pre">True</span></code> を返し、リスト内にあるひとつだけの要素がメッセージ内のコンポーネントオブジェクトになります。</p>
+</li>
+<li><p class="first">いくつかの標準的でないメッセージは、 <em class="mimetype">multipart</em> の使い方に統一がとれていない場合があります。このようなメッセージは <em class="mailheader">Content-Type</em> ヘッダに <em class="mimetype">multipart</em> を指定しているものの、その <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドは <code class="docutils literal"><span class="pre">False</span></code> を返すことがあります。もしこのようなメッセージが <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって解析されると、その <em>defects</em> 属性のリスト中には <code class="xref py py-class docutils literal"><span class="pre">MultipartInvariantViolationDefect</span></code> クラスのインスタンスが現れます。詳しい情報については <a class="reference internal" href="email.errors.html#module-email.errors" title="email.errors: The exception classes used by the email package."><code class="xref py py-mod docutils literal"><span class="pre">email.errors</span></code></a> を参照してください。</p>
+</li>
+</ul>
+<p class="rubric">脚注</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">Python 2.4 から導入された email パッケージバージョン 3.0 では、旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> は <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって書き直されました。そのためパーザの意味論と得られる結果は 2 つのパーザで同一のものになります。</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">18.1.2. <code class="docutils literal"><span class="pre">email.parser</span></code>: 電子メールメッセージを解析(パース)する</a><ul>
+<li><a class="reference internal" href="#feedparser-api">18.1.2.1. FeedParser API</a></li>
+<li><a class="reference internal" href="#parser-class-api">18.1.2.2. Parser クラス API</a></li>
+<li><a class="reference internal" href="#additional-notes">18.1.2.3. 追記事項</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="email.message.html"
+                        title="前の章へ">18.1.1. <code class="docutils literal"><span class="pre">email.message</span></code>: 電子メールメッセージの表現</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="email.generator.html"
+                        title="次の章へ">18.1.3. <code class="docutils literal"><span class="pre">email.generator</span></code>: MIME 文書を生成する</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/email.parser.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email.generator.html" title="18.1.3. email.generator: MIME 文書を生成する"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="email.message.html" title="18.1.1. email.message: 電子メールメッセージの表現"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

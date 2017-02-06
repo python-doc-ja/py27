@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.1.10. email.iterators: イテレータ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
+    <link rel="next" title="18.1.11. email: 使用例" href="email-examples.html" />
+    <link rel="prev" title="18.1.9. email.utils: 雑用ユーティリティ" href="email.util.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email-examples.html" title="18.1.11. email: 使用例"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="email.util.html" title="18.1.9. email.utils: 雑用ユーティリティ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-email.iterators">
+<span id="email-iterators-iterators"></span><h1>18.1.10. <a class="reference internal" href="#module-email.iterators" title="email.iterators: Iterate over a  message object tree."><code class="xref py py-mod docutils literal"><span class="pre">email.iterators</span></code></a>: イテレータ<a class="headerlink" href="#module-email.iterators" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference internal" href="email.message.html#email.message.Message.walk" title="email.message.Message.walk"><code class="xref py py-meth docutils literal"><span class="pre">Message.walk</span></code></a> メソッドを使うと、簡単にメッセージオブジェクトツリー内を次から次へとたどる (iteration) ことができます。 <a class="reference internal" href="#module-email.iterators" title="email.iterators: Iterate over a  message object tree."><code class="xref py py-mod docutils literal"><span class="pre">email.iterators</span></code></a> モジュールはこのための高水準イテレータをいくつか提供します。</p>
+<dl class="function">
+<dt id="email.iterators.body_line_iterator">
+<code class="descclassname">email.iterators.</code><code class="descname">body_line_iterator</code><span class="sig-paren">(</span><em>msg</em><span class="optional">[</span>, <em>decode</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.iterators.body_line_iterator" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このイテレータは <em>msg</em> 中のすべてのサブパートに含まれるペイロードをすべて順にたどっていき、ペイロード内の文字列を 1 行ずつ返します。サブパートのヘッダはすべて無視され、Python 文字列でないペイロードからなるサブパートも無視されます。これは <a class="reference internal" href="io.html#io.TextIOBase.readline" title="io.TextIOBase.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> を使って、ファイルからメッセージを (ヘッダだけとばして) フラットなテキストとして読むのにいくぶん似ているかもしれません。</p>
+<p>オプション引数 <em>decode</em> は、 <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">Message.get_payload</span></code></a> にそのまま渡されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="email.iterators.typed_subpart_iterator">
+<code class="descclassname">email.iterators.</code><code class="descname">typed_subpart_iterator</code><span class="sig-paren">(</span><em>msg</em><span class="optional">[</span>, <em>maintype</em><span class="optional">[</span>, <em>subtype</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.iterators.typed_subpart_iterator" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このイテレータは <em>msg</em> 中のすべてのサブパートをたどり、それらの中で指定されたMIME 形式 <em>maintype</em> と <em>subtype</em> をもつようなパートのみを返します。</p>
+<p><em>subtype</em> は省略可能であることに注意してください。これが省略された場合、サブパートの MIME 形式は maintype のみがチェックされます。じつは <em>maintype</em> も省略可能で、その場合にはデフォルトは <em class="mimetype">text</em> です。</p>
+<p>つまり、デフォルトでは <a class="reference internal" href="#email.iterators.typed_subpart_iterator" title="email.iterators.typed_subpart_iterator"><code class="xref py py-func docutils literal"><span class="pre">typed_subpart_iterator()</span></code></a> は MIME 形式 <em class="mimetype">text/*</em> をもつサブパートを順に返していくというわけです。</p>
+</dd></dl>
+
+<p>以下の関数は役に立つデバッグ用ツールとして追加されたもので、パッケージとして公式なサポートのあるインターフェイスでは <em>ありません</em>。</p>
+<dl class="function">
+<dt id="email.iterators._structure">
+<code class="descclassname">email.iterators.</code><code class="descname">_structure</code><span class="sig-paren">(</span><em>msg</em><span class="optional">[</span>, <em>fp</em><span class="optional">[</span>, <em>level</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.iterators._structure" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>そのメッセージオブジェクト構造の content-type をインデントつきで表示します。たとえば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_file</span><span class="p">(</span><span class="n">somefile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_structure</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="go">multipart/mixed</span>
+<span class="go">    text/plain</span>
+<span class="go">    text/plain</span>
+<span class="go">    multipart/digest</span>
+<span class="go">        message/rfc822</span>
+<span class="go">            text/plain</span>
+<span class="go">        message/rfc822</span>
+<span class="go">            text/plain</span>
+<span class="go">        message/rfc822</span>
+<span class="go">            text/plain</span>
+<span class="go">        message/rfc822</span>
+<span class="go">            text/plain</span>
+<span class="go">        message/rfc822</span>
+<span class="go">            text/plain</span>
+<span class="go">    text/plain</span>
+</pre></div>
+</div>
+<p>オプション引数 <em>fp</em> は出力を渡すためのストリーム (訳注: 原文では file-like) オブジェクトです。これは Python の拡張 print 文が対応できるようになっている必要があります。 <em>level</em> は内部的に使用されます。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="email.util.html"
+                        title="前の章へ">18.1.9. <code class="docutils literal"><span class="pre">email.utils</span></code>: 雑用ユーティリティ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="email-examples.html"
+                        title="次の章へ">18.1.11. <code class="docutils literal"><span class="pre">email</span></code>: 使用例</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/email.iterators.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="email-examples.html" title="18.1.11. email: 使用例"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="email.util.html" title="18.1.9. email.utils: 雑用ユーティリティ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

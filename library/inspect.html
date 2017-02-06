@@ -1,0 +1,875 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>28.13. inspect — 活動中のオブジェクトの情報を取得する &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
+    <link rel="next" title="28.14. site — サイト固有の設定フック" href="site.html" />
+    <link rel="prev" title="28.12. gc — ガベージコレクタインターフェース" href="gc.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="site.html" title="28.14. site — サイト固有の設定フック"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="gc.html" title="28.12. gc — ガベージコレクタインターフェース"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" accesskey="U">28. Python ランタイムサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-inspect">
+<span id="inspect-inspect-live-objects"></span><h1>28.13. <a class="reference internal" href="#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-mod docutils literal"><span class="pre">inspect</span></code></a> &#8212; 活動中のオブジェクトの情報を取得する<a class="headerlink" href="#module-inspect" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/inspect.py">Lib/inspect.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-mod docutils literal"><span class="pre">inspect</span></code></a> は、活動中のオブジェクト (モジュール、クラス、メソッド、関数、トレースバック、フレームオブジェクト、コードオブジェクトなど) から情報を取得する関数を定義しており、クラスの内容を調べたり、メソッドのソースコードを取得したり、関数の引数リストを取り出して整形したり、詳細なトレースバックを表示するのに必要な情報を取得したりするために利用できます。</p>
+<p>このモジュールの機能は4種類に分類することができます。型チェック、ソースコードの情報取得、クラスや関数からの情報取得、インタープリタのスタック情報の調査です。</p>
+<div class="section" id="types-and-members">
+<span id="inspect-types"></span><h2>28.13.1. 型とメンバー<a class="headerlink" href="#types-and-members" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> は、クラスやモジュールなどのオブジェクトからメンバーを取得します。名前が&#8221;is&#8221;で始まる16個の関数は、主に <a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> の第2引数として利用するために提供されています。以下のような特殊属性を参照できるかどうか調べる時にも使えるでしょう:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="44%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">型</p>
+</th>
+<th class="head"><p class="first last">属性</p>
+</th>
+<th class="head"><p class="first last">説明</p>
+</th>
+<th class="head"><p class="first last">注釈</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">モジュール</p>
+</td>
+<td>__doc__</td>
+<td><p class="first last">ドキュメント文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>__file__</td>
+<td><p class="first last">ファイル名 (組み込みモジュールには存在しません)</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">クラス</p>
+</td>
+<td>__doc__</td>
+<td><p class="first last">ドキュメント文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>__module__</td>
+<td><p class="first last">クラスを定義しているモジュールの名前</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">メソッド</p>
+</td>
+<td>__doc__</td>
+<td><p class="first last">ドキュメント文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>__name__</td>
+<td><p class="first last">メソッドが定義された時の名前</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>im_class</td>
+<td><p class="first last">このメソッドを要求したクラスオブジェクト</p>
+</td>
+<td>(1)</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><p class="first last">im_func または __func__</p>
+</td>
+<td><p class="first last">メソッドを実装している関数オブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><p class="first last">im_self または __self__</p>
+</td>
+<td><p class="first last">メソッドに結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>function</td>
+<td>__doc__</td>
+<td><p class="first last">ドキュメント文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>__name__</td>
+<td><p class="first last">関数が定義された時の名前</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>func_code</td>
+<td><p class="first last">関数をコンパイルしたバイトコード (<a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a>) を格納するコードオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>func_defaults</td>
+<td><p class="first last">引数のデフォルト値のタプル</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>func_doc</td>
+<td><p class="first last">(__doc__ と同じ)</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>func_globals</td>
+<td><p class="first last">関数を定義した時のグローバル名前空間</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>func_name</td>
+<td><p class="first last">(__name__ と同じ)</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>generator</td>
+<td>__iter__</td>
+<td><p class="first last">コンテナを通したイテレーションのために定義されます</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>close</td>
+<td><p class="first last">イテレーションを停止するために、ジェネレータの内部で GeneratorExitexception を発生させます</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>gi_code</td>
+<td><p class="first last">コードオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>gi_frame</td>
+<td><p class="first last">フレームオブジェクト。ジェネレータが終了したあとは None になることもあります</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>gi_running</td>
+<td><p class="first last">ジェネレータが実行中の時は 1 それ以外の場合は 0</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>next</td>
+<td><p class="first last">コンテナから次の要素を返します</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>send</td>
+<td><p class="first last">ジェネレータを再開して、現在の yield 式の結果となる値を &#8220;送り&#8221; ます</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>throw</td>
+<td><p class="first last">ジェネレータ内部で例外を発生させるために用います</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">トレースバック</p>
+</td>
+<td>tb_frame</td>
+<td><p class="first last">このレベルのフレームオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>tb_lasti</td>
+<td><p class="first last">最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>tb_lineno</td>
+<td><p class="first last">現在の Python ソースコードの行番号</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>tb_next</td>
+<td><p class="first last">このオブジェクトの内側 (このレベルから呼び出された) のトレースバックオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>frame</td>
+<td>f_back</td>
+<td><p class="first last">外側 (このフレームを呼び出した) のフレームオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_builtins</td>
+<td><p class="first last">このフレームで参照している組み込み名前空間</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f_code</td>
+<td><p class="first last">このフレームで実行しているコードオブジェクト</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_exc_traceback</td>
+<td><p class="first last">このフレームで例外が発生した場合にはトレースバックオブジェクト、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f_exc_type</td>
+<td><p class="first last">このフレームで例外が発生した場合には例外型、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_exc_value</td>
+<td><p class="first last">このフレームで例外が発生した場合には例外の値、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f_globals</td>
+<td><p class="first last">このフレームで参照しているグローバル名前空間</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_lasti</td>
+<td><p class="first last">最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f_lineno</td>
+<td><p class="first last">現在の Python ソースコードの行番号</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_locals</td>
+<td><p class="first last">このフレームで参照しているローカル名前空間</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f_restricted</td>
+<td><p class="first last">制限実行モードなら1、それ以外なら0</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>f_trace</td>
+<td><p class="first last">このフレームのトレース関数、または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">コード</p>
+</td>
+<td>co_argcount</td>
+<td><p class="first last">引数の数 (* や ** 引数は含まない)</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_code</td>
+<td><p class="first last">コンパイルされたバイトコードそのままの文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>co_consts</td>
+<td><p class="first last">バイトコード中で使用している定数のタプル</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_filename</td>
+<td><p class="first last">コードオブジェクトを生成したファイルのファイル名</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>co_firstlineno</td>
+<td><p class="first last">Python ソースコードの先頭行</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_flags</td>
+<td><p class="first last">以下の値の組み合わせ: 1=optimized <code class="docutils literal"><span class="pre">|</span></code> 2=newlocals <code class="docutils literal"><span class="pre">|</span></code> 4=*arg <code class="docutils literal"><span class="pre">|</span></code> 8=**arg</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>co_lnotab</td>
+<td><p class="first last">行番号からバイトコードインデックスへの変換表を文字列にエンコードしたもの</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_name</td>
+<td><p class="first last">コードオブジェクトが定義されたときの名前</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>co_names</td>
+<td><p class="first last">ローカル変数名のタプル</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_nlocals</td>
+<td><p class="first last">ローカル変数の数</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>co_stacksize</td>
+<td><p class="first last">必要とされる仮想マシンのスタックスペース</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>co_varnames</td>
+<td><p class="first last">引数名とローカル変数名のタプル</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>builtin</td>
+<td>__doc__</td>
+<td><p class="first last">ドキュメント文字列</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>__name__</td>
+<td><p class="first last">関数、メソッドの元々の名前</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>__self__</td>
+<td><p class="first last">メソッドが結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>注釈:</p>
+<ol class="arabic">
+<li><div class="first versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span><code class="xref py py-attr docutils literal"><span class="pre">im_class</span></code> は、以前はメソッドを定義しているクラスを指していました。</p>
+</div>
+</li>
+</ol>
+<dl class="function">
+<dt id="inspect.getmembers">
+<code class="descclassname">inspect.</code><code class="descname">getmembers</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>predicate</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getmembers" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトの全メンバーを、(名前, 値) の組み合わせのリストで返します。リストはメンバー名でソートされています。<em>predicate</em> が指定されている場合、predicate の戻り値が真となる値のみを返します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> は、引数がクラスの場合にメタクラス属性を返しません (この動作は <a class="reference internal" href="functions.html#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> 関数に合わせてあります)。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getmoduleinfo">
+<code class="descclassname">inspect.</code><code class="descname">getmoduleinfo</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getmoduleinfo" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>path</em> で指定したファイルがモジュールであれば、そのモジュールが Python でどのように解釈されるかを示す <code class="docutils literal"><span class="pre">(name,</span> <span class="pre">suffix,</span> <span class="pre">mode,</span> <span class="pre">module_type)</span></code> のタプルを返します。モジュールでなければ <code class="docutils literal"><span class="pre">None</span></code> を返します。 <em>name</em> はパッケージ名を含まないモジュール名、 <em>suffix</em> はファイル名からモジュール名を除いた残りの部分 (ドット区切りの拡張子であってはなりません)、 <em>mode</em> は <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> で指定されるファイルモード (<code class="docutils literal"><span class="pre">'r'</span></code> または <code class="docutils literal"><span class="pre">'rb'</span></code>)、 <em>module_type</em> はモジュールタイプを示す整数で、 <a class="reference internal" href="imp.html#module-imp" title="imp: Access the implementation of the import statement."><code class="xref py py-mod docutils literal"><span class="pre">imp</span></code></a> で定義している定数のいずれかが指定されます。モジュールタイプについては <a class="reference internal" href="imp.html#module-imp" title="imp: Access the implementation of the import statement."><code class="xref py py-mod docutils literal"><span class="pre">imp</span></code></a> を参照してください。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span>名前付きタプル (<a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a>) の <code class="docutils literal"><span class="pre">ModuleInfo(name,</span> <span class="pre">suffix,</span> <span class="pre">mode,</span> <span class="pre">module_type)</span></code> を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getmodulename">
+<code class="descclassname">inspect.</code><code class="descname">getmodulename</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getmodulename" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>path</em> で指定したファイルの、パッケージ名を含まないモジュール名を返します。この処理は、インタープリタがモジュールを検索する時と同じアルゴリズムで行われます。ファイルがこのアルゴリズムで見つからない場合には <code class="docutils literal"><span class="pre">None</span></code> が返ります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.ismodule">
+<code class="descclassname">inspect.</code><code class="descname">ismodule</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.ismodule" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがモジュールの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isclass">
+<code class="descclassname">inspect.</code><code class="descname">isclass</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isclass" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトが、ビルトインもしくは Python で作られたクラスの場合に真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.ismethod">
+<code class="descclassname">inspect.</code><code class="descname">ismethod</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.ismethod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがメソッドの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isfunction">
+<code class="descclassname">inspect.</code><code class="descname">isfunction</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isfunction" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトが Python の関数(<a class="reference internal" href="../glossary.html#term-lambda"><span class="xref std std-term">lambda</span></a> 式で生成されたものを含む) である場合に真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isgeneratorfunction">
+<code class="descclassname">inspect.</code><code class="descname">isgeneratorfunction</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isgeneratorfunction" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> が Python のジェネレータ関数であるときに真を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isgenerator">
+<code class="descclassname">inspect.</code><code class="descname">isgenerator</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isgenerator" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> がジェネレータであるときに真を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.istraceback">
+<code class="descclassname">inspect.</code><code class="descname">istraceback</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.istraceback" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがトレースバックの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isframe">
+<code class="descclassname">inspect.</code><code class="descname">isframe</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isframe" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがフレームの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.iscode">
+<code class="descclassname">inspect.</code><code class="descname">iscode</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.iscode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがコードの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isbuiltin">
+<code class="descclassname">inspect.</code><code class="descname">isbuiltin</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isbuiltin" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトが組み込み関数か束縛済みのビルトインメソッドの場合に真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isroutine">
+<code class="descclassname">inspect.</code><code class="descname">isroutine</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isroutine" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがユーザ定義か組み込みの関数またはメソッドの場合は真を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isabstract">
+<code class="descclassname">inspect.</code><code class="descname">isabstract</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isabstract" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> が抽象規定型 (ABC) であるときに真を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.ismethoddescriptor">
+<code class="descclassname">inspect.</code><code class="descname">ismethoddescriptor</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.ismethoddescriptor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがメソッドデスクリプタであり、 <a class="reference internal" href="#inspect.ismethod" title="inspect.ismethod"><code class="xref py py-func docutils literal"><span class="pre">ismethod()</span></code></a>, <a class="reference internal" href="#inspect.isclass" title="inspect.isclass"><code class="xref py py-func docutils literal"><span class="pre">isclass()</span></code></a>, <a class="reference internal" href="#inspect.isfunction" title="inspect.isfunction"><code class="xref py py-func docutils literal"><span class="pre">isfunction()</span></code></a>, <a class="reference internal" href="#inspect.isbuiltin" title="inspect.isbuiltin"><code class="xref py py-func docutils literal"><span class="pre">isbuiltin()</span></code></a> でない場合に真を返します。</p>
+<p>この機能は Python 2.2 から新たに追加されたもので、例えば <code class="docutils literal"><span class="pre">int.__add__</span></code> は真になります。このテストをパスするオブジェクトは <code class="xref py py-attr docutils literal"><span class="pre">__get__</span></code> 属性を持ちますが <code class="xref py py-attr docutils literal"><span class="pre">__set__</span></code> 属性を持ちません。それ以外の属性を持っているかもしれません。通常 <code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code> を持っていますし、しばしば <code class="xref py py-attr docutils literal"><span class="pre">__doc__</span></code> も持っています。</p>
+<p>デスクリプタを使って実装されたメソッドで、上記のいずれかのテストもパスしているものは、 <a class="reference internal" href="#inspect.ismethoddescriptor" title="inspect.ismethoddescriptor"><code class="xref py py-func docutils literal"><span class="pre">ismethoddescriptor()</span></code></a> では偽を返します。これは単に他のテストの方がもっと確実だからです &#8211; 例えば、 <a class="reference internal" href="#inspect.ismethod" title="inspect.ismethod"><code class="xref py py-func docutils literal"><span class="pre">ismethod()</span></code></a> をパスしたオブジェクトは <code class="xref py py-attr docutils literal"><span class="pre">im_func</span></code> 属性などを持っていると期待できます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isdatadescriptor">
+<code class="descclassname">inspect.</code><code class="descname">isdatadescriptor</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isdatadescriptor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがデータデスクリプタの場合に真を返します。</p>
+<p>データデスクリプタは <code class="xref py py-attr docutils literal"><span class="pre">__get__</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">__set__</span></code> 属性の両方を持ちます。データデスクリプタの例は (Python 上で定義された) プロパティや getset やメンバーです。後者のふたつは C で定義されており、個々の型に特有のテストも行います。そのため、Python の実装よりもより確実です。通常、データデスクリプタは <code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code> や <code class="xref py py-attr docutils literal"><span class="pre">__doc__</span></code>  属性を持ちます (プロパティ、 getset 、メンバーは両方の属性を持っています) が、保証されているわけではありません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.isgetsetdescriptor">
+<code class="descclassname">inspect.</code><code class="descname">isgetsetdescriptor</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.isgetsetdescriptor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトが getset デスクリプタの場合に真を返します。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> getset とは、拡張モジュールで <code class="xref c c-type docutils literal"><span class="pre">PyGetSetDef</span></code> 構造体を用いて定義された属性のことです。そのような型を持たない Python 実装の場合は、このメソッドは常に <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.ismemberdescriptor">
+<code class="descclassname">inspect.</code><code class="descname">ismemberdescriptor</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.ismemberdescriptor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがメンバーデスクリプタの場合に真を返します。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> メンバーデスクリプタとは、拡張モジュールで <a class="reference internal" href="../c-api/structures.html#c.PyMemberDef" title="PyMemberDef"><code class="xref c c-type docutils literal"><span class="pre">PyMemberDef</span></code></a> 構造体を用いて定義された属性のことです。そのような型を持たない Python 実装の場合は、このメソッドは常に <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="retrieving-source-code">
+<span id="inspect-source"></span><h2>28.13.2. ソースコードの情報取得<a class="headerlink" href="#retrieving-source-code" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="function">
+<dt id="inspect.getdoc">
+<code class="descclassname">inspect.</code><code class="descname">getdoc</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getdoc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#inspect.cleandoc" title="inspect.cleandoc"><code class="xref py py-func docutils literal"><span class="pre">cleandoc()</span></code></a> でクリーンアップされた、オブジェクトのドキュメンテーション文字列を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getcomments">
+<code class="descclassname">inspect.</code><code class="descname">getcomments</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getcomments" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがクラス、関数、メソッドのいずれかの場合は、オブジェクトのソースコードの直後にあるコメント行 (複数行) を、単一の文字列として返します。オブジェクトがモジュールの場合、ソースファイルの先頭にあるコメントを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getfile">
+<code class="descclassname">inspect.</code><code class="descname">getfile</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getfile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトを定義している (テキストまたはバイナリの) ファイルの名前を返します。オブジェクトが組み込みモジュール、クラス、関数の場合は <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外が発生します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getmodule">
+<code class="descclassname">inspect.</code><code class="descname">getmodule</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getmodule" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトを定義しているモジュールを推測します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getsourcefile">
+<code class="descclassname">inspect.</code><code class="descname">getsourcefile</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getsourcefile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトを定義している Python ソースファイルの名前を返します。オブジェクトが組み込みのモジュール、クラス、関数の場合には、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外が発生します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getsourcelines">
+<code class="descclassname">inspect.</code><code class="descname">getsourcelines</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getsourcelines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトのソース行のリストと開始行番号を返します。引数にはモジュール、クラス、メソッド、関数、トレースバック、フレーム、コードオブジェクトを指定することができます。戻り値は指定したオブジェクトに対応するソースコードのソース行リストと元のソースファイル上での開始行となります。ソースコードを取得できない場合は <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> が発生します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getsource">
+<code class="descclassname">inspect.</code><code class="descname">getsource</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getsource" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトのソースコードテキストを返します。引数にはモジュール、クラス、メソッド、関数、トレースバック、フレーム、コードオブジェクトを指定することができます。ソースコードは単一の文字列で返します。ソースコードを取得できない場合は <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> が発生します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.cleandoc">
+<code class="descclassname">inspect.</code><code class="descname">cleandoc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.cleandoc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>インデントされた docstring から、コードブロックまでのインデントを削除します。2行目以降では行頭の空白は一様に削除されます。全てのタブはスペースに展開されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="classes-and-functions">
+<span id="inspect-classes-functions"></span><h2>28.13.3. クラスと関数<a class="headerlink" href="#classes-and-functions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="function">
+<dt id="inspect.getclasstree">
+<code class="descclassname">inspect.</code><code class="descname">getclasstree</code><span class="sig-paren">(</span><em>classes</em><span class="optional">[</span>, <em>unique</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getclasstree" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リストで指定したクラスの継承関係から、ネストしたリストを作成します。ネストしたリストには、直前の要素から派生したクラスが格納されます。各要素は長さ2のタプルで、クラスと基底クラスのタプルを格納しています。<em>unique</em> が真の場合、各クラスは戻り値のリスト内に一つだけしか格納されません。真でなければ、多重継承を利用したクラスとその派生クラスは複数回格納される場合があります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getargspec">
+<code class="descclassname">inspect.</code><code class="descname">getargspec</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getargspec" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Python 関数の引数名とデフォルト値を取得します。戻り値は長さ4のタプルで、次の値を返します: <code class="docutils literal"><span class="pre">(args,</span> <span class="pre">varargs,</span> <span class="pre">keywords,</span> <span class="pre">defaults)</span></code> 。 <em>args</em> は引数名のリストです (ネストしたリストが格納される場合があります)。 <em>varargs</em> と <em>keywords</em> は <code class="docutils literal"><span class="pre">*</span></code> 引数と <code class="docutils literal"><span class="pre">**</span></code> 引数の名前で、引数がなければ <code class="docutils literal"><span class="pre">None</span></code> となります。 <em>defaults</em> は引数のデフォルト値のタプルか、デフォルト値がない場合は <code class="docutils literal"><span class="pre">None</span></code> です。このタプルに <em>n</em> 個の要素があれば、各要素は <em>args</em> の後ろから <em>n</em> 個分の引数のデフォルト値となります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><code class="docutils literal"><span class="pre">ArgSpec(args,</span> <span class="pre">varargs,</span> <span class="pre">keywords,</span> <span class="pre">defaults)</span></code> 形式の名前付きタプル (<a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a>) を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getargvalues">
+<code class="descclassname">inspect.</code><code class="descname">getargvalues</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getargvalues" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定したフレームに渡された引数の情報を取得します。戻り値は長さ4のタプルで、次の値を返します: <code class="docutils literal"><span class="pre">(args,</span> <span class="pre">varargs,</span> <span class="pre">keywords,</span> <span class="pre">locals)</span></code>. <em>args</em> は引数名のリストです (ネストしたリストが格納される場合があります)。 <em>varargs</em> と <em>keywords</em> は <code class="docutils literal"><span class="pre">*</span></code> 引数と <code class="docutils literal"><span class="pre">**</span></code> 引数の名前で、引数がなければ <code class="docutils literal"><span class="pre">None</span></code> となります。 <em>locals</em> は指定したフレームのローカル変数の辞書です。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><code class="docutils literal"><span class="pre">ArgInfo(args,</span> <span class="pre">varargs,</span> <span class="pre">keywords,</span> <span class="pre">locals)</span></code> 形式の名前付きタプル (<a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a>) を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.formatargspec">
+<code class="descclassname">inspect.</code><code class="descname">formatargspec</code><span class="sig-paren">(</span><em>args</em><span class="optional">[</span>, <em>varargs</em>, <em>varkw</em>, <em>defaults</em>, <em>formatarg</em>, <em>formatvarargs</em>, <em>formatvarkw</em>, <em>formatvalue</em>, <em>join</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.formatargspec" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#inspect.getargspec" title="inspect.getargspec"><code class="xref py py-func docutils literal"><span class="pre">getargspec()</span></code></a> で取得した4つの値を読みやすく整形します。 format* 引数はオプションで、名前と値を文字列に変換する整形関数を指定することができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.formatargvalues">
+<code class="descclassname">inspect.</code><code class="descname">formatargvalues</code><span class="sig-paren">(</span><em>args</em><span class="optional">[</span>, <em>varargs</em>, <em>varkw</em>, <em>locals</em>, <em>formatarg</em>, <em>formatvarargs</em>, <em>formatvarkw</em>, <em>formatvalue</em>, <em>join</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.formatargvalues" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#inspect.getargvalues" title="inspect.getargvalues"><code class="xref py py-func docutils literal"><span class="pre">getargvalues()</span></code></a> で取得した4つの値を読みやすく整形します。 format* 引数はオプションで、名前と値を文字列に変換する整形関数を指定することができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getmro">
+<code class="descclassname">inspect.</code><code class="descname">getmro</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getmro" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>cls</em> クラスの基底クラス (<em>cls</em> 自身も含む) を、メソッドの優先順位順に並べたタプルを返します。結果のリスト内で各クラスは一度だけ格納されます。メソッドの優先順位はクラスの型によって異なります。非常に特殊なユーザ定義のメタクラスを使用していない限り、<em>cls</em> が戻り値の先頭要素となります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getcallargs">
+<code class="descclassname">inspect.</code><code class="descname">getcallargs</code><span class="sig-paren">(</span><em>func[, *args][, **kwds]</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getcallargs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>args</em> と <em>kwds</em> を、Python の関数もしくはメソッド <em>func</em> を呼び出した場合と同じように引数名に束縛します。束縛済みメソッド(bound method)の場合、最初の引数(慣習的に <code class="docutils literal"><span class="pre">self</span></code> という名前が付けられます)にも、関連づけられたインスタンスを束縛します。引数名 (<code class="docutils literal"><span class="pre">*</span></code> や <code class="docutils literal"><span class="pre">**</span></code> 引数が存在すればその名前も) に <em>args</em> と <em>kwds</em> からの値をマップした辞書を返します。<em>func</em> を正しく呼び出せない場合、つまり <code class="docutils literal"><span class="pre">func(*args,</span> <span class="pre">**kwds)</span></code> がシグネチャの不一致のために例外を投げるような場合には、それと同じ型で同じか似ているメッセージの例外を発生させます。例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">inspect</span> <span class="k">import</span> <span class="n">getcallargs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">pos</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: 1, &#39;named&#39;: {}, &#39;b&#39;: 2, &#39;pos&#39;: (3,)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: 2, &#39;named&#39;: {&#39;x&#39;: 4}, &#39;b&#39;: 1, &#39;pos&#39;: ()}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">TypeError</span>: <span class="n">f() takes at least 1 argument (0 given)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="the-interpreter-stack">
+<span id="inspect-stack"></span><h2>28.13.4. インタープリタスタック<a class="headerlink" href="#the-interpreter-stack" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の関数には、戻り値として&#8221;フレームレコード&#8221;を返す関数があります。&#8221;フレームレコード&#8221;は長さ6のタプルで、以下の値を格納しています: フレームオブジェクト、ファイル名、実行中の行番号、関数名、コンテキストのソース行のリスト、ソース行のリストにおける実行中の行のインデックス。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>フレームレコードの最初の要素などのフレームオブジェクトへの参照を保存すると、循環参照になってしまう場合があります。循環参照ができると、Python の循環参照検出機能を有効にしていたとしても関連するオブジェクトが参照しているすべてのオブジェクトが解放されにくくなり、明示的に参照を削除しないとメモリ消費量が増大する恐れがあります。</p>
+<p>参照の削除を Python の循環参照検出機能にまかせることもできますが、 <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節で循環参照を解除すれば確実にフレーム (とそのローカル変数) は削除されます。また、循環参照検出機能は Python のコンパイルオプションや <a class="reference internal" href="gc.html#gc.disable" title="gc.disable"><code class="xref py py-func docutils literal"><span class="pre">gc.disable()</span></code></a> で無効とされている場合がありますので注意が必要です。例:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">handle_stackframe_without_leak</span><span class="p">():</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># do something with the frame</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">frame</span>
+</pre></div>
+</div>
+</div>
+<p>以下の関数でオプション引数 <em>context</em> には、戻り値のソース行リストに何行分のソースを含めるかを指定します。ソース行リストには、実行中の行を中心として指定された行数分のリストを返します。</p>
+<dl class="function">
+<dt id="inspect.getframeinfo">
+<code class="descclassname">inspect.</code><code class="descname">getframeinfo</code><span class="sig-paren">(</span><em>frame</em><span class="optional">[</span>, <em>context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getframeinfo" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フレームまたはトレースバックオブジェクトの情報を取得します。フレームレコードの最後の 5 要素からなる長さ 5 のタプルを返します。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><code class="docutils literal"><span class="pre">Traceback(filename,</span> <span class="pre">lineno,</span> <span class="pre">function,</span> <span class="pre">code_context,</span> <span class="pre">index)</span></code> 形式の名前付きタプル (<a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a>) を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getouterframes">
+<code class="descclassname">inspect.</code><code class="descname">getouterframes</code><span class="sig-paren">(</span><em>frame</em><span class="optional">[</span>, <em>context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getouterframes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定したフレームと、その外側の全フレームのフレームレコードを返します。外側のフレームとは <em>frame</em> が生成されるまでのすべての関数呼び出しを示します。戻り値のリストの先頭は <em>frame</em> のフレームレコードで、末尾の要素は <em>frame</em> のスタックにある最も外側のフレームのフレームレコードとなります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.getinnerframes">
+<code class="descclassname">inspect.</code><code class="descname">getinnerframes</code><span class="sig-paren">(</span><em>traceback</em><span class="optional">[</span>, <em>context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.getinnerframes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定したフレームと、その内側の全フレームのフレームレコードを返します。内のフレームとは <em>frame</em> から続く一連の関数呼び出しを示します。戻り値のリストの先頭は <em>traceback</em> のフレームレコードで、末尾の要素は例外が発生した位置を示します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.currentframe">
+<code class="descclassname">inspect.</code><code class="descname">currentframe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.currentframe" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>呼び出し元のフレームオブジェクトを返します。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> この関数はインタプリタの Python スタックフレームサポートに依存します。これは Python のすべての実装に存在している保証はありません。Python スタックフレームサポートのない環境では、この関数は <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.stack">
+<code class="descclassname">inspect.</code><code class="descname">stack</code><span class="sig-paren">(</span><span class="optional">[</span><em>context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.stack" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>呼び出し元スタックのフレームレコードのリストを返します。最初の要素は呼び出し元のフレームレコードで、末尾の要素はスタックにある最も外側のフレームのフレームレコードとなります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="inspect.trace">
+<code class="descclassname">inspect.</code><code class="descname">trace</code><span class="sig-paren">(</span><span class="optional">[</span><em>context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#inspect.trace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>実行中のフレームと処理中の例外が発生したフレームの間のフレームレコードのリストを返します。最初の要素は呼び出し元のフレームレコードで、末尾の要素は例外が発生した位置を示します。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> &#8212; 活動中のオブジェクトの情報を取得する</a><ul>
+<li><a class="reference internal" href="#types-and-members">28.13.1. 型とメンバー</a></li>
+<li><a class="reference internal" href="#retrieving-source-code">28.13.2. ソースコードの情報取得</a></li>
+<li><a class="reference internal" href="#classes-and-functions">28.13.3. クラスと関数</a></li>
+<li><a class="reference internal" href="#the-interpreter-stack">28.13.4. インタープリタスタック</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="gc.html"
+                        title="前の章へ">28.12. <code class="docutils literal"><span class="pre">gc</span></code> &#8212; ガベージコレクタインターフェース</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="site.html"
+                        title="次の章へ">28.14. <code class="docutils literal"><span class="pre">site</span></code> &#8212; サイト固有の設定フック</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/inspect.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="site.html" title="28.14. site — サイト固有の設定フック"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="gc.html" title="28.12. gc — ガベージコレクタインターフェース"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" >28. Python ランタイムサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

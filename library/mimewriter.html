@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.8. MimeWriter — 汎用 MIME ファイルライター &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18. インターネット上のデータの操作" href="netdata.html" />
+    <link rel="next" title="18.9. mimify — 電子メールメッセージの MIME 処理" href="mimify.html" />
+    <link rel="prev" title="18.7. mimetypes — ファイル名を MIME 型へマップする" href="mimetypes.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mimify.html" title="18.9. mimify — 電子メールメッセージの MIME 処理"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="mimetypes.html" title="18.7. mimetypes — ファイル名を MIME 型へマップする"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" accesskey="U">18. インターネット上のデータの操作</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-MimeWriter">
+<span id="mimewriter-generic-mime-file-writer"></span><h1>18.8. <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></code></a> &#8212; 汎用 MIME ファイルライター<a class="headerlink" href="#module-MimeWriter" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.3 で撤廃: </span><a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージを、 <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></code></a> モジュールよりも優先して使用すべきです。このモジュールは、下位互換性維持のためだけに存在します。</p>
+</div>
+<p>このモジュールは、クラス <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> を定義します。この <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> クラスは、MIME マルチパートファイルを作成するための基本的なフォーマッタを実装します。これは出力ファイル内をあちこち移動することも、大量のバッファスペースを使うこともありません。あなたは、最終のファイルに現れるであろう順番に、パートを書かなければなりません。 <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> は、あなたが追加するヘッダをバッファして、それらの順番を並び替えることができるようにします。</p>
+<dl class="class">
+<dt id="MimeWriter.MimeWriter">
+<em class="property">class </em><code class="descclassname">MimeWriter.</code><code class="descname">MimeWriter</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> クラスの新しいインスタンスを返します。渡される唯一の引数 <em>fp</em> は、出力先ファイルオブジェクトです。 <a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを使うこともできることに注意して下さい。</p>
+</dd></dl>
+
+<div class="section" id="mimewriter-objects">
+<span id="id1"></span><h2>18.8.1. MimeWriter オブジェクト<a class="headerlink" href="#mimewriter-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> インスタンスには以下のメソッドがあります:</p>
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.addheader">
+<code class="descclassname">MimeWriter.</code><code class="descname">addheader</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.addheader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>MIMEメッセージに新しいヘッダ行を追加します。 <em>key</em> は、そのヘッダの名前であり、そして <em>value</em> で、そのヘッダの値を明示的に与えます。省略可能な引数 <em>prefix</em> は、ヘッダが挿入される場所を決定します; <code class="docutils literal"><span class="pre">0</span></code> は最後に追加することを意味し、 <code class="docutils literal"><span class="pre">1</span></code> は先頭への挿入です。デフォルトは最後に追加することです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.flushheaders">
+<code class="descclassname">MimeWriter.</code><code class="descname">flushheaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.flushheaders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>今まで集められたヘッダすべてが書かれ (そして忘れられ) るようにします。これは、もし全く本体が必要でない場合に役に立ちます。例えば、ヘッダのような情報を保管するために (誤って) 使用された、型 <em class="mimetype">message/rfc822</em> のサブパート用など。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.startbody">
+<code class="descclassname">MimeWriter.</code><code class="descname">startbody</code><span class="sig-paren">(</span><em>ctype</em><span class="optional">[</span>, <em>plist</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.startbody" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メッセージの本体に書くのに使用できるファイルのようなオブジェクトを返します。 content-type は与えられた <em>ctype</em> に設定され、省略可能なパラメータ <em>plist</em> は、 content-type 宣言のための追加のパラメータを与えます。 <em>prefix</em> は、そのデフォルトが先頭への挿入であること以外は <a class="reference internal" href="#MimeWriter.MimeWriter.addheader" title="MimeWriter.MimeWriter.addheader"><code class="xref py py-meth docutils literal"><span class="pre">addheader()</span></code></a> でのように働きます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.startmultipartbody">
+<code class="descclassname">MimeWriter.</code><code class="descname">startmultipartbody</code><span class="sig-paren">(</span><em>subtype</em><span class="optional">[</span>, <em>boundary</em><span class="optional">[</span>, <em>plist</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.startmultipartbody" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メッセージ本体を書くのに使うことができるファイルのようなオブジェクトを返します。更に、このメソッドはマルチパートのコードを初期化します。ここで、 <em>subtype</em> が、そのマルチパートのサブタイプを、 <em>boundary</em> がユーザ定義の境界指定を、そして <em>plist</em> が、そのサブタイプ用の省略可能なパラメータを定義します。 <em>prefix</em> は、 <a class="reference internal" href="#MimeWriter.MimeWriter.startbody" title="MimeWriter.MimeWriter.startbody"><code class="xref py py-meth docutils literal"><span class="pre">startbody()</span></code></a> でのように働きます。サブパートは、 <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><code class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></code></a> を使って作成するべきです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.nextpart">
+<code class="descclassname">MimeWriter.</code><code class="descname">nextpart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.nextpart" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>マルチパートメッセージの個々のパートを表す、 <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> の新しいインスタンスを返します。これは、そのパートを書くのにも、また複雑なマルチパートを再帰的に作成するのにも使うことができます。メッセージは、 <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><code class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></code></a> を使う前に最初 に <a class="reference internal" href="#MimeWriter.MimeWriter.startmultipartbody" title="MimeWriter.MimeWriter.startmultipartbody"><code class="xref py py-meth docutils literal"><span class="pre">startmultipartbody()</span></code></a> で初期化しなければなりません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.lastpart">
+<code class="descclassname">MimeWriter.</code><code class="descname">lastpart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.lastpart" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これは、マルチパートメッセージの最後のパートを指定するのに使うことができ、マルチパートメッセージを書くときは <em>いつでも</em> 使うべきです。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">18.8. <code class="docutils literal"><span class="pre">MimeWriter</span></code> &#8212; 汎用 MIME ファイルライター</a><ul>
+<li><a class="reference internal" href="#mimewriter-objects">18.8.1. MimeWriter オブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="mimetypes.html"
+                        title="前の章へ">18.7. <code class="docutils literal"><span class="pre">mimetypes</span></code> &#8212; ファイル名を MIME 型へマップする</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mimify.html"
+                        title="次の章へ">18.9. <code class="docutils literal"><span class="pre">mimify</span></code> &#8212; 電子メールメッセージの MIME 処理</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/mimewriter.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mimify.html" title="18.9. mimify — 電子メールメッセージの MIME 処理"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="mimetypes.html" title="18.7. mimetypes — ファイル名を MIME 型へマップする"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

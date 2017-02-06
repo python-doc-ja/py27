@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13.4. netrc — netrc ファイルの処理 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="13. ファイルフォーマット" href="fileformats.html" />
+    <link rel="next" title="13.5. xdrlib — XDR データのエンコードおよびデコード" href="xdrlib.html" />
+    <link rel="prev" title="13.3. robotparser — robots.txt のためのパーザ" href="robotparser.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xdrlib.html" title="13.5. xdrlib — XDR データのエンコードおよびデコード"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="robotparser.html" title="13.3. robotparser — robots.txt のためのパーザ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="fileformats.html" accesskey="U">13. ファイルフォーマット</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-netrc">
+<span id="netrc-netrc-file-processing"></span><h1>13.4. <a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-mod docutils literal"><span class="pre">netrc</span></code></a> &#8212; netrc ファイルの処理<a class="headerlink" href="#module-netrc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 1.5.2 で追加.</span></p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/netrc.py">Lib/netrc.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> クラスは、Unix <strong class="program">ftp</strong> プログラムや他の FTP クライアントで用いられる netrc ファイル形式を解析し、カプセル化 (encapsulate) します。</p>
+<dl class="class">
+<dt id="netrc.netrc">
+<em class="property">class </em><code class="descclassname">netrc.</code><code class="descname">netrc</code><span class="sig-paren">(</span><span class="optional">[</span><em>file</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#netrc.netrc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> のインスタンスやサブクラスのインスタンスは netrc ファイルのデータをカプセル化します。初期化の際の引数が存在する場合、解析対象となるファイルの指定になります。引数がない場合、ユーザのホームディレクトリ下にある <code class="file docutils literal"><span class="pre">.netrc</span></code> が読み出されます。解析エラーが発生した場合、ファイル名、行番号、解析を中断したトークンに関する情報の入った <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> を送出します。POSIX システムにおいて引数を指定しない場合、ファイルのオーナシップやパーミッションが安全でない (プロセスを実行しているユーザ以外が所有者であるか、誰にでも読み書き出来てしまう) のに <code class="file docutils literal"><span class="pre">.netrc</span></code> ファイル内にパスワードが含まれていると、 <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> を送出します。このセキュリティ的な振る舞いは、 ftp などの <code class="file docutils literal"><span class="pre">.netrc</span></code> を使うプログラムと同じものです。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7.6 で変更: </span>POSIX パーミッションのチェックが追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="netrc.NetrcParseError">
+<em class="property">exception </em><code class="descclassname">netrc.</code><code class="descname">NetrcParseError</code><a class="headerlink" href="#netrc.NetrcParseError" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ソースファイルのテキスト中で文法エラーに遭遇した場合に <a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a>  クラスによって送出される例外です。この例外のインスタンスは 3 つのインスタンス変数を持っています: <code class="xref py py-attr docutils literal"><span class="pre">msg</span></code> はテキストによるエラーの説明で、 <code class="xref py py-attr docutils literal"><span class="pre">filename</span></code> はソースファイルの名前、そして <code class="xref py py-attr docutils literal"><span class="pre">lineno</span></code> はエラーが発見された行番号です。</p>
+</dd></dl>
+
+<div class="section" id="netrc-objects">
+<span id="id1"></span><h2>13.4.1. netrc オブジェクト<a class="headerlink" href="#netrc-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> インスタンスは以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="netrc.netrc.authenticators">
+<code class="descclassname">netrc.</code><code class="descname">authenticators</code><span class="sig-paren">(</span><em>host</em><span class="sig-paren">)</span><a class="headerlink" href="#netrc.netrc.authenticators" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>host</em> の認証情報として、三要素のタプル  <code class="docutils literal"><span class="pre">(login,</span> <span class="pre">account,</span> <span class="pre">password)</span></code> を返します。与えられた host に対するエントリが netrc ファイルにない場合、&#8217;default&#8217; エントリに関連付けられたタプルが返されます。host に対応するエントリがなく、default エントリもない場合、<code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="netrc.netrc.__repr__">
+<code class="descclassname">netrc.</code><code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#netrc.netrc.__repr__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クラスの持っているデータを netrc ファイルの書式に従った文字列で出力します。(コメントは無視され、エントリが並べ替えられる可能性があります。)</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> のインスタンスは以下の公開されたインスタンス変数を持っています:</p>
+<dl class="attribute">
+<dt id="netrc.netrc.hosts">
+<code class="descclassname">netrc.</code><code class="descname">hosts</code><a class="headerlink" href="#netrc.netrc.hosts" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ホスト名を <code class="docutils literal"><span class="pre">(login,</span> <span class="pre">account,</span> <span class="pre">password)</span></code> からなるタプルに対応づけている辞書です。&#8217;default&#8217; エントリがある場合、その名前の擬似ホスト名として表現されます。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="netrc.netrc.macros">
+<code class="descclassname">netrc.</code><code class="descname">macros</code><a class="headerlink" href="#netrc.netrc.macros" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>マクロ名を文字列のリストに対応付けている辞書です。</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">利用可能なパスワードの文字セットは、ASCII のサブセットのみです。2.3 より前のバージョンでは厳しく制限されていましたが、2.3 以降では全ての ASCII の記号を使用することができます。しかし、空白文字と印刷不可文字を使用することはできません。この制限は .netrc ファイルの解析方法によるものであり、将来解除されます。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">13.4. <code class="docutils literal"><span class="pre">netrc</span></code> &#8212; netrc ファイルの処理</a><ul>
+<li><a class="reference internal" href="#netrc-objects">13.4.1. netrc オブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="robotparser.html"
+                        title="前の章へ">13.3. <code class="docutils literal"><span class="pre">robotparser</span></code> &#8212; robots.txt のためのパーザ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="xdrlib.html"
+                        title="次の章へ">13.5. <code class="docutils literal"><span class="pre">xdrlib</span></code> &#8212; XDR データのエンコードおよびデコード</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/netrc.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xdrlib.html" title="13.5. xdrlib — XDR データのエンコードおよびデコード"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="robotparser.html" title="13.3. robotparser — robots.txt のためのパーザ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="fileformats.html" >13. ファイルフォーマット</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>14.2. hmac — メッセージ認証のための鍵付きハッシュ化 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="14. 暗号関連のサービス" href="crypto.html" />
+    <link rel="next" title="14.3. md5 — MD5 メッセージダイジェストアルゴリズム" href="md5.html" />
+    <link rel="prev" title="14.1. hashlib — セキュアハッシュおよびメッセージダイジェスト" href="hashlib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="md5.html" title="14.3. md5 — MD5 メッセージダイジェストアルゴリズム"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="hashlib.html" title="14.1. hashlib — セキュアハッシュおよびメッセージダイジェスト"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" accesskey="U">14. 暗号関連のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hmac">
+<span id="hmac-keyed-hashing-for-message-authentication"></span><h1>14.2. <a class="reference internal" href="#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal"><span class="pre">hmac</span></code></a> &#8212; メッセージ認証のための鍵付きハッシュ化<a class="headerlink" href="#module-hmac" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/hmac.py">Lib/hmac.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは <span class="target" id="index-2"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2104.html"><strong>RFC 2104</strong></a> で記述されている HMAC アルゴリズムを実装しています。</p>
+<dl class="function">
+<dt id="hmac.new">
+<code class="descclassname">hmac.</code><code class="descname">new</code><span class="sig-paren">(</span><em>key</em><span class="optional">[</span>, <em>msg</em><span class="optional">[</span>, <em>digestmod</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.new" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しい hmac オブジェクトを返します。 <em>msg</em> が与えられると、<code class="docutils literal"><span class="pre">update(msg)</span></code> が呼び出されます。<em>digestmod</em> は利用するダイジェストコンストラクターまたは HMAC オブジェクトのモジュールです。デフォルトは <code class="xref py py-data docutils literal"><span class="pre">hashlib.md5</span></code> のコンストラクターです。</p>
+</dd></dl>
+
+<p>HMAC オブジェクトは以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="hmac.HMAC.update">
+<code class="descclassname">HMAC.</code><code class="descname">update</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.update" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>hmac オブジェクトを <em>msg</em> で更新します。このメソッドの呼出の繰り返しは、それらの引数を全て結合した引数で単一の呼び出しをした際と同じになります。すなわち <code class="docutils literal"><span class="pre">m.update(a);</span> <span class="pre">m.update(b)</span></code>  は <code class="docutils literal"><span class="pre">m.update(a</span> <span class="pre">+</span> <span class="pre">b)</span></code> と等価です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hmac.HMAC.digest">
+<code class="descclassname">HMAC.</code><code class="descname">digest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.digest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これまで <a class="reference internal" href="#hmac.HMAC.update" title="hmac.HMAC.update"><code class="xref py py-meth docutils literal"><span class="pre">update()</span></code></a> メソッドに渡されたバイト列のダイジェスト値を返します。これはコンストラクタに与えられた <em>digest_size</em> と同じ長さのバイト列で、 NUL バイトを含む非 ASCII 文字が含まれることがあります。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last"><a class="reference internal" href="#hmac.HMAC.digest" title="hmac.HMAC.digest"><code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code></a> の出力結果と外部から供給されたダイジェストを検証ルーチン内で比較しようとするのであれば、タイミング攻撃への脆弱性を減らすために、 <code class="docutils literal"><span class="pre">==</span></code> 演算子ではなく <a class="reference internal" href="#hmac.compare_digest" title="hmac.compare_digest"><code class="xref py py-func docutils literal"><span class="pre">compare_digest()</span></code></a> を使うことをお奨めします。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hmac.HMAC.hexdigest">
+<code class="descclassname">HMAC.</code><code class="descname">hexdigest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.hexdigest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#hmac.HMAC.digest" title="hmac.HMAC.digest"><code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code></a> と似ていますが、返される文字列は倍の長さとなり、16進形式となります。これは、電子メールなどの非バイナリ環境で値を交換する場合に便利です。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last"><a class="reference internal" href="#hmac.HMAC.hexdigest" title="hmac.HMAC.hexdigest"><code class="xref py py-meth docutils literal"><span class="pre">hexdigest()</span></code></a> の出力結果と外部から供給されたダイジェストを検証ルーチン内で比較しようとするのであれば、タイミング攻撃への脆弱性を減らすために、 <code class="docutils literal"><span class="pre">==</span></code> 演算子ではなく <a class="reference internal" href="#hmac.compare_digest" title="hmac.compare_digest"><code class="xref py py-func docutils literal"><span class="pre">compare_digest()</span></code></a> を使うことをお奨めします。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hmac.HMAC.copy">
+<code class="descclassname">HMAC.</code><code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>hmac オブジェクトのコピー (&#8220;クローン&#8221;) を返します。このコピーは最初の部分文字列が共通になっている文字列のダイジェスト値を効率よく計算するために使うことができます。</p>
+</dd></dl>
+
+<p>このモジュールは以下のヘルパ関数も提供しています:</p>
+<dl class="function">
+<dt id="hmac.compare_digest">
+<code class="descclassname">hmac.</code><code class="descname">compare_digest</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.compare_digest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></code> を返します。この関数は、内容ベースの短絡的な振る舞いを避けることによってタイミング分析を防ぐよう設計されたアプローチを用い、暗号化に用いるのに相応しいものとしています。 <em>a</em> と <em>b</em> は両方が同じ型でなければなりません:  <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> または <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a> のどちらか一方。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><em>a</em> と <em>b</em> が異なる長さであったりエラーが発生すれば、タイミング攻撃で理論上 <em>a</em> と <em>b</em> の長さについての情報が暴露されますが、その値は明らかになりません。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7.7 で追加.</span></p>
+</div>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal"><span class="pre">hashlib</span></code></a></dt>
+<dd><p class="first last">セキュアハッシュ関数を提供する Python モジュールです。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="hashlib.html"
+                        title="前の章へ">14.1. <code class="docutils literal"><span class="pre">hashlib</span></code> &#8212; セキュアハッシュおよびメッセージダイジェスト</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="md5.html"
+                        title="次の章へ">14.3. <code class="docutils literal"><span class="pre">md5</span></code> &#8212; MD5 メッセージダイジェストアルゴリズム</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/hmac.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="md5.html" title="14.3. md5 — MD5 メッセージダイジェストアルゴリズム"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="hashlib.html" title="14.1. hashlib — セキュアハッシュおよびメッセージダイジェスト"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" >14. 暗号関連のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

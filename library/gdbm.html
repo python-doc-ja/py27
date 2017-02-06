@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11.9. gdbm — GNU による dbm の再実装 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="11. データの永続化" href="persistence.html" />
+    <link rel="next" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース" href="dbhash.html" />
+    <link rel="prev" title="11.8. dbm — UNIX dbmのシンプルなインタフェース" href="dbm.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dbhash.html" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="dbm.html" title="11.8. dbm — UNIX dbmのシンプルなインタフェース"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" accesskey="U">11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-gdbm">
+<span id="gdbm-gnu-s-reinterpretation-of-dbm"></span><h1>11.9. <a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> &#8212; GNU による dbm の再実装<a class="headerlink" href="#module-gdbm" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">dbm.gnu</span></code> にリネームされました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードの import を修正します。</p>
+</div>
+<p id="index-0">このモジュールは <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> モジュールによく似ていますが、 <code class="docutils literal"><span class="pre">gdbm</span></code> を使っていくつかの追加機能を提供しています。 <code class="docutils literal"><span class="pre">gdbm</span></code> と <code class="docutils literal"><span class="pre">dbm</span></code> では生成されるファイル形式に互換性がないので注意してください。</p>
+<p><a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> モジュールでは GNU DBM ライブラリへのインタフェースを提供します。 <code class="docutils literal"><span class="pre">gdbm</span></code> オブジェクトはキーと値が常に文字列であることを除き、マップ型 (辞書型) と同じように動作します。 <code class="docutils literal"><span class="pre">gdbm</span></code> オブジェクトに対して <a class="reference internal" href="../reference/simple_stmts.html#print"><code class="xref std std-keyword docutils literal"><span class="pre">print</span></code></a> を適用してもキーや値を印字することはなく、 <code class="xref py py-meth docutils literal"><span class="pre">items()</span></code> 及び <code class="xref py py-meth docutils literal"><span class="pre">values()</span></code> メソッドはサポートされていません。</p>
+<p>このモジュールでは以下の定数および関数を定義しています:</p>
+<dl class="exception">
+<dt id="gdbm.error">
+<em class="property">exception </em><code class="descclassname">gdbm.</code><code class="descname">error</code><a class="headerlink" href="#gdbm.error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>I/O エラーのような <code class="docutils literal"><span class="pre">gdbm</span></code> 特有のエラーで送出されます。誤ったキーの指定のように、一般的なマップ型のエラーに対しては <a class="reference internal" href="exceptions.html#exceptions.KeyError" title="exceptions.KeyError"><code class="xref py py-exc docutils literal"><span class="pre">KeyError</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gdbm.open">
+<code class="descclassname">gdbm.</code><code class="descname">open</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>flag</em><span class="optional">[</span>, <em>mode</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">gdbm</span></code> データベースを開いて <code class="docutils literal"><span class="pre">gdbm</span></code> オブジェクトを返します。 <em>filename</em> 引数はデータベースファイルの名前です。</p>
+<p>オプションの <em>flag</em> は:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'r'</span></code></td>
+<td><p class="first last">既存のデータベースを読み込み専用で開く (デフォルト)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'w'</span></code></td>
+<td><p class="first last">既存のデータベースを読み書き用に開く</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'c'</span></code></td>
+<td><p class="first last">データベースを読み書き用に開く。ただし存在しない場合には新たに作成する</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'n'</span></code></td>
+<td><p class="first last">常に新たに読み書き用の新規のデータベースを作成する</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>以下の追加の文字を flag に追加して、データベースの開きかたを制御することができます:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'f'</span></code></td>
+<td><p class="first last">データベースを高速モードで開きます。書き込みが同期されません。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'s'</span></code></td>
+<td><p class="first last">同期モード。データベースへの変更がすぐにファイルに書き込まれます。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'u'</span></code></td>
+<td><p class="first last">データベースをロックしません。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>全てのバージョンの <code class="docutils literal"><span class="pre">gdbm</span></code> で全てのフラグが有効とは限りません。モジュール定数 <code class="xref py py-const docutils literal"><span class="pre">open_flags</span></code> はサポートされているフラグ文字からなる文字列です。無効なフラグが指定された場合、例外 <a class="reference internal" href="#gdbm.error" title="gdbm.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> が送出されます。</p>
+<p>オプションの <em>mode</em> 引数は、新たにデータベースを作成しなければならない場合に使われる Unix のファイルモードです。標準の値は 8 進数の <code class="docutils literal"><span class="pre">0666</span></code> です。</p>
+</dd></dl>
+
+<p>辞書型形式のメソッドに加えて、<code class="docutils literal"><span class="pre">gdbm</span></code> オブジェクトには以下のメソッドがあります:</p>
+<dl class="function">
+<dt id="gdbm.firstkey">
+<code class="descclassname">gdbm.</code><code class="descname">firstkey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.firstkey" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドと <a class="reference internal" href="#gdbm.nextkey" title="gdbm.nextkey"><code class="xref py py-meth docutils literal"><span class="pre">nextkey()</span></code></a> メソッドを使って、データベースの全てのキーにわたってループ処理を行うことができます。探索は <code class="docutils literal"><span class="pre">gdbm</span></code> の内部ハッシュ値の順番に行われ、キーの値に順に並んでいるとは限りません。このメソッドは最初のキーを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gdbm.nextkey">
+<code class="descclassname">gdbm.</code><code class="descname">nextkey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.nextkey" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベースの順方向探索において、<em>key</em> よりも後に来るキーを返します。以下のコードはデータベース <code class="docutils literal"><span class="pre">db</span></code> について、キー全てを含むリストをメモリ上に生成することなく全てのキーを出力します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">firstkey</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">k</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">k</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">nextkey</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="gdbm.reorganize">
+<code class="descclassname">gdbm.</code><code class="descname">reorganize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.reorganize" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>大量の削除を実行した後、 <code class="docutils literal"><span class="pre">gdbm</span></code> ファイルの占めるスペースを削減したい場合、このルーチンはデータベースを再組織化します。この再組織化を使う以外に <code class="docutils literal"><span class="pre">gdbm</span></code> はデータベースファイルの大きさを短くすることはありません; そうでない場合、削除された部分のファイルスペースは保持され、新たな (キー、値の) ペアが追加される際に再利用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gdbm.sync">
+<code class="descclassname">gdbm.</code><code class="descname">sync</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.sync" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベースが高速モードで開かれていた場合、このメソッドはディスクにまだ書き込まれていないデータを全て書き込ませます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gdbm.close">
+<code class="descclassname">gdbm.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gdbm.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">gdbm</span></code> データベースをクローズします。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="anydbm.html#module-anydbm" title="anydbm: Generic interface to DBM-style database modules."><code class="xref py py-mod docutils literal"><span class="pre">anydbm</span></code></a></dt>
+<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</p>
+</dd>
+<dt>Module <a class="reference internal" href="whichdb.html#module-whichdb" title="whichdb: Guess which DBM-style module created a given database."><code class="xref py py-mod docutils literal"><span class="pre">whichdb</span></code></a></dt>
+<dd><p class="first last">既存のデータベースがどの形式のデータベースか判定するユーティリティモジュール。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="dbm.html"
+                        title="前の章へ">11.8. <code class="docutils literal"><span class="pre">dbm</span></code> &#8212; UNIX dbmのシンプルなインタフェース</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="dbhash.html"
+                        title="次の章へ">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/gdbm.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dbhash.html" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="dbm.html" title="11.8. dbm — UNIX dbmのシンプルなインタフェース"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" >11. データの永続化</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

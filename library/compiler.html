@@ -1,0 +1,955 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>33. Python コンパイラパッケージ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
+    <link rel="next" title="34. 各種サービス" href="misc.html" />
+    <link rel="prev" title="32.13. pickletools — pickle 開発者のためのツール群" href="pickletools.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="34. 各種サービス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="pickletools.html" title="32.13. pickletools — pickle 開発者のためのツール群"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-compiler-package">
+<span id="compiler"></span><h1>33. Python コンパイラパッケージ<a class="headerlink" href="#python-compiler-package" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p>Python コンパイラパッケージは Python のソースコードを分析したり Python バイトコードを生成するためのツールです。compiler は Python のソースコードから抽象的な構文木を生成し、その構文木から Python バイトコード (<a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a>) を生成するライブラリをそなえています。</p>
+<p><a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> パッケージは、Python で書かれた Python ソースコードからバイトコードへの変換プログラムです。これは組み込みの構文解析器と標準ライブラリの <a class="reference internal" href="parser.html#module-parser" title="parser: Access parse trees for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">parser</span></code></a> モジュールを使って、具象構文木を生成します。この構文木から抽象構文木 AST (Abstract Syntax Tree) が生成され、その後 Python バイトコードが得られます。</p>
+<p>このパッケージの機能は、Python インタプリタに内蔵されている組み込みのコンパイラがすべて含んでいるものです。これはその機能と正確に同じものになるよう意図してつくられています。なぜ同じことをするコンパイラをもうひとつ作る必要があるのでしょうか? このパッケージはいろいろな目的に使うことができるからです。これは組み込みのコンパイラよりも簡単に変更できますし、これが生成する AST は Python ソースコードを解析するのに有用です。</p>
+<p>この章では <a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> パッケージのいろいろなコンポーネントがどのように動作するのかを説明します。そのため説明はリファレンスマニュアル的なものと、チュートリアル的な要素がまざったものになっています。</p>
+<div class="section" id="module-compiler">
+<span id="the-basic-interface"></span><h2>33.1. 基本的なインターフェイス<a class="headerlink" href="#module-compiler" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このパッケージのトップレベルでは 4 つの関数が定義されています。 <a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> モジュールを import すると、これらの関数およびこのパッケージに含まれている一連のモジュールが使用可能になります。</p>
+<dl class="function">
+<dt id="compiler.parse">
+<code class="descclassname">compiler.</code><code class="descname">parse</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.parse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>buf</em> 中の Python ソースコードから得られた抽象構文木 AST を返します。ソースコード中にエラーがある場合、この関数は <a class="reference internal" href="exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> を発生させます。返り値は <code class="xref py py-class docutils literal"><span class="pre">compiler.ast.Module</span></code> インスタンスであり、この中に構文木が格納されています。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="compiler.parseFile">
+<code class="descclassname">compiler.</code><code class="descname">parseFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.parseFile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>path</em> で指定されたファイル中の Python ソースコードから得られた抽象構文木 AST を返します。これは <code class="docutils literal"><span class="pre">parse(open(path).read())</span></code> と等価な働きをします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="compiler.walk">
+<code class="descclassname">compiler.</code><code class="descname">walk</code><span class="sig-paren">(</span><em>ast</em>, <em>visitor</em><span class="optional">[</span>, <em>verbose</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.walk" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>ast</em> に格納された抽象構文木の各ノードを先行順序 (pre-order) でたどっていきます。各ノードごとに <em>visitor</em> インスタンスの該当するメソッドが呼ばれます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="compiler.compile">
+<code class="descclassname">compiler.</code><code class="descname">compile</code><span class="sig-paren">(</span><em>source</em>, <em>filename</em>, <em>mode</em>, <em>flags=None</em>, <em>dont_inherit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.compile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>source</em> 、Python モジュール、文あるいは式を <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 文あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> 関数で実行可能なバイトコードオブジェクトにコンパイルします。この関数は組み込みの <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> 関数を置き換えるものです。</p>
+<p><em>filename</em> は実行時のエラーメッセージに使用されます。</p>
+<p><em>mode</em> は、モジュールをコンパイルする場合は &#8216;exec&#8217;、 (対話的に実行される) 単一の文をコンパイルする場合は &#8216;single&#8217;、式をコンパイルする場合には &#8216;eval&#8217; を渡します。</p>
+<p>引数 <em>flags</em> および <em>dont_inherit</em> は将来的に使用される文に影響しますが、いまのところはサポートされていません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="compiler.compileFile">
+<code class="descclassname">compiler.</code><code class="descname">compileFile</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.compileFile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイル <em>source</em> をコンパイルし、 <code class="file docutils literal"><span class="pre">.pyc</span></code> ファイルを生成します。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> パッケージは以下のモジュールを含んでいます: <a class="reference internal" href="ast.html#module-ast" title="ast: Abstract Syntax Tree classes and manipulation."><code class="xref py py-mod docutils literal"><span class="pre">ast</span></code></a>, <code class="xref py py-mod docutils literal"><span class="pre">consts</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">future</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">misc</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">pyassem</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">pycodegen</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">symbols</span></code>, <code class="xref py py-mod docutils literal"><span class="pre">transformer</span></code>, そして <code class="xref py py-mod docutils literal"><span class="pre">visitor</span></code> 。</p>
+</div>
+<div class="section" id="limitations">
+<h2>33.2. 制限<a class="headerlink" href="#limitations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>compiler パッケージにはエラーチェックにいくつか問題が存在します。構文エラーはインタープリタの 2 つの別々のフェーズによって認識されます。ひとつはインタープリタのパーザによって認識されるもので、もうひとつはコンパイラによって認識されるものです。 compiler パッケージはインタープリタのパーザに依存しているので、最初の段階のエラーチェックは労せずして実現できています。しかしその次の段階は、実装されてはいますが、その実装は不完全です。たとえば compiler パッケージは引数に同じ名前が 2 度以上出てきていてもエラーを出しません: <code class="docutils literal"><span class="pre">def</span> <span class="pre">f(x,</span> <span class="pre">x):</span> <span class="pre">...</span></code></p>
+<p>compiler の将来のバージョンでは、これらの問題は修正される予定です。</p>
+</div>
+<div class="section" id="python-abstract-syntax">
+<h2>33.3. Python 抽象構文<a class="headerlink" href="#python-abstract-syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-compiler.ast" title="compiler.ast"><code class="xref py py-mod docutils literal"><span class="pre">compiler.ast</span></code></a> モジュールは Python の抽象構文木 AST を定義します。 AST では各ノードがそれぞれの構文要素をあらわします。木の根は <code class="xref py py-class docutils literal"><span class="pre">Module</span></code> オブジェクトです。</p>
+<p>抽象構文木 AST オブジェクトは、パーズされた Python ソースコードに対する高水準のインターフェイスを提供します。 Python インタプリタにおける <a class="reference internal" href="parser.html#module-parser" title="parser: Access parse trees for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">parser</span></code></a> モジュールとコンパイラは C で書かれおり、具象構文木を使っています。具象構文木は Python のパーザ中で使われている構文と密接に関連しています。ひとつの要素に単一のノードを割り当てる代わりに、ここでは Python の優先順位に従って、何層にもわたるネストしたノードがしばしば使われています。</p>
+<p>抽象構文木 AST は、 <code class="xref py py-mod docutils literal"><span class="pre">compiler.transformer</span></code> (変換器) モジュールによって生成されます。 transformer は組み込みの Python パーザに依存しており、これを使って具象構文木をまず生成します。つぎにそこから抽象構文木 AST を生成します。</p>
+<p id="index-0"><code class="xref py py-mod docutils literal"><span class="pre">transformer</span></code> モジュールは、実験的な Python-to-C コンパイラ用に Greg Stein と Bill Tutt によって作られました。現行のバージョンではいくつもの修正と改良がなされていますが、抽象構文木 AST と transformer の基本的な構造は Stein と Tutt によるものです。</p>
+<div class="section" id="module-compiler.ast">
+<span id="ast-nodes"></span><h3>33.3.1. AST ノード<a class="headerlink" href="#module-compiler.ast" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#module-compiler.ast" title="compiler.ast"><code class="xref py py-mod docutils literal"><span class="pre">compiler.ast</span></code></a> モジュールは、各ノードのタイプとその要素を記述したテキストファイルからつくられます。各ノードのタイプはクラスとして表現され、そのクラスは抽象基底クラス <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">compiler.ast.Node</span></code></a> を継承し子ノードの名前属性を定義しています。</p>
+<dl class="class">
+<dt id="compiler.ast.Node">
+<em class="property">class </em><code class="descclassname">compiler.ast.</code><code class="descname">Node</code><a class="headerlink" href="#compiler.ast.Node" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスはパーザジェネレータによって自動的に作成されます。ある特定の <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスに対する推奨されるインターフェイスとは、子ノードにアクセスするために public な属性を使うことです。 public な属性は単一のノード、あるいは一連のノードのシーケンスに束縛されているかもしれませんが、これは <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> のタイプによって違います。たとえば <code class="xref py py-class docutils literal"><span class="pre">Class</span></code> ノードの <code class="xref py py-attr docutils literal"><span class="pre">bases</span></code> 属性は基底クラスのノードのリストに束縛されており、 <code class="xref py py-attr docutils literal"><span class="pre">doc</span></code> 属性は単一のノードのみに束縛されている、といった具合です。</p>
+<p>各 <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスは <code class="xref py py-attr docutils literal"><span class="pre">lineno</span></code> 属性をもっており、これは <code class="docutils literal"><span class="pre">None</span></code> かもしれません。 XXX どういったノードが使用可能な lineno をもっているかの規則は定かではない。</p>
+<p>全ての <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> オブジェクトは以下のメソッドを提供します:</p>
+<dl class="method">
+<dt id="compiler.ast.Node.getChildren">
+<code class="descname">getChildren</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.ast.Node.getChildren" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>子ノードと子オブジェクトを、これらが出てきた順で、平らなリスト形式にして返します。とくにノードの順序は、 Python 文法中に現れるものと同じになっています。すべての子が <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスなわけではありません。たとえば関数名やクラス名といったものは、ただの文字列として表されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="compiler.ast.Node.getChildNodes">
+<code class="descname">getChildNodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.ast.Node.getChildNodes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>子ノードをこれらが出てきた順で平らなリスト形式にして返します。このメソッドは <a class="reference internal" href="#compiler.ast.Node.getChildren" title="compiler.ast.Node.getChildren"><code class="xref py py-meth docutils literal"><span class="pre">getChildren()</span></code></a> に似ていますが、 <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスしか返さないという点で異なっています。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p><a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> クラスの一般的な構造を説明するため、以下に 2 つの例を示します。 <a class="reference internal" href="../reference/compound_stmts.html#while"><code class="xref std std-keyword docutils literal"><span class="pre">while</span></code></a> 文は以下のような文法規則により定義されています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">while_stmt</span><span class="p">:</span>     <span class="s2">&quot;while&quot;</span> <span class="n">expression</span> <span class="s2">&quot;:&quot;</span> <span class="n">suite</span>
+               <span class="p">[</span><span class="s2">&quot;else&quot;</span> <span class="s2">&quot;:&quot;</span> <span class="n">suite</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="xref py py-class docutils literal"><span class="pre">While</span></code> ノードは 3 つの属性をもっています: <a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-attr docutils literal"><span class="pre">test</span></code></a>, <code class="xref py py-attr docutils literal"><span class="pre">body</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">else_</span></code> です。 (ある属性にふさわしい名前が Python の予約語としてすでに使われているとき、その名前を属性名にすることはできません。そのため、ここでは名前が正規のものとして受けつけられるようにアンダースコアを後につけてあります、そのため <code class="xref py py-attr docutils literal"><span class="pre">else_</span></code> は <a class="reference internal" href="../reference/compound_stmts.html#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> のかわりです。)</p>
+<p><a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 文はもっとこみ入っています。なぜならこれはいくつもの条件判定を含む可能性があるからです。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">if_stmt</span><span class="p">:</span> <span class="s1">&#39;if&#39;</span> <span class="n">test</span> <span class="s1">&#39;:&#39;</span> <span class="n">suite</span> <span class="p">(</span><span class="s1">&#39;elif&#39;</span> <span class="n">test</span> <span class="s1">&#39;:&#39;</span> <span class="n">suite</span><span class="p">)</span><span class="o">*</span> <span class="p">[</span><span class="s1">&#39;else&#39;</span> <span class="s1">&#39;:&#39;</span> <span class="n">suite</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="xref py py-class docutils literal"><span class="pre">If</span></code> ノードでは、 <code class="xref py py-attr docutils literal"><span class="pre">tests</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">else_</span></code> の 2つだけの属性が定義されています。 <code class="xref py py-attr docutils literal"><span class="pre">tests</span></code> 属性には条件式とその後の動作のタプルがリスト形式で入っています。おのおのの <a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> / <a class="reference internal" href="../reference/compound_stmts.html#elif"><code class="xref std std-keyword docutils literal"><span class="pre">elif</span></code></a> 節ごとに 1 タプルです。各タプルの最初の要素は条件式で、2 番目の要素はもしその式が真ならば実行されるコードをふくんだ <code class="xref py py-class docutils literal"><span class="pre">Stmt</span></code> ノードになっています。</p>
+<p><code class="xref py py-class docutils literal"><span class="pre">If</span></code> の <code class="xref py py-meth docutils literal"><span class="pre">getChildren()</span></code> メソッドは、子ノードの平らなリストを返します。 <a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> / <a class="reference internal" href="../reference/compound_stmts.html#elif"><code class="xref std std-keyword docutils literal"><span class="pre">elif</span></code></a> 節が 3 つあって <a class="reference internal" href="../reference/compound_stmts.html#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節がない場合なら、 <code class="xref py py-meth docutils literal"><span class="pre">getChildren()</span></code> は 6 要素のリストを返すでしょう: 最初の条件式、最初の <code class="xref py py-class docutils literal"><span class="pre">Stmt</span></code> 、2 番目の条件式…といった具合です。</p>
+<p>以下の表は <a class="reference internal" href="#module-compiler.ast" title="compiler.ast"><code class="xref py py-mod docutils literal"><span class="pre">compiler.ast</span></code></a> で定義されている <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> サブクラスと、それらのインスタンスに対して使用可能なパブリックな属性です。ほとんどの属性の値自体は <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> インスタンスか、インスタンスのリストです。この値がインスタンス型以外の場合、その型は備考の中で記されています。これら属性の順序は、 <code class="xref py py-meth docutils literal"><span class="pre">getChildren()</span></code> および <code class="xref py py-meth docutils literal"><span class="pre">getChildNodes()</span></code> が返す順です。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="26%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">ノード型</p>
+</th>
+<th class="head"><p class="first last">属性</p>
+</th>
+<th class="head"><p class="first last">値</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Add</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td><p class="first last">左オペランド</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td><p class="first last">右オペランド</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">And</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">オペランドのリスト</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">AssAttr</span></code></td>
+<td>&nbsp;</td>
+<td><p class="first last"><em>代入のターゲットとなる属性</em></p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td><p class="first last">ドットの左側の式</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">attrname</span></code></td>
+<td><p class="first last">属性名, 文字列</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>XXX</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">AssList</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">代入先のリスト要素のリスト</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">AssName</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></td>
+<td><p class="first last">代入先の名前</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>XXX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">AssTuple</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">代入先のタプル要素のリスト</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Assert</span></code></td>
+<td><a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-attr docutils literal"><span class="pre">test</span></code></a></td>
+<td><p class="first last">テストされる式</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">fail</span></code></td>
+<td><p class="first last"><a class="reference internal" href="exceptions.html#exceptions.AssertionError" title="exceptions.AssertionError"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code></a> の値</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Assign</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">代入ターゲットのリスト、等号ごとに一つ</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td><p class="first last">代入される値</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">AugAssign</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">node</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">op</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Backquote</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Bitand</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Bitor</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Bitxor</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Break</span></code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">CallFunc</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">node</span></code></td>
+<td><p class="first last">呼び出される式</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">args</span></code></td>
+<td><p class="first last">引数のリスト</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">star_args</span></code></td>
+<td><p class="first last">拡張 *-引数の値</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">dstar_args</span></code></td>
+<td><p class="first last">拡張 **-引数の値</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Class</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></td>
+<td><p class="first last">クラス名, 文字列</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">bases</span></code></td>
+<td><p class="first last">基底クラスのリスト</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">doc</span></code></td>
+<td><p class="first last">ドキュメント文字列, 文字列または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-attr docutils literal"><span class="pre">code</span></code></a></td>
+<td><p class="first last">クラス文の本体</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Compare</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ops</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Const</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">value</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Continue</span></code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Decorators</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">関数デコレータ式のリスト</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Dict</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">items</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Discard</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Div</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="constants.html#Ellipsis" title="Ellipsis"><code class="xref py py-class docutils literal"><span class="pre">Ellipsis</span></code></a></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Expression</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">node</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Exec</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#locals" title="locals"><code class="xref py py-attr docutils literal"><span class="pre">locals</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#globals" title="globals"><code class="xref py py-attr docutils literal"><span class="pre">globals</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">FloorDiv</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">For</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">assign</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-attr docutils literal"><span class="pre">list</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">body</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">else_</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">From</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">modname</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">names</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Function</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">decorators</span></code></td>
+<td><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">Decorators</span></code> または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></td>
+<td><p class="first last">def に使われた名前, 文字列</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">argnames</span></code></td>
+<td><p class="first last">引数名の文字列としてのリスト</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">defaults</span></code></td>
+<td><p class="first last">デフォルト値のリスト</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>xxx</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">doc</span></code></td>
+<td><p class="first last">ドキュメント文字列, 文字列または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-attr docutils literal"><span class="pre">code</span></code></a></td>
+<td><p class="first last">関数の本体</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">GenExpr</span></code></td>
+<td><a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-attr docutils literal"><span class="pre">code</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">GenExprFor</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">assign</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#iter" title="iter"><code class="xref py py-attr docutils literal"><span class="pre">iter</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ifs</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">GenExprIf</span></code></td>
+<td><a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-attr docutils literal"><span class="pre">test</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">GenExprInner</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">quals</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Getattr</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">attrname</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Global</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">names</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">If</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">tests</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">else_</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Import</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">names</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Invert</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Keyword</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Lambda</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">argnames</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">defaults</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-attr docutils literal"><span class="pre">code</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">LeftShift</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">List</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">ListComp</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">quals</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">ListCompFor</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">assign</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-attr docutils literal"><span class="pre">list</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ifs</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">ListCompIf</span></code></td>
+<td><a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-attr docutils literal"><span class="pre">test</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Mod</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Module</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">doc</span></code></td>
+<td><p class="first last">ドキュメント文字列, 文字列または <code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">node</span></code></td>
+<td><p class="first last">モジュールの本体, <code class="xref py py-class docutils literal"><span class="pre">Stmt</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Mul</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Name</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Not</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Or</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Pass</span></code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Power</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Print</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">dest</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Printnl</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">dest</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Raise</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr1</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr2</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr3</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Return</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">value</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">RightShift</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Slice</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">lower</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">upper</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Sliceobj</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td><p class="first last">文のリスト</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Stmt</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Sub</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">left</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">right</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Subscript</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">flags</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">subs</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">TryExcept</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">body</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">handlers</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">else_</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">TryFinally</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">body</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">final</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">Tuple</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">UnaryAdd</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">UnarySub</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">While</span></code></td>
+<td><a class="reference internal" href="test.html#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-attr docutils literal"><span class="pre">test</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">body</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">else_</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-class docutils literal"><span class="pre">With</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">expr</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><a class="reference internal" href="functions.html#vars" title="vars"><code class="xref py py-attr docutils literal"><span class="pre">vars</span></code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">body</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-class docutils literal"><span class="pre">Yield</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">value</span></code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="assignment-nodes">
+<h3>33.3.2. 代入ノード<a class="headerlink" href="#assignment-nodes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>代入をあらわすのに使われる一群のノードが存在します。ソースコードにおけるそれぞれの代入文は、抽象構文木 AST では単一のノード <code class="xref py py-class docutils literal"><span class="pre">Assign</span></code> になっています。 <code class="xref py py-attr docutils literal"><span class="pre">nodes</span></code> 属性は各代入の対象にたいするノードのリストです。これが必要なのは、たとえば <code class="docutils literal"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">b</span> <span class="pre">=</span> <span class="pre">2</span></code> のように代入が連鎖的に起こるためです。このリスト中における各 <a class="reference internal" href="#compiler.ast.Node" title="compiler.ast.Node"><code class="xref py py-class docutils literal"><span class="pre">Node</span></code></a> は、次のうちどれかのクラスになります: <code class="xref py py-class docutils literal"><span class="pre">AssAttr</span></code>, <code class="xref py py-class docutils literal"><span class="pre">AssList</span></code>, <code class="xref py py-class docutils literal"><span class="pre">AssName</span></code> または <code class="xref py py-class docutils literal"><span class="pre">AssTuple</span></code> 。</p>
+<p>代入対象の各ノードには代入されるオブジェクトの種類が記録されています。 <code class="xref py py-class docutils literal"><span class="pre">AssName</span></code> は <code class="docutils literal"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> などの単純な変数名、 <code class="xref py py-class docutils literal"><span class="pre">AssAttr</span></code> は <code class="docutils literal"><span class="pre">a.x</span> <span class="pre">=</span> <span class="pre">1</span></code> などの属性に対する代入、 <code class="xref py py-class docutils literal"><span class="pre">AssList</span></code> および <code class="xref py py-class docutils literal"><span class="pre">AssTuple</span></code> はそれぞれ、 <code class="docutils literal"><span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">c</span> <span class="pre">=</span> <span class="pre">a_tuple</span></code> などのようなリストとタプルの展開をあらわします。</p>
+<p>代入対象ノードはまた、そのノードが代入で使われるのか、それとも削除文で使われるのかをあらわす属性 <code class="xref py py-attr docutils literal"><span class="pre">flags</span></code> も持っています。 <code class="xref py py-class docutils literal"><span class="pre">AssName</span></code> は <code class="docutils literal"><span class="pre">del</span> <span class="pre">x</span></code> などのような削除文をあらわすのにも使われます。</p>
+<p>ある式がいくつかの属性への参照をふくんでいるときは、代入あるいは削除文はただひとつだけの <code class="xref py py-class docutils literal"><span class="pre">AssAttr</span></code> ノードをもちます &#8211; 最終的な属性への参照としてです。それ以外の属性への参照は <code class="xref py py-class docutils literal"><span class="pre">AssAttr</span></code> インスタンスの <code class="xref py py-attr docutils literal"><span class="pre">expr</span></code> 属性にある <code class="xref py py-class docutils literal"><span class="pre">Getattr</span></code> ノードによってあらわされます。</p>
+</div>
+<div class="section" id="examples">
+<h3>33.3.3. 例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>この節では、Python ソースコードに対する抽象構文木 AST のかんたんな例をいくつかご紹介します。これらの例では <code class="xref py py-func docutils literal"><span class="pre">parse()</span></code> 関数をどうやって使うか、AST の repr 表現はどんなふうになっているか、そしてある AST ノードの属性にアクセスするにはどうするかを説明します。</p>
+<p>最初のモジュールでは単一の関数を定義しています。かりにこれは <code class="file docutils literal"><span class="pre">/tmp/doublelib.py</span></code> に格納されていると仮定しましょう。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This is an example module.</span>
+
+<span class="sd">This is the docstring.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">double</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s2">&quot;Return twice the argument&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>以下の対話的インタプリタのセッションでは、見やすさのため長い AST の repr を整形しなおしてあります。 AST の repr では qualify されていないクラス名が使われています。 repr 表現からインスタンスを作成したい場合は、 <a class="reference internal" href="#module-compiler.ast" title="compiler.ast"><code class="xref py py-mod docutils literal"><span class="pre">compiler.ast</span></code></a> モジュールからそれらのクラス名を import しなければなりません。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compiler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mod</span> <span class="o">=</span> <span class="n">compiler</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="s2">&quot;doublelib.py&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mod</span>
+<span class="go">Module(&#39;This is an example module.\n\nThis is the docstring.\n&#39;,</span>
+<span class="go">       Stmt([Function(None, &#39;double&#39;, [&#39;x&#39;], [], 0,</span>
+<span class="go">                      &#39;Return twice the argument&#39;,</span>
+<span class="go">                      Stmt([Return(Mul((Name(&#39;x&#39;), Const(2))))]))]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compiler.ast</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Module</span><span class="p">(</span><span class="s1">&#39;This is an example module.</span><span class="se">\n\n</span><span class="s1">This is the docstring.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">Stmt</span><span class="p">([</span><span class="n">Function</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>                  <span class="s1">&#39;Return twice the argument&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                  <span class="n">Stmt</span><span class="p">([</span><span class="n">Return</span><span class="p">(</span><span class="n">Mul</span><span class="p">((</span><span class="n">Name</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">Const</span><span class="p">(</span><span class="mi">2</span><span class="p">))))]))]))</span>
+<span class="go">Module(&#39;This is an example module.\n\nThis is the docstring.\n&#39;,</span>
+<span class="go">       Stmt([Function(None, &#39;double&#39;, [&#39;x&#39;], [], 0,</span>
+<span class="go">                      &#39;Return twice the argument&#39;,</span>
+<span class="go">                      Stmt([Return(Mul((Name(&#39;x&#39;), Const(2))))]))]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mod</span><span class="o">.</span><span class="n">doc</span>
+<span class="go">&#39;This is an example module.\n\nThis is the docstring.\n&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">mod</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">node</span>
+<span class="gp">...</span>
+<span class="go">Function(None, &#39;double&#39;, [&#39;x&#39;], [], 0, &#39;Return twice the argument&#39;,</span>
+<span class="go">         Stmt([Return(Mul((Name(&#39;x&#39;), Const(2))))]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func</span><span class="o">.</span><span class="n">code</span>
+<span class="go">Stmt([Return(Mul((Name(&#39;x&#39;), Const(2))))])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="module-compiler.visitor">
+<span id="using-visitors-to-walk-asts"></span><h2>33.4. Visitor を使って AST をわたり歩く<a class="headerlink" href="#module-compiler.visitor" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>visitor パターンは… <a class="reference internal" href="#module-compiler" title="compiler: Python code compiler written in Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">compiler</span></code></a> パッケージは、Python のイントロスペクション機能を利用して visitor のために必要な大部分のインフラを省略した、visitor パターンの変種を使っています。</p>
+<p>visit されるクラスは、visitor を受け入れるようにプログラムされている必要はありません。 visitor が必要なのはただそれがとくに興味あるクラスに対して visit メソッドを定義することだけです。それ以外はデフォルトの visit メソッドが処理します。</p>
+<p>XXX visitor 用の魔法の <code class="xref py py-meth docutils literal"><span class="pre">visit()</span></code> メソッド。</p>
+<dl class="function">
+<dt id="compiler.visitor.walk">
+<code class="descclassname">compiler.visitor.</code><code class="descname">walk</code><span class="sig-paren">(</span><em>tree</em>, <em>visitor</em><span class="optional">[</span>, <em>verbose</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.visitor.walk" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="compiler.visitor.ASTVisitor">
+<em class="property">class </em><code class="descclassname">compiler.visitor.</code><code class="descname">ASTVisitor</code><a class="headerlink" href="#compiler.visitor.ASTVisitor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> は構文木を正しい順序でわたり歩くようにします。それぞれのノードはまず <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> の呼び出しではじまります。各ノードに対して、これは &#8216;visitNodeType&#8217; という名前のメソッドに対する <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> 関数への <em>visitor</em> 引数をチェックします。ここで NodeType の部分はそのノードのクラス名です。たとえば <code class="xref py py-class docutils literal"><span class="pre">While</span></code> ノードなら、 <code class="xref py py-meth docutils literal"><span class="pre">visitWhile()</span></code> が呼ばれるわけです。もしそのメソッドが存在している場合、それはそのノードを第一引数として呼び出されます。</p>
+<p>ある特定のノード型に対する visitor メソッドでは、その子ノードをどのようにわたり歩くかが制御できます。 <a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> は visitor に visit メソッドを追加することで、その visitor 引数を修正します; このメソッドは特定の子ノードを訪問するのに使われるでしょう。特定のノード型に対する visitor が存在しない場合、 <a class="reference internal" href="#compiler.visitor.ASTVisitor.default" title="compiler.visitor.ASTVisitor.default"><code class="xref py py-meth docutils literal"><span class="pre">default()</span></code></a> メソッドが呼び出されます。</p>
+<p><a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> オブジェクトには以下のようなメソッドがあります:</p>
+<p>XXX 追加の引数を記述</p>
+<dl class="method">
+<dt id="compiler.visitor.ASTVisitor.default">
+<code class="descname">default</code><span class="sig-paren">(</span><em>node</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.visitor.ASTVisitor.default" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="compiler.visitor.ASTVisitor.dispatch">
+<code class="descname">dispatch</code><span class="sig-paren">(</span><em>node</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#compiler.visitor.ASTVisitor.dispatch" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="compiler.visitor.ASTVisitor.preorder">
+<code class="descname">preorder</code><span class="sig-paren">(</span><em>tree</em>, <em>visitor</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.visitor.ASTVisitor.preorder" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="bytecode-generation">
+<h2>33.5. バイトコード生成<a class="headerlink" href="#bytecode-generation" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>バイトコード生成器はバイトコードを出力する visitor です。 visit メソッドが呼ばれるたびにこれは <code class="xref py py-meth docutils literal"><span class="pre">emit()</span></code> メソッドを呼び出し、バイトコードを出力します。基本的なバイトコード生成器はモジュール、クラス、および関数のために特殊化されます。アセンブラがこれらの出力された命令を低レベルのバイトコードに変換します。これはコードオブジェクトからなる定数のリスト生成や、分岐のオフセット計算といった処理をおこないます。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">33. Python コンパイラパッケージ</a><ul>
+<li><a class="reference internal" href="#module-compiler">33.1. 基本的なインターフェイス</a></li>
+<li><a class="reference internal" href="#limitations">33.2. 制限</a></li>
+<li><a class="reference internal" href="#python-abstract-syntax">33.3. Python 抽象構文</a><ul>
+<li><a class="reference internal" href="#module-compiler.ast">33.3.1. AST ノード</a></li>
+<li><a class="reference internal" href="#assignment-nodes">33.3.2. 代入ノード</a></li>
+<li><a class="reference internal" href="#examples">33.3.3. 例</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-compiler.visitor">33.4. Visitor を使って AST をわたり歩く</a></li>
+<li><a class="reference internal" href="#bytecode-generation">33.5. バイトコード生成</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="pickletools.html"
+                        title="前の章へ">32.13. <code class="docutils literal"><span class="pre">pickletools</span></code> &#8212; pickle 開発者のためのツール群</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="misc.html"
+                        title="次の章へ">34. 各種サービス</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/compiler.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="34. 各種サービス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="pickletools.html" title="32.13. pickletools — pickle 開発者のためのツール群"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

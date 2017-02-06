@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>24. Tk を用いたグラフィカルユーザインターフェイス &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
+    <link rel="next" title="24.1. Tkinter — Tcl/Tk への Python インタフェース" href="tkinter.html" />
+    <link rel="prev" title="23.2. shlex — 単純な字句解析" href="shlex.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="tkinter.html" title="24.1. Tkinter — Tcl/Tk への Python インタフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="shlex.html" title="23.2. shlex — 単純な字句解析"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graphical-user-interfaces-with-tk">
+<span id="tkinter"></span><h1>24. Tk を用いたグラフィカルユーザインターフェイス<a class="headerlink" href="#graphical-user-interfaces-with-tk" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">Tk/Tcl は長きにわたり Python の不可欠な一部でありつづけています。 Tk/Tcl は頑健でプラットホームに依存しないウィンドウ構築ツールキットであり、 Python プログラマは <a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> モジュールやその拡張の <a class="reference internal" href="tix.html#module-Tix" title="Tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal"><span class="pre">Tix</span></code></a>, <a class="reference internal" href="ttk.html#module-ttk" title="ttk: Tk themed widget set"><code class="xref py py-mod docutils literal"><span class="pre">ttk</span></code></a> モジュールを使って利用できます。</p>
+<p><a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> モジュールは、 Tcl/Tk 上に作られた軽量なオブジェクト指向のレイヤです。 <a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> を使うために Tcl コードを書く必要はありませんが、Tk のドキュメントや、場合によっては Tcl のドキュメントを調べる必要があるでしょう。 <a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> は Tk のウィジェットを Python のクラスとして実装しているラッパをまとめたものです。加えて、内部モジュール <code class="xref py py-mod docutils literal"><span class="pre">_tkinter</span></code> では、 Python と Tcl がやり取りできるようなスレッド安全なメカニズムを提供しています。</p>
+<p><a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> の一番素晴らしい点は速く、そして普通に Python に付属してくることです。標準ドキュメントが頼りないものだとしても、代わりになるものが入手可能です: リファレンス、チュートリアル、書籍その他です。 <a class="reference internal" href="tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> は古臭いルックアンドフィールでも有名ですが、その点は Tk 8.5 で幅広く改善されました。とはいえ、興味を引きそうな GUI ライブラリは他にも多数あります。そういったものについてはもっと知りたい人は <a class="reference internal" href="othergui.html#other-gui-packages"><span class="std std-ref">他のグラフィカルユーザインタフェースパッケージ</span></a> 節を参照してください。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.html">24.1. <code class="docutils literal"><span class="pre">Tkinter</span></code> &#8212; Tcl/Tk への Python インタフェース</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#tkinter-modules">24.1.1. Tkinter モジュール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#tkinter-life-preserver">24.1.2. Tkinter お助け手帳</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#how-to-use-this-section">24.1.2.1. この節の使い方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#a-simple-hello-world-program">24.1.2.2. 簡単な Hello World プログラム</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#a-very-quick-look-at-tcl-tk">24.1.3. Tcl/Tk を (本当に少しだけ) 見渡してみる</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#mapping-basic-tk-into-tkinter">24.1.4. 基本的な Tk プログラムと Tkinter との対応関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#how-tk-and-tkinter-are-related">24.1.5. Tk と Tkinter はどのように関わっているのか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#handy-reference">24.1.6. 簡単なリファレンス</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#setting-options">24.1.6.1. オプションの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-packer">24.1.6.2. Packer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#packer-options">24.1.6.3. Packer のオプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#coupling-widget-variables">24.1.6.4. ウィジェット変数を関連付ける</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-window-manager">24.1.6.5. ウィンドウマネージャ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#tk-option-data-types">24.1.6.6. Tk オプションデータ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#bindings-and-events">24.1.6.7. バインドとイベント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-index-parameter">24.1.6.8. index パラメータ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#images">24.1.6.9. 画像</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#file-handlers">24.1.7. ファイルハンドラ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ttk.html">24.2. <code class="docutils literal"><span class="pre">ttk</span></code> &#8212; Tk のテーマ付きウィジェット</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#using-ttk">24.2.1. Ttk を使う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#ttk-widgets">24.2.2. Ttk ウィジェット</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#widget">24.2.3. ウィジェット</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#standard-options">24.2.3.1. 標準オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#scrollable-widget-options">24.2.3.2. スクロール可能ウィジェットのオプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#label-options">24.2.3.3. ラベルオプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#compatibility-options">24.2.3.4. 互換性オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#widget-states">24.2.3.5. ウィジェットの状態</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#ttk-widget">24.2.3.6. ttk.Widget</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#combobox">24.2.4. コンボボックス</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#options">24.2.4.1. オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#virtual-events">24.2.4.2. 仮想イベント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#ttk-combobox">24.2.4.3. ttk.Combobox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#notebook">24.2.5. ノートブック</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id1">24.2.5.1. オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#tab-options">24.2.5.2. タブオプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#tab-identifiers">24.2.5.3. タブ識別子</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id2">24.2.5.4. 仮想イベント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#ttk-notebook">24.2.5.5. ttk.Notebook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#progressbar">24.2.6. プログレスバー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id3">24.2.6.1. オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#ttk-progressbar">24.2.6.2. ttk.Progressbar</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#separator">24.2.7. セパレータ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id4">24.2.7.1. オプション</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#sizegrip">24.2.8. サイズグリップ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#platform-specific-notes">24.2.8.1. プラットフォーム固有のメモ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#bugs">24.2.8.2. バグ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#treeview">24.2.9. ツリービュー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id5">24.2.9.1. オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#item-options">24.2.9.2. 要素オプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#tag-options">24.2.9.3. タグオプション</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#column-identifiers">24.2.9.4. カラム識別子</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#id6">24.2.9.5. 仮想イベント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#ttk-treeview">24.2.9.6. ttk.Treeview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ttk.html#ttk-styling">24.2.10. Ttk スタイル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ttk.html#layouts">24.2.10.1. レイアウト</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tix.html">24.3. <code class="docutils literal"><span class="pre">Tix</span></code> &#8212; Tkの拡張ウィジェット</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tix.html#using-tix">24.3.1. Tixを使う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tix.html#tix-widgets">24.3.2. Tixウィジェット</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#basic-widgets">24.3.2.1. 基本ウィジェット</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#file-selectors">24.3.2.2. ファイルセレクタ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#hierarchical-listbox">24.3.2.3. ハイアラキカルリストボックス</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#tabular-listbox">24.3.2.4. タビュラーリストボックス</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#manager-widgets">24.3.2.5. 管理ウィジェット</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#image-types">24.3.2.6. 画像タイプ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#miscellaneous-widgets">24.3.2.7. その他のウィジェット</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tix.html#form-geometry-manager">24.3.2.8. ジオメトリマネジャを作る</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tix.html#tix-commands">24.3.3. Tixコマンド</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scrolledtext.html">24.4. <code class="docutils literal"><span class="pre">ScrolledText</span></code> &#8212; スクロールするテキストウィジェット</a></li>
+<li class="toctree-l1"><a class="reference internal" href="turtle.html">24.5. <code class="docutils literal"><span class="pre">turtle</span></code> &#8212; Tkのためのタートルグラフィックス</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#introduction">24.5.1. はじめに</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#overview-over-available-turtle-and-screen-methods">24.5.2. Turtle および Screen のメソッド概観</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#turtle-methods">24.5.2.1. Turtle のメソッド</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#methods-of-turtlescreen-screen">24.5.2.2. TurtleScreen/Screen のメソッド</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#methods-of-rawturtle-turtle-and-corresponding-functions">24.5.3. RawTurtle/Turtle のメソッドと対応する関数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#turtle-motion">24.5.3.1. Turtle の動き</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#tell-turtle-s-state">24.5.3.2. Turtle の状態を知る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#settings-for-measurement">24.5.3.3. 設定と計測</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#pen-control">24.5.3.4. Pen の制御</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#drawing-state">24.5.3.4.1. 描画状態</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#color-control">24.5.3.4.2. 色の制御</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#filling">24.5.3.4.3. 塗りつぶし</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#more-drawing-control">24.5.3.4.4. さらなる描画の制御</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#turtle-state">24.5.3.5. タートルの状態</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#visibility">24.5.3.5.1. 可視性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle.html#appearance">24.5.3.5.2. 見た目</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#using-events">24.5.3.6. イベントを利用する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#special-turtle-methods">24.5.3.7. 特別な Turtle のメソッド</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#excursus-about-the-use-of-compound-shapes">24.5.3.8. 合成形の使用に関する補遺</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#methods-of-turtlescreen-screen-and-corresponding-functions">24.5.4. TurtleScreen/Screen のメソッドと対応する関数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#window-control">24.5.4.1. ウィンドウの制御</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#animation-control">24.5.4.2. アニメーションの制御</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#using-screen-events">24.5.4.3. スクリーンイベントを利用する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#settings-and-special-methods">24.5.4.4. 設定と特殊なメソッド</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#methods-specific-to-screen-not-inherited-from-turtlescreen">24.5.4.5. Screen 独自のメソッド、TurtleScreen から継承したもの以外</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#the-public-classes-of-the-module-turtle">24.5.5. <code class="docutils literal"><span class="pre">turtle</span></code> モジュールのパブリッククラス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#help-and-configuration">24.5.6. ヘルプと設定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#how-to-use-help">24.5.6.1. ヘルプの使い方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#translation-of-docstrings-into-different-languages">24.5.6.2. ドキュメント文字列の翻訳</a></li>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html#how-to-configure-screen-and-turtles">24.5.6.3. Screen および Turtle の設定方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle.html#demo-scripts">24.5.7. デモスクリプト</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idle.html">24.6. IDLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#menus">24.6.1. メニュー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#file-menu-shell-and-editor">24.6.1.1. File メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#edit-menu-shell-and-editor">24.6.1.2. Edit メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#format-menu-editor-window-only">24.6.1.3. Format メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#run-menu-editor-window-only">24.6.1.4. Run メニュー (Editor ウィンドウのみ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#shell-menu-shell-window-only">24.6.1.5. Shell メニュー (Shell ウィンドウのみ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#debug-menu-shell-window-only">24.6.1.6. Debug メニュー (Shell ウィンドウのみ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#options-menu-shell-and-editor">24.6.1.7. Options メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#window-menu-shell-and-editor">24.6.1.8. Window メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#help-menu-shell-and-editor">24.6.1.9. Help メニュー (Shell ウィンドウ、Editor ウィンドウ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#context-menus">24.6.1.10. コンテキストメニュー</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#editing-and-navigation">24.6.2. 編集とナビゲーション</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#automatic-indentation">24.6.2.1. 自動的な字下げ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#completions">24.6.2.2. 補完 (Completions)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#calltips">24.6.2.3. 呼び出しヒント (Calltips)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#python-shell-window">24.6.2.4. Python Shell ウィンドウ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#text-colors">24.6.2.5. テキストの色</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#startup-and-code-execution">24.6.3. スタートアップとコードの実行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#command-line-usage">24.6.3.1. コマンドラインの使い方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#idle-console-differences">24.6.3.2. IDLE とコンソールの違い</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#running-without-a-subprocess">24.6.3.3. サブプロセスを起こさずに起動する</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#help-and-preferences">24.6.4. ヘルプとお好み設定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#additional-help-sources">24.6.4.1. Additional help sources [ヘルプ参照先の追加]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#setting-preferences">24.6.4.2. Setting preferences [お好み設定]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#extensions">24.6.4.3. Extensions [拡張]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="othergui.html">24.7. 他のグラフィカルユーザインタフェースパッケージ</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="shlex.html"
+                        title="前の章へ">23.2. <code class="docutils literal"><span class="pre">shlex</span></code> &#8212; 単純な字句解析</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="tkinter.html"
+                        title="次の章へ">24.1. <code class="docutils literal"><span class="pre">Tkinter</span></code> &#8212; Tcl/Tk への Python インタフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/tk.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="tkinter.html" title="24.1. Tkinter — Tcl/Tk への Python インタフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="shlex.html" title="23.2. shlex — 単純な字句解析"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

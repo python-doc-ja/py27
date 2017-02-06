@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>14.3. md5 — MD5 メッセージダイジェストアルゴリズム &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="14. 暗号関連のサービス" href="crypto.html" />
+    <link rel="next" title="14.4. sha — SHA-1 メッセージダイジェストアルゴリズム" href="sha.html" />
+    <link rel="prev" title="14.2. hmac — メッセージ認証のための鍵付きハッシュ化" href="hmac.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="sha.html" title="14.4. sha — SHA-1 メッセージダイジェストアルゴリズム"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="hmac.html" title="14.2. hmac — メッセージ認証のための鍵付きハッシュ化"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" accesskey="U">14. 暗号関連のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-md5">
+<span id="md5-md5-message-digest-algorithm"></span><h1>14.3. <a class="reference internal" href="#module-md5" title="md5: RSA's MD5 message digest algorithm. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">md5</span></code></a> &#8212; MD5 メッセージダイジェストアルゴリズム<a class="headerlink" href="#module-md5" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.5 で撤廃: </span>代わりにモジュール <a class="reference internal" href="hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal"><span class="pre">hashlib</span></code></a> を使ってください。</p>
+</div>
+<p id="index-0">このモジュールは RSA 社の MD5 メッセージダイジェストアルゴリズムへのインタフェースを実装しています。 (Internet <span class="target" id="index-3"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1321.html"><strong>RFC 1321</strong></a> も参照してください ) 。利用方法は極めて単純です。まず md5 オブジェクトを <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> を使って生成します。後は <code class="xref py py-meth docutils literal"><span class="pre">update()</span></code> メソッドを使って、生成されたオブジェクトに任意の文字列データを入力します。オブジェクトに入力された文字列データ全体の <em class="dfn">digest</em> (&#8220;fingerprint&#8221; として知られる強力な 128-bit チェックサム ) は <code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code> を使っていつでも調べることができます。</p>
+<p>たとえば、 <code class="docutils literal"><span class="pre">'Nobody</span> <span class="pre">inspects</span> <span class="pre">the</span> <span class="pre">spammish</span> <span class="pre">repetition'</span></code> というバイト文字列のダイジェストを取得するには次のようにします:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">md5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">md5</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Nobody inspects&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot; the spammish repetition&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="go">&#39;\xbbd\x9c\x83\xdd\x1e\xa5\xc9\xd9\xde\xc9\xa1\x8d\xf0\xff\xe9&#39;</span>
+</pre></div>
+</div>
+<p>もっと簡潔に書くと、このようになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">md5</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Nobody inspects the spammish repetition&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="go">&#39;\xbbd\x9c\x83\xdd\x1e\xa5\xc9\xd9\xde\xc9\xa1\x8d\xf0\xff\xe9&#39;</span>
+</pre></div>
+</div>
+<p>以下の値はモジュールの中で定数として与えられており、 <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> で返される md5 オブジェクトの属性としても与えられます :</p>
+<dl class="data">
+<dt id="md5.digest_size">
+<code class="descclassname">md5.</code><code class="descname">digest_size</code><a class="headerlink" href="#md5.digest_size" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>返されるダイジェスト値のバイト数で表した長さ。常に <code class="docutils literal"><span class="pre">16</span></code> です。</p>
+</dd></dl>
+
+<p>md5 クラスオブジェクトは以下のメソッドをサポートします :</p>
+<dl class="function">
+<dt id="md5.new">
+<code class="descclassname">md5.</code><code class="descname">new</code><span class="sig-paren">(</span><span class="optional">[</span><em>arg</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#md5.new" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな md5 オブジェクトを返します。もし <em>arg</em> が存在するなら、 <code class="docutils literal"><span class="pre">update(arg)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="md5.md5">
+<code class="descclassname">md5.</code><code class="descname">md5</code><span class="sig-paren">(</span><span class="optional">[</span><em>arg</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#md5.md5" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>下位互換性のために、 <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> の別名として提供されています。</p>
+</dd></dl>
+
+<p>md5 オブジェクトは以下のメソッドをサポートします :</p>
+<dl class="method">
+<dt id="md5.md5.update">
+<code class="descclassname">md5.</code><code class="descname">update</code><span class="sig-paren">(</span><em>arg</em><span class="sig-paren">)</span><a class="headerlink" href="#md5.md5.update" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>arg</em> を入力として md5 オブジェクトを更新します。このメソッドを繰り返して呼び出す操作は、それぞれの呼び出し時の引数 <em>arg</em> を結合したデータを引数として一回の呼び出す操作と同等になります : つまり、 <code class="docutils literal"><span class="pre">m.update(a);</span> <span class="pre">m.update(b)</span></code> は <code class="docutils literal"><span class="pre">m.update(a+b)</span></code> と同等です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="md5.md5.digest">
+<code class="descclassname">md5.</code><code class="descname">digest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#md5.md5.digest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これまで <a class="reference internal" href="#md5.md5.update" title="md5.md5.update"><code class="xref py py-meth docutils literal"><span class="pre">update()</span></code></a> で与えてきた文字列入力のダイジェストを返します。返り値は 16 バイトの文字列で、 null バイトを含む非 ASCII 文字が入っているかもしれません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="md5.md5.hexdigest">
+<code class="descclassname">md5.</code><code class="descname">hexdigest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#md5.md5.hexdigest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#md5.md5.digest" title="md5.md5.digest"><code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code></a> に似ていますが、ダイジェストは長さ 32 の文字列になり、 16 進表記文字しか含みません。この文字列は電子メールやその他のバイナリを受け付けない環境でダイジェストを安全にやりとりするために使うことができます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="md5.md5.copy">
+<code class="descclassname">md5.</code><code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#md5.md5.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>md5 オブジェクトのコピー (&#8221; クローン &#8221;) を返します。冒頭の部分文字列が共通な複数の文字列のダイジェストを効率よく計算する際に使うことができます。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="sha.html#module-sha" title="sha: NIST's secure hash algorithm, SHA. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sha</span></code></a></dt>
+<dd><p class="first last">Secure Hash Algorithm (SHA) を実装した類似のモジュール。 SHA アルゴリズムはより安全なハッシュアルゴリズムだと考えられています。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="hmac.html"
+                        title="前の章へ">14.2. <code class="docutils literal"><span class="pre">hmac</span></code> &#8212; メッセージ認証のための鍵付きハッシュ化</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="sha.html"
+                        title="次の章へ">14.4. <code class="docutils literal"><span class="pre">sha</span></code> &#8212; SHA-1 メッセージダイジェストアルゴリズム</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/md5.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="sha.html" title="14.4. sha — SHA-1 メッセージダイジェストアルゴリズム"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="hmac.html" title="14.2. hmac — メッセージ認証のための鍵付きハッシュ化"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" >14. 暗号関連のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

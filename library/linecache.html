@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10.9. linecache — テキストラインにランダムアクセスする &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="10. ファイルとディレクトリへのアクセス" href="filesys.html" />
+    <link rel="next" title="10.10. shutil — 高水準のファイル操作" href="shutil.html" />
+    <link rel="prev" title="10.8. fnmatch — Unix ファイル名のパターンマッチ" href="fnmatch.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="shutil.html" title="10.10. shutil — 高水準のファイル操作"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="fnmatch.html" title="10.8. fnmatch — Unix ファイル名のパターンマッチ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" accesskey="U">10. ファイルとディレクトリへのアクセス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-linecache">
+<span id="linecache-random-access-to-text-lines"></span><h1>10.9. <a class="reference internal" href="#module-linecache" title="linecache: This module provides random access to individual lines from text files."><code class="xref py py-mod docutils literal"><span class="pre">linecache</span></code></a> &#8212; テキストラインにランダムアクセスする<a class="headerlink" href="#module-linecache" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/linecache.py">Lib/linecache.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-linecache" title="linecache: This module provides random access to individual lines from text files."><code class="xref py py-mod docutils literal"><span class="pre">linecache</span></code></a> モジュールは、キャッシュ (一つのファイルから何行も読んでおくのが一般的です) を使って、内部で最適化を図りつつ、任意のファイルの任意の行を取得するのを可能にします。 <a class="reference internal" href="traceback.html#module-traceback" title="traceback: Print or retrieve a stack traceback."><code class="xref py py-mod docutils literal"><span class="pre">traceback</span></code></a> モジュールは、整形されたトレースバックにソースコードを含めるためにこのモジュールを利用しています。</p>
+<p><a class="reference internal" href="#module-linecache" title="linecache: This module provides random access to individual lines from text files."><code class="xref py py-mod docutils literal"><span class="pre">linecache</span></code></a> モジュールでは次の関数が定義されています:</p>
+<dl class="function">
+<dt id="linecache.getline">
+<code class="descclassname">linecache.</code><code class="descname">getline</code><span class="sig-paren">(</span><em>filename</em>, <em>lineno</em><span class="optional">[</span>, <em>module_globals</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#linecache.getline" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>filename</em> という名前のファイルから <em>lineno</em> 行目を取得します。この関数は決して例外を発生させません &#8212; エラーの際には <code class="docutils literal"><span class="pre">''</span></code> を返します (行末の改行文字は、見つかった行に含まれます)。</p>
+<p id="index-0"><em>filename</em> という名前のファイルが見つからなかった場合、モジュールの、つまり、 <code class="docutils literal"><span class="pre">sys.path</span></code> でそのファイルを探します。 zipfileやその他のファイルシステムでないimport元に対応するためまず <em>module_globals</em> の <span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> <code class="docutils literal"><span class="pre">__loader__</span></code> をチェックし、そのあと <code class="docutils literal"><span class="pre">sys.path</span></code> を探索します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加: </span>パラメータ <em>module_globals</em> の追加.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="linecache.clearcache">
+<code class="descclassname">linecache.</code><code class="descname">clearcache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#linecache.clearcache" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キャッシュをクリアします。それまでに <a class="reference internal" href="#linecache.getline" title="linecache.getline"><code class="xref py py-func docutils literal"><span class="pre">getline()</span></code></a> を使って読み込んだファイルの行が必要でなくなったら、この関数を使ってください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linecache.checkcache">
+<code class="descclassname">linecache.</code><code class="descname">checkcache</code><span class="sig-paren">(</span><span class="optional">[</span><em>filename</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#linecache.checkcache" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キャッシュが有効かチェックします。キャッシュしたファイルにディスク上で変更があったかもしれなくて、更新が必要なときにこの関数を使ってください。もし <em>filename</em> がなければ、全てのキャッシュエントリをチェックします。</p>
+</dd></dl>
+
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">linecache</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">&#39;sys:x:3:3:sys:/dev:/bin/sh\n&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="fnmatch.html"
+                        title="前の章へ">10.8. <code class="docutils literal"><span class="pre">fnmatch</span></code> &#8212; Unix ファイル名のパターンマッチ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="shutil.html"
+                        title="次の章へ">10.10. <code class="docutils literal"><span class="pre">shutil</span></code> &#8212; 高水準のファイル操作</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/linecache.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="shutil.html" title="10.10. shutil — 高水準のファイル操作"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="fnmatch.html" title="10.8. fnmatch — Unix ファイル名のパターンマッチ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" >10. ファイルとディレクトリへのアクセス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

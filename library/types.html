@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.15. types — 組み込み型の名前 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="8. データ型" href="datatypes.html" />
+    <link rel="next" title="8.16. new — ランタイム内部オブジェクトの作成" href="new.html" />
+    <link rel="prev" title="8.12. UserDict — 辞書オブジェクトのためのクラスラッパー" href="userdict.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="new.html" title="8.16. new — ランタイム内部オブジェクトの作成"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="userdict.html" title="8.12. UserDict — 辞書オブジェクトのためのクラスラッパー"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">8. データ型</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-types">
+<span id="types-names-for-built-in-types"></span><h1>8.15. <a class="reference internal" href="#module-types" title="types: Names for built-in types."><code class="xref py py-mod docutils literal"><span class="pre">types</span></code></a> &#8212; 組み込み型の名前<a class="headerlink" href="#module-types" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/types.py">Lib/types.py</a></p>
+<hr class="docutils" />
+<p>このモジュールは標準のPythonインタプリタで使われているオブジェクトの型について、名前を定義しています(拡張モジュールで定義されている型を除く)。また、このモジュールには <code class="docutils literal"><span class="pre">listiterator</span></code> 型のような処理中に例外が起きる型は含まれません。 <code class="docutils literal"><span class="pre">from</span> <span class="pre">types</span> <span class="pre">import</span> <span class="pre">*</span></code> のように使っても安全です &#8211; モジュールはここでリストされている以外の名前をエクスポートしません。このモジュールの将来のバージョンで追加される名前は、 <code class="docutils literal"><span class="pre">Type</span></code> で終わる予定です。</p>
+<p>典型的な利用方法は、関数が以下のように引数の型によって異なる動作をする場合です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="o">*</span>
+<span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">is</span> <span class="n">IntType</span><span class="p">:</span>
+       <span class="k">del</span> <span class="n">mylist</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">mylist</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Python 2.2以降では、 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> や <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> のようなファクトリ関数は、型の名前となりましたので、 <a class="reference internal" href="#module-types" title="types: Names for built-in types."><code class="xref py py-mod docutils literal"><span class="pre">types</span></code></a> を使用する必要はなくなりました。上記のサンプルは、以下のように記述する事が推奨されています。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+       <span class="k">del</span> <span class="n">mylist</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">mylist</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>このモジュールは以下の名前を定義しています。</p>
+<dl class="data">
+<dt id="types.NoneType">
+<code class="descclassname">types.</code><code class="descname">NoneType</code><a class="headerlink" href="#types.NoneType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">None</span></code> の型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.TypeType">
+<code class="descclassname">types.</code><code class="descname">TypeType</code><a class="headerlink" href="#types.TypeType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-0">typeオブジェクトの型です (<a class="reference internal" href="functions.html#type" title="type"><code class="xref py py-func docutils literal"><span class="pre">type()</span></code></a> などによって返されます)。組み込みの <a class="reference internal" href="functions.html#type" title="type"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.BooleanType">
+<code class="descclassname">types.</code><code class="descname">BooleanType</code><a class="headerlink" href="#types.BooleanType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="functions.html#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a> の <code class="docutils literal"><span class="pre">True</span></code> と <code class="docutils literal"><span class="pre">False</span></code> の型です。これは組み込みの <a class="reference internal" href="functions.html#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a> のエイリアスです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.IntType">
+<code class="descclassname">types.</code><code class="descname">IntType</code><a class="headerlink" href="#types.IntType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>整数の型です (e.g. <code class="docutils literal"><span class="pre">1</span></code>)。組み込みの <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.LongType">
+<code class="descclassname">types.</code><code class="descname">LongType</code><a class="headerlink" href="#types.LongType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>長整数の型です (e.g. <code class="docutils literal"><span class="pre">1L</span></code>)。組み込みの <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.FloatType">
+<code class="descclassname">types.</code><code class="descname">FloatType</code><a class="headerlink" href="#types.FloatType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>浮動小数点数の型です (e.g. <code class="docutils literal"><span class="pre">1.0</span></code>)。組み込みの <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.ComplexType">
+<code class="descclassname">types.</code><code class="descname">ComplexType</code><a class="headerlink" href="#types.ComplexType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>複素数の型です (e.g. <code class="docutils literal"><span class="pre">1.0j</span></code>)。 Python が複素数のサポートなしでコンパイルされていた場合には定義されません。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.StringType">
+<code class="descclassname">types.</code><code class="descname">StringType</code><a class="headerlink" href="#types.StringType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列の型です (e.g. <code class="docutils literal"><span class="pre">'Spam'</span></code>)。組み込みの <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.UnicodeType">
+<code class="descclassname">types.</code><code class="descname">UnicodeType</code><a class="headerlink" href="#types.UnicodeType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode 文字列の型です (e.g. <code class="docutils literal"><span class="pre">u'Spam'</span></code>)。 Python が Unicode のサポートなしでコンパイルされていた場合には定義されません。組み込みの <code class="xref py py-class docutils literal"><span class="pre">Unicode</span></code> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.TupleType">
+<code class="descclassname">types.</code><code class="descname">TupleType</code><a class="headerlink" href="#types.TupleType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タプルの型です (e.g. <code class="docutils literal"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">'Spam')</span></code>)。組み込みの <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.ListType">
+<code class="descclassname">types.</code><code class="descname">ListType</code><a class="headerlink" href="#types.ListType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リストの型です (e.g. <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>)。組み込みの <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.DictType">
+<code class="descclassname">types.</code><code class="descname">DictType</code><a class="headerlink" href="#types.DictType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>辞書の型です (e.g. <code class="docutils literal"><span class="pre">{'Bacon':</span> <span class="pre">1,</span> <span class="pre">'Ham':</span> <span class="pre">0}</span></code>)。組み込みの <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.DictionaryType">
+<code class="descclassname">types.</code><code class="descname">DictionaryType</code><a class="headerlink" href="#types.DictionaryType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">DictType</span></code> の別名です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.FunctionType">
+<code class="descclassname">types.</code><code class="descname">FunctionType</code><a class="headerlink" href="#types.FunctionType" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="types.LambdaType">
+<code class="descclassname">types.</code><code class="descname">LambdaType</code><a class="headerlink" href="#types.LambdaType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザー定義の関数または <a class="reference internal" href="../reference/expressions.html#lambda"><code class="xref std std-keyword docutils literal"><span class="pre">lambda</span></code></a> 式によって作成された関数の型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.GeneratorType">
+<code class="descclassname">types.</code><code class="descname">GeneratorType</code><a class="headerlink" href="#types.GeneratorType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ジェネレータ (<a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a>) 関数の呼び出しによって生成されたイテレータオブジェクトの型です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.CodeType">
+<code class="descclassname">types.</code><code class="descname">CodeType</code><a class="headerlink" href="#types.CodeType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-1"><a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> 関数などによって返されるコードオブジェクトの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.ClassType">
+<code class="descclassname">types.</code><code class="descname">ClassType</code><a class="headerlink" href="#types.ClassType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザー定義の、旧形式クラスの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.InstanceType">
+<code class="descclassname">types.</code><code class="descname">InstanceType</code><a class="headerlink" href="#types.InstanceType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザー定義のクラスのインスタンスの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.MethodType">
+<code class="descclassname">types.</code><code class="descname">MethodType</code><a class="headerlink" href="#types.MethodType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザー定義のクラスのインスタンスのメソッドの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.UnboundMethodType">
+<code class="descclassname">types.</code><code class="descname">UnboundMethodType</code><a class="headerlink" href="#types.UnboundMethodType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">MethodType</span></code> の別名です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.BuiltinFunctionType">
+<code class="descclassname">types.</code><code class="descname">BuiltinFunctionType</code><a class="headerlink" href="#types.BuiltinFunctionType" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="types.BuiltinMethodType">
+<code class="descclassname">types.</code><code class="descname">BuiltinMethodType</code><a class="headerlink" href="#types.BuiltinMethodType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="functions.html#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a> や <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> のような組み込み関数や、組み込み型のメソッドの型です。 (ここでは、&#8221;組み込み&#8221;という単語を、&#8221;C で書かれた&#8221; という意味で使っています)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.ModuleType">
+<code class="descclassname">types.</code><code class="descname">ModuleType</code><a class="headerlink" href="#types.ModuleType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モジュールの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.FileType">
+<code class="descclassname">types.</code><code class="descname">FileType</code><a class="headerlink" href="#types.FileType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">sys.stdout</span></code> のような open されたファイルオブジェクトの型です。組み込みの <a class="reference internal" href="functions.html#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.XRangeType">
+<code class="descclassname">types.</code><code class="descname">XRangeType</code><a class="headerlink" href="#types.XRangeType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-2"><a class="reference internal" href="functions.html#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a> 関数によって返される range オブジェクトの型です。組み込みの <a class="reference internal" href="functions.html#xrange" title="xrange"><code class="xref py py-class docutils literal"><span class="pre">xrange</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.SliceType">
+<code class="descclassname">types.</code><code class="descname">SliceType</code><a class="headerlink" href="#types.SliceType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-3"><a class="reference internal" href="functions.html#slice" title="slice"><code class="xref py py-func docutils literal"><span class="pre">slice()</span></code></a> 関数によって返されるオブジェクトの型です。組み込みの <a class="reference internal" href="functions.html#slice" title="slice"><code class="xref py py-class docutils literal"><span class="pre">slice</span></code></a> のエイリアスになります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.EllipsisType">
+<code class="descclassname">types.</code><code class="descname">EllipsisType</code><a class="headerlink" href="#types.EllipsisType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">Ellipsis</span></code> の型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.TracebackType">
+<code class="descclassname">types.</code><code class="descname">TracebackType</code><a class="headerlink" href="#types.TracebackType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">sys.exc_traceback</span></code> に含まれるようなトレースバックオブジェクトの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.FrameType">
+<code class="descclassname">types.</code><code class="descname">FrameType</code><a class="headerlink" href="#types.FrameType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フレームオブジェクトの型です。トレースバックオブジェクト <code class="docutils literal"><span class="pre">tb</span></code> の <code class="docutils literal"><span class="pre">tb.tb_frame</span></code> などです。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.BufferType">
+<code class="descclassname">types.</code><code class="descname">BufferType</code><a class="headerlink" href="#types.BufferType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-4"><a class="reference internal" href="functions.html#buffer" title="buffer"><code class="xref py py-func docutils literal"><span class="pre">buffer()</span></code></a> 関数によって作られるバッファオブジェクトの型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.DictProxyType">
+<code class="descclassname">types.</code><code class="descname">DictProxyType</code><a class="headerlink" href="#types.DictProxyType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">TypeType.__dict__</span></code> のような dict へのプロキシ型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.NotImplementedType">
+<code class="descclassname">types.</code><code class="descname">NotImplementedType</code><a class="headerlink" href="#types.NotImplementedType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">NotImplemented</span></code> の型です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.GetSetDescriptorType">
+<code class="descclassname">types.</code><code class="descname">GetSetDescriptorType</code><a class="headerlink" href="#types.GetSetDescriptorType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">FrameType.f_locals</span></code> や <code class="docutils literal"><span class="pre">array.array.typecode</span></code> のような、拡張モジュールにおいて <code class="docutils literal"><span class="pre">PyGetSetDef</span></code> によって定義されたオブジェクトの型です。この型はオブジェクト属性のディスクリプタとして利用されます。 <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-class docutils literal"><span class="pre">property</span></code></a> 型と同じ目的を持った型ですが、こちらは拡張モジュールで定義された型のためのものです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.MemberDescriptorType">
+<code class="descclassname">types.</code><code class="descname">MemberDescriptorType</code><a class="headerlink" href="#types.MemberDescriptorType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">datetime.timedelta.days</span></code> のような、拡張モジュールにおいて <code class="docutils literal"><span class="pre">PyMemberDef</span></code> によって定義されたオブジェクトの型です。この型は、標準の変換関数を利用するような、Cのシンプルなデータメンバで利用されます。 <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-class docutils literal"><span class="pre">property</span></code></a> 型と同じ目的を持った型ですが、こちらは拡張モジュールで定義された型のためのものです。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> Pythonの他の実装では、この型は <code class="docutils literal"><span class="pre">GetSetDescriptorType</span></code> と同じかもしれません。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="types.StringTypes">
+<code class="descclassname">types.</code><code class="descname">StringTypes</code><a class="headerlink" href="#types.StringTypes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列型のチェックを簡単にするための <code class="docutils literal"><span class="pre">StringType</span></code> と <code class="docutils literal"><span class="pre">UnicodeType</span></code> を含むシーケンスです。 <code class="docutils literal"><span class="pre">UnicodeType</span></code> は実行中の版の Python に含まれている場合にだけ含まれるので、2 つの文字列型のシーケンスを使うよりこれを使う方が移植性が高くなります。例: <code class="docutils literal"><span class="pre">isinstance(s,</span> <span class="pre">types.StringTypes)</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="userdict.html"
+                        title="前の章へ">8.12. <code class="docutils literal"><span class="pre">UserDict</span></code> &#8212; 辞書オブジェクトのためのクラスラッパー</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="new.html"
+                        title="次の章へ">8.16. <code class="docutils literal"><span class="pre">new</span></code> &#8212; ランタイム内部オブジェクトの作成</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/types.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="new.html" title="8.16. new — ランタイム内部オブジェクトの作成"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="userdict.html" title="8.12. UserDict — 辞書オブジェクトのためのクラスラッパー"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >8. データ型</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

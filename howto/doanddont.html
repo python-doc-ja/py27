@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python 良い慣用句、悪い慣用句 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python HOWTO" href="index.html" />
+    <link rel="next" title="関数型プログラミング HOWTO" href="functional.html" />
+    <link rel="prev" title="ディスクリプタ HowTo ガイド" href="descriptor.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="関数型プログラミング HOWTO"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="descriptor.html" title="ディスクリプタ HowTo ガイド"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="idioms-and-anti-idioms-in-python">
+<h1>Python 良い慣用句、悪い慣用句<a class="headerlink" href="#idioms-and-anti-idioms-in-python" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Moshe Zadka</td>
+</tr>
+</tbody>
+</table>
+<p>This document is placed in the public domain. (この文書はパブリックドメインです。)</p>
+<div class="topic">
+<p class="topic-title first">概要</p>
+<p>この文書はチュートリアルのおまけと考えてもらって結構です。 Python をどう使うべきか、そして更に重要なこととして、どう使うべきで <em>ない</em> かを例示しています。</p>
+</div>
+<div class="section" id="language-constructs-you-should-not-use">
+<h2>使うべきでない構文<a class="headerlink" href="#language-constructs-you-should-not-use" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python の落とし穴は他言語と比べればほとんどないようなものですが、中には特殊な場面でしか役に立たなかったり、単に危険なだけの構文も存在しています。</p>
+<div class="section" id="from-module-import">
+<h3>from モジュール import *<a class="headerlink" href="#from-module-import" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="inside-function-definitions">
+<h4>関数定義の中で<a class="headerlink" href="#inside-function-definitions" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>関数定義内での <code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">*</span></code> は <em>不正</em> です。多くの古い Python では不正としてチェックされないものの、だからと言って有効になるわけではありません。やり手の弁護士を雇って無罪になっても、潔白になれるわけではないのと同じですね。ですから絶対にそういう使い方をしないでください。不正にされないバージョンでも、コンパイラはどの名前がローカルでどの名前がグローバルなのか判然としなくなるので、関数の実行が遅くなってしまいます。Python 2.1 で、この構文は警告や、場合によってはエラーも出すようになりました。</p>
+</div>
+<div class="section" id="at-module-level">
+<h4>モジュールレベルで<a class="headerlink" href="#at-module-level" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>モジュールレベルで <code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">*</span></code> を使うのは有効ではありますが、大抵は、やめたほうが良いですよ。理由のひとつとして、それをやると本来 Python が持っている大事な特徴を失ってしまうということが挙げられます。その特徴とは、トップレベルの名前がそれぞれどこで定義されているのか、エディタの検索機能だけでわかるというものです。それに、将来モジュールに関数やクラスが増えていくと、ややこしいことになりかねません。</p>
+<p>ニュースグループで出てくる最低の質問には、なぜこのコード:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;www&quot;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>が動かないのか、というものがあります。もちろんこれで動きますよ (ただし &#8220;www&#8221; というファイルがあれば)。でもモジュールのどこかに <code class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></code> があればダメです。 <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールは、整数を返す <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 関数を持っているのです。これはとても便利ではありますが、ビルトインを隠してしまうのは、非常に不便な特徴のひとつと言えます。</p>
+<p>モジュールがエクスポートする名前は確実にはわからないのですから、必要なものだけ <code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">名前1,</span> <span class="pre">名前2</span></code> で取るか、モジュールから出さずに <code class="docutils literal"><span class="pre">import</span> <span class="pre">モジュール;print</span> <span class="pre">モジュール.name</span></code> としておいて必要に応じてアクセスするようにしましょう。</p>
+</div>
+<div class="section" id="when-it-is-just-fine">
+<h4>問題ない状況<a class="headerlink" href="#when-it-is-just-fine" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">*</span></code> が問題とならない状況もあります:</p>
+<ul class="simple">
+<li><p class="first">対話的プロンプト。たとえば <code class="docutils literal"><span class="pre">from</span> <span class="pre">math</span> <span class="pre">import</span> <span class="pre">*</span></code> すれば Python がスーパー関数電卓に変身します。</p>
+</li>
+<li><p class="first">C のモジュールを Python のモジュールで拡張するとき。</p>
+</li>
+<li><p class="first">そのモジュールは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> 可だ、と作者が言っているとき。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="unadorned-exec-execfile-and-friends">
+<h3>そのまんまな <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a>, <a class="reference internal" href="../library/functions.html#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> と仲間たち<a class="headerlink" href="#unadorned-exec-execfile-and-friends" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>「そのまんま」という言葉は辞書を明示せずに使うという意味で、そういう構文ではコードが <em>その時点の</em> 環境に対して評価されます。これは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> と同じ理由で危険です &#8212; 使っている最中の変数を土足で踏んで行って、コード全体をメチャクチャにしてしまう可能性があるからです。これは、とにかくやめてください。</p>
+<p>悪い見本:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">exec</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">=1&quot;</span> <span class="o">%</span> <span class="n">name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">exec</span> <span class="s2">&quot;s.</span><span class="si">%s</span><span class="s2">=val&quot;</span> <span class="o">%</span> <span class="n">var</span>  <span class="c1"># invalid!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">execfile</span><span class="p">(</span><span class="s2">&quot;handler.py&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handle</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>良い見本:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">d</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">setattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">=</span><span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">execfile</span><span class="p">(</span><span class="s2">&quot;handle.py&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handle</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handle</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-module-import-name1-name2">
+<h3>from モジュール import 名前1, 名前2<a class="headerlink" href="#from-module-import-name1-name2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回のは、これまでの「ダメ」よりかなり弱い「ダメ」ですが、やはりそれなりの理由がなければ、やめておいたほうが良いことに変わりありません。これが大抵うまくないのは、いつの間にか二つ別々の名前空間に住む一つのオブジェクトを持つことになるからです。一方の名前空間でそのバインディングが変更されたとき、もう一方のバインディングは変更されないので、食い違いができてしまいます。これが起こるのは、たとえば、モジュールを読み直したり、ランタイムで関数の定義を変更したときなどです。</p>
+<p>悪い見本:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># foo.py</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># bar.py</span>
+<span class="kn">from</span> <span class="nn">foo</span> <span class="k">import</span> <span class="n">a</span>
+<span class="k">if</span> <span class="n">something</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># danger: foo.a != a</span>
+</pre></div>
+</div>
+<p>良い見本:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># foo.py</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># bar.py</span>
+<span class="kn">import</span> <span class="nn">foo</span>
+<span class="k">if</span> <span class="n">something</span><span class="p">():</span>
+    <span class="n">foo</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="except">
+<h3>except:<a class="headerlink" href="#except" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Python には <code class="docutils literal"><span class="pre">except:</span></code> 節があり、これはあらゆる例外を捕捉します。 Python のエラーは <em>すべて</em> 例外を出しますから、 <code class="docutils literal"><span class="pre">except:</span></code> を使うと各種のプログラミングエラーがランタイムの問題のように見えてしまい、デバッグの邪魔になります。</p>
+<p>以下のコードは、 <code class="docutils literal"><span class="pre">except:</span></code> をなぜ避けるべきなのかを示す良い例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="n">opne</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">)</span> <span class="c1"># misspelled &quot;open&quot;</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;could not open file!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>この 2 行目は <a class="reference internal" href="../library/exceptions.html#exceptions.NameError" title="exceptions.NameError"><code class="xref py py-exc docutils literal"><span class="pre">NameError</span></code></a> を引き起こし、続く except 節で捕捉されます。プログラムがエラー終了しますが、実際のエラーが <code class="docutils literal"><span class="pre">&quot;file&quot;</span></code> とは何の関係もないのに、にプログラムが表示するエラーメッセージは <code class="docutils literal"><span class="pre">&quot;file&quot;</span></code> の読み込みにあったように誤解させます。</p>
+<p>前述の例はこう書くべきでした:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="n">opne</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;could not open file&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>このプログラムを実行した場合は、 Python は <a class="reference internal" href="../library/exceptions.html#exceptions.NameError" title="exceptions.NameError"><code class="xref py py-exc docutils literal"><span class="pre">NameError</span></code></a> のトレースバックを表示し、修正すべき問題を即座に明らかにしてくれます。</p>
+<p id="index-0"><code class="docutils literal"><span class="pre">except:</span></code> は <em>全て</em> の例外を補足します。これには <a class="reference internal" href="../library/exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> (これはエラーではなく、通常はユーザーコードでキャッチするべきではない例外です) も含まれるので、ほとんど全ての場合に <code class="docutils literal"><span class="pre">except:</span></code> を利用してはいけません。 &#8220;通常の&#8221; すべてのエラーをキャッチする必要がある場合、たとえばコールバックを実行するようなフレームワークの場合は、全ての通常の例外の基底クラスである <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> をキャッチすることができます。不幸なことに、 Python 2.x ではサードパーティのコードが <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> を継承していない例外を発生させる可能性があるので、 <code class="docutils literal"><span class="pre">except:</span></code> を使ってキャッチしたくない例外を手動で再度 raise する必要がある場合があるかもしれません。</p>
+</div>
+</div>
+<div class="section" id="exceptions">
+<h2>例外<a class="headerlink" href="#exceptions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>例外は Python の有用な機能です。何か期待している以外のことが起これば例外を出す、という習慣を持つべきですが、それと同時に、何か対処できるときにだけ捕捉する、ということも習慣にしてください。</p>
+<p>以下は非常にありがちな悪い見本です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;file not found&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ここで、 <a class="reference internal" href="../library/os.path.html#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal"><span class="pre">os.path.exists()</span></code></a> を呼んでから <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を呼ぶまでの間にファイルが消された場合を考えてください。そうなれば最後の行は <a class="reference internal" href="../library/exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> を投げるでしょう。同じことは、 <em>file</em> は存在しているけれど読み出し権限がなかった、という場合にも起こります。これをテストする際、ふつうのマシンで、存在するファイルと存在しないファイルに対してだけやったのではバグがないように見えてしまい、テスト結果が大丈夫そうなのでコードはそのまま出荷されてしまうことになります。こうして、対処されない <a class="reference internal" href="../library/exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> (またはその他の <a class="reference internal" href="../library/exceptions.html#exceptions.EnvironmentError" title="exceptions.EnvironmentError"><code class="xref py py-exc docutils literal"><span class="pre">EnvironmentError</span></code></a>)はユーザの所まで逃げのびて、汚いトレースバックを見せることになるのです。</p>
+<p>もっと良い方法はこちら:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">EnvironmentError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s2">&quot;Unable to open file: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>このバージョンでは、ファイルが開かれて一行目も読まれる (だから、あてにならない NFS や SMB 接続でも動く) か、あるいはファイルを開くのに失敗した理由についての全ての情報を含むエラーメッセージを表示してアプリケーションを強制終了するかの <em>いずれか</em> 一方しか起こりません。</p>
+<p>とはいえ、このバージョンの <code class="xref py py-func docutils literal"><span class="pre">get_status()</span></code> でさえ、前提としている条件が多過ぎます &#8212; すぐ終わるスクリプトでだけ使って、長く動作させる、いわゆるサーバでは使わない前提なのです。もちろん呼び出し側はこうすることもできます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">get_status</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>でも、もっと良い方法があります。コードで使う <code class="docutils literal"><span class="pre">except</span></code> 節を、できるだけ少なくするのです &#8212; 使うとすれば、必ず成功するはずの呼び出し内か、main 関数での全捕捉ですね。</p>
+<p>というわけで、たぶんもっと良い <code class="xref py py-func docutils literal"><span class="pre">get_status()</span></code> はこちら:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>呼び出した側は、望むなら例外を処理することもできますし (たとえばループで複数ファイルに試行するときとか)、そのまま <em>自分の</em> 呼び出し親まで上げることもできます。</p>
+<p>しかし、この最終バージョンにも深刻な問題があります &#8212; CPython 実装の細部に原因があるのですが、例外が起きたときにはその例外ハンドラが終了するまでファイルが閉じられないのです; しかも、なお悪いことに、他の実装 (たとえば Jython) では例外の有無に関わらず閉じられません。</p>
+<p>この関数の一番良いバージョンでは <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> をコンテクストマネジャとして使って、関数が返るとすぐにファイルが閉じられるようにしています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-batteries">
+<h2>使い捨てじゃなくて充電池を使う<a class="headerlink" href="#using-the-batteries" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>どうも皆、Python ライブラリに最初からあるものを自分で書こうとして、大抵うまくいっていないようです。そういう場当たりなモジュールには貧弱なインタフェースしかないことを考えると、ふつうは Python に付いてくる高機能な標準ライブラリとデータ型を使うほうが、自分でひねり出すより格段に良いですよ。</p>
+<p>便利なのにほとんど知られていないモジュールに <a class="reference internal" href="../library/os.path.html#module-os.path" title="os.path: Operations on pathnames."><code class="xref py py-mod docutils literal"><span class="pre">os.path</span></code></a> があります。このモジュールには OS に合ったパス演算が備わっていて、大抵は自分でどれだけ苦労して作ったものよりもずっと良いものです。</p>
+<p>比べてください:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># ugh!</span>
+<span class="k">return</span> <span class="nb">dir</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">file</span>
+<span class="c1"># better</span>
+<span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../library/os.path.html#module-os.path" title="os.path: Operations on pathnames."><code class="xref py py-mod docutils literal"><span class="pre">os.path</span></code></a> にはさらに便利な関数が他にもあります: <code class="xref py py-func docutils literal"><span class="pre">basename()</span></code> や <code class="xref py py-func docutils literal"><span class="pre">dirname()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">splitext()</span></code> などです。</p>
+<p>加えて、なぜか気付かれていない多くのビルトイン関数があります: たとえば <a class="reference internal" href="../library/functions.html#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a> と <a class="reference internal" href="../library/functions.html#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a> を使えば、大小比較のできるシーケンスなら何からでも最小値/最大値を見つけることができるのに、多くの人々が自家製の <a class="reference internal" href="../library/functions.html#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a>/<a class="reference internal" href="../library/functions.html#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a> を書いています。また別の超便利な関数として、シーケンスに対して2項演算を繰り返し適用して最終的に1つの値にまとめる <a class="reference internal" href="../library/functions.html#reduce" title="reduce"><code class="xref py py-func docutils literal"><span class="pre">reduce()</span></code></a> です。例えば、階乗を乗算の繰り返しで計算します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">24</span>
+</pre></div>
+</div>
+<p>数値の字句解析をするときには、 <a class="reference internal" href="../library/functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="../library/functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a> は全て文字列の引数を受け取って、不正なフォーマットの文字列の場合には <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を発生させることを覚えておくと便利です。</p>
+</div>
+<div class="section" id="using-backslash-to-continue-statements">
+<h2>バックスラッシュで文を続ける<a class="headerlink" href="#using-backslash-to-continue-statements" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python は改行を文の終わりとして扱いますので、そして文は一行にうまく収まらないことがよくありますので、こうする人が多いです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">()[</span><span class="s1">&#39;first&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">baz</span><span class="o">.</span><span class="n">quux</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">5</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="ow">and</span> \
+   <span class="n">calculate_number</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">!=</span> <span class="n">forbulate</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">360</span><span class="p">):</span>
+      <span class="k">pass</span>
+</pre></div>
+</div>
+<p>これは危険だということに気づいたほうが良いですよ: はぐれスペースが <code class="docutils literal"><span class="pre">\</span></code> の後に来ればその行の意味が変わってしまいますが、スペースはエディタで見えにくいことに定評があるのです。今回の場合は構文エラーにはなりますが、もしこうなら:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">()[</span><span class="s1">&#39;first&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">baz</span><span class="o">.</span><span class="n">quux</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">5</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span> \
+        <span class="o">+</span> <span class="n">calculate_number</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">*</span><span class="n">forbulate</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>微妙に違う意味になるだけで、エラーが出ません。</p>
+<p>それで、ふつうは括弧に入れて暗黙のうちに行をつなげるほうが賢明です:</p>
+<p>このバージョンで鉄壁です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">()[</span><span class="s1">&#39;first&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">baz</span><span class="o">.</span><span class="n">quux</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">5</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">calculate_number</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">*</span><span class="n">forbulate</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python 良い慣用句、悪い慣用句</a><ul>
+<li><a class="reference internal" href="#language-constructs-you-should-not-use">使うべきでない構文</a><ul>
+<li><a class="reference internal" href="#from-module-import">from モジュール import *</a><ul>
+<li><a class="reference internal" href="#inside-function-definitions">関数定義の中で</a></li>
+<li><a class="reference internal" href="#at-module-level">モジュールレベルで</a></li>
+<li><a class="reference internal" href="#when-it-is-just-fine">問題ない状況</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unadorned-exec-execfile-and-friends">そのまんまな <code class="docutils literal"><span class="pre">exec</span></code>, <code class="docutils literal"><span class="pre">execfile()</span></code> と仲間たち</a></li>
+<li><a class="reference internal" href="#from-module-import-name1-name2">from モジュール import 名前1, 名前2</a></li>
+<li><a class="reference internal" href="#except">except:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exceptions">例外</a></li>
+<li><a class="reference internal" href="#using-the-batteries">使い捨てじゃなくて充電池を使う</a></li>
+<li><a class="reference internal" href="#using-backslash-to-continue-statements">バックスラッシュで文を続ける</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="descriptor.html"
+                        title="前の章へ">ディスクリプタ HowTo ガイド</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="functional.html"
+                        title="次の章へ">関数型プログラミング HOWTO</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/howto/doanddont.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="関数型プログラミング HOWTO"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="descriptor.html" title="ディスクリプタ HowTo ガイド"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

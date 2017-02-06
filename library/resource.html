@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>36.13. resource — リソース使用状態の情報 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="36. Unix 固有のサービス" href="unix.html" />
+    <link rel="next" title="36.14. nis — Sun の NIS (Yellow Pages) へのインタフェース" href="nis.html" />
+    <link rel="prev" title="36.12. posixfile — ロック機構をサポートするファイル類似オブジェクト" href="posixfile.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="nis.html" title="36.14. nis — Sun の NIS (Yellow Pages) へのインタフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="posixfile.html" title="36.12. posixfile — ロック機構をサポートするファイル類似オブジェクト"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" accesskey="U">36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-resource">
+<span id="resource-resource-usage-information"></span><h1>36.13. <a class="reference internal" href="#module-resource" title="resource: An interface to provide resource usage information on the current process. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">resource</span></code></a> &#8212; リソース使用状態の情報<a class="headerlink" href="#module-resource" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このモジュールでは、プログラムによって使用されているシステムリソースを計測したり制御するための基本的なメカニズムを提供します。</p>
+<p>特定のシステムリソースを指定したり、現在のプロセスやその子プロセスのリソース使用情報を要求するためにシンボル定数が使われます。</p>
+<p>エラーを表すための例外が一つ定義されています:</p>
+<dl class="exception">
+<dt id="resource.error">
+<em class="property">exception </em><code class="descclassname">resource.</code><code class="descname">error</code><a class="headerlink" href="#resource.error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>下に述べる関数は、背後にあるシステムコールが予期せず失敗した場合、このエラーを送出するかもしれません。</p>
+</dd></dl>
+
+<div class="section" id="resource-limits">
+<h2>36.13.1. リソースの制限<a class="headerlink" href="#resource-limits" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>リソースの使用は下に述べる <a class="reference internal" href="#resource.setrlimit" title="resource.setrlimit"><code class="xref py py-func docutils literal"><span class="pre">setrlimit()</span></code></a> 関数を使って制限することができます。各リソースは二つ組の制限値: ソフトリミット (soft limit) 、およびハードリミット (hard limit) 、で制御されます。ソフトリミットは現在の制限値で、時間とともにプロセスによって下げたり上げたりできます。ソフトリミットはハードリミットを超えることはできません。ハードリミットはソフトリミットよりも高い任意の値まで下げることができますが、上げることはできません。 (スーパユーザの有効な UID を持つプロセスのみがハードリミットを上げることができます。)</p>
+<p>制限をかけるべく指定できるリソースはシステムに依存します。指定できるリソースは <em class="manpage">getrlimit(2)</em> マニュアルページで解説されています。以下に列挙するリソースは背後のオペレーティングシステムがサポートする場合にサポートされています; オペレーティングシステム側で値を調べたり制御したりできないリソースは、そのプラットフォーム向けのこのモジュール内では定義されていません。</p>
+<dl class="data">
+<dt id="resource.RLIM_INFINITY">
+<code class="descclassname">resource.</code><code class="descname">RLIM_INFINITY</code><a class="headerlink" href="#resource.RLIM_INFINITY" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>無制限のリソースの上限を示すための定数です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="resource.getrlimit">
+<code class="descclassname">resource.</code><code class="descname">getrlimit</code><span class="sig-paren">(</span><em>resource</em><span class="sig-paren">)</span><a class="headerlink" href="#resource.getrlimit" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>resource</em> の現在のソフトおよびハードリミットを表すタプル <code class="docutils literal"><span class="pre">(soft,</span> <span class="pre">hard)</span></code> を返します。無効なリソースが指定された場合には <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が、背後のシステムコールが予期せず失敗した場合には <a class="reference internal" href="#resource.error" title="resource.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="resource.setrlimit">
+<code class="descclassname">resource.</code><code class="descname">setrlimit</code><span class="sig-paren">(</span><em>resource</em>, <em>limits</em><span class="sig-paren">)</span><a class="headerlink" href="#resource.setrlimit" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>resouce</em> の新たな消費制限を設定します。 <em>limits</em> 引数には、タプル <code class="docutils literal"><span class="pre">(soft,</span> <span class="pre">hard)</span></code> による二つの整数で、新たな制限を記述しなければなりません。 <a class="reference internal" href="#resource.RLIM_INFINITY" title="resource.RLIM_INFINITY"><code class="xref py py-data docutils literal"><span class="pre">RLIM_INFINITY</span></code></a> を指定することで、無制限を要求することが出来ます。</p>
+<p>無効なリソースが指定された場合、ソフトリミットの値がハードリミットの値を超えている場合、プロセスがハードリミットを引き上げようとした場合には <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。リソースのハードリミットやシステムリミットが無制限でないのに <a class="reference internal" href="#resource.RLIM_INFINITY" title="resource.RLIM_INFINITY"><code class="xref py py-data docutils literal"><span class="pre">RLIM_INFINITY</span></code></a> を指定した場合も、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> になります。スーパーユーザの実効 UID を持ったプロセスは無制限を含めあらゆる妥当な制限値を要求出来ますが、システムが課している制限を超過した要求ではやはり <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> となります。</p>
+<p><code class="docutils literal"><span class="pre">setrlimit</span></code> は背後のシステムコールが予期せず失敗した場合に、 <a class="reference internal" href="#resource.error" title="resource.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> を送出する場合があります。</p>
+</dd></dl>
+
+<p>以下のシンボルは、後に述べる関数 <a class="reference internal" href="#resource.setrlimit" title="resource.setrlimit"><code class="xref py py-func docutils literal"><span class="pre">setrlimit()</span></code></a> および <a class="reference internal" href="#resource.getrlimit" title="resource.getrlimit"><code class="xref py py-func docutils literal"><span class="pre">getrlimit()</span></code></a> を使って消費量を制御することができるリソースを定義しています。これらのシンボルの値は、C プログラムで使われているシンボルと全く同じです。</p>
+<p><em class="manpage">getrlimit(2)</em> の Unix マニュアルページには、指定可能なリソースが列挙されています。全てのシステムで同じシンボルが使われているわけではなく、また同じリソースを表すために同じ値が使われているとも限らないので注意してください。このモジュールはプラットフォーム間の相違を隠蔽しようとはしていません &#8212; あるプラットフォームで定義されていないシンボルは、そのプラットフォーム向けの本モジュールでは利用することができません。</p>
+<dl class="data">
+<dt id="resource.RLIMIT_CORE">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_CORE</code><a class="headerlink" href="#resource.RLIMIT_CORE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のプロセスが生成できるコアファイルの最大 (バイト) サイズです。プロセスの全体イメージを入れるためにこの値より大きなサイズのコアファイルが要求された結果、部分的なコアファイルが生成される可能性があります。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_CPU">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_CPU</code><a class="headerlink" href="#resource.RLIMIT_CPU" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロセッサが利用することができる最大プロセッサ時間 (秒) です。この制限を超えた場合、 <code class="xref py py-const docutils literal"><span class="pre">SIGXCPU</span></code> シグナルがプロセスに送られます。 (どのようにしてシグナルを捕捉したり、例えば開かれているファイルをディスクにフラッシュするといった有用な処理を行うかについての情報は、 <a class="reference internal" href="signal.html#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> モジュールのドキュメントを参照してください)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_FSIZE">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_FSIZE</code><a class="headerlink" href="#resource.RLIMIT_FSIZE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロセスが生成できるファイルの最大サイズです。マルチスレッドプロセスの場合、この値は主スレッドのスタックにのみ影響します。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_DATA">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_DATA</code><a class="headerlink" href="#resource.RLIMIT_DATA" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロセスのヒープの最大 (バイト) サイズです。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_STACK">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_STACK</code><a class="headerlink" href="#resource.RLIMIT_STACK" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のプロセスのコールスタックの最大 (バイト) サイズです。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_RSS">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_RSS</code><a class="headerlink" href="#resource.RLIMIT_RSS" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロセスが取りうる最大 RAM 常駐ページサイズ (resident set size) です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_NPROC">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_NPROC</code><a class="headerlink" href="#resource.RLIMIT_NPROC" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のプロセスが生成できるプロセスの上限です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_NOFILE">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_NOFILE</code><a class="headerlink" href="#resource.RLIMIT_NOFILE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のプロセスが開けるファイル記述子の上限です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_OFILE">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_OFILE</code><a class="headerlink" href="#resource.RLIMIT_OFILE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#resource.RLIMIT_NOFILE" title="resource.RLIMIT_NOFILE"><code class="xref py py-const docutils literal"><span class="pre">RLIMIT_NOFILE</span></code></a> の BSD での名称です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_MEMLOCK">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_MEMLOCK</code><a class="headerlink" href="#resource.RLIMIT_MEMLOCK" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メモリ中でロックできる最大アドレス空間です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_VMEM">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_VMEM</code><a class="headerlink" href="#resource.RLIMIT_VMEM" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロセスが占有できるマップメモリの最大領域です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RLIMIT_AS">
+<code class="descclassname">resource.</code><code class="descname">RLIMIT_AS</code><a class="headerlink" href="#resource.RLIMIT_AS" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>アドレス空間でプロセスが占有できる最大領域 (バイト) です。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="resource-usage">
+<h2>36.13.2. リソースの使用状態<a class="headerlink" href="#resource-usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の関数はリソース使用情報を取得するために使われます:</p>
+<dl class="function">
+<dt id="resource.getrusage">
+<code class="descclassname">resource.</code><code class="descname">getrusage</code><span class="sig-paren">(</span><em>who</em><span class="sig-paren">)</span><a class="headerlink" href="#resource.getrusage" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は、 <em>who</em> 引数で指定される、現プロセスおよびその子プロセスによって消費されているリソースを記述するオブジェクトを返します。 <em>who</em> 引数は以下に記述される <code class="xref py py-const docutils literal"><span class="pre">RUSAGE_*</span></code> 定数のいずれかを使って指定します。</p>
+<p>返される値の各フィールドはそれぞれ、個々のシステムリソースがどれくらい使用されているか、例えばユーザモードでの実行に費やされた時間やプロセスが主記憶からスワップアウトされた回数、を示しています。幾つかの値、例えばプロセスが使用しているメモリ量は、内部時計の最小単位に依存します。</p>
+<p>以前のバージョンとの互換性のため、返される値は 16 要素からなるタプルとしてアクセスすることもできます。</p>
+<p>戻り値のフィールド <code class="xref py py-attr docutils literal"><span class="pre">ru_utime</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">ru_stime</span></code> は浮動小数点数で、それぞれユーザモードでの実行に費やされた時間、およびシステムモードでの実行に費やされた時間を表します。それ以外の値は整数です。これらの値に関する詳しい情報は <em class="manpage">getrusage(2)</em> を調べてください。以下に簡単な概要を示します:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="35%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">インデックス</p>
+</th>
+<th class="head"><p class="first last">フィールド</p>
+</th>
+<th class="head"><p class="first last">リソース</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">0</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_utime</span></code></td>
+<td><p class="first last">ユーザモード実行時間 (float)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">1</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_stime</span></code></td>
+<td><p class="first last">システムモード実行時間 (float)</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">2</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_maxrss</span></code></td>
+<td><p class="first last">最大常駐ページサイズ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">3</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_ixrss</span></code></td>
+<td><p class="first last">共有メモリサイズ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">4</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_idrss</span></code></td>
+<td><p class="first last">非共有メモリサイズ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">5</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_isrss</span></code></td>
+<td><p class="first last">非共有スタックサイズ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">6</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_minflt</span></code></td>
+<td><p class="first last">I/O を必要としないページフォールト数</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">7</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_majflt</span></code></td>
+<td><p class="first last">I/O を必要とするページフォールト数</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">8</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_nswap</span></code></td>
+<td><p class="first last">スワップアウト回数</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">9</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_inblock</span></code></td>
+<td><p class="first last">ブロック入力操作数</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">10</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_oublock</span></code></td>
+<td><p class="first last">ブロック出力操作数</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">11</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_msgsnd</span></code></td>
+<td><p class="first last">送信メッセージ数</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">12</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_msgrcv</span></code></td>
+<td><p class="first last">受信メッセージ数</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">13</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_nsignals</span></code></td>
+<td><p class="first last">受信シグナル数</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">14</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_nvcsw</span></code></td>
+<td><p class="first last">自発的な実行コンテキスト切り替え数</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">15</span></code></td>
+<td><code class="xref py py-attr docutils literal"><span class="pre">ru_nivcsw</span></code></td>
+<td><p class="first last">非自発的な実行コンテキスト切り替え数</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>この関数は無効な <em>who</em> 引数を指定した場合には <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。また、異常が発生した場合には <a class="reference internal" href="#resource.error" title="resource.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> 例外が送出される可能性があります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>値へのアクセスを戻り値の属性として追加しました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="resource.getpagesize">
+<code class="descclassname">resource.</code><code class="descname">getpagesize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resource.getpagesize" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>システムページ内のバイト数を返します。(ハードウェアページサイズと同じとは限りません。)</p>
+</dd></dl>
+
+<p>以下の <code class="xref py py-const docutils literal"><span class="pre">RUSAGE_*</span></code> シンボルはどのプロセスの情報を提供させるかを指定するために関数 <a class="reference internal" href="#resource.getrusage" title="resource.getrusage"><code class="xref py py-func docutils literal"><span class="pre">getrusage()</span></code></a> に渡されます。</p>
+<dl class="data">
+<dt id="resource.RUSAGE_SELF">
+<code class="descclassname">resource.</code><code class="descname">RUSAGE_SELF</code><a class="headerlink" href="#resource.RUSAGE_SELF" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#resource.RUSAGE_SELF" title="resource.RUSAGE_SELF"><code class="xref py py-const docutils literal"><span class="pre">RUSAGE_SELF</span></code></a> はプロセス自体のみに属する情報を要求するために使われます。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RUSAGE_CHILDREN">
+<code class="descclassname">resource.</code><code class="descname">RUSAGE_CHILDREN</code><a class="headerlink" href="#resource.RUSAGE_CHILDREN" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#resource.getrusage" title="resource.getrusage"><code class="xref py py-func docutils literal"><span class="pre">getrusage()</span></code></a>  に渡すと呼び出し側プロセスの子プロセスのリソース情報を要求します。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="resource.RUSAGE_BOTH">
+<code class="descclassname">resource.</code><code class="descname">RUSAGE_BOTH</code><a class="headerlink" href="#resource.RUSAGE_BOTH" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#resource.getrusage" title="resource.getrusage"><code class="xref py py-func docutils literal"><span class="pre">getrusage()</span></code></a> に渡すと現在のプロセスおよび子プロセスの両方が消費しているリソースを要求します。全てのシステムで利用可能なわけではありません。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">36.13. <code class="docutils literal"><span class="pre">resource</span></code> &#8212; リソース使用状態の情報</a><ul>
+<li><a class="reference internal" href="#resource-limits">36.13.1. リソースの制限</a></li>
+<li><a class="reference internal" href="#resource-usage">36.13.2. リソースの使用状態</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="posixfile.html"
+                        title="前の章へ">36.12. <code class="docutils literal"><span class="pre">posixfile</span></code> &#8212; ロック機構をサポートするファイル類似オブジェクト</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="nis.html"
+                        title="次の章へ">36.14. <code class="docutils literal"><span class="pre">nis</span></code> &#8212; Sun の NIS (Yellow Pages) へのインタフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/resource.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="nis.html" title="36.14. nis — Sun の NIS (Yellow Pages) へのインタフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="posixfile.html" title="36.12. posixfile — ロック機構をサポートするファイル類似オブジェクト"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" >36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

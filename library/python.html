@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>28. Python ランタイムサービス &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
+    <link rel="next" title="28.1. sys — システムパラメータと関数" href="sys.html" />
+    <link rel="prev" title="27.2. ensurepip — pip インストーラのブートストラップ" href="ensurepip.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="sys.html" title="28.1. sys — システムパラメータと関数"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="ensurepip.html" title="27.2. ensurepip — pip インストーラのブートストラップ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-runtime-services">
+<span id="python"></span><h1>28. Python ランタイムサービス<a class="headerlink" href="#python-runtime-services" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章では、Python インタープリタや Python 環境に深く関連する各種の機能を解説します。以下に一覧を示します:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">28.1. <code class="docutils literal"><span class="pre">sys</span></code> &#8212; システムパラメータと関数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysconfig.html">28.2. <code class="docutils literal"><span class="pre">sysconfig</span></code> &#8212; Python の構成情報にアクセスする</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#configuration-variables">28.2.1. 構成変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#installation-paths">28.2.2. インストールパス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#other-functions">28.2.3. その他の関数</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="__builtin__.html">28.3. <code class="docutils literal"><span class="pre">__builtin__</span></code> &#8212; 組み込みオブジェクト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="future_builtins.html">28.4. <code class="docutils literal"><span class="pre">future_builtins</span></code> &#8212; Python 3 のビルトイン</a></li>
+<li class="toctree-l1"><a class="reference internal" href="__main__.html">28.5. <code class="docutils literal"><span class="pre">__main__</span></code> &#8212; トップレベルのスクリプト環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warnings.html">28.6. <code class="docutils literal"><span class="pre">warnings</span></code> &#8212; 警告の制御</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#warning-categories">28.6.1. 警告カテゴリ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#the-warnings-filter">28.6.2. 警告フィルタ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html#default-warning-filters">28.6.2.1. デフォルトの警告フィルタ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#temporarily-suppressing-warnings">28.6.3. 一時的に警告を抑制する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#testing-warnings">28.6.4. 警告のテスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#updating-code-for-new-versions-of-python">28.6.5. コードを新しいバージョンの Python のために更新する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#available-functions">28.6.6. 利用可能な関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#available-context-managers">28.6.7. 利用可能なコンテキストマネージャー</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contextlib.html">28.7. <code class="docutils literal"><span class="pre">contextlib</span></code> &#8212; <code class="docutils literal"><span class="pre">with</span></code> 文コンテキスト用ユーティリティ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abc.html">28.8. <code class="docutils literal"><span class="pre">abc</span></code> &#8212; 抽象基底クラス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atexit.html">28.9. <code class="docutils literal"><span class="pre">atexit</span></code> &#8212; 終了ハンドラ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="atexit.html#atexit-example">28.9.1. <code class="docutils literal"><span class="pre">atexit</span></code> の例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="traceback.html">28.10. <code class="docutils literal"><span class="pre">traceback</span></code> &#8212; スタックトレースの表示または取得</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="traceback.html#traceback-examples">28.10.1. トレースバックの例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="__future__.html">28.11. <code class="docutils literal"><span class="pre">__future__</span></code> &#8212; future 文の定義</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gc.html">28.12. <code class="docutils literal"><span class="pre">gc</span></code> &#8212; ガベージコレクタインターフェース</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspect.html">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> &#8212; 活動中のオブジェクトの情報を取得する</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#types-and-members">28.13.1. 型とメンバー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#retrieving-source-code">28.13.2. ソースコードの情報取得</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#classes-and-functions">28.13.3. クラスと関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#the-interpreter-stack">28.13.4. インタープリタスタック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="site.html">28.14. <code class="docutils literal"><span class="pre">site</span></code> &#8212; サイト固有の設定フック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">28.15. <code class="docutils literal"><span class="pre">user</span></code> &#8212; ユーザー設定のフック</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fpectl.html">28.16. <code class="docutils literal"><span class="pre">fpectl</span></code> &#8212; 浮動小数点例外の制御</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fpectl.html#example">28.16.1. 例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fpectl.html#limitations-and-other-considerations">28.16.2. 制限と他に考慮すべきこと</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="ensurepip.html"
+                        title="前の章へ">27.2. <code class="docutils literal"><span class="pre">ensurepip</span></code> &#8212;  <code class="docutils literal"><span class="pre">pip</span></code> インストーラのブートストラップ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="sys.html"
+                        title="次の章へ">28.1. <code class="docutils literal"><span class="pre">sys</span></code> &#8212; システムパラメータと関数</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/python.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="sys.html" title="28.1. sys — システムパラメータと関数"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="ensurepip.html" title="27.2. ensurepip — pip インストーラのブートストラップ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

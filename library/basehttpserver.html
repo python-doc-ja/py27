@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.18. BaseHTTPServer — 基本的な機能を持つ HTTP サーバ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
+    <link rel="next" title="20.19. SimpleHTTPServer — 簡潔な HTTP リクエストハンドラ" href="simplehttpserver.html" />
+    <link rel="prev" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク" href="socketserver.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="simplehttpserver.html" title="20.19. SimpleHTTPServer — 簡潔な HTTP リクエストハンドラ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="socketserver.html" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-BaseHTTPServer">
+<span id="basehttpserver-basic-http-server"></span><h1>20.18. <a class="reference internal" href="#module-BaseHTTPServer" title="BaseHTTPServer: Basic HTTP server (base class for SimpleHTTPServer and CGIHTTPServer)."><code class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></code></a> &#8212; 基本的な機能を持つ HTTP サーバ<a class="headerlink" href="#module-BaseHTTPServer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-BaseHTTPServer" title="BaseHTTPServer: Basic HTTP server (base class for SimpleHTTPServer and CGIHTTPServer)."><code class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">http.server</span></code> モジュールに統合されました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコード内の import を修正します。</p>
+</div>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/BaseHTTPServer.py">Lib/BaseHTTPServer.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは、 HTTP サーバ (Web サーバ) を実装するための二つののクラスを定義しています。通常、このモジュールが直接使用されることはなく、特定の機能を持つ Web サーバを構築するために使われます。 <a class="reference internal" href="simplehttpserver.html#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> および <a class="reference internal" href="cgihttpserver.html#module-CGIHTTPServer" title="CGIHTTPServer: This module provides a request handler for HTTP servers which can run CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">CGIHTTPServer</span></code></a> モジュールを参照してください。</p>
+<p>最初のクラス <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は <code class="xref py py-class docutils literal"><span class="pre">SocketServer.TCPServer</span></code> のサブクラスで、従って <a class="reference internal" href="socketserver.html#SocketServer.BaseServer" title="SocketServer.BaseServer"><code class="xref py py-class docutils literal"><span class="pre">SocketServer.BaseServer</span></code></a> インタフェースを実装しています。 <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は HTTP ソケットを生成してリクエスト待ち (listen) を行い、リクエストをハンドラに渡します。サーバを作成して動作させるためのコードは以下のようになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">server_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">,</span>
+        <span class="n">handler_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    <span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+    <span class="n">httpd</span> <span class="o">=</span> <span class="n">server_class</span><span class="p">(</span><span class="n">server_address</span><span class="p">,</span> <span class="n">handler_class</span><span class="p">)</span>
+    <span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="BaseHTTPServer.HTTPServer">
+<em class="property">class </em><code class="descclassname">BaseHTTPServer.</code><code class="descname">HTTPServer</code><span class="sig-paren">(</span><em>server_address</em>, <em>RequestHandlerClass</em><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.HTTPServer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このクラスは <code class="xref py py-class docutils literal"><span class="pre">TCPServer</span></code> 型のクラスの上に構築されており、サーバのアドレスをインスタンス変数 <code class="xref py py-attr docutils literal"><span class="pre">server_name</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">server_port</span></code> に記憶します。サーバはハンドラからアクセス可能で、通常 <code class="xref py py-attr docutils literal"><span class="pre">server</span></code> インスタンス変数でアクセスします。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler">
+<em class="property">class </em><code class="descclassname">BaseHTTPServer.</code><code class="descname">BaseHTTPRequestHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このクラスはサーバに到着したリクエストを処理します。このメソッド自体では、実際のリクエストに応答することはできません; (GET や POST のような) 各リクエストメソッドを処理するためにはサブクラス化しなければなりません。 <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></code></a> では、サブクラスで使うためのクラスやインスタンス変数、メソッド群を数多く提供しています。</p>
+<p>このハンドラはリクエストを解釈し、次いでリクエスト形式ごとに固有のメソッドを呼び出します。メソッド名はリクエストの名称から構成されます。例えば、リクエストメソッド <code class="docutils literal"><span class="pre">SPAM</span></code> に対しては、 <code class="xref py py-meth docutils literal"><span class="pre">do_SPAM()</span></code> メソッドが引数なしで呼び出されます。リクエストに関連する情報は全て、ハンドラのインスタンス変数に記憶されています。サブクラスでは <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> メソッドを上書きしたり拡張したりする必要はありません。</p>
+<p><a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></code></a> は以下のインスタンス変数を持っています:</p>
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.client_address">
+<code class="descname">client_address</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.client_address" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTTP クライアントのアドレスを参照している、<code class="docutils literal"><span class="pre">(host,</span> <span class="pre">port)</span></code> の形式をとるタプルが入っています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.server">
+<code class="descname">server</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.server" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>server インスタンスが入っています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.command">
+<code class="descname">command</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.command" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTTP 命令 (リクエスト形式) が入っています。例えば <code class="docutils literal"><span class="pre">'GET'</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.path">
+<code class="descname">path</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リクエストされたパスが入っています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.request_version">
+<code class="descname">request_version</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.request_version" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リクエストのバージョン文字列が入っています。例えば <code class="docutils literal"><span class="pre">'HTTP/1.0'</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.headers">
+<code class="descname">headers</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.headers" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.MessageClass" title="BaseHTTPServer.BaseHTTPRequestHandler.MessageClass"><code class="xref py py-attr docutils literal"><span class="pre">MessageClass</span></code></a> クラス変数で指定されたクラスのインスタンスを保持しています。このインスタンスは HTTP リクエストのヘッダを解釈し、管理しています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.rfile">
+<code class="descname">rfile</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.rfile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>入力ストリームが入っており、そのファイルポインタはオプション入力データ部の先頭を指しています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.wfile">
+<code class="descname">wfile</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.wfile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クライアントに返送する応答を書き込むための出力ストリームが入っています。このストリームに書き込む際には、HTTP プロトコルに従った形式をとらなければなりません。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></code></a> は以下のクラス変数を持っています:</p>
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.server_version">
+<code class="descname">server_version</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.server_version" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバのソフトウェアバージョンを指定します。この値は上書きする必要が生じるかもしれません。書式は複数の文字列を空白で分割したもので、各文字列はソフトウェア名[/バージョン] の形式をとります。例えば、<code class="docutils literal"><span class="pre">'BaseHTTP/0.2'</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.sys_version">
+<code class="descname">sys_version</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.sys_version" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Python 処理系のバージョンが, <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.version_string" title="BaseHTTPServer.BaseHTTPRequestHandler.version_string"><code class="xref py py-attr docutils literal"><span class="pre">version_string</span></code></a> メソッドや <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.server_version" title="BaseHTTPServer.BaseHTTPRequestHandler.server_version"><code class="xref py py-attr docutils literal"><span class="pre">server_version</span></code></a> クラス変数で利用可能な形式で入っています。例えば <code class="docutils literal"><span class="pre">'Python/1.4'</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.error_message_format">
+<code class="descname">error_message_format</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_message_format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クライアントに返すエラー応答を構築するための書式化文字列を指定します。この文字列は丸括弧で囲ったキー文字列で指定する形式を使うので、書式化の対象となる値は辞書でなければなりません。キー <em>code</em> は整数で、HTTP エラーコードを特定する数値です。 <em>message</em> は文字列で、何が発生したかを表す (詳細な) エラーメッセージが入ります。 <em>explain</em> はエラーコード番号の説明です。 <em>message</em> および <em>explain</em> の標準の値は <em>response</em> クラス変数でみつけることができます。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.error_content_type">
+<code class="descname">error_content_type</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_content_type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エラーレスポンスをクライアントに送信する時に使う Content-Type HTTP ヘッダを指定します。デフォルトでは <code class="docutils literal"><span class="pre">'text/html'</span></code> です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加: </span>以前は、 Content-Type は常に <code class="docutils literal"><span class="pre">'text/html'</span></code> でした。</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.protocol_version">
+<code class="descname">protocol_version</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.protocol_version" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この値には応答に使われる HTTP プロトコルのバージョンを指定します。 <code class="docutils literal"><span class="pre">'HTTP/1.1'</span></code> に設定されると、サーバは持続的 HTTP 接続を許可します; しかしその場合、サーバは全てのクライアントに対する応答に、正確な値を持つ <code class="docutils literal"><span class="pre">Content-Length</span></code> ヘッダを (<a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.send_header" title="BaseHTTPServer.BaseHTTPRequestHandler.send_header"><code class="xref py py-meth docutils literal"><span class="pre">send_header()</span></code></a> を使って) 含め <em>なければなりません</em> 。以前のバージョンとの互換性を保つため、標準の設定値は <code class="docutils literal"><span class="pre">'HTTP/1.0'</span></code> です。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.MessageClass">
+<code class="descname">MessageClass</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.MessageClass" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-1">HTTP ヘッダを解釈するための <a class="reference internal" href="rfc822.html#rfc822.Message" title="rfc822.Message"><code class="xref py py-class docutils literal"><span class="pre">rfc822.Message</span></code></a> 類似のクラスを指定します。通常この値が上書きされることはなく、標準の値 <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> になっています。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.responses">
+<code class="descname">responses</code><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.responses" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この変数はエラーコードを表す整数を二つの要素をもつタプルに対応付けます。タプルには短いメッセージと長いメッセージが入っています。例えば、 <code class="docutils literal"><span class="pre">{code:</span> <span class="pre">(shortmessage,</span> <span class="pre">longmessage)}</span></code> といったようになります。 <em>shortmessage</em> は通常、エラー応答における <em>message</em> キーの値として使われ、 <em>longmessage</em> は <em>explain</em> キーの値として使われます (<a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_message_format" title="BaseHTTPServer.BaseHTTPRequestHandler.error_message_format"><code class="xref py py-attr docutils literal"><span class="pre">error_message_format</span></code></a> クラス変数を参照してください) 。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler" title="BaseHTTPServer.BaseHTTPRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></code></a> インスタンスは以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.handle">
+<code class="descname">handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.handle" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.handle_one_request" title="BaseHTTPServer.BaseHTTPRequestHandler.handle_one_request"><code class="xref py py-meth docutils literal"><span class="pre">handle_one_request()</span></code></a> を一度だけ (持続的接続が有効になっている場合には複数回) 呼び出して、HTTPリクエストを処理します。このメソッドを上書きする必要はまったくありません; そうする代わりに適切な <code class="xref py py-meth docutils literal"><span class="pre">do_*()</span></code> を実装してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.handle_one_request">
+<code class="descname">handle_one_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.handle_one_request" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドはリクエストを解釈し、適切な <code class="xref py py-meth docutils literal"><span class="pre">do_*()</span></code> メソッドに転送します。このメソッドを上書きする必要はまったくありません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.send_error">
+<code class="descname">send_error</code><span class="sig-paren">(</span><em>code</em><span class="optional">[</span>, <em>message</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.send_error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>完全なエラー応答をクライアントに送信し、ログ記録します。 <em>code</em> は数値型で、HTTP エラーコードを指定します。 <em>message</em> はオプションで、より詳細なメッセージテキストです。完全なヘッダのセットが送信された後, <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_message_format" title="BaseHTTPServer.BaseHTTPRequestHandler.error_message_format"><code class="xref py py-attr docutils literal"><span class="pre">error_message_format</span></code></a> クラス変数を使って組み立てられたテキストが送られます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.send_response">
+<code class="descname">send_response</code><span class="sig-paren">(</span><em>code</em><span class="optional">[</span>, <em>message</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.send_response" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>応答ヘッダを送信し、受理したリクエストをログ記録します。HTTP 応答行が送られた後、 <em>Server</em> および <em>Date</em> ヘッダが送られます。これら二つのヘッダはそれぞれ <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.version_string" title="BaseHTTPServer.BaseHTTPRequestHandler.version_string"><code class="xref py py-meth docutils literal"><span class="pre">version_string()</span></code></a>  および <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.date_time_string" title="BaseHTTPServer.BaseHTTPRequestHandler.date_time_string"><code class="xref py py-meth docutils literal"><span class="pre">date_time_string()</span></code></a> メソッドで取り出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.send_header">
+<code class="descname">send_header</code><span class="sig-paren">(</span><em>keyword</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.send_header" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>出力ストリームに特定の HTTP ヘッダを書き込みます。 <em>keyword</em> はヘッダのキーワードを指定し、 <em>value</em> にはその値を指定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.end_headers">
+<code class="descname">end_headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.end_headers" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>応答中の HTTP ヘッダの終了を示す空行を送信します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.log_request">
+<code class="descname">log_request</code><span class="sig-paren">(</span><span class="optional">[</span><em>code</em><span class="optional">[</span>, <em>size</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_request" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>受理された (成功した) リクエストをログに記録します。<em>code</em> にはこの応答に関連付けられた HTTP コード番号を指定します。応答メッセージの大きさを知ることができる場合、<em>size</em> パラメタに渡すとよいでしょう。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リクエストを遂行できなかった際に、エラーをログに記録します。標準では、メッセージを <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_message" title="BaseHTTPServer.BaseHTTPRequestHandler.log_message"><code class="xref py py-meth docutils literal"><span class="pre">log_message()</span></code></a> に渡します。従って同じ引数 (<em>format</em> と追加の値) を取ります。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.log_message">
+<code class="descname">log_message</code><span class="sig-paren">(</span><em>format</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_message" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>任意のメッセージを <code class="docutils literal"><span class="pre">sys.stderr</span></code> にログ記録します。このメソッドは通常、カスタムのエラーログ記録機構を作成するために上書きされます。 <em>format</em> 引数は標準の printf 形式の書式化文字列で、 <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_message" title="BaseHTTPServer.BaseHTTPRequestHandler.log_message"><code class="xref py py-meth docutils literal"><span class="pre">log_message()</span></code></a> に渡された追加の引数は書式化の入力として適用されます。ログ記録される全てのメッセージには、クライアントの IP アドレスおよび現在の日付、時刻が先頭に付けられます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.version_string">
+<code class="descname">version_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.version_string" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバソフトウェアのバージョン文字列を返します。この文字列はクラス変数 <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.server_version" title="BaseHTTPServer.BaseHTTPRequestHandler.server_version"><code class="xref py py-attr docutils literal"><span class="pre">server_version</span></code></a> および <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.sys_version" title="BaseHTTPServer.BaseHTTPRequestHandler.sys_version"><code class="xref py py-attr docutils literal"><span class="pre">sys_version</span></code></a> を組み合わせたものです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.date_time_string">
+<code class="descname">date_time_string</code><span class="sig-paren">(</span><span class="optional">[</span><em>timestamp</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.date_time_string" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メッセージヘッダ向けに書式化された、 <em>timestamp</em> (<a class="reference internal" href="time.html#time.time" title="time.time"><code class="xref py py-func docutils literal"><span class="pre">time.time()</span></code></a> のフォーマットである必要があります)で与えられた日時を返します。もし <em>timestamp</em> が省略された場合には、現在の日時が使われます。</p>
+<p>出力は <code class="docutils literal"><span class="pre">'Sun,</span> <span class="pre">06</span> <span class="pre">Nov</span> <span class="pre">1994</span> <span class="pre">08:49:37</span> <span class="pre">GMT'</span></code> のようになります。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加: </span><em>timestamp</em> パラメータ.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.log_date_time_string">
+<code class="descname">log_date_time_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.log_date_time_string" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ログ記録向けに書式化された、現在の日付および時刻を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BaseHTTPServer.BaseHTTPRequestHandler.address_string">
+<code class="descname">address_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.address_string" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ログ記録向けに書式化された、クライアントのアドレスを返します。このときクライアントの IP アドレスに対する名前解決を行います。</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="more-examples">
+<h2>20.18.1. 他の例<a class="headerlink" href="#more-examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>永遠ではなく、何かの条件が満たされるまでの間実行するサーバーを作るには:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_while_true</span><span class="p">(</span><span class="n">server_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">,</span>
+                   <span class="n">handler_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This assumes that keep_running() is a function of no arguments which</span>
+<span class="sd">    is tested initially and after each request.  If its return value</span>
+<span class="sd">    is true, the server continues.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+    <span class="n">httpd</span> <span class="o">=</span> <span class="n">server_class</span><span class="p">(</span><span class="n">server_address</span><span class="p">,</span> <span class="n">handler_class</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">keep_running</span><span class="p">():</span>
+        <span class="n">httpd</span><span class="o">.</span><span class="n">handle_request</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="cgihttpserver.html#module-CGIHTTPServer" title="CGIHTTPServer: This module provides a request handler for HTTP servers which can run CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">CGIHTTPServer</span></code></a></dt>
+<dd><p class="first last">CGI スクリプトをサポートするように拡張されたリクエストハンドラ。</p>
+</dd>
+<dt>Module <a class="reference internal" href="simplehttpserver.html#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a></dt>
+<dd><p class="first last">ドキュメントルートの下にあるファイルに対する要求への応答のみに制限した基本リクエストハンドラ。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">20.18. <code class="docutils literal"><span class="pre">BaseHTTPServer</span></code> &#8212; 基本的な機能を持つ HTTP サーバ</a><ul>
+<li><a class="reference internal" href="#more-examples">20.18.1. 他の例</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="socketserver.html"
+                        title="前の章へ">20.17. <code class="docutils literal"><span class="pre">SocketServer</span></code> &#8212; ネットワークサーバ構築のためのフレームワーク</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="simplehttpserver.html"
+                        title="次の章へ">20.19. <code class="docutils literal"><span class="pre">SimpleHTTPServer</span></code> &#8212; 簡潔な HTTP リクエストハンドラ</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/basehttpserver.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="simplehttpserver.html" title="20.19. SimpleHTTPServer — 簡潔な HTTP リクエストハンドラ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="socketserver.html" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

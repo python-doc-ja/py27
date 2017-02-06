@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.13. smtpd — SMTP サーバー &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
+    <link rel="next" title="20.14. telnetlib — Telnet クライアント" href="telnetlib.html" />
+    <link rel="prev" title="20.12. smtplib — SMTP プロトコルクライアント" href="smtplib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="telnetlib.html" title="20.14. telnetlib — Telnet クライアント"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="smtplib.html" title="20.12. smtplib — SMTP プロトコルクライアント"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-smtpd">
+<span id="smtpd-smtp-server"></span><h1>20.13. <a class="reference internal" href="#module-smtpd" title="smtpd: A SMTP server implementation in Python."><code class="xref py py-mod docutils literal"><span class="pre">smtpd</span></code></a> &#8212; SMTP サーバー<a class="headerlink" href="#module-smtpd" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/smtpd.py">Lib/smtpd.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは、 SMTP サーバを実装するためのクラスをいくつか提供しています。一つは何も行わない、オーバライドできる汎用のサーバで、 その他の二つでは特定のメール送信ストラテジを提供しています。</p>
+<div class="section" id="smtpserver-objects">
+<h2>20.13.1. SMTPServer オブジェクト<a class="headerlink" href="#smtpserver-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="smtpd.SMTPServer">
+<em class="property">class </em><code class="descclassname">smtpd.</code><code class="descname">SMTPServer</code><span class="sig-paren">(</span><em>localaddr</em>, <em>remoteaddr</em><span class="sig-paren">)</span><a class="headerlink" href="#smtpd.SMTPServer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな <a class="reference internal" href="#smtpd.SMTPServer" title="smtpd.SMTPServer"><code class="xref py py-class docutils literal"><span class="pre">SMTPServer</span></code></a> オブジェクトを作成します。このオブジェクトはローカルのアドレス <em>localaddr</em> に関連づけ (bind) されます。オブジェクトは <em>remoteaddr</em> を上流の SMTP リレー先にします。 このクラスは <a class="reference internal" href="asyncore.html#asyncore.dispatcher" title="asyncore.dispatcher"><code class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></code></a> を継承しており、インスタンス化時に自身を <a class="reference internal" href="asyncore.html#module-asyncore" title="asyncore: A base class for developing asynchronous socket handling services."><code class="xref py py-mod docutils literal"><span class="pre">asyncore</span></code></a> のイベントループに登録します。</p>
+<dl class="method">
+<dt id="smtpd.SMTPServer.process_message">
+<code class="descname">process_message</code><span class="sig-paren">(</span><em>peer</em>, <em>mailfrom</em>, <em>rcpttos</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#smtpd.SMTPServer.process_message" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このクラスでは <a class="reference internal" href="exceptions.html#exceptions.NotImplementedError" title="exceptions.NotImplementedError"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code></a> 例外を送出します。受信したメッセージを使って何か意味のある処理をしたい場合にはこのメソッドを オーバライドしてください。コンストラクタの <em>remoteaddr</em> に渡した値は <code class="xref py py-attr docutils literal"><span class="pre">_remoteaddr</span></code> 属性で参照できます。 <em>peer</em> はリモートホストのアドレスで、 <em>mailfrom</em> はメッセージエンベロープの発信元 (envelope originator) 、 <em>rcpttos</em> はメッセージエンベロープの受信対象、そして <em>data</em> は電子メールの内容が入った(<span class="target" id="index-2"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 形式の)文字列です。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="debuggingserver-objects">
+<h2>20.13.2. DebuggingServer オブジェクト<a class="headerlink" href="#debuggingserver-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="smtpd.DebuggingServer">
+<em class="property">class </em><code class="descclassname">smtpd.</code><code class="descname">DebuggingServer</code><span class="sig-paren">(</span><em>localaddr</em>, <em>remoteaddr</em><span class="sig-paren">)</span><a class="headerlink" href="#smtpd.DebuggingServer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たなデバッグ用サーバを生成します。引数は <a class="reference internal" href="#smtpd.SMTPServer" title="smtpd.SMTPServer"><code class="xref py py-class docutils literal"><span class="pre">SMTPServer</span></code></a> と同じです。メッセージが届いても無視し、標準出力に出力します。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pureproxy-objects">
+<h2>20.13.3. PureProxy オブジェクト<a class="headerlink" href="#pureproxy-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="smtpd.PureProxy">
+<em class="property">class </em><code class="descclassname">smtpd.</code><code class="descname">PureProxy</code><span class="sig-paren">(</span><em>localaddr</em>, <em>remoteaddr</em><span class="sig-paren">)</span><a class="headerlink" href="#smtpd.PureProxy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな単純プロキシ (pure proxy) サーバを生成します。引数は <a class="reference internal" href="#smtpd.SMTPServer" title="smtpd.SMTPServer"><code class="xref py py-class docutils literal"><span class="pre">SMTPServer</span></code></a> と同じです。全てのメッセージを <em>remoteaddr</em> にリレーします。このオブジェクトを動作させるとオープンリレーを作成してしまう可能性が多分にあります。注意してください。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mailmanproxy-objects">
+<h2>20.13.4. MailmanProxy Objects<a class="headerlink" href="#mailmanproxy-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="smtpd.MailmanProxy">
+<em class="property">class </em><code class="descclassname">smtpd.</code><code class="descname">MailmanProxy</code><span class="sig-paren">(</span><em>localaddr</em>, <em>remoteaddr</em><span class="sig-paren">)</span><a class="headerlink" href="#smtpd.MailmanProxy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな単純プロキシサーバを生成します。引数は <a class="reference internal" href="#smtpd.SMTPServer" title="smtpd.SMTPServer"><code class="xref py py-class docutils literal"><span class="pre">SMTPServer</span></code></a> と同じです。全てのメッセージを <em>remoteaddr</em> にリレーしますが、 ローカルの mailman の設定に <em>remoteaddr</em> がある場合には mailman を使って処理します。このオブジェクトを動作させるとオープンリレーを 作成してしまう可能性が多分にあります。注意してください。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">20.13. <code class="docutils literal"><span class="pre">smtpd</span></code> &#8212; SMTP サーバー</a><ul>
+<li><a class="reference internal" href="#smtpserver-objects">20.13.1. SMTPServer オブジェクト</a></li>
+<li><a class="reference internal" href="#debuggingserver-objects">20.13.2. DebuggingServer オブジェクト</a></li>
+<li><a class="reference internal" href="#pureproxy-objects">20.13.3. PureProxy オブジェクト</a></li>
+<li><a class="reference internal" href="#mailmanproxy-objects">20.13.4. MailmanProxy Objects</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="smtplib.html"
+                        title="前の章へ">20.12. <code class="docutils literal"><span class="pre">smtplib</span></code> &#8212; SMTP プロトコルクライアント</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="telnetlib.html"
+                        title="次の章へ">20.14. <code class="docutils literal"><span class="pre">telnetlib</span></code> &#8212; Telnet クライアント</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/smtpd.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="telnetlib.html" title="20.14. telnetlib — Telnet クライアント"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="smtplib.html" title="20.12. smtplib — SMTP プロトコルクライアント"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >20. インターネットプロトコルとサポート</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

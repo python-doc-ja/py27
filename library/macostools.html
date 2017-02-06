@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>37.3. macostools — ファイル操作を便利にするルーチン集 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="37. Mac OS X 固有のサービス" href="mac.html" />
+    <link rel="next" title="37.5. EasyDialogs — 基本的な Macintosh ダイアログ" href="easydialogs.html" />
+    <link rel="prev" title="37.2. MacOS — Mac OS インタプリタ機能へのアクセス" href="macos.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="easydialogs.html" title="37.5. EasyDialogs — 基本的な Macintosh ダイアログ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="macos.html" title="37.2. MacOS — Mac OS インタプリタ機能へのアクセス"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mac.html" accesskey="U">37. Mac OS X 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-macostools">
+<span id="macostools-convenience-routines-for-file-manipulation"></span><h1>37.3. <a class="reference internal" href="#module-macostools" title="macostools: Convenience routines for file manipulation. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">macostools</span></code></a> &#8212; ファイル操作を便利にするルーチン集<a class="headerlink" href="#module-macostools" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このモジュールには、Macintosh 上でのファイル操作を便利にするためのルーチンがいくつか入っています。全てファイルパラメタは、パス名か <code class="xref py py-class docutils literal"><span class="pre">FSRef</span></code> または <code class="xref py py-class docutils literal"><span class="pre">FSSpec</span></code> オブジェクトで指定できます。このモジュールは、リソースフォークつきファイル (forked file) をサポートするファイルシステムを想定しているので、UFS パーティションに使ってはなりません。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このモジュールは Python 3 で削除されました。</p>
+</div>
+<p><a class="reference internal" href="#module-macostools" title="macostools: Convenience routines for file manipulation. (撤廃) (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">macostools</span></code></a> モジュールでは以下の関数を定義しています。</p>
+<dl class="function">
+<dt id="macostools.copy">
+<code class="descclassname">macostools.</code><code class="descname">copy</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="optional">[</span>, <em>createpath</em><span class="optional">[</span>, <em>copytimes</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#macostools.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイル <em>src</em> を <em>dst</em> へコピーします。 <em>createpath</em> が真なら、必要に応じて <em>dst</em> に至るまでのフォルダを作成します。このメソッドはデータとリソースフォーク、そしていくつかのファインダ情報 (クリエータ、タイプ、フラグ) をコピーします。オプションの <em>copytypes</em> を指定すると、作成日、修正日、バックアップ日の情報のコピー (デフォルトではコピーします) を制御できます。カスタムアイコン、コメント、アイコン位置はコピーされません。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この関数は 64 bit モードで利用できない API を使用するので、 64 bit のコードでは動きません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="macostools.copytree">
+<code class="descclassname">macostools.</code><code class="descname">copytree</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="sig-paren">)</span><a class="headerlink" href="#macostools.copytree" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>src</em> から <em>dst</em> へ再帰的にファイルのツリーをコピーします。必要に応じてフォルダを作成してゆきます。 <em>src</em> と <em>dst</em> はパス名で指定しなければなりません。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この関数は 64 bit モードで利用できない API を使用するので、 64 bit のコードでは動きません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="macostools.mkalias">
+<code class="descclassname">macostools.</code><code class="descname">mkalias</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em><span class="sig-paren">)</span><a class="headerlink" href="#macostools.mkalias" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>src</em> を示すファインダエイリアス <em>dst</em> を作成します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この関数は 64 bit モードで利用できない API を使用するので、 64 bit のコードでは動きません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="macostools.touched">
+<code class="descclassname">macostools.</code><code class="descname">touched</code><span class="sig-paren">(</span><em>dst</em><span class="sig-paren">)</span><a class="headerlink" href="#macostools.touched" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイル <em>dst</em> のクリエータやタイプなどのファインダ情報が変わったことをファインダに知らせます。ファイルはパス名か <code class="xref py py-class docutils literal"><span class="pre">FSSpec</span></code> で指定できます。この呼び出しは、ファインダにアイコンを再描画させるよう命令します。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span>この関数は OS X では何もしません。</p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="macostools.BUFSIZ">
+<code class="descclassname">macostools.</code><code class="descname">BUFSIZ</code><a class="headerlink" href="#macostools.BUFSIZ" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">copy</span></code> に用いるバッファサイズで、デフォルトは 1 メガバイトです。</p>
+</dd></dl>
+
+<p>Apple のドキュメントでは、ファインダエイリアスの作成プロセスを規定していません。そのため、 <a class="reference internal" href="#macostools.mkalias" title="macostools.mkalias"><code class="xref py py-func docutils literal"><span class="pre">mkalias()</span></code></a> で作成したエイリアスが互換性のない振る舞いをする可能性があるので注意してください。</p>
+</div>
+<div class="section" id="module-findertools">
+<span id="findertools-the-finder-s-apple-events-interface"></span><h1>37.4. <a class="reference internal" href="#module-findertools" title="findertools: Wrappers around the finder's Apple Events interface. (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">findertools</span></code></a> &#8212; <strong class="program">finder</strong> のApple Events インターフェース<a class="headerlink" href="#module-findertools" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">このモジュールのルーチンを使うと、Python プログラムからファインダが持ついくつかの機能へアクセスできます。これらの機能はファインダへの AppleEvent インタフェースのラッパとして実装されています。</p>
+<p>全てのファイルとフォルダのパラメータは、フルパス名、あるいは <code class="xref py py-class docutils literal"><span class="pre">FSRef</span></code> か <code class="xref py py-class docutils literal"><span class="pre">FSSpec</span></code> オブジェクトで指定できます。</p>
+<p><a class="reference internal" href="#module-findertools" title="findertools: Wrappers around the finder's Apple Events interface. (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">findertools</span></code></a> モジュールは以下の関数を定義しています。</p>
+<dl class="function">
+<dt id="findertools.launch">
+<code class="descclassname">findertools.</code><code class="descname">launch</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#findertools.launch" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダに <em>file</em> を起動するように命令します。起動が意味するものは <em>file</em> に依存します。アプリケーションなら起動しますし、フォルダなら開かれ、文書なら適切なアプリケーションで開かれます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.Print">
+<code class="descclassname">findertools.</code><code class="descname">Print</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#findertools.Print" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダにファイルを印刷するよう命令します。実際の動作はファイルを選択し、ファインダのファイルメニューから印刷コマンドを使うのと同じです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.copy">
+<code class="descclassname">findertools.</code><code class="descname">copy</code><span class="sig-paren">(</span><em>file</em>, <em>destdir</em><span class="sig-paren">)</span><a class="headerlink" href="#findertools.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダにファイルかフォルダである <em>file</em> をフォルダ <em>destdir</em> にコピーするよう命令します。この関数は新しいファイルを示す <code class="xref py py-class docutils literal"><span class="pre">Alias</span></code> オブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.move">
+<code class="descclassname">findertools.</code><code class="descname">move</code><span class="sig-paren">(</span><em>file</em>, <em>destdir</em><span class="sig-paren">)</span><a class="headerlink" href="#findertools.move" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダにファイルかフォルダである <em>file</em> をフォルダ <em>destdir</em> に移動するように命令します。この関数は新しいファイルを示す <code class="xref py py-class docutils literal"><span class="pre">Alias</span></code> オブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.sleep">
+<code class="descclassname">findertools.</code><code class="descname">sleep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findertools.sleep" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>マシンがサポートしていれば、ファインダに Macintosh をスリープさせるよう命令します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.restart">
+<code class="descclassname">findertools.</code><code class="descname">restart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findertools.restart" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダに、マシンを適切に再起動するよう命令します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="findertools.shutdown">
+<code class="descclassname">findertools.</code><code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findertools.shutdown" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファインダに、マシンを適切にシャットダウンするよう命令します。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">37.3. <code class="docutils literal"><span class="pre">macostools</span></code> &#8212; ファイル操作を便利にするルーチン集</a></li>
+<li><a class="reference internal" href="#module-findertools">37.4. <code class="docutils literal"><span class="pre">findertools</span></code> &#8212; <strong class="program">finder</strong> のApple Events インターフェース</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="macos.html"
+                        title="前の章へ">37.2. <code class="docutils literal"><span class="pre">MacOS</span></code> &#8212; Mac OS インタプリタ機能へのアクセス</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="easydialogs.html"
+                        title="次の章へ">37.5. <code class="docutils literal"><span class="pre">EasyDialogs</span></code> &#8212; 基本的な Macintosh ダイアログ</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/macostools.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="easydialogs.html" title="37.5. EasyDialogs — 基本的な Macintosh ダイアログ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="macos.html" title="37.2. MacOS — Mac OS インタプリタ機能へのアクセス"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mac.html" >37. Mac OS X 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. distutils による C および C++ 拡張モジュールのビルド &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python インタプリタの拡張と埋め込み" href="index.html" />
+    <link rel="next" title="4. Windows 上での C および C++ 拡張モジュールのビルド" href="windows.html" />
+    <link rel="prev" title="2. 新しい型を定義する" href="newtypes.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="4. Windows 上での C および C++ 拡張モジュールのビルド"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="newtypes.html" title="2. 新しい型を定義する"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python インタプリタの拡張と埋め込み</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="building-c-and-c-extensions-with-distutils">
+<span id="building"></span><h1>3. distutils による C および C++ 拡張モジュールのビルド<a class="headerlink" href="#building-c-and-c-extensions-with-distutils" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Python 1.4 になってから、動的にリンクされるような拡張モジュールをビルドするためのメイクファイルを作成するような、特殊なメイクファイルをUnix 向けに提供するようになりました。Python 2.0 からはこの機構 (いわゆる Makefile.pre.in および Setup ファイルの関係ファイル) はサポートされなくなりました。インタプリタ自体のカスタマイズはほとんど使われず、distutils で拡張モジュールをビルドできるようになったからです。</p>
+<p>distutils を使った拡張モジュールのビルドには、ビルドを行う計算機上に distutils をインストールしていることが必要です。Python 2.x には distutils が入っており、Python 1.5 用には個別のパッケージがあります。distutils はバイナリパッケージの作成もサポートしているので、ユーザが拡張モジュールをインストールする際に、必ずしもコンパイラが必要というわけではありません。</p>
+<p>distutils ベースのパッケージには、駆動スクリプト (driver script) となる <code class="file docutils literal"><span class="pre">setup.py</span></code> が入っています。 <code class="file docutils literal"><span class="pre">setup.py</span></code> は普通の Python プログラムファイルで、ほとんどの場合以下のような見かけになっています:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span>from distutils.core import setup, Extension
+
+module1 = Extension(&#39;demo&#39;,
+                    sources = [&#39;demo.c&#39;])
+
+setup (name = &#39;PackageName&#39;,
+       version = &#39;1.0&#39;,
+       description = &#39;This is a demo package&#39;,
+       ext_modules = [module1])
+</pre></div>
+</div>
+<p>この <code class="file docutils literal"><span class="pre">setup.py</span></code> とファイル <code class="file docutils literal"><span class="pre">demo.c</span></code> があるとき、以下のコマンド</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">build</span>
+</pre></div>
+</div>
+<p>を実行すると、 <code class="file docutils literal"><span class="pre">demo.c</span></code> をコンパイルして、 <code class="docutils literal"><span class="pre">demo</span></code> という名前の拡張モジュールを <code class="file docutils literal"><span class="pre">build</span></code> ディレクトリ内に生成します。システムによってはモジュールファイルは <code class="file docutils literal"><span class="pre">build/lib.system</span></code> サブディレクトリに生成され、 <code class="file docutils literal"><span class="pre">demo.so</span></code> や <code class="file docutils literal"><span class="pre">demo.pyd</span></code> といった名前になることがあります。</p>
+<p><code class="file docutils literal"><span class="pre">setup.py</span></code> 内では、コマンドの実行はすべて <code class="docutils literal"><span class="pre">setup</span></code> 関数を呼び出して行います。この関数は可変個のキーワード引数をとります。例ではその一部を使っているにすぎません。もっと具体的にいうと、例の中ではパッケージをビルドするためのメタ情報と、パッケージの内容を指定しています。通常、パッケージには Python ソースモジュールやドキュメント、サブパッケージ等といった別のファイルも入ります。 distutils の機能に関する詳細は、 <a class="reference internal" href="../distutils/index.html#distutils-index"><span class="std std-ref">Python モジュールの配布</span></a> に書かれている distutils のドキュメントを参照してください;  この節では、拡張モジュールのビルドについてのみ説明します。</p>
+<p>駆動スクリプトをよりよく構成するために、 <code class="xref py py-func docutils literal"><span class="pre">setup()</span></code> への引数を前もって計算しておくことがよくあります。上の例では、 <code class="xref py py-func docutils literal"><span class="pre">setup()</span></code> の <code class="docutils literal"><span class="pre">ext_modules</span></code> は拡張モジュールのリストで、リストの各々の要素は <code class="xref py py-class docutils literal"><span class="pre">Extension</span></code> クラスのインスタンスになっています。上の例では、 <code class="docutils literal"><span class="pre">demo</span></code> という名の拡張モジュールを定義していて、単一のソースファイル <code class="file docutils literal"><span class="pre">demo.c</span></code> をコンパイルしてビルドするよう定義しています。</p>
+<p>多くの場合、拡張モジュールのビルドはもっと複雑になります。というのは、プリプロセッサ定義やライブラリの追加指定が必要になることがあるからです。例えば以下のファイルがその実例です。</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span>from distutils.core import setup, Extension
+
+module1 = Extension(&#39;demo&#39;,
+                    define_macros = [(&#39;MAJOR_VERSION&#39;, &#39;1&#39;),
+                                     (&#39;MINOR_VERSION&#39;, &#39;0&#39;)],
+                    include_dirs = [&#39;/usr/local/include&#39;],
+                    libraries = [&#39;tcl83&#39;],
+                    library_dirs = [&#39;/usr/local/lib&#39;],
+                    sources = [&#39;demo.c&#39;])
+
+setup (name = &#39;PackageName&#39;,
+       version = &#39;1.0&#39;,
+       description = &#39;This is a demo package&#39;,
+       author = &#39;Martin v. Loewis&#39;,
+       author_email = &#39;martin@v.loewis.de&#39;,
+       url = &#39;https://docs.python.org/extending/building&#39;,
+       long_description = &#39;&#39;&#39;
+This is really just a demo package.
+&#39;&#39;&#39;,
+       ext_modules = [module1])
+</pre></div>
+</div>
+<p>この例では、 <code class="xref py py-func docutils literal"><span class="pre">setup()</span></code> は追加のメタ情報と共に呼び出されます。配布パッケージを構築する際には、メタ情報の追加が推奨されています。拡張モジュール自体については、プリプロセッサ定義、インクルードファイルのディレクトリ、ライブラリのディレクトリ、ライブラリといった指定があります。 distutils はこの情報をコンパイラに応じて異なるやり方で引渡します。例えば、Unix では、上の設定は以下のようなコンパイルコマンドになるかもしれません</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">DNDEBUG</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Wstrict</span><span class="o">-</span><span class="n">prototypes</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">DMAJOR_VERSION</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span><span class="n">DMINOR_VERSION</span><span class="o">=</span><span class="mi">0</span> <span class="o">-</span><span class="n">I</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">I</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">python2</span><span class="mf">.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">demo</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">build</span><span class="o">/</span><span class="n">temp</span><span class="p">.</span><span class="n">linux</span><span class="o">-</span><span class="n">i686</span><span class="o">-</span><span class="mf">2.2</span><span class="o">/</span><span class="n">demo</span><span class="p">.</span><span class="n">o</span>
+
+<span class="n">gcc</span> <span class="o">-</span><span class="n">shared</span> <span class="n">build</span><span class="o">/</span><span class="n">temp</span><span class="p">.</span><span class="n">linux</span><span class="o">-</span><span class="n">i686</span><span class="o">-</span><span class="mf">2.2</span><span class="o">/</span><span class="n">demo</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">ltcl83</span> <span class="o">-</span><span class="n">o</span> <span class="n">build</span><span class="o">/</span><span class="n">lib</span><span class="p">.</span><span class="n">linux</span><span class="o">-</span><span class="n">i686</span><span class="o">-</span><span class="mf">2.2</span><span class="o">/</span><span class="n">demo</span><span class="p">.</span><span class="n">so</span>
+</pre></div>
+</div>
+<p>これらのコマンドラインは実演目的で書かれたものです; distutils のユーザは distutils が正しくコマンドを実行すると信用してください。</p>
+<div class="section" id="distributing-your-extension-modules">
+<span id="distributing"></span><h2>3.1. 拡張モジュールの配布<a class="headerlink" href="#distributing-your-extension-modules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>拡張モジュールをうまくビルドできたら、三通りの使い方があります。</p>
+<p>エンドユーザは普通モジュールをインストールしようと考えます; これには、次を実行します</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>モジュールメンテナはソースパッケージを作成します; これには、次を実行します</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">sdist</span>
+</pre></div>
+</div>
+<p>場合によっては、ソース配布物に追加のファイルを含める必要があります; これには <code class="file docutils literal"><span class="pre">MANIFEST.in</span></code> ファイルを使います; 詳しくは distutils のドキュメントを参照してください。</p>
+<p>ソースコード配布物をうまく構築できたら、メンテナはバイナリ配布物も作成できます。プラットフォームに応じて、以下のコマンドのいずれかを使います。</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">bdist_wininst</span>
+<span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">bdist_rpm</span>
+<span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">bdist_dumb</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. distutils による C および C++ 拡張モジュールのビルド</a><ul>
+<li><a class="reference internal" href="#distributing-your-extension-modules">3.1. 拡張モジュールの配布</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="newtypes.html"
+                        title="前の章へ">2. 新しい型を定義する</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="windows.html"
+                        title="次の章へ">4. Windows 上での C および C++ 拡張モジュールのビルド</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/extending/building.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="4. Windows 上での C および C++ 拡張モジュールのビルド"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="newtypes.html" title="2. 新しい型を定義する"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python インタプリタの拡張と埋め込み</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

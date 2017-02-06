@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>(通常)整数型オブジェクト (plain integer object) &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
+    <link rel="next" title="Boolean オブジェクト" href="bool.html" />
+    <link rel="prev" title="None オブジェクト" href="none.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="bool.html" title="Boolean オブジェクト"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="none.html" title="None オブジェクト"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="plain-integer-objects">
+<span id="intobjects"></span><h1>(通常)整数型オブジェクト (plain integer object)<a class="headerlink" href="#plain-integer-objects" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span class="target" id="index-0"></span><dl class="type">
+<dt id="c.PyIntObject">
+<code class="descname">PyIntObject</code><a class="headerlink" href="#c.PyIntObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject</span></code></a> のサブタイプは整数型を表現します。</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyInt_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="descname">PyInt_Type</code><a class="headerlink" href="#c.PyInt_Type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-1">この <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a> のインスタンスは Python の (長整数でない)整数型を表現します。これは Python レイヤにおける <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> や <code class="docutils literal"><span class="pre">types.IntType</span></code> と同じオブジェクトです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_Check">
+int <code class="descname">PyInt_Check</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_Check" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が <a class="reference internal" href="#c.PyInt_Type" title="PyInt_Type"><code class="xref c c-data docutils literal"><span class="pre">PyInt_Type</span></code></a> 型か <a class="reference internal" href="#c.PyInt_Type" title="PyInt_Type"><code class="xref c c-data docutils literal"><span class="pre">PyInt_Type</span></code></a> 型のサブタイプであるときに真を返します。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span>サブタイプを引数にとれるようになりました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_CheckExact">
+int <code class="descname">PyInt_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_CheckExact" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>o</em> が <a class="reference internal" href="#c.PyInt_Type" title="PyInt_Type"><code class="xref c c-data docutils literal"><span class="pre">PyInt_Type</span></code></a> 型で、かつ <a class="reference internal" href="#c.PyInt_Type" title="PyInt_Type"><code class="xref c c-data docutils literal"><span class="pre">PyInt_Type</span></code></a> 型のサブタイプでないときに真を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_FromString">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyInt_FromString</code><span class="sig-paren">(</span>char<em>&nbsp;*str</em>, char<em>&nbsp;**pend</em>, int<em>&nbsp;base</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_FromString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>str</em> の文字列値に基づいて、新たな <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> または <a class="reference internal" href="long.html#c.PyLongObject" title="PyLongObject"><code class="xref c c-type docutils literal"><span class="pre">PyLongObject</span></code></a> を返します。このとき <em>base</em> を基数として文字列を解釈します。 <em>pend</em> が <em>NULL</em> でなければ、 <code class="docutils literal"><span class="pre">*pend</span></code> は <em>str</em> 中で数が表現されている部分以後の先頭の文字のアドレスを指しています。 <em>base</em> が <code class="docutils literal"><span class="pre">0</span></code> ならば、 <em>str</em> の先頭の文字列に基づいて基数を決定します: もし <em>str</em> が <code class="docutils literal"><span class="pre">'0x'</span></code> または <code class="docutils literal"><span class="pre">'0X'</span></code> で始まっていれば、基数に 16 を使います; <em>str</em> が <code class="docutils literal"><span class="pre">'0'</span></code> で始まっていれば、基数に 8 を使います; その他の場合には基数に 10 を使います。 <em>base</em> が <code class="docutils literal"><span class="pre">0</span></code> でなければ、 <em>base</em> は <code class="docutils literal"><span class="pre">2</span></code> 以上 <code class="docutils literal"><span class="pre">36</span></code> 以下の数でなければなりません。先頭に空白がある場合は無視されます。数字が全くない場合、 <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。使用しているマシンの <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">int</span></code> 型で表現し切れないくらい大きな数が文字列に入っており、オーバフロー警告が抑制されていれば、 <a class="reference internal" href="long.html#c.PyLongObject" title="PyLongObject"><code class="xref c c-type docutils literal"><span class="pre">PyLongObject</span></code></a> を返します。オーバフロー警告が抑制されていなければ、 <em>NULL</em> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_FromLong">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyInt_FromLong</code><span class="sig-paren">(</span>long<em>&nbsp;ival</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_FromLong" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>ival</em> の値を使って新たな整数オブジェクトを生成します。</p>
+<p>現在の実装では、<code class="docutils literal"><span class="pre">-5</span></code> から <code class="docutils literal"><span class="pre">256</span></code> までの全ての整数に対する整数オブジェクトの配列を保持するようにしており、この範囲の数を生成すると、実際には既存のオブジェクトに対する参照が返るようになっています。従って、<code class="docutils literal"><span class="pre">1</span></code> の値を変えることすら可能です。変えてしまった場合の Python の挙動は未定義です :-)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_FromSsize_t">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyInt_FromSsize_t</code><span class="sig-paren">(</span>Py_ssize_t<em>&nbsp;ival</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_FromSsize_t" title="この定義へのパーマリンク">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>ival</em> の値を使って新たな整数オブジェクトを生成します。値が <code class="docutils literal"><span class="pre">LONG_MAX</span></code> より大きいか <code class="docutils literal"><span class="pre">LONG_MIN</span></code> より小さい場合、長整数オブジェクトを返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_FromSize_t">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyInt_FromSize_t</code><span class="sig-paren">(</span>size_t<em>&nbsp;ival</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_FromSize_t" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>ival</em> の値を使って新たな整数オブジェクトを生成します。値が <code class="docutils literal"><span class="pre">LONG_MAX</span></code> を超えている場合、長整数オブジェクトを返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_AsLong">
+long <code class="descname">PyInt_AsLong</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AsLong" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがまだ <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> でなければまず型キャストを試み、次にその値を返します。エラーが発生した場合、 <code class="docutils literal"><span class="pre">-1</span></code> が返されます。その時呼び出し側は、 <code class="docutils literal"><span class="pre">PyErr_Occurred()</span></code> を使って、エラーが発生したのか、単に値が -1 だったのかを判断するべきです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_AS_LONG">
+long <code class="descname">PyInt_AS_LONG</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AS_LONG" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>io</em> の値を返します。エラーチェックを行いません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_AsUnsignedLongMask">
+unsigned long <code class="descname">PyInt_AsUnsignedLongMask</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AsUnsignedLongMask" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがまだ <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> または <a class="reference internal" href="long.html#c.PyLongObject" title="PyLongObject"><code class="xref c c-type docutils literal"><span class="pre">PyLongObject</span></code></a> でなければまず型キャストを試み、次にその値を <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span></code> 型で返します。この関数はオーバフローをチェックしません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_AsUnsignedLongLongMask">
+unsigned PY_LONG_LONG <code class="descname">PyInt_AsUnsignedLongLongMask</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AsUnsignedLongLongMask" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがまだ <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> または <a class="reference internal" href="long.html#c.PyLongObject" title="PyLongObject"><code class="xref c c-type docutils literal"><span class="pre">PyLongObject</span></code></a> でなければまず型キャストを試み、次にその値を <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">long</span></code> 型で返します。オーバフローをチェックしません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_AsSsize_t">
+Py_ssize_t <code class="descname">PyInt_AsSsize_t</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AsSsize_t" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトがまだ <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> または <a class="reference internal" href="long.html#c.PyLongObject" title="PyLongObject"><code class="xref c c-type docutils literal"><span class="pre">PyLongObject</span></code></a> でなければまず型キャストを試み、次にその値を <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> 型で返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_GetMax">
+long <code class="descname">PyInt_GetMax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_GetMax" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-2">システムの知識に基づく、扱える最大の整数値 (システムのヘッダファイルに定義されている <code class="xref py py-const docutils literal"><span class="pre">LONG_MAX</span></code>) を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyInt_ClearFreeList">
+int <code class="descname">PyInt_ClearFreeList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_ClearFreeList" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>整数の free list をクリアします。解放できなかった要素の数を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="none.html"
+                        title="前の章へ">None オブジェクト</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="bool.html"
+                        title="次の章へ">Boolean オブジェクト</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/c-api/int.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="bool.html" title="Boolean オブジェクト"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="none.html" title="None オブジェクト"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >具象オブジェクト (concrete object) レイヤ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>36.16. commands — コマンド実行ユーティリティ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="36. Unix 固有のサービス" href="unix.html" />
+    <link rel="next" title="37. Mac OS X 固有のサービス" href="mac.html" />
+    <link rel="prev" title="36.15. syslog — Unix syslog ライブラリルーチン群" href="syslog.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mac.html" title="37. Mac OS X 固有のサービス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="syslog.html" title="36.15. syslog — Unix syslog ライブラリルーチン群"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" accesskey="U">36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-commands">
+<span id="commands-utilities-for-running-commands"></span><h1>36.16. <a class="reference internal" href="#module-commands" title="commands: Utility functions for running external commands. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">commands</span></code></a> &#8212; コマンド実行ユーティリティ<a class="headerlink" href="#module-commands" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-commands" title="commands: Utility functions for running external commands. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">commands</span></code></a> モジュールは Python 3 で削除されました。代わりに <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを使ってください。</p>
+</div>
+<p><a class="reference internal" href="#module-commands" title="commands: Utility functions for running external commands. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">commands</span></code></a> は、システムへコマンド文字列を渡して実行する <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal"><span class="pre">os.popen()</span></code></a> のラッパー関数を含んでいるモジュールです。外部で実行したコマンドの結果や、その終了ステータスを扱います。</p>
+<p><a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> がプロセスを生成してその結果を取得するためのより強力な手段を提供しています。 <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを使う方が <a class="reference internal" href="#module-commands" title="commands: Utility functions for running external commands. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">commands</span></code></a> モジュールを使うより好ましいです。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">Python 3.x において、 <a class="reference internal" href="#commands.getstatus" title="commands.getstatus"><code class="xref py py-func docutils literal"><span class="pre">getstatus()</span></code></a> および二つの隠し関数 (<code class="xref py py-func docutils literal"><span class="pre">mk2arg()</span></code> と <code class="xref py py-func docutils literal"><span class="pre">mkarg()</span></code>) は削除されました。また、 <a class="reference internal" href="#commands.getstatusoutput" title="commands.getstatusoutput"><code class="xref py py-func docutils literal"><span class="pre">getstatusoutput()</span></code></a> と <a class="reference internal" href="#commands.getoutput" title="commands.getoutput"><code class="xref py py-func docutils literal"><span class="pre">getoutput()</span></code></a> は <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールに移動されました。</p>
+</div>
+<p><a class="reference internal" href="#module-commands" title="commands: Utility functions for running external commands. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">commands</span></code></a> モジュールは以下の関数を定義しています。</p>
+<dl class="function">
+<dt id="commands.getstatusoutput">
+<code class="descclassname">commands.</code><code class="descname">getstatusoutput</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#commands.getstatusoutput" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 <em>cmd</em> を <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal"><span class="pre">os.popen()</span></code></a> を使いシェル上で実行し、タプル <code class="docutils literal"><span class="pre">(status,</span> <span class="pre">output)</span></code> を返します。実際には <code class="docutils literal"><span class="pre">{</span> <span class="pre">cmd;</span> <span class="pre">}</span> <span class="pre">2&gt;&amp;1</span></code> と実行されるため、標準出力とエラー出力が混合されます。また、出力の最後の改行文字は取り除かれます。コマンドの終了ステータスはC言語関数の <code class="xref c c-func docutils literal"><span class="pre">wait()</span></code> の規則に従って解釈することができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="commands.getoutput">
+<code class="descclassname">commands.</code><code class="descname">getoutput</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="headerlink" href="#commands.getoutput" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#commands.getstatusoutput" title="commands.getstatusoutput"><code class="xref py py-func docutils literal"><span class="pre">getstatusoutput()</span></code></a> に似ていますが、終了ステータスは無視され、コマンドの出力のみを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="commands.getstatus">
+<code class="descclassname">commands.</code><code class="descname">getstatus</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#commands.getstatus" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">ls</span> <span class="pre">-ld</span> <span class="pre">file</span></code> の出力を文字列で返します。この関数は <a class="reference internal" href="#commands.getoutput" title="commands.getoutput"><code class="xref py py-func docutils literal"><span class="pre">getoutput()</span></code></a> を使い、引数内のバックスラッシュ記号とドル記号を適切にエスケープします。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span>この関数は明らかでないですし役立たずです。名前も <a class="reference internal" href="#commands.getstatusoutput" title="commands.getstatusoutput"><code class="xref py py-func docutils literal"><span class="pre">getstatusoutput()</span></code></a> の前では誤解を招くものです。</p>
+</div>
+</dd></dl>
+
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">commands</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span><span class="o">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="s1">&#39;ls /bin/ls&#39;</span><span class="p">)</span>
+<span class="go">(0, &#39;/bin/ls&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span><span class="o">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="s1">&#39;cat /bin/junk&#39;</span><span class="p">)</span>
+<span class="go">(256, &#39;cat: /bin/junk: No such file or directory&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span><span class="o">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="s1">&#39;/bin/junk&#39;</span><span class="p">)</span>
+<span class="go">(256, &#39;sh: /bin/junk: not found&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s1">&#39;ls /bin/ls&#39;</span><span class="p">)</span>
+<span class="go">&#39;/bin/ls&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span><span class="o">.</span><span class="n">getstatus</span><span class="p">(</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+<span class="go">&#39;-rwxr-xr-x  1 root        13352 Oct 14  1994 /bin/ls&#39;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a></dt>
+<dd><p class="first last">サブプロセスの生成と管理のためのモジュール。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="syslog.html"
+                        title="前の章へ">36.15. <code class="docutils literal"><span class="pre">syslog</span></code> &#8212; Unix syslog ライブラリルーチン群</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mac.html"
+                        title="次の章へ">37. Mac OS X 固有のサービス</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/commands.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mac.html" title="37. Mac OS X 固有のサービス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="syslog.html" title="36.15. syslog — Unix syslog ライブラリルーチン群"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" >36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

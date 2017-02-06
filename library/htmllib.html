@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19.3. htmllib — HTML 文書の解析器 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="19. 構造化マークアップツール" href="markup.html" />
+    <link rel="next" title="19.5. XMLを扱うモジュール群" href="xml.html" />
+    <link rel="prev" title="19.2. sgmllib — 単純な SGML パーザ" href="sgmllib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.html" title="19.5. XMLを扱うモジュール群"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="sgmllib.html" title="19.2. sgmllib — 単純な SGML パーザ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" accesskey="U">19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-htmllib">
+<span id="htmllib-a-parser-for-html-documents"></span><h1>19.3. <a class="reference internal" href="#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> &#8212; HTML 文書の解析器<a class="headerlink" href="#module-htmllib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> モジュールは Python 3 で削除されました。Python 2 では代わりに <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-mod docutils literal"><span class="pre">HTMLParser</span></code></a> を使ってください。なお、 <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-mod docutils literal"><span class="pre">HTMLParser</span></code></a> は Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">html.parser</span></code> に移動しています。</p>
+</div>
+<span class="target" id="index-0"></span><p id="index-1">このモジュールでは、ハイパーテキスト記述言語 (HTML, HyperText Mark-up Language) 形式で書式化されたテキストファイルを解析するための基盤として役立つクラスを定義しています。このクラスは I/O と直接的には接続されません &#8212; このクラスにはメソッドを介して文字列形式の入力を提供する必要があり、出力を生成するには &#8220;フォーマッタ (formatter)&#8221; オブジェクトのメソッドを何度か呼び出さなくてはなりません。<a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスは、機能を追加するために他のクラスの基底クラスとして利用するように設計されており、ほとんどのメソッドが拡張したり上書きしたりできるようになっています。さらにこのクラスは <a class="reference internal" href="sgmllib.html#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a> モジュールで定義されている <code class="xref py py-class docutils literal"><span class="pre">SGMLParser</span></code> クラスから派生しており、その機能を拡張しています。 <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> の実装は、 <span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1866.html"><strong>RFC 1866</strong></a> で解説されている HTML 2.0 記述言語をサポートします。 <a class="reference internal" href="formatter.html#module-formatter" title="formatter: Generic output formatter and device interface."><code class="xref py py-mod docutils literal"><span class="pre">formatter</span></code></a> では 2 つのフォーマッタオブジェクト実装が提供されています; フォーマッタのインタフェースについての情報は <a class="reference internal" href="formatter.html#module-formatter" title="formatter: Generic output formatter and device interface."><code class="xref py py-mod docutils literal"><span class="pre">formatter</span></code></a> モジュールのドキュメントを参照してください。</p>
+<p>以下は <a class="reference internal" href="sgmllib.html#sgmllib.SGMLParser" title="sgmllib.SGMLParser"><code class="xref py py-class docutils literal"><span class="pre">sgmllib.SGMLParser</span></code></a> で定義されているインタフェースの概要です:</p>
+<ul>
+<li><p class="first">インスタンスにデータを与えるためのインタフェースは <code class="xref py py-meth docutils literal"><span class="pre">feed()</span></code> メソッドで、このメソッドは文字列を引数に取ります。このメソッドに一度に与えるテキストは必要に応じて多くも少なくもできます; というのは <code class="docutils literal"><span class="pre">p.feed(a);</span> <span class="pre">p.feed(b)</span></code> は <code class="docutils literal"><span class="pre">p.feed(a+b)</span></code> と同じ効果を持つからです。与えられたデータが完全な HTML マークアップ文を含む場合、それらの文は即座に処理されます; 不完全なマークアップ構造はバッファに保存されます。全ての未処理データを強制的に処理させるには、 <code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> メソッドを呼び出します。</p>
+<p>例えば、ファイルの全内容を解析するには:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;myfile.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">HTML タグに対して意味付けを定義するためのインタフェースはとても単純です: サブクラスを派生して、 <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> 、あるいは <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> といったメソッドを定義するだけです。パーザはこれらのメソッドを適切なタイミングで呼び出します: <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> や <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> は <code class="docutils literal"><span class="pre">&lt;tag</span> <span class="pre">...&gt;</span></code> の形式の開始タグに遭遇した時に呼び出されます; <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> は <code class="docutils literal"><span class="pre">&lt;tag&gt;</span></code> の形式の終了タグに遭遇した時に呼び出されます。 <code class="docutils literal"><span class="pre">&lt;H1&gt;</span></code> ... <code class="docutils literal"><span class="pre">&lt;/H1&gt;</span></code> のように開始タグが終了タグと対応している必要がある場合、クラス中で <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> が定義されていなければなりません; <code class="docutils literal"><span class="pre">&lt;P&gt;</span></code> のように終了タグが必要ない場合、クラス中では <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> を定義しなければなりません。</p>
+</li>
+</ul>
+<p>このモジュールではパーザクラスと例外を一つづつ定義しています:</p>
+<dl class="class">
+<dt id="htmllib.HTMLParser">
+<em class="property">class </em><code class="descclassname">htmllib.</code><code class="descname">HTMLParser</code><span class="sig-paren">(</span><em>formatter</em><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>基底となる HTML パーザクラスです。XHTML 1.0 仕様 (<a class="reference external" href="http://www.w3.org/TR/xhtml1">http://www.w3.org/TR/xhtml1</a>) 勧告で要求されている全てのエンティティ名をサポートしています。また、全ての HTML 2.0 の要素および HTML 3.0、3.2 の多くの要素のハンドラを定義しています。</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="htmllib.HTMLParseError">
+<em class="property">exception </em><code class="descclassname">htmllib.</code><code class="descname">HTMLParseError</code><a class="headerlink" href="#htmllib.HTMLParseError" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスがパーズ処理中にエラーに遭遇した場合に送出する例外です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="formatter.html#module-formatter" title="formatter: Generic output formatter and device interface."><code class="xref py py-mod docutils literal"><span class="pre">formatter</span></code></a></dt>
+<dd><p class="first last">抽象化された書式イベントの流れを writer オブジェクト上の特定の出力イベントに変換するためのインターフェース。</p>
+</dd>
+<dt>Module <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-mod docutils literal"><span class="pre">HTMLParser</span></code></a></dt>
+<dd><p class="first last">HTML パーザのひとつです。やや低いレベルでしか入力を扱えませんが、XHTML を扱うことができるように設計されています。&#8221;広く知られている HTML (HTML as deployed)&#8221; では使われておらずかつ XHTML では正しくないとされる SGML 構文のいくつかは実装されていません。</p>
+</dd>
+<dt>Module <a class="reference internal" href="#module-htmlentitydefs" title="htmlentitydefs: Definitions of HTML general entities."><code class="xref py py-mod docutils literal"><span class="pre">htmlentitydefs</span></code></a></dt>
+<dd><p class="first last">XHTML 1.0 エンティティに対する置換テキストの定義。</p>
+</dd>
+<dt>Module <a class="reference internal" href="sgmllib.html#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a></dt>
+<dd><p class="first last"><a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> の基底クラス。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="htmlparser-objects">
+<span id="html-parser-objects"></span><h2>19.3.1. HTMLParser オブジェクト<a class="headerlink" href="#htmlparser-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>タグメソッドに加えて、 <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスではタグメソッドで利用するためのいくつかのメソッドとインスタンス変数を提供しています。</p>
+<dl class="attribute">
+<dt id="htmllib.HTMLParser.formatter">
+<code class="descclassname">HTMLParser.</code><code class="descname">formatter</code><a class="headerlink" href="#htmllib.HTMLParser.formatter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パーザに関連付けられているフォーマッタインスタンスです。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="htmllib.HTMLParser.nofill">
+<code class="descclassname">HTMLParser.</code><code class="descname">nofill</code><a class="headerlink" href="#htmllib.HTMLParser.nofill" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ブール値のフラグで、空白文字を縮約したくないときには真、縮約するときには偽にします。一般的には、この値を真にするのは、 <code class="docutils literal"><span class="pre">&lt;PRE&gt;</span></code> 要素の中のテキストのように、文字列データが &#8220;書式化済みの (preformatted)&#8221; 場合だけです。標準の値は偽です。この値は <code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code> および <a class="reference internal" href="#htmllib.HTMLParser.save_end" title="htmllib.HTMLParser.save_end"><code class="xref py py-meth docutils literal"><span class="pre">save_end()</span></code></a> の操作に影響します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmllib.HTMLParser.anchor_bgn">
+<code class="descclassname">HTMLParser.</code><code class="descname">anchor_bgn</code><span class="sig-paren">(</span><em>href</em>, <em>name</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser.anchor_bgn" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドはアンカー領域の先頭で呼び出されます。引数は <code class="docutils literal"><span class="pre">&lt;A&gt;</span></code> タグの属性で同じ名前を持つものに対応します。標準の実装では、ドキュメント内のハイパーリンク (<code class="docutils literal"><span class="pre">&lt;A&gt;</span></code> タグの <code class="docutils literal"><span class="pre">HREF</span></code> 属性) を列挙したリストを維持しています。ハイパーリンクのリストはデータ属性 <code class="xref py py-attr docutils literal"><span class="pre">anchorlist</span></code> で手に入れることができます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmllib.HTMLParser.anchor_end">
+<code class="descclassname">HTMLParser.</code><code class="descname">anchor_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser.anchor_end" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドはアンカー領域の末尾で呼び出されます。標準の実装では、テキストの脚注マーカを追加します。マーカは <a class="reference internal" href="#htmllib.HTMLParser.anchor_bgn" title="htmllib.HTMLParser.anchor_bgn"><code class="xref py py-meth docutils literal"><span class="pre">anchor_bgn()</span></code></a> で作られたハイパーリンクリストのインデクス値です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmllib.HTMLParser.handle_image">
+<code class="descclassname">HTMLParser.</code><code class="descname">handle_image</code><span class="sig-paren">(</span><em>source</em>, <em>alt</em><span class="optional">[</span>, <em>ismap</em><span class="optional">[</span>, <em>align</em><span class="optional">[</span>, <em>width</em><span class="optional">[</span>, <em>height</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser.handle_image" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは画像を扱うために呼び出されます。標準の実装では、単に <code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code> に <em>alt</em> の値を渡すだけです。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmllib.HTMLParser.save_bgn">
+<code class="descclassname">HTMLParser.</code><code class="descname">save_bgn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser.save_bgn" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列データをフォーマッタオブジェクトに送らずにバッファに保存する操作を開始します。保存されたデータは <a class="reference internal" href="#htmllib.HTMLParser.save_end" title="htmllib.HTMLParser.save_end"><code class="xref py py-meth docutils literal"><span class="pre">save_end()</span></code></a> で取得してください。 <a class="reference internal" href="#htmllib.HTMLParser.save_bgn" title="htmllib.HTMLParser.save_bgn"><code class="xref py py-meth docutils literal"><span class="pre">save_bgn()</span></code></a> / <a class="reference internal" href="#htmllib.HTMLParser.save_end" title="htmllib.HTMLParser.save_end"><code class="xref py py-meth docutils literal"><span class="pre">save_end()</span></code></a> のペアを入れ子構造にすることはできません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmllib.HTMLParser.save_end">
+<code class="descclassname">HTMLParser.</code><code class="descname">save_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#htmllib.HTMLParser.save_end" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列データのバッファリングを終了し、以前 <a class="reference internal" href="#htmllib.HTMLParser.save_bgn" title="htmllib.HTMLParser.save_bgn"><code class="xref py py-meth docutils literal"><span class="pre">save_bgn()</span></code></a> を呼び出した時点から保存されている全てのデータを返します。 <a class="reference internal" href="#htmllib.HTMLParser.nofill" title="htmllib.HTMLParser.nofill"><code class="xref py py-attr docutils literal"><span class="pre">nofill</span></code></a> フラグが偽の場合、空白文字は全てスペース文字一文字に置き換えられます。予め <a class="reference internal" href="#htmllib.HTMLParser.save_bgn" title="htmllib.HTMLParser.save_bgn"><code class="xref py py-meth docutils literal"><span class="pre">save_bgn()</span></code></a> を呼ばないでこのメソッドを呼び出すと <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外が送出されます。</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-htmlentitydefs">
+<span id="htmlentitydefs-definitions-of-html-general-entities"></span><h1>19.4. <a class="reference internal" href="#module-htmlentitydefs" title="htmlentitydefs: Definitions of HTML general entities."><code class="xref py py-mod docutils literal"><span class="pre">htmlentitydefs</span></code></a> &#8212; HTML 一般エンティティの定義<a class="headerlink" href="#module-htmlentitydefs" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">Python 3 で <a class="reference internal" href="#module-htmlentitydefs" title="htmlentitydefs: Definitions of HTML general entities."><code class="xref py py-mod docutils literal"><span class="pre">htmlentitydefs</span></code></a> モジュールは <code class="xref py py-mod docutils literal"><span class="pre">html.entities</span></code> と改名されました。ソースを 3 用に変換する際には <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的に import を直してくれます。</p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/htmlentitydefs.py">Lib/htmlentitydefs.py</a></p>
+<hr class="docutils" />
+<p>このモジュールでは <code class="docutils literal"><span class="pre">name2codepoint</span></code> 、 <code class="docutils literal"><span class="pre">codepoint2name</span></code> 、 <code class="docutils literal"><span class="pre">entitydefs</span></code> の三つの辞書を定義しています。 <code class="docutils literal"><span class="pre">entitydefs</span></code> は <a class="reference internal" href="#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> モジュールで <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスの <a class="reference internal" href="#htmlentitydefs.entitydefs" title="htmlentitydefs.entitydefs"><code class="xref py py-attr docutils literal"><span class="pre">entitydefs</span></code></a> メンバを定義するために使われます。このモジュールでは XHTML 1.0 で定義された全てのエンティティを提供しており、 Latin-1 キャラクタセット (ISO-8859-1)の簡単なテキスト置換を行う事ができます。</p>
+<dl class="data">
+<dt id="htmlentitydefs.entitydefs">
+<code class="descclassname">htmlentitydefs.</code><code class="descname">entitydefs</code><a class="headerlink" href="#htmlentitydefs.entitydefs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>各 XHTML 1.0 実体定義と ISO Latin-1 における置換テキストとを対応付ける辞書です。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="htmlentitydefs.name2codepoint">
+<code class="descclassname">htmlentitydefs.</code><code class="descname">name2codepoint</code><a class="headerlink" href="#htmlentitydefs.name2codepoint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>HTML 実体名と Unicode コードポイントとを対応付ける辞書です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="htmlentitydefs.codepoint2name">
+<code class="descclassname">htmlentitydefs.</code><code class="descname">codepoint2name</code><a class="headerlink" href="#htmlentitydefs.codepoint2name" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode コードポイントと HTML 実体名とを対応付ける辞書です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">19.3. <code class="docutils literal"><span class="pre">htmllib</span></code> &#8212; HTML 文書の解析器</a><ul>
+<li><a class="reference internal" href="#htmlparser-objects">19.3.1. HTMLParser オブジェクト</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-htmlentitydefs">19.4. <code class="docutils literal"><span class="pre">htmlentitydefs</span></code> &#8212; HTML 一般エンティティの定義</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="sgmllib.html"
+                        title="前の章へ">19.2. <code class="docutils literal"><span class="pre">sgmllib</span></code> &#8212; 単純な SGML パーザ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="xml.html"
+                        title="次の章へ">19.5. XMLを扱うモジュール群</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/htmllib.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.html" title="19.5. XMLを扱うモジュール群"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="sgmllib.html" title="19.2. sgmllib — 単純な SGML パーザ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" >19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

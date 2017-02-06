@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19.10. xml.dom.pulldom — 部分的な DOM ツリー構築のサポート &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="19. 構造化マークアップツール" href="markup.html" />
+    <link rel="next" title="19.11. xml.sax — SAX2 パーサのサポート" href="xml.sax.html" />
+    <link rel="prev" title="19.9. xml.dom.minidom — 最小限の DOM の実装" href="xml.dom.minidom.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.html" title="19.11. xml.sax — SAX2 パーサのサポート"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="xml.dom.minidom.html" title="19.9. xml.dom.minidom — 最小限の DOM の実装"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" accesskey="U">19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-xml.dom.pulldom">
+<span id="xml-dom-pulldom-support-for-building-partial-dom-trees"></span><h1>19.10. <a class="reference internal" href="#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a> &#8212; 部分的な DOM ツリー構築のサポート<a class="headerlink" href="#module-xml.dom.pulldom" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+<p><strong>Source code:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/xml/dom/pulldom.py">Lib/xml/dom/pulldom.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a> では、SAX イベントから、文書の文書オブジェクトモデル表現の選択された一部分だけを構築できるようにします。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last"><a class="reference internal" href="#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a> モジュールは悪意を持って構築されたデータに対して安全ではありません。信頼できないデータや認証されていないデータを解析する必要がある場合は、 <a class="reference internal" href="xml.html#xml-vulnerabilities"><span class="std std-ref">XML の脆弱性</span></a> を参照してください。</p>
+</div>
+<dl class="class">
+<dt id="xml.dom.pulldom.PullDOM">
+<em class="property">class </em><code class="descclassname">xml.dom.pulldom.</code><code class="descname">PullDOM</code><span class="sig-paren">(</span><span class="optional">[</span><em>documentFactory</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.PullDOM" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="xml.sax.handler.html#xml.sax.handler.ContentHandler" title="xml.sax.handler.ContentHandler"><code class="xref py py-class docutils literal"><span class="pre">xml.sax.handler.ContentHandler</span></code></a> 実装です ...</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xml.dom.pulldom.DOMEventStream">
+<em class="property">class </em><code class="descclassname">xml.dom.pulldom.</code><code class="descname">DOMEventStream</code><span class="sig-paren">(</span><em>stream</em>, <em>parser</em>, <em>bufsize</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.DOMEventStream" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xml.dom.pulldom.SAX2DOM">
+<em class="property">class </em><code class="descclassname">xml.dom.pulldom.</code><code class="descname">SAX2DOM</code><span class="sig-paren">(</span><span class="optional">[</span><em>documentFactory</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.SAX2DOM" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="xml.sax.handler.html#xml.sax.handler.ContentHandler" title="xml.sax.handler.ContentHandler"><code class="xref py py-class docutils literal"><span class="pre">xml.sax.handler.ContentHandler</span></code></a> 実装です ...</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xml.dom.pulldom.parse">
+<code class="descclassname">xml.dom.pulldom.</code><code class="descname">parse</code><span class="sig-paren">(</span><em>stream_or_string</em><span class="optional">[</span>, <em>parser</em><span class="optional">[</span>, <em>bufsize</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.parse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xml.dom.pulldom.parseString">
+<code class="descclassname">xml.dom.pulldom.</code><code class="descname">parseString</code><span class="sig-paren">(</span><em>string</em><span class="optional">[</span>, <em>parser</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.parseString" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.dom.pulldom.default_bufsize">
+<code class="descclassname">xml.dom.pulldom.</code><code class="descname">default_bufsize</code><a class="headerlink" href="#xml.dom.pulldom.default_bufsize" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#xml.dom.pulldom.parse" title="xml.dom.pulldom.parse"><code class="xref py py-func docutils literal"><span class="pre">parse()</span></code></a> の <em>bufsize</em> パラメタのデフォルト値です。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.1 で変更: </span>この変数の値は <a class="reference internal" href="#xml.dom.pulldom.parse" title="xml.dom.pulldom.parse"><code class="xref py py-func docutils literal"><span class="pre">parse()</span></code></a> を呼び出す前に変更することができ、その場合新たな値が効果を持つようになります.</p>
+</div>
+</dd></dl>
+
+<div class="section" id="domeventstream-objects">
+<span id="id1"></span><h2>19.10.1. DOMEventStream オブジェクト<a class="headerlink" href="#domeventstream-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="method">
+<dt id="xml.dom.pulldom.DOMEventStream.getEvent">
+<code class="descclassname">DOMEventStream.</code><code class="descname">getEvent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.DOMEventStream.getEvent" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.dom.pulldom.DOMEventStream.expandNode">
+<code class="descclassname">DOMEventStream.</code><code class="descname">expandNode</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.DOMEventStream.expandNode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.dom.pulldom.DOMEventStream.reset">
+<code class="descclassname">DOMEventStream.</code><code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.dom.pulldom.DOMEventStream.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>...</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">19.10. <code class="docutils literal"><span class="pre">xml.dom.pulldom</span></code> &#8212; 部分的な DOM ツリー構築のサポート</a><ul>
+<li><a class="reference internal" href="#domeventstream-objects">19.10.1. DOMEventStream オブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="xml.dom.minidom.html"
+                        title="前の章へ">19.9. <code class="docutils literal"><span class="pre">xml.dom.minidom</span></code> &#8212; 最小限の DOM の実装</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="xml.sax.html"
+                        title="次の章へ">19.11. <code class="docutils literal"><span class="pre">xml.sax</span></code> &#8212; SAX2 パーサのサポート</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/xml.dom.pulldom.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.html" title="19.11. xml.sax — SAX2 パーサのサポート"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="xml.dom.minidom.html" title="19.9. xml.dom.minidom — 最小限の DOM の実装"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" >19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

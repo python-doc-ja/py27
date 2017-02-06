@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.5. mhlib — MH のメールボックスへのアクセス機構 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="18. インターネット上のデータの操作" href="netdata.html" />
+    <link rel="next" title="18.6. mimetools — MIME メッセージを解析するためのツール" href="mimetools.html" />
+    <link rel="prev" title="18.4. mailbox — 様々な形式のメールボックス操作" href="mailbox.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mimetools.html" title="18.6. mimetools — MIME メッセージを解析するためのツール"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="mailbox.html" title="18.4. mailbox — 様々な形式のメールボックス操作"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" accesskey="U">18. インターネット上のデータの操作</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-mhlib">
+<span id="mhlib-access-to-mh-mailboxes"></span><h1>18.5. <a class="reference internal" href="#module-mhlib" title="mhlib: Manipulate MH mailboxes from Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">mhlib</span></code></a> &#8212; MH のメールボックスへのアクセス機構<a class="headerlink" href="#module-mhlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-mhlib" title="mhlib: Manipulate MH mailboxes from Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">mhlib</span></code></a> モジュールは Python 3 で削除されました。代わりに <a class="reference internal" href="mailbox.html#module-mailbox" title="mailbox: Manipulate mailboxes in various formats"><code class="xref py py-mod docutils literal"><span class="pre">mailbox</span></code></a> モジュールを使ってください。</p>
+</div>
+<p><a class="reference internal" href="#module-mhlib" title="mhlib: Manipulate MH mailboxes from Python. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">mhlib</span></code></a> モジュールは MH フォルダおよびその内容に対する Python インタフェースを提供します。</p>
+<p>このモジュールには、あるフォルダの集まりを表現する <a class="reference internal" href="#mhlib.MH" title="mhlib.MH"><code class="xref py py-class docutils literal"><span class="pre">MH</span></code></a> 、単一のフォルダを表現する <a class="reference internal" href="#mhlib.Folder" title="mhlib.Folder"><code class="xref py py-class docutils literal"><span class="pre">Folder</span></code></a> 、単一のメッセージを表現する <a class="reference internal" href="#mhlib.Message" title="mhlib.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> 、の 3 つのクラスが入っています。</p>
+<dl class="class">
+<dt id="mhlib.MH">
+<em class="property">class </em><code class="descclassname">mhlib.</code><code class="descname">MH</code><span class="sig-paren">(</span><span class="optional">[</span><em>path</em><span class="optional">[</span>, <em>profile</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#mhlib.MH" title="mhlib.MH"><code class="xref py py-class docutils literal"><span class="pre">MH</span></code></a> は MH フォルダの集まりを表現します。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mhlib.Folder">
+<em class="property">class </em><code class="descclassname">mhlib.</code><code class="descname">Folder</code><span class="sig-paren">(</span><em>mh</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#mhlib.Folder" title="mhlib.Folder"><code class="xref py py-class docutils literal"><span class="pre">Folder</span></code></a> クラスは単一のフォルダとフォルダ内のメッセージ群を表現します。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mhlib.Message">
+<em class="property">class </em><code class="descclassname">mhlib.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>folder</em>, <em>number</em><span class="optional">[</span>, <em>name</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Message" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#mhlib.Message" title="mhlib.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> オブジェクトはフォルダ内の個々のメッセージを表現します。メッセージクラスは <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> から派生しています。</p>
+</dd></dl>
+
+<div class="section" id="mh-objects">
+<span id="id1"></span><h2>18.5.1. MH オブジェクト<a class="headerlink" href="#mh-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#mhlib.MH" title="mhlib.MH"><code class="xref py py-class docutils literal"><span class="pre">MH</span></code></a> インスタンスは以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="mhlib.MH.error">
+<code class="descclassname">MH.</code><code class="descname">error</code><span class="sig-paren">(</span><em>format</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エラーメッセージを出力します &#8211; 上書きすることができます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.getprofile">
+<code class="descclassname">MH.</code><code class="descname">getprofile</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.getprofile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プロファイルエントリ (設定されていなければ <code class="docutils literal"><span class="pre">None</span></code>) を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.getpath">
+<code class="descclassname">MH.</code><code class="descname">getpath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.getpath" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メールボックスのパス名を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.getcontext">
+<code class="descclassname">MH.</code><code class="descname">getcontext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.getcontext" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のフォルダ名を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.setcontext">
+<code class="descclassname">MH.</code><code class="descname">setcontext</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.setcontext" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のフォルダ名を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.listfolders">
+<code class="descclassname">MH.</code><code class="descname">listfolders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.listfolders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>トップレベルフォルダのリストを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.listallfolders">
+<code class="descclassname">MH.</code><code class="descname">listallfolders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.listallfolders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>全てのフォルダのリストを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.listsubfolders">
+<code class="descclassname">MH.</code><code class="descname">listsubfolders</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.listsubfolders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定したフォルダの直下にあるサブフォルダのリストを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.listallsubfolders">
+<code class="descclassname">MH.</code><code class="descname">listallsubfolders</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.listallsubfolders" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定したフォルダの下にある全てのサブフォルダのリストを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.makefolder">
+<code class="descclassname">MH.</code><code class="descname">makefolder</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.makefolder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しいフォルダを生成します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.deletefolder">
+<code class="descclassname">MH.</code><code class="descname">deletefolder</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.deletefolder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダを削除します &#8211; サブフォルダが入っていてはいけません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.MH.openfolder">
+<code class="descclassname">MH.</code><code class="descname">openfolder</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.MH.openfolder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな開かれたフォルダオブジェクトを返します。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="folder-objects">
+<span id="mh-folder-objects"></span><h2>18.5.2. Folder オブジェクト<a class="headerlink" href="#folder-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#mhlib.Folder" title="mhlib.Folder"><code class="xref py py-class docutils literal"><span class="pre">Folder</span></code></a> インスタンスは開かれたフォルダを表現し、以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="mhlib.Folder.error">
+<code class="descclassname">Folder.</code><code class="descname">error</code><span class="sig-paren">(</span><em>format</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エラーメッセージを出力します &#8211; 上書きすることができます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getfullname">
+<code class="descclassname">Folder.</code><code class="descname">getfullname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getfullname" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダの完全なパス名を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getsequencesfilename">
+<code class="descclassname">Folder.</code><code class="descname">getsequencesfilename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getsequencesfilename" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダ内のシーケンスファイルの完全なパス名を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getmessagefilename">
+<code class="descclassname">Folder.</code><code class="descname">getmessagefilename</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getmessagefilename" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダ内のメッセージ <em>n</em> の完全なパス名を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.listmessages">
+<code class="descclassname">Folder.</code><code class="descname">listmessages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.listmessages" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダ内のメッセージの (番号の) リストを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getcurrent">
+<code class="descclassname">Folder.</code><code class="descname">getcurrent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getcurrent" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のメッセージ番号を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.setcurrent">
+<code class="descclassname">Folder.</code><code class="descname">setcurrent</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.setcurrent" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のメッセージ番号を <em>n</em> に設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.parsesequence">
+<code class="descclassname">Folder.</code><code class="descname">parsesequence</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.parsesequence" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>msgs 文を解釈して、メッセージのリストにします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getlast">
+<code class="descclassname">Folder.</code><code class="descname">getlast</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getlast" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最新のメッセージを取得します。メッセージがフォルダにない場合には <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.setlast">
+<code class="descclassname">Folder.</code><code class="descname">setlast</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.setlast" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最新のメッセージを設定します (内部使用のみ)。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.getsequences">
+<code class="descclassname">Folder.</code><code class="descname">getsequences</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.getsequences" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダ内のシーケンスからなる辞書を返します。シーケンス名がキーとして使われ、値はシーケンスに含まれるメッセージ番号のリストになります。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.putsequences">
+<code class="descclassname">Folder.</code><code class="descname">putsequences</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.putsequences" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォルダ内のシーケンスからなる辞書 name: list を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.removemessages">
+<code class="descclassname">Folder.</code><code class="descname">removemessages</code><span class="sig-paren">(</span><em>list</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.removemessages" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リスト中のメッセージをフォルダから削除します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.refilemessages">
+<code class="descclassname">Folder.</code><code class="descname">refilemessages</code><span class="sig-paren">(</span><em>list</em>, <em>tofolder</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.refilemessages" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リスト中のメッセージを他のフォルダに移動します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.movemessage">
+<code class="descclassname">Folder.</code><code class="descname">movemessage</code><span class="sig-paren">(</span><em>n</em>, <em>tofolder</em>, <em>ton</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.movemessage" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>一つのメッセージを他のフォルダの指定先に移動します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mhlib.Folder.copymessage">
+<code class="descclassname">Folder.</code><code class="descname">copymessage</code><span class="sig-paren">(</span><em>n</em>, <em>tofolder</em>, <em>ton</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Folder.copymessage" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>一つのメッセージを他のフォルダの指定先にコピーします。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="message-objects">
+<span id="mh-message-objects"></span><h2>18.5.3. Message オブジェクト<a class="headerlink" href="#message-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#mhlib.Message" title="mhlib.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> クラスは <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> のメソッドに加え、一つメソッドを持っています:</p>
+<dl class="method">
+<dt id="mhlib.Message.openmessage">
+<code class="descclassname">Message.</code><code class="descname">openmessage</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#mhlib.Message.openmessage" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新たな開かれたメッセージオブジェクトを返します (ファイル記述子を一つ消費します)。</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">18.5. <code class="docutils literal"><span class="pre">mhlib</span></code> &#8212; MH のメールボックスへのアクセス機構</a><ul>
+<li><a class="reference internal" href="#mh-objects">18.5.1. MH オブジェクト</a></li>
+<li><a class="reference internal" href="#folder-objects">18.5.2. Folder オブジェクト</a></li>
+<li><a class="reference internal" href="#message-objects">18.5.3. Message オブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="mailbox.html"
+                        title="前の章へ">18.4. <code class="docutils literal"><span class="pre">mailbox</span></code> &#8212; 様々な形式のメールボックス操作</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mimetools.html"
+                        title="次の章へ">18.6. <code class="docutils literal"><span class="pre">mimetools</span></code> &#8212; MIME メッセージを解析するためのツール</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/mhlib.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="mimetools.html" title="18.6. mimetools — MIME メッセージを解析するためのツール"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="mailbox.html" title="18.4. mailbox — 様々な形式のメールボックス操作"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

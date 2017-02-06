@@ -1,0 +1,1451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.8. codecs — codec レジストリと基底クラス &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="7. 文字列処理" href="strings.html" />
+    <link rel="next" title="7.9. unicodedata — Unicode データベース" href="unicodedata.html" />
+    <link rel="prev" title="7.7. textwrap — テキストの折り返しと詰め込み" href="textwrap.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="unicodedata.html" title="7.9. unicodedata — Unicode データベース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="7.7. textwrap — テキストの折り返しと詰め込み"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" accesskey="U">7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-codecs">
+<span id="codecs-codec-registry-and-base-classes"></span><h1>7.8. <a class="reference internal" href="#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> &#8212; codec レジストリと基底クラス<a class="headerlink" href="#module-codecs" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">このモジュールでは、内部的な Python codec レジストリに対するアクセス手段を提供しています。codec レジストリは、標準の Python codec(エンコーダとデコーダ)の基底クラスを定義し、 codec およびエラー処理の検索手順を管理しています。</p>
+<p><a class="reference internal" href="#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> では以下の関数を定義しています:</p>
+<dl class="function">
+<dt id="codecs.encode">
+<code class="descclassname">codecs.</code><code class="descname">encode</code><span class="sig-paren">(</span><em>obj</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>encoding</em> に記載された codec を使用して <em>obj</em> をエンコードします。デフォルトのエンコーディングは <code class="docutils literal"><span class="pre">'ascii'</span></code> です。</p>
+<p>希望のエラー処理スキームを <em>errors</em> に設定することができます。デフォルトのエラーハンドラは <code class="docutils literal"><span class="pre">'strict'</span></code> です。これはエンコードエラーは <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (もしくは <a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> のような、より codec に固有のサブクラス) を送出することを意味します。codec エラー処理についてのより詳しい情報は <a class="reference internal" href="#codec-base-classes"><span class="std std-ref">Codec 基底クラス</span></a> を参照してください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.decode">
+<code class="descclassname">codecs.</code><code class="descname">decode</code><span class="sig-paren">(</span><em>obj</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.decode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>encoding</em> に記載された codec を使用して <em>obj</em> をデコードします。デフォルトのエンコーディングは <code class="docutils literal"><span class="pre">'ascii'</span></code> です。</p>
+<p>希望のエラー処理スキームを <em>errors</em> に設定することができます。デフォルトのエラーハンドラは <code class="docutils literal"><span class="pre">'strict'</span></code> です。これはデコードエラーは <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (もしくは <a class="reference internal" href="exceptions.html#exceptions.UnicodeDecodeError" title="exceptions.UnicodeDecodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeDecodeError</span></code></a> のような、より codec に固有のサブクラス) を送出することを意味します。codec エラー処理についてのより詳しい情報は <a class="reference internal" href="#codec-base-classes"><span class="std std-ref">Codec 基底クラス</span></a> を参照してください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.register">
+<code class="descclassname">codecs.</code><code class="descname">register</code><span class="sig-paren">(</span><em>search_function</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.register" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>codec 検索関数を登録します。検索関数は第 1 引数にアルファベットの小文字から成るエンコーディング名を取り、以下の属性を持つ <code class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></code> オブジェクトを返します:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">name</span></code> エンコーディング名;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">encode</span></code> 内部状態を持たないエンコード関数;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">decode</span></code> 内部状態を持たないデコード関数;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">incrementalencoder</span></code> 漸増的エンコーダクラスまたはファクトリ関数;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">incrementaldecoder</span></code> 漸増的デコーダクラスまたはファクトリ関数;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">streamwriter</span></code> ストリームライタクラスまたはファクトリ関数;</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">streamreader</span></code> ストリームリーダクラスまたはファクトリ関数。</p>
+</li>
+</ul>
+<p>種々の関数やクラスが以下の引数をとります:</p>
+<p><em>encode</em> と <em>decode</em>: これらの引数は、 Codec インスタンスの <a class="reference internal" href="#codecs.Codec.encode" title="codecs.Codec.encode"><code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code></a> と <a class="reference internal" href="#codecs.Codec.decode" title="codecs.Codec.decode"><code class="xref py py-meth docutils literal"><span class="pre">decode()</span></code></a> と同じインタフェースを持つ関数、またはメソッドでなければなりません (<a class="reference internal" href="#codec-objects"><span class="std std-ref">Codec Interface</span></a> 参照) 。これらの関数・メソッドは内部状態を持たずに動作する (stateless mode) と想定されています。</p>
+<p><em>incrementalencoder</em> と <em>incrementaldecoder</em>: これらは以下のインタフェースを持つファクトリ関数でなければなりません:</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">factory(errors='strict')</span></code></div></blockquote>
+<p>ファクトリ関数は、それぞれ基底クラスの <a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> や <a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> が定義しているインタフェースを提供するオブジェクトを返さなければなりません。漸増的 codecs は内部状態を維持できます。</p>
+<p><em>streamreader</em> と <em>streamwriter</em>: これらの引数は、次のようなインタフェースを持つファクトリ関数でなければなりません:</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">factory(stream,</span> <span class="pre">errors='strict')</span></code></div></blockquote>
+<p>ファクトリ関数は、それぞれ基底クラスの <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> や <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> が定義しているインタフェースを提供するオブジェクトを返さねばなりません。ストリーム codecs は内部状態を維持できます。</p>
+<p><em>errors</em> が取り得る値は</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">'strict'</span></code> エンコーディングエラーの際に例外を発生</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'replace'</span></code> 奇形データを <code class="docutils literal"><span class="pre">'?'</span></code> や <code class="docutils literal"><span class="pre">'\ufffd'</span></code> 等の適切な文字で置換</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'ignore'</span></code> 奇形データを無視し何も通知せずに処理を継続</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'xmlcharrefreplace'</span></code> 適切な XML 文字参照で置換 (エンコーディングのみ))</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'backslashreplace'</span></code> (バックスラッシュつきのエスケープシーケンス (エンコーディングのみ))</p>
+</li>
+</ul>
+<p>と <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-func docutils literal"><span class="pre">register_error()</span></code></a> で定義されたその他のエラー処理名になります。</p>
+<p>検索関数は、与えられたエンコーディングを見つけられなかった場合、 <code class="docutils literal"><span class="pre">None</span></code> を返さなければなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.lookup">
+<code class="descclassname">codecs.</code><code class="descname">lookup</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.lookup" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Python codec レジストリから codec 情報を探し、上で定義したような <code class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></code> オブジェクトを返します。</p>
+<p>エンコーディングの検索は、まずレジストリのキャッシュから行います。見つからなければ、登録されている検索関数のリストから探します。 <code class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></code> オブジェクトが一つも見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。見つかったら、その <code class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></code> オブジェクトはキャッシュに保存され、呼び出し側に返されます。</p>
+</dd></dl>
+
+<p>さまざまな codec へのアクセスを簡便化するために、このモジュールは以下のような関数を提供しています。これらの関数は、 codec の検索に <a class="reference internal" href="#codecs.lookup" title="codecs.lookup"><code class="xref py py-func docutils literal"><span class="pre">lookup()</span></code></a> を使います:</p>
+<dl class="function">
+<dt id="codecs.getencoder">
+<code class="descclassname">codecs.</code><code class="descname">getencoder</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getencoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、エンコーダ関数を返します。</p>
+<p>エンコーディングが見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.getdecoder">
+<code class="descclassname">codecs.</code><code class="descname">getdecoder</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getdecoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、デコーダ関数を返します。</p>
+<p>エンコーディングが見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.getincrementalencoder">
+<code class="descclassname">codecs.</code><code class="descname">getincrementalencoder</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getincrementalencoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、漸増的エンコーダクラスまたはファクトリ関数を返します。</p>
+<p>エンコーディングが見つからないか、 codec が漸増的エンコーダをサポートしなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.getincrementaldecoder">
+<code class="descclassname">codecs.</code><code class="descname">getincrementaldecoder</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getincrementaldecoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、漸増的デコーダクラスまたはファクトリ関数を返します。</p>
+<p>エンコーディングが見つからないか、 codec が漸増的デコーダをサポートしなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.getreader">
+<code class="descclassname">codecs.</code><code class="descname">getreader</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getreader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、StreamReader クラスまたはファクトリ関数を返します。</p>
+<p>エンコーディングが見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.getwriter">
+<code class="descclassname">codecs.</code><code class="descname">getwriter</code><span class="sig-paren">(</span><em>encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.getwriter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたエンコーディングに対する codec を検索し、StreamWriter クラスまたはファクトリ関数を返します。</p>
+<p>エンコーディングが見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.register_error">
+<code class="descclassname">codecs.</code><code class="descname">register_error</code><span class="sig-paren">(</span><em>name</em>, <em>error_handler</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.register_error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エラー処理関数 <em>error_handler</em> を名前 <em>name</em> で登録します。エンコード中およびデコード中にエラーが送出された場合、 <em>errors</em> パラメタに <em>name</em> を指定していれば <em>error_handler</em> を呼び出すようになります。</p>
+<p>エンコード時の <em>error_handler</em> はエラーの場所に関する情報の入った <a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> インスタンスとともに呼び出されます。エラー処理関数はこの例外を送出するか、別の例外を送出するか、または入力のエンコードができなかった部分の代替文字列とエンコードを再開する場所の指定が入ったタプルを返すかしなければなりません。最後の場合、エンコーダは代替文字列をエンコードし、元の入力中の指定位置からエンコードを再開します。位置を負の値にすると、入力文字列の末端からの相対位置として扱われます。境界の外側にある位置を返した場合には <a class="reference internal" href="exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a> が送出されます。</p>
+<p>デコードと翻訳は同様に働きますが、エラー処理関数に渡されるのが <a class="reference internal" href="exceptions.html#exceptions.UnicodeDecodeError" title="exceptions.UnicodeDecodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeDecodeError</span></code></a> か <a class="reference internal" href="exceptions.html#exceptions.UnicodeTranslateError" title="exceptions.UnicodeTranslateError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeTranslateError</span></code></a> である点と、エラー処理関数の置換した内容が直接出力になる点が異なります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.lookup_error">
+<code class="descclassname">codecs.</code><code class="descname">lookup_error</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.lookup_error" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前 <em>name</em> で登録済みのエラー処理関数を返します。</p>
+<p>エラー処理関数が見つからなければ <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.strict_errors">
+<code class="descclassname">codecs.</code><code class="descname">strict_errors</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.strict_errors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">strict</span></code> エラー処理の実装です: エンコード又はデコードエラーは各々 <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を送出します.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.replace_errors">
+<code class="descclassname">codecs.</code><code class="descname">replace_errors</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.replace_errors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">replace</span></code> エラー処理の実装です: 奇形データは適切な文字列に置換されます。バイト文字列では <code class="docutils literal"><span class="pre">'?'</span></code> 、 Unicode 文字列では <code class="docutils literal"><span class="pre">'\ufffd'</span></code> に置換されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.ignore_errors">
+<code class="descclassname">codecs.</code><code class="descname">ignore_errors</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.ignore_errors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">ignore</span></code> エラー処理の実装です: 奇形データは無視されエンコード又はデコードは何も通知せず、継続されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.xmlcharrefreplace_errors">
+<code class="descclassname">codecs.</code><code class="descname">xmlcharrefreplace_errors</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.xmlcharrefreplace_errors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">xmlcharrefreplace</span></code> エラー処理の実装です(エンコードのみ): エンコードできなかった文字は適切な XML 文字参照に置き換えます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.backslashreplace_errors">
+<code class="descclassname">codecs.</code><code class="descname">backslashreplace_errors</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.backslashreplace_errors" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">backslashreplace</span></code> エラー処理の実装です (エンコードのみ): エンコードできなかった文字はバックスラッシュつきのエスケープシーケンスに置き換えられます。</p>
+</dd></dl>
+
+<p>エンコードされたファイルやストリームの処理を簡便化するため、このモジュールは次のようなユーティリティ関数を定義しています:</p>
+<dl class="function">
+<dt id="codecs.open">
+<code class="descclassname">codecs.</code><code class="descname">open</code><span class="sig-paren">(</span><em>filename</em>, <em>mode</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">[</span>, <em>buffering</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンコードされたファイルを <em>mode</em> を使って開き、透過的なエンコード/デコードを提供するラップされたバージョンを返します。デフォルトのファイルモードは <code class="docutils literal"><span class="pre">'r'</span></code> 、つまり、読み出しモードでファイルを開きます。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">ラップされたバージョンは、該当する codec が定義している形式のオブジェクトだけを受け付けます。多くの組み込み codec では Unicode オブジェクトです。関数の戻り値も codec に依存し、通常は Unicode オブジェクトです。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">非バイナリモードが指定されても、ファイルは常にバイナリモードで開かれます。これは、 8-bit の値を使うエンコーディングでデータが消失するのを防ぐためです。つまり、読み出しや書き込み時に、 <code class="docutils literal"><span class="pre">`'\n'</span></code> の自動変換はされないということです。</p>
+</div>
+<p><em>encoding</em> にはファイルのエンコーディングを指定します。</p>
+<p>エラーハンドリングのために <em>errors</em> を渡すことができます。これはデフォルトでは <code class="docutils literal"><span class="pre">'strict'</span></code> で、エンコード時にエラーがあれば <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。</p>
+<p><em>buffering</em> は組み込み関数 <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> の場合と同じ意味を持ちます。デフォルトでは行バッファリングです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.EncodedFile">
+<code class="descclassname">codecs.</code><code class="descname">EncodedFile</code><span class="sig-paren">(</span><em>file</em>, <em>input</em><span class="optional">[</span>, <em>output</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.EncodedFile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ラップしたファイルオブジェクトを返します。このオブジェクトは透過なエンコード変換を提供します。</p>
+<p>ラップされたファイルに書かれた文字列は、 <em>input</em> に指定したエンコーディングに従って変換され、 <em>output</em> に指定したエンコーディングを使って string 型に変換され、元のファイルに書き込まれます。中間エンコーディングは指定された codecs に依存しますが、普通は Unicode です。</p>
+<p><em>output</em> が与えられなければ、<em>input</em> がデフォルトになります。</p>
+<p>エラーハンドリングのために <em>errors</em> を渡すことができます。これはデフォルトでは <code class="docutils literal"><span class="pre">'strict'</span></code> で、エンコード時にエラーがあれば <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.iterencode">
+<code class="descclassname">codecs.</code><code class="descname">iterencode</code><span class="sig-paren">(</span><em>iterable</em>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.iterencode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>漸増的エンコーダを使って、 <em>iterable</em> から供給される入力を反復的にエンコードします。この関数は <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a> です。 <em>errors</em> は (そして他のキーワード引数も同様に) 漸増的エンコーダにそのまま引き渡されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="codecs.iterdecode">
+<code class="descclassname">codecs.</code><code class="descname">iterdecode</code><span class="sig-paren">(</span><em>iterable</em>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.iterdecode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>漸増的デコーダを使って、 <em>iterable</em> から供給される入力を反復的にデコードします。この関数は <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a> です。 <em>errors</em> は (そして他のキーワード引数も同様に) 漸増的デコーダにそのまま引き渡されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p>このモジュールは以下のような定数も定義しています。プラットフォーム依存なファイルを読み書きするのに役立ちます:</p>
+<dl class="data">
+<dt id="codecs.BOM">
+<code class="descclassname">codecs.</code><code class="descname">BOM</code><a class="headerlink" href="#codecs.BOM" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_BE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_BE</code><a class="headerlink" href="#codecs.BOM_BE" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_LE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_LE</code><a class="headerlink" href="#codecs.BOM_LE" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF8">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF8</code><a class="headerlink" href="#codecs.BOM_UTF8" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF16">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF16</code><a class="headerlink" href="#codecs.BOM_UTF16" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF16_BE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF16_BE</code><a class="headerlink" href="#codecs.BOM_UTF16_BE" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF16_LE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF16_LE</code><a class="headerlink" href="#codecs.BOM_UTF16_LE" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF32">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF32</code><a class="headerlink" href="#codecs.BOM_UTF32" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF32_BE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF32_BE</code><a class="headerlink" href="#codecs.BOM_UTF32_BE" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="codecs.BOM_UTF32_LE">
+<code class="descclassname">codecs.</code><code class="descname">BOM_UTF32_LE</code><a class="headerlink" href="#codecs.BOM_UTF32_LE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ここで定義された定数は、様々なエンコーディングの Unicode のバイトオーダマーカ (BOM) で、 UTF-16 と UTF-32 におけるデータストリームやファイルストリームのバイトオーダを指定したり、 UTF-8 における Unicode signature として使われます。 <a class="reference internal" href="#codecs.BOM_UTF16" title="codecs.BOM_UTF16"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16</span></code></a> は <a class="reference internal" href="#codecs.BOM_UTF16_BE" title="codecs.BOM_UTF16_BE"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16_BE</span></code></a> と <a class="reference internal" href="#codecs.BOM_UTF16_LE" title="codecs.BOM_UTF16_LE"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16_LE</span></code></a> のいずれかで、プラットフォームのネイティブバイトオーダに依存します。 <a class="reference internal" href="#codecs.BOM" title="codecs.BOM"><code class="xref py py-const docutils literal"><span class="pre">BOM</span></code></a> は <a class="reference internal" href="#codecs.BOM_UTF16" title="codecs.BOM_UTF16"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16</span></code></a> の別名です。同様に <a class="reference internal" href="#codecs.BOM_LE" title="codecs.BOM_LE"><code class="xref py py-const docutils literal"><span class="pre">BOM_LE</span></code></a> は <a class="reference internal" href="#codecs.BOM_UTF16_LE" title="codecs.BOM_UTF16_LE"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16_LE</span></code></a> の、 <a class="reference internal" href="#codecs.BOM_BE" title="codecs.BOM_BE"><code class="xref py py-const docutils literal"><span class="pre">BOM_BE</span></code></a> は <a class="reference internal" href="#codecs.BOM_UTF16_BE" title="codecs.BOM_UTF16_BE"><code class="xref py py-const docutils literal"><span class="pre">BOM_UTF16_BE</span></code></a> の別名です。他は UTF-8 と UTF-32 エンコーディングの BOM を表します。</p>
+</dd></dl>
+
+<div class="section" id="codec-base-classes">
+<span id="id1"></span><h2>7.8.1. Codec 基底クラス<a class="headerlink" href="#codec-base-classes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールでは、 codec のインタフェースを定義する一連の基底クラスを用意して、 Python 用 codec を簡単に自作できるようにしています。</p>
+<p>Python で何らかの codec を使えるようにするには、状態なしエンコーダ、状態なしデコーダ、ストリームリーダ、ストリームライタの 4 つのインタフェースを定義しなければなりません。通常は、状態なしエンコーダとデコーダを再利用してストリームリーダとライタのファイル・プロトコルを実装します。</p>
+<p><code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> クラスは、状態なしエンコーダ・デコーダのインタフェースを定義しています。</p>
+<p>エラー処理の簡便化と標準化のため、<a class="reference internal" href="#codecs.Codec.encode" title="codecs.Codec.encode"><code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code></a> メソッドと <a class="reference internal" href="#codecs.Codec.decode" title="codecs.Codec.decode"><code class="xref py py-meth docutils literal"><span class="pre">decode()</span></code></a> メソッドでは、 <em>errors</em> 文字列引数を指定した場合に別のエラー処理を行うような仕組みを実装してもかまいません。全ての標準 Python codec では以下の文字列が定義され、実装されています。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'strict'</span></code></td>
+<td><p class="first last"><a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> (または、そのサブクラス) を送出します &#8211; デフォルトの動作です。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'ignore'</span></code></td>
+<td><p class="first last">その文字を無視し、次の文字から変換を再開します。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'replace'</span></code></td>
+<td><p class="first last">適当な文字で置換します &#8211; Python の組み込み Unicode codec のデコード時には公式の U+FFFD REPLACEMENT CHARACTER を、エンコード時には &#8216;?&#8217; を使います。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">'xmlcharrefreplace'</span></code></td>
+<td><p class="first last">適切な XML 文字参照で置換します (エンコードのみ)。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'backslashreplace'</span></code></td>
+<td><p class="first last">バックスラッシュつきのエスケープシーケンスで置換します (エンコードのみ)。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>codecs がエラーハンドラとして受け入れる値は <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-meth docutils literal"><span class="pre">register_error()</span></code></a> を使って追加できます。</p>
+<div class="section" id="codec-objects">
+<span id="id2"></span><h3>7.8.1.1. Codec オブジェクト<a class="headerlink" href="#codec-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> クラスは以下のメソッドを定義します。これらのメソッドは、内部状態を持たないエンコーダ／デコーダ関数のインタフェースを定義します:</p>
+<dl class="method">
+<dt id="codecs.Codec.encode">
+<code class="descclassname">Codec.</code><code class="descname">encode</code><span class="sig-paren">(</span><em>input</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.Codec.encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>input</em> エンコードし、(出力オブジェクト, 消費した長さ) のタプルを返します。 codecs は Unicode 専用ではありませんが、 Unicode の文脈では、エンコーディングは Unicode オブジェクトを特定の文字集合エンコーディング(たとえば <code class="docutils literal"><span class="pre">cp1252</span></code> や <code class="docutils literal"><span class="pre">iso-8859-1</span></code>) を使ってバイト文字列オブジェクトに変換します。</p>
+<p><em>errors</em> は適用するエラー処理を定義します。 <code class="docutils literal"><span class="pre">'strict'</span></code> 処理がデフォルトです。</p>
+<p>このメソッドは <code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> に内部状態を保存してはなりません。効率よくエンコードするために状態を保持しなければならないような codecs には <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> を使ってください。</p>
+<p>エンコーダは長さが 0 の入力を処理できなければなりません。この場合、空のオブジェクトを出力オブジェクトとして返さなければなりません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.Codec.decode">
+<code class="descclassname">Codec.</code><code class="descname">decode</code><span class="sig-paren">(</span><em>input</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.Codec.decode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクト <em>input</em> をデコードし、(出力オブジェクト, 消費した長さ) のタプルを返します。 Unicode の文脈では、デコードは特定の文字集合エンコーディングでエンコードされた文字列を Unicode オブジェクトに変換します。</p>
+<p><em>input</em> は <code class="docutils literal"><span class="pre">bf_getreadbuf</span></code> バッファスロットを提供するオブジェクトでなければなりません。バッファスロットを提供しているオブジェクトには Python 文字列オブジェクト、バッファオブジェクト、メモリマップファイルがあります。</p>
+<p><em>errors</em> は適用するエラー処理を定義します。 <code class="docutils literal"><span class="pre">'strict'</span></code> 処理がデフォルトです。</p>
+<p>このメソッドは、 <code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> インスタンスに内部状態を保存してはなりません。効率よくエンコード／デコードするために状態を保持しなければならないような codecs には <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> を使ってください。</p>
+<p>デコーダは長さが 0 の入力を処理できなければなりません。この場合、空のオブジェクトを出力オブジェクトとして返さなければなりません。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> クラスおよび <a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> クラスはそれぞれ漸増的エンコーディングおよびデコーディングのための基本的なインタフェースを提供します。エンコーディング／デコーディングは内部状態を持たないエンコーダ／デコーダを一度呼び出すことで行なわれるのではなく、漸増的エンコーダ／デコーダの <a class="reference internal" href="#codecs.IncrementalEncoder.encode" title="codecs.IncrementalEncoder.encode"><code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code></a>/<a class="reference internal" href="#codecs.IncrementalDecoder.decode" title="codecs.IncrementalDecoder.decode"><code class="xref py py-meth docutils literal"><span class="pre">decode()</span></code></a> メソッドを複数回呼び出すことで行なわれます。漸増的エンコーダ／デコーダはメソッド呼び出しの間エンコーディング／デコーディング処理の進行を管理します。</p>
+<p><a class="reference internal" href="#codecs.IncrementalEncoder.encode" title="codecs.IncrementalEncoder.encode"><code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code></a>/<a class="reference internal" href="#codecs.IncrementalDecoder.decode" title="codecs.IncrementalDecoder.decode"><code class="xref py py-meth docutils literal"><span class="pre">decode()</span></code></a> メソッド呼び出しの出力結果をまとめたものは、入力をひとまとめにして内部状態を持たないエンコーダ／デコーダでエンコード／デコードしたものと同じになります。</p>
+</div>
+<div class="section" id="incrementalencoder-objects">
+<span id="incremental-encoder-objects"></span><h3>7.8.1.2. IncrementalEncoder オブジェクト<a class="headerlink" href="#incrementalencoder-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+<p><a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> クラスは入力を複数ステップでエンコードするのに使われます。全ての漸増的エンコーダが Python codec レジストリと互換性を持つために定義すべきメソッドとして、このクラスには以下のメソッドが定義されています。</p>
+<dl class="class">
+<dt id="codecs.IncrementalEncoder">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">IncrementalEncoder</code><span class="sig-paren">(</span><span class="optional">[</span><em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalEncoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> インスタンスのコンストラクタ。</p>
+<p>全ての漸増的エンコーダはこのコンストラクタインタフェースを提供しなければなりません。さらにキーワード引数を付け加えるのは構いませんが、Python codec レジストリで利用されるのはここで定義されているものだけです。</p>
+<p><a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> は <em>errors</em> キーワード引数を提供して異なったエラー取扱方法を実装することもできます。あらかじめ定義されているパラメータは以下の通りです:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">'strict'</span></code> <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (またはそのサブクラス) を送出します。これがデフォルトです。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'ignore'</span></code> 一文字無視して次に進みます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'replace'</span></code> 適当な代替文字で置き換えます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'xmlcharrefreplace'</span></code> 適切な XML 文字参照に置き換えます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'backslashreplace'</span></code> バックスラッシュ付きのエスケープシーケンスで置き換えます。</p>
+</li>
+</ul>
+<p>引数 <em>errors</em> は同名の属性に割り当てられます。属性に割り当てることで <a class="reference internal" href="#codecs.IncrementalEncoder" title="codecs.IncrementalEncoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></code></a> オブジェクトが生きている間にエラー取扱戦略を違うものに切り替えることができるようになります。</p>
+<p><em>errors</em> 引数に許される値の集合は <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-func docutils literal"><span class="pre">register_error()</span></code></a> で拡張できます。</p>
+<dl class="method">
+<dt id="codecs.IncrementalEncoder.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>final</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalEncoder.encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> を(エンコーダの現在の状態を考慮に入れて)エンコードし、得られたエンコードされたオブジェクトを返します。 <a class="reference internal" href="#codecs.encode" title="codecs.encode"><code class="xref py py-meth docutils literal"><span class="pre">encode()</span></code></a> 呼び出しがこれで最後という時には <em>final</em> は真でなければなりません(デフォルトは偽です)。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.IncrementalEncoder.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalEncoder.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンコーダを初期状態にリセットします。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="incrementaldecoder-objects">
+<span id="incremental-decoder-objects"></span><h3>7.8.1.3. IncrementalDecoder オブジェクト<a class="headerlink" href="#incrementaldecoder-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> クラスは入力を複数ステップでデコードするのに使われます。全ての漸増的デコーダが Python codec レジストリと互換性を持つために定義すべきメソッドとして、このクラスには以下のメソッドが定義されています。</p>
+<dl class="class">
+<dt id="codecs.IncrementalDecoder">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">IncrementalDecoder</code><span class="sig-paren">(</span><span class="optional">[</span><em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalDecoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> インスタンスのコンストラクタ。</p>
+<p>全ての漸増的デコーダはこのコンストラクタインタフェースを提供しなければなりません。さらにキーワード引数を付け加えるのは構いませんが、Python codec レジストリで利用されるのはここで定義されているものだけです。</p>
+<p><a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> は <em>errors</em> キーワード引数を提供して異なったエラー取扱方法を実装することもできます。あらかじめ定義されているパラメータは以下の通りです:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">'strict'</span></code> <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (またはそのサブクラス) を送出します。これがデフォルトです。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'ignore'</span></code> 一文字無視して次に進みます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'replace'</span></code> 適切な置換文字で置換します。</p>
+</li>
+</ul>
+<p>引数 <em>errors</em> は同名の属性に割り当てられます。属性に割り当てることで <a class="reference internal" href="#codecs.IncrementalDecoder" title="codecs.IncrementalDecoder"><code class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></code></a> オブジェクトが生きている間にエラー取扱戦略を違うものに切り替えることができるようになります。</p>
+<p><em>errors</em> 引数に許される値の集合は <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-func docutils literal"><span class="pre">register_error()</span></code></a> で拡張できます。</p>
+<dl class="method">
+<dt id="codecs.IncrementalDecoder.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>final</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalDecoder.decode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> を(デコーダの現在の状態を考慮に入れて)デコードし、得られたデコードされたオブジェクトを返します。 <a class="reference internal" href="#codecs.decode" title="codecs.decode"><code class="xref py py-meth docutils literal"><span class="pre">decode()</span></code></a> 呼び出しがこれで最後という時には <em>final</em> は真でなければなりません(デフォルトは偽です)。もし <em>final</em> が真ならばデコーダは入力をデコードし切り全てのバッファをフラッシュしなければなりません。そうできない場合(たとえば入力の最後に不完全なバイト列があるから)、デコーダは内部状態を持たない場合と同じようにエラーの取り扱いを開始しなければなりません(例外を送出するかもしれません)。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.IncrementalDecoder.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.IncrementalDecoder.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>デコーダを初期状態にリセットします。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p><a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> と <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> クラスは、新しいエンコーディングモジュールを、非常に簡単に実装するのに使用できる、一般的なインターフェイス提供します。実装例は <code class="xref py py-mod docutils literal"><span class="pre">encodings.utf_8</span></code> をご覧ください。</p>
+</div>
+<div class="section" id="streamwriter-objects">
+<span id="stream-writer-objects"></span><h3>7.8.1.4. StreamWriter オブジェクト<a class="headerlink" href="#streamwriter-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> クラスは <code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> のサブクラスで、以下のメソッドを定義しています。全てのストリームライタは、 Python の codec レジストリとの互換性を保つために、これらのメソッドを定義する必要があります。</p>
+<dl class="class">
+<dt id="codecs.StreamWriter">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">StreamWriter</code><span class="sig-paren">(</span><em>stream</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamWriter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> インスタンスのコンストラクタです。</p>
+<p>全てのストリームライタはコンストラクタとしてこのインタフェースを提供しなければなりません。キーワード引数を追加しても構いませんが、Python の codec レジストリはここで定義されている引数だけを使います。</p>
+<p><em>stream</em> は、(バイナリで) 書き込み可能なファイル類似のオブジェクトでなくてはなりません。</p>
+<p><a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> は、 <em>errors</em> キーワード引数を受けて、異なったエラー処理の仕組みを実装しても構いません。定義済みのパラメタを以下に示します:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">'strict'</span></code> <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (またはそのサブクラス) を送出します。これがデフォルトです。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'ignore'</span></code> 一文字無視して次に進みます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'replace'</span></code> 適当な代替文字で置き換えます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'xmlcharrefreplace'</span></code> 適切な XML 文字参照に置き換えます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'backslashreplace'</span></code> バックスラッシュ付きのエスケープシーケンスで置き換えます。</p>
+</li>
+</ul>
+<p><em>errors</em> 引数は、同名の属性に代入されます。この属性を変更すると、 <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> オブジェクトが生きている間に、異なるエラー処理に変更できます。</p>
+<p><em>errors</em> 引数に許される値の集合は <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-func docutils literal"><span class="pre">register_error()</span></code></a> で拡張できます。</p>
+<dl class="method">
+<dt id="codecs.StreamWriter.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamWriter.write" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> の内容をエンコードしてストリームに書き出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.StreamWriter.writelines">
+<code class="descname">writelines</code><span class="sig-paren">(</span><em>list</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamWriter.writelines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列からなるリストを連結して、(必要に応じて <a class="reference internal" href="#codecs.StreamWriter.write" title="codecs.StreamWriter.write"><code class="xref py py-meth docutils literal"><span class="pre">write()</span></code></a> を何度も使って) ストリームに書き出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.StreamWriter.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamWriter.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>状態保持に使われていた codec のバッファを強制的に出力してリセットします。</p>
+<p>このメソッドが呼び出された場合、出力先データをきれいな状態にし、わざわざストリーム全体を再スキャンして状態を元に戻さなくても新しくデータを追加できるようにしなければなりません。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>ここまでで挙げたメソッドの他にも、 <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> では背後にあるストリームの他の全てのメソッドや属性を継承しなければなりません。</p>
+</div>
+<div class="section" id="streamreader-objects">
+<span id="stream-reader-objects"></span><h3>7.8.1.5. StreamReader オブジェクト<a class="headerlink" href="#streamreader-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> クラスは <code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> のサブクラスで、以下のメソッドを定義しています。全てのストリームリーダは、 Python の codec レジストリとの互換性を保つために、これらのメソッドを定義する必要があります。</p>
+<dl class="class">
+<dt id="codecs.StreamReader">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">StreamReader</code><span class="sig-paren">(</span><em>stream</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReader" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> インスタンスのコンストラクタです。</p>
+<p>全てのストリームリーダはコンストラクタとしてこのインタフェースを提供しなければなりません。キーワード引数を追加しても構いませんが、Python の codec レジストリはここで定義されている引数だけを使います。</p>
+<p><em>stream</em> は、(バイナリで) 読み出し可能なファイル類似のオブジェクトでなくてはなりません。</p>
+<p><a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> は、 <em>errors</em> キーワード引数を受けて、異なったエラー処理の仕組みを実装しても構いません。定義済みのパラメタを以下に示します:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">'strict'</span></code> <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> (またはそのサブクラス) を送出します。これがデフォルトです。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'ignore'</span></code> 一文字無視して次に進みます。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">'replace'</span></code> 適切な置換文字で置換します。</p>
+</li>
+</ul>
+<p><em>errors</em> 引数は、同名の属性に代入されます。この属性を変更すると、 <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> オブジェクトが生きている間に、異なるエラー処理に変更できます。</p>
+<p><em>errors</em> 引数に許される値の集合は <a class="reference internal" href="#codecs.register_error" title="codecs.register_error"><code class="xref py py-func docutils literal"><span class="pre">register_error()</span></code></a> で拡張できます。</p>
+<dl class="method">
+<dt id="codecs.StreamReader.read">
+<code class="descname">read</code><span class="sig-paren">(</span><span class="optional">[</span><em>size</em><span class="optional">[</span>, <em>chars</em><span class="optional">[</span>, <em>firstline</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReader.read" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ストリームからのデータをデコードし、デコード済のオブジェクトを返します。</p>
+<p><em>chars</em> はストリームから読み込む文字数です。 <a class="reference internal" href="#codecs.StreamReader.read" title="codecs.StreamReader.read"><code class="xref py py-func docutils literal"><span class="pre">read()</span></code></a> は <em>chars</em> 以上の文字を返しませんが、それより少ない文字しか取得できない場合には <em>chars</em> 以下の文字を返します。</p>
+<p><em>size</em> は、デコードするためにストリームから読み込む、およその最大バイト数を意味します。デコーダはこの値を適切な値に変更できます。デフォルト値 -1 にすると可能な限りたくさんのデータを読み込みます。 <em>size</em> の目的は、巨大なファイルの一括デコードを防ぐことにあります。</p>
+<p><em>firstline</em> は、1行目さえ返せばその後の行でデコードエラーがあっても無視して十分だ、ということを示します。</p>
+<p>このメソッドは貪欲な読み込み戦略を取るべきです。すなわち、エンコーディング定義と size の値が許す範囲で、できるだけ多くのデータを読むべきだということです。たとえば、ストリーム上にエンコーディングの終端や状態の目印があれば、それも読み込みます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span><em>chars</em> 引数を追加しました.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4.2 で変更: </span><em>firstline</em> 引数を追加しました.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.StreamReader.readline">
+<code class="descname">readline</code><span class="sig-paren">(</span><span class="optional">[</span><em>size</em><span class="optional">[</span>, <em>keepends</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReader.readline" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>入力ストリームから1行読み込み、デコード済みのデータを返します。</p>
+<p><em>size</em> が与えられた場合、ストリームの <a class="reference internal" href="#codecs.StreamReader.read" title="codecs.StreamReader.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> メソッドに size 引数として渡されます。</p>
+<p><em>keepends</em> が偽の場合には行末の改行が削除された行が返ります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span><em>keepends</em> 引数を追加しました.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.StreamReader.readlines">
+<code class="descname">readlines</code><span class="sig-paren">(</span><span class="optional">[</span><em>sizehint</em><span class="optional">[</span>, <em>keepends</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReader.readlines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>入力ストリームから全ての行を読み込み、行のリストとして返します。</p>
+<p><em>keepends</em> が真なら、改行は、codec のデコーダメソッドを使って実装され、リスト要素の中に含まれます。</p>
+<p><em>sizehint</em> が与えられた場合、ストリームの <a class="reference internal" href="#codecs.StreamReader.read" title="codecs.StreamReader.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> メソッドに <em>size</em> 引数として渡されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="codecs.StreamReader.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReader.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>状態保持に使われた codec のバッファをリセットします。</p>
+<p>ストリームの読み位置を再設定してはならないので注意してください。このメソッドはデコードの際にエラーから復帰できるようにするためのものです。</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>ここまでで挙げたメソッドの他にも、 <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> では背後にあるストリームの他の全てのメソッドや属性を継承しなければなりません。</p>
+<p>次に挙げる2つの基底クラスは、利便性のために含まれています。codec レジストリは、これらを必要としませんが、実際のところ、あると有用なものでしょう。</p>
+</div>
+<div class="section" id="streamreaderwriter-objects">
+<span id="stream-reader-writer"></span><h3>7.8.1.6. StreamReaderWriter オブジェクト<a class="headerlink" href="#streamreaderwriter-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#codecs.StreamReaderWriter" title="codecs.StreamReaderWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamReaderWriter</span></code></a> を使って、読み書き両方に使えるストリームをラップできます。</p>
+<p><a class="reference internal" href="#codecs.lookup" title="codecs.lookup"><code class="xref py py-func docutils literal"><span class="pre">lookup()</span></code></a> 関数が返すファクトリ関数を使って、インスタンスを生成するという設計です。</p>
+<dl class="class">
+<dt id="codecs.StreamReaderWriter">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">StreamReaderWriter</code><span class="sig-paren">(</span><em>stream</em>, <em>Reader</em>, <em>Writer</em>, <em>errors</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamReaderWriter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#codecs.StreamReaderWriter" title="codecs.StreamReaderWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamReaderWriter</span></code></a> インスタンスを生成します。 <em>stream</em> はファイル類似のオブジェクトです。 <em>Reader</em> と <em>Writer</em> は、それぞれ <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> と <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> インタフェースを提供するファクトリ関数かファクトリクラスでなければなりません。エラー処理は、ストリームリーダとライタで定義したものと同じように行われます。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#codecs.StreamReaderWriter" title="codecs.StreamReaderWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamReaderWriter</span></code></a> インスタンスは、 <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> クラスと <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> クラスを合わせたインタフェースを継承します。元になるストリームからは、他のメソッドや属性を継承します。</p>
+</div>
+<div class="section" id="streamrecoder-objects">
+<span id="stream-recoder-objects"></span><h3>7.8.1.7. StreamRecoder オブジェクト<a class="headerlink" href="#streamrecoder-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="#codecs.StreamRecoder" title="codecs.StreamRecoder"><code class="xref py py-class docutils literal"><span class="pre">StreamRecoder</span></code></a> はエンコーディングデータの、フロントエンド-バックエンドを観察する機能を提供します。異なるエンコーディング環境を扱うとき、便利な場合があります。</p>
+<p><a class="reference internal" href="#codecs.lookup" title="codecs.lookup"><code class="xref py py-func docutils literal"><span class="pre">lookup()</span></code></a> 関数が返すファクトリ関数を使って、インスタンスを生成するという設計です。</p>
+<dl class="class">
+<dt id="codecs.StreamRecoder">
+<em class="property">class </em><code class="descclassname">codecs.</code><code class="descname">StreamRecoder</code><span class="sig-paren">(</span><em>stream</em>, <em>encode</em>, <em>decode</em>, <em>Reader</em>, <em>Writer</em>, <em>errors</em><span class="sig-paren">)</span><a class="headerlink" href="#codecs.StreamRecoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>双方向変換を実装する <a class="reference internal" href="#codecs.StreamRecoder" title="codecs.StreamRecoder"><code class="xref py py-class docutils literal"><span class="pre">StreamRecoder</span></code></a> インスタンスを生成します。 <em>encode</em> と <em>decode</em> はフロントエンド (<code class="xref py py-meth docutils literal"><span class="pre">read()</span></code> への入力と <code class="xref py py-meth docutils literal"><span class="pre">write()</span></code> からの出力) を処理し、 <em>Reader</em> と <em>Writer</em> はバックエンド (ストリームに対する読み書き) を処理します。</p>
+<p>これらのオブジェクトを使って、たとえば、 Latin-1 から UTF-8 、あるいは逆向きの変換を、透過に記録できます。</p>
+<p><em>stream</em> はファイル的オブジェクトでなくてはなりません。</p>
+<p><em>encode</em> と <em>decode</em> は <code class="xref py py-class docutils literal"><span class="pre">Codec</span></code> のインタフェースに忠実でなくてはならず、 <em>Reader</em> と <em>Writer</em> は、それぞれ <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> と <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> のインタフェースを提供するオブジェクトのファクトリ関数かクラスでなくてはなりません。</p>
+<p><em>encode</em> と <em>decode</em> はフロントエンドの変換に必要で、 <em>Reader</em> と <em>Writer</em> はバックエンドの変換に必要です。中間のフォーマットはコデックの組み合わせによって決定されます。たとえば、 Unicode コデックは中間エンコーディングに Unicode を使います。</p>
+<p>エラー処理はストリーム・リーダやライタで定義されている方法と同じように行われます。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#codecs.StreamRecoder" title="codecs.StreamRecoder"><code class="xref py py-class docutils literal"><span class="pre">StreamRecoder</span></code></a> インスタンスは、 <a class="reference internal" href="#codecs.StreamReader" title="codecs.StreamReader"><code class="xref py py-class docutils literal"><span class="pre">StreamReader</span></code></a> と <a class="reference internal" href="#codecs.StreamWriter" title="codecs.StreamWriter"><code class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></code></a> クラスを合わせたインタフェースを定義します。また、元のストリームのメソッドと属性も継承します。</p>
+</div>
+</div>
+<div class="section" id="encodings-and-unicode">
+<span id="encodings-overview"></span><h2>7.8.2. エンコーディングと Unicode<a class="headerlink" href="#encodings-and-unicode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Unicode 文字列は内部的にはコードポイントのシーケンスとして格納されます (正確に言えば <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> 配列です)。 Python がどのようにコンパイルされたか (デフォルトである <code class="docutils literal"><span class="pre">--enable-unicode=ucs2</span></code> かまたは <code class="docutils literal"><span class="pre">--enable-unicode=ucs4</span></code> のどちらか) によって、 <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> は16ビットまたは32ビットのデータ型です。 Unicode オブジェクトが CPU とメモリの外で使われることになると、 CPU のエンディアンやこれらの配列がバイト列としてどのように格納されるかが問題になってきます。 Unicode オブジェクトをバイト列に変換することをエンコーディングと呼び、バイト列から Unicode オブジェクトを再生することをデコーディングと呼びます。どのようにこの変換を行うかには多くの異なった方法があります (これらの方法のこともエンコーディングと言います) 。最も単純な方法はコードポイント 0-255 をバイト <code class="docutils literal"><span class="pre">0x0</span></code>-<code class="docutils literal"><span class="pre">0xff</span></code> に写すことです。これは <code class="docutils literal"><span class="pre">U+00FF</span></code> より上のコードポイントを持つ Unicode オブジェクトはこの方法ではエンコードできないということを意味します (この方法を <code class="docutils literal"><span class="pre">'latin-1'</span></code> とか <code class="docutils literal"><span class="pre">'iso-8859-1'</span></code> と呼びます)。 <code class="xref py py-func docutils literal"><span class="pre">unicode.encode()</span></code> は次のような <a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> を送出することになります: <code class="docutils literal"><span class="pre">UnicodeEncodeError:</span> <span class="pre">'latin-1'</span> <span class="pre">codec</span> <span class="pre">can't</span> <span class="pre">encode</span> <span class="pre">character</span> <span class="pre">u'\u1234'</span> <span class="pre">in</span> <span class="pre">position</span> <span class="pre">3:</span> <span class="pre">ordinal</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">range(256)</span></code></p>
+<p>他のエンコーディングの一群 (charmap エンコーディングと呼ばれます) がありますが、 Unicode コードポイントの別の部分集合とこれらがどのように <code class="docutils literal"><span class="pre">0x0</span></code> - <code class="docutils literal"><span class="pre">0xff</span></code> のバイトに写されるかを選んだものです。これがどのように行なわれるかを知るには、単にたとえば <code class="file docutils literal"><span class="pre">encodings/cp1252.py</span></code> (主に Windows で使われるエンコーディングです) を開いてみてください。256 文字のひとつの文字列定数がありどの文字がどのバイト値に写されるかを示しています。</p>
+<p>これらのエンコーディングはすべて、 Unicode に定義された 1114112 のコードポイントのうちの 256 だけをエンコードすることができます。 Unicode のすべてのコードポイントを格納するための単純で直接的な方法は、各コードポイントを連続する4バイトとして格納することです。これには2つの可能性があります: ビッグエンディアンまたはリトルエンディアンの順にバイトを格納することです。これら2つのエンコーディングはそれぞれ <code class="docutils literal"><span class="pre">UTF-32-BE</span></code> および <code class="docutils literal"><span class="pre">UTF-32-LE</span></code> と呼ばれます。それらのデメリットは、例えばリトルエンディアンのマシン上で <code class="docutils literal"><span class="pre">UTF-32-BE</span></code> を使用すると、エンコードでもデコードでも常にバイト順を交換する必要があることです。<code class="docutils literal"><span class="pre">UTF-32</span></code> はこの問題を回避します: バイト順は、常に自然なエンディアンに従います。しかし、これらのバイト順が異なるエンディアン性を持つ CPU によって読まれる場合、結局バイト順を交換しなければなりません。<code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列のエンディアン性を検出する目的で、いわゆる BOM (「バイト・オーダー・マーク」) があります。これは Unicode 文字 <code class="docutils literal"><span class="pre">U+FEFF</span></code> です。この文字はすべての <code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列の前に置くことができます。この文字のバイトが交換されたバージョン (<code class="docutils literal"><span class="pre">0xFFFE</span></code>) は、 Unicode テキストに現われてはならない不正な文字です。したがって、<code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列中の最初の文字が <code class="docutils literal"><span class="pre">U+FFFE</span></code> であるように見える場合、デコードの際にバイトを交換しなければなりません。不運にも文字 <code class="docutils literal"><span class="pre">U+FEFF</span></code> は <code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> として別の目的を持っていました: 幅を持たず、単語を分割することを許容しない文字。それは、例えばリガチャアルゴリズムにヒントを与えるために使用することができます。 Unicode  4.0 で、<code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> としての <code class="docutils literal"><span class="pre">U+FEFF</span></code> の使用は廃止予定になりました (この役割は <code class="docutils literal"><span class="pre">U+2060</span></code> (<code class="docutils literal"><span class="pre">WORD</span> <span class="pre">JOINER</span></code>) によって引き継がれました)。しかしながら、 Unicode ソフトウェアは、依然として両方の役割の <code class="docutils literal"><span class="pre">U+FEFF</span></code> を扱うことができなければなりません: BOM として、エンコードされたバイトのメモリレイアウトを決定する手段であり、一旦バイト列が文字列にデコードされたならば消えます; <code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> として、他の任意の文字のようにデコードされる通常の文字です。</p>
+<p>さらにもう一つ Unicode 文字全てをエンコードできるエンコーディングがあり、UTF-8 と呼ばれています。UTF-8 は8ビットエンコーディングで、したがって UTF-8 にはバイト順の問題はありません。UTF-8 バイト列の各バイトは二つのパートから成ります。二つはマーカ(上位数ビット)とペイロードです。マーカは0ビットから4ビットの <code class="docutils literal"><span class="pre">1</span></code> の列に <code class="docutils literal"><span class="pre">0</span></code> のビットが一つ続いたものです。Unicode 文字は次のようにエンコードされます (x はペイロードを表わし、連結されると一つの Unicode 文字を表わします):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">範囲</p>
+</th>
+<th class="head"><p class="first last">エンコーディング</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">U-00000000</span></code> ... <code class="docutils literal"><span class="pre">U-0000007F</span></code></td>
+<td>0xxxxxxx</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">U-00000080</span></code> ... <code class="docutils literal"><span class="pre">U-000007FF</span></code></td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">U-00000800</span></code> ... <code class="docutils literal"><span class="pre">U-0000FFFF</span></code></td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">U-00010000</span></code> ... <code class="docutils literal"><span class="pre">U-0010FFFF</span></code></td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+<p>Unicode 文字の最下位ビットとは最も右にある x のビットです。</p>
+<p>UTF-8 は8ビットエンコーディングなので BOM は必要とせず、デコードされた Unicode 文字列中の <code class="docutils literal"><span class="pre">U+FEFF</span></code> は(たとえ最初の文字であったとしても) <code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> として扱われます。</p>
+<p>外部からの情報無しには、Unicode 文字列のエンコーディングにどのエンコーディングが使われたのか信頼できる形で決定することは不可能です。どの charmap エンコーディングもどんなランダムなバイト列でもデコードできます。しかし UTF-8 ではそれは可能ではありません。任意のバイト列を許さないような構造を持っているからです。UTF-8 エンコーディングであることを検知する信頼性を向上させるために、Microsoft は Notepad プログラム用に UTF-8 の変種 (Python 2.5 では <code class="docutils literal"><span class="pre">&quot;utf-8-sig&quot;</span></code> と呼んでいます) を考案しました。Unicode 文字がファイルに書き込まれる前に UTF-8 でエンコードした BOM (バイト列では <code class="docutils literal"><span class="pre">0xef</span></code>, <code class="docutils literal"><span class="pre">0xbb</span></code>, <code class="docutils literal"><span class="pre">0xbf</span></code> のように見えます) が書き込まれます。このようなバイト値で charmap エンコードされたファイルが始まることはほとんどあり得ない (たとえば iso-8859-1 では</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">LATIN SMALL LETTER I WITH DIAERESIS</div>
+<div class="line">RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK</div>
+<div class="line">INVERTED QUESTION MARK</div>
+</div>
+</div></blockquote>
+<p>のようになる)ので、<code class="docutils literal"><span class="pre">utf-8-sig</span></code> エンコーディングがバイト列から正しく推測される確率を高めます。つまりここでは BOM はバイト列を生成する際のバイト順を決定できるように使われているのではなく、エンコーディングを推測する助けになる印として使われているのです。<code class="docutils literal"><span class="pre">utf-8-sig</span></code> codec はエンコーディングの際ファイルに最初の3文字として <code class="docutils literal"><span class="pre">0xef</span></code>, <code class="docutils literal"><span class="pre">0xbb</span></code>, <code class="docutils literal"><span class="pre">0xbf</span></code> を書き込みます。デコーディングの際はファイルの先頭に現れたこれら3バイトはスキップします。UTF-8 では BOM の使用は推奨されておらず、一般的には避けるべきです。</p>
+</div>
+<div class="section" id="standard-encodings">
+<span id="id3"></span><h2>7.8.3. 標準エンコーディング<a class="headerlink" href="#standard-encodings" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python には数多くの codec が組み込みで付属します。これらは C 言語の関数、対応付けを行うテーブルの両方で提供されています。以下のテーブルでは codec と、いくつかの良く知られている別名と、エンコーディングが使われる言語を列挙します。別名のリスト、言語のリストともしらみつぶしに網羅されているわけではありません。大文字と小文字、またはアンダースコアの代りにハイフンにしただけの綴りも有効な別名です; そのため、例えば <code class="docutils literal"><span class="pre">'utf-8'</span></code> は <code class="docutils literal"><span class="pre">'utf_8'</span></code> codec の正当な別名です。</p>
+<p>多くの文字セットは同じ言語をサポートしています。これらの文字セットは個々の文字 (例えば、EURO SIGN がサポートされているかどうか) や、文字のコード部分への割り付けが異なります。特に欧州言語では、典型的に以下の変種が存在します:</p>
+<ul class="simple">
+<li><p class="first">ISO 8859 コードセット</p>
+</li>
+<li><p class="first">Microsoft Windows コードページで、8859 コード形式から導出されているが、制御文字を追加のグラフィック文字と置き換えたもの</p>
+</li>
+<li><p class="first">IBM EBCDIC コードページ</p>
+</li>
+<li><p class="first">ASCII 互換の IBM PC コードページ</p>
+</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Codec</th>
+<th class="head"><p class="first last">別名</p>
+</th>
+<th class="head"><p class="first last">言語</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ascii</td>
+<td>646, us-ascii</td>
+<td><p class="first last">英語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>big5</td>
+<td>big5-tw, csbig5</td>
+<td><p class="first last">繁体字中国語</p>
+</td>
+</tr>
+<tr class="row-even"><td>big5hkscs</td>
+<td>big5-hkscs, hkscs</td>
+<td><p class="first last">繁体字中国語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp037</td>
+<td>IBM037, IBM039</td>
+<td><p class="first last">英語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp424</td>
+<td>EBCDIC-CP-HE, IBM424</td>
+<td><p class="first last">ヘブライ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp437</td>
+<td>437, IBM437</td>
+<td><p class="first last">英語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp500</td>
+<td>EBCDIC-CP-BE, EBCDIC-CP-CH,
+IBM500</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp720</td>
+<td>&nbsp;</td>
+<td><p class="first last">アラビア語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp737</td>
+<td>&nbsp;</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp775</td>
+<td>IBM775</td>
+<td><p class="first last">バルト沿岸国</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp850</td>
+<td>850, IBM850</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp852</td>
+<td>852, IBM852</td>
+<td><p class="first last">中央および東ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp855</td>
+<td>855, IBM855</td>
+<td><p class="first last">ブルガリア、ベラルーシ、マケドニア、ロシア、セルビア</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp856</td>
+<td>&nbsp;</td>
+<td><p class="first last">ヘブライ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp857</td>
+<td>857, IBM857</td>
+<td><p class="first last">トルコ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp858</td>
+<td>858, IBM858</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp860</td>
+<td>860, IBM860</td>
+<td><p class="first last">ポルトガル語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp861</td>
+<td>861, CP-IS, IBM861</td>
+<td><p class="first last">アイスランド語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp862</td>
+<td>862, IBM862</td>
+<td><p class="first last">ヘブライ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp863</td>
+<td>863, IBM863</td>
+<td><p class="first last">カナダ</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp864</td>
+<td>IBM864</td>
+<td><p class="first last">アラビア語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp865</td>
+<td>865, IBM865</td>
+<td><p class="first last">デンマーク、ノルウェー</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp866</td>
+<td>866, IBM866</td>
+<td><p class="first last">ロシア語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp869</td>
+<td>869, CP-GR, IBM869</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp874</td>
+<td>&nbsp;</td>
+<td><p class="first last">タイ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp875</td>
+<td>&nbsp;</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp932</td>
+<td>932, ms932, mskanji, ms-kanji</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp949</td>
+<td>949, ms949, uhc</td>
+<td><p class="first last">韓国語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp950</td>
+<td>950, ms950</td>
+<td><p class="first last">繁体字中国語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1006</td>
+<td>&nbsp;</td>
+<td>Urdu</td>
+</tr>
+<tr class="row-even"><td>cp1026</td>
+<td>ibm1026</td>
+<td><p class="first last">トルコ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1140</td>
+<td>ibm1140</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp1250</td>
+<td>windows-1250</td>
+<td><p class="first last">中央および東ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1251</td>
+<td>windows-1251</td>
+<td><p class="first last">ブルガリア、ベラルーシ、マケドニア、ロシア、セルビア</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp1252</td>
+<td>windows-1252</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1253</td>
+<td>windows-1253</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp1254</td>
+<td>windows-1254</td>
+<td><p class="first last">トルコ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1255</td>
+<td>windows-1255</td>
+<td><p class="first last">ヘブライ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp1256</td>
+<td>windows-1256</td>
+<td><p class="first last">アラビア語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>cp1257</td>
+<td>windows-1257</td>
+<td><p class="first last">バルト沿岸国</p>
+</td>
+</tr>
+<tr class="row-even"><td>cp1258</td>
+<td>windows-1258</td>
+<td><p class="first last">ベトナム</p>
+</td>
+</tr>
+<tr class="row-odd"><td>euc_jp</td>
+<td>eucjp, ujis, u-jis</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>euc_jis_2004</td>
+<td>jisx0213, eucjis2004</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>euc_jisx0213</td>
+<td>eucjisx0213</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>euc_kr</td>
+<td>euckr, korean, ksc5601,
+ks_c-5601, ks_c-5601-1987,
+ksx1001, ks_x-1001</td>
+<td><p class="first last">韓国語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>gb2312</td>
+<td>chinese, csiso58gb231280, euc-
+cn, euccn, eucgb2312-cn,
+gb2312-1980, gb2312-80, iso-
+ir-58</td>
+<td><p class="first last">簡体字中国語</p>
+</td>
+</tr>
+<tr class="row-even"><td>gbk</td>
+<td>936, cp936, ms936</td>
+<td>Unified Chinese</td>
+</tr>
+<tr class="row-odd"><td>gb18030</td>
+<td>gb18030-2000</td>
+<td>Unified Chinese</td>
+</tr>
+<tr class="row-even"><td>hz</td>
+<td>hzgb, hz-gb, hz-gb-2312</td>
+<td><p class="first last">簡体字中国語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso2022_jp</td>
+<td>csiso2022jp, iso2022jp,
+iso-2022-jp</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso2022_jp_1</td>
+<td>iso2022jp-1, iso-2022-jp-1</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso2022_jp_2</td>
+<td>iso2022jp-2, iso-2022-jp-2</td>
+<td><p class="first last">日本語, 韓国語, 簡体字中国語, 西欧, ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso2022_jp_2004</td>
+<td>iso2022jp-2004,
+iso-2022-jp-2004</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso2022_jp_3</td>
+<td>iso2022jp-3, iso-2022-jp-3</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso2022_jp_ext</td>
+<td>iso2022jp-ext, iso-2022-jp-ext</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso2022_kr</td>
+<td>csiso2022kr, iso2022kr,
+iso-2022-kr</td>
+<td><p class="first last">韓国語</p>
+</td>
+</tr>
+<tr class="row-even"><td>latin_1</td>
+<td>iso-8859-1, iso8859-1, 8859,
+cp819, latin, latin1, L1</td>
+<td><p class="first last">西ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_2</td>
+<td>iso-8859-2, latin2, L2</td>
+<td><p class="first last">中央および東ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_3</td>
+<td>iso-8859-3, latin3, L3</td>
+<td><p class="first last">エスペラント、マルタ</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_4</td>
+<td>iso-8859-4, latin4, L4</td>
+<td><p class="first last">バルト沿岸国</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_5</td>
+<td>iso-8859-5, cyrillic</td>
+<td><p class="first last">ブルガリア、ベラルーシ、マケドニア、ロシア、セルビア</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_6</td>
+<td>iso-8859-6, arabic</td>
+<td><p class="first last">アラビア語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_7</td>
+<td>iso-8859-7, greek, greek8</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_8</td>
+<td>iso-8859-8, hebrew</td>
+<td><p class="first last">ヘブライ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_9</td>
+<td>iso-8859-9, latin5, L5</td>
+<td><p class="first last">トルコ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_10</td>
+<td>iso-8859-10, latin6, L6</td>
+<td><p class="first last">北欧語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_11</td>
+<td>iso-8859-11, thai</td>
+<td><p class="first last">タイ語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_13</td>
+<td>iso-8859-13, latin7, L7</td>
+<td><p class="first last">バルト沿岸国</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_14</td>
+<td>iso-8859-14, latin8, L8</td>
+<td><p class="first last">ケルト語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>iso8859_15</td>
+<td>iso-8859-15, latin9, L9</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>iso8859_16</td>
+<td>iso-8859-16, latin10, L10</td>
+<td><p class="first last">南東ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-odd"><td>johab</td>
+<td>cp1361, ms1361</td>
+<td><p class="first last">韓国語</p>
+</td>
+</tr>
+<tr class="row-even"><td>koi8_r</td>
+<td>&nbsp;</td>
+<td><p class="first last">ロシア語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>koi8_u</td>
+<td>&nbsp;</td>
+<td><p class="first last">ウクライナ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>mac_cyrillic</td>
+<td>maccyrillic</td>
+<td><p class="first last">ブルガリア、ベラルーシ、マケドニア、ロシア、セルビア</p>
+</td>
+</tr>
+<tr class="row-odd"><td>mac_greek</td>
+<td>macgreek</td>
+<td><p class="first last">ギリシャ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>mac_iceland</td>
+<td>maciceland</td>
+<td><p class="first last">アイスランド語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>mac_latin2</td>
+<td>maclatin2, maccentraleurope</td>
+<td><p class="first last">中央および東ヨーロッパ</p>
+</td>
+</tr>
+<tr class="row-even"><td>mac_roman</td>
+<td>macroman</td>
+<td><p class="first last">西ヨーロッパ言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>mac_turkish</td>
+<td>macturkish</td>
+<td><p class="first last">トルコ語</p>
+</td>
+</tr>
+<tr class="row-even"><td>ptcp154</td>
+<td>csptcp154, pt154, cp154,
+cyrillic-asian</td>
+<td><p class="first last">カザフ</p>
+</td>
+</tr>
+<tr class="row-odd"><td>shift_jis</td>
+<td>csshiftjis, shiftjis, sjis,
+s_jis</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>shift_jis_2004</td>
+<td>shiftjis2004, sjis_2004,
+sjis2004</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>shift_jisx0213</td>
+<td>shiftjisx0213, sjisx0213,
+s_jisx0213</td>
+<td><p class="first last">日本語</p>
+</td>
+</tr>
+<tr class="row-even"><td>utf_32</td>
+<td>U32, utf32</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>utf_32_be</td>
+<td>UTF-32BE</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>utf_32_le</td>
+<td>UTF-32LE</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>utf_16</td>
+<td>U16, utf16</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>utf_16_be</td>
+<td>UTF-16BE</td>
+<td><p class="first last">全ての言語 (BMP のみ)</p>
+</td>
+</tr>
+<tr class="row-odd"><td>utf_16_le</td>
+<td>UTF-16LE</td>
+<td><p class="first last">全ての言語 (BMP のみ)</p>
+</td>
+</tr>
+<tr class="row-even"><td>utf_7</td>
+<td>U7, unicode-1-1-utf-7</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-odd"><td>utf_8</td>
+<td>U8, UTF, utf8</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+<tr class="row-even"><td>utf_8_sig</td>
+<td>&nbsp;</td>
+<td><p class="first last">全ての言語</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="python-specific-encodings">
+<h2>7.8.4. Python 特有のエンコーディング<a class="headerlink" href="#python-specific-encodings" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>予め定義された codec のいくつかは Python 特有のものなので、それらの codec 名は Python の外では無意味なものとなります。以下に、想定されている入出力のタイプに基づいて、それらを表にしました（テキストエンコーディングは codec の最も一般的な使用例ですが、その根底にある codec 基盤は、ただのテキストエンコーディングというよりも、任意のデータの変換をサポートしていることに注意してください）。非対称的な codec については、その目的がエンコーディングの方向を説明しています。</p>
+<p>以下の codec では Unicode から文字列へのエンコーディング <a class="footnote-reference" href="#encoding-note" id="id4">[1]</a> 、文字列から Unicode へのデコーディング <a class="footnote-reference" href="#decoding-note" id="id5">[2]</a> を、Unicode テキストエンコーディング同様に提供しています。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Codec</th>
+<th class="head"><p class="first last">別名</p>
+</th>
+<th class="head"><p class="first last">目的</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>idna</td>
+<td>&nbsp;</td>
+<td><p class="first last"><span class="target" id="index-15"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> の実装です。 <a class="reference internal" href="#module-encodings.idna" title="encodings.idna: Internationalized Domain Names implementation"><code class="xref py py-mod docutils literal"><span class="pre">encodings.idna</span></code></a> も参照してください。</p>
+</td>
+</tr>
+<tr class="row-odd"><td>mbcs</td>
+<td>dbcs</td>
+<td><p class="first last">Windows のみ: 被演算子を ANSI コードページ (CP_ACP) に従ってエンコードします</p>
+</td>
+</tr>
+<tr class="row-even"><td>palmos</td>
+<td>&nbsp;</td>
+<td><p class="first last">PalmOS 3.5 のエンコーディングです</p>
+</td>
+</tr>
+<tr class="row-odd"><td>punycode</td>
+<td>&nbsp;</td>
+<td><p class="first last"><span class="target" id="index-16"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3492.html"><strong>RFC 3492</strong></a> を実装しています。</p>
+</td>
+</tr>
+<tr class="row-even"><td>raw_unicode_escape</td>
+<td>&nbsp;</td>
+<td><p class="first last">Python ソースコードにおける raw Unicode リテラルとして適切な文字列を生成します。</p>
+</td>
+</tr>
+<tr class="row-odd"><td>rot_13</td>
+<td>rot13</td>
+<td><p class="first last">被演算子のシーザー暗号 (Caesar-cypher) を返します</p>
+</td>
+</tr>
+<tr class="row-even"><td>undefined</td>
+<td>&nbsp;</td>
+<td><p class="first last">全ての変換に対して例外を送出します。バイト列と Unicode 文字列との間で <a class="reference internal" href="../glossary.html#term-coercion"><span class="xref std std-term">coercion</span></a> (強制型変換) をおこないたくない時にシステムエンコーディングとして使うことができます。</p>
+</td>
+</tr>
+<tr class="row-odd"><td>unicode_escape</td>
+<td>&nbsp;</td>
+<td><p class="first last">Python ソースコードにおける Unicode リテラルとして適切な文字列を生成します。</p>
+</td>
+</tr>
+<tr class="row-even"><td>unicode_internal</td>
+<td>&nbsp;</td>
+<td><p class="first last">被演算子の内部表現を返します。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加: </span><code class="docutils literal"><span class="pre">idna</span></code>, <code class="docutils literal"><span class="pre">punycode</span></code> エンコーディングの追加。</p>
+</div>
+<p>以下の codec では文字列から文字列へのエンコーディングとデコーディング <a class="footnote-reference" href="#decoding-note" id="id6">[2]</a> を提供しています。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="26%" />
+<col width="26%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Codec</th>
+<th class="head"><p class="first last">別名</p>
+</th>
+<th class="head"><p class="first last">目的</p>
+</th>
+<th class="head"><p class="first last">エンコーダ/デコーダ</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>base64_codec</td>
+<td>base64, base-64</td>
+<td><p class="first last">被演算子をマルチラインの MIME base64 に変換します (結果は常に末尾の <code class="docutils literal"><span class="pre">'\n'</span></code> を含みます)</p>
+</td>
+<td><a class="reference internal" href="base64.html#base64.encodestring" title="base64.encodestring"><code class="xref py py-meth docutils literal"><span class="pre">base64.encodestring()</span></code></a>,
+<a class="reference internal" href="base64.html#base64.decodestring" title="base64.decodestring"><code class="xref py py-meth docutils literal"><span class="pre">base64.decodestring()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>bz2_codec</td>
+<td>bz2</td>
+<td><p class="first last">被演算子をbz2を使って圧縮します</p>
+</td>
+<td><a class="reference internal" href="bz2.html#bz2.compress" title="bz2.compress"><code class="xref py py-meth docutils literal"><span class="pre">bz2.compress()</span></code></a>,
+<a class="reference internal" href="bz2.html#bz2.decompress" title="bz2.decompress"><code class="xref py py-meth docutils literal"><span class="pre">bz2.decompress()</span></code></a></td>
+</tr>
+<tr class="row-even"><td>hex_codec</td>
+<td>hex</td>
+<td><p class="first last">被演算子をバイトあたり 2 桁の 16 進数の表現に変換します</p>
+</td>
+<td><a class="reference internal" href="binascii.html#binascii.b2a_hex" title="binascii.b2a_hex"><code class="xref py py-meth docutils literal"><span class="pre">binascii.b2a_hex()</span></code></a>,
+<a class="reference internal" href="binascii.html#binascii.a2b_hex" title="binascii.a2b_hex"><code class="xref py py-meth docutils literal"><span class="pre">binascii.a2b_hex()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>quopri_codec</td>
+<td>quopri, quoted-printable,
+quotedprintable</td>
+<td><p class="first last">被演算子を MIME quoted printable 形式に変換します</p>
+</td>
+<td><p class="first last"><code class="docutils literal"><span class="pre">quotetabs=True</span></code> を指定した <a class="reference internal" href="quopri.html#quopri.encode" title="quopri.encode"><code class="xref py py-meth docutils literal"><span class="pre">quopri.encode()</span></code></a>, <a class="reference internal" href="quopri.html#quopri.decode" title="quopri.decode"><code class="xref py py-meth docutils literal"><span class="pre">quopri.decode()</span></code></a></p>
+</td>
+</tr>
+<tr class="row-even"><td>string_escape</td>
+<td>&nbsp;</td>
+<td><p class="first last">Python ソースコードにおける文字列リテラルとして適切な文字列を生成します。</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>uu_codec</td>
+<td>uu</td>
+<td><p class="first last">被演算子を uuencode を用いて変換します</p>
+</td>
+<td><a class="reference internal" href="uu.html#uu.encode" title="uu.encode"><code class="xref py py-meth docutils literal"><span class="pre">uu.encode()</span></code></a>,
+<a class="reference internal" href="uu.html#uu.decode" title="uu.decode"><code class="xref py py-meth docutils literal"><span class="pre">uu.decode()</span></code></a></td>
+</tr>
+<tr class="row-even"><td>zlib_codec</td>
+<td>zip, zlib</td>
+<td><p class="first last">被演算子を gzip を用いて圧縮します</p>
+</td>
+<td><a class="reference internal" href="zlib.html#zlib.compress" title="zlib.compress"><code class="xref py py-meth docutils literal"><span class="pre">zlib.compress()</span></code></a>,
+<a class="reference internal" href="zlib.html#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal"><span class="pre">zlib.decompress()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="encoding-note" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[1]</a></td><td><p class="first last">unicode オブジェクトを入力として受け容れる場所では str オブジェクトも許容されます。この場合デフォルトエンコーディングを使って暗黙に unicode に変換されます。この変換が失敗した場合はエンコード操作が <a class="reference internal" href="exceptions.html#exceptions.UnicodeDecodeError" title="exceptions.UnicodeDecodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeDecodeError</span></code></a> を起こします。</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="decoding-note" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><em>(<a class="fn-backref" href="#id5">1</a>, <a class="fn-backref" href="#id6">2</a>)</em> <p class="last">str オブジェクトを入力として受け容れる場所では unicode オブジェクトも許容されます。この場合デフォルトエンコーディングを使って暗黙に str に変換されます。この変換が失敗した場合はデコード操作が <a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> を起こします。</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-encodings.idna">
+<span id="encodings-idna-internationalized-domain-names-in-applications"></span><h2>7.8.5. <a class="reference internal" href="#module-encodings.idna" title="encodings.idna: Internationalized Domain Names implementation"><code class="xref py py-mod docutils literal"><span class="pre">encodings.idna</span></code></a> &#8212; アプリケーションにおける国際化ドメイン名 (IDNA)<a class="headerlink" href="#module-encodings.idna" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+<p>このモジュールでは <span class="target" id="index-17"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> (アプリケーションにおける国際化ドメイン名、 IDNA: Internationalized Domain Names in Applications) および <span class="target" id="index-18"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3492.html"><strong>RFC 3492</strong></a> (Nameprep: 国際化ドメイン名 (IDN) のための stringprep プロファイル) を実装しています。このモジュールは <code class="docutils literal"><span class="pre">punycode</span></code> エンコーディングおよび <a class="reference internal" href="stringprep.html#module-stringprep" title="stringprep: String preparation, as per RFC 3453"><code class="xref py py-mod docutils literal"><span class="pre">stringprep</span></code></a> の上に構築されています。</p>
+<p>これらの RFC はともに、非 ASCII 文字の入ったドメイン名をサポートするためのプロトコルを定義しています。 (<code class="docutils literal"><span class="pre">www.Alliancefrançaise.nu</span></code> のような) 非 ASCII 文字を含むドメイン名は、 ASCII と互換性のあるエンコーディング (ACE、 <code class="docutils literal"><span class="pre">www.xn--alliancefranaise-npb.nu</span></code> のような形式) に変換されます。ドメイン名の ACE 形式は、 DNS クエリ、 HTTP <em class="mailheader">Host</em> フィールドなどといった、プロトコル中で任意の文字を使えないような全ての局面で用いられます。この変換はアプリケーション内で行われます; 可能ならユーザからは不可視となります: アプリケーションは Unicode ドメインラベルをネットワークに載せる際に IDNA に、 ACE ドメインラベルをユーザに提供する前に Unicode に、それぞれ透過的に変換しなければなりません。</p>
+<p>Python ではこの変換をいくつかの方法でサポートします: <code class="docutils literal"><span class="pre">idna</span></code> codec は Unicode と ACE 間の変換を行い、入力文字列を <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> の <a class="reference external" href="http://tools.ietf.org/html/rfc3490#section-3.1">section 3.1</a> (1) で定義されている区切り文字に基づいてラベルに分解し、各ラベルを要求通りに ACE に変換します。逆に、入力のバイト文字列を <code class="docutils literal"><span class="pre">.</span></code> 区切り文字でラベルに分解し、 ACE ラベルを Unicode に変換します。さらに、 <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールは Unicode ホスト名を ACE に透過的に変換するため、アプリケーションはホスト名を <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールに渡す際にホスト名の変換に煩わされることがありません。その上で、ホスト名を関数パラメタとして持つ、 <a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> や <a class="reference internal" href="ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> のようなモジュールでは Unicode ホスト名を受理します (<a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> でもまた、 <code class="docutils literal"><span class="pre">Host:</span></code> フィールドにある IDNA ホスト名を、フィールド全体を送信する場合に透過的に送信します)。</p>
+<p>(逆引きなどによって) ネットワーク越しにホスト名を受信する際、Unicode への自動変換は行われません: こうしたホスト名をユーザに提供したいアプリケーションでは、Unicode にデコードしてやる必要があります。</p>
+<p><a class="reference internal" href="#module-encodings.idna" title="encodings.idna: Internationalized Domain Names implementation"><code class="xref py py-mod docutils literal"><span class="pre">encodings.idna</span></code></a> ではまた、 nameprep 手続きを実装しています。 nameprep はホスト名に対してある正規化を行って、国際化ドメイン名で大小文字を区別しないようにするとともに、類似の文字を一元化します。 nameprep 関数は必要なら直接使うこともできます。</p>
+<dl class="function">
+<dt id="encodings.idna.nameprep">
+<code class="descclassname">encodings.idna.</code><code class="descname">nameprep</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#encodings.idna.nameprep" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>label</em> を nameprep したバージョンを返します。現在の実装ではクエリ文字列を仮定しているので、<code class="docutils literal"><span class="pre">AllowUnassigned</span></code> は真です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="encodings.idna.ToASCII">
+<code class="descclassname">encodings.idna.</code><code class="descname">ToASCII</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#encodings.idna.ToASCII" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><span class="target" id="index-20"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> 仕様に従ってラベルを ASCIIに変換します。 <code class="docutils literal"><span class="pre">UseSTD3ASCIIRules</span></code> は偽であると仮定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="encodings.idna.ToUnicode">
+<code class="descclassname">encodings.idna.</code><code class="descname">ToUnicode</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#encodings.idna.ToUnicode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><span class="target" id="index-21"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> 仕様に従ってラベルを Unicode に変換します。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-encodings.utf_8_sig">
+<span id="encodings-utf-8-sig-utf-8-codec-with-bom-signature"></span><h2>7.8.6. <a class="reference internal" href="#module-encodings.utf_8_sig" title="encodings.utf_8_sig: UTF-8 codec with BOM signature"><code class="xref py py-mod docutils literal"><span class="pre">encodings.utf_8_sig</span></code></a> &#8212; BOM 印付き UTF-8<a class="headerlink" href="#module-encodings.utf_8_sig" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+<p>このモジュールは UTF-8 codec の変種を実装します。エンコーディング時は、UTF-8 でエンコードしたバイト列の前に UTF-8 でエンコードした BOM を追加します。これは内部状態を持つエンコーダで、この動作は (バイトストリームの最初の書き込み時に) 一度だけ行なわれます。デコーディング時は、データの最初に UTF-8 でエンコードされた BOM があれば、それをスキップします。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.8. <code class="docutils literal"><span class="pre">codecs</span></code> &#8212; codec レジストリと基底クラス</a><ul>
+<li><a class="reference internal" href="#codec-base-classes">7.8.1. Codec 基底クラス</a><ul>
+<li><a class="reference internal" href="#codec-objects">7.8.1.1. Codec オブジェクト</a></li>
+<li><a class="reference internal" href="#incrementalencoder-objects">7.8.1.2. IncrementalEncoder オブジェクト</a></li>
+<li><a class="reference internal" href="#incrementaldecoder-objects">7.8.1.3. IncrementalDecoder オブジェクト</a></li>
+<li><a class="reference internal" href="#streamwriter-objects">7.8.1.4. StreamWriter オブジェクト</a></li>
+<li><a class="reference internal" href="#streamreader-objects">7.8.1.5. StreamReader オブジェクト</a></li>
+<li><a class="reference internal" href="#streamreaderwriter-objects">7.8.1.6. StreamReaderWriter オブジェクト</a></li>
+<li><a class="reference internal" href="#streamrecoder-objects">7.8.1.7. StreamRecoder オブジェクト</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#encodings-and-unicode">7.8.2. エンコーディングと Unicode</a></li>
+<li><a class="reference internal" href="#standard-encodings">7.8.3. 標準エンコーディング</a></li>
+<li><a class="reference internal" href="#python-specific-encodings">7.8.4. Python 特有のエンコーディング</a></li>
+<li><a class="reference internal" href="#module-encodings.idna">7.8.5. <code class="docutils literal"><span class="pre">encodings.idna</span></code> &#8212; アプリケーションにおける国際化ドメイン名 (IDNA)</a></li>
+<li><a class="reference internal" href="#module-encodings.utf_8_sig">7.8.6. <code class="docutils literal"><span class="pre">encodings.utf_8_sig</span></code> &#8212; BOM 印付き UTF-8</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="textwrap.html"
+                        title="前の章へ">7.7. <code class="docutils literal"><span class="pre">textwrap</span></code> &#8212; テキストの折り返しと詰め込み</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="unicodedata.html"
+                        title="次の章へ">7.9. <code class="docutils literal"><span class="pre">unicodedata</span></code> &#8212; Unicode データベース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/codecs.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="unicodedata.html" title="7.9. unicodedata — Unicode データベース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="7.7. textwrap — テキストの折り返しと詰め込み"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" >7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>15.10. getpass — 可搬性のあるパスワード入力機構 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="15. 汎用オペレーティングシステムサービス" href="allos.html" />
+    <link rel="next" title="15.11. curses — 文字セル表示を扱うための端末操作" href="curses.html" />
+    <link rel="prev" title="15.9. logging.handlers — ロギングハンドラ" href="logging.handlers.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="15.11. curses — 文字セル表示を扱うための端末操作"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="logging.handlers.html" title="15.9. logging.handlers — ロギングハンドラ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" accesskey="U">15. 汎用オペレーティングシステムサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-getpass">
+<span id="getpass-portable-password-input"></span><h1>15.10. <a class="reference internal" href="#module-getpass" title="getpass: Portable reading of passwords and retrieval of the userid."><code class="xref py py-mod docutils literal"><span class="pre">getpass</span></code></a> &#8212; 可搬性のあるパスワード入力機構<a class="headerlink" href="#module-getpass" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference internal" href="#module-getpass" title="getpass: Portable reading of passwords and retrieval of the userid."><code class="xref py py-mod docutils literal"><span class="pre">getpass</span></code></a> モジュールは二つの関数を提供します:</p>
+<dl class="function">
+<dt id="getpass.getpass">
+<code class="descclassname">getpass.</code><code class="descname">getpass</code><span class="sig-paren">(</span><span class="optional">[</span><em>prompt</em><span class="optional">[</span>, <em>stream</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getpass.getpass" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エコーなしでユーザーにパスワードを入力させるプロンプト。ユーザーは <em>prompt</em> の文字列をプロンプトに使え、デフォルトは <code class="docutils literal"><span class="pre">'Password:'</span></code> です。 Unixではプロンプトはファイルに似たオブジェクト <em>stream</em> へ出力されます。 <em>stream</em> のデフォルトは、制御端末 (/dev/tty) か、それが利用できない場合は <code class="docutils literal"><span class="pre">sys.stderr</span></code> です。 (この引数は Windowsでは無視されます。)</p>
+<p>もしエコー無しの入力が利用できない場合は、 <code class="docutils literal"><span class="pre">getpass()</span></code> は <em>stream</em> に警告メッセージを出力し、 <code class="docutils literal"><span class="pre">sys.stdin</span></code> から読み込み、 <a class="reference internal" href="#getpass.GetPassWarning" title="getpass.GetPassWarning"><code class="xref py py-exc docutils literal"><span class="pre">GetPassWarning</span></code></a> 警告を発生させます。</p>
+<p>利用できるシステム: Macintosh, Unix, Windows。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>パラメータ <em>stream</em> の追加.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span>Unix ではデフォルトで、 <code class="docutils literal"><span class="pre">sys.stdin</span></code> と <code class="docutils literal"><span class="pre">sys.stderr</span></code> へ fallback するまえに /dev/tty を利用します。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">IDLE から getpass を呼び出した場合、入力はIDLEのウィンドウではなく、IDLE を起動したターミナルから行われます。</p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="getpass.GetPassWarning">
+<em class="property">exception </em><code class="descclassname">getpass.</code><code class="descname">GetPassWarning</code><a class="headerlink" href="#getpass.GetPassWarning" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="exceptions.html#exceptions.UserWarning" title="exceptions.UserWarning"><code class="xref py py-exc docutils literal"><span class="pre">UserWarning</span></code></a> のサブクラスで、入力がエコーされてしまった場合に発生します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="getpass.getuser">
+<code class="descclassname">getpass.</code><code class="descname">getuser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getpass.getuser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザーの &#8220;ログイン名&#8221;を返します。有効性:Unix、Windows。</p>
+<p>この関数は環境変数 <span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal"><span class="pre">LOGNAME</span></code> <span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal"><span class="pre">USER</span></code> <span class="target" id="index-10"></span><code class="xref std std-envvar docutils literal"><span class="pre">LNAME</span></code> <span class="target" id="index-11"></span><code class="xref std std-envvar docutils literal"><span class="pre">USERNAME</span></code> の順序でチェックして、最初の空ではない文字列が設定された値を返します。もし、なにも設定されていない場合は <a class="reference internal" href="pwd.html#module-pwd" title="pwd: The password database (getpwnam() and friends). (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">pwd</span></code></a> モジュールが提供するシステム上のパスワードデータベースから返します。それ以外は、例外が上がります。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="logging.handlers.html"
+                        title="前の章へ">15.9. <code class="docutils literal"><span class="pre">logging.handlers</span></code> &#8212; ロギングハンドラ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="curses.html"
+                        title="次の章へ">15.11. <code class="docutils literal"><span class="pre">curses</span></code> &#8212; 文字セル表示を扱うための端末操作</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/getpass.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="15.11. curses — 文字セル表示を扱うための端末操作"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="logging.handlers.html" title="15.9. logging.handlers — ロギングハンドラ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" >15. 汎用オペレーティングシステムサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

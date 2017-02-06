@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>16.8. readline — GNU readline のインタフェース &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="16. オプションのオペレーティングシステムサービス" href="someos.html" />
+    <link rel="next" title="16.9. rlcompleter — GNU readline向け補完関数" href="rlcompleter.html" />
+    <link rel="prev" title="16.7. mmap — メモリマップファイル" href="mmap.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="rlcompleter.html" title="16.9. rlcompleter — GNU readline向け補完関数"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="mmap.html" title="16.7. mmap — メモリマップファイル"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="someos.html" accesskey="U">16. オプションのオペレーティングシステムサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-readline">
+<span id="readline-gnu-readline-interface"></span><h1>16.8. <a class="reference internal" href="#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> &#8212; GNU readline のインタフェース<a class="headerlink" href="#module-readline" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference internal" href="#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールでは、補完をしやすくしたり、ヒストリファイルを Python インタプリタから読み書きできるようにするためのいくつかの関数を定義しています。このモジュールは直接使うことも <a class="reference internal" href="rlcompleter.html#module-rlcompleter" title="rlcompleter: Python identifier completion, suitable for the GNU readline library."><code class="xref py py-mod docutils literal"><span class="pre">rlcompleter</span></code></a> モジュールを介して使うこともできます。このモジュールで利用される設定はインタプリタの対話プロンプトの振舞い、組み込みの <a class="reference internal" href="functions.html#raw_input" title="raw_input"><code class="xref py py-func docutils literal"><span class="pre">raw_input()</span></code></a> , <a class="reference internal" href="functions.html#input" title="input"><code class="xref py py-func docutils literal"><span class="pre">input()</span></code></a> 関数の振舞いに影響します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>MacOS X では <a class="reference internal" href="#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールは GNU readline ではなく <code class="docutils literal"><span class="pre">libedit</span></code> ライブラリを使って実装されていることがあります。</p>
+<p class="last"><code class="docutils literal"><span class="pre">libedit</span></code> の設定ファイルは GNU readline のものとは異なります。もし設定文字列をプログラムからロードしているなら、 GNU readline と libedit を区別するために &#8220;libedit&#8221; という文字列が <code class="xref py py-const docutils literal"><span class="pre">readline.__doc__</span></code> に含まれているかどうかチェックしてください。</p>
+</div>
+<p><a class="reference internal" href="#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールでは以下の関数を定義しています:</p>
+<dl class="function">
+<dt id="readline.parse_and_bind">
+<code class="descclassname">readline.</code><code class="descname">parse_and_bind</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.parse_and_bind" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline 初期化ファイルの一行を解析して実行します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_line_buffer">
+<code class="descclassname">readline.</code><code class="descname">get_line_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_line_buffer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>行バッファの現在の内容を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.insert_text">
+<code class="descclassname">readline.</code><code class="descname">insert_text</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.insert_text" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>コマンドラインにテキストを挿入します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.read_init_file">
+<code class="descclassname">readline.</code><code class="descname">read_init_file</code><span class="sig-paren">(</span><span class="optional">[</span><em>filename</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.read_init_file" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline 初期化ファイルを解析します。標準のファイル名は最後に使われたファイル名です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.read_history_file">
+<code class="descclassname">readline.</code><code class="descname">read_history_file</code><span class="sig-paren">(</span><span class="optional">[</span><em>filename</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.read_history_file" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline 履歴ファイルを読み出します。標準のファイル名は <code class="file docutils literal"><span class="pre">~/.history</span></code> です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.write_history_file">
+<code class="descclassname">readline.</code><code class="descname">write_history_file</code><span class="sig-paren">(</span><span class="optional">[</span><em>filename</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.write_history_file" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline 履歴ファイルを保存します。標準のファイル名は <code class="file docutils literal"><span class="pre">~/.history</span></code> です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.clear_history">
+<code class="descclassname">readline.</code><code class="descname">clear_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.clear_history" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在の履歴をクリアします。(注意:インストールされている GNU readline がサポートしていない場合、この関数は利用できません)</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_history_length">
+<code class="descclassname">readline.</code><code class="descname">get_history_length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_history_length" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>履歴ファイルに求める長さを返します。負の値は履歴ファイルのサイズに制限がないことを示します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_history_length">
+<code class="descclassname">readline.</code><code class="descname">set_history_length</code><span class="sig-paren">(</span><em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_history_length" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>履歴ファイルに保存する行数を設定します。<a class="reference internal" href="#readline.write_history_file" title="readline.write_history_file"><code class="xref py py-func docutils literal"><span class="pre">write_history_file()</span></code></a> は保存時に履歴ファイルを切り詰めるためにこの値を使います。負の値は履歴ファイルのサイズを制限しないことを示します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_current_history_length">
+<code class="descclassname">readline.</code><code class="descname">get_current_history_length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_current_history_length" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>履歴の現在の行数を返します。(この関数は <a class="reference internal" href="#readline.get_history_length" title="readline.get_history_length"><code class="xref py py-func docutils literal"><span class="pre">get_history_length()</span></code></a> と異なります。 <a class="reference internal" href="#readline.get_history_length" title="readline.get_history_length"><code class="xref py py-func docutils literal"><span class="pre">get_history_length()</span></code></a> は履歴ファイルに書き出される最大行数を返します。)</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_history_item">
+<code class="descclassname">readline.</code><code class="descname">get_history_item</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_history_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>履歴の現在の内容から <em>index</em> 番目の項目を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.remove_history_item">
+<code class="descclassname">readline.</code><code class="descname">remove_history_item</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.remove_history_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>履歴から位置指定した項目を削除します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.replace_history_item">
+<code class="descclassname">readline.</code><code class="descname">replace_history_item</code><span class="sig-paren">(</span><em>pos</em>, <em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.replace_history_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>位置指定した履歴項目を指定した line で置き換えます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.redisplay">
+<code class="descclassname">readline.</code><code class="descname">redisplay</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.redisplay" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>行バッファの現在の内容を反映して画面の表示を更新します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_startup_hook">
+<code class="descclassname">readline.</code><code class="descname">set_startup_hook</code><span class="sig-paren">(</span><span class="optional">[</span><em>function</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_startup_hook" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>startup_hook 関数を設定または削除します。<em>function</em> が指定された場合、新たな startup_hook 関数として用いられます; 省略された場合や <code class="docutils literal"><span class="pre">None</span></code> の場合、現在インストールされている全フック関数は削除されます。startup_hook 関数は readline が最初のプロンプトを出力する直前に引数なしで呼び出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_pre_input_hook">
+<code class="descclassname">readline.</code><code class="descname">set_pre_input_hook</code><span class="sig-paren">(</span><span class="optional">[</span><em>function</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_pre_input_hook" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>pre_input_hook 関数を設定または削除します。<em>function</em> が指定された場合、新たな pre_input_hook 関数として用いられます;  省略された場合や <code class="docutils literal"><span class="pre">None</span></code> の場合、現在インストールされているフック関数は削除されます。pre_input_hook 関数は readline が最初のプロンプトを出力した後で、かつ readline が入力された文字を読み込み始める直前に引数なしで呼び出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_completer">
+<code class="descclassname">readline.</code><code class="descname">set_completer</code><span class="sig-paren">(</span><span class="optional">[</span><em>function</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_completer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>completer 関数を設定または削除します。<em>function</em> が指定された場合、新たな completer 関数として用いられます;  省略された場合や <code class="docutils literal"><span class="pre">None</span></code> の場合、現在インストールされている completer 関数は削除されます。completer 関数は <code class="docutils literal"><span class="pre">function(text,</span> <span class="pre">state)</span></code> の形式で、関数が文字列でない値を返すまで <em>state</em> を <code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">2</span></code>, ..., にして呼び出します。この関数は <em>text</em> から始まる補完結果として次に来そうなものを返さなければなりません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_completer">
+<code class="descclassname">readline.</code><code class="descname">get_completer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_completer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>completer 関数を取得します。completer 関数が設定されていなければ <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_completion_type">
+<code class="descclassname">readline.</code><code class="descname">get_completion_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_completion_type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>試行中の補完のタイプを取得します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_begidx">
+<code class="descclassname">readline.</code><code class="descname">get_begidx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_begidx" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline タブ補完スコープの先頭のインデックスを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_endidx">
+<code class="descclassname">readline.</code><code class="descname">get_endidx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_endidx" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>readline タブ補完スコープの末尾のインデックスを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_completer_delims">
+<code class="descclassname">readline.</code><code class="descname">set_completer_delims</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_completer_delims" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タブ補完のための readline 単語区切り文字を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.get_completer_delims">
+<code class="descclassname">readline.</code><code class="descname">get_completer_delims</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.get_completer_delims" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タブ補完のための readline 単語区切り文字を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.set_completion_display_matches_hook">
+<code class="descclassname">readline.</code><code class="descname">set_completion_display_matches_hook</code><span class="sig-paren">(</span><span class="optional">[</span><em>function</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#readline.set_completion_display_matches_hook" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>補完表示関数を設定あるいは削除します。<em>function</em> が指定された場合、それが新しい補完表示関数として利用されます。省略された場合や``None`` の場合、既に設定されていた補完表示関数が削除されます。補完表示関数は、マッチの表示が必要になるたびに、<code class="docutils literal"><span class="pre">function(substitution,</span> <span class="pre">[matches],</span> <span class="pre">longest_match_length)</span></code> という形で呼び出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="readline.add_history">
+<code class="descclassname">readline.</code><code class="descname">add_history</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#readline.add_history" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>1 行を履歴バッファに追加し、最後に打ち込まれた行のようにします。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="rlcompleter.html#module-rlcompleter" title="rlcompleter: Python identifier completion, suitable for the GNU readline library."><code class="xref py py-mod docutils literal"><span class="pre">rlcompleter</span></code></a></dt>
+<dd><p class="first last">対話的プロンプトで Python 識別子を補完する機能。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<span id="readline-example"></span><h2>16.8.1. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の例では、ユーザのホームディレクトリにある <code class="file docutils literal"><span class="pre">.pyhist</span></code> という名前のヒストリファイルを自動的に読み書きするために、 <a class="reference internal" href="#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールによるヒストリの読み書き関数をどのように使うかを例示しています。以下のソースコードは通常、対話セッションの中で <span class="target" id="index-2"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSTARTUP"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONSTARTUP</span></code></a> ファイルから読み込まれ自動的に実行されることになります。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">readline</span>
+<span class="n">histfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;.pyhist&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">read_history_file</span><span class="p">(</span><span class="n">histfile</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">readline</span><span class="o">.</span><span class="n">write_history_file</span><span class="p">,</span> <span class="n">histfile</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">os</span><span class="p">,</span> <span class="n">histfile</span>
+</pre></div>
+</div>
+<p>次の例では <a class="reference internal" href="code.html#code.InteractiveConsole" title="code.InteractiveConsole"><code class="xref py py-class docutils literal"><span class="pre">code.InteractiveConsole</span></code></a> クラスを拡張し、履歴の保存・復旧をサポートします。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">code</span>
+<span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">HistoryConsole</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">InteractiveConsole</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;&lt;console&gt;&quot;</span><span class="p">,</span>
+                 <span class="n">histfile</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.console-history&quot;</span><span class="p">)):</span>
+        <span class="n">code</span><span class="o">.</span><span class="n">InteractiveConsole</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">locals</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_history</span><span class="p">(</span><span class="n">histfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">histfile</span><span class="p">):</span>
+        <span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s2">&quot;tab: complete&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">readline</span><span class="p">,</span> <span class="s2">&quot;read_history_file&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">readline</span><span class="o">.</span><span class="n">read_history_file</span><span class="p">(</span><span class="n">histfile</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_history</span><span class="p">,</span> <span class="n">histfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">histfile</span><span class="p">):</span>
+        <span class="n">readline</span><span class="o">.</span><span class="n">write_history_file</span><span class="p">(</span><span class="n">histfile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">16.8. <code class="docutils literal"><span class="pre">readline</span></code> &#8212; GNU readline のインタフェース</a><ul>
+<li><a class="reference internal" href="#example">16.8.1. 例</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="mmap.html"
+                        title="前の章へ">16.7. <code class="docutils literal"><span class="pre">mmap</span></code> &#8212; メモリマップファイル</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="rlcompleter.html"
+                        title="次の章へ">16.9. <code class="docutils literal"><span class="pre">rlcompleter</span></code> &#8212; GNU readline向け補完関数</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/readline.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="rlcompleter.html" title="16.9. rlcompleter — GNU readline向け補完関数"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="mmap.html" title="16.7. mmap — メモリマップファイル"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="someos.html" >16. オプションのオペレーティングシステムサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

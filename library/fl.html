@@ -1,0 +1,729 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>39.4. fl — グラフィカルユーザーインターフェースのための FORMS ライブラリ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="39. SGI IRIX 固有のサービス" href="sgi.html" />
+    <link rel="next" title="39.7. fm — Font Manager インターフェース" href="fm.html" />
+    <link rel="prev" title="39.3. cd — SGI システムの CD-ROM へのアクセス" href="cd.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="fm.html" title="39.7. fm — Font Manager インターフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="cd.html" title="39.3. cd — SGI システムの CD-ROM へのアクセス"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sgi.html" accesskey="U">39. SGI IRIX 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-fl">
+<span id="fl-forms-library-for-graphical-user-interfaces"></span><h1>39.4. <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> &#8212; グラフィカルユーザーインターフェースのための FORMS ライブラリ<a class="headerlink" href="#module-fl" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p id="index-0">このモジュールは、Mark Overmars による FORMS ライブラリへのインターフェースを提供します。 FORMS ライブラリのソースは anonymous ftp <code class="docutils literal"><span class="pre">ftp.cs.ruu.nl</span></code> の <code class="file docutils literal"><span class="pre">SGI/FORMS</span></code> ディレクトリから入手できます。最新のテストはバージョン 2.0b で行いました。</p>
+<p>ほとんどの関数は接頭辞の <code class="docutils literal"><span class="pre">fl_</span></code> を取ると、対応する C の関数名になります。ライブラリで使われる定数は後述の <a class="reference internal" href="#module-FL" title="FL: Constants used with the fl module. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">FL</span></code></a> モジュールで定義されています。</p>
+<p>Python でこのオブジェクトを作る方法は C とは少し違っています： ライブラリに保持された &#8216;現在のフォーム&#8217; に新しい FORMS オブジェクトを加えるのではなく、フォームに FORMS オブジェクトを加えるには、フォームを示す Python オブジェクトのメソッドで全て行います。したがって、C の関数の <code class="xref c c-func docutils literal"><span class="pre">fl_addto_form()</span></code> と <code class="xref c c-func docutils literal"><span class="pre">fl_end_form()</span></code> に相当するものは Python にはありませんし、 <code class="xref c c-func docutils literal"><span class="pre">fl_bgn_form()</span></code> に相当するものとしては <a class="reference internal" href="#fl.make_form" title="fl.make_form"><code class="xref py py-func docutils literal"><span class="pre">fl.make_form()</span></code></a> を呼び出します。</p>
+<p>用語のちょっとした混乱に注意してください： FORMS ではフォームの中に置くことができるボタン、スライダーなどに <em class="dfn">object</em> の用語を使います。 Python では全ての値が &#8216;オブジェクト&#8217; です。 FORMS への Python のインターフェースによって、2つの新しいタイプの Python オブジェクト： フォームオブジェクト (フォーム全体を示します) と FORMS オブジェクト (ボタン、スライダーなどの一つひとつを示します) を作ります。おそらく、混乱するほどのことではありません。</p>
+<p>FORMS への Python インターフェースに &#8216;フリーオブジェクト&#8217; はありませんし、 Python でオブジェクトクラスを書いて加える簡単な方法もありません。しかし、GL イベントハンドルへの FORMS インターフェースが利用可能で、純粋な GL ウィンドウに FORMS を組み合わせることができます。</p>
+<p><strong>注意：</strong> <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> をインポートすると、GL の関数 <code class="xref c c-func docutils literal"><span class="pre">foreground()</span></code> と FORMS のルーチン <code class="xref c c-func docutils literal"><span class="pre">fl_init()</span></code> を呼び出します。</p>
+<div class="section" id="functions-defined-in-module-fl">
+<span id="fl-functions"></span><h2>39.4.1. <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> モジュールに定義されている関数<a class="headerlink" href="#functions-defined-in-module-fl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> モジュールには以下の関数が定義されています。これらの関数の働きに関する詳しい情報については、FORMS  ドキュメントで対応する C の関数の説明を参照してください。</p>
+<dl class="function">
+<dt id="fl.make_form">
+<code class="descclassname">fl.</code><code class="descname">make_form</code><span class="sig-paren">(</span><em>type</em>, <em>width</em>, <em>height</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.make_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたタイプ、幅、高さでフォームを作ります。これは <em class="dfn">form</em> オブジェクトを返します。このオブジェクトは後述のメソッドを持ちます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.do_forms">
+<code class="descclassname">fl.</code><code class="descname">do_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.do_forms" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>標準の FORMS のメインループです。ユーザからの応答が必要な FORMS オブジェクトを示す Python オブジェクト、あるいは特別な値 <code class="xref py py-const docutils literal"><span class="pre">FL.EVENT</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.check_forms">
+<code class="descclassname">fl.</code><code class="descname">check_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.check_forms" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>FORMS イベントを確認します。 <a class="reference internal" href="#fl.do_forms" title="fl.do_forms"><code class="xref py py-func docutils literal"><span class="pre">do_forms()</span></code></a> が返すもの、あるいはユーザからの応答をすぐに必要とするイベントがないなら <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.set_event_call_back">
+<code class="descclassname">fl.</code><code class="descname">set_event_call_back</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.set_event_call_back" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>イベントのコールバック関数を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.set_graphics_mode">
+<code class="descclassname">fl.</code><code class="descname">set_graphics_mode</code><span class="sig-paren">(</span><em>rgbmode</em>, <em>doublebuffering</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.set_graphics_mode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>グラフィックモードを設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.get_rgbmode">
+<code class="descclassname">fl.</code><code class="descname">get_rgbmode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.get_rgbmode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在の RGB モードを返します。これは C のグローバル変数 <code class="xref c c-data docutils literal"><span class="pre">fl_rgbmode</span></code> の値です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.show_message">
+<code class="descclassname">fl.</code><code class="descname">show_message</code><span class="sig-paren">(</span><em>str1</em>, <em>str2</em>, <em>str3</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.show_message" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>3 行のメッセージと OK ボタンのあるダイアログボックスを表示します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.show_question">
+<code class="descclassname">fl.</code><code class="descname">show_question</code><span class="sig-paren">(</span><em>str1</em>, <em>str2</em>, <em>str3</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.show_question" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>3 行のメッセージと YES、NO のボタンのあるダイアログボックスを表示します。ユーザによって YES が押されたら <code class="docutils literal"><span class="pre">1</span></code> 、NO が押されたら <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.show_choice">
+<code class="descclassname">fl.</code><code class="descname">show_choice</code><span class="sig-paren">(</span><em>str1</em>, <em>str2</em>, <em>str3</em>, <em>but1</em><span class="optional">[</span>, <em>but2</em><span class="optional">[</span>, <em>but3</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.show_choice" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>3 行のメッセージと最大3つまでのボタンのあるダイアログボックスを表示します。ユーザによって押されたボタンの数値を返します (それぞれ <code class="docutils literal"><span class="pre">1</span></code> 、 <code class="docutils literal"><span class="pre">2</span></code> 、 <code class="docutils literal"><span class="pre">3</span></code>)。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.show_input">
+<code class="descclassname">fl.</code><code class="descname">show_input</code><span class="sig-paren">(</span><em>prompt</em>, <em>default</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.show_input" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>1 行のプロンプトメッセージと、ユーザが入力できるテキストフィールドを持つダイアログボックスを表示します。 2 番目の引数はデフォルトで表示される入力文字列です。ユーザが入力した文字列が返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.show_file_selector">
+<code class="descclassname">fl.</code><code class="descname">show_file_selector</code><span class="sig-paren">(</span><em>message</em>, <em>directory</em>, <em>pattern</em>, <em>default</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.show_file_selector" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイル選択ダイアログを表示します。ユーザによって選択されたファイルの絶対パス、あるいはユーザが Cancel ボタンを押した場合は <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.get_directory">
+<code class="descclassname">fl.</code><code class="descname">get_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.get_directory" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.get_pattern">
+<code class="descclassname">fl.</code><code class="descname">get_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.get_pattern" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.get_filename">
+<code class="descclassname">fl.</code><code class="descname">get_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.get_filename" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これらの関数は最後にユーザが <a class="reference internal" href="#fl.show_file_selector" title="fl.show_file_selector"><code class="xref py py-func docutils literal"><span class="pre">show_file_selector()</span></code></a> で選択したディレクトリ、パターン、ファイル名 (パスの末尾のみ) を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.qdevice">
+<code class="descclassname">fl.</code><code class="descname">qdevice</code><span class="sig-paren">(</span><em>dev</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.qdevice" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.unqdevice">
+<code class="descclassname">fl.</code><code class="descname">unqdevice</code><span class="sig-paren">(</span><em>dev</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.unqdevice" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.isqueued">
+<code class="descclassname">fl.</code><code class="descname">isqueued</code><span class="sig-paren">(</span><em>dev</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.isqueued" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.qtest">
+<code class="descclassname">fl.</code><code class="descname">qtest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.qtest" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.qread">
+<code class="descclassname">fl.</code><code class="descname">qread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.qread" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.qreset">
+<code class="descclassname">fl.</code><code class="descname">qreset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.qreset" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.qenter">
+<code class="descclassname">fl.</code><code class="descname">qenter</code><span class="sig-paren">(</span><em>dev</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.qenter" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.get_mouse">
+<code class="descclassname">fl.</code><code class="descname">get_mouse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.get_mouse" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.tie">
+<code class="descclassname">fl.</code><code class="descname">tie</code><span class="sig-paren">(</span><em>button</em>, <em>valuator1</em>, <em>valuator2</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.tie" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これらの関数は対応する GL 関数への FORMS のインターフェースです。 <code class="xref py py-func docutils literal"><span class="pre">fl.do_events()</span></code> を使っていて、自分で何か GL イベントを操作したいときにこれらを使います。FORMS が扱うことのできない GL イベントが検出されたら <a class="reference internal" href="#fl.do_forms" title="fl.do_forms"><code class="xref py py-func docutils literal"><span class="pre">fl.do_forms()</span></code></a> が特別の値 <code class="xref py py-const docutils literal"><span class="pre">FL.EVENT</span></code> を返すので、 <a class="reference internal" href="#fl.qread" title="fl.qread"><code class="xref py py-func docutils literal"><span class="pre">fl.qread()</span></code></a> を呼び出して、キューからイベントを読み込むべきです。対応する GL の関数は使わないでください!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fl.color">
+<code class="descclassname">fl.</code><code class="descname">color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.color" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.mapcolor">
+<code class="descclassname">fl.</code><code class="descname">mapcolor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.mapcolor" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="fl.getmcolor">
+<code class="descclassname">fl.</code><code class="descname">getmcolor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.getmcolor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>FORMS ドキュメントにある <code class="xref c c-func docutils literal"><span class="pre">fl_color()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">fl_mapcolor()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">fl_getmcolor()</span></code> の記述を参照してください。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="form-objects">
+<span id="id1"></span><h2>39.4.2. Form オブジェクト<a class="headerlink" href="#form-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>フォームオブジェクト (上で述べた <a class="reference internal" href="#fl.make_form" title="fl.make_form"><code class="xref py py-func docutils literal"><span class="pre">make_form()</span></code></a> で返されます) には下記のメソッドがあります。各メソッドは名前の接頭辞に <code class="docutils literal"><span class="pre">fl_</span></code> を付けた C の関数に対応します；また、最初の引数はフォームのポインタです；説明は FORMS の公式文書を参照してください。</p>
+<p>全ての <code class="xref py py-meth docutils literal"><span class="pre">add_*()</span></code> メソッドは、 FORMS オブジェクトを示す Python オブジェクトを返します。 FORMS オブジェクトのメソッドを以下に記載します。ほとんどの FORMS オブジェクトは、そのオブジェクトの種類ごとに特有のメソッドもいくつか持っています。</p>
+<dl class="method">
+<dt id="fl.form.show_form">
+<code class="descclassname">form.</code><code class="descname">show_form</code><span class="sig-paren">(</span><em>placement</em>, <em>bordertype</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.show_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームを表示します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.hide_form">
+<code class="descclassname">form.</code><code class="descname">hide_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.hide_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームを隠します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.redraw_form">
+<code class="descclassname">form.</code><code class="descname">redraw_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.redraw_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームを再描画します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.set_form_position">
+<code class="descclassname">form.</code><code class="descname">set_form_position</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.set_form_position" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームの位置を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.freeze_form">
+<code class="descclassname">form.</code><code class="descname">freeze_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.freeze_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームを固定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.unfreeze_form">
+<code class="descclassname">form.</code><code class="descname">unfreeze_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.unfreeze_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>固定したフォームの固定を解除します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.activate_form">
+<code class="descclassname">form.</code><code class="descname">activate_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.activate_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームをアクティベートします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.deactivate_form">
+<code class="descclassname">form.</code><code class="descname">deactivate_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.deactivate_form" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームをディアクティベートします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.bgn_group">
+<code class="descclassname">form.</code><code class="descname">bgn_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.bgn_group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しいオブジェクトのグループを作ります；グループオブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.end_group">
+<code class="descclassname">form.</code><code class="descname">end_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.end_group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のオブジェクトのグループを終了します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.find_first">
+<code class="descclassname">form.</code><code class="descname">find_first</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.find_first" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームの中の最初のオブジェクトを見つけます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.find_last">
+<code class="descclassname">form.</code><code class="descname">find_last</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.find_last" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームの中の最後のオブジェクトを見つけます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_box">
+<code class="descclassname">form.</code><code class="descname">add_box</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_box" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにボックスオブジェクトを加えます。特別な追加のメソッドはありません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_text">
+<code class="descclassname">form.</code><code class="descname">add_text</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_text" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにテキストオブジェクトを加えます。特別な追加のメソッドはありません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_clock">
+<code class="descclassname">form.</code><code class="descname">add_clock</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_clock" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにクロックオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">get_clock()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_button">
+<code class="descclassname">form.</code><code class="descname">add_button</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_button" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにボタンオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">get_button()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_button()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_lightbutton">
+<code class="descclassname">form.</code><code class="descname">add_lightbutton</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_lightbutton" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにライトボタンオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">get_button()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_button()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_roundbutton">
+<code class="descclassname">form.</code><code class="descname">add_roundbutton</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_roundbutton" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにラウンドボタンオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">get_button()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_button()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_slider">
+<code class="descclassname">form.</code><code class="descname">add_slider</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_slider" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにスライダーオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_slider_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_slider_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_slider_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_return()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_size()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_precision()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_step()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_valslider">
+<code class="descclassname">form.</code><code class="descname">add_valslider</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_valslider" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにバリュースライダーオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_slider_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_slider_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_slider_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_return()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_size()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_precision()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_slider_step()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_dial">
+<code class="descclassname">form.</code><code class="descname">add_dial</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_dial" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにダイアルオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_dial_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_dial_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_dial_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_dial_bounds()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_positioner">
+<code class="descclassname">form.</code><code class="descname">add_positioner</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_positioner" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームに 2 次元ポジショナーオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_positioner_xvalue()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_positioner_yvalue()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_positioner_xbounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_positioner_ybounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_positioner_xvalue()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_positioner_yvalue()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_positioner_xbounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_positioner_ybounds()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_counter">
+<code class="descclassname">form.</code><code class="descname">add_counter</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_counter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにカウンタオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_counter_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_counter_value()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_counter_bounds()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_counter_step()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_counter_precision()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_counter_return()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_input">
+<code class="descclassname">form.</code><code class="descname">add_input</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_input" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにインプットオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_input()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_input()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_input_color()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_input_return()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_menu">
+<code class="descclassname">form.</code><code class="descname">add_menu</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_menu" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにメニューオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_menu()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_menu()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">addto_menu()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_choice">
+<code class="descclassname">form.</code><code class="descname">add_choice</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_choice" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにチョイスオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">clear_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">addto_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">replace_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">delete_choice()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_choice_text()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_choice_fontsize()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_choice_fontstyle()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_browser">
+<code class="descclassname">form.</code><code class="descname">add_browser</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_browser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにブラウザオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_browser_topline()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">clear_browser()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">add_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">addto_browser()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">insert_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">delete_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">replace_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">load_browser()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_browser_maxline()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">select_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">deselect_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">deselect_browser()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">isselected_browser_line()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_browser()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_browser_fontsize()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_browser_fontstyle()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">set_browser_specialkey()</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fl.form.add_timer">
+<code class="descclassname">form.</code><code class="descname">add_timer</code><span class="sig-paren">(</span><em>type</em>, <em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fl.form.add_timer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォームにタイマーオブジェクトを加えます。 &#8212; メソッド： <code class="xref py py-meth docutils literal"><span class="pre">set_timer()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">get_timer()</span></code> 。</p>
+</dd></dl>
+
+<p>フォームオブジェクトには以下のデータ属性があります；FORMS ドキュメントを参照してください:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="24%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">名前</p>
+</th>
+<th class="head"><p class="first last">C の型</p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">window</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">GL ウィンドウの id</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">w</span></code></td>
+<td>float</td>
+<td><p class="first last">フォームの幅</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">h</span></code></td>
+<td>float</td>
+<td><p class="first last">フォームの高さ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">x</span></code></td>
+<td>float</td>
+<td><p class="first last">フォーム左肩の x 座標</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">y</span></code></td>
+<td>float</td>
+<td><p class="first last">フォーム左肩の y 座標</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">deactivated</span></code></td>
+<td>int</td>
+<td><p class="first last">フォームがディアクティベートされているなら非ゼロ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">visible</span></code></td>
+<td>int</td>
+<td><p class="first last">フォームが可視なら非ゼロ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">frozen</span></code></td>
+<td>int</td>
+<td><p class="first last">フォームが固定されているなら非ゼロ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">doublebuf</span></code></td>
+<td>int</td>
+<td><p class="first last">ダブルバッファリングがオンなら非ゼロ</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="forms-objects">
+<span id="id2"></span><h2>39.4.3. FORMS オブジェクト<a class="headerlink" href="#forms-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>FORMS オブジェクトの種類ごとに特有のメソッドの他に、全ての FORMS オブジェクトは以下のメソッドも持っています:</p>
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.set_call_back(function, argument)</code></dt>
+<dd><p>オブジェクトのコールバック関数と引数を設定します。オブジェクトがユーザからの応答を必要とするときには、コールバック関数は 2 つの引数、オブジェクトとコールバックの引数とともに呼び出されます。 (コールバック関数のない FORMS オブジェクトは、ユーザからの応答を必要とするときには <a class="reference internal" href="#fl.do_forms" title="fl.do_forms"><code class="xref py py-func docutils literal"><span class="pre">fl.do_forms()</span></code></a> あるいは <a class="reference internal" href="#fl.check_forms" title="fl.check_forms"><code class="xref py py-func docutils literal"><span class="pre">fl.check_forms()</span></code></a> によって返されます。) 引数なしにこのメソッドを呼び出すと、コールバック関数を削除します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.delete_object()</code></dt>
+<dd><p>オブジェクトを削除します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.show_object()</code></dt>
+<dd><p>オブジェクトを表示します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.hide_object()</code></dt>
+<dd><p>オブジェクトを隠します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.redraw_object()</code></dt>
+<dd><p>オブジェクトを再描画します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.freeze_object()</code></dt>
+<dd><p>オブジェクトを固定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">FORMS object.unfreeze_object()</code></dt>
+<dd><p>固定したオブジェクトの固定を解除します。</p>
+</dd></dl>
+
+<p>FORMS オブジェクトには以下のデータ属性があります； FORMS ドキュメントを参照してください。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="31%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">名前</p>
+</th>
+<th class="head"><p class="first last">C の型</p>
+</th>
+<th class="head"><p class="first last">意味</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">objclass</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">オブジェクトクラス</p>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="functions.html#type" title="type"><code class="xref py py-attr docutils literal"><span class="pre">type</span></code></a></td>
+<td>int (read-only)</td>
+<td><p class="first last">オブジェクトタイプ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">boxtype</span></code></td>
+<td>int</td>
+<td><p class="first last">ボックスタイプ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">x</span></code></td>
+<td>float</td>
+<td><p class="first last">左肩の x 座標</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">y</span></code></td>
+<td>float</td>
+<td><p class="first last">左肩の y 座標</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">w</span></code></td>
+<td>float</td>
+<td><p class="first last">幅</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">h</span></code></td>
+<td>float</td>
+<td><p class="first last">高さ</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">col1</span></code></td>
+<td>int</td>
+<td><p class="first last">第 1 の色</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">col2</span></code></td>
+<td>int</td>
+<td><p class="first last">第 2 の色</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">align</span></code></td>
+<td>int</td>
+<td><p class="first last">配置</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">lcol</span></code></td>
+<td>int</td>
+<td><p class="first last">ラベルの色</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">lsize</span></code></td>
+<td>float</td>
+<td><p class="first last">ラベルのフォントサイズ</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">label</span></code></td>
+<td>string</td>
+<td><p class="first last">ラベルの文字列</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">lstyle</span></code></td>
+<td>int</td>
+<td><p class="first last">ラベルのスタイル</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">pushed</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">focus</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">belowmouse</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">frozen</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">active</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="functions.html#input" title="input"><code class="xref py py-attr docutils literal"><span class="pre">input</span></code></a></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">visible</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">radio</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">automatic</span></code></td>
+<td>int (read-only)</td>
+<td><p class="first last">(FORMS ドキュメント参照)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-FL">
+<span id="fl-constants-used-with-the-fl-module"></span><h1>39.5. <a class="reference internal" href="#module-FL" title="FL: Constants used with the fl module. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">FL</span></code></a> &#8212; <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> モジュールで使用される定数<a class="headerlink" href="#module-FL" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-FL" title="FL: Constants used with the fl module. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">FL</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p>このモジュールには、組み込みモジュール <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> を使うのに必要なシンボル定数が定義されています (上記参照) ；これらは名前の接頭辞 <code class="docutils literal"><span class="pre">FL_</span></code> が省かれていることを除いて、C のヘッダファイル <code class="docutils literal"><span class="pre">&lt;forms.h&gt;</span></code> に定義されているものと同じです。定義されている名称の完全なリストについては、モジュールのソースをご覧ください。お勧めする使い方は以下の通りです：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fl</span>
+<span class="kn">from</span> <span class="nn">FL</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-flp">
+<span id="flp-functions-for-loading-stored-forms-designs"></span><h1>39.6. <a class="reference internal" href="#module-flp" title="flp: Functions for loading stored FORMS designs. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">flp</span></code></a> &#8212; 保存された FORMS デザインをロードする関数<a class="headerlink" href="#module-flp" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-flp" title="flp: Functions for loading stored FORMS designs. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">flp</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p>このモジュールには、FORMS ライブラリ (上記の <a class="reference internal" href="#module-fl" title="fl: FORMS library for applications with graphical user interfaces. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fl</span></code></a> モジュールを参照してください) とともに配布される &#8216;フォームデザイナー&#8217; (<strong class="program">fdesign</strong>) プログラムで作られたフォームの定義を読み込む関数が定義されています。</p>
+<p>今のところは、詳しくは Python ライブラリソースのディレクトリの中の <code class="file docutils literal"><span class="pre">flp.doc</span></code> を参照してください。</p>
+<p>XXX A complete description should be inserted here!</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">39.4. <code class="docutils literal"><span class="pre">fl</span></code> &#8212; グラフィカルユーザーインターフェースのための FORMS ライブラリ</a><ul>
+<li><a class="reference internal" href="#functions-defined-in-module-fl">39.4.1. <code class="docutils literal"><span class="pre">fl</span></code> モジュールに定義されている関数</a></li>
+<li><a class="reference internal" href="#form-objects">39.4.2. Form オブジェクト</a></li>
+<li><a class="reference internal" href="#forms-objects">39.4.3. FORMS オブジェクト</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-FL">39.5. <code class="docutils literal"><span class="pre">FL</span></code> &#8212; <code class="docutils literal"><span class="pre">fl</span></code> モジュールで使用される定数</a></li>
+<li><a class="reference internal" href="#module-flp">39.6. <code class="docutils literal"><span class="pre">flp</span></code> &#8212; 保存された FORMS デザインをロードする関数</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="cd.html"
+                        title="前の章へ">39.3. <code class="docutils literal"><span class="pre">cd</span></code> &#8212; SGI システムの CD-ROM へのアクセス</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="fm.html"
+                        title="次の章へ">39.7. <code class="docutils literal"><span class="pre">fm</span></code> &#8212; <em>Font Manager</em> インターフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/fl.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="fm.html" title="39.7. fm — Font Manager インターフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="cd.html" title="39.3. cd — SGI システムの CD-ROM へのアクセス"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sgi.html" >39. SGI IRIX 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

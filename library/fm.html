@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>39.7. fm — Font Manager インターフェース &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="39. SGI IRIX 固有のサービス" href="sgi.html" />
+    <link rel="next" title="39.8. gl — Graphics Library インターフェース" href="gl.html" />
+    <link rel="prev" title="39.4. fl — グラフィカルユーザーインターフェースのための FORMS ライブラリ" href="fl.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="gl.html" title="39.8. gl — Graphics Library インターフェース"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="fl.html" title="39.4. fl — グラフィカルユーザーインターフェースのための FORMS ライブラリ"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sgi.html" accesskey="U">39. SGI IRIX 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-fm">
+<span id="fm-font-manager-interface"></span><h1>39.7. <a class="reference internal" href="#module-fm" title="fm: Font Manager interface for SGI workstations. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fm</span></code></a> &#8212; <em>Font Manager</em> インターフェース<a class="headerlink" href="#module-fm" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-fm" title="fm: Font Manager interface for SGI workstations. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fm</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p id="index-0">このモジュールはIRIS <em>Font Manager</em> ライブラリへのアクセスを提供します。 Silicon Graphics マシン上だけで利用可能です。次も参照してください： <em>4Sight User&#8217;s Guide</em>, section 1, chapter 5: &#8220;Using the IRIS Font Manager&#8221;。</p>
+<p>このモジュールは、まだ IRIS Font Manager への完全なインタフェースではありません。サポートされていない機能は次のものです： matrix operations; cache operations; character operations（代わりに string operations を使ってください）; font info のうちのいくつか; individual glyph metrics; printer matching。</p>
+<p>以下の操作をサポートしています:</p>
+<dl class="function">
+<dt id="fm.init">
+<code class="descclassname">fm.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fm.init" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関数を初期化します。 <code class="xref c c-func docutils literal"><span class="pre">fminit()</span></code> を呼び出します。この関数は <a class="reference internal" href="#module-fm" title="fm: Font Manager interface for SGI workstations. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">fm</span></code></a> モジュールを最初にインポートすると自動的に呼び出されるので、普通、呼び出す必要はありません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fm.findfont">
+<code class="descclassname">fm.</code><code class="descname">findfont</code><span class="sig-paren">(</span><em>fontname</em><span class="sig-paren">)</span><a class="headerlink" href="#fm.findfont" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォントハンドルオブジェクトを返します。 <code class="docutils literal"><span class="pre">fmfindfont(fontname)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fm.enumerate">
+<code class="descclassname">fm.</code><code class="descname">enumerate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fm.enumerate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>利用可能なフォント名のリストを返します。この関数は <code class="xref c c-func docutils literal"><span class="pre">fmenumerate()</span></code> へのインタフェースです。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fm.prstr">
+<code class="descclassname">fm.</code><code class="descname">prstr</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#fm.prstr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のフォントを使って文字列をレンダリングします（下のフォントハンドルメソッド <code class="xref py py-func docutils literal"><span class="pre">setfont()</span></code> を参照）。 <code class="docutils literal"><span class="pre">fmprstr(string)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fm.setpath">
+<code class="descclassname">fm.</code><code class="descname">setpath</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#fm.setpath" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フォントの検索パスを設定します。 <code class="docutils literal"><span class="pre">fmsetpath(string)</span></code> を呼び出します。（XXX 機能しない!?!）</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fm.fontpath">
+<code class="descclassname">fm.</code><code class="descname">fontpath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fm.fontpath" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のフォント検索パスを返します。</p>
+</dd></dl>
+
+<p>フォントハンドルオブジェクトは以下の操作をサポートします:</p>
+<dl class="method">
+<dt>
+<code class="descname">font handle.scalefont(factor)</code></dt>
+<dd><p>このフォントを拡大／縮小したハンドルを返します。 <code class="docutils literal"><span class="pre">fmscalefont(fh,</span> <span class="pre">factor)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">font handle.setfont()</code></dt>
+<dd><p>このフォントを現在のフォントに設定します。注意：フォントハンドルオブジェクトが削除されると、設定は告知なしに元に戻ります。 <code class="docutils literal"><span class="pre">fmsetfont(fh)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">font handle.getfontname()</code></dt>
+<dd><p>このフォントの名前を返します。 <code class="docutils literal"><span class="pre">fmgetfontname(fh)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">font handle.getcomment()</code></dt>
+<dd><p>このフォントに関連付けられたコメント文字列を返します。コメント文字列が何もなければ例外を返します。 <code class="docutils literal"><span class="pre">fmgetcomment(fh)</span></code> を呼び出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">font handle.getfontinfo()</code></dt>
+<dd><p>このフォントに関連したデータを含むタプルを返します。これは <code class="docutils literal"><span class="pre">fmgetfontinfo()</span></code> へのインタフェースです。以下の数値を含むタプルを返します： <code class="docutils literal"><span class="pre">(printermatched,</span> <span class="pre">fixed_width,</span> <span class="pre">xorig,</span> <span class="pre">yorig,</span> <span class="pre">xsize,</span> <span class="pre">ysize,</span> <span class="pre">height,</span> <span class="pre">nglyphs)</span></code> 。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">font handle.getstrwidth(string)</code></dt>
+<dd><p>このフォントで <em>string</em> を描いたときの幅をピクセル数で返します。 <code class="docutils literal"><span class="pre">fmgetstrwidth(fh,</span> <span class="pre">string)</span></code> を呼び出します。</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="fl.html"
+                        title="前の章へ">39.4. <code class="docutils literal"><span class="pre">fl</span></code> &#8212; グラフィカルユーザーインターフェースのための FORMS ライブラリ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="gl.html"
+                        title="次の章へ">39.8. <code class="docutils literal"><span class="pre">gl</span></code> &#8212; <em>Graphics Library</em> インターフェース</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/fm.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="gl.html" title="39.8. gl — Graphics Library インターフェース"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="fl.html" title="39.4. fl — グラフィカルユーザーインターフェースのための FORMS ライブラリ"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="sgi.html" >39. SGI IRIX 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

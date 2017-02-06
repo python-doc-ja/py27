@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.10. Queue — 同期キュークラス &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="8. データ型" href="datatypes.html" />
+    <link rel="next" title="8.11. weakref — 弱参照" href="weakref.html" />
+    <link rel="prev" title="8.9. mutex — 排他制御" href="mutex.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="weakref.html" title="8.11. weakref — 弱参照"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="mutex.html" title="8.9. mutex — 排他制御"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">8. データ型</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-Queue">
+<span id="queue-a-synchronized-queue-class"></span><h1>8.10. <a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-mod docutils literal"><span class="pre">Queue</span></code></a> &#8212; 同期キュークラス<a class="headerlink" href="#module-Queue" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-mod docutils literal"><span class="pre">Queue</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">queue</span></code> にリネームされました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードの import を修正します。</p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/Queue.py">Lib/Queue.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-mod docutils literal"><span class="pre">Queue</span></code></a> モジュールは、複数プロデューサ-複数コンシューマ(multi-producer, multi-consumer)キューを実装します。これは、複数のスレッドの間で情報を安全に交換しなければならないときのマルチスレッドプログラミングで特に有益です。このモジュールの <a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> クラスは、必要なすべてのロックセマンティクスを実装しています。これはPythonのスレッドサポートの状況に依存します。 <a class="reference internal" href="threading.html#module-threading" title="threading: Higher-level threading interface."><code class="xref py py-mod docutils literal"><span class="pre">threading</span></code></a> モジュールを参照してください。</p>
+<p>このモジュールでは3種類のキューが実装されています。それらはキューから取り出されるエントリの順番だけが違います。 FIFOキューでは、最初に追加されたエントリが最初に取り出されます。 LIFOキューでは、最後に追加されたエントリが最初に取り出されます(スタックのように振る舞います)。 優先順位付きキュー(priority queue)では、エントリは(<a class="reference internal" href="heapq.html#module-heapq" title="heapq: Heap queue algorithm (a.k.a. priority queue)."><code class="xref py py-mod docutils literal"><span class="pre">heapq</span></code></a> モジュールを利用して)ソートされ、 最も低い値のエントリが最初に取り出されます。</p>
+<p><a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-mod docutils literal"><span class="pre">Queue</span></code></a> モジュールは以下のクラスと例外を定義します:</p>
+<dl class="class">
+<dt id="Queue.Queue">
+<em class="property">class </em><code class="descclassname">Queue.</code><code class="descname">Queue</code><span class="sig-paren">(</span><em>maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>FIFOキューのコンストラクタです。<em>maxsize</em> はキューに置くことのできる要素数の上限を設定する整数です。いったんこの大きさに達したら、挿入はキューの要素が消費されるまでブロックされます。もし <em>maxsize</em> が0以下であるならば、キューの大きさは無限です。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="Queue.LifoQueue">
+<em class="property">class </em><code class="descclassname">Queue.</code><code class="descname">LifoQueue</code><span class="sig-paren">(</span><em>maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Queue.LifoQueue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>LIFOキューのコンストラクタです。<em>maxsize</em> はキューに置くことのできる要素数の上限を設定する整数です。いったんこの大きさに達したら、挿入はキューの要素が消費されるまでブロックされます。もし <em>maxsize</em> が0以下であるならば、キューの大きさは無限です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="Queue.PriorityQueue">
+<em class="property">class </em><code class="descclassname">Queue.</code><code class="descname">PriorityQueue</code><span class="sig-paren">(</span><em>maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Queue.PriorityQueue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>優先順位付きキューのコンストラクタです。<em>maxsize</em> はキューに置くことのできる要素数の上限を設定する整数です。いったんこの大きさに達したら、挿入はキューの要素が消費されるまでブロックされます。もし <em>maxsize</em> が0以下であるならば、キューの大きさは無限です。</p>
+<p>最小の値を持つ要素が最初に検索されます (最小の値を持つ値は、<code class="docutils literal"><span class="pre">sorted(list(entries))[0]</span></code> によって返されるものです)。典型的な要素のパターンは、<code class="docutils literal"><span class="pre">(priority_number,</span> <span class="pre">data)</span></code> 形式のタプルです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Queue.Empty">
+<em class="property">exception </em><code class="descclassname">Queue.</code><code class="descname">Empty</code><a class="headerlink" href="#Queue.Empty" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>空な <a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> オブジェクトで、非ブロックメソッドとして <a class="reference internal" href="#Queue.Queue.get" title="Queue.Queue.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a> (または <a class="reference internal" href="#Queue.Queue.get_nowait" title="Queue.Queue.get_nowait"><code class="xref py py-meth docutils literal"><span class="pre">get_nowait()</span></code></a>) が呼ばれたとき、送出される例外です。</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="Queue.Full">
+<em class="property">exception </em><code class="descclassname">Queue.</code><code class="descname">Full</code><a class="headerlink" href="#Queue.Full" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>満杯な <a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> オブジェクトで、非ブロックメソッドとして <a class="reference internal" href="#Queue.Queue.put" title="Queue.Queue.put"><code class="xref py py-meth docutils literal"><span class="pre">put()</span></code></a> (または <a class="reference internal" href="#Queue.Queue.put_nowait" title="Queue.Queue.put_nowait"><code class="xref py py-meth docutils literal"><span class="pre">put_nowait()</span></code></a>) が呼ばれたとき、送出される例外です。</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<p class="last"><a class="reference internal" href="collections.html#collections.deque" title="collections.deque"><code class="xref py py-class docutils literal"><span class="pre">collections.deque</span></code></a> は、ロックなしで <code class="xref py py-func docutils literal"><span class="pre">popleft()</span></code> や <code class="xref py py-func docutils literal"><span class="pre">append()</span></code> といったアトミック操作が可能なキューの実装です。</p>
+</div>
+<div class="section" id="queue-objects">
+<span id="queueobjects"></span><h2>8.10.1. キューオブジェクト<a class="headerlink" href="#queue-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>キューオブジェクト(<a class="reference internal" href="#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a>, <a class="reference internal" href="#Queue.LifoQueue" title="Queue.LifoQueue"><code class="xref py py-class docutils literal"><span class="pre">LifoQueue</span></code></a>, <a class="reference internal" href="#Queue.PriorityQueue" title="Queue.PriorityQueue"><code class="xref py py-class docutils literal"><span class="pre">PriorityQueue</span></code></a>)は、以下のpublicメソッドを提供しています。</p>
+<dl class="method">
+<dt id="Queue.Queue.qsize">
+<code class="descclassname">Queue.</code><code class="descname">qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.qsize" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューの近似サイズを返します。ここで、qsize() &gt; 0 は後続の get() がブロックしないことを保証しないこと、また qsize() &lt; maxsize が put() がブロックしないことを保証しないことに注意してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.empty">
+<code class="descclassname">Queue.</code><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.empty" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューが空の場合は <code class="docutils literal"><span class="pre">True</span></code> を返し、そうでなければ <code class="docutils literal"><span class="pre">False</span></code> を返します。empty() が <code class="docutils literal"><span class="pre">True</span></code> を返しても、後続の put() の呼び出しがブロックしないことは保証されません。同様に、empty() が <code class="docutils literal"><span class="pre">False</span></code> を返しても、後続の get() の呼び出しがブロックしないことは保証されません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.full">
+<code class="descclassname">Queue.</code><code class="descname">full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.full" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューが一杯の場合は <code class="docutils literal"><span class="pre">True</span></code> を返し、そうでなければ <code class="docutils literal"><span class="pre">False</span></code> を返します。full() が <code class="docutils literal"><span class="pre">True</span></code> を返しても、後続の get() の呼び出しがブロックしないことは保証されません。同様に、full() が <code class="docutils literal"><span class="pre">False</span></code> を返しても、後続の put() の呼び出しがブロックしないことは保証されません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.put">
+<code class="descclassname">Queue.</code><code class="descname">put</code><span class="sig-paren">(</span><em>item</em><span class="optional">[</span>, <em>block</em><span class="optional">[</span>, <em>timeout</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.put" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>item</em> をキューに入れます。もしオプション引数 <em>block</em> がTrueで <em>timeout</em> がNone(デフォルト)ならば、フリースロットが利用可能になるまでブロックします。 <em>timeout</em> が正の値の場合、最大で <em>timeout</em> 秒間ブロックし、その時間内に空きスロットが利用可能にならなければ、例外 <a class="reference internal" href="#Queue.Full" title="Queue.Full"><code class="xref py py-exc docutils literal"><span class="pre">Full</span></code></a> を送出します。他方(<em>block</em> がFalse)、直ちにフリースロットが利用できるならば、キューにアイテムを置きます。できないならば、例外 <a class="reference internal" href="#Queue.Full" title="Queue.Full"><code class="xref py py-exc docutils literal"><span class="pre">Full</span></code></a> を送出します (この場合 <em>timeout</em> は無視されます)。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加: </span><em>timeout</em> パラメータが追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.put_nowait">
+<code class="descclassname">Queue.</code><code class="descname">put_nowait</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.put_nowait" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">put(item,</span> <span class="pre">False)</span></code> と等価です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.get">
+<code class="descclassname">Queue.</code><code class="descname">get</code><span class="sig-paren">(</span><span class="optional">[</span><em>block</em><span class="optional">[</span>, <em>timeout</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.get" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューからアイテムを取り除き、それを返します。もしオプション引数 <em>block</em> がTrueで <em>timeout</em> がNone(デフォルト)ならば、アイテムが利用可能になるまでブロックします。もし <em>timeout</em> が正の値の場合、最大で <em>timeout</em> 秒間ブロックし、その時間内でアイテムが利用可能にならなければ、例外 <a class="reference internal" href="#Queue.Empty" title="Queue.Empty"><code class="xref py py-exc docutils literal"><span class="pre">Empty</span></code></a> を送出します。他方(<em>block</em> がFalse)、直ちにアイテムが利用できるならば、それを返します。できないならば、例外 <a class="reference internal" href="#Queue.Empty" title="Queue.Empty"><code class="xref py py-exc docutils literal"><span class="pre">Empty</span></code></a> を送出します (この場合 <em>timeout</em> は無視されます)。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加: </span><em>timeout</em> パラメータが追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.get_nowait">
+<code class="descclassname">Queue.</code><code class="descname">get_nowait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.get_nowait" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">get(False)</span></code> と等価です。</p>
+</dd></dl>
+
+<p>キューに入れられたタスクが全てコンシューマスレッドに処理されたかどうかを追跡するために 2つのメソッドが提供されます。</p>
+<dl class="method">
+<dt id="Queue.Queue.task_done">
+<code class="descclassname">Queue.</code><code class="descname">task_done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.task_done" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>過去にキューに入れられたタスクが完了した事を示します。キューのコンシューマスレッドに利用されます。タスクの取り出しに使われた、各 <a class="reference internal" href="#Queue.Queue.get" title="Queue.Queue.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a> に対して、それに続く <a class="reference internal" href="#Queue.Queue.task_done" title="Queue.Queue.task_done"><code class="xref py py-meth docutils literal"><span class="pre">task_done()</span></code></a> の呼び出しは、取り出したタスクに対する処理が完了した事をキューに教えます。</p>
+<p><a class="reference internal" href="#Queue.Queue.join" title="Queue.Queue.join"><code class="xref py py-meth docutils literal"><span class="pre">join()</span></code></a> がブロックされていた場合、全itemが処理された (キューに <a class="reference internal" href="#Queue.Queue.put" title="Queue.Queue.put"><code class="xref py py-meth docutils literal"><span class="pre">put()</span></code></a> された全てのitemに対して <a class="reference internal" href="#Queue.Queue.task_done" title="Queue.Queue.task_done"><code class="xref py py-meth docutils literal"><span class="pre">task_done()</span></code></a> が呼び出されたことを意味します) 時に復帰します。</p>
+<p>キューにある要素より多く呼び出された場合 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が発生します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Queue.Queue.join">
+<code class="descclassname">Queue.</code><code class="descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Queue.Queue.join" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キューの中の全アイテムが処理される間でブロックします。</p>
+<p>キューにitemが追加される度に、未完了タスクカウントが増やされます。コンシューマスレッドが <a class="reference internal" href="#Queue.Queue.task_done" title="Queue.Queue.task_done"><code class="xref py py-meth docutils literal"><span class="pre">task_done()</span></code></a> を呼び出して、itemを受け取ってそれに対する処理が完了した事を知らせる度に、未完了タスクカウントが減らされます。未完了タスクカウントが0になったときに、 <a class="reference internal" href="#Queue.Queue.join" title="Queue.Queue.join"><code class="xref py py-meth docutils literal"><span class="pre">join()</span></code></a>  のブロックが解除されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p>キューに入れたタスクが完了するのを待つ例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">do_work</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_worker_threads</span><span class="p">):</span>
+     <span class="n">t</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+     <span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+     <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">source</span><span class="p">():</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<span class="n">q</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>       <span class="c1"># block until all tasks are done</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8.10. <code class="docutils literal"><span class="pre">Queue</span></code> &#8212; 同期キュークラス</a><ul>
+<li><a class="reference internal" href="#queue-objects">8.10.1. キューオブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="mutex.html"
+                        title="前の章へ">8.9. <code class="docutils literal"><span class="pre">mutex</span></code> &#8212; 排他制御</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="weakref.html"
+                        title="次の章へ">8.11. <code class="docutils literal"><span class="pre">weakref</span></code> &#8212; 弱参照</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/queue.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="weakref.html" title="8.11. weakref — 弱参照"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="mutex.html" title="8.9. mutex — 排他制御"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >8. データ型</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19.5. XMLを扱うモジュール群 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="19. 構造化マークアップツール" href="markup.html" />
+    <link rel="next" title="19.7. xml.etree.ElementTree — ElementTree XML API" href="xml.etree.elementtree.html" />
+    <link rel="prev" title="19.3. htmllib — HTML 文書の解析器" href="htmllib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.etree.elementtree.html" title="19.7. xml.etree.ElementTree — ElementTree XML API"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="htmllib.html" title="19.3. htmllib — HTML 文書の解析器"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" accesskey="U">19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-xml">
+<span id="xml-processing-modules"></span><span id="xml"></span><h1>19.5. XMLを扱うモジュール群<a class="headerlink" href="#module-xml" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>PythonのXMLを扱うインタフェースは <code class="docutils literal"><span class="pre">xml</span></code> パッケージにまとめられています。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">XML モジュール群は不正なデータや悪意を持って生成されたデータに対して安全ではありません。信頼できないデータをパースする必要がある場合は、 <a class="reference internal" href="#xml-vulnerabilities"><span class="std std-ref">XML の脆弱性</span></a> を参照してください。</p>
+</div>
+<p>注意すべき重要な点として、 <a class="reference internal" href="#module-xml" title="xml: Package containing XML processing modules"><code class="xref py py-mod docutils literal"><span class="pre">xml</span></code></a> パッケージは少なくとも一つの SAX に対応した XML パーザが利用可能でなければなりません。Expat パーザが Python に取り込まれているので、 <a class="reference internal" href="pyexpat.html#module-xml.parsers.expat" title="xml.parsers.expat: An interface to the Expat non-validating XML parser."><code class="xref py py-mod docutils literal"><span class="pre">xml.parsers.expat</span></code></a> モジュールは常に利用できます。</p>
+<p><a class="reference internal" href="xml.dom.html#module-xml.dom" title="xml.dom: Document Object Model API for Python."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom</span></code></a> および <a class="reference internal" href="xml.sax.html#module-xml.sax" title="xml.sax: Package containing SAX2 base classes and convenience functions."><code class="xref py py-mod docutils literal"><span class="pre">xml.sax</span></code></a> パッケージのドキュメントは Python による DOM および SAX インタフェースへのバインディングに関する定義です。</p>
+<p>XML に関連するサブモジュール:</p>
+<ul class="simple">
+<li><p class="first"><a class="reference internal" href="xml.etree.elementtree.html#module-xml.etree.ElementTree" title="xml.etree.ElementTree: Implementation of the ElementTree API."><code class="xref py py-mod docutils literal"><span class="pre">xml.etree.ElementTree</span></code></a>: ElementTree API、シンプルで軽量な XML プロセッサ</p>
+</li>
+</ul>
+<ul class="simple">
+<li><p class="first"><a class="reference internal" href="xml.dom.html#module-xml.dom" title="xml.dom: Document Object Model API for Python."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom</span></code></a>: DOM API の定義</p>
+</li>
+<li><p class="first"><a class="reference internal" href="xml.dom.minidom.html#module-xml.dom.minidom" title="xml.dom.minidom: Minimal Document Object Model (DOM) implementation."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.minidom</span></code></a>: 最小限の DOM の実装</p>
+</li>
+<li><p class="first"><a class="reference internal" href="xml.dom.pulldom.html#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a>: 部分的な DOM ツリー構築のサポート</p>
+</li>
+</ul>
+<ul class="simple">
+<li><p class="first"><a class="reference internal" href="xml.sax.html#module-xml.sax" title="xml.sax: Package containing SAX2 base classes and convenience functions."><code class="xref py py-mod docutils literal"><span class="pre">xml.sax</span></code></a>: SAX2 基底クラスと便利関数群</p>
+</li>
+<li><p class="first"><a class="reference internal" href="pyexpat.html#module-xml.parsers.expat" title="xml.parsers.expat: An interface to the Expat non-validating XML parser."><code class="xref py py-mod docutils literal"><span class="pre">xml.parsers.expat</span></code></a>: Expat parser バインディング</p>
+</li>
+</ul>
+</div>
+<div class="section" id="xml-vulnerabilities">
+<span id="id1"></span><h1>19.6. XML の脆弱性<a class="headerlink" href="#xml-vulnerabilities" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>XML処理モジュールは悪意を持って生成されたデータに対して安全ではありません。攻撃者は脆弱性を使って、 DoS攻撃、ローカルファイルへのアクセス、他マシンへのネットワーク接続、ファイアーウォールの迂回などが可能になります。
+XML に対する攻撃は、エンティティに対するインライン <a class="reference external" href="http://en.wikipedia.org/wiki/Document_Type_Definition">DTD</a> (Document Type Definition) などのマイナーな機能を悪用します。</p>
+<p>以下のテーブルは知られている攻撃と、各モジュールがそれに対して脆弱であるかどうかを示しています。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="12%" />
+<col width="13%" />
+<col width="13%" />
+<col width="12%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">種類</p>
+</th>
+<th class="head">sax</th>
+<th class="head">etree</th>
+<th class="head">minidom</th>
+<th class="head">pulldom</th>
+<th class="head">xmlrpc</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>billion laughs</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-odd"><td>quadratic blowup</td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr class="row-even"><td>external entity expansion</td>
+<td><strong>Yes</strong></td>
+<td>No    (1)</td>
+<td>No    (2)</td>
+<td><strong>Yes</strong></td>
+<td>No    (3)</td>
+</tr>
+<tr class="row-odd"><td>DTD retrieval</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>decompression bomb</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple">
+<li><p class="first"><a class="reference internal" href="xml.etree.elementtree.html#module-xml.etree.ElementTree" title="xml.etree.ElementTree: Implementation of the ElementTree API."><code class="xref py py-mod docutils literal"><span class="pre">xml.etree.ElementTree</span></code></a> は外部のエンティティを展開せず、 ParserError 例外を発生させます。</p>
+</li>
+<li><p class="first"><a class="reference internal" href="xml.dom.minidom.html#module-xml.dom.minidom" title="xml.dom.minidom: Minimal Document Object Model (DOM) implementation."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.minidom</span></code></a> は外部エンティティを展開せず、展開前のエンティティをそのまま返します。</p>
+</li>
+<li><p class="first"><a class="reference internal" href="xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> は外部エンティティを展開せず、除外します。</p>
+</li>
+</ol>
+<dl class="docutils">
+<dt>billion laughs / exponential entity expansion</dt>
+<dd><p class="first last"><a class="reference external" href="http://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃 &#8211; exponential entity expansion とも呼ばれる &#8211; は、複数レベルにネストしたエンティティを用います。各エンティティは他のエンティティを複数回参照し、最後のエンティティ定義は小さい文字列を含みます。最終的に、その小さい文字列は数ギガバイトにまで展開されます。
+exponential expansion は大量の CPU 時間も消費します。</p>
+</dd>
+<dt>quadratic blowup entity expansion</dt>
+<dd><p class="first last">quadratic blowup 攻撃は <a class="reference external" href="http://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃と似ています。こちらもエンティティの展開を利用します。ネストしたエンティティを用いる代わりに、数千文字のエンティティ1つを繰り返し利用します。この攻撃は指数関数的な効率はありませんが、パーサーのエンティティのネスト対策を回避します。</p>
+</dd>
+<dt>external entity expansion</dt>
+<dd><p class="first last">エンティティの定義はただのテキスト置換以上のことができます。
+public identifier や system identifier を使って外部のリソースを参照することもできます。
+system identifier は標準的な URI やローカルファイルを参照できます。
+XML パーサーはリソースを HTTP や FTP リクエストを用いて取得し、その内容を XML ドキュメントに埋め込みます。</p>
+</dd>
+<dt>DTD retrieval</dt>
+<dd><p class="first last">Python の <a class="reference internal" href="xml.dom.pulldom.html#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a> のような XML ライブラリは DTD をリモートやローカルの場所から読み込みます。この機能には外部エンティティ展開の問題と同じことが予想されます。</p>
+</dd>
+<dt>decompression bomb</dt>
+<dd><p class="first last">decompression bomb (<a class="reference external" href="http://en.wikipedia.org/wiki/Zip_bomb">ZIP bomb</a> とも呼ばれる) 問題は、 gzipped HTTP ストリームや LZMA ファイルなどの圧縮された XML ストリームをパースできる全ての XML ライブラリに適用されます。攻撃者は送信するデータ量を1/3かそれ以下に減らすことができます。</p>
+</dd>
+</dl>
+<p>PyPI にある <a class="reference external" href="https://pypi.python.org/pypi/defusedxml/">defusedxml</a> のドキュメントは、全ての知られている攻撃手法についてのさらなる情報を、例や参照つきで提供しています。</p>
+<div class="section" id="defused-packages">
+<h2>19.6.1. defused packages<a class="headerlink" href="#defused-packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>これらの拡張パッケージは、信頼出来ない XML データを解析するあらゆるコードでの使用に推奨されます。</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/defusedxml/">defusedxml</a> は、潜在的に悪意のある操作を防止するように修正された標準 XML パーザのサブクラスを含む pure Python パッケージです。このパッケージには、さらに exploit の例や xpath インジェクションのようなより多くの XML exploit についての幅広いドキュメントが付属しています。</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/defusedexpat/">defusedexpat</a> は libexpat を改造したものと、 <code class="xref py py-mod docutils literal"><span class="pre">pyexpat</span></code> にパッチを当てた拡張モジュールで、エンティティ展開を使った DoS 攻撃の対策をしています。
+defusedexpat は、安全で設定可能な量のエンティティ展開を許可します。この改造は将来のバージョンの Python にマージされる予定です。</p>
+<p>これらのワークアラウンドや改造は、後方互換性のためにパッチレベルのリリースには含められません。また、インライン DTD とエンティティ展開は、正しく定義された XML の機能です。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">19.5. XMLを扱うモジュール群</a></li>
+<li><a class="reference internal" href="#xml-vulnerabilities">19.6. XML の脆弱性</a><ul>
+<li><a class="reference internal" href="#defused-packages">19.6.1. defused packages</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="htmllib.html"
+                        title="前の章へ">19.3. <code class="docutils literal"><span class="pre">htmllib</span></code> &#8212; HTML 文書の解析器</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="xml.etree.elementtree.html"
+                        title="次の章へ">19.7. <code class="docutils literal"><span class="pre">xml.etree.ElementTree</span></code> &#8212; ElementTree XML API</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/xml.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="xml.etree.elementtree.html" title="19.7. xml.etree.ElementTree — ElementTree XML API"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="htmllib.html" title="19.3. htmllib — HTML 文書の解析器"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" >19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

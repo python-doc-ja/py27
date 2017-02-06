@@ -1,0 +1,1248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logging クックブック &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python HOWTO" href="index.html" />
+    <link rel="next" title="正規表現 HOWTO" href="regex.html" />
+    <link rel="prev" title="Logging HOWTO" href="logging.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="regex.html" title="正規表現 HOWTO"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging HOWTO"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="logging-cookbook">
+<span id="id1"></span><h1>Logging クックブック<a class="headerlink" href="#logging-cookbook" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Vinay Sajip &lt;vinay_sajip at red-dove dot com&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>このページでは、過去に見つかった logging に関するいくつかの便利なレシピを紹介します。</p>
+<div class="section" id="using-logging-in-multiple-modules">
+<h2>複数のモジュールで logging を使う<a class="headerlink" href="#using-logging-in-multiple-modules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">logging.getLogger('someLogger')</span></code> の複数回の呼び出しは同じ logger への参照を返します。これは同じ Python インタプリタプロセス上で動いている限り、一つのモジュールの中からに限らず、モジュールをまたいでも当てはまります。同じオブジェクトへの参照という点でも正しいです。さらに、一つのモジュールの中で親 logger を定義して設定し、別のモジュールで子 logger を定義する (ただし設定はしない) ことが可能で、すべての子 logger への呼び出しは親にまで渡されます。まずはメインのモジュールです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">auxiliary_module</span>
+
+<span class="c1"># create logger with &#39;spam_application&#39;</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;spam_application&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="c1"># create file handler which logs even debug messages</span>
+<span class="n">fh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s1">&#39;spam.log&#39;</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="c1"># create console handler with a higher log level</span>
+<span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="c1"># create formatter and add it to the handlers</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="c1"># add the handlers to the logger</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;creating an instance of auxiliary_module.Auxiliary&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">Auxiliary</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;created an instance of auxiliary_module.Auxiliary&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;calling auxiliary_module.Auxiliary.do_something&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;finished auxiliary_module.Auxiliary.do_something&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;calling auxiliary_module.some_function()&#39;</span><span class="p">)</span>
+<span class="n">auxiliary_module</span><span class="o">.</span><span class="n">some_function</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;done with auxiliary_module.some_function()&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>そして補助モジュール (auxiliary module) がこちらです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># create logger</span>
+<span class="n">module_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;spam_application.auxiliary&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Auxiliary</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;spam_application.auxiliary.Auxiliary&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;creating an instance of Auxiliary&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;doing something&#39;</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;done doing something&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">some_function</span><span class="p">():</span>
+    <span class="n">module_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received a call to &quot;some_function&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>出力はこのようになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">663</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">creating</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">Auxiliary</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">665</span> <span class="o">-</span> <span class="n">spam_application</span><span class="o">.</span><span class="n">auxiliary</span><span class="o">.</span><span class="n">Auxiliary</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">creating</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">Auxiliary</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">665</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">created</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">Auxiliary</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">668</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">calling</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">Auxiliary</span><span class="o">.</span><span class="n">do_something</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">668</span> <span class="o">-</span> <span class="n">spam_application</span><span class="o">.</span><span class="n">auxiliary</span><span class="o">.</span><span class="n">Auxiliary</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">doing</span> <span class="n">something</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">669</span> <span class="o">-</span> <span class="n">spam_application</span><span class="o">.</span><span class="n">auxiliary</span><span class="o">.</span><span class="n">Auxiliary</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">done</span> <span class="n">doing</span> <span class="n">something</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">670</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">finished</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">Auxiliary</span><span class="o">.</span><span class="n">do_something</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">671</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">calling</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">some_function</span><span class="p">()</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">672</span> <span class="o">-</span> <span class="n">spam_application</span><span class="o">.</span><span class="n">auxiliary</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">received</span> <span class="n">a</span> <span class="n">call</span> <span class="n">to</span> <span class="s1">&#39;some_function&#39;</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span> <span class="mi">23</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">673</span> <span class="o">-</span> <span class="n">spam_application</span> <span class="o">-</span> <span class="n">INFO</span> <span class="o">-</span>
+   <span class="n">done</span> <span class="k">with</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">some_function</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-handlers-and-formatters">
+<h2>複数の handler と formatter<a class="headerlink" href="#multiple-handlers-and-formatters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>logger は通常の Python オブジェクトです。 <a class="reference internal" href="../library/logging.html#logging.Logger.addHandler" title="logging.Logger.addHandler"><code class="xref py py-meth docutils literal"><span class="pre">addHandler()</span></code></a> メソッドは追加されるハンドラの個数について最小値も最大値も定めていません。時にアプリケーションがすべての深刻度のすべてのメッセージをテキストファイルに記録しつつ、同時にエラーやそれ以上のものをコンソールに出力することが役に立ちます。これを実現する方法は、単に適切なハンドラを設定するだけです。アプリケーションコードの中のログ記録の呼び出しは変更されずに残ります。少し前に取り上げた単純なモジュール式の例を少し変えるとこうなります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;simple_example&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="c1"># create file handler which logs even debug messages</span>
+<span class="n">fh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s1">&#39;spam.log&#39;</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="c1"># create console handler with a higher log level</span>
+<span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="c1"># create formatter and add it to the handlers</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="c1"># add the handlers to logger</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+<span class="c1"># &#39;application&#39; code</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;debug message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;info message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;warn message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;error message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;critical message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&#8216;application&#8217; 部分のコードは複数の handler について何も気にしていないことに注目してください。変更した箇所は新しい <em>fh</em> という名の handler を追加して設定したところがすべてです。</p>
+<p>新しい handler を、異なる深刻度に対する filter と共に生成できることは、アプリケーションを書いてテストを行うときとても助けになります。デバッグ用にたくさんの <code class="docutils literal"><span class="pre">print</span></code> 文を使う代わりに <code class="docutils literal"><span class="pre">logger.debug</span></code> を使いましょう。あとで消したりコメントアウトしたりしなければならない print 文と違って、logger.debug 命令はソースコードの中にそのまま残しておいて再び必要になるまで休眠させておけます。その時必要になるのはただ logger および/または handler の深刻度の設定をいじることだけです。</p>
+</div>
+<div class="section" id="logging-to-multiple-destinations">
+<span id="multiple-destinations"></span><h2>複数の出力先にログを出力する<a class="headerlink" href="#logging-to-multiple-destinations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>コンソールとファイルに、別々のメッセージ書式で、別々の状況に応じたログ出力を行わせたいとしましょう。例えば DEBUG よりも高いレベルのメッセージはファイルに記録し、INFO 以上のレベルのメッセージはコンソールに出力したいという場合です。また、ファイルにはタイムスタンプを記録し、コンソールには出力しないとします。以下のようにすれば、こうした挙動を実現できます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># set up logging to file - see previous section for more details</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-12s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;/temp/myapp.log&#39;</span><span class="p">,</span>
+                    <span class="n">filemode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="c1"># define a Handler which writes INFO messages or higher to the sys.stderr</span>
+<span class="n">console</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="c1"># set a format which is simpler for console use</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(name)-12s</span><span class="s1">: </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># tell the handler to use this format</span>
+<span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="c1"># add the handler to the root logger</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
+
+<span class="c1"># Now, we can log to the root logger, or any other logger. First the root...</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Jackdaws love my big sphinx of quartz.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Now, define a couple of other loggers which might represent areas in your</span>
+<span class="c1"># application:</span>
+
+<span class="n">logger1</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;myapp.area1&#39;</span><span class="p">)</span>
+<span class="n">logger2</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;myapp.area2&#39;</span><span class="p">)</span>
+
+<span class="n">logger1</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Quick zephyrs blow, vexing daft Jim.&#39;</span><span class="p">)</span>
+<span class="n">logger1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;How quickly daft jumping zebras vex.&#39;</span><span class="p">)</span>
+<span class="n">logger2</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Jail zesty vixen who grabbed pay from quack.&#39;</span><span class="p">)</span>
+<span class="n">logger2</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The five boxing wizards jump quickly.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>このスクリプトを実行すると、コンソールには以下のように表示されるでしょう</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>        <span class="p">:</span> <span class="n">INFO</span>     <span class="n">Jackdaws</span> <span class="n">love</span> <span class="n">my</span> <span class="n">big</span> <span class="n">sphinx</span> <span class="n">of</span> <span class="n">quartz</span><span class="o">.</span>
+<span class="n">myapp</span><span class="o">.</span><span class="n">area1</span> <span class="p">:</span> <span class="n">INFO</span>     <span class="n">How</span> <span class="n">quickly</span> <span class="n">daft</span> <span class="n">jumping</span> <span class="n">zebras</span> <span class="n">vex</span><span class="o">.</span>
+<span class="n">myapp</span><span class="o">.</span><span class="n">area2</span> <span class="p">:</span> <span class="n">WARNING</span>  <span class="n">Jail</span> <span class="n">zesty</span> <span class="n">vixen</span> <span class="n">who</span> <span class="n">grabbed</span> <span class="n">pay</span> <span class="kn">from</span> <span class="nn">quack.</span>
+<span class="n">myapp</span><span class="o">.</span><span class="n">area2</span> <span class="p">:</span> <span class="n">ERROR</span>    <span class="n">The</span> <span class="n">five</span> <span class="n">boxing</span> <span class="n">wizards</span> <span class="n">jump</span> <span class="n">quickly</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>そして、ファイルは以下のようになるはずです</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">10</span><span class="o">-</span><span class="mi">22</span> <span class="mi">22</span><span class="p">:</span><span class="mi">19</span> <span class="n">root</span>         <span class="n">INFO</span>     <span class="n">Jackdaws</span> <span class="n">love</span> <span class="n">my</span> <span class="n">big</span> <span class="n">sphinx</span> <span class="n">of</span> <span class="n">quartz</span><span class="o">.</span>
+<span class="mi">10</span><span class="o">-</span><span class="mi">22</span> <span class="mi">22</span><span class="p">:</span><span class="mi">19</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area1</span>  <span class="n">DEBUG</span>    <span class="n">Quick</span> <span class="n">zephyrs</span> <span class="n">blow</span><span class="p">,</span> <span class="n">vexing</span> <span class="n">daft</span> <span class="n">Jim</span><span class="o">.</span>
+<span class="mi">10</span><span class="o">-</span><span class="mi">22</span> <span class="mi">22</span><span class="p">:</span><span class="mi">19</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area1</span>  <span class="n">INFO</span>     <span class="n">How</span> <span class="n">quickly</span> <span class="n">daft</span> <span class="n">jumping</span> <span class="n">zebras</span> <span class="n">vex</span><span class="o">.</span>
+<span class="mi">10</span><span class="o">-</span><span class="mi">22</span> <span class="mi">22</span><span class="p">:</span><span class="mi">19</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area2</span>  <span class="n">WARNING</span>  <span class="n">Jail</span> <span class="n">zesty</span> <span class="n">vixen</span> <span class="n">who</span> <span class="n">grabbed</span> <span class="n">pay</span> <span class="kn">from</span> <span class="nn">quack.</span>
+<span class="mi">10</span><span class="o">-</span><span class="mi">22</span> <span class="mi">22</span><span class="p">:</span><span class="mi">19</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area2</span>  <span class="n">ERROR</span>    <span class="n">The</span> <span class="n">five</span> <span class="n">boxing</span> <span class="n">wizards</span> <span class="n">jump</span> <span class="n">quickly</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>これを見て分かる通り、DEBUG メッセージはファイルだけに出力され、その他のメッセージは両方に出力されます。</p>
+<p>この例ではコンソールとファイルのハンドラだけを使っていますが、実際には任意の数のハンドラや組み合わせを使えます。</p>
+</div>
+<div class="section" id="configuration-server-example">
+<h2>設定サーバの例<a class="headerlink" href="#configuration-server-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログ記録設定サーバを使うモジュールの例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># read initial config file</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;logging.conf&#39;</span><span class="p">)</span>
+
+<span class="c1"># create and start listener on port 9999</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">9999</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;simpleExample&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># loop through logging calls to see the difference</span>
+    <span class="c1"># new configurations make, until Ctrl+C is pressed</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;debug message&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;info message&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;warn message&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;error message&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;critical message&#39;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="c1"># cleanup</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">stopListening</span><span class="p">()</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>そしてファイル名を受け取ってそのファイルをサーバに送るスクリプトですが、それに先だってバイナリエンコード長を新しいログ記録の設定として先に送っておきます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">struct</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data_to_send</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;connecting...&#39;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sending config...&#39;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;L&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_to_send</span><span class="p">)))</span>
+<span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data_to_send</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-and-receiving-logging-events-across-a-network">
+<span id="network-logging"></span><h2>ネットワーク越しの logging イベントの送受信<a class="headerlink" href="#sending-and-receiving-logging-events-across-a-network" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログイベントをネットワーク越しに送信し、受信端でそれを処理したいとしましょう。 <code class="xref py py-class docutils literal"><span class="pre">SocketHandler</span></code> インスタンスを送信端の root logger にアタッチすれば、簡単に実現できます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span><span class="o">,</span> <span class="nn">logging.handlers</span>
+
+<span class="n">rootLogger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">rootLogger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">socketHandler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">SocketHandler</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">)</span>
+<span class="c1"># don&#39;t bother with a formatter, since a socket handler sends the event as</span>
+<span class="c1"># an unformatted pickle</span>
+<span class="n">rootLogger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">socketHandler</span><span class="p">)</span>
+
+<span class="c1"># Now, we can log to the root logger, or any other logger. First the root...</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Jackdaws love my big sphinx of quartz.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Now, define a couple of other loggers which might represent areas in your</span>
+<span class="c1"># application:</span>
+
+<span class="n">logger1</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;myapp.area1&#39;</span><span class="p">)</span>
+<span class="n">logger2</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;myapp.area2&#39;</span><span class="p">)</span>
+
+<span class="n">logger1</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Quick zephyrs blow, vexing daft Jim.&#39;</span><span class="p">)</span>
+<span class="n">logger1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;How quickly daft jumping zebras vex.&#39;</span><span class="p">)</span>
+<span class="n">logger2</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Jail zesty vixen who grabbed pay from quack.&#39;</span><span class="p">)</span>
+<span class="n">logger2</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The five boxing wizards jump quickly.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>受信端では <a class="reference internal" href="../library/socketserver.html#module-SocketServer" title="SocketServer: A framework for network servers."><code class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></code></a> モジュールを使って受信プログラムを作成しておきます。簡単な実用プログラムを以下に示します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+
+<span class="k">class</span> <span class="nc">LogRecordStreamHandler</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">StreamRequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handler for a streaming logging request.</span>
+
+<span class="sd">    This basically logs the record using whatever logging policy is</span>
+<span class="sd">    configured locally.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle multiple requests - each expected to be a 4-byte length,</span>
+<span class="sd">        followed by the LogRecord in pickle format. Logs the record</span>
+<span class="sd">        according to whatever policy is configured locally.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">slen</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;L&#39;</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">slen</span><span class="p">)</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">slen</span><span class="p">:</span>
+                <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">slen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">))</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unPickle</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">makeLogRecord</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handleLogRecord</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unPickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handleLogRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="c1"># if a name is specified, we use the named logger rather than the one</span>
+        <span class="c1"># implied by the record.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">logname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">logname</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># N.B. EVERY record gets logged. This is because Logger.handle</span>
+        <span class="c1"># is normally called AFTER logger-level filtering. If you want</span>
+        <span class="c1"># to do filtering, do it at the client end to save wasting</span>
+        <span class="c1"># cycles and network bandwidth!</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LogRecordSocketReceiver</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">ThreadingTCPServer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple TCP socket-based logging receiver suitable for testing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">allow_reuse_address</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                 <span class="n">port</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
+                 <span class="n">handler</span><span class="o">=</span><span class="n">LogRecordStreamHandler</span><span class="p">):</span>
+        <span class="n">SocketServer</span><span class="o">.</span><span class="n">ThreadingTCPServer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abort</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logname</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">serve_until_stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">select</span>
+        <span class="n">abort</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">abort</span><span class="p">:</span>
+            <span class="n">rd</span><span class="p">,</span> <span class="n">wr</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">fileno</span><span class="p">()],</span>
+                                       <span class="p">[],</span> <span class="p">[],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_request</span><span class="p">()</span>
+            <span class="n">abort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">abort</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+        <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(relativeCreated)5d</span><span class="s1"> </span><span class="si">%(name)-15s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tcpserver</span> <span class="o">=</span> <span class="n">LogRecordSocketReceiver</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;About to start TCP server...&#39;</span><span class="p">)</span>
+    <span class="n">tcpserver</span><span class="o">.</span><span class="n">serve_until_stopped</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>先にサーバを起動しておき、次にクライアントを起動します。クライアント側では、コンソールには何も出力されません; サーバ側では以下のようなメッセージを目にするはずです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">About</span> <span class="n">to</span> <span class="n">start</span> <span class="n">TCP</span> <span class="n">server</span><span class="o">...</span>
+   <span class="mi">59</span> <span class="n">root</span>            <span class="n">INFO</span>     <span class="n">Jackdaws</span> <span class="n">love</span> <span class="n">my</span> <span class="n">big</span> <span class="n">sphinx</span> <span class="n">of</span> <span class="n">quartz</span><span class="o">.</span>
+   <span class="mi">59</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area1</span>     <span class="n">DEBUG</span>    <span class="n">Quick</span> <span class="n">zephyrs</span> <span class="n">blow</span><span class="p">,</span> <span class="n">vexing</span> <span class="n">daft</span> <span class="n">Jim</span><span class="o">.</span>
+   <span class="mi">69</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area1</span>     <span class="n">INFO</span>     <span class="n">How</span> <span class="n">quickly</span> <span class="n">daft</span> <span class="n">jumping</span> <span class="n">zebras</span> <span class="n">vex</span><span class="o">.</span>
+   <span class="mi">69</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area2</span>     <span class="n">WARNING</span>  <span class="n">Jail</span> <span class="n">zesty</span> <span class="n">vixen</span> <span class="n">who</span> <span class="n">grabbed</span> <span class="n">pay</span> <span class="kn">from</span> <span class="nn">quack.</span>
+   <span class="mi">69</span> <span class="n">myapp</span><span class="o">.</span><span class="n">area2</span>     <span class="n">ERROR</span>    <span class="n">The</span> <span class="n">five</span> <span class="n">boxing</span> <span class="n">wizards</span> <span class="n">jump</span> <span class="n">quickly</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>特定のシナリオでは pickle にはいくつかのセキュリティ上の問題があることに注意してください。これが問題になる場合、 <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SocketHandler.makePickle" title="logging.handlers.SocketHandler.makePickle"><code class="xref py py-meth docutils literal"><span class="pre">makePickle()</span></code></a> メソッドをオーバーライドして代替手段を実装することで異なるシリアライズ手法を使用できます。代替シリアライズ手法を使うように上記のスクリプトを修正することもできます。</p>
+</div>
+<div class="section" id="adding-contextual-information-to-your-logging-output">
+<span id="context-info"></span><h2>コンテキスト情報をログ記録出力に付加する<a class="headerlink" href="#adding-contextual-information-to-your-logging-output" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>時にはログ記録出力にログ関数の呼び出し時に渡されたパラメータに加えてコンテキスト情報を含めたいこともあるでしょう。たとえば、ネットワークアプリケーションで、クライアント固有の情報 (例: リモートクライアントの名前、 IP アドレス) もログ記録に残しておきたいと思ったとしましょう。 <em>extra</em> パラメータをこの目的に使うこともできますが、いつでもこの方法で情報を渡すのが便利なやり方とも限りません。また接続ごとに <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスを生成する誘惑に駆られるかもしれませんが、生成した <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスはガーベジコレクションで回収されないので、これは良いアイデアとは言えません。この例は現実的な問題ではないかもしれませんが、 <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスの個数がアプリケーションの中でログ記録が行われるレベルの粒度に依存する場合、 <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスの個数が事実上無制限にならないと、管理が難しくなります。</p>
+<div class="section" id="using-loggeradapters-to-impart-contextual-information">
+<h3>LoggerAdapter を使ったコンテキスト情報の伝達<a class="headerlink" href="#using-loggeradapters-to-impart-contextual-information" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>logging イベントの情報と一緒に出力されるコンテキスト情報を渡す簡単な方法は、 <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> を使うことです。このクラスは <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> のように見えるように設計されていて、 <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-meth docutils literal"><span class="pre">debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-meth docutils literal"><span class="pre">info()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.warning" title="logging.warning"><code class="xref py py-meth docutils literal"><span class="pre">warning()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.error" title="logging.error"><code class="xref py py-meth docutils literal"><span class="pre">error()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.exception" title="logging.exception"><code class="xref py py-meth docutils literal"><span class="pre">exception()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.critical" title="logging.critical"><code class="xref py py-meth docutils literal"><span class="pre">critical()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.log" title="logging.log"><code class="xref py py-meth docutils literal"><span class="pre">log()</span></code></a> の各メソッドを呼び出せるようになっています。これらのメソッドは対応する <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> のメソッドと同じ引数を取るので、二つの型を取り替えて使うことができます。</p>
+<p><a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> のインスタンスを生成する際には、 <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスとコンテキスト情報を収めた辞書風 (dict-like) のオブジェクトを渡します。 <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> のログ記録メソッドを呼び出すと、呼び出しをコンストラクタに渡された配下の <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> インスタンスに委譲し、その際コンテキスト情報をその委譲された呼び出しに埋め込みます。 <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> のコードから少し抜き出してみます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delegate a debug call to the underlying logger, after adding</span>
+<span class="sd">    contextual information from this adapter instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> の <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter.process" title="logging.LoggerAdapter.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a> メソッドがコンテキスト情報をログ出力に加える場所です。そこではログ記録呼び出しのメッセージとキーワード引数が渡され、加工された (可能性のある) それらの情報を配下のロガーへの呼び出しに渡し直します。このメソッドのデフォルト実装ではメッセージは元のままですが、キーワード引数にはコンストラクタに渡された辞書風オブジェクトを値として &#8220;extra&#8221; キーが挿入されます。もちろん、呼び出し時に &#8220;extra&#8221; キーワードを使った場合には何事もなかったかのように上書きされます。</p>
+<p>&#8220;extra&#8221; を用いる利点は辞書風オブジェクトの中の値が <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal"><span class="pre">LogRecord</span></code></a> インスタンスの __dict__ にマージされることで、辞書風オブジェクトのキーを知っている <a class="reference internal" href="../library/logging.html#logging.Formatter" title="logging.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a> を用意して文字列をカスタマイズするようにできることです。それ以外のメソッドが必要なとき、たとえばコンテキスト情報をメッセージの前や後ろにつなげたい場合には、 <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> から <a class="reference internal" href="../library/logging.html#logging.LoggerAdapter.process" title="logging.LoggerAdapter.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a> を望むようにオーバライドしたサブクラスを作ることが必要なだけです。次に挙げるのはこのクラスを使った例で、コンストラクタで使われる「辞書風」オブジェクトにどの振る舞いが必要なのかも示しています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomAdapter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LoggerAdapter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This example adapter expects the passed in dict-like object to have a</span>
+<span class="sd">    &#39;connid&#39; key, whose value in brackets is prepended to the log message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">] </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extra</span><span class="p">[</span><span class="s1">&#39;connid&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">),</span> <span class="n">kwargs</span>
+</pre></div>
+</div>
+<p>これを次のように使うことができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">CustomAdapter</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;connid&#39;</span><span class="p">:</span> <span class="n">some_conn_id</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>これで、この adapter 経由でログした全てのイベントに対して、<code class="docutils literal"><span class="pre">some_conn_id</span></code> の値がログメッセージの前に追加されます。</p>
+<div class="section" id="using-objects-other-than-dicts-to-pass-contextual-information">
+<h4>コンテキスト情報を渡すために dict 以外のオブジェクトを使う<a class="headerlink" href="#using-objects-other-than-dicts-to-pass-contextual-information" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><a class="reference internal" href="../library/logging.html#logging.LoggerAdapter" title="logging.LoggerAdapter"><code class="xref py py-class docutils literal"><span class="pre">LoggerAdapter</span></code></a> に渡すのは本物の dict でなくても構いません。 <code class="docutils literal"><span class="pre">__getitem__</span></code> と <code class="docutils literal"><span class="pre">__iter__</span></code> を実装していて logging が辞書のように扱えるクラスのインスタンスを利用することができます。これは (dict の値が固定されるのに対して) 値を動的に生成できるので便利です。</p>
+</div>
+</div>
+<div class="section" id="using-filters-to-impart-contextual-information">
+<span id="filters-contextual"></span><h3>Filter を使ったコンテキスト情報の伝達<a class="headerlink" href="#using-filters-to-impart-contextual-information" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ユーザ定義の <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal"><span class="pre">Filter</span></code></a> を使ってログ出力にコンテキスト情報を加えることもできます。 <code class="docutils literal"><span class="pre">Filter</span></code> インスタンスは、渡された <code class="docutils literal"><span class="pre">LogRecords</span></code> を修正することができます。これにより、適切なフォーマット文字列や必要なら <a class="reference internal" href="../library/logging.html#logging.Formatter" title="logging.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a> を使って、出力となる属性を新しく追加することも出来ます。</p>
+<p>例えば、web アプリケーションで、処理されるリクエスト (または、少なくともその重要な部分) は、スレッドローカル (<a class="reference internal" href="../library/threading.html#threading.local" title="threading.local"><code class="xref py py-class docutils literal"><span class="pre">threading.local</span></code></a>) な変数に保存して、 <code class="docutils literal"><span class="pre">Filter</span></code> からアクセスすることで、 <code class="docutils literal"><span class="pre">LogRecord</span></code> にリクエストの情報を追加できます。例えば、リモート IP アドレスやリモートユーザのユーザ名にアクセスしたいなら、上述の <code class="docutils literal"><span class="pre">LoggerAdapter</span></code> の例のように属性名 &#8216;ip&#8217; や &#8216;user&#8217; を使うといったようにです。その場合、同じフォーマット文字列を使って以下に示すように似たような出力を得られます。これはスクリプトの例です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">choice</span>
+
+<span class="k">class</span> <span class="nc">ContextFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a filter which injects contextual information into the log.</span>
+
+<span class="sd">    Rather than use actual contextual information, we just use random</span>
+<span class="sd">    data in this demo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">USERS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jim&#39;</span><span class="p">,</span> <span class="s1">&#39;fred&#39;</span><span class="p">,</span> <span class="s1">&#39;sheila&#39;</span><span class="p">]</span>
+    <span class="n">IPS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;123.231.231.123&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;192.168.0.1&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+
+        <span class="n">record</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">ContextFilter</span><span class="o">.</span><span class="n">IPS</span><span class="p">)</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">ContextFilter</span><span class="o">.</span><span class="n">USERS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+   <span class="n">levels</span> <span class="o">=</span> <span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+   <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                       <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)-15s</span><span class="s1"> </span><span class="si">%(name)-5s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> IP: </span><span class="si">%(ip)-15s</span><span class="s1"> User: </span><span class="si">%(user)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+   <span class="n">a1</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">)</span>
+   <span class="n">a2</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;d.e.f&#39;</span><span class="p">)</span>
+
+   <span class="n">f</span> <span class="o">=</span> <span class="n">ContextFilter</span><span class="p">()</span>
+   <span class="n">a1</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+   <span class="n">a2</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+   <span class="n">a1</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A debug message&#39;</span><span class="p">)</span>
+   <span class="n">a1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;An info message with </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;some parameters&#39;</span><span class="p">)</span>
+   <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+       <span class="n">lvl</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
+       <span class="n">lvlname</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span>
+       <span class="n">a2</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">lvl</span><span class="p">,</span> <span class="s1">&#39;A message at </span><span class="si">%s</span><span class="s1"> level with </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lvlname</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>そして、実行時に、以下のようになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">292</span> <span class="n">a</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">c</span> <span class="n">DEBUG</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">123.231</span><span class="o">.</span><span class="mf">231.123</span> <span class="n">User</span><span class="p">:</span> <span class="n">fred</span>     <span class="n">A</span> <span class="n">debug</span> <span class="n">message</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">a</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">c</span> <span class="n">INFO</span>     <span class="n">IP</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span>     <span class="n">User</span><span class="p">:</span> <span class="n">sheila</span>   <span class="n">An</span> <span class="n">info</span> <span class="n">message</span> <span class="k">with</span> <span class="n">some</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">CRITICAL</span> <span class="n">IP</span><span class="p">:</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">User</span><span class="p">:</span> <span class="n">sheila</span>   <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">CRITICAL</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">ERROR</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">User</span><span class="p">:</span> <span class="n">jim</span>      <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">ERROR</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">DEBUG</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">User</span><span class="p">:</span> <span class="n">sheila</span>   <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">ERROR</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">123.231</span><span class="o">.</span><span class="mf">231.123</span> <span class="n">User</span><span class="p">:</span> <span class="n">fred</span>     <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">ERROR</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">CRITICAL</span> <span class="n">IP</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span>     <span class="n">User</span><span class="p">:</span> <span class="n">jim</span>      <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">CRITICAL</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">CRITICAL</span> <span class="n">IP</span><span class="p">:</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">User</span><span class="p">:</span> <span class="n">sheila</span>   <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">CRITICAL</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">300</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">DEBUG</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span>     <span class="n">User</span><span class="p">:</span> <span class="n">jim</span>      <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">301</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">ERROR</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">User</span><span class="p">:</span> <span class="n">sheila</span>   <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">ERROR</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">301</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">DEBUG</span>    <span class="n">IP</span><span class="p">:</span> <span class="mf">123.231</span><span class="o">.</span><span class="mf">231.123</span> <span class="n">User</span><span class="p">:</span> <span class="n">fred</span>     <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">22</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">301</span> <span class="n">d</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">f</span> <span class="n">INFO</span>     <span class="n">IP</span><span class="p">:</span> <span class="mf">123.231</span><span class="o">.</span><span class="mf">231.123</span> <span class="n">User</span><span class="p">:</span> <span class="n">fred</span>     <span class="n">A</span> <span class="n">message</span> <span class="n">at</span> <span class="n">INFO</span> <span class="n">level</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="logging-to-a-single-file-from-multiple-processes">
+<span id="multiple-processes"></span><h2>複数のプロセスからの単一ファイルへのログ記録<a class="headerlink" href="#logging-to-a-single-file-from-multiple-processes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログ記録はスレッドセーフであり、単一プロセスの複数のスレッドからの単一ファイルへのログ記録はサポート <em>されています</em> が、 <em>複数プロセス</em> からの単一ファイルへのログ記録はサポート <em>されません</em> 。なぜなら、複数のプロセスをまたいで単一のファイルへのアクセスを直列化する標準の方法が Python には存在しないからです。複数のプロセスから単一ファイルへログ記録しなければならないなら、最も良い方法は、すべてのプロセスが <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SocketHandler" title="logging.handlers.SocketHandler"><code class="xref py py-class docutils literal"><span class="pre">SocketHandler</span></code></a> に対してログ記録を行い、独立したプロセスとしてソケットサーバを動かすことです。ソケットサーバはソケットから読み取ってファイルにログを書き出します。 (この機能を実行するために、既存のプロセスの 1 つのスレッドを割り当てることもできます) <a class="reference internal" href="#network-logging"><span class="std std-ref">この節</span></a> では、このアプローチをさらに詳細に文書化しています。動作するソケット受信プログラムが含まれているので、アプリケーションに組み込むための出発点として使用できるでしょう。</p>
+<p><a class="reference internal" href="../library/multiprocessing.html#module-multiprocessing" title="multiprocessing: Process-based &quot;threading&quot; interface."><code class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></code></a> モジュールを含む最近のバージョンの Python を使用しているなら、複数のプロセスからファイルへのアクセスを直列化するために <a class="reference internal" href="../library/multiprocessing.html#multiprocessing.Lock" title="multiprocessing.Lock"><code class="xref py py-class docutils literal"><span class="pre">Lock</span></code></a> クラスを使って独自のハンドラを書くことができます。既存の <a class="reference internal" href="../library/logging.handlers.html#logging.FileHandler" title="logging.FileHandler"><code class="xref py py-class docutils literal"><span class="pre">FileHandler</span></code></a> とそのサブクラスは現在のところ <a class="reference internal" href="../library/multiprocessing.html#module-multiprocessing" title="multiprocessing: Process-based &quot;threading&quot; interface."><code class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></code></a> を利用していませんが、将来は利用するようになるかもしれません。現在のところ <a class="reference internal" href="../library/multiprocessing.html#module-multiprocessing" title="multiprocessing: Process-based &quot;threading&quot; interface."><code class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></code></a> モジュールが提供するロック機能はすべてのプラットホームで動作するわけではないことに注意してください (<a class="reference external" href="https://bugs.python.org/issue3770">https://bugs.python.org/issue3770</a> 参照)。</p>
+</div>
+<div class="section" id="using-file-rotation">
+<h2>ファイルをローテートする<a class="headerlink" href="#using-file-rotation" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログファイルがある大きさに達したら、新しいファイルを開いてそこにログを取りたいことがあります。そのファイルをある数だけ残し、その数のファイルが生成されたらファイルを循環し、ファイルの数も大きさも制限したいこともあるでしょう。この利用パターンのために、logging パッケージは <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.RotatingFileHandler" title="logging.handlers.RotatingFileHandler"><code class="xref py py-class docutils literal"><span class="pre">RotatingFileHandler</span></code></a> を提供しています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+
+<span class="n">LOG_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;logging_rotatingfile_example.out&#39;</span>
+
+<span class="c1"># Set up a specific logger with our desired output level</span>
+<span class="n">my_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;MyLogger&#39;</span><span class="p">)</span>
+<span class="n">my_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># Add the log message handler to the logger</span>
+<span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
+              <span class="n">LOG_FILENAME</span><span class="p">,</span> <span class="n">maxBytes</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">my_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+<span class="c1"># Log some messages</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">my_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;i = </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="c1"># See what files are created</span>
+<span class="n">logfiles</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">*&#39;</span> <span class="o">%</span> <span class="n">LOG_FILENAME</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">logfiles</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>この結果として、アプリケーションのログ履歴の一部である、6 つに別れたファイルが得られます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span>
+<span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="mi">3</span>
+<span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="mi">4</span>
+<span class="n">logging_rotatingfile_example</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>最新のファイルはいつでも <code class="file docutils literal"><span class="pre">logging_rotatingfile_example.out</span></code> で、サイズの上限に達するたびに拡張子 <code class="docutils literal"><span class="pre">.1</span></code> を付けた名前に改名されます。既にあるバックアップファイルはその拡張子がインクリメントされ (<code class="docutils literal"><span class="pre">.1</span></code> が <code class="docutils literal"><span class="pre">.2</span></code> になるなど)、 <code class="docutils literal"><span class="pre">.6</span></code> ファイルは消去されます。</p>
+<p>明らかに、ここでは極端な例示のためにファイルの大きさをかなり小さな値に設定しています。実際に使うときは <em>maxBytes</em> を適切な値に設定してください。</p>
+</div>
+<div class="section" id="an-example-dictionary-based-configuration">
+<h2>辞書ベースで構成する例<a class="headerlink" href="#an-example-dictionary-based-configuration" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>次の例は辞書を使った logging の構成です。この例は <a class="reference external" href="https://docs.djangoproject.com/en/1.3/topics/logging/#configuring-logging">Django プロジェクトのドキュメント</a> から持ってきました。この辞書を <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> に渡して設定を有効にします:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(module)s</span><span class="s1"> </span><span class="si">%(process)d</span><span class="s1"> </span><span class="si">%(thread)d</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;simple&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;filters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;special&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="s1">&#39;project.logging.SpecialFilter&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;null&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span><span class="s1">&#39;django.utils.log.NullHandler&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;console&#39;</span><span class="p">:{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span><span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;simple&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;mail_admins&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;django.utils.log.AdminEmailHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;special&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;django&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:[</span><span class="s1">&#39;null&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;django.request&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mail_admins&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;myproject.custom&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">,</span> <span class="s1">&#39;mail_admins&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;special&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>この構成方法についてのより詳しい情報は、Django のドキュメントの <a class="reference external" href="https://docs.djangoproject.com/en/1.6/topics/logging/#configuring-logging">該当のセクション</a> で見ることができます。</p>
+</div>
+<div class="section" id="inserting-a-bom-into-messages-sent-to-a-sysloghandler">
+<h2>SysLogHandler に送るメッセージに BOM を挿入する<a class="headerlink" href="#inserting-a-bom-into-messages-sent-to-a-sysloghandler" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference external" href="http://tools.ietf.org/html/rfc5424">RFC 5424</a> は syslog デーモンに Unicode メッセージを送る時、次の構造を要求しています: オプショナルなピュア ASCII部分、続けて UTF-8 の Byte Order Mark (BOM)、続けて UTF-8 でエンコードされた Unicode. (<a class="reference external" href="http://tools.ietf.org/html/rfc5424#section-6">仕様の該当セクション</a> を参照)</p>
+<p>Python 2.6, 2.7 で <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SysLogHandler" title="logging.handlers.SysLogHandler"><code class="xref py py-class docutils literal"><span class="pre">SysLogHandler</span></code></a> に、 message に BOM を挿入するコードが追加されました。しかし、そのときの実装が悪くて、 message の先頭に BOM をつけてしまうのでピュアASCII 部分をその前に書くことができませんでした。</p>
+<p>この動作は壊れているので、Python 2.7.4 以降では BOM を挿入するコードが、削除されました。書き直されるのではなく削除されたので、RFC 5424 準拠の、BOM と、オプションのピュア ASCII部分をBOMの前に、任意の Unicode を BOM の後ろに持つ UTF-8 でエンコードされた message を生成したい場合、次の手順に従う必要があります:</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SysLogHandler" title="logging.handlers.SysLogHandler"><code class="xref py py-class docutils literal"><span class="pre">SysLogHandler</span></code></a> のインスタンスに、次のような format 文字列を持った <a class="reference internal" href="../library/logging.html#logging.Formatter" title="logging.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a> インスタンスをアタッチする:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">u&#39;ASCII section</span><span class="se">\ufeff</span><span class="s1">Unicode section&#39;</span>
+</pre></div>
+</div>
+<p>Unicode のコードポイント <code class="docutils literal"><span class="pre">u'\ufeff'</span></code> は、UTF-8 でエンコードすると BOM &#8211; <code class="docutils literal"><span class="pre">'\xef\xbb\xbf'</span></code> &#8211; になります。</p>
+</li>
+<li><p class="first">ASCII セクションを好きなプレースホルダに変更する。ただしその部分の置換結果が常に ASCII になるように注意する(UTF-8 でエンコードされてもその部分が変化しないようにする)。</p>
+</li>
+<li><p class="first">Unicode セクションを任意のプレースホルダに置き換える。この部分を置換したデータに ASCII 外の文字が含まれていても、それは単に UTF-8 でエンコードされるだけです。</p>
+</li>
+</ol>
+<p>フォーマットされた message が Unicode の場合、 <code class="docutils literal"><span class="pre">SysLogHandler</span></code> によって UTF-8 でエンコードされます。上のルールに従えば、RFC 5424 準拠のメッセージを生成できます。上のルールに従わない場合、logging は何もエラーを起こしませんが、message は RFC 5424 に準拠しない形で送られるので、syslog デーモン側で何かエラーが起こる可能性があります。</p>
+</div>
+<div class="section" id="implementing-structured-logging">
+<h2>構造化ログを実装する<a class="headerlink" href="#implementing-structured-logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>多くのログメッセージは人間が読むために書かれるため、機械的に処理しにくくなっていますが、場合によっては (複雑な正規表現を使ってメッセージをパースしなくても) プログラムがぱーすできる構造化されたフォーマットでメッセージを出力したい場合があります。logging パッケージをつかってこれを簡単に実現することができます。実現する方法は幾つもありますが、次の例は JSON を使ってイベントをシリアライズしています:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">StructuredMessage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> &gt;&gt;&gt; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">))</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">StructuredMessage</span>   <span class="c1"># optional, to improve readability</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;message 1&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">fnum</span><span class="o">=</span><span class="mf">123.456</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>上のスクリプトを実行すると次のように出力されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="mi">1</span> <span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s2">&quot;fnum&quot;</span><span class="p">:</span> <span class="mf">123.456</span><span class="p">,</span> <span class="s2">&quot;num&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>要素の順序は Python のバージョンによって異なることに注意してください。</p>
+<p>より特殊な処理が必要な場合、次の例のように、カスタムの JSON エンコーダを作ることができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># This next bit is to ensure the script runs unchanged on 2.x and 3.x</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">unicode</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;unicode_escape&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Encoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">StructuredMessage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> &gt;&gt;&gt; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">StructuredMessage</span>   <span class="c1"># optional, to improve readability</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;message 1&#39;</span><span class="p">,</span> <span class="n">set_value</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">snowman</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\u2603</span><span class="s1">&#39;</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>上のスクリプトを実行すると次のように出力されます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="mi">1</span> <span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s2">&quot;snowman&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\u2603</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;set_value&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>要素の順序は Python のバージョンによって異なることに注意してください。</p>
+</div>
+<div class="section" id="customizing-handlers-with-dictconfig">
+<span id="custom-handlers"></span><h2>handler を <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> を使ってカスタマイズする<a class="headerlink" href="#customizing-handlers-with-dictconfig" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>logging handler に特定のカスタマイズを何度もしたい場合で、 <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> を使っているなら、サブクラスを作らなくてもカスタマイズが可能です。例えば、ログファイルの owner を設定したいとします。これは POSIX 環境では <a class="reference internal" href="../library/os.html#os.chown" title="os.chown"><code class="xref py py-func docutils literal"><span class="pre">os.chown()</span></code></a> を使って簡単に実現できますが、標準ライブラリの file handler はこの機能を組み込みでサポートしていません。 handler の生成を通常の関数を使ってカスタマイズすることができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">owned_file_handler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">owner</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">owner</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span><span class="o">,</span> <span class="nn">grp</span>
+        <span class="c1"># convert user and group names to uid and gid</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">owner</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">pw_uid</span>
+        <span class="n">gid</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="n">owner</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">gr_gid</span>
+        <span class="n">owner</span> <span class="o">=</span> <span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">owner</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>そして、 <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> に渡される構成設定の中で、この関数を使って logging handler を生成するように指定することができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(name)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:{</span>
+            <span class="c1"># The values below are popped from this dictionary and</span>
+            <span class="c1"># used to create the handler, set the handler&#39;s level and</span>
+            <span class="c1"># its formatter.</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">owned_file_handler</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
+            <span class="c1"># The values below are passed to the handler creator callable</span>
+            <span class="c1"># as keyword arguments.</span>
+            <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pulse&#39;</span><span class="p">,</span> <span class="s1">&#39;pulse&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;chowntest.log&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;root&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>この例は説明用のものですが、owner の user と group を <code class="docutils literal"><span class="pre">pulse</span></code> に設定しています。これを動くスクリプトに <code class="docutils literal"><span class="pre">chowntest.py</span></code> に組み込んでみます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span><span class="o">,</span> <span class="nn">logging.config</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">shutil</span>
+
+<span class="k">def</span> <span class="nf">owned_file_handler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">owner</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">owner</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">owner</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(name)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:{</span>
+            <span class="c1"># The values below are popped from this dictionary and</span>
+            <span class="c1"># used to create the handler, set the handler&#39;s level and</span>
+            <span class="c1"># its formatter.</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">owned_file_handler</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
+            <span class="c1"># The values below are passed to the handler creator callable</span>
+            <span class="c1"># as keyword arguments.</span>
+            <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pulse&#39;</span><span class="p">,</span> <span class="s1">&#39;pulse&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;chowntest.log&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;root&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">LOGGING</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;mylogger&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A debug message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>これを実行するには、<code class="docutils literal"><span class="pre">root</span></code> 権限で実行する必要があるかもしれません:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo python3.3 chowntest.py
+$ cat chowntest.log
+2013-11-05 09:34:51,128 DEBUG mylogger A debug message
+$ ls -l chowntest.log
+-rw-r--r-- 1 pulse pulse 55 2013-11-05 09:34 chowntest.log
+</pre></div>
+</div>
+<p><code class="xref py py-func docutils literal"><span class="pre">shutil.chown()</span></code> が追加されたのが Python 3.3 からなので、この例は Python 3.3 を使っています。このアプローチ自体は <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> をサポートした全ての Python バージョン - Python 2.7, 3.2 以降 - で利用できます。 3.3 以前のバージョンでは、オーナーを変更するのに <a class="reference internal" href="../library/os.html#os.chown" title="os.chown"><code class="xref py py-func docutils literal"><span class="pre">os.chown()</span></code></a> を利用する必要があるでしょう。</p>
+<p>実際には、handler を生成する関数はプロジェクト内のどこかにあるユーティリティモジュールに置くことになるでしょう。設定の中で直接関数を参照する代わりに:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">owned_file_handler</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>次のように書くこともできます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="s1">&#39;ext://project.util.owned_file_handler&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">project.util</span></code> は関数がある実際の場所に置き換えてください。上のスクリプトでは <code class="docutils literal"><span class="pre">'ext://__main__.owned_file_handler'</span></code> で動くはずです。 <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> は <code class="docutils literal"><span class="pre">ext://</span></code> から実際の callable を見つけます。</p>
+<p>この例は他のファイルに対する変更を実装する例にもなっています。例えば <a class="reference internal" href="../library/os.html#os.chmod" title="os.chmod"><code class="xref py py-func docutils literal"><span class="pre">os.chmod()</span></code></a> を使って、同じ方法で POSIX パーミッションを設定できるでしょう。</p>
+<p>もちろん、このアプローチは <a class="reference internal" href="../library/logging.handlers.html#logging.FileHandler" title="logging.FileHandler"><code class="xref py py-class docutils literal"><span class="pre">FileHandler</span></code></a> 以外の handler 、ローテートする file handler のいずれかやその他の handler にも適用できます。</p>
+</div>
+<div class="section" id="configuring-filters-with-dictconfig">
+<span id="filters-dictconfig"></span><h2>filter を <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> を使ってカスタマイズする<a class="headerlink" href="#configuring-filters-with-dictconfig" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> によってフィルタを設定 <em>出来ます</em> が、どうやってそれを行うのかが初見では明快とは言えないでしょう(そのためのこのレシピです)。 <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal"><span class="pre">Filter</span></code></a> のみが唯一標準ライブラリに含まれているだけですし、それは何の要求にも応えてはくれません(ただの基底クラスですから)ので、典型的には <a class="reference internal" href="../library/logging.html#logging.Filter.filter" title="logging.Filter.filter"><code class="xref py py-meth docutils literal"><span class="pre">filter()</span></code></a> メソッドをオーバライドした <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal"><span class="pre">Filter</span></code></a> のサブクラスをあなた自身で定義する必要があります。これをするには、設定辞書内のフィルタ指定部分に、 <code class="docutils literal"><span class="pre">()</span></code> キーでそのフィルタを作るのに使われる callable を指定してください(クラスを指定するのが最もわかりやすいですが、 <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal"><span class="pre">Filter</span></code></a> インスタンスを返却する callable を提供することでも出来ます)。以下に完全な例を示します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">MyFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="n">param</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">allow</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">allow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">msg</span>
+        <span class="k">if</span> <span class="n">allow</span><span class="p">:</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;changed: &#39;</span> <span class="o">+</span> <span class="n">record</span><span class="o">.</span><span class="n">msg</span>
+        <span class="k">return</span> <span class="n">allow</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;filters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;myfilter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">MyFilter</span><span class="p">,</span>
+            <span class="s1">&#39;param&#39;</span><span class="p">:</span> <span class="s1">&#39;noshow&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;console&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;myfilter&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;root&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">LOGGING</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;hello - noshow&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>どのようにして設定データとして、そのインスタンスを構築する callable をキーワードパラメータの形で渡すのか、をこの例は教えてくれます。上記スクリプトは実行すると、このような出力をします:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">changed</span><span class="p">:</span> <span class="n">hello</span>
+</pre></div>
+</div>
+<p>設定した通りに動いていますね。</p>
+<p>ほかにもいくつか特筆すべき点があります:</p>
+<ul class="simple">
+<li><p class="first">設定内で直接その callable を参照出来ない場合(例えばそれが異なるモジュール内にあり、設定辞書のある場所からそれを直接インポート出来ない、など)には、 <a class="reference internal" href="../library/logging.config.html#logging-config-dict-externalobj"><span class="std std-ref">外部オブジェクトへのアクセス</span></a> に記述されている <code class="docutils literal"><span class="pre">ext://...</span></code> 形式を使えます。例えば、上記例のように <code class="docutils literal"><span class="pre">MyFilter</span></code> と指定する代わりに、 <code class="docutils literal"><span class="pre">'ext://__main__.MyFilter'</span></code> と記述することが出来ます。</p>
+</li>
+<li><p class="first">フィルタについてとともに、このテクニックは、カスタムハンドラ、カスタムフォーマッタに対しても同様に使えます。ロギングが設定において、どのようにユーザ定義のオブジェクトをサポートするのかについてのさらなる詳細については、 <a class="reference internal" href="../library/logging.config.html#logging-config-dict-userdef"><span class="std std-ref">ユーザ定義オブジェクト</span></a> と、本クックブックの上の方のレシピ <a class="reference internal" href="#custom-handlers"><span class="std std-ref">handler を dictConfig() を使ってカスタマイズする</span></a> を参照してください。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="customized-exception-formatting">
+<span id="custom-format-exception"></span><h2>例外の書式化をカスタマイズする<a class="headerlink" href="#customized-exception-formatting" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>例外の書式化をカスタマイズしたいことがあるでしょう - わかりやすさのために、例外情報がある場合でもログイベントごとに一行に収まることを死守したいと望むとしましょう。フォーマッタのクラスをカスタマイズして、このように出来ます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">OneLineExceptionFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">formatException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Format an exception so that it prints on a single line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">OneLineExceptionFormatter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">formatException</span><span class="p">(</span><span class="n">exc_info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1"># or format into one line however you want to</span>
+
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">OneLineExceptionFormatter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">exc_text</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;|&#39;</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">def</span> <span class="nf">configure_logging</span><span class="p">():</span>
+    <span class="n">fh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">OneLineExceptionFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1">|</span><span class="si">%(levelname)s</span><span class="s1">|</span><span class="si">%(message)s</span><span class="s1">|&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">fh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">configure_logging</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Sample message&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;ZeroDivisionError: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>実行してみましょう。このように正確に2行の出力を生成します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">28</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="mi">2015</span> <span class="mi">07</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">23</span><span class="o">|</span><span class="n">INFO</span><span class="o">|</span><span class="n">Sample</span> <span class="n">message</span><span class="o">|</span>
+<span class="mi">28</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="mi">2015</span> <span class="mi">07</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">23</span><span class="o">|</span><span class="n">ERROR</span><span class="o">|</span><span class="ne">ZeroDivisionError</span><span class="p">:</span> <span class="n">integer</span> <span class="n">division</span> <span class="ow">or</span> <span class="n">modulo</span> <span class="n">by</span> <span class="n">zero</span><span class="o">|</span><span class="s1">&#39;Traceback (most recent call last):</span><span class="se">\n</span><span class="s1">  File &quot;logtest7.py&quot;, line 30, in main</span><span class="se">\n</span><span class="s1">    x = 1 / 0</span><span class="se">\n</span><span class="s1">ZeroDivisionError: integer division or modulo by zero&#39;</span><span class="o">|</span>
+</pre></div>
+</div>
+<p>これは扱いとしては単純過ぎますが、例外情報をどのようにしてあなた好みの書式化出来るかを示しています。さらに特殊なニーズが必要な場合には <a class="reference internal" href="../library/traceback.html#module-traceback" title="traceback: Print or retrieve a stack traceback."><code class="xref py py-mod docutils literal"><span class="pre">traceback</span></code></a> モジュールが有用です。</p>
+</div>
+<div class="section" id="speaking-logging-messages">
+<span id="spoken-messages"></span><h2>ロギングメッセージを喋る<a class="headerlink" href="#speaking-logging-messages" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ロギングメッセージを目で見る形式ではなく音で聴く形式として出力したい、という状況があるかもしれません。これはあなたのシステムで text- to-speech (TTS) 機能が利用可能であれば、容易です。それが Python バインディングを持っていなくとも、です。ほとんどの TTS システムはあなたが実行出来るコマンドラインプログラムを持っていて、このことで、 <a class="reference internal" href="../library/subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> を使うことでハンドラが呼び出せます。ここでは、TTS コマンドラインプログラムはユーザとの対話を期待せず、完了には時間がかかり、そしてログメッセージの頻度はユーザをメッセージで圧倒してしまうほどには高くはなく、そして並列で喋るよりはメッセージ一つにつき一回喋ることが受け容れられる、としておきます。ここでお見せする実装例では、次が処理される前に一つのメッセージを喋り終わるまで待ち、結果としてほかのハンドラを待たせることになります。 <code class="docutils literal"><span class="pre">espeak</span></code> TTS パッケージが手許にあるとして、このアプローチによる短い例はこのようなものです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">TTSHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="c1"># Speak slowly in a female English voice</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;espeak&#39;</span><span class="p">,</span> <span class="s1">&#39;-s150&#39;</span><span class="p">,</span> <span class="s1">&#39;-ven+f3&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
+        <span class="c1"># wait for the program to finish</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">configure_logging</span><span class="p">():</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">TTSHandler</span><span class="p">()</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="c1"># the default formatter just returns the message</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Goodbye&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">configure_logging</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すれば、女性の声で &#8220;Hello&#8221; に続き &#8220;Goodbye&#8221; と喋るはずです。</p>
+<p>このアプローチは、もちろんほかの TTS システムにも採用出来ますし、メッセージをコマンドライン経由で外部プログラムに渡せるようなものであれば、ほかのシステムであっても全く同じです。</p>
+</div>
+<div class="section" id="buffering-logging-messages-and-outputting-them-conditionally">
+<span id="buffered-logging"></span><h2>ロギングメッセージをバッファリングし、条件に従って出力する<a class="headerlink" href="#buffering-logging-messages-and-outputting-them-conditionally" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>メッセージを一次領域に記録し、ある種の特定の状況になった場合にだけ出力したい、ということがあるかもしれません。たとえばある関数内でのデバッグのためのログ出力をしたくても、エラーなしで終了する限りにおいては収集されたデバッグ情報による混雑は喰らいたくはなく、エラーがあった場合にだけエラー出力とともにデバッグ情報を見たいのだ、のようなことがあるでしょう。</p>
+<p>このような振る舞いをするロギングをしたい関数に対して、デコレータを用いてこれを行う例をお見せします。それには <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.MemoryHandler" title="logging.handlers.MemoryHandler"><code class="xref py py-class docutils literal"><span class="pre">logging.handlers.MemoryHandler</span></code></a> を使います。これにより何か条件を満たすまでロギングイベントを溜め込むことが出来、条件を満たせば溜め込まれたイベントが <code class="docutils literal"><span class="pre">flushed</span></code> として他のハンドラ (<code class="docutils literal"><span class="pre">target</span></code> のハンドラ)に渡されます。デフォルトでは、 <code class="docutils literal"><span class="pre">MemoryHandler</span></code> はそのバッファが一杯になるか、指定された閾値のレベル以上のイベントが起こるとフラッシュされます。何か特別なフラッシュの振る舞いをしたければ、このレシピはさらに特殊化した <code class="docutils literal"><span class="pre">MemoryHandler</span></code> とともに利用出来ます。</p>
+<p>スクリプト例では、 <code class="docutils literal"><span class="pre">foo</span></code> という、単に全てのログレベルについて、 <code class="docutils literal"><span class="pre">sys.stderr</span></code> にもどのレベルを出力したのかについて書き出しながら実際のログ出力も行う、という単純な関数を使っています。 <code class="docutils literal"><span class="pre">foo</span></code> に真を与えると ERROR と CRITICAL の出力をし、そうでなければ DEBUG, INFO, WARNING だけを出力します。</p>
+<p>スクリプトが行うことは単に、 <code class="docutils literal"><span class="pre">foo</span></code> を必要とされている特定の条件でのロギングを行うようにするデコレータで修飾することだけです。このデコレータはパラメータとしてロガーを取り、修飾された関数が呼ばれている間だけメモリハンドラをアタッチします。追加のパラメータとして、ターゲットのハンドラ、フラッシュが発生すべきレベル、バッファの容量も受け取れます。これらのデフォルトは順に <code class="docutils literal"><span class="pre">sys.stderr</span></code> へ書き出す <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal"><span class="pre">StreamHandler</span></code></a>, <code class="docutils literal"><span class="pre">logging.ERROR</span></code>, <code class="docutils literal"><span class="pre">100</span></code> です。</p>
+<p>スクリプトはこれです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging.handlers</span> <span class="k">import</span> <span class="n">MemoryHandler</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">log_if_errors</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">target_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flush_level</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">target_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">flush_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">flush_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span>
+    <span class="k">if</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">capacity</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">MemoryHandler</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">flushLevel</span><span class="o">=</span><span class="n">flush_level</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target_handler</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;call failed&#39;</span><span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="nb">super</span><span class="p">(</span><span class="n">MemoryHandler</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="k">def</span> <span class="nf">write_line</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">fail</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;about to log at DEBUG ...&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Actually logged at DEBUG&#39;</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;about to log at INFO ...&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Actually logged at INFO&#39;</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;about to log at WARNING ...&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Actually logged at WARNING&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
+        <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;about to log at ERROR ...&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Actually logged at ERROR&#39;</span><span class="p">)</span>
+        <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;about to log at CRITICAL ...&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;Actually logged at CRITICAL&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fail</span>
+
+<span class="n">decorated_foo</span> <span class="o">=</span> <span class="n">log_if_errors</span><span class="p">(</span><span class="n">logger</span><span class="p">)(</span><span class="n">foo</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;Calling undecorated foo with False&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">foo</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;Calling undecorated foo with True&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">foo</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;Calling decorated foo with False&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">decorated_foo</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">write_line</span><span class="p">(</span><span class="s1">&#39;Calling decorated foo with True&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">decorated_foo</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>実行すればこのような出力になるはずです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Calling</span> <span class="n">undecorated</span> <span class="n">foo</span> <span class="k">with</span> <span class="kc">False</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">INFO</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">WARNING</span> <span class="o">...</span>
+<span class="n">Calling</span> <span class="n">undecorated</span> <span class="n">foo</span> <span class="k">with</span> <span class="kc">True</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">INFO</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">WARNING</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">ERROR</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">CRITICAL</span> <span class="o">...</span>
+<span class="n">Calling</span> <span class="n">decorated</span> <span class="n">foo</span> <span class="k">with</span> <span class="kc">False</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">INFO</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">WARNING</span> <span class="o">...</span>
+<span class="n">Calling</span> <span class="n">decorated</span> <span class="n">foo</span> <span class="k">with</span> <span class="kc">True</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">DEBUG</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">INFO</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">WARNING</span> <span class="o">...</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">ERROR</span> <span class="o">...</span>
+<span class="n">Actually</span> <span class="n">logged</span> <span class="n">at</span> <span class="n">DEBUG</span>
+<span class="n">Actually</span> <span class="n">logged</span> <span class="n">at</span> <span class="n">INFO</span>
+<span class="n">Actually</span> <span class="n">logged</span> <span class="n">at</span> <span class="n">WARNING</span>
+<span class="n">Actually</span> <span class="n">logged</span> <span class="n">at</span> <span class="n">ERROR</span>
+<span class="n">about</span> <span class="n">to</span> <span class="n">log</span> <span class="n">at</span> <span class="n">CRITICAL</span> <span class="o">...</span>
+<span class="n">Actually</span> <span class="n">logged</span> <span class="n">at</span> <span class="n">CRITICAL</span>
+</pre></div>
+</div>
+<p>見ての通り、実際のログ出力は重要度 ERROR かそれより大きい場合にのみ行っていますが、この場合はそれよりも重要度の低い ERROR よりも前に発生したイベントも出力されます。</p>
+<p>当然のことですが、デコレーションはいつものやり方でどうぞ:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@log_if_errors</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">fail</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="formatting-times-using-utc-gmt-via-configuration">
+<span id="utc-formatting"></span><h2>設定によって時刻を UTC(GMT) で書式化する<a class="headerlink" href="#formatting-times-using-utc-gmt-via-configuration" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>場合によっては、時刻として UTC を使いたいと思うかもしれません。これには以下に示すような <cite>UTCFormatter</cite> のようなクラスを使って出来ます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">UTCFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span>
+</pre></div>
+</div>
+<p>そしてコード中で <code class="docutils literal"><span class="pre">UTCFormatter</span></code> を <a class="reference internal" href="../library/logging.html#logging.Formatter" title="logging.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a> の代わりに使えます。これを設定を通して行いたい場合、 <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> API を以下の完全な例で示すようなアプローチで使うことが出来ます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">UTCFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;utc&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">UTCFormatter</span><span class="p">,</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;local&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;console1&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;utc&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;console2&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;root&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console1&#39;</span><span class="p">,</span> <span class="s1">&#39;console2&#39;</span><span class="p">],</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">LOGGING</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;The local time is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すれば、このような出力になるはずです:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2015</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">17</span> <span class="mi">12</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mi">29</span><span class="p">,</span><span class="mi">501</span> <span class="n">The</span> <span class="n">local</span> <span class="n">time</span> <span class="ow">is</span> <span class="n">Sat</span> <span class="n">Oct</span> <span class="mi">17</span> <span class="mi">13</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mi">29</span> <span class="mi">2015</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">17</span> <span class="mi">13</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mi">29</span><span class="p">,</span><span class="mi">501</span> <span class="n">The</span> <span class="n">local</span> <span class="n">time</span> <span class="ow">is</span> <span class="n">Sat</span> <span class="n">Oct</span> <span class="mi">17</span> <span class="mi">13</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mi">29</span> <span class="mi">2015</span>
+</pre></div>
+</div>
+<p>時刻をローカル時刻と UTC の両方に書式化するのに、それぞれのハンドラにそれぞれフォーマッタを与えています。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Logging クックブック</a><ul>
+<li><a class="reference internal" href="#using-logging-in-multiple-modules">複数のモジュールで logging を使う</a></li>
+<li><a class="reference internal" href="#multiple-handlers-and-formatters">複数の handler と formatter</a></li>
+<li><a class="reference internal" href="#logging-to-multiple-destinations">複数の出力先にログを出力する</a></li>
+<li><a class="reference internal" href="#configuration-server-example">設定サーバの例</a></li>
+<li><a class="reference internal" href="#sending-and-receiving-logging-events-across-a-network">ネットワーク越しの logging イベントの送受信</a></li>
+<li><a class="reference internal" href="#adding-contextual-information-to-your-logging-output">コンテキスト情報をログ記録出力に付加する</a><ul>
+<li><a class="reference internal" href="#using-loggeradapters-to-impart-contextual-information">LoggerAdapter を使ったコンテキスト情報の伝達</a><ul>
+<li><a class="reference internal" href="#using-objects-other-than-dicts-to-pass-contextual-information">コンテキスト情報を渡すために dict 以外のオブジェクトを使う</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-filters-to-impart-contextual-information">Filter を使ったコンテキスト情報の伝達</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging-to-a-single-file-from-multiple-processes">複数のプロセスからの単一ファイルへのログ記録</a></li>
+<li><a class="reference internal" href="#using-file-rotation">ファイルをローテートする</a></li>
+<li><a class="reference internal" href="#an-example-dictionary-based-configuration">辞書ベースで構成する例</a></li>
+<li><a class="reference internal" href="#inserting-a-bom-into-messages-sent-to-a-sysloghandler">SysLogHandler に送るメッセージに BOM を挿入する</a></li>
+<li><a class="reference internal" href="#implementing-structured-logging">構造化ログを実装する</a></li>
+<li><a class="reference internal" href="#customizing-handlers-with-dictconfig">handler を <code class="docutils literal"><span class="pre">dictConfig()</span></code> を使ってカスタマイズする</a></li>
+<li><a class="reference internal" href="#configuring-filters-with-dictconfig">filter を <code class="docutils literal"><span class="pre">dictConfig()</span></code> を使ってカスタマイズする</a></li>
+<li><a class="reference internal" href="#customized-exception-formatting">例外の書式化をカスタマイズする</a></li>
+<li><a class="reference internal" href="#speaking-logging-messages">ロギングメッセージを喋る</a></li>
+<li><a class="reference internal" href="#buffering-logging-messages-and-outputting-them-conditionally">ロギングメッセージをバッファリングし、条件に従って出力する</a></li>
+<li><a class="reference internal" href="#formatting-times-using-utc-gmt-via-configuration">設定によって時刻を UTC(GMT) で書式化する</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="logging.html"
+                        title="前の章へ">Logging HOWTO</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="regex.html"
+                        title="次の章へ">正規表現 HOWTO</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/howto/logging-cookbook.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="regex.html" title="正規表現 HOWTO"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging HOWTO"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python HOWTO</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

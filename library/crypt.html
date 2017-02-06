@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>36.5. crypt — Unix パスワードをチェックするための関数 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="36. Unix 固有のサービス" href="unix.html" />
+    <link rel="next" title="36.6. dl — 共有オブジェクトの C 関数の呼び出し" href="dl.html" />
+    <link rel="prev" title="36.4. grp — グループデータベースへのアクセス" href="grp.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dl.html" title="36.6. dl — 共有オブジェクトの C 関数の呼び出し"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="grp.html" title="36.4. grp — グループデータベースへのアクセス"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" accesskey="U">36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-crypt">
+<span id="crypt-function-to-check-unix-passwords"></span><h1>36.5. <a class="reference internal" href="#module-crypt" title="crypt: The crypt() function used to check Unix passwords. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">crypt</span></code></a> &#8212; Unix パスワードをチェックするための関数<a class="headerlink" href="#module-crypt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">このモジュールは修正 DES アルゴリズムに基づいた一方向ハッシュ関数である <em class="manpage">crypt(3)</em>  ルーチンを実装しています。詳細については Unix マニュアルページを参照してください。このモジュールは、Python スクリプトがユーザから入力されたパスワードを受理できるようにしたり、Unix パスワードに (脆弱性検査のための) 辞書攻撃を試みるのに使えます。</p>
+<p id="index-1">このモジュールは実行環境の <em class="manpage">crypt(3)</em> の実装に依存しています。そのため、現在の実装で利用可能な拡張を、このモジュールでもそのまま利用できます。</p>
+<dl class="function">
+<dt id="crypt.crypt">
+<code class="descclassname">crypt.</code><code class="descname">crypt</code><span class="sig-paren">(</span><em>word</em>, <em>salt</em><span class="sig-paren">)</span><a class="headerlink" href="#crypt.crypt" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>word</em> は通常はユーザのパスワードで、プロンプトやグラフィカルインタフェースからタイプ入力されます。 <em>salt</em> は通常ランダムな 2 文字からなる文字列で、DES アルゴリズムに 4096 通りのうち 1 つの方法で外乱を与えるために使われます。 <em>salt</em> に使う文字は集合 <code class="docutils literal"><span class="pre">[./a-zA-Z0-9]</span></code> の要素でなければなりません。ハッシュされたパスワードを文字列として返します。パスワード文字列は <em>salt</em> と同じ文字集合に含まれる文字からなります (最初の 2 文字は <em>salt</em> 自体です).</p>
+<p id="index-2">いくつかの拡張された <em class="manpage">crypt(3)</em> は異なる値と <em>salt</em> の長さを許しているので、パスワードをチェックする際には crypt されたパスワード文字列全体を <em>salt</em> として渡すよう勧めます。</p>
+</dd></dl>
+
+<p>典型的な使用例のサンプルコード:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">crypt</span><span class="o">,</span> <span class="nn">getpass</span><span class="o">,</span> <span class="nn">pwd</span>
+
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">raw_input</span><span class="p">(</span><span class="s1">&#39;Python login:&#39;</span><span class="p">)</span>
+    <span class="n">cryptedpasswd</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">username</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">cryptedpasswd</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cryptedpasswd</span> <span class="o">==</span> <span class="s1">&#39;x&#39;</span> <span class="ow">or</span> <span class="n">cryptedpasswd</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;Sorry, currently no support for shadow passwords&quot;</span><span class="p">)</span>
+        <span class="n">cleartext</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">crypt</span><span class="o">.</span><span class="n">crypt</span><span class="p">(</span><span class="n">cleartext</span><span class="p">,</span> <span class="n">cryptedpasswd</span><span class="p">)</span> <span class="o">==</span> <span class="n">cryptedpasswd</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="grp.html"
+                        title="前の章へ">36.4. <code class="docutils literal"><span class="pre">grp</span></code> &#8212; グループデータベースへのアクセス</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="dl.html"
+                        title="次の章へ">36.6. <code class="docutils literal"><span class="pre">dl</span></code> &#8212; 共有オブジェクトの C 関数の呼び出し</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/crypt.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="dl.html" title="36.6. dl — 共有オブジェクトの C 関数の呼び出し"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="grp.html" title="36.4. grp — グループデータベースへのアクセス"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" >36. Unix 固有のサービス</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

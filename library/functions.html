@@ -1,0 +1,1364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. 組み込み関数 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
+    <link rel="next" title="4. 組み込み定数" href="constants.html" />
+    <link rel="prev" title="1. はじめに" href="intro.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="constants.html" title="4. 組み込み定数"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. はじめに"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="built-in-functions">
+<span id="built-in-funcs"></span><h1>2. 組み込み関数<a class="headerlink" href="#built-in-functions" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Python インタプリタは数多くの組み込み関数を持っていて、いつでも利用することができます。それらの関数をアルファベット順に挙げます。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="20%" />
+<col width="19%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p class="first last">組み込み関数</p>
+</th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="#abs" title="abs"><code class="xref py py-func docutils literal"><span class="pre">abs()</span></code></a></td>
+<td><a class="reference internal" href="#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a></td>
+<td><a class="reference internal" href="#input" title="input"><code class="xref py py-func docutils literal"><span class="pre">input()</span></code></a></td>
+<td><a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a></td>
+<td><a class="reference internal" href="#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal"><span class="pre">staticmethod()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#all" title="all"><code class="xref py py-func docutils literal"><span class="pre">all()</span></code></a></td>
+<td><a class="reference internal" href="#enumerate" title="enumerate"><code class="xref py py-func docutils literal"><span class="pre">enumerate()</span></code></a></td>
+<td><a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a></td>
+<td><a class="reference internal" href="#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a></td>
+<td><a class="reference internal" href="#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#any" title="any"><code class="xref py py-func docutils literal"><span class="pre">any()</span></code></a></td>
+<td><a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a></td>
+<td><a class="reference internal" href="#isinstance" title="isinstance"><code class="xref py py-func docutils literal"><span class="pre">isinstance()</span></code></a></td>
+<td><a class="reference internal" href="#pow" title="pow"><code class="xref py py-func docutils literal"><span class="pre">pow()</span></code></a></td>
+<td><a class="reference internal" href="#sum" title="sum"><code class="xref py py-func docutils literal"><span class="pre">sum()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#basestring" title="basestring"><code class="xref py py-func docutils literal"><span class="pre">basestring()</span></code></a></td>
+<td><a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a></td>
+<td><a class="reference internal" href="#issubclass" title="issubclass"><code class="xref py py-func docutils literal"><span class="pre">issubclass()</span></code></a></td>
+<td><a class="reference internal" href="#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a></td>
+<td><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#bin" title="bin"><code class="xref py py-func docutils literal"><span class="pre">bin()</span></code></a></td>
+<td><a class="reference internal" href="#file" title="file"><code class="xref py py-func docutils literal"><span class="pre">file()</span></code></a></td>
+<td><a class="reference internal" href="#iter" title="iter"><code class="xref py py-func docutils literal"><span class="pre">iter()</span></code></a></td>
+<td><a class="reference internal" href="#property" title="property"><code class="xref py py-func docutils literal"><span class="pre">property()</span></code></a></td>
+<td><a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-func docutils literal"><span class="pre">tuple()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#bool" title="bool"><code class="xref py py-func docutils literal"><span class="pre">bool()</span></code></a></td>
+<td><a class="reference internal" href="#filter" title="filter"><code class="xref py py-func docutils literal"><span class="pre">filter()</span></code></a></td>
+<td><a class="reference internal" href="#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a></td>
+<td><a class="reference internal" href="#range" title="range"><code class="xref py py-func docutils literal"><span class="pre">range()</span></code></a></td>
+<td><a class="reference internal" href="#type" title="type"><code class="xref py py-func docutils literal"><span class="pre">type()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#bytearray" title="bytearray"><code class="xref py py-func docutils literal"><span class="pre">bytearray()</span></code></a></td>
+<td><a class="reference internal" href="#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a></td>
+<td><a class="reference internal" href="#list" title="list"><code class="xref py py-func docutils literal"><span class="pre">list()</span></code></a></td>
+<td><a class="reference internal" href="#raw_input" title="raw_input"><code class="xref py py-func docutils literal"><span class="pre">raw_input()</span></code></a></td>
+<td><a class="reference internal" href="#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#callable" title="callable"><code class="xref py py-func docutils literal"><span class="pre">callable()</span></code></a></td>
+<td><a class="reference internal" href="#format" title="format"><code class="xref py py-func docutils literal"><span class="pre">format()</span></code></a></td>
+<td><a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a></td>
+<td><a class="reference internal" href="#reduce" title="reduce"><code class="xref py py-func docutils literal"><span class="pre">reduce()</span></code></a></td>
+<td><a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#chr" title="chr"><code class="xref py py-func docutils literal"><span class="pre">chr()</span></code></a></td>
+<td><a class="reference internal" href="#func-frozenset"><code class="docutils literal"><span class="pre">frozenset()</span></code></a></td>
+<td><a class="reference internal" href="#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a></td>
+<td><a class="reference internal" href="#reload" title="reload"><code class="xref py py-func docutils literal"><span class="pre">reload()</span></code></a></td>
+<td><a class="reference internal" href="#vars" title="vars"><code class="xref py py-func docutils literal"><span class="pre">vars()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#classmethod" title="classmethod"><code class="xref py py-func docutils literal"><span class="pre">classmethod()</span></code></a></td>
+<td><a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a></td>
+<td><a class="reference internal" href="#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a></td>
+<td><a class="reference internal" href="#func-repr"><code class="docutils literal"><span class="pre">repr()</span></code></a></td>
+<td><a class="reference internal" href="#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#cmp" title="cmp"><code class="xref py py-func docutils literal"><span class="pre">cmp()</span></code></a></td>
+<td><a class="reference internal" href="#globals" title="globals"><code class="xref py py-func docutils literal"><span class="pre">globals()</span></code></a></td>
+<td><a class="reference internal" href="#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a></td>
+<td><a class="reference internal" href="#reversed" title="reversed"><code class="xref py py-func docutils literal"><span class="pre">reversed()</span></code></a></td>
+<td><a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a></td>
+<td><a class="reference internal" href="#hasattr" title="hasattr"><code class="xref py py-func docutils literal"><span class="pre">hasattr()</span></code></a></td>
+<td><a class="reference internal" href="#func-memoryview"><code class="docutils literal"><span class="pre">memoryview()</span></code></a></td>
+<td><a class="reference internal" href="#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round()</span></code></a></td>
+<td><a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a></td>
+<td><a class="reference internal" href="#hash" title="hash"><code class="xref py py-func docutils literal"><span class="pre">hash()</span></code></a></td>
+<td><a class="reference internal" href="#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a></td>
+<td><a class="reference internal" href="#func-set"><code class="docutils literal"><span class="pre">set()</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#delattr" title="delattr"><code class="xref py py-func docutils literal"><span class="pre">delattr()</span></code></a></td>
+<td><a class="reference internal" href="#help" title="help"><code class="xref py py-func docutils literal"><span class="pre">help()</span></code></a></td>
+<td><a class="reference internal" href="#next" title="next"><code class="xref py py-func docutils literal"><span class="pre">next()</span></code></a></td>
+<td><a class="reference internal" href="#setattr" title="setattr"><code class="xref py py-func docutils literal"><span class="pre">setattr()</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#func-dict"><code class="docutils literal"><span class="pre">dict()</span></code></a></td>
+<td><a class="reference internal" href="#hex" title="hex"><code class="xref py py-func docutils literal"><span class="pre">hex()</span></code></a></td>
+<td><a class="reference internal" href="#object" title="object"><code class="xref py py-func docutils literal"><span class="pre">object()</span></code></a></td>
+<td><a class="reference internal" href="#slice" title="slice"><code class="xref py py-func docutils literal"><span class="pre">slice()</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a></td>
+<td><a class="reference internal" href="#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a></td>
+<td><a class="reference internal" href="#oct" title="oct"><code class="xref py py-func docutils literal"><span class="pre">oct()</span></code></a></td>
+<td><a class="reference internal" href="#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>これらに加えて、今では不可欠なものとは考えることがなくなった 4 つの組み込み関数があります: <a class="reference internal" href="#apply" title="apply"><code class="xref py py-func docutils literal"><span class="pre">apply()</span></code></a>, <a class="reference internal" href="#buffer" title="buffer"><code class="xref py py-func docutils literal"><span class="pre">buffer()</span></code></a>, <a class="reference internal" href="#coerce" title="coerce"><code class="xref py py-func docutils literal"><span class="pre">coerce()</span></code></a>, <a class="reference internal" href="#intern" title="intern"><code class="xref py py-func docutils literal"><span class="pre">intern()</span></code></a> です。これらは <a class="reference internal" href="#non-essential-built-in-funcs"><span class="std std-ref">非必須組み込み関数 (Non-essential Built-in Functions)</span></a>  セクションで説明しています。</p>
+<dl class="function">
+<dt id="abs">
+<code class="descname">abs</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#abs" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>数値の絶対値を返します。引数として通常の整数、長整数、浮動小数点数をとることができます。引数が複素数の場合、その大きさ (magnitude) が返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="all">
+<code class="descname">all</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#all" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> の全ての要素が真ならば (もしくは <em>iterable</em> が空ならば) <code class="docutils literal"><span class="pre">True</span></code> を返します。以下のコードと等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="any">
+<code class="descname">any</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#any" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> のいずれかの要素が真ならば <code class="docutils literal"><span class="pre">True</span></code> を返します。<em>iterable</em> が空なら <code class="docutils literal"><span class="pre">False</span></code> を返します。以下のコードと等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">any</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="basestring">
+<code class="descname">basestring</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#basestring" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この抽象型は、 <a class="reference internal" href="#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> および <a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> の スーパークラスです。 この型は呼び出したりインスタンス化したりはできませんが、オブジェクトが <a class="reference internal" href="#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> や <a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> の インスタンスであるかどうかを調べる際に利用できます。 <code class="docutils literal"><span class="pre">isinstance(obj,</span> <span class="pre">basestring)</span></code> は <code class="docutils literal"><span class="pre">isinstance(obj,</span> <span class="pre">(str,</span> <span class="pre">unicode))</span></code> と等価です。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bin">
+<code class="descname">bin</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#bin" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>整数を二進文字列に変換します。結果は Python の式としても使える形式になります。 <em>x</em> が Python の <a class="reference internal" href="#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> オブジェクトでない場合、整数値を返す <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> メソッドが定義されていなければなりません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="bool">
+<em class="property">class </em><code class="descname">bool</code><span class="sig-paren">(</span><span class="optional">[</span><em>x</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#bool" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ブール値、即ち <code class="docutils literal"><span class="pre">True</span></code> または <code class="docutils literal"><span class="pre">False</span></code> のどちらかを返します。 <em>x</em> は標準の <a class="reference internal" href="stdtypes.html#truth"><span class="std std-ref">真理値判定プロシージャ</span></a> を用いて変換されます。 <em>x</em> が偽または省略されている場合、この関数は <code class="docutils literal"><span class="pre">False</span></code> を返します。それ以外の場合、 <code class="docutils literal"><span class="pre">True</span></code> を返します。 <a class="reference internal" href="#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a> クラスは <a class="reference internal" href="#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> クラスの派生クラスです。 <a class="reference internal" href="#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>  からさらに派生することはできません。ブール値のインスタンスは <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> と <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> のみです。</p>
+<div class="versionadded" id="index-0">
+<p><span class="versionmodified">バージョン 2.2.1 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>引数が与えられなかった場合、この関数は <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> を返します。</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="bytearray">
+<em class="property">class </em><code class="descname">bytearray</code><span class="sig-paren">(</span><span class="optional">[</span><em>source</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#bytearray" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しいバイト配列を返します。 <a class="reference internal" href="#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> クラスは0 &lt;= x &lt; 256の範囲の整数からなる <a class="reference internal" href="../glossary.html#term-mutable"><span class="xref std std-term">mutable</span></a> なシーケンスです。 <a class="reference internal" href="stdtypes.html#typesseq-mutable"><span class="std std-ref">ミュータブルなシーケンス型</span></a> に記述されている  <a class="reference internal" href="../glossary.html#term-mutable"><span class="xref std std-term">mutable</span></a>  なシーケンスに対する普通のメソッドの大半を備えています。また、 <a class="reference internal" href="#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> 型が持つメソッドの大半も備えています（<a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a> 参照）。</p>
+<p>オプションの <em>source</em> パラメタは、配列を異なる方法で初期化するのに使われます:</p>
+<ul class="simple">
+<li><p class="first">それが <em>unicode</em> なら、 <em>encoding</em> (と、オプションの <em>errors</em>) パラメタも与えなければなりません。このとき <a class="reference internal" href="#bytearray" title="bytearray"><code class="xref py py-func docutils literal"><span class="pre">bytearray()</span></code></a> は unicode を <code class="xref py py-meth docutils literal"><span class="pre">unicode.encode()</span></code> でバイトに変換して返します。</p>
+</li>
+<li><p class="first">これが <em>整数</em> なら、配列はそのサイズになり、null バイトで初期化されます。</p>
+</li>
+<li><p class="first">これが <em>バッファ</em> インタフェースに適合するオブジェクトなら、そのオブジェクトの読み込み専用バッファがバイト配列の初期化に使われます。</p>
+</li>
+<li><p class="first">これが <em>イテラブル</em> なら、それは範囲 <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">256</span></code> 内の整数のイテラブルであることが必要で、それらが配列の初期の内容になります。</p>
+</li>
+</ul>
+<p>引数がなければ、長さ 0 の配列が生成されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="callable">
+<code class="descname">callable</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#callable" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>object</em> が呼び出し可能オブジェクトであれば、 <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> を返します。そうでなければ、 <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> を返します。この関数が真を返しても <em>object</em> の呼び出しは失敗する可能性がありますが、偽を返した場合は決して成功することはありません。クラスは呼び 出し可能 (クラスを呼び出すと新しいインスタンスを返します) なことと、クラスのインスタンスがメソッド <a class="reference internal" href="../reference/datamodel.html#object.__call__" title="object.__call__"><code class="xref py py-meth docutils literal"><span class="pre">__call__()</span></code></a> を持つ場合には呼び出しが可能なことに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chr">
+<code class="descname">chr</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#chr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ASCII コードが整数 <em>i</em> となるような文字 1 字からなる文字列を返します。例えば、 <code class="docutils literal"><span class="pre">chr(97)</span></code> は文字列 <code class="docutils literal"><span class="pre">'a'</span></code> を返します。この関数は <a class="reference internal" href="#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a> の逆です。引数は [0..255] の両端を含む範囲内に収まらなければなりません; <em>i</em> が範囲外の値のときには <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。 <a class="reference internal" href="#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a> も参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="classmethod">
+<code class="descname">classmethod</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#classmethod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>function</em> のクラスメソッドを返します。</p>
+<p>クラスメソッドは、インスタンスメソッドが暗黙の第一引数としてインスタンスをとるように、第一引数としてクラスをとります。クラスメソッドを宣言するには、以下のイディオムを使います:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">&#64;classmethod</span></code> 形式は関数デコレータ (<a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a>) です。詳しくは <a class="reference internal" href="../reference/compound_stmts.html#function"><span class="std std-ref">関数定義</span></a> の関数定義の説明を参照してください。</p>
+<p>このメソッドはクラスで呼び出すこと (例えば <code class="docutils literal"><span class="pre">C.f()</span></code>) も、インスタンスとして呼び出すこと (例えば <code class="docutils literal"><span class="pre">C().f()</span></code>) もできます。インスタンスはそのクラスが何であるかを除いて無視されます。クラスメソッドが派生クラスに対して呼び出された場合、派生したクラスオブジェクトが暗黙の第一引数として渡されます。</p>
+<p>クラスメソッドは C++ や Java の静的メソッドとは異なります。静的メソッドは、この節の <a class="reference internal" href="#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal"><span class="pre">staticmethod()</span></code></a> を参照してください。</p>
+<p>クラスメソッドについて詳しい情報は、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> の標準型階層のドキュメントを参照下さい。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>関数デコレータ構文を追加しました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cmp">
+<code class="descname">cmp</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#cmp" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>二つのオブジェクト <em>x</em> および <em>y</em> を比較し、その結果に従って整数を返します。戻り値は <code class="docutils literal"><span class="pre">x</span></code> &lt; <code class="docutils literal"><span class="pre">y</span></code> のときには負、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code> の時にはゼロ、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code> には厳密に正の値になります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="compile">
+<code class="descname">compile</code><span class="sig-paren">(</span><em>source</em>, <em>filename</em>, <em>mode</em><span class="optional">[</span>, <em>flags</em><span class="optional">[</span>, <em>dont_inherit</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#compile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>source</em> をコードオブジェクト、もしくは、 AST オブジェクトにコンパイルします。 コードオブジェクトは <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 文で実行したり、 <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> 呼び出しで評価できます。 <em>source</em> は Unicode 文字列、 <em>Latin-1</em>  エンコードのバイト列、 AST オブジェクトのいずれでもかまいません。 AST オブジェクトへの、また、 AST オブジェクトからのコンパイルの方法は、 <a class="reference internal" href="ast.html#module-ast" title="ast: Abstract Syntax Tree classes and manipulation."><code class="xref py py-mod docutils literal"><span class="pre">ast</span></code></a> モジュールのドキュメントを参照してください。</p>
+<p><em>filename</em> 引数には、コードの読み出し元のファイルを与えなければなりません; ファイルから読み出されるのでなければ、認識可能な値を渡して下さい (<code class="docutils literal"><span class="pre">'&lt;string&gt;'</span></code> が一般的に使われます)。</p>
+<p><em>mode</em> 引数は、コンパイルされるコードの種類を指定します; <em>source</em> が一連の文から成るなら <code class="docutils literal"><span class="pre">'exec'</span></code> 、単一の式から成るなら <code class="docutils literal"><span class="pre">'eval'</span></code> 、単一の対話的文の場合 <code class="docutils literal"><span class="pre">'single'</span></code> です。(後者の場合、評価が <code class="docutils literal"><span class="pre">None</span></code> 以外である式文が印字されます)。</p>
+<p>オプション引数 <em>flags</em> および <em>dont_inherit</em> は、 <em>source</em> のコンパイルにどの future 文 (<span class="target" id="index-12"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0236"><strong>PEP 236</strong></a> 参照) を作用させるかを制御します。どちらも与えらていない (または両方ともゼロ) ならば、 <a class="reference internal" href="#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> を呼び出している側のコードで有効な future 文を有効にしてコードをコンパイルします。 <em>flags</em> が与えられていて、<em>dont_inherit</em> は与えられていない (またはゼロ) ならば、それに加えて <em>flags</em> に指定された future 文が使われます。 <em>dont_inherit</em> がゼロでない整数ならば、 <em>flags</em> の値そのものが使われ、コンパイルの呼び出して周辺で有効な future 文は無視されます。</p>
+<p>future 文はビットフィールドで指定されます。ビットフィールドはビット単位の OR を取ることで複数の文を指定することができます。特定の機能を指定するために必要なビットフィールドは、<a class="reference internal" href="__future__.html#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal"><span class="pre">__future__</span></code></a> モジュールの <code class="xref py py-class docutils literal"><span class="pre">_Feature</span></code> インスタンスにおける <code class="xref py py-attr docutils literal"><span class="pre">compiler_flag</span></code> 属性で得られます。</p>
+<p>この関数は、コンパイルするソースが不正である場合 <a class="reference internal" href="exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> を、ソースがヌルバイトを含む場合 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
+<p>Python コードをパースしてその AST 表現を得たいのであれば、 <a class="reference internal" href="ast.html#ast.parse" title="ast.parse"><code class="xref py py-func docutils literal"><span class="pre">ast.parse()</span></code></a> を参照してください。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">複数行に渡るコードの文字列を <code class="docutils literal"><span class="pre">'single'</span></code> や <code class="docutils literal"><span class="pre">'eval'</span></code> モードでコンパイルするとき、入力は一つ以上の改行文字で終端されなければなりません。これは、 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールで不完全な文と完全な文を検知しやすくするためです。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span><em>flags</em> と <em>dont_inherit</em> 引数が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span>AST オブジェクトのコンパイルをサポートしました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7 で変更: </span>Windows や Mac の改行文字を使えるようになりました。また、 <code class="docutils literal"><span class="pre">'exec'</span></code> モードで改行文字は必要なくなりました。 <em>optimize</em> パラメタを追加しました。</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="complex">
+<em class="property">class </em><code class="descname">complex</code><span class="sig-paren">(</span><span class="optional">[</span><em>real</em><span class="optional">[</span>, <em>imag</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#complex" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>値 <em>real</em> + <em>imag</em>*1j の複素数を生成するか、文字列や数を複素数に変換します。第一引数が文字列なら、それが複素数と解釈され、この関数は第二引数無しで呼び出されなければなりません。第二引数は文字列であってはなりません。それぞれの引数は (複素数を含む) 任意の数値型です。 <em>imag</em> が省略された場合、標準の値はゼロで、この関数は <a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a> や <a class="reference internal" href="#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a> のような数値変換関数としてはたらきます。両方の引数が省略された場合、 <code class="docutils literal"><span class="pre">0j</span></code> を返します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">文字列から変換するとき、その文字列は中央の <code class="docutils literal"><span class="pre">+</span></code> や <code class="docutils literal"><span class="pre">-</span></code> 演算子の周りに空白を含んではなりません。例えば、<code class="docutils literal"><span class="pre">complex('1+2j')</span></code> はいいですが、<code class="docutils literal"><span class="pre">complex('1</span> <span class="pre">+</span> <span class="pre">2j')</span></code> は <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。</p>
+</div>
+<p>複素数型については <a class="reference internal" href="stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a> に説明があります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="delattr">
+<code class="descname">delattr</code><span class="sig-paren">(</span><em>object</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#delattr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#setattr" title="setattr"><code class="xref py py-func docutils literal"><span class="pre">setattr()</span></code></a> の親戚です。引数はオブジェクトと文字列です。文字列はオブジェクトの属性のうち一つの名前でなければなりません。この関数は、オブジェクトが許すなら、指名された属性を削除します。例えば、 <code class="docutils literal"><span class="pre">delattr(x,</span> <span class="pre">'foobar')</span></code> は <code class="docutils literal"><span class="pre">del</span> <span class="pre">x.foobar</span></code> と等価です。</p>
+</dd></dl>
+
+<span class="target" id="func-dict"></span><dl class="class">
+<dt>
+<em class="property">class </em><code class="descname">dict</code><span class="sig-paren">(</span><em>**kwarg</em><span class="sig-paren">)</span></dt>
+<dt>
+<em class="property">class </em><code class="descname">dict</code><span class="sig-paren">(</span><em>mapping</em>, <em>**kwarg</em><span class="sig-paren">)</span></dt>
+<dt>
+<em class="property">class </em><code class="descname">dict</code><span class="sig-paren">(</span><em>iterable</em>, <em>**kwarg</em><span class="sig-paren">)</span></dt>
+<dd><p>新しい辞書を作成します。 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> オブジェクトは辞書クラスです。このクラスに関するドキュメンテーションは <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> と <a class="reference internal" href="stdtypes.html#typesmapping"><span class="std std-ref">マッピング型 &#8212; dict</span></a> を参照してください。</p>
+<p>他のコンテナについては、 ビルトインの <a class="reference internal" href="#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, <a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> クラスおよび <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールを参照してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dir">
+<code class="descname">dir</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dir" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数がない場合、現在のローカルスコープにある名前のリストを返します。引数がある場合、そのオブジェクトの有効な属性のリストを返そうと試みます。</p>
+<p>オブジェクトが <code class="xref py py-meth docutils literal"><span class="pre">__dir__()</span></code> という名のメソッドを持つなら、そのメソッドが呼び出され、属性のリストを返さなければなりません。これにより、カスタムの <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-func docutils literal"><span class="pre">__getattr__()</span></code></a> や <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-func docutils literal"><span class="pre">__getattribute__()</span></code></a> 関数を実装するオブジェクトは、<a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> が属性を報告するやり方をカスタマイズできます。</p>
+<p>オブジェクトが <code class="xref py py-meth docutils literal"><span class="pre">__dir__()</span></code> を提供していない場合、定義されていればオブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性から、そして型オブジェクトから、情報を収集しようと試みます。結果のリストは完全であるとは限らず、また、カスタムの <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-func docutils literal"><span class="pre">__getattr__()</span></code></a> を持つ場合、不正確になるかもしれません。</p>
+<p>デフォルトの <a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> メカニズムは、完全というより最重要な情報を作成しようとするため、異なる型のオブジェクトでは異なって振る舞います:</p>
+<ul class="simple">
+<li><p class="first">オブジェクトがモジュールオブジェクトの場合、リストにはモジュールの属性の名前が含まれます。</p>
+</li>
+<li><p class="first">オブジェクトが型オブジェクトやクラスオブジェクトの場合、リストにはその属性と、再帰的にたどったその基底クラスの属性が含まれます。</p>
+</li>
+<li><p class="first">それ以外の場合には、リストにはオブジェクトの属性名、クラス属性名、再帰的にたどった基底クラスの属性名が含まれます。</p>
+</li>
+</ul>
+<p>返されるリストはアルファベット順に並べられています。例えば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">struct</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>   <span class="c1"># show the names in the module namespace</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;struct&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">struct</span><span class="p">)</span>   <span class="c1"># show the names in the struct module</span>
+<span class="go">[&#39;Struct&#39;, &#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;,</span>
+<span class="go"> &#39;__package__&#39;, &#39;_clearcache&#39;, &#39;calcsize&#39;, &#39;error&#39;, &#39;pack&#39;, &#39;pack_into&#39;,</span>
+<span class="go"> &#39;unpack&#39;, &#39;unpack_from&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="go">        def __dir__(self):</span>
+<span class="go">            return [&#39;area&#39;, &#39;perimeter&#39;, &#39;location&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Shape</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;area&#39;, &#39;perimeter&#39;, &#39;location&#39;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> は主に対話プロンプトでの使用に便利なように提供されているので、厳密性や一貫性を重視して定義された名前のセットというよりも、むしろ興味を引くような名前のセットを返そうとします。また、この関数の細かい動作はリリース間で変わる可能性があります。例えば、引数がクラスであるとき、メタクラス属性は結果のリストに含まれません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="divmod">
+<code class="descname">divmod</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#divmod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>2 つの (複素数でない) 数値を引数として取り、整数の除法を行ったときの商と剰余からなるペアを返します。被演算子が型混合である場合、 2 進算術演算子での規則が適用されます。通常の整数と長整数の場合、結果は  <code class="docutils literal"><span class="pre">(a</span> <span class="pre">//</span> <span class="pre">b,</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b)</span></code> と同じです。浮動小数点数の場合、結果は <code class="docutils literal"><span class="pre">(q,</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b)</span></code> であり、 <em>q</em> は通常 <code class="docutils literal"><span class="pre">math.floor(a</span> <span class="pre">/</span> <span class="pre">b)</span></code> ですが、そうではなく 1 になることもあります。いずれにせよ、 <code class="docutils literal"><span class="pre">q</span> <span class="pre">*</span> <span class="pre">b</span> <span class="pre">+</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> は <em>a</em> に非常に近い値になり、 <code class="docutils literal"><span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> がゼロでない値の場合、その符号は <em>b</em> と同じで、 <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">abs(a</span> <span class="pre">%</span> <span class="pre">b)</span> <span class="pre">&lt;</span> <span class="pre">abs(b)</span></code> になります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>複素数に対する <a class="reference internal" href="#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a> の使用は廃用されました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="enumerate">
+<code class="descname">enumerate</code><span class="sig-paren">(</span><em>sequence</em>, <em>start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#enumerate" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>列挙オブジェクトを返します。 <em>sequence</em> はシーケンス型、イテレータ型、反復をサポートする他のオブジェクト型のいずれかでなければなりま せん。 <a class="reference internal" href="#enumerate" title="enumerate"><code class="xref py py-func docutils literal"><span class="pre">enumerate()</span></code></a> が返すイテレータの <code class="xref py py-meth docutils literal"><span class="pre">next()</span></code> メソッドは、 (ゼロから始まる) カウント値と、値だけ <em>sequence</em> を反復操作して得ら れる、対応するオブジェクトを含むタプルを返します。 <a class="reference internal" href="#enumerate" title="enumerate"><code class="xref py py-func docutils literal"><span class="pre">enumerate()</span></code></a> はインデクス付けされた値の列: <code class="docutils literal"><span class="pre">(0,</span> <span class="pre">seq[0])</span></code>, <code class="docutils literal"><span class="pre">(1,</span> <span class="pre">seq[1])</span></code>, <code class="docutils literal"><span class="pre">(2,</span> <span class="pre">seq[2])</span></code>, ... を得るのに便利です。 例</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seasons</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="s1">&#39;Summer&#39;</span><span class="p">,</span> <span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">))</span>
+<span class="go">[(0, &#39;Spring&#39;), (1, &#39;Summer&#39;), (2, &#39;Fall&#39;), (3, &#39;Winter&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">[(1, &#39;Spring&#39;), (2, &#39;Summer&#39;), (3, &#39;Fall&#39;), (4, &#39;Winter&#39;)]</span>
+</pre></div>
+</div>
+<p>次と等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">n</span><span class="p">,</span> <span class="n">elem</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><em>start</em> 引数が追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="eval">
+<code class="descname">eval</code><span class="sig-paren">(</span><em>expression</em><span class="optional">[</span>, <em>globals</em><span class="optional">[</span>, <em>locals</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#eval" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数には、Unicode 文字列または <em>Latin-1</em>  エンコードのバイト文字列と、オプションの引数 <em>globals</em> 、 <em>locals</em> をとります。 <em>globals</em> を与える場合は辞書でなくてはなりません。 <em>locals</em> を与える場合は任意のマッピングオブジェクトにできます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は <em>locals</em> も辞書でなければなりませんでした.</p>
+</div>
+<p>引数 <em>expression</em> は Python の表現式 (技術的にいうと、条件のリストです) として構文解釈され、評価されます。このとき辞書 <em>globals</em> およ び <em>locals</em> はそれぞれグローバルおよびローカルな名前空間として使われます。 <em>global</em> 辞書が存在するが、 &#8216;__builtins__&#8217; が欠けている場 合、 <em>expression</em> を解析する前に現在のグローバル変数を <em>globals</em> にコピーします。このことから、 <em>expression</em> は通常、標準の <a class="reference internal" href="__builtin__.html#module-__builtin__" title="__builtin__: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal"><span class="pre">__builtin__</span></code></a> モジュールへの完全なアクセスを有し、制限された環境が伝播するようになっています。 <em>locals</em> 辞書が省略された場合、標 準の値として <em>globals</em> に設定されます。辞書が両方とも省略された場合、 表現式は <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> が呼び出されている環境の下で実行されます。 構文エラーは例外として報告されます。以下に例を示します :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;x+1&#39;</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>この関数は (<a class="reference internal" href="#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> で生成されるような) 任意のコードオブジェクトを実行するのにも利用できます。この場合、文字列の代わりにコードオブジェクトを渡します。このコードオブジェクトが、引数 <em>mode</em> を <code class="docutils literal"><span class="pre">'exec'</span></code> としてコンパイルされている場合、 <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> が返す値は <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
+<p>ヒント: 文の動的な実行は <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 文でサポートされています。 ファイルからの文の実行は関数 <a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> でサポートされています。関数 <a class="reference internal" href="#globals" title="globals"><code class="xref py py-func docutils literal"><span class="pre">globals()</span></code></a> および <a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a> は、それぞれ現在のグローバルおよびローカルな辞書を返すので、 <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> や <a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> で使うことができます。</p>
+<p>リテラルだけを含む式の文字列を安全に評価できる関数、 <a class="reference internal" href="ast.html#ast.literal_eval" title="ast.literal_eval"><code class="xref py py-func docutils literal"><span class="pre">ast.literal_eval()</span></code></a> も参照してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="execfile">
+<code class="descname">execfile</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>globals</em><span class="optional">[</span>, <em>locals</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#execfile" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数は <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 文に似ていますが、文字列の代わりにファイルに対して構文解釈を行います。 <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文と違って、モジュー ル管理機構を使いません &#8212; この関数はファイルを無条件に読み込み、新 たなモジュールを生成しません。 <a class="footnote-reference" href="#id3" id="id1">[1]</a></p>
+<p>引数は、ファイル名と、2 つのオプショナルな辞書です。ファイルはパースされて、(モジュールに対してそうするのと同じように) Python ステートメントのシーケンスとして評価されます。この際 <em>globals</em> と <em>locals</em> がそれぞれグローバル名前空間、ローカル名前空間として使われます。 <em>locals</em> を指定する場合は何らかのマップ型オブジェクトでなければなりません。モジュールレベルではグローバルとローカルは同じ辞書であることを忘れないで下さい。 <em>globals</em> と <em>locals</em> として別々にオブジェクトを渡す場合、コードはクラス定義に埋め込まれたかのように実行されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は <em>locals</em> も辞書でなければなりませんでした.</p>
+</div>
+<p><em>locals</em> 辞書が省略された場合、標準の値として <em>globals</em> に設定されます。辞書が両方とも省略された場合、表現式は <code class="xref py py-func docutils literal"><span class="pre">execfiles()</span></code> が呼び出されている環境の下で実行されます。戻り値は <code class="docutils literal"><span class="pre">None</span></code> です。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">標準では <em>locals</em> は後に述べる関数 <a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a> のように動作します: 標準の <em>locals</em> 辞書に対する変更を試みてはいけません。 <a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> の呼び出しが返る時にコードが <em>locals</em> に与える影響を知りたいなら、明示的に <em>loacals</em> 辞書を渡してください。 <a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> は関数のローカルを変更するための信頼性のある方法として使うことはできません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="file">
+<code class="descname">file</code><span class="sig-paren">(</span><em>name</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>buffering</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#file" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> 型のコンストラクタです。詳しくは <a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> 節を参照してください。コンストラクタの引数 は後述の <a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 組み込み関数と同じです。</p>
+<p>ファイルを開くときは、このコンストラクタを直接呼ばずに <a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を呼び出すのが望ましい方法です。 <a class="reference internal" href="#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> は型テストにより適し ています (たとえば <code class="docutils literal"><span class="pre">isinstance(f,</span> <span class="pre">file)</span></code> と書くような)。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#filter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> のうち、 <em>function</em> が真を返すような要素からなるリストを構築します。 <em>iterable</em> はシーケンスか、反復をサポートするコンテナか、イテレータです。 <em>iterable</em> が文字列型かタプル型の場合、結果も同じ型になります。そうでない場合はリストとなります。 <em>function</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、恒等関数を仮定します。すなわち、 <em>iterable</em> の偽となる要素は除去されます。</p>
+<p>function が <code class="docutils literal"><span class="pre">None</span></code> ではない場合、 <code class="docutils literal"><span class="pre">filter(function,</span> <span class="pre">iterable)</span></code> は <code class="docutils literal"><span class="pre">[item</span> <span class="pre">for</span> <span class="pre">item</span> <span class="pre">in</span> <span class="pre">iterable</span> <span class="pre">if</span> <span class="pre">function(item)]</span></code> と同等です。 function が <code class="docutils literal"><span class="pre">None</span></code> の場合 <code class="docutils literal"><span class="pre">[item</span> <span class="pre">for</span> <span class="pre">item</span> <span class="pre">in</span> <span class="pre">iterable</span> <span class="pre">if</span> <span class="pre">item]</span></code> と同等です。</p>
+<p>この関数のイテレータ版である <a class="reference internal" href="itertools.html#itertools.ifilter" title="itertools.ifilter"><code class="xref py py-func docutils literal"><span class="pre">itertools.ifilter()</span></code></a> と <a class="reference internal" href="itertools.html#itertools.ifilterfalse" title="itertools.ifilterfalse"><code class="xref py py-func docutils literal"><span class="pre">itertools.ifilterfalse()</span></code></a> についても参照して下さい、 変種として <em>function</em> が false を返す場合に要素を返す変種も含んでいます。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="float">
+<em class="property">class </em><code class="descname">float</code><span class="sig-paren">(</span><span class="optional">[</span><em>x</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#float" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>数または文字列 <em>x</em> から生成された浮動小数点数を返します。</p>
+<p>引数が文字列の場合、十進の数または浮動小数点数を含んでいなければなりません。符号が付いていてもかまいません。また、空白文字中に埋め込まれていてもかまいません。引数は [+|-]nan 、 [+|-]inf であっても構いません。それ以外の場合、引数は通常整数、長整数、または浮動小数点数をとることができ、同じ値の浮動小数点数が (Python の浮動小数点精度で) 返されます。引数が指定されなかった場合、 0.0 を返します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last" id="index-2">文字列で値を渡す際、背後の C ライブラリによって NaN および Infinity が返されるかもしれません。 float は文字列、 nan 、 inf 、および -inf を、それぞれ、 NaN 、正の無限大、負の無限大として 解釈します。大文字小文字の違い、 + 記号、および、 nan に対する - 記号は無視されます。</p>
+</div>
+<p>浮動小数点数型については、 <a class="reference internal" href="stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a> も参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="format">
+<code class="descname">format</code><span class="sig-paren">(</span><em>value</em><span class="optional">[</span>, <em>format_spec</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p id="index-3"><em>value</em> を <em>format_spec</em> で制御される &#8220;フォーマット化&#8221; 表現に変換します。 <em>format_spec</em> の解釈は <em>value</em> 引数の型に依存しますが、ほとんどの組み込み型で使われる標準的な構文が存在します: <a class="reference internal" href="string.html#formatspec"><span class="std std-ref">書式指定ミニ言語仕様</span></a> 。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><code class="docutils literal"><span class="pre">format(value,</span> <span class="pre">format_spec)</span></code> は単に <code class="docutils literal"><span class="pre">value.__format__(format_spec)</span></code> を呼び出すだけです。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<span class="target" id="func-frozenset"></span><dl class="class">
+<dt>
+<em class="property">class </em><code class="descname">frozenset</code><span class="sig-paren">(</span><span class="optional">[</span><em>iterable</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>新しい <a class="reference internal" href="stdtypes.html#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> オブジェクトを返します。オプションで <em>iterable</em> から得られた要素を含みます。 <code class="docutils literal"><span class="pre">frozenset</span></code> はビルトインクラスです。このクラスに関するドキュメントは <a class="reference internal" href="stdtypes.html#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> と <a class="reference internal" href="stdtypes.html#types-set"><span class="std std-ref">set（集合）型 &#8212; set, frozenset</span></a> を参照してください。</p>
+<p>他のコンテナについては、ビルトインクラス <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, <a class="reference internal" href="#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a>, <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> や <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールを見てください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="getattr">
+<code class="descname">getattr</code><span class="sig-paren">(</span><em>object</em>, <em>name</em><span class="optional">[</span>, <em>default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getattr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> の指名された属性の値を返します。 <em>name</em> は文字列でなくてはなりません。文字列がオブジェクトの属性の一つの名前であった場合、戻り値はその属性の値になります。例えば、 <code class="docutils literal"><span class="pre">getattr(x,</span> <span class="pre">'foobar')</span></code> は <code class="docutils literal"><span class="pre">x.foobar</span></code> と等価です。指名された属性が存在しない場合、 <em>default</em> が与えられていればそれが返され、そうでない場合には <a class="reference internal" href="exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="globals">
+<code class="descname">globals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#globals" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のグローバルシンボルテーブルを表す辞書を返します。これは常に現在のモジュール (関数やメソッドの中では、それを呼び出したモジュールではなく、それを定義しているモジュール) の辞書です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hasattr">
+<code class="descname">hasattr</code><span class="sig-paren">(</span><em>object</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hasattr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数はオブジェクトと文字列です。文字列がオブジェクトの属性名の一つ であった場合 <code class="docutils literal"><span class="pre">True</span></code> を、そうでない場合 <code class="docutils literal"><span class="pre">False</span></code> を返します (この 関数は <code class="docutils literal"><span class="pre">getattr(object,</span> <span class="pre">name)</span></code> を呼び出し、例外を送出するかどうか を調べることで実装されています)。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hash">
+<code class="descname">hash</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#hash" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトのハッシュ値を (存在すれれば) 返します。ハッシュ値は整数です。これらは辞書を検索する際に辞書のキーを高速に比較するために 使われます。等しい値となる数値は等しいハッシュ値を持ちます (1 と 1.0 のように型が異なっていてもです)。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="help">
+<code class="descname">help</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#help" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>組み込みヘルプシステムを起動します。(この関数は対話的な使用のためのものです)。引数が与えられていない場合、対話的ヘルプシステムはインタプリタコンソール上で起動します。引数が文字列の場合、文字列はモジュール、関数、クラス、メソッド、キーワード、またはドキュメントの項目名として検索され、ヘルプページがコンソール上に印字されます。引数がその他のオブジェクトの場合、そのオブジェクトに関するヘルプページが生成されます。</p>
+<p>この関数は、 <a class="reference internal" href="site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> モジュールから、組み込みの名前空間に移されました。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hex">
+<code class="descname">hex</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#hex" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>(任意のサイズの) 整数を、先頭に &#8220;0x&#8221; が付いた小文字の16進数文字列に変換します。例えば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="go">&#39;0xff&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="o">-</span><span class="mi">42</span><span class="p">)</span>
+<span class="go">&#39;-0x2a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">)</span>
+<span class="go">&#39;0x1L&#39;</span>
+</pre></div>
+</div>
+<p>x が Python の <a class="reference internal" href="#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> オブジェクトでも <a class="reference internal" href="#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> オブジェクトでもない場合、整数を返す <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> メソッドを定義していなければなりません。</p>
+<p>16を底として16進数文字列を整数に変換するには <a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> も参照してください。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">浮動小数点数の16進文字列表記を得たい場合には、 <a class="reference internal" href="stdtypes.html#float.hex" title="float.hex"><code class="xref py py-meth docutils literal"><span class="pre">float.hex()</span></code></a> メソッドを使って下さい。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は符号なしのリテラルしか返しませんでした.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="id">
+<code class="descname">id</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#id" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトの &#8220;識別値&#8221; を返します。この値は整数 (または長整数) で、 このオブジェクトの有効期間は一意かつ定数であることが保証されていま す。 オブジェクトの有効期間が重ならない 2 つのオブジェクトは同じ <a class="reference internal" href="#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a> 値を持つかもしれません。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> This is the address of the object in memory.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="input">
+<code class="descname">input</code><span class="sig-paren">(</span><span class="optional">[</span><em>prompt</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#input" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">eval(raw_input(prompt))</span></code> と同じです。</p>
+<p>この関数はユーザエラーを捕捉しません。入力が構文的に正しくない場合、 <a class="reference internal" href="exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> が送出されます。式を評価する際にエラーが生じた場合、他の例外も送出されるかもしれません。</p>
+<p><a class="reference internal" href="readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールが読み込まれていれば、 <a class="reference internal" href="#input" title="input"><code class="xref py py-func docutils literal"><span class="pre">input()</span></code></a> はそれを使って精緻な行編集やヒストリ機能を提供します。</p>
+<p>一般的なユーザからの入力のための関数としては <a class="reference internal" href="#raw_input" title="raw_input"><code class="xref py py-func docutils literal"><span class="pre">raw_input()</span></code></a> を使うことを検討してください。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="int">
+<em class="property">class </em><code class="descname">int</code><span class="sig-paren">(</span><em>x=0</em><span class="sig-paren">)</span><a class="headerlink" href="#int" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<em class="property">class </em><code class="descname">int</code><span class="sig-paren">(</span><em>x</em>, <em>base=10</em><span class="sig-paren">)</span></dt>
+<dd><p>数値または文字列 <em>x</em> から生成された整数を返します。引数が与えられない場合には <code class="docutils literal"><span class="pre">0</span></code> を返します。  <em>x</em> が数値である場合は、通常整数、長整数、または浮動小数点数を返します。浮動小数点数については、これは 0 に向かう方向へ切り詰めます。引数が整数で通常整数の範囲外であれば、長整数を代わりに返します。</p>
+<p><em>x</em> が数値でない場合、あるいは <em>base</em> が与えられた場合、 <em>x</em> は基数 <em>base</em> の <a class="reference internal" href="../reference/lexical_analysis.html#integers"><span class="std std-ref">integer literal</span></a> で表された、バイト文字列または Unicode 文字列、 のインスタンスでなければなりません。オプションで、リテラルの前に <code class="docutils literal"><span class="pre">+</span></code> あるいは <code class="docutils literal"><span class="pre">-</span></code> を (中間のスペースなしで) 付けることができます。また、リテラルは余白で囲むことができます。基数 n のリテラルの各桁は 0 から n-1 の数を、値 10-35 を持つ <code class="docutils literal"><span class="pre">a</span></code> から <code class="docutils literal"><span class="pre">z</span></code> (または <code class="docutils literal"><span class="pre">A</span></code> から <code class="docutils literal"><span class="pre">Z</span></code>) を含んで表現します。デフォルトの <em>base</em> は 10 です。許される値は 0 と 2-36 です。基数 2, 8, 16 のリテラルは、オプションでコード中の整数リテラルのように  <code class="docutils literal"><span class="pre">0b</span></code>/<code class="docutils literal"><span class="pre">0B</span></code>, <code class="docutils literal"><span class="pre">0o</span></code>/<code class="docutils literal"><span class="pre">0O</span></code>/<code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">0x</span></code>/<code class="docutils literal"><span class="pre">0X</span></code> を前に付けることができます。基数 0 を渡すと、文字列を、実際の基数 2, 8, 10, 16 のどれかで整数リテラルとして正確に解釈します。</p>
+<p>整数型については、 <a class="reference internal" href="stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a> も参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isinstance">
+<code class="descname">isinstance</code><span class="sig-paren">(</span><em>object</em>, <em>classinfo</em><span class="sig-paren">)</span><a class="headerlink" href="#isinstance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>object</em> が引数 <em>classinfo</em> のインスタンスであるか、 (直接または間接的な、もしくは <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">virtual</span></a> の) サブクラスのインスタンスの場合に真を返します。また、 <em>classinfo</em> が型オブジェクト (新スタイルクラス) であり、 <em>object</em> がその型のオブジェクトであるか、または、 (直接または間接的な、もしくは <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">virtual</span></a> の) サブクラスの場合にも真を返します。 <em>object</em> がクラスインスタンスや与えられた型のオブジェクトでない場合、この関数は常に偽を返します。<em>classinfo</em> がクラスや型オブジェクトのタプル (あるいはそういったタプルを再帰的に含むタプル) の場合、 <em>object</em> がそれらクラスや型のいずれかのインスタンスであれば真を返します。 <em>classinfo</em> がクラス、型、クラスや型からなるタプル、そういったタプルが再帰構造をとっているタプルのいずれでもない場合、例外 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が送出されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span>型情報からなるタプルへのサポートが追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="issubclass">
+<code class="descname">issubclass</code><span class="sig-paren">(</span><em>class</em>, <em>classinfo</em><span class="sig-paren">)</span><a class="headerlink" href="#issubclass" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>class</em> が <em>classinfo</em> の (直接または間接的な、あるいは <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">virtual</span></a>) サブクラスである場合に真を返します。クラスはそれ自身のサブクラスとみなされます。 <em>classinfo</em> はクラスオブジェクトからなるタプルでもよく、この場合には <em>classinfo</em> のすべてのエントリが調べられます。その他の場合では、例外 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が送出されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>型情報からなるタプルへのサポートが追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="iter">
+<code class="descname">iter</code><span class="sig-paren">(</span><em>o</em><span class="optional">[</span>, <em>sentinel</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#iter" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> (イテレータ)オブジェクトを返します。 2 つ目の引数があるかどうかで、最初の引数の解釈は非常に異なります。 2 つ目の引数 がない場合、 <em>o</em> は反復プロトコル (<a class="reference internal" href="../reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal"><span class="pre">__iter__()</span></code></a> メソッド) か、シーケンス型プロトコル (引数が <code class="docutils literal"><span class="pre">0</span></code> から開始する <a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a> メソッド) をサポートする集合オブジェクトでなければなりません。これらのプロトコルが両方ともサポートされていない場 合、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が送出されます。 2 つ目の引数 <em>sentinel</em> が与えられていれば、 <em>o</em> は呼び出し可能なオ ブジェクトでなければなりません。この場合に生成されるイテレータは、 <a class="reference internal" href="stdtypes.html#iterator.next" title="iterator.next"><code class="xref py py-meth docutils literal"><span class="pre">next()</span></code></a> を呼ぶ毎に <em>o</em> を引数無しで呼び出します。返された値が <em>sentinel</em> と等しければ、 <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> が送出されます。そう でない場合、戻り値がそのまま返されます。</p>
+<p><a class="reference internal" href="#iter" title="iter"><code class="xref py py-func docutils literal"><span class="pre">iter()</span></code></a> の2つめの形式の便利な使用法の一つは、ファイルの行を特定の行まで読み進めることです。以下の例では <a class="reference internal" href="io.html#io.TextIOBase.readline" title="io.TextIOBase.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> が空文字列を返すまでファイルを読み進めます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mydata.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">process_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="len">
+<code class="descname">len</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#len" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトの長さ (要素の数) を返します。引数はシーケンス (文字列、バイト列、タプル、リスト、range 等) かコレクション (辞書、集合、凍結集合等) です。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="list">
+<em class="property">class </em><code class="descname">list</code><span class="sig-paren">(</span><span class="optional">[</span><em>iterable</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#list" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> の要素と同じ要素をもち、かつ順番も同じなリストを返します。 <em>iterable</em> はシーケンス、反復処理をサポートするコンテナ、あるいはイテレータオブジェクトです。 <em>sequence</em> がすでにリストの場合、 <code class="docutils literal"><span class="pre">iterable[:]</span></code> と同様にコピーを作成して返します。 例えば、 <code class="docutils literal"><span class="pre">list('abc')</span></code> は <code class="docutils literal"><span class="pre">['a',</span> <span class="pre">'b',</span> <span class="pre">'c']</span></code> および <code class="docutils literal"><span class="pre">list((1,</span> <span class="pre">2,</span> <span class="pre">3))</span></code> は <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> を返します。引数が与えられなかった場合、新 しい空のリスト <code class="docutils literal"><span class="pre">[]</span></code> を返します。</p>
+<p><a class="reference internal" href="#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> は変更可能なシーケンス型であり、 <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> に記 述があります。他のコンテナ型については組み込み型の <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>, <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, および <a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> クラスと、 <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールを参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="locals">
+<code class="descname">locals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#locals" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のローカルシンボルテーブルを表す辞書を更新して返します。関数ブロックで <a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a> を呼び出した場合自由変数が返されます、クラスブロックでは返されません。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この辞書の内容は変更してはいけません; 変更しても、インタプリタが使うローカル変数や自由変数の値には影響しません。</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="long">
+<em class="property">class </em><code class="descname">long</code><span class="sig-paren">(</span><em>x=0</em><span class="sig-paren">)</span><a class="headerlink" href="#long" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<em class="property">class </em><code class="descname">long</code><span class="sig-paren">(</span><em>x</em>, <em>base=10</em><span class="sig-paren">)</span></dt>
+<dd><p>文字列または数値 <em>x</em> から長整数オブジェクトを構築して返します。引数が文字列の場合は、任意サイズの符号付の数を表していなければなりません。空白で囲まれていても構いません。 <em>base</em> 引数は <a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> のものと同じように解釈され、また、 <em>x</em> が文字列の時だけ与えることができます。文字列以外の引数では通常整数、長整数、浮動小数点数を与えることが出来、同じ値としての長整数を返します。浮動小数点数から整数への変換では、(ゼロに向かう方向へ) 切り詰められます。引数が与えられなければ <code class="docutils literal"><span class="pre">0L</span></code> を返します。</p>
+<p>長整数型については、 <a class="reference internal" href="stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a> も参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="map">
+<code class="descname">map</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#map" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>function</em> を <em>iterable</em> の全ての要素に適用し、返された値からなるリ ストを返します。追加の <em>iterable</em> 引数を与えた場合、 <em>function</em> は それらを引数として取らなければならず、関数はそのリストの全ての要素 について個別に適用されます; 他のリストより短いリストがある場合、要 素 <code class="docutils literal"><span class="pre">None</span></code> で延長されます。 <em>function</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、恒等関 数であると仮定されます; すなわち、複数のリスト引数が存在する場合、 <a class="reference internal" href="#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> は全てのリスト引数に対し、対応する要素からなるタプルか らなるリストを返します (転置操作のようなものです)。 <em>list</em> 引数はど のようなシーケンス型でもかまいません; 結果は常にリストになります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="max">
+<code class="descname">max</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#max" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descname">max</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em>, <em>*args</em><span class="optional">[</span>, <em>key</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>iterable の中で最大の要素、または2つ以上の引数の中で最大のものを返します。</p>
+<p>キーワード無しの引数が 1 つだけ与えられた場合、 <em>iterable</em> は空でない  (文字列、タプル、リストなどの) iterable でなくてはいけません。iterable の最大の要素が返されます。
+2 つ以上のキーワード無しの引数が与えられた場合、その引数の中で最大のものが返されます。</p>
+<p>オプションの <em>key</em> 引数には <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> で使われるのと同じような 1 引数の順序付け関数を指定します。 <em>key</em> を指定する場合はキーワード形式でなければなりません (たとえば <code class="docutils literal"><span class="pre">max(a,b,c,key=func)</span></code>)。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>オプションの <em>key</em> 引数が追加されました.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="func-memoryview"></span><dl class="function">
+<dt>
+<code class="descname">memoryview</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span></dt>
+<dd><p>与えられたオブジェクトから作られた &#8220;メモリビュー&#8221; オブジェクトを返します。詳しくは <a class="reference internal" href="stdtypes.html#typememoryview"><span class="std std-ref">メモリビュー型</span></a> を参照してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="min">
+<code class="descname">min</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#min" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descname">min</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em>, <em>*args</em><span class="optional">[</span>, <em>key</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>iterable の中で最小の要素、または2つ以上の引数の中で最小のものを返します。</p>
+<p>キーワード無しの引数が1つだけ与えられた場合、 <em>iterable</em> は空でない  (文字列、タプル、リストなどの) iterable でなくてはいけません。
+iterable の最小の要素が返されます。
+2 つ以上のキーワード無しの引数が与えられた場合、その引数の中で最小のものが返されます。</p>
+<p>オプションの <em>key</em> 引数には <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> で使われるのと同じような 1 引数の順序付け関数を指定します。 <em>key</em> を指定する場合はキーワード形式でなければなりません (たとえば <code class="docutils literal"><span class="pre">min(a,b,c,key=func)</span></code>)。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>オプションの <em>key</em> 引数が追加されました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="next">
+<code class="descname">next</code><span class="sig-paren">(</span><em>iterator</em><span class="optional">[</span>, <em>default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#next" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterator</em> から、 <a class="reference internal" href="stdtypes.html#iterator.next" title="iterator.next"><code class="xref py py-meth docutils literal"><span class="pre">next()</span></code></a> メソッドにより、次の要素を取得します。 もし、 <em>default</em> が与えられると、イテレータが空である場合に、それが返されます。それ以外の場合は、 <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> が送出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="object">
+<em class="property">class </em><code class="descname">object</code><a class="headerlink" href="#object" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザ定義の属性やメソッドを持たない、新しいオブジェクトを返します。 <a class="reference internal" href="#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object()</span></code></a> は新スタイルのクラスの、基底クラスです。これは、新スタイルのクラスのインスタンスに共通のメソッド群を持ちます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>この関数はいかなる引数も受け付けません。以前は、引数を受理しましたが無視していました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="oct">
+<code class="descname">oct</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#oct" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>(任意のサイズの) 整数を 8 進の文字列に変換します。結果は Python の 式としても使える形式になります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は符号なしのリテラルしか返しませんでした.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="open">
+<code class="descname">open</code><span class="sig-paren">(</span><em>name</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>buffering</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイルを開いて、  <a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> にて説明される、 <a class="reference internal" href="#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> オブジェクトを返します。もし、ファイルが開けないなら、 <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> が送出されます。ファイルを開くときは <a class="reference internal" href="#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> のコンストラクタを直接呼ばずに <a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を使うのが望ましい方法です。</p>
+<p>最初の 2 つの引数は <code class="docutils literal"><span class="pre">stdio</span></code> の <code class="xref c c-func docutils literal"><span class="pre">fopen()</span></code> と同じです: <em>filename</em> は開きたいファイルの名前で、 <em>mode</em> はファイルをどのようにして開くかを指定します。</p>
+<p>最もよく使われる <em>mode</em> の値は、読み出しの <code class="docutils literal"><span class="pre">'r'</span></code> 、書き込み (ファイルがすでに存在すれば切り詰められます) の <code class="docutils literal"><span class="pre">'w'</span></code> 、追記書き込みの <code class="docutils literal"><span class="pre">'a'</span></code> です ( <em>いくつかの</em> Unix システムでは、 <em>全て</em> の書き込みが 現在のファイルシーク位置に関係なくファイルの末尾に追加されます)。 <em>mode</em> が省略された場合、標準の値は <code class="docutils literal"><span class="pre">'r'</span></code> になります。デフォルトではテキストモードでファイルを開きます。 <code class="docutils literal"><span class="pre">'\n'</span></code> 文字は、プラットフォームでの改行の表現に変換されます。移植性を高めるために、バイナ リファイルを開くときには、 <em>mode</em> の値に <code class="docutils literal"><span class="pre">'b'</span></code> を追加しなければなりません。(バイナリファイルとテキストファイルを区別なく扱うようなシステムでも、ドキュメンテーションの代わりになるので便利です。) 他に <em>mode</em> に与えられる可能性のある値については後述します。</p>
+<p id="index-4">オプションの <em>buffering</em> 引数は、ファイルのために必要とするバッファのサイズを指定します: 0 は非バッファリング、1 は行単位バッファリング、その他の正の値は指定した値 (の近似値) の (バイト)サイズをもつバッファを使用することを意味します。 <em>buffering</em> の値が負の場合、システムの標準を使います。通常、tty 端末は行単位のバッファリングであり、その他のファイルは完全なバッファリングです。省略された場合、システムの標準の値が使われます。 <a class="footnote-reference" href="#id4" id="id2">[2]</a></p>
+<p><code class="docutils literal"><span class="pre">'r+'</span></code>, <code class="docutils literal"><span class="pre">'w+'</span></code>, および <code class="docutils literal"><span class="pre">'a+'</span></code> はファイルを更新のために開きます (開いて読み書きします); <code class="docutils literal"><span class="pre">'w+'</span></code> はファイルがすでに存在すれば切り詰めるので注意してください。バイナリとテキストファイルを区別するシステムでは、ファイルをバイナリモードで開くためには <code class="docutils literal"><span class="pre">'b'</span></code> を追加してください; 区別しないシステムでは <code class="docutils literal"><span class="pre">'b'</span></code> は無視されます。</p>
+<p id="index-5">標準の <code class="xref c c-func docutils literal"><span class="pre">fopen()</span></code> における <em>mode</em> の値に加えて、 <code class="docutils literal"><span class="pre">'U'</span></code> または <code class="docutils literal"><span class="pre">'rU'</span></code> を使うことができます。Python が <a class="reference internal" href="../glossary.html#term-universal-newlines"><span class="xref std std-term">universal newlines</span></a> サポートを行っている (標準ではしています) 場合、ファイルがテキストファイルで開かれますが、行末文字として Unix における慣行である <code class="docutils literal"><span class="pre">'\n'</span></code> 、Macintosh における慣行である <code class="docutils literal"><span class="pre">'\r'</span></code> 、 Windows における慣行である <code class="docutils literal"><span class="pre">'\r\n'</span></code> のいずれを使うこともできます。これらの改行文字の外部表現はどれも、Python プログラムからは <code class="docutils literal"><span class="pre">'\n'</span></code> に見えます。 Python が <a class="reference internal" href="../glossary.html#term-universal-newlines"><span class="xref std std-term">universal newlines</span></a> サポートなしで構築されている場合、 <em>mode</em> <code class="docutils literal"><span class="pre">'U'</span></code> は通常のテキストモードと同様になります。開かれたファイルオブジェクトはまた、 <code class="xref py py-attr docutils literal"><span class="pre">newlines</span></code> と呼ばれる属性を持っており、その値は <code class="docutils literal"><span class="pre">None</span></code> (改行が見つからなかった場合)、 <code class="docutils literal"><span class="pre">'\n'</span></code>, <code class="docutils literal"><span class="pre">'\r'</span></code>, <code class="docutils literal"><span class="pre">'\r\n'</span></code>, または見つかった全ての改行タイプを含むタプルになります。</p>
+<p><code class="docutils literal"><span class="pre">'U'</span></code> を取り除いた後のモードは <code class="docutils literal"><span class="pre">'r'</span></code>, <code class="docutils literal"><span class="pre">'w'</span></code>, <code class="docutils literal"><span class="pre">'a'</span></code> のいずれかで始まる、というのが Python における規則です。</p>
+<p>Python では、 <a class="reference internal" href="fileinput.html#module-fileinput" title="fileinput: Loop over standard input or a list of files."><code class="xref py py-mod docutils literal"><span class="pre">fileinput</span></code></a>, <a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a>, <a class="reference internal" href="os.path.html#module-os.path" title="os.path: Operations on pathnames."><code class="xref py py-mod docutils literal"><span class="pre">os.path</span></code></a>, <a class="reference internal" href="tempfile.html#module-tempfile" title="tempfile: Generate temporary files and directories."><code class="xref py py-mod docutils literal"><span class="pre">tempfile</span></code></a>, <a class="reference internal" href="shutil.html#module-shutil" title="shutil: High-level file operations, including copying."><code class="xref py py-mod docutils literal"><span class="pre">shutil</span></code></a> などの多数のファイル操作モジュールが提供されています。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>モード文字列の先頭についての制限が導入されました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ord">
+<code class="descname">ord</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#ord" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>長さ 1 の与えられた文字列に対し、その文字列が unicode オブジェクトならば Unicode コードポイントを表す整数を、 8 ビット文字列ならばそのバイトの値を返します。たとえば、 <code class="docutils literal"><span class="pre">ord('a')</span></code> は整数 <code class="docutils literal"><span class="pre">97</span></code> を返し、 <code class="docutils literal"><span class="pre">ord(u'\u2020')</span></code> は <code class="docutils literal"><span class="pre">8224</span></code> を返します。この値は 8 ビット文字列に対する <a class="reference internal" href="#chr" title="chr"><code class="xref py py-func docutils literal"><span class="pre">chr()</span></code></a> の逆であり、 unicode オブジェクトに対する <a class="reference internal" href="#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a> の逆です。引数が unicode で Python が UCS2 Unicode 対応版ならば、その文字のコードポイントは両端を含めて [0..65535] の範囲に入っていなければなりません。この範囲から外れると文字列の長さが 2 になり、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が送出されることになります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pow">
+<code class="descname">pow</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="optional">[</span>, <em>z</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#pow" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>x</em> の <em>y</em> 乗を返します; <em>z</em> があれば、<em>x</em> の <em>y</em> 乗に対する <em>z</em> のモジュロを返します (<code class="docutils literal"><span class="pre">pow(x,</span> <span class="pre">y)</span> <span class="pre">%</span> <span class="pre">z</span></code> より効率よく計算されます)。二引数の形式 <code class="docutils literal"><span class="pre">pow(x,</span> <span class="pre">y)</span></code> は、冪乗演算子を使った <code class="docutils literal"><span class="pre">x**y</span></code> と等価です。</p>
+<p>引数は数値型でなくてはなりません。型混合の場合、 2 進算術演算におけ る型強制規則が適用されます。通常整数、および、長整数の被演算子に対しては、二つ目の引数が負の数でない限り、結果は (型強制後の) 被演算子と同じ型になります; 負の場合、全ての引数は浮動小数点型に変換され、浮動小数点型の結果が 返されます。例えば、 <code class="docutils literal"><span class="pre">10**2</span></code> は <code class="docutils literal"><span class="pre">100</span></code> を返しますが、 <code class="docutils literal"><span class="pre">10**-2</span></code> は <code class="docutils literal"><span class="pre">0.01</span></code> を返します。 (最後に述べた機能は Python 2.2 で追加され たものです。 Python 2.1 以前では、双方の引数が整数で二つ目の値が負の場合、例外が送出されます。) 二つ目の引数が負の場合、三つめの引数 は無視されます。 <em>z</em> がある場合、 <em>x</em> および <em>y</em> は整数型でなければならず、 <em>y</em> は非負の値でなくてはなりません (この制限は Python 2.2 で追加されました。 Python 2.1 以前では、 3 つの浮動小数点引数を持つ <code class="docutils literal"><span class="pre">pow()</span></code> は浮動小数点の丸めに関する偶発誤差により、プラットフォー ム依存の結果を返します)。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="print">
+<code class="descname">print</code><span class="sig-paren">(</span><em>*objects</em>, <em>sep=' '</em>, <em>end='\n'</em>, <em>file=sys.stdout</em><span class="sig-paren">)</span><a class="headerlink" href="#print" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>object</em> (複数でも可) を <em>sep</em> で区切りながらストリーム <em>file</em> に表示し、最後に <em>end</em> を表示します。 <em>sep</em>, <em>end</em> そして <em>file</em> が与えられる場合、キーワード引数として与えられる必要があります。</p>
+<p>キーワードなしの引数はすべて、 <a class="reference internal" href="#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> がするように文字列に変換され、 <em>sep</em> で区切られながらストリームに書き出され、最後に <em>end</em> が続きます。 <em>sep</em> と <em>end</em> の両方とも、文字列でなければなりません; または <code class="docutils literal"><span class="pre">None</span></code> にすれば、デフォルトの値が使われます。 <em>objects</em> が与えられなければ、 <a class="reference internal" href="#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a> は <em>end</em> だけを書き出します。</p>
+<p><em>file</em> 引数は、 <code class="docutils literal"><span class="pre">write(string)</span></code> メソッドを持つオブジェクトでなければなりません。指定されないか、 <code class="docutils literal"><span class="pre">None</span></code> であった場合には、 <a class="reference internal" href="sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal"><span class="pre">sys.stdout</span></code></a> が使われます。出力のバッファリングは <em>file</em> により決定されます。たとえば即座に画面に現れて欲しければ、 <code class="docutils literal"><span class="pre">file.flush()</span></code> を使ってそれを保障してください。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>この関数は <code class="docutils literal"><span class="pre">print</span></code> という名前が <a class="reference internal" href="../reference/simple_stmts.html#print"><code class="xref std std-keyword docutils literal"><span class="pre">print</span></code></a> ステートメン トとして解釈されるため、通常は使用できません。ステートメントを無効化して、 <a class="reference internal" href="#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a> 関数を使うためには、以下の future ステートメントをモジュールの最初に書いて下さい。:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+</pre></div>
+</div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="property">
+<em class="property">class </em><code class="descname">property</code><span class="sig-paren">(</span><span class="optional">[</span><em>fget</em><span class="optional">[</span>, <em>fset</em><span class="optional">[</span>, <em>fdel</em><span class="optional">[</span>, <em>doc</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#property" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a> (新しい形式のクラス) (<a class="reference internal" href="#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> から派生したクラス) における property 属性を返します。</p>
+<p><em>fget</em> は属性値を取得するための関数です。<em>fset</em> は属性値を設定するための関数です。<em>fdel</em> は属性値を削除するための関数です。<em>doc</em> は属性の docstring を作成します。</p>
+<p>典型的な使用法は、属性 <code class="docutils literal"><span class="pre">x</span></code> の処理の定義です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">getx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="k">def</span> <span class="nf">setx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">delx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getx</span><span class="p">,</span> <span class="n">setx</span><span class="p">,</span> <span class="n">delx</span><span class="p">,</span> <span class="s2">&quot;I&#39;m the &#39;x&#39; property.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>c</em> が <em>C</em> のインスタンスならば、<code class="docutils literal"><span class="pre">c.x</span></code> は getter を呼び出し、<code class="docutils literal"><span class="pre">c.x</span> <span class="pre">=</span> <span class="pre">value</span></code> は setter を、<code class="docutils literal"><span class="pre">del</span> <span class="pre">c.x</span></code> は deleter を呼び出します。</p>
+<p><em>doc</em> は、与えられれば property 属性のドキュメント文字列になります。与えられなければ、 property は <em>fget</em> のドキュメント文字列(もしあれば)をコピーします。そのため、 <a class="reference internal" href="#property" title="property"><code class="xref py py-func docutils literal"><span class="pre">property()</span></code></a> をデコレータ (<a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a>) として使えば、読み取り専用 property を作るのは容易です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parrot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="mi">100000</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the current voltage.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">&#64;property</span></code> デコレータは <code class="xref py py-meth docutils literal"><span class="pre">voltage()</span></code> を同じ名前のまま 読み取り専用属性の &#8220;getter&#8221; にし、<em>voltage</em> のドキュメント文字列を &#8220;Get the current voltage.&#8221; に設定します。</p>
+<p>property オブジェクトは <code class="xref py py-attr docutils literal"><span class="pre">getter</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">setter</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">deleter</span></code> メソッドを持っています。これらのメソッドをデコレータとして使うと、対応するアクセサ関数がデコレートされた関数に設定された、 property のコピーを作成できます。これを一番分かりやすく説明する例があります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;I&#39;m the &#39;x&#39; property.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="nd">@x</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@x</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+</pre></div>
+</div>
+<p>このコードは最初の例と等価です。追加の関数には、必ず元の property と同じ名前 (この例では <code class="docutils literal"><span class="pre">x</span></code>) を与えて下さい。</p>
+<p>返される property オブジェクトも、コンストラクタの引数に対応した <code class="docutils literal"><span class="pre">fget</span></code>, <code class="docutils literal"><span class="pre">fset</span></code>, および <code class="docutils literal"><span class="pre">fdel</span></code> 属性を持ちます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span><em>doc</em> が与えられない場合に <em>fget</em> のドキュメント文字列を使う。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span><code class="docutils literal"><span class="pre">getter</span></code>, <code class="docutils literal"><span class="pre">setter</span></code> そして <code class="docutils literal"><span class="pre">deleter</span></code> 属性が追加されました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="range">
+<code class="descname">range</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#range" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descname">range</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>等差数列を含むリストを生成するための多機能関数です。 <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> ループでよく使われます。引数は通常の整数でなければなりません。 <em>step</em> 引数が無視された場合、標準の値 <code class="docutils literal"><span class="pre">1</span></code> になります。 <em>start</em> 引数が省 略された場合、標準の値 <code class="docutils literal"><span class="pre">0</span></code> になります。完全な形式では、通常の整数列 <code class="docutils literal"><span class="pre">[start,</span> <span class="pre">start</span> <span class="pre">+</span> <span class="pre">step,</span> <span class="pre">start</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">step,</span> <span class="pre">...]</span></code> を返します。 <em>step</em> が正の値の場合、最後の要素は <em>stop</em> よりも小さい <code class="docutils literal"><span class="pre">start</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">*</span> <span class="pre">step</span></code> の最大値になります; <em>step</em> が負の値の場合、最後の要素は <em>stop</em> よりも大きい <code class="docutils literal"><span class="pre">start</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">*</span> <span class="pre">step</span></code> の最小値になります。 <em>step</em> はゼロであってはなりません (さもなければ <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます)。以下に例を示します。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[0, 5, 10, 15, 20, 25]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">[0, 3, 6, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[0, -1, -2, -3, -4, -5, -6, -7, -8, -9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="raw_input">
+<code class="descname">raw_input</code><span class="sig-paren">(</span><span class="optional">[</span><em>prompt</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#raw_input" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>prompt</em> が存在する場合、末尾の改行を除いて標準出力に出力されます。次に、この関数は入力から 1 行を読み込んで文字列に変換して (末尾の改行を除いて) 返します。 EOF が読み込まれると <a class="reference internal" href="exceptions.html#exceptions.EOFError" title="exceptions.EOFError"><code class="xref py py-exc docutils literal"><span class="pre">EOFError</span></code></a> が送出されます。以下に例を示します。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">raw_input</span><span class="p">(</span><span class="s1">&#39;--&gt; &#39;</span><span class="p">)</span>
+<span class="go">--&gt; Monty Python&#39;s Flying Circus</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&quot;Monty Python&#39;s Flying Circus&quot;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">readline</span></code></a> モジュールが読み込まれていれば、 <a class="reference internal" href="#raw_input" title="raw_input"><code class="xref py py-func docutils literal"><span class="pre">raw_input()</span></code></a> は精緻な行編集およびヒストリ機能を提供します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reduce">
+<code class="descname">reduce</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> の要素に対して、iterable を単一の値に短縮するような形で 2 つの引数をもつ <em>function</em> を左から右に累積的に適用します。例えば、 <code class="docutils literal"><span class="pre">reduce(lambda</span> <span class="pre">x,</span> <span class="pre">y:</span> <span class="pre">x+y,</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5])</span></code> は <code class="docutils literal"><span class="pre">((((1+2)+3)+4)+5)</span></code> を計算します。左引数 <em>x</em> は累計の値になり、右引数 <em>y</em> は <code class="docutils literal"><span class="pre">iterable</span></code> から取り出した更新値になります。オプションの <em>initializer</em> が存在する場合、計算の際に iterable の先頭に置かれます。また、 iterable が空の場合には標準の値になります。 <em>initializer</em> が与えられておらず、 <em>iterable</em> が単一の要素しか持っていない場合、最初の要素が返されます。これは大体以下と等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">initializer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">initializer</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;reduce() of empty sequence with no initial value&#39;</span><span class="p">)</span>
+    <span class="n">accum_value</span> <span class="o">=</span> <span class="n">initializer</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">accum_value</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">accum_value</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">accum_value</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="headerlink" href="#reload" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>すでにインポートされた <em>module</em> を再解釈し、再初期化します。引数はモジュールオブジェクトでなければならないので、予めインポートに成功していなければなりません。この関数はモジュールのソースコードファイルを外部エディタで編集して、Python インタプリタから離れることなく新しいバージョンを試したい際に有効です。戻り値は (<em>module</em> 引数と同じ) モジュールオブジェクトです。</p>
+<p><code class="docutils literal"><span class="pre">reload(module)</span></code> を実行すると、以下の処理が行われます:</p>
+<ul class="simple">
+<li><p class="first">Python モジュールのコードは再コンパイルされ、モジュールレベルのコードは再度実行されます。モジュールの辞書中にある、何らかの名前に結び付けられたオブジェクトを新たに定義します。拡張モジュール中の <code class="docutils literal"><span class="pre">init</span></code> 関数が二度呼び出されることはありません。</p>
+</li>
+<li><p class="first">Python における他のオブジェクトと同様、以前のオブジェクトのメモリ領域は、参照カウントがゼロにならないかぎり再利用されません。</p>
+</li>
+<li><p class="first">モジュール名前空間内の名前は新しいオブジェクト (または更新されたオブジェクト) を指すよう更新されます。</p>
+</li>
+<li><p class="first">以前のオブジェクトが (外部の他のモジュールなどからの) 参照を受けている場合、それらを新たなオブジェクトに再束縛し直すことはないので、必要なら自分で名前空間を更新しなければなりません。</p>
+</li>
+</ul>
+<p>いくつか補足説明があります:</p>
+<p>モジュールが再ロードされた際、その辞書 (モジュールのグローバル変数を含みます) はそのまま残ります。名前の再定義を行うと、以前の定義を上書きするので、一般的には問題はありません。新たなバージョンのモジュールが古いバージョンで定義された名前を定義していない場合、古い定義がそのまま残ります。辞書がグローバルテーブルやオブジェクトのキャッシュを維持していれば、この機能をモジュールを有効性を引き出すために使うことができます &#8212; つまり、 <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 文を使えば、必要に応じてテーブルがあるかどうかをテストし、その初期化を飛ばすことができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">cache</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>組み込みモジュールや動的にロードされるモジュールを再ロードすることは、一般的にそれほど便利ではありません。 <a class="reference internal" href="sys.html#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal"><span class="pre">sys</span></code></a>, <a class="reference internal" href="__main__.html#module-__main__" title="__main__: The environment where the top-level script is run."><code class="xref py py-mod docutils literal"><span class="pre">__main__</span></code></a>, <code class="xref py py-mod docutils literal"><span class="pre">builtins</span></code> やその他重要なモジュールの再ロードはお勧め出来ません。多くの場合、拡張モジュールは 1 度以上初期化されるようには設計されておらず、再ロードされた場合には何らかの理由で失敗するかもしれません。</p>
+<p>一方のモジュールが <a class="reference internal" href="../reference/simple_stmts.html#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> ... <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> ... を使って、オブジェクトを他方のモジュールからインポートしているなら、他方のモジュールを <a class="reference internal" href="#reload" title="reload"><code class="xref py py-func docutils literal"><span class="pre">reload()</span></code></a> で呼び出しても、そのモジュールからインポートされたオブジェクトを再定義することはできません &#8212; この問題を回避する一つの方法は、 <a class="reference internal" href="../reference/simple_stmts.html#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> 文を再度実行することで、もう一つの方法は <a class="reference internal" href="../reference/simple_stmts.html#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> 文の代わりに <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> と限定的な名前 (<em>module</em>.*name*) を使うことです。</p>
+<p>あるモジュールがクラスのインスタンスを生成している場合、そのクラスを定義しているモジュールの再ロードはそれらインスタンスのメソッド定義に影響しません &#8212; それらは古いクラス定義を使い続けます。これは派生クラスの場合でも同じです。</p>
+</dd></dl>
+
+<span class="target" id="func-repr"></span><dl class="function">
+<dt id="repr">
+<code class="descname">repr</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#repr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトの印字可能な表現を含む文字列を返します。これは型変換で得られる (逆クオートの) 値と同じです。通常の関数としてこの操作にアクセスできるとたまに便利です。この関数は多くの型について、 <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> に渡されたときに同じ値を持つようなオブジェクトを表す文字列を生成しようとします。そうでない場合は、角括弧に囲まれたオブジェクトの型の名前と追加の情報 (大抵の場合はオブジェクトの名前とアドレスを含みます) を返します。クラスは、 <a class="reference internal" href="../reference/datamodel.html#object.__repr__" title="object.__repr__"><code class="xref py py-meth docutils literal"><span class="pre">__repr__()</span></code></a> メソッドを定義することで、この関数によりそのクラスのインスタンスが返すものを制御することができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reversed">
+<code class="descname">reversed</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#reversed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>要素を逆順に取り出すイテレータ (reverse <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a>) を返します。 <em>seq</em> は <a class="reference internal" href="../reference/datamodel.html#object.__reversed__" title="object.__reversed__"><code class="xref py py-meth docutils literal"><span class="pre">__reversed__()</span></code></a> メソッドを持つか、シーケンス型プロトコル (<a class="reference internal" href="../reference/datamodel.html#object.__len__" title="object.__len__"><code class="xref py py-meth docutils literal"><span class="pre">__len__()</span></code></a> メソッド、および、 <code class="docutils literal"><span class="pre">0</span></code> 以上の整数を引数とする <a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a> メソッド) をサポートするオブジェクトでなければなりません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.6 で変更: </span>カスタムの <a class="reference internal" href="../reference/datamodel.html#object.__reversed__" title="object.__reversed__"><code class="xref py py-meth docutils literal"><span class="pre">__reversed__()</span></code></a> メソッドが使えるようになりました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="round">
+<code class="descname">round</code><span class="sig-paren">(</span><em>number</em><span class="optional">[</span>, <em>ndigits</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#round" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>number</em> を小数点以下 <em>ndigits</em> 桁で丸めた浮動小数点数の値を返します。 <em>ndigits</em> が省略されると、デフォルトはゼロになります。結果は浮動小数点数です。値は最も近い 10 のマイナス <em>ndigits</em> 乗の倍数に丸められます。二つの倍数との距離が等しい場合、ゼロから離れる方向に丸められます (従って、例えば <code class="docutils literal"><span class="pre">round(0.5)</span></code> は <code class="docutils literal"><span class="pre">1.0</span></code> になり、 <code class="docutils literal"><span class="pre">round(-0.5)</span></code> は <code class="docutils literal"><span class="pre">-1.0</span></code> になります)。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">浮動小数点数に対する <a class="reference internal" href="#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round()</span></code></a> の振る舞いは意外なものかもしれません: 例えば、 <code class="docutils literal"><span class="pre">round(2.675,</span> <span class="pre">2)</span></code> は予想通りの <code class="docutils literal"><span class="pre">2.68</span></code> ではなく <code class="docutils literal"><span class="pre">2.67</span></code> を与えます。これはバグではありません: これはほとんどの小数が浮動小数点数で正確に表せないことの結果です。詳しくは <a class="reference internal" href="../tutorial/floatingpoint.html#tut-fp-issues"><span class="std std-ref">浮動小数点演算、その問題と制限</span></a> を参照してください。</p>
+</div>
+</dd></dl>
+
+<span class="target" id="func-set"></span><dl class="class">
+<dt>
+<em class="property">class </em><code class="descname">set</code><span class="sig-paren">(</span><span class="optional">[</span><em>iterable</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>オプションで <em>iterable</em> の要素を持つ、新しい <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> オブジェクトを返します。 <code class="docutils literal"><span class="pre">set</span></code> は組み込みクラスです。このクラスについて詳しい情報は <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> や <a class="reference internal" href="stdtypes.html#types-set"><span class="std std-ref">set（集合）型 &#8212; set, frozenset</span></a> を参照してください。</p>
+<p>他のコンテナについては <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールや組み込みの <a class="reference internal" href="stdtypes.html#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> 、 <a class="reference internal" href="#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> 、 <a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> 、 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> クラスを参照してください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="setattr">
+<code class="descname">setattr</code><span class="sig-paren">(</span><em>object</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#setattr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a> の相方です。引数はオブジェクト、文字列、それから任意の値です。文字列は既存の属性または新たな属性の名前にできます。この関数は指定したオブジェクトが許せば、値を属性に関連付けます。例えば、 <code class="docutils literal"><span class="pre">setattr(x,</span> <span class="pre">'foobar',</span> <span class="pre">123)</span></code> は <code class="docutils literal"><span class="pre">x.foobar</span> <span class="pre">=</span> <span class="pre">123</span></code> と等価です。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="slice">
+<em class="property">class </em><code class="descname">slice</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#slice" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<em class="property">class </em><code class="descname">slice</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p id="index-6"><code class="docutils literal"><span class="pre">range(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></code> で指定されるインデクスの集合を表す、スライス (<a class="reference internal" href="../glossary.html#term-slice"><span class="xref std std-term">slice</span></a>) オブジェクトを返します。引数 <em>start</em> および <em>step</em> はデフォルトでは <code class="docutils literal"><span class="pre">None</span></code> です。スライスオブジェクトは読み出し専用の属性 <code class="xref py py-attr docutils literal"><span class="pre">start</span></code>、<code class="xref py py-attr docutils literal"><span class="pre">stop</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">step</span></code> を持ち、これらは単に引数で使われた 値 (またはデフォルト値) を返します。これらの値には、その他のはっきりと した機能はありません。しかしながら、これらの値は Numerical Python および、その他のサードパーティによる拡張で利用されています。スライスオブジェクトは拡張されたインデクス指定構文が使われる際にも生成されます。例えば <code class="docutils literal"><span class="pre">a[start:stop:step]</span></code> や <code class="docutils literal"><span class="pre">a[start:stop,</span> <span class="pre">i]</span></code> です。この関数の代替となるイテレータを返す関数、<a class="reference internal" href="itertools.html#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal"><span class="pre">itertools.islice()</span></code></a> も参照してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sorted">
+<code class="descname">sorted</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>cmp</em><span class="optional">[</span>, <em>key</em><span class="optional">[</span>, <em>reverse</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#sorted" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> の要素を並べ替えた新たなリストを返します。</p>
+<p>オプション引数 <em>cmp</em>, <em>key</em>, および <em>reverse</em> の意味は <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> メソッドと同じです。 (<a class="reference internal" href="stdtypes.html#typesseq-mutable"><span class="std std-ref">ミュータブルなシーケンス型</span></a> 節に説明があります。)</p>
+<p><em>cmp</em> は2つの引数 (iterable の要素) からなるカスタムの比較関数を指定します。 これは始めの引数が 2 つ目の引数に比べて小さい、等しい、大きいかに応じて負数、ゼロ、正数を返します。 <code class="docutils literal"><span class="pre">cmp=lambda</span> <span class="pre">x,y:</span> <span class="pre">cmp(x.lower(),</span> <span class="pre">y.lower())</span></code> 。デフォルト値は <code class="docutils literal"><span class="pre">None</span></code> です。</p>
+<p><em>key</em> は 1 つの引数からなる関数を指定します。これはリストの各要素から比較のキーを取り出すのに使われます: <code class="docutils literal"><span class="pre">key=str.lower</span></code> 。デフォルト値は <code class="docutils literal"><span class="pre">None</span></code> です (要素を直接比較します)。</p>
+<p><em>reverse</em> は真偽値です。 <code class="docutils literal"><span class="pre">True</span></code> がセットされた場合、リストの要素は個々の比較が反転したものとして並び替えられます。</p>
+<p>一般的に、 <em>key</em> および <em>reverse</em> の変換プロセスは同等の <em>cmp</em> 関数を指定するより早く動作します。これは <em>key</em> および <em>reverse</em> がそれぞれの要素に一度だけ触れる間に、 <em>cmp</em> はリストのそれぞれの要素に対して複数回呼ばれることによるものです。旧式の <em>cmp</em> 関数を <em>key</em> 関数に変換するには <a class="reference internal" href="functools.html#functools.cmp_to_key" title="functools.cmp_to_key"><code class="xref py py-func docutils literal"><span class="pre">functools.cmp_to_key()</span></code></a> を使用してください。</p>
+<p>組み込みの <code class="xref py py-meth docutils literal"><span class="pre">sort()</span></code> 関数は安定なことが保証されています。同等な要素の相対順序を変更しないことが保証されていれば、ソートは安定です。これは複数のパスでソートを行なうのに役立ちます（例えば部署でソートしてから給与の等級でソートする場合）。</p>
+<p>ソートの例と簡単なチュートリアルは <a class="reference internal" href="../howto/sorting.html#sortinghowto"><span class="std std-ref">ソート HOW TO</span></a> を参照して下さい。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="staticmethod">
+<code class="descname">staticmethod</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#staticmethod" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>function</em> の静的メソッドを返します。</p>
+<p>静的メソッドは暗黙の第一引数を受け取りません。静的メソッドを宣言するには、このイディオムを使ってください:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">&#64;staticmethod</span></code> は関数デコレータ (<a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a>) 形式です。詳しくは <a class="reference internal" href="../reference/compound_stmts.html#function"><span class="std std-ref">関数定義</span></a> の関数定義の説明を参照してください。</p>
+<p>このメソッドはクラスで呼び出すこと (例えば <code class="docutils literal"><span class="pre">C.f()</span></code> ) も、インスタンスとして呼び出すこと (例えば <code class="docutils literal"><span class="pre">C().f()</span></code>) もできます。インスタンスはそのクラスが何であるかを除いて無視されます。</p>
+<p>Python における静的メソッドは Java や C++ における静的メソッドと類似しています。クラスコンストラクタの代替を生成するのに役立つ変種、 <a class="reference internal" href="#classmethod" title="classmethod"><code class="xref py py-func docutils literal"><span class="pre">classmethod()</span></code></a> も参照してください。</p>
+<p>静的メソッドについて詳しくは、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> の標準型階層についてのドキュメントを繙いてください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>関数デコレータ構文を追加しました.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="str">
+<em class="property">class </em><code class="descname">str</code><span class="sig-paren">(</span><em>object=''</em><span class="sig-paren">)</span><a class="headerlink" href="#str" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトをうまく印字可能な形に表現したものを含む文字列を返します。文字列に対してはその文字列自体を返します。 <code class="docutils literal"><span class="pre">repr(object)</span></code> との違いは、 <code class="docutils literal"><span class="pre">str(object)</span></code> は常に <a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> が受理できるような文字列を返そうと試みるわけではないという点です; この関数の目的は印字可能な文字列を返すところにあります。引数が与えられなかった場合、空の文字列 <code class="docutils literal"><span class="pre">''</span></code> を返します。</p>
+<p>文字列についての詳細は、シーケンスの機能についての説明、 <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> を参照下さい(文字列はシーケンスです)。 また、文字列特有のメソッドについては、 <a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a> を参照下さい。整形した文字列を出力するためには、テンプレート文字列か、 <a class="reference internal" href="stdtypes.html#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> にて説明される <code class="docutils literal"><span class="pre">%</span></code> 演算子を使用して下さい。さらには、 <a class="reference internal" href="strings.html#stringservices"><span class="std std-ref">文字列処理</span></a> と <a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> も参照下さい。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sum">
+<code class="descname">sum</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>start</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#sum" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>start</em> と <em>iterable</em> の要素を左から右へ合計し、総和を返します。 <em>start</em> はデフォルトで <code class="docutils literal"><span class="pre">0</span></code> です。 <em>iterable</em> の要素は通常は数値で、start の値は文字列であってはなりません。</p>
+<p>使う場面によっては、 <a class="reference internal" href="#sum" title="sum"><code class="xref py py-func docutils literal"><span class="pre">sum()</span></code></a> よりもいい選択肢があります。文字列からなるシーケンスを結合する高速かつ望ましい方法は <code class="docutils literal"><span class="pre">''.join(sequence)</span></code> を呼ぶことです。浮動小数点数値を拡張された精度で加算するには、 <a class="reference internal" href="math.html#math.fsum" title="math.fsum"><code class="xref py py-func docutils literal"><span class="pre">math.fsum()</span></code></a> を参照下さい。一連のイテラブルを連結するには、 <a class="reference internal" href="itertools.html#itertools.chain" title="itertools.chain"><code class="xref py py-func docutils literal"><span class="pre">itertools.chain()</span></code></a> の使用を考えてください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="super">
+<code class="descname">super</code><span class="sig-paren">(</span><em>type</em><span class="optional">[</span>, <em>object-or-type</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#super" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メソッドの呼び出しを <em>type</em> の親または兄弟クラスに委譲するプロキシオブジェクトを返します。これはクラスの中でオーバーライドされた継承メソッドにアクセスするのに便利です。探索の順序は、 <em>type</em> 自身が飛ばされるのをのぞいて <a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a> で使われるのと同じです。</p>
+<p><em>type</em> の <a class="reference internal" href="stdtypes.html#class.__mro__" title="class.__mro__"><code class="xref py py-attr docutils literal"><span class="pre">__mro__</span></code></a> 属性は、 <a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a> と <a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> の 両方で使われる、メソッド解決の探索順序を列記します。 この属性は動的で、継承の階層構造が更新されれば、随時変化します。</p>
+<p>第 2 引数が省かれたなら、返されるスーパーオブジェクトは束縛されません。第 2 引数がオブジェクトであれば、 <code class="docutils literal"><span class="pre">isinstance(obj,</span> <span class="pre">type)</span></code> は真でなければなりません。第 2 引数が型であれば、 <code class="docutils literal"><span class="pre">issubclass(type2,</span> <span class="pre">type)</span></code> は真でなければなりません (これはクラスメソッドに役に立つでしょう)。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> は <a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a> に対してのみ動作します。</p>
+</div>
+<p><em>super</em> の典型的な用途は 2 つあります。単一の継承をしているクラス階層構造では、 <em>super</em> は名前を明示することなく親クラスを参照するのに使え、これでコードはメンテナンスしやすくなります。この用途の <em>super</em> は他のプログラミング言語で見られるものと近い方向性です。</p>
+<p>2 つ目の用途は、動的な実行環境下での複数の継承の共同をサポートすることです。この用途は Python 特有で、静的にコンパイルされる言語や、単一の継承しかサポートしない言語では見られないものです。これは複数の基底クラスが同じメソッドを実装する &#8220;diamond diagram&#8221; を実装できるようにします。良い設計のために、このメソッドがすべての場合に同じ形式で呼び出せるべきです (呼び出しの順序が実行時に決定されることや、順序がクラスの階層の変更に対応することや、その順序には実行時まで未知の兄弟クラスが含まれえることが理由です)。</p>
+<p>両方のケースにおいて、典型的なスーパークラスの呼び出しはこのようになるでしょう。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>なお、<a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> は <code class="docutils literal"><span class="pre">super().__getitem__(name)</span></code> のような明示的なドット表記属性探索の束縛処理の一部として使うように実装されています。これは、 <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">__getattribute__()</span></code></a> メソッドを予測可能な順序でクラスを検索するように実装し、協調的な多重継承をサポートすることで実現されています。従って、 <a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> は <code class="docutils literal"><span class="pre">super()[name]</span></code> のような文や演算子を使った暗黙の探索向けには定義されていません。</p>
+<p>また、 <a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> の使用がメソッド内部に限定されないことにも注目して 下さい。引数を2つ渡す形式の呼び出しは、必要な要素を正確に指定するので、 適当な参照を作ることができます。</p>
+<p><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> を用いて協調的なクラスを設計する方法の実践的な提案は、 <a class="reference external" href="http://rhettinger.wordpress.com/2011/05/26/super-considered-super/">guide to using super()</a> を参照してください。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tuple">
+<code class="descname">tuple</code><span class="sig-paren">(</span><span class="optional">[</span><em>iterable</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#tuple" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>iterable</em> の要素と要素が同じで、かつ順番も同じになるタプルを返します。 <em>iterable</em> はシーケンス型、反復をサポートするコンテナ型、およびイテレータオブジェクトをとることができます。 <em>iterable</em> がすでにタプルの場合、そのタプルを変更せずに返します。 例えば、 <code class="docutils literal"><span class="pre">tuple('abc')</span></code> は <code class="docutils literal"><span class="pre">('a',</span> <span class="pre">'b',</span> <span class="pre">'c')</span></code> を返し、 <code class="docutils literal"><span class="pre">tuple([1,</span> <span class="pre">2,</span> <span class="pre">3])</span></code> は <code class="docutils literal"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> を返します。</p>
+<p><a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> クラスは、不変のシーケンス型で、 <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> にて説明されます。他のコンテナ型については、組み込みクラスの <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>, <a class="reference internal" href="#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, および <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> と、 <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールを参照下さい。</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="type">
+<em class="property">class </em><code class="descname">type</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#type" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<em class="property">class </em><code class="descname">type</code><span class="sig-paren">(</span><em>name</em>, <em>bases</em>, <em>dict</em><span class="sig-paren">)</span></dt>
+<dd><p id="index-7">一つの引数を取り、 <em>object</em> の型を返します。戻り値は型オブジェクトです。オブジェクトの型の検査には <a class="reference internal" href="#isinstance" title="isinstance"><code class="xref py py-func docutils literal"><span class="pre">isinstance()</span></code></a> 組み込み関数を使うことが推奨されます。</p>
+<p>引数が 3 つの場合、新しい型オブジェクトを返します。本質的には <a class="reference internal" href="../reference/compound_stmts.html#class"><code class="xref std std-keyword docutils literal"><span class="pre">class</span></code></a> 文の動的な形式です。 <em>name</em> 文字列はクラス名で、 <a class="reference internal" href="stdtypes.html#class.__name__" title="class.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> 属性になります。 <em>bases</em> タプルは基底クラスの羅列で、 <a class="reference internal" href="stdtypes.html#class.__bases__" title="class.__bases__"><code class="xref py py-attr docutils literal"><span class="pre">__bases__</span></code></a> 属性になります。 <em>dict</em> 辞書はクラス本体の定義を含む名前空間で、 <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性になります。たとえば、以下の二つの文は同じ <a class="reference internal" href="#type" title="type"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a> オブジェクトを作ります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="unichr">
+<code class="descname">unichr</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#unichr" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Unicode におけるコードが整数 <em>i</em> になるような文字 1 文字からなる Unicode 文字列を返します。例えば、 <code class="docutils literal"><span class="pre">unichr(97)</span></code> は文字列 <code class="docutils literal"><span class="pre">u'a'</span></code> を返します。この関数は Unicode 文字列に対する <a class="reference internal" href="#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a> の逆です。 引数の正当な範囲は Python がどのように構成されているかに依存しています &#8212; UCS2 ならば [0..0xFFFF] であり UCS4 ならば [0..0x10FFFF] であり、このどちらかです。それ以外の値に対しては <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。ASCII の 8 ビットの文字列に対しては、 <a class="reference internal" href="#chr" title="chr"><code class="xref py py-func docutils literal"><span class="pre">chr()</span></code></a> を参照下さい。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicode">
+<code class="descname">unicode</code><span class="sig-paren">(</span><em>object=''</em><span class="sig-paren">)</span><a class="headerlink" href="#unicode" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descname">unicode</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>errors</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>以下のモードのうち一つを使って、 <em>object</em> の Unicode 文字列バージョンを返します:</p>
+<p>もし <em>encoding</em> かつ/または <em>errors</em> が与えられていれば、 <code class="docutils literal"><span class="pre">unicode()</span></code> は 8 ビットの文字列または文字列バッファになっているオ ブジェクトを <em>encoding</em> の codec を使ってデコードします。 <em>encoding</em> 引数はエンコーディング名を与える文字列です; 未知のエンコーディングの場合、 <a class="reference internal" href="exceptions.html#exceptions.LookupError" title="exceptions.LookupError"><code class="xref py py-exc docutils literal"><span class="pre">LookupError</span></code></a> が送出されます。エラー処理は <em>errors</em> に従って行われます; このパラメータは入力エンコーディング中で無効な文字の扱い方を指定します。 <em>errors</em> が <code class="docutils literal"><span class="pre">'strict'</span></code> (標準の設定です) の場合、エラー発生時には <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。一方、 <code class="docutils literal"><span class="pre">'ignore'</span></code> では、エラーは暗黙のうちに無視されるようになり、 <code class="docutils literal"><span class="pre">'replace'</span></code> では公式の置換文字、 <code class="docutils literal"><span class="pre">U+FFFD</span></code> を使って、デコードできなかった文字を置き換えます。 <a class="reference internal" href="codecs.html#module-codecs" title="codecs: Encode and decode data and streams."><code class="xref py py-mod docutils literal"><span class="pre">codecs</span></code></a> モジュールについても参照してください。</p>
+<p>オプションのパラメータが与えられていない場合、 <code class="docutils literal"><span class="pre">unicode()</span></code> は <code class="docutils literal"><span class="pre">str()</span></code> の動作をまねます。ただし、8 ビット文字列ではなく、 Unicode 文字列を返します。もっと詳しくいえば、 <em>object</em> が Unicode 文字列かそのサブクラスなら、デコード処理を一切介することなく Unicode 文字列を返すということです。</p>
+<p><a class="reference internal" href="../reference/datamodel.html#object.__unicode__" title="object.__unicode__"><code class="xref py py-meth docutils literal"><span class="pre">__unicode__()</span></code></a> メソッドを提供しているオブジェクトの場合、 <a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> はこのメソッドを引数なしで呼び出して Unicode 文字列を生成します。それ以外のオブジェクトの場合、 8 ビットの文字列か、オ ブジェクトのデータ表現 (representation) を呼び出し、その後デフォルトエンコーディングで <code class="docutils literal"><span class="pre">'strict'</span></code> モードの codec を使って Unicode 文字列に変換します。</p>
+<p>Unicode 文字列についてのさらなる情報については、シーケンス型の機能 についての説明、 <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> を参照下さい(Unicode 文字列はシー ケンスです)。また、文字列特有のメソッドについては、 <a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a> を参照下さい。整形した文字列を出力するために は、テンプレート文字列か、 <a class="reference internal" href="stdtypes.html#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> にて説明される <code class="docutils literal"><span class="pre">%</span></code> 演算子を使用して下さい。さらには、 <a class="reference internal" href="strings.html#stringservices"><span class="std std-ref">文字列処理</span></a> と <a class="reference internal" href="#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> も参照下さい。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.2 で変更: </span><a class="reference internal" href="../reference/datamodel.html#object.__unicode__" title="object.__unicode__"><code class="xref py py-meth docutils literal"><span class="pre">__unicode__()</span></code></a> のサポートが追加されました.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="vars">
+<code class="descname">vars</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#vars" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モジュール、クラス、インスタンス、あるいはそれ以外の <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性を持つオブジェクトの、<a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を返します。</p>
+<p>モジュールやインスタンスのようなオブジェクトには、更新可能な <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性があります。しかし、それ以外のオブジェクトでは <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性への書き込みに制限があるかもしれません。(例えば新スタイルクラスは、辞書を直接更新されることを防ぐために dictproxy を使っています。)</p>
+<p>引数がなければ、<a class="reference internal" href="#vars" title="vars"><code class="xref py py-func docutils literal"><span class="pre">vars()</span></code></a> は <a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a> のように振る舞います。ただし、辞書 locals への更新は無視されるため、辞書 locals は読み出し時のみ有用であることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xrange">
+<code class="descname">xrange</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#xrange" title="この定義へのパーマリンク">¶</a></dt>
+<dt>
+<code class="descname">xrange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>この関数は <a class="reference internal" href="#range" title="range"><code class="xref py py-func docutils literal"><span class="pre">range()</span></code></a> に非常によく似ていますが、リストの代わりに <a class="reference internal" href="stdtypes.html#typesseq-xrange"><span class="std std-ref">XRange 型</span></a> を返します。このオブジェクトは不透明なシーケンス型で、対応するリストと同じ値を持ちますが、それらの値全てを同時に記憶しません。 <code class="xref py py-func docutils literal"><span class="pre">ragne()</span></code> に対する <a class="reference internal" href="#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a> の利点は微々たるものです (<a class="reference internal" href="#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a> は要求に応じて値を生成するからです) ただし、メモリ量の厳しい計算機で巨大な範囲の値を使う時や、(ループがよく <a class="reference internal" href="../reference/simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> で中断されるといったように) 範囲中の全ての値を使うとは限らない場合はその限りではありません。xrange オブジェクトについてのさらに詳しい情報については、 <a class="reference internal" href="stdtypes.html#typesseq-xrange"><span class="std std-ref">XRange 型</span></a> と <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> を参照して下さい。</p>
+<div class="impl-detail compound">
+<p><strong>CPython 実装の詳細:</strong> <a class="reference internal" href="#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a> はシンプルさと速度のために定義されている関数であり、その実現のために実装上の制限を課している場合があります。 Python の C 実装では、全ての引数をネイティブの C long 型 (Python の &#8220;short&#8221; 整数型) に制限しており、要素数がネイティブの C long 型の範囲内に収まるよう要求しています。もし大きな範囲が必要ならば、別の実装である <a class="reference internal" href="itertools.html#module-itertools" title="itertools: Functions creating iterators for efficient looping."><code class="xref py py-mod docutils literal"><span class="pre">itertools</span></code></a> モジュールの、 <code class="docutils literal"><span class="pre">islice(count(start,</span> <span class="pre">step),</span> <span class="pre">(stop-start+step-1+2*(step&lt;0))//step)</span></code> を使うのが巧い方法かも知れません。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="zip">
+<code class="descname">zip</code><span class="sig-paren">(</span><span class="optional">[</span><em>iterable</em>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zip" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>この関数はタプルのリストを返します。このリストの <em>i</em> 番目のタプルは各引数のシーケンスまたはイテレート可能オブジェクト中の <em>i</em> 番目の要素を含みます。 返されるリストは引数のシーケンスのうち長さが最小のものの長さに切り詰められます。引数が全て同じ長さの際には、 <a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> は初期値引数が <code class="docutils literal"><span class="pre">None</span></code> の <a class="reference internal" href="#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> と似ています。引数が単一のシーケンスの場合、1 要素のタプルからなるリストを返します。引数を指定しない場合、空のリストを返します。</p>
+<p>イテラブルの左から右への評価順序が保証されます。そのため <code class="docutils literal"><span class="pre">zip(*[iter(s)]*n)</span></code> を使ってデータ系列を n 長のグループにクラスタリングできます。</p>
+<p><a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> に続けて <code class="docutils literal"><span class="pre">*</span></code> 演算子を使うと、zip したリストを元に戻せます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zipped</span>
+<span class="go">[(1, 4), (2, 5), (3, 6)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">zipped</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">y2</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.0 で追加.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.4 で変更: </span>これまでは、 <a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> は少なくとも一つの引数を要求しており、空のリストを返す代わりに <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出していました。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="__import__">
+<code class="descname">__import__</code><span class="sig-paren">(</span><em>name</em><span class="optional">[</span>, <em>globals</em><span class="optional">[</span>, <em>locals</em><span class="optional">[</span>, <em>fromlist</em><span class="optional">[</span>, <em>level</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#__import__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="admonition note" id="index-8">
+<p class="first admonition-title">注釈</p>
+<p class="last">これは <a class="reference internal" href="importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal"><span class="pre">importlib.import_module()</span></code></a> とは違い、日常の Python プログラミングでは必要ない高等な関数です。</p>
+</div>
+<p>この関数は <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> ステートメントにより呼び出されます。これは (<a class="reference internal" href="__builtin__.html#module-__builtin__" title="__builtin__: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal"><span class="pre">__builtin__</span></code></a> モジュールをインポートし、 <code class="docutils literal"><span class="pre">__builtin__.__import__</span></code> を割り当てることで) <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> ステートメントの意味を変更するための置き換えが可能ですが、今では、フックをインポートするほうが、大抵の場合簡単です (<span class="target" id="index-13"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> を参照下さい)。 <a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a> を直接使用することは稀で、例外は、実行時に名前が決定するモジュールをインポートするときです。</p>
+<p>この関数は、モジュール <em>name</em> をインポートし、 <em>globals</em> と <em>locals</em> が与えられれば、パッケージのコンテキストで名前をどう解釈するか決定するのに使います。 <em>fromlist</em> は <em>name</em> で与えられるモジュールからインポートされるべきオブジェクトまたはサブモジュールの名前を与ます。標準の実装では <em>locals</em> 引数はまったく使われず、 <em>globals</em> は <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文のパッケージコンテキストを決定するためにのみ使われます。</p>
+<p><em>level</em> は絶対、もしくは、相対のどちらのインポートを使うかを指定します。デフォルトは <code class="docutils literal"><span class="pre">-1</span></code> で絶対、相対インポートの両方を試みます。 <code class="docutils literal"><span class="pre">0</span></code> は絶対インポートのみ実行します。正の <em>level</em> の値は、 <a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a> を呼び出したディレクトリから検索対象となる親ディレクトリの階層を示します。</p>
+<p><em>name</em> 変数が <code class="docutils literal"><span class="pre">package.module</span></code> 形式であるとき、通常は、<em>name</em> で指名されたモジュール <em>ではなく</em>、最上位のパッケージ (最初のドットまでの名前) が返されます。しかしながら、空でない <em>fromlist</em> 引数が与えられると、 <em>name</em> で指名されたモジュールが返されます。</p>
+<p>例えば、文 <code class="docutils literal"><span class="pre">import</span> <span class="pre">spam</span></code> は、以下のコードのようなバイトコードに帰結します:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">spam</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>文 <code class="docutils literal"><span class="pre">import</span> <span class="pre">spam.ham</span></code> は、この呼び出しになります:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">spam</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;spam.ham&#39;</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ここで <a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a> がどのように最上位モジュールを返しているかに注意して下さい。 <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文により名前が束縛されたオブジェクトになっています。</p>
+<p>一方で、文 <code class="docutils literal"><span class="pre">from</span> <span class="pre">spam.ham</span> <span class="pre">import</span> <span class="pre">eggs,</span> <span class="pre">sausage</span> <span class="pre">as</span> <span class="pre">saus</span></code> は、以下となります</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_temp</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;spam.ham&#39;</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[</span><span class="s1">&#39;eggs&#39;</span><span class="p">,</span> <span class="s1">&#39;sausage&#39;</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">eggs</span> <span class="o">=</span> <span class="n">_temp</span><span class="o">.</span><span class="n">eggs</span>
+<span class="n">saus</span> <span class="o">=</span> <span class="n">_temp</span><span class="o">.</span><span class="n">sausage</span>
+</pre></div>
+</div>
+<p>ここで、<a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a> から <code class="docutils literal"><span class="pre">spam.ham</span></code> モジュールが返されます。このオブジェクトから、インポートされる名前が取り出され、それぞれの名前として代入されます。</p>
+<p>単純に名前からモジュール (パッケージの範囲内であるかも知れません) をインポートしたいなら、 <a class="reference internal" href="importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal"><span class="pre">importlib.import_module()</span></code></a> を使ってください。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>level パラメータが追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>Keyword サポートパラメータが追加されました。</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="non-essential-built-in-functions">
+<span id="non-essential-built-in-funcs"></span><h1>3. 非必須組み込み関数 (Non-essential Built-in Functions)<a class="headerlink" href="#non-essential-built-in-functions" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>いくつかの組み込み関数は、現代的な Python プログラミングを行う場合には、必ずしも学習したり、知っていたり、使ったりする必要がなくなりました。こうした関数は古いバージョンの Python 向け書かれたプログラムとの互換性を維持するだけの目的で残されています。</p>
+<p>Python のプログラマ、教官、学生、そして本の著者は、こうした関数を飛ばしてもかまわず、その際に何か重要なことを忘れていると思う必要もありません。</p>
+<dl class="function">
+<dt id="apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>function</em>, <em>args</em><span class="optional">[</span>, <em>keywords</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#apply" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>function</em> は呼び出しができるオブジェクト (ユーザ定義および組み込みの関数またはメソッド、またはクラスオブジェクト) でなければなりません。 <em>args</em> はシーケンス型でなくてはなりません。 <em>function</em> は引数リスト <em>args</em> を使って呼び出されます; 引数の数はタプルの長さになります。オプションの引数 <em>keywords</em> を与 える場合、 <em>keywords</em> は文字列のキーを持つ辞書でなければなりません。 これは引数リストの最後に追加されるキーワード引数です。 <a class="reference internal" href="#apply" title="apply"><code class="xref py py-func docutils literal"><span class="pre">apply()</span></code></a> の呼び出しは、単なる <code class="docutils literal"><span class="pre">function(args)</span></code> の呼び出しとは異なります。というのは、 <a class="reference internal" href="#apply" title="apply"><code class="xref py py-func docutils literal"><span class="pre">apply()</span></code></a> の場合、引数は常に一つだからです。 <a class="reference internal" href="#apply" title="apply"><code class="xref py py-func docutils literal"><span class="pre">apply()</span></code></a> は <code class="docutils literal"><span class="pre">function(*args,</span> <span class="pre">**keywords)</span></code> を使うのと等価です。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.3 で撤廃: </span><code class="docutils literal"><span class="pre">apply(function,</span> <span class="pre">args,</span> <span class="pre">keywords)</span></code> ではなく <code class="docutils literal"><span class="pre">function(*args,</span> <span class="pre">**keywords)</span></code> を使ってください  (<a class="reference internal" href="../tutorial/controlflow.html#tut-unpacking-arguments"><span class="std std-ref">引数リストのアンパック</span></a> 参照)。</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="buffer">
+<code class="descname">buffer</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>offset</em><span class="optional">[</span>, <em>size</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#buffer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数 <em>object</em> は (文字列、アレイ、バッファといった) バッファ呼び出しインタフェースをサポートするオブジェクトでなければなりません。引数 <em>object</em> を参照する新たなバッファオブジェクトが生成されます。 返されるバッファオブジェクトは <em>object</em> の先頭 (または <em>offset</em>) から のスライスになります。スライスの末端は <em>object</em> の末端まで (または引数 <em>size</em> で与えられた長さになるまで) です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="coerce">
+<code class="descname">coerce</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#coerce" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>二つの数値型の引数を共通の型に変換して、変換後の値からなるタプルを返します。変換に使われる規則は算術演算における規則と同じです。型変換が不可能である場合、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="intern">
+<code class="descname">intern</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#intern" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>string</em> を &#8220;隔離&#8221; された文字列のテーブルに入力し、隔離された文字列を返します &#8211; この文字列は <em>string</em> 自体かコピーです。隔離された文字列は辞書検索のパフォーマンスを少しだけ向上させるのに有効です &#8211; 辞書中のキーが隔離されており、検索するキーが隔離されている場合、(ハッシュ化後の) キーの比較は文字列の比較ではなくポインタの比較で行うことができるからです。通常、Python プログラム内で利用されている名前は自動的に隔離され、モジュール、クラス、またはインスタンス属性を保持するための辞書は隔離されたキーを持っています。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>隔離された文字列の有効期限は (Python 2.2 またはそれ以前は永続的でしたが) 永続的ではなくなりました; <a class="reference internal" href="#intern" title="intern"><code class="xref py py-func docutils literal"><span class="pre">intern()</span></code></a> の恩恵を受けるためには、 <a class="reference internal" href="#intern" title="intern"><code class="xref py py-func docutils literal"><span class="pre">intern()</span></code></a> の返す値に対する参照を保持しなければなりません。</p>
+</div>
+</dd></dl>
+
+<p class="rubric">脚注</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">この関数は比較的利用されない関数なので、構文になるかどうかは保証できません。</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">現状では、 <code class="xref c c-func docutils literal"><span class="pre">setvbuf()</span></code> を持っていないシステムでは、バッファサイズを指定しても効果はありません。バッファサイズを指定するためのインタフェースは <code class="xref c c-func docutils literal"><span class="pre">setvbuf()</span></code> を使っては行われていません。何らかの I/O が実行された後で呼び出されるとコアダンプすることがあり、どのような場合にそうなるかを決定する信頼性のある方法がないからです。</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><p class="first last">現在の実装では、ローカルな値のバインディングは通常は影響を受けませんが、 (モジュールのような) 他のスコープから取り出した値は影響を受けるかもしれません。またこの実装は変更されるかもしれません。</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. 組み込み関数</a></li>
+<li><a class="reference internal" href="#non-essential-built-in-functions">3. 非必須組み込み関数 (Non-essential Built-in Functions)</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="intro.html"
+                        title="前の章へ">1. はじめに</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="constants.html"
+                        title="次の章へ">4. 組み込み定数</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/functions.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="constants.html" title="4. 組み込み定数"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. はじめに"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

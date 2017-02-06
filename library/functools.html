@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9.8. functools — 高次関数と呼び出し可能オブジェクトの操作 &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="9. 数値と数学モジュール" href="numeric.html" />
+    <link rel="next" title="9.9. operator — 関数形式の標準演算子" href="operator.html" />
+    <link rel="prev" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数" href="itertools.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="operator.html" title="9.9. operator — 関数形式の標準演算子"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="numeric.html" accesskey="U">9. 数値と数学モジュール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-functools">
+<span id="functools-higher-order-functions-and-operations-on-callable-objects"></span><h1>9.8. <a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal"><span class="pre">functools</span></code></a> &#8212; 高次関数と呼び出し可能オブジェクトの操作<a class="headerlink" href="#module-functools" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/functools.py">Lib/functools.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal"><span class="pre">functools</span></code></a> モジュールは高次関数、つまり関数に影響を及ぼしたり他の関数を返したりする関数、のためのものです。一般に、どんな呼び出し可能オブジェクトでもこのモジュールの目的には関数として扱えます。</p>
+<p>モジュール <a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal"><span class="pre">functools</span></code></a> は以下の関数を定義します:</p>
+<dl class="function">
+<dt id="functools.cmp_to_key">
+<code class="descclassname">functools.</code><code class="descname">cmp_to_key</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cmp_to_key" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>古いスタイルの比較関数を <a class="reference internal" href="../glossary.html#term-key-function"><span class="xref std std-term">key function</span></a> に変換します。 key 関数を受け取る関数 (<a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a>, <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a>, <a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nlargest" title="heapq.nlargest"><code class="xref py py-func docutils literal"><span class="pre">heapq.nlargest()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nsmallest" title="heapq.nsmallest"><code class="xref py py-func docutils literal"><span class="pre">heapq.nsmallest()</span></code></a>, <a class="reference internal" href="itertools.html#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal"><span class="pre">itertools.groupby()</span></code></a> など) と共に使用します。この関数は、主に比較関数をサポートしていない Python 3 への移行のためのツールとして用意されています。</p>
+<p>比較関数は2つの引数を受け取り、それらを比較し、 &#8220;より小さい&#8221; 場合は負の数を、同値の場合には 0 を、 &#8220;より大きい&#8221; 場合には正の数を返す、あらゆる呼び出し可能オブジェクトです。key 関数は呼び出し可能オブジェクトで、1つの引数を受け取り、ソートキーとして使われる値を返します。</p>
+<p>例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">strcoll</span><span class="p">))</span>  <span class="c1"># locale-aware sort order</span>
+</pre></div>
+</div>
+<p>ソートの例と簡単なチュートリアルは <a class="reference internal" href="../howto/sorting.html#sortinghowto"><span class="std std-ref">ソート HOW TO</span></a> を参照して下さい。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.total_ordering">
+<code class="descclassname">functools.</code><code class="descname">total_ordering</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.total_ordering" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ひとつ以上の拡張順序比較メソッド (rich comparison ordering methods) を定義したクラスを受け取り、残りを実装するクラスデコレータです。このデコレータは全ての拡張順序比較演算をサポートするための労力を軽減します:</p>
+<p>引数のクラスは、 <a class="reference internal" href="../reference/datamodel.html#object.__lt__" title="object.__lt__"><code class="xref py py-meth docutils literal"><span class="pre">__lt__()</span></code></a>, <a class="reference internal" href="../reference/datamodel.html#object.__le__" title="object.__le__"><code class="xref py py-meth docutils literal"><span class="pre">__le__()</span></code></a>, <a class="reference internal" href="../reference/datamodel.html#object.__gt__" title="object.__gt__"><code class="xref py py-meth docutils literal"><span class="pre">__gt__()</span></code></a>, <a class="reference internal" href="../reference/datamodel.html#object.__ge__" title="object.__ge__"><code class="xref py py-meth docutils literal"><span class="pre">__ge__()</span></code></a> の中からどれか1つと、 <a class="reference internal" href="../reference/datamodel.html#object.__eq__" title="object.__eq__"><code class="xref py py-meth docutils literal"><span class="pre">__eq__()</span></code></a> メソッドを定義する必要があります。</p>
+<p>例えば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@total_ordering</span>
+<span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">==</span>
+                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">&lt;</span>
+                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.reduce">
+<code class="descclassname">functools.</code><code class="descname">reduce</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#functools.reduce" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これは <a class="reference internal" href="functions.html#reduce" title="reduce"><code class="xref py py-func docutils literal"><span class="pre">reduce()</span></code></a> 関数と同じものです。このモジュールからも使えるようにしたのは Python 3 と前方互換なコードを書けるようにするためです。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.partial">
+<code class="descclassname">functools.</code><code class="descname">partial</code><span class="sig-paren">(</span><em>func[,*args][, **keywords]</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.partial" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しい <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトを返します。このオブジェクトは呼び出されると位置引数 <em>args</em> とキーワード引数 <em>keywords</em> 付きで呼び出された <em>func</em> のように振る舞います。呼び出しに際してさらなる引数が渡された場合、それらは <em>args</em> に付け加えられます。追加のキーワード引数が渡された場合には、それらで <em>keywords</em> を拡張または上書きします。大雑把にいうと、次のコードと等価です:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">newfunc</span><span class="p">(</span><span class="o">*</span><span class="n">fargs</span><span class="p">,</span> <span class="o">**</span><span class="n">fkeywords</span><span class="p">):</span>
+        <span class="n">newkeywords</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">newkeywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fkeywords</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">args</span> <span class="o">+</span> <span class="n">fargs</span><span class="p">),</span> <span class="o">**</span><span class="n">newkeywords</span><span class="p">)</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="n">keywords</span>
+    <span class="k">return</span> <span class="n">newfunc</span>
+</pre></div>
+</div>
+<p>関数 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal"><span class="pre">partial()</span></code></a> は、関数の位置引数・キーワード引数の一部を「凍結」した部分適用として使われ、簡素化された引数形式をもった新たなオブジェクトを作り出します。例えば、 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal"><span class="pre">partial()</span></code></a> を使って <em>base</em> 引数のデフォルトが 2 である <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> 関数のように振る舞う呼び出し可能オブジェクトを作ることができます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="s1">&#39;Convert base 2 string to an int.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="p">(</span><span class="s1">&#39;10010&#39;</span><span class="p">)</span>
+<span class="go">18</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.update_wrapper">
+<code class="descclassname">functools.</code><code class="descname">update_wrapper</code><span class="sig-paren">(</span><em>wrapper, wrapped[, assigned][, updated]</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.update_wrapper" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>wrapper</em> 関数を <em>wrapped</em> 関数に見えるようにアップデートします。オプション引数はタプルで、元の関数のどの属性がラッパ関数の対応する属性に直接代入されるか、またラッパ関数のどの属性が元の関数の対応する属性でアップデートされる(updated)か、を指定します。これらの引数のデフォルト値はモジュールレベル定数 <em>WRAPPER_ASSIGNMENTS</em> (ラッパ関数の <em>__name__</em> 、<em>__module__</em> 、そしてドキュメンテーション文字列 <em>__doc__</em> に代入します) と <em>WRAPPER_UPDATES</em> (ラッパ関数の <em>__dict__</em> 、すなわちインスタンス辞書をアップデートします) です。</p>
+<p>この関数は主に関数を包んでラッパを返すデコレータ (<a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a>) 関数の中で使われるよう意図されています。もしラッパ関数がアップデートされないとすると、返される関数のメタデータは元の関数の定義ではなくラッパ関数の定義を反映してしまい、これは通常あまり有益ではありません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.wraps">
+<code class="descclassname">functools.</code><code class="descname">wraps</code><span class="sig-paren">(</span><em>wrapped[, assigned][, updated]</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.wraps" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>これはラッパ関数を定義するときに <a class="reference internal" href="#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal"><span class="pre">update_wrapper()</span></code></a> を関数デコレータとして呼び出す便宜関数です。これは <code class="docutils literal"><span class="pre">partial(update_wrapper,</span> <span class="pre">wrapped=wrapped,</span> <span class="pre">assigned=assigned,</span> <span class="pre">updated=updated)</span></code> と等価です。例えば:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span> <span class="s1">&#39;Calling decorated function&#39;</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">wrapper</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_decorator</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;Docstring&quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="s1">&#39;Called example function&#39;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="p">()</span>
+<span class="go">Calling decorated function</span>
+<span class="go">Called example function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="n">__name__</span>
+<span class="go">&#39;example&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">&#39;Docstring&#39;</span>
+</pre></div>
+</div>
+<p>このデコレータ・ファクトリーを使わなければ、上の例中の関数の名前は <code class="docutils literal"><span class="pre">'wrapper'</span></code> となり、元々の <code class="xref py py-func docutils literal"><span class="pre">example()</span></code> のドキュメンテーション文字列は失われたところです。</p>
+</dd></dl>
+
+<div class="section" id="partial-objects">
+<span id="id1"></span><h2>9.8.1. <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクト<a class="headerlink" href="#partial-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトは、 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal"><span class="pre">partial()</span></code></a> 関数によって作られる呼び出し可能オブジェクトです。オブジェクトには読み取り専用の属性が三つあります:</p>
+<dl class="attribute">
+<dt id="functools.partial.func">
+<code class="descclassname">partial.</code><code class="descname">func</code><a class="headerlink" href="#functools.partial.func" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>呼び出し可能オブジェクトまたは関数です。 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトの呼び出しは新しい引数とキーワードと共に <a class="reference internal" href="#functools.partial.func" title="functools.partial.func"><code class="xref py py-attr docutils literal"><span class="pre">func</span></code></a> に転送されます。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functools.partial.args">
+<code class="descclassname">partial.</code><code class="descname">args</code><a class="headerlink" href="#functools.partial.args" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最左の位置引数で、 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトの呼び出し時にその呼び出しの際の位置引数の前に追加されます。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functools.partial.keywords">
+<code class="descclassname">partial.</code><code class="descname">keywords</code><a class="headerlink" href="#functools.partial.keywords" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトの呼び出し時に渡されるキーワード引数です。</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトは <code class="xref py py-class docutils literal"><span class="pre">function</span></code> オブジェクトのように呼び出し可能で、弱参照可能で、属性を持つことができます。重要な相違点もあります。例えば、 <code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code> と <code class="xref py py-attr docutils literal"><span class="pre">__doc__</span></code> 両属性は自動では作られません。また、クラス中で定義された <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal"><span class="pre">partial</span></code></a> オブジェクトはスタティックメソッドのように振る舞い、インスタンスの属性問い合わせの中で束縛メソッドに変換されません。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9.8. <code class="docutils literal"><span class="pre">functools</span></code> &#8212; 高次関数と呼び出し可能オブジェクトの操作</a><ul>
+<li><a class="reference internal" href="#partial-objects">9.8.1. <code class="docutils literal"><span class="pre">partial</span></code> オブジェクト</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="itertools.html"
+                        title="前の章へ">9.7. <code class="docutils literal"><span class="pre">itertools</span></code> &#8212; 効率的なループ実行のためのイテレータ生成関数</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="operator.html"
+                        title="次の章へ">9.9. <code class="docutils literal"><span class="pre">operator</span></code> &#8212; 関数形式の標準演算子</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/functools.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="operator.html" title="9.9. operator — 関数形式の標準演算子"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="numeric.html" >9. 数値と数学モジュール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

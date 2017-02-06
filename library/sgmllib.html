@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19.2. sgmllib — 単純な SGML パーザ &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="19. 構造化マークアップツール" href="markup.html" />
+    <link rel="next" title="19.3. htmllib — HTML 文書の解析器" href="htmllib.html" />
+    <link rel="prev" title="19.1. HTMLParser — HTML および XHTML のシンプルなパーサー" href="htmlparser.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="htmllib.html" title="19.3. htmllib — HTML 文書の解析器"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="htmlparser.html" title="19.1. HTMLParser — HTML および XHTML のシンプルなパーサー"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" accesskey="U">19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sgmllib">
+<span id="sgmllib-simple-sgml-parser"></span><h1>19.2. <a class="reference internal" href="#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a> &#8212; 単純な SGML パーザ<a class="headerlink" href="#module-sgmllib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a> モジュールは Python 3 で削除されました。</p>
+</div>
+<p id="index-0">このモジュールでは SGML (Standard Generalized Mark-up Language: 汎用マークアップ言語標準) で書式化されたテキストファイルを解析するための基礎として働く <a class="reference internal" href="#sgmllib.SGMLParser" title="sgmllib.SGMLParser"><code class="xref py py-class docutils literal"><span class="pre">SGMLParser</span></code></a> クラスを定義しています。実際には、このクラスは完全な SGML パーザを提供しているわけではありません &#8212; このクラスは HTML で用いられているような SGML だけを解析し、モジュール自体も <a class="reference internal" href="htmllib.html#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> モジュールの基礎にするためだけに存在しています。XHTML をサポートし、少し異なったインタフェースを提供しているもう一つの HTML パーザは、 <a class="reference internal" href="htmlparser.html#module-HTMLParser" title="HTMLParser: A simple parser that can handle HTML and XHTML."><code class="xref py py-mod docutils literal"><span class="pre">HTMLParser</span></code></a> モジュールで使うことができます。</p>
+<dl class="class">
+<dt id="sgmllib.SGMLParser">
+<em class="property">class </em><code class="descclassname">sgmllib.</code><code class="descname">SGMLParser</code><a class="headerlink" href="#sgmllib.SGMLParser" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#sgmllib.SGMLParser" title="sgmllib.SGMLParser"><code class="xref py py-class docutils literal"><span class="pre">SGMLParser</span></code></a> クラスは引数無しでインスタンス化されます。このパーザは以下の構成を認識するようにハードコードされています:</p>
+<ul class="simple">
+<li><p class="first"><code class="docutils literal"><span class="pre">&lt;tag</span> <span class="pre">attr=&quot;value&quot;</span> <span class="pre">...&gt;</span></code> と <code class="docutils literal"><span class="pre">&lt;/tag&gt;</span></code> で表されるタグの開始部と終了部。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">&amp;#name;</span></code> 形式をとる文字の数値参照。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">&amp;name;</span></code> 形式をとるエンティティ参照。</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">&lt;!--text--&gt;</span></code> 形式をとる SGML コメント。末尾の <code class="docutils literal"><span class="pre">&gt;</span></code> とその直前にある <code class="docutils literal"><span class="pre">--</span></code> の間にはスペース、タブ、改行を入れることができます。</p>
+</li>
+</ul>
+</dd></dl>
+
+<p>一つの例外が以下のように定義されます:</p>
+<dl class="exception">
+<dt id="sgmllib.SGMLParseError">
+<em class="property">exception </em><code class="descclassname">sgmllib.</code><code class="descname">SGMLParseError</code><a class="headerlink" href="#sgmllib.SGMLParseError" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#sgmllib.SGMLParser" title="sgmllib.SGMLParser"><code class="xref py py-class docutils literal"><span class="pre">SGMLParser</span></code></a> クラスで構文解析中にエラーに出逢うとこの例外が発生します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
+</div>
+</dd></dl>
+
+<p><a class="reference internal" href="#sgmllib.SGMLParser" title="sgmllib.SGMLParser"><code class="xref py py-class docutils literal"><span class="pre">SGMLParser</span></code></a> インスタンスは以下のメソッドを持っています:</p>
+<dl class="method">
+<dt id="sgmllib.SGMLParser.reset">
+<code class="descclassname">SGMLParser.</code><code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.reset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>インスタンスをリセットします。未処理のデータはすべて失われます。インスタンス化の際に暗黙的に呼び出されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.setnomoretags">
+<code class="descclassname">SGMLParser.</code><code class="descname">setnomoretags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.setnomoretags" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タグの処理を停止します。以降の入力をリテラル入力 (CDATA) として扱います。(この機能は HTML タグ <code class="docutils literal"><span class="pre">&lt;PAINTEXT&gt;</span></code> を実装できるようにするためだけに提供されています)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.setliteral">
+<code class="descclassname">SGMLParser.</code><code class="descname">setliteral</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.setliteral" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リテラルモード (CDATA モード) に移行します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.feed">
+<code class="descclassname">SGMLParser.</code><code class="descname">feed</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.feed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>テキストをパーザに入力します。入力は完全なエレメントから成り立つ場合に限り処理されます; 不完全なデータは追加のデータが入力されるか、 <a class="reference internal" href="#sgmllib.SGMLParser.close" title="sgmllib.SGMLParser.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> が呼び出されるまでバッファに蓄積されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.close">
+<code class="descclassname">SGMLParser.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>バッファに蓄積されている全てのデータについて、直後に EOF が来た時のようにして強制的に処理します。このメソッドは派生クラスで再定義して、入力の終了時に追加の処理を行うよう定義することができますが、このメソッドの再定義されたバージョンでは常に <a class="reference internal" href="#sgmllib.SGMLParser.close" title="sgmllib.SGMLParser.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> を呼び出さなければなりません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.get_starttag_text">
+<code class="descclassname">SGMLParser.</code><code class="descname">get_starttag_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.get_starttag_text" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最も最近開かれた開始タグのテキスト部分を返します。このテキストは必ずしも元データを構造化する上で必須ではありませんが、 &#8220;広く知られている (as deployed)&#8221; HTML を扱ったり、入力を最小限の変更で再生成 (属性間の空白をそのままにするなど) したりする場合に便利なことがあります。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_starttag">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_starttag</code><span class="sig-paren">(</span><em>tag</em>, <em>method</em>, <em>attributes</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_starttag" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> か <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> のどちらかのメソッドが定義されている開始タグを処理するために呼び出されます。 <em>tag</em> 引数はタグの名前で、小文字に変換されています。 <em>method</em> 引数は開始タグの意味解釈をサポートするために用いられるバインドされたメソッドです。 <em>attributes</em> 引数は <code class="docutils literal"><span class="pre">(name,</span> <span class="pre">value)</span></code> のペアからなるリストで、タグの <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> 括弧内にある属性が収められています。</p>
+<p><em>name</em> は小文字に変換されます。 <em>value</em> 内の二重引用符とバックスラッシュも変換され、と同時に知られている文字参照および知られているエンティティ参照でセミコロンで終端されているものも変換されます(通常、エンティティ参照は任意の非英数文字で終端されてよいのですが、これを許すと非常に一般的な <code class="docutils literal"><span class="pre">&lt;A</span> <span class="pre">HREF=&quot;url?spam=1&amp;eggs=2&quot;&gt;</span></code> 　において <code class="docutils literal"><span class="pre">eggs</span></code> が正当なエンティティ参照であるようなケースを破綻させます)。</p>
+<p>例えば、タグ <code class="docutils literal"><span class="pre">&lt;A</span> <span class="pre">HREF=&quot;http://www.cwi.nl/&quot;&gt;</span></code> を処理する場合、このメソッドは <code class="docutils literal"><span class="pre">unknown_starttag('a',</span> <span class="pre">[('href',</span> <span class="pre">'http://www.cwi.nl/')])</span></code> として呼び出されます。基底クラスの実装では、単に <em>method</em> を単一の引数 <em>attributes</em> と共に呼び出します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加: </span>属性値中のエンティティおよび文字参照の扱い.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_endtag">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_endtag</code><span class="sig-paren">(</span><em>tag</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_endtag" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> メソッドの定義されている終了タグを処理するために呼び出されます。 <em>tag</em> 引数はタグの名前で、小文字に変換されており、 <em>method</em> 引数は終了タグの意味解釈をサポートするために使われるバインドされたメソッドです。 <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> メソッドが終了エレメントとして定義されていない場合、このハンドラは呼び出されません。基底クラスの実装では単に <em>method</em> を呼び出します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_data">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_data" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは何らかのデータを処理するために呼び出されます。派生クラスで上書きするためのメソッドです; 基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_charref">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_charref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_charref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは <code class="docutils literal"><span class="pre">&amp;#ref;</span></code> 形式の文字参照 (character reference) を処理するために呼び出されます。基底クラスの実装は、 <a class="reference internal" href="#sgmllib.SGMLParser.convert_charref" title="sgmllib.SGMLParser.convert_charref"><code class="xref py py-meth docutils literal"><span class="pre">convert_charref()</span></code></a> を使って参照を文字列に変換します。もしそのメソッドが文字列を返せば <a class="reference internal" href="#sgmllib.SGMLParser.handle_data" title="sgmllib.SGMLParser.handle_data"><code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code></a> を呼び出します。そうでなければ、エラーを処理するために <code class="docutils literal"><span class="pre">unknown_charref(ref)</span></code> が呼び出されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>ハードコードされた変換ではなく <a class="reference internal" href="#sgmllib.SGMLParser.convert_charref" title="sgmllib.SGMLParser.convert_charref"><code class="xref py py-meth docutils literal"><span class="pre">convert_charref()</span></code></a> を使うようになりました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.convert_charref">
+<code class="descclassname">SGMLParser.</code><code class="descname">convert_charref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.convert_charref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字参照を文字列に変換するか、 <code class="docutils literal"><span class="pre">None</span></code> を返します。 <em>ref</em> は文字列として渡される参照です。基底クラスでは <em>ref</em> は 0-255 の範囲の十進数でなければなりません。そしてコードポイントをメソッド <a class="reference internal" href="#sgmllib.SGMLParser.convert_codepoint" title="sgmllib.SGMLParser.convert_codepoint"><code class="xref py py-meth docutils literal"><span class="pre">convert_codepoint()</span></code></a> を使って変換します。もし <em>ref</em> が不正もしくは範囲外ならば、 <code class="docutils literal"><span class="pre">None</span></code> を返します。このメソッドはデフォルト実装の <a class="reference internal" href="#sgmllib.SGMLParser.handle_charref" title="sgmllib.SGMLParser.handle_charref"><code class="xref py py-meth docutils literal"><span class="pre">handle_charref()</span></code></a> と属性値パーザから呼び出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.convert_codepoint">
+<code class="descclassname">SGMLParser.</code><code class="descname">convert_codepoint</code><span class="sig-paren">(</span><em>codepoint</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.convert_codepoint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>コードポイントを <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> の値に変換します。もしそれが適切ならばエンコーディングをここで扱うこともできますが、 <a class="reference internal" href="#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a> の残りの部分はこの問題に関知しません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_entityref">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_entityref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_entityref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは <em>ref</em> を一般エンティティ参照として、 <code class="docutils literal"><span class="pre">&amp;ref;</span></code> 形式のエンティティ参照を処理するために呼び出されます。このメソッドは、 <em>ref</em> を <a class="reference internal" href="#sgmllib.SGMLParser.convert_entityref" title="sgmllib.SGMLParser.convert_entityref"><code class="xref py py-meth docutils literal"><span class="pre">convert_entityref()</span></code></a> に渡して変換します。変換結果が返された場合、変換された文字を引数にして <a class="reference internal" href="#sgmllib.SGMLParser.handle_data" title="sgmllib.SGMLParser.handle_data"><code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code></a> を呼び出します; そうでない場合、 <code class="docutils literal"><span class="pre">unknown_entityref(ref)</span></code> を呼び出します。標準では <code class="xref py py-attr docutils literal"><span class="pre">entitydefs</span></code> は <code class="docutils literal"><span class="pre">&amp;amp;</span></code> 、 <code class="docutils literal"><span class="pre">&amp;apos</span></code> 、 <code class="docutils literal"><span class="pre">&amp;gt;</span></code> 、 <code class="docutils literal"><span class="pre">&amp;lt;</span></code> 、および <code class="docutils literal"><span class="pre">&amp;quot;</span></code> の変換を定義しています。</p>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>ハードコードされた変換ではなく <a class="reference internal" href="#sgmllib.SGMLParser.convert_entityref" title="sgmllib.SGMLParser.convert_entityref"><code class="xref py py-meth docutils literal"><span class="pre">convert_entityref()</span></code></a> を使うようになりました。</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.convert_entityref">
+<code class="descclassname">SGMLParser.</code><code class="descname">convert_entityref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.convert_entityref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前付きエンティティ参照を <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> の値に変換するか、または <code class="docutils literal"><span class="pre">None</span></code> を返します。変換結果は再パーズしません。 <em>ref</em> はエンティティの名前部分だけです。デフォルトの実装ではインスタンス(またはクラス)変数の <code class="xref py py-attr docutils literal"><span class="pre">entitydefs</span></code> というエンティティ名から対応する文字列へのマッピングから <em>ref</em> を探します。もし <em>ref</em> に対応する文字列が見つからなければメソッドは <code class="docutils literal"><span class="pre">None</span></code> を返します。このメソッドは <a class="reference internal" href="#sgmllib.SGMLParser.handle_entityref" title="sgmllib.SGMLParser.handle_entityref"><code class="xref py py-meth docutils literal"><span class="pre">handle_entityref()</span></code></a> のデフォルト実装からおよび属性値パーザから呼び出されます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_comment">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_comment</code><span class="sig-paren">(</span><em>comment</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_comment" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドはコメントに遭遇した場合に呼び出されます。 <em>comment</em> 引数は文字列で、 <code class="docutils literal"><span class="pre">&lt;!--</span></code> と``&#8211;&gt;`` デリミタ間の、デリミタ自体を除いたテキストが収められています。例えば、コメント <code class="docutils literal"><span class="pre">&lt;!--text--&gt;</span></code> があると、このメソッドは引数 <code class="docutils literal"><span class="pre">'text'</span></code> で呼び出されます。基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.handle_decl">
+<code class="descclassname">SGMLParser.</code><code class="descname">handle_decl</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_decl" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パーザが SGML 宣言を読み出した際に呼び出されるメソッドです。実際には、 <code class="docutils literal"><span class="pre">DOCTYPE</span></code> は HTML だけに見られる宣言ですが、パーザは宣言間の相違 (や誤った宣言) を判別しません。 <code class="docutils literal"><span class="pre">DOCTYPE</span></code> の内部サブセット宣言はサポートされていません。 <em>data</em> パラメタは <code class="docutils literal"><span class="pre">&lt;!</span></code>...<code class="docutils literal"><span class="pre">&gt;</span></code> 記述内の宣言内容全体になります。基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.report_unbalanced">
+<code class="descclassname">SGMLParser.</code><code class="descname">report_unbalanced</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.report_unbalanced" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは対応する開始エレメントのない終了タグが発見された時に呼び出されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.unknown_starttag">
+<code class="descclassname">SGMLParser.</code><code class="descname">unknown_starttag</code><span class="sig-paren">(</span><em>tag</em>, <em>attributes</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.unknown_starttag" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>未知の開始タグを処理するために呼び出されるメソッドです。派生クラスで上書きするためのメソッドです; 基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.unknown_endtag">
+<code class="descclassname">SGMLParser.</code><code class="descname">unknown_endtag</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.unknown_endtag" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>未知の終了タグを処理するために呼び出されるメソッドです。派生クラスで上書きするためのメソッドです; 基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.unknown_charref">
+<code class="descclassname">SGMLParser.</code><code class="descname">unknown_charref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.unknown_charref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドは解決不能な文字参照数値を処理するために呼び出されます。標準で何が処理可能かは <a class="reference internal" href="#sgmllib.SGMLParser.handle_charref" title="sgmllib.SGMLParser.handle_charref"><code class="xref py py-meth docutils literal"><span class="pre">handle_charref()</span></code></a> を参照してください。派生クラスで上書きするためのメソッドです; 基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sgmllib.SGMLParser.unknown_entityref">
+<code class="descclassname">SGMLParser.</code><code class="descname">unknown_entityref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.unknown_entityref" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>未知のエンティティ参照を処理するために呼び出されるメソッドです。派生クラスで上書きするためのメソッドです; 基底クラスの実装では何も行いません。</p>
+</dd></dl>
+
+<p>上に挙げたメソッドを上書きしたり拡張したりするのとは別に、派生クラスでは以下の形式のメソッドを定義して、特定のタグを処理することもできます。入力ストリーム中のタグ名は大小文字の区別に依存しません; メソッド名中の <em>tag</em> は小文字でなければなりません:</p>
+<dl class="method">
+<dt>
+<code class="descclassname">SGMLParser.</code><code class="descname">start_tag</code><span class="sig-paren">(</span><em>attributes</em><span class="sig-paren">)</span></dt>
+<dd><p>このメソッドは開始タグ <em>tag</em> を処理するために呼び出されます。 <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> よりも高い優先順位があります。 <em>attributes</em> 引数は上の <a class="reference internal" href="#sgmllib.SGMLParser.handle_starttag" title="sgmllib.SGMLParser.handle_starttag"><code class="xref py py-meth docutils literal"><span class="pre">handle_starttag()</span></code></a> で記述されているのと同じ意味です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descclassname">SGMLParser.</code><code class="descname">do_tag</code><span class="sig-paren">(</span><em>attributes</em><span class="sig-paren">)</span></dt>
+<dd><p>このメソッドは <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> メソッドが定義されていない開始タグ <em>tag</em> を処理するために呼び出されます。 <em>attributes</em> 引数は上の <a class="reference internal" href="#sgmllib.SGMLParser.handle_starttag" title="sgmllib.SGMLParser.handle_starttag"><code class="xref py py-meth docutils literal"><span class="pre">handle_starttag()</span></code></a> で記述されているのと同じ意味です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descclassname">SGMLParser.</code><code class="descname">end_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>このメソッドは終了タグ <em>tag</em> を処理するために呼び出されます。</p>
+</dd></dl>
+
+<p>パーザは開始されたエレメントのうち、終了タグがまだ見つかっていないもののスタックを維持しているので注意してください。 <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> で処理されたタグだけがスタックにプッシュされます。それらのタグに対する <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> メソッドの定義はオプションです。 <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> や <code class="xref py py-meth docutils literal"><span class="pre">unknown_tag()</span></code> で処理されるタグについては、 <code class="xref py py-meth docutils literal"><span class="pre">end_tag()</span></code> を定義してはいけません; 定義されていても使われることはありません。あるタグに対して <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> および <code class="xref py py-meth docutils literal"><span class="pre">do_tag()</span></code> メソッドの両方が存在する場合、 <code class="xref py py-meth docutils literal"><span class="pre">start_tag()</span></code> が優先されます。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="htmlparser.html"
+                        title="前の章へ">19.1. <code class="docutils literal"><span class="pre">HTMLParser</span></code> &#8212; HTML および XHTML のシンプルなパーサー</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="htmllib.html"
+                        title="次の章へ">19.3. <code class="docutils literal"><span class="pre">htmllib</span></code> &#8212; HTML 文書の解析器</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/sgmllib.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="htmllib.html" title="19.3. htmllib — HTML 文書の解析器"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="htmlparser.html" title="19.1. HTMLParser — HTML および XHTML のシンプルなパーサー"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" >19. 構造化マークアップツール</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

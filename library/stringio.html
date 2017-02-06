@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.5. StringIO — ファイルのように文字列を読み書きする &#8212; Python 2.7.x ドキュメント</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.x',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 2.7.x ドキュメント 内を検索"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="このドキュメントについて" href="../about.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="up" title="7. 文字列処理" href="strings.html" />
+    <link rel="next" title="7.7. textwrap — テキストの折り返しと詰め込み" href="textwrap.html" />
+    <link rel="prev" title="7.4. difflib — 差分の計算を助ける" href="difflib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/_jp.js"></script>
+    
+    <script type="text/javascript" src="../_static/version_switch.js"></script>
+ 
+    
+
+  </head>
+  <body role="document">  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="7.7. textwrap — テキストの折り返しと詰め込み"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="difflib.html" title="7.4. difflib — 差分の計算を助ける"
+             accesskey="P">前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" accesskey="U">7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-StringIO">
+<span id="stringio-read-and-write-strings-as-files"></span><h1>7.5. <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a> &#8212; ファイルのように文字列を読み書きする<a class="headerlink" href="#module-StringIO" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このモジュールは、(<em>メモリファイル</em> としても知られている) 文字列のバッファに対して読み書きを行うファイルのようなクラス、 <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> を実装しています。操作方法についてはファイルオブジェクトの説明を参照してください (<a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> )。 (通常の文字列については、 <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> と <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> を参照してください)</p>
+<dl class="class">
+<dt id="StringIO.StringIO">
+<em class="property">class </em><code class="descclassname">StringIO.</code><code class="descname">StringIO</code><span class="sig-paren">(</span><span class="optional">[</span><em>buffer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを作る際に、コンストラクタに文字列を渡すことで初期化することができます。文字列を渡さない場合、最初は <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> は空です。どちらの場合でも最初のファイル位置は 0 から始まります。</p>
+<p><a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトは Unicode も 8 ビットの文字列も受け付けますが、この 2 つを混ぜることには少し注意が必要です。この 2 つが一緒に使われると、 <a class="reference internal" href="#StringIO.StringIO.getvalue" title="StringIO.StringIO.getvalue"><code class="xref py py-meth docutils literal"><span class="pre">getvalue()</span></code></a> が呼ばれたときに、 (8  ビット目を使っている) 7-bit ASCII に解釈できない 8-bit の文字列は、 <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を引き起こします。</p>
+</dd></dl>
+
+<p>次にあげる <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトのメソッドには特別な説明が必要です:</p>
+<dl class="method">
+<dt id="StringIO.StringIO.getvalue">
+<code class="descclassname">StringIO.</code><code class="descname">getvalue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO.getvalue" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトの <a class="reference internal" href="#StringIO.StringIO.close" title="StringIO.StringIO.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> メソッドが呼ばれる前ならいつでも、 &#8220;file&#8221; の中身全体を返します。Unicode と 8 ビット文字列を混ぜることの説明は、上の注意を参照してください。この 2 つの文字コードを混ぜると、このメソッドは <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を引き起こすかもしれません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="StringIO.StringIO.close">
+<code class="descclassname">StringIO.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO.close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>メモリバッファを解放します。 close された後の <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを操作しようとすると <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</p>
+</dd></dl>
+
+<p>使い方の例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">StringIO</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;First line.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;Second line.&#39;</span>
+
+<span class="c1"># Retrieve file contents -- this will be</span>
+<span class="c1"># &#39;First line.\nSecond line.\n&#39;</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+<span class="c1"># Close object and discard memory buffer --</span>
+<span class="c1"># .getvalue() will now raise an exception.</span>
+<span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-cStringIO">
+<span id="cstringio-faster-version-of-stringio"></span><h1>7.6. <a class="reference internal" href="#module-cStringIO" title="cStringIO: Faster version of StringIO, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cStringIO</span></code></a> &#8212; 高速化された <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a><a class="headerlink" href="#module-cStringIO" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference internal" href="#module-cStringIO" title="cStringIO: Faster version of StringIO, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cStringIO</span></code></a> モジュールは <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a> モジュールと同様のインターフェースを提供しています。 <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO.StringIO</span></code></a> オブジェクトを酷使する場合、このモジュールにある <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-func docutils literal"><span class="pre">StringIO()</span></code></a> 関数をかわりに使うと効果的です。</p>
+<dl class="function">
+<dt id="cStringIO.StringIO">
+<code class="descclassname">cStringIO.</code><code class="descname">StringIO</code><span class="sig-paren">(</span><span class="optional">[</span><em>s</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cStringIO.StringIO" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>読み書きのための StringIO 類似ストリームを返します。</p>
+<p>組み込み型オブジェクトを返す factory 関数なので、サブクラス化して独自の関数を組むことはできません。属性の追加もできません。これらをするにはオリジナルの <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a> モジュールを使ってください。</p>
+<p><a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a> モジュールとは異なり、このモジュールで提供されているものは、プレイン ASCII 文字列にエンコードできない Unicode を受け付けることができません。</p>
+<p>もう一つ違いがあります。引数に文字列を指定して <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-func docutils literal"><span class="pre">StringIO()</span></code></a> 呼び出すと読み出し専用のオブジェクトが生成されますが、これの場合 <a class="reference internal" href="#cStringIO.StringIO" title="cStringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">cStringIO.StringIO()</span></code></a> では write()メソッドを持たないオブジェクトを生成します。これらのオブジェクトは普段は見えません。トレースバックに <code class="xref py py-class docutils literal"><span class="pre">StringI</span></code> と <code class="xref py py-class docutils literal"><span class="pre">StringO</span></code> として表示されます。</p>
+</dd></dl>
+
+<p>次にあげるデータオブジェクトも提供されています:</p>
+<dl class="data">
+<dt id="cStringIO.InputType">
+<code class="descclassname">cStringIO.</code><code class="descname">InputType</code><a class="headerlink" href="#cStringIO.InputType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列をパラメーターに渡して <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-func docutils literal"><span class="pre">StringIO()</span></code></a> を呼ぶことで作られるオブジェクトのオブジェクト型。</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cStringIO.OutputType">
+<code class="descclassname">cStringIO.</code><code class="descname">OutputType</code><a class="headerlink" href="#cStringIO.OutputType" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パラメーターを渡さずに <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-func docutils literal"><span class="pre">StringIO()</span></code></a> を呼ぶことで返されるオブジェクトのオブジェクト型。</p>
+</dd></dl>
+
+<p>このモジュールには C API もあります。詳しくはこのモジュールのソースを参照してください。</p>
+<p>使い方の例:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cStringIO</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;First line.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;Second line.&#39;</span>
+
+<span class="c1"># Retrieve file contents -- this will be</span>
+<span class="c1"># &#39;First line.\nSecond line.\n&#39;</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+<span class="c1"># Close object and discard memory buffer --</span>
+<span class="c1"># .getvalue() will now raise an exception.</span>
+<span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.5. <code class="docutils literal"><span class="pre">StringIO</span></code> &#8212; ファイルのように文字列を読み書きする</a></li>
+<li><a class="reference internal" href="#module-cStringIO">7.6. <code class="docutils literal"><span class="pre">cStringIO</span></code> &#8212; 高速化された <code class="docutils literal"><span class="pre">StringIO</span></code></a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="difflib.html"
+                        title="前の章へ">7.4. <code class="docutils literal"><span class="pre">difflib</span></code> &#8212; 差分の計算を助ける</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="textwrap.html"
+                        title="次の章へ">7.7. <code class="docutils literal"><span class="pre">textwrap</span></code> &#8212; テキストの折り返しと詰め込み</a></p>
+<h3>このページ</h3>
+<ul class="this-page-menu">
+  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../_sources/library/stringio.txt"
+         rel="nofollow">Show Source</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="7.7. textwrap — テキストの折り返しと詰め込み"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="difflib.html" title="7.4. difflib — 差分の計算を助ける"
+             >前へ</a> |</li>
+        <li><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="http://www.python.jp/">Python</a> &#187;</li>
+        <li>
+          <span class="version_switcher_placeholder">2.7.x</span>
+          <a href="../index.html">Documentation</a> &#187;
+        </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="strings.html" >7. 文字列処理</a> &#187;</li> 
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    <br />
+    The Python Software Foundation is a non-profit corporation.
+    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on 2017-02-06.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    </div>
+
+  </body>
+</html>

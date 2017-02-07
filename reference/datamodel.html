@@ -663,7 +663,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">metacls</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;metacls was here&#39;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>もちろん、他のクラスメソッドをオーバーライドする(または新しいメソッドを追加する)こともできます。例えば、カスタムの <a class="reference internal" href="#object.__call__" title="object.__call__"><code class="xref py py-meth docutils literal"><span class="pre">__call__()</span></code></a> メソッドをメタクラスに定義して、新しいインスタンスを常には造らないといったカスタムの動作を実装できます。</p>
@@ -1071,8 +1071,8 @@
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="o">.</span><span class="n">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span><span class="o">.</span><span class="n">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="o">.</span><span class="fm">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span><span class="o">.</span><span class="fm">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">9</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
 <span class="go">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
@@ -1087,7 +1087,7 @@
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="fm">__len__</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
@@ -1095,18 +1095,18 @@
 </pre></div>
 </div>
 <p>この動作の背景となる理由は、 <a class="reference internal" href="#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> と <a class="reference internal" href="#object.__repr__" title="object.__repr__"><code class="xref py py-meth docutils literal"><span class="pre">__repr__()</span></code></a> といった type オブジェクトを含むすべてのオブジェクトで定義されている特殊メソッドにあります。これらのメソッドの暗黙の検索が通常の検索プロセスを使った場合、 type オブジェクト自体に対して実行されたときに失敗してしまいます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">.</span><span class="n">__hash__</span><span class="p">()</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="o">.</span><span class="n">__hash__</span><span class="p">()</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">descriptor &#39;__hash__&#39; of &#39;int&#39; object needs an argument</span>
 </pre></div>
 </div>
 <p>クラスの非結合メソッドをこのようにして実行しようとすることは、&#8217;metaclass confusion&#8217; と呼ばれることもあり、特殊メソッドを検索するときはインスタンスをバイパスすることで回避されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">__hash__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">__hash__</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1114,7 +1114,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 <span class="gp">... </span>   <span class="k">def</span> <span class="nf">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="gp">... </span>      <span class="nb">print</span> <span class="s2">&quot;Metaclass getattribute invoked&quot;</span>
-<span class="gp">... </span>      <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="gp">... </span>      <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">Meta</span>
@@ -1122,13 +1122,13 @@
 <span class="gp">... </span>        <span class="k">return</span> <span class="mi">10</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="nb">print</span> <span class="s2">&quot;Class getattribute invoked&quot;</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="n">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">__len__</span><span class="p">()</span>                 <span class="c1"># Explicit lookup via instance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>                 <span class="c1"># Explicit lookup via instance</span>
 <span class="go">Class getattribute invoked</span>
 <span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">__len__</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>          <span class="c1"># Explicit lookup via type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="fm">__len__</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>          <span class="c1"># Explicit lookup via type</span>
 <span class="go">Metaclass getattribute invoked</span>
 <span class="go">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>                      <span class="c1"># Implicit lookup</span>
@@ -1251,7 +1251,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

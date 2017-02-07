@@ -149,7 +149,7 @@
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
 </pre></div>
@@ -199,7 +199,7 @@ $
 <div class="section" id="simple-usage-checking-examples-in-docstrings">
 <span id="doctest-simple-testmod"></span><h2>25.2.1. 簡単な利用法: docstring 中の実行例をチェックする<a class="headerlink" href="#simple-usage-checking-examples-in-docstrings" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>doctest を試す簡単な方法 (とはいえ、いつもそうする必要はないのですが) は、各モジュール <code class="xref py py-mod docutils literal"><span class="pre">M</span></code> の最後を、以下のようにして締めくくることです:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
 </pre></div>
@@ -320,15 +320,15 @@ Now use it:
 </li>
 <li><p class="first">対話セッションにおいて、バックスラッシュを用いて次の行に続ける場合や、その他の理由でバックスラッシュを用いる場合、raw docstring を使ってバックスラッシュを入力どおりに扱わせるようにしなければなりません:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="sd">r&#39;&#39;&#39;Backslashes in a raw docstring: m\n&#39;&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="gp">... </span>    <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Backslashes in a raw docstring: m\n&#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
 <span class="go">Backslashes in a raw docstring: m\n</span>
 </pre></div>
 </div>
 <p>そうしない場合は、バックスラッシュは文字列の一部として解釈されます。例えば、上の <code class="docutils literal"><span class="pre">\n</span></code> は改行文字として解釈されてしまいます。それ以外の方法では、doctest にあるバックスラッシュを二重にする (そして raw string を使わない) という方法もあります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="sd">&#39;&#39;&#39;Backslashes in a raw docstring: m\\n&#39;&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
 <span class="go">Backslashes in a raw docstring: m\n</span>
 </pre></div>
 </div>
@@ -1143,7 +1143,7 @@ Now use it:
 <dd><p>実行例の入ったテキストをスクリプトに変換します。</p>
 <p>引数 <em>s</em> は doctest 実行例の入った文字列です。この文字列は Python スクリプトに変換され、その中では <em>s</em> の doctest 実行例が通常のコードに、それ以外は Python のコメント文になります。生成したスクリプトを文字列で返します。例えば、</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">doctest</span>
-<span class="nb">print</span> <span class="n">doctest</span><span class="o">.</span><span class="n">script_from_examples</span><span class="p">(</span><span class="s2">r&quot;&quot;&quot;</span>
+<span class="nb">print</span> <span class="n">doctest</span><span class="o">.</span><span class="n">script_from_examples</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Set x and y to 1 and 2.</span>
 <span class="s2">    &gt;&gt;&gt; x, y = 1, 2</span>
 
@@ -1295,7 +1295,7 @@ Now use it:
 </li>
 </ul>
 <p>テストコードをモジュールに組み込むことで、そのモジュールは、モジュール自身がテストランナー(test runner)になることができます。テストが失敗した場合には、問題箇所をデバッグする際に、失敗したdoctestだけを再度実行することで、作成したテストランナーを修正することができます。これがこのようなテストランナーの最小例となります。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>
     <span class="n">flags</span> <span class="o">=</span> <span class="n">doctest</span><span class="o">.</span><span class="n">REPORT_NDIFF</span><span class="o">|</span><span class="n">doctest</span><span class="o">.</span><span class="n">REPORT_ONLY_FIRST_FAILURE</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -1420,7 +1420,7 @@ Now use it:
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

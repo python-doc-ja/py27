@@ -218,12 +218,12 @@
 <p>Unicode 文字列の一つの文字は <a class="reference internal" href="../library/functions.html#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a> 組み込み関数で作成することができます、この関数は整数を引数にとり、対応するコードポイントを含む長さ1の Unicode 文字列を返します。逆の操作は <a class="reference internal" href="../library/functions.html#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a> 組み込み関数です、この関数は一文字の Unicode 文字列を引数にとり、コードポイント値を返します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span>
 <span class="go">u&#39;\ua000&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">u&#39;</span><span class="se">\ua000</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\ua000</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="go">40960</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> 型のインスタンスは多くの 8-bit 文字列型と同じ検索や書式指定のためのメソッドを持っています:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s1">u&#39;Was ever feather so lightly blown to and fro as this multitude?&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Was ever feather so lightly blown to and fro as this multitude?&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
 <span class="go">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;feather&#39;</span><span class="p">)</span>
@@ -242,13 +242,13 @@
     <span class="o">...</span>
 <span class="gr">UnicodeDecodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t decode byte 0x9f in position 3:</span>
 <span class="go">ordinal not in range(128)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">u&#39;Was</span><span class="se">\x9f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Was</span><span class="se">\x9f</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="go">-1</span>
 </pre></div>
 </div>
 <p>文字列操作を行なう多くの Python コードはコードの変更無しに Unicode 文字列を扱うことができるでしょう。 (入出力に関しては Unicode のための更新が必要になります; 詳しくは後で述べます。)</p>
 <p>別の重要なメソッドは <code class="docutils literal"><span class="pre">.encode([encoding],</span> <span class="pre">[errors='strict'])</span></code> があります、このメソッドは Unicode 文字列を要求したエンコーディングでエンコードされた 8-bit 文字列を返します。 <code class="docutils literal"><span class="pre">errors</span></code> パラメータは <code class="docutils literal"><span class="pre">unicode()</span></code> コンストラクタのパラメータと同様ですが、もう一つ可能性が追加されています; 同様のものとして &#8216;strict&#8217;, &#8216;ignore&#8217;, そして &#8216;replace&#8217; があり、さらに XML 文字参照を使う &#8216;xmlcharrefreplace&#8217; を渡すことができます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="s1">u&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 <span class="go">&#39;\xea\x80\x80abcd\xde\xb4&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>                       
@@ -265,7 +265,7 @@
 </pre></div>
 </div>
 <p>Python の 8-bit 文字列は <code class="docutils literal"><span class="pre">.decode([encoding],</span> <span class="pre">[errors])</span></code> メソッドを持っています、これは与えたエンコーディングを使って文字列を解釈します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="s1">u&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>   <span class="c1"># Assemble a string</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">40960</span><span class="p">)</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">&#39;abcd&#39;</span> <span class="o">+</span> <span class="n">unichr</span><span class="p">(</span><span class="mi">1972</span><span class="p">)</span>   <span class="c1"># Assemble a string</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">utf8_version</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>             <span class="c1"># Encode as UTF-8</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">utf8_version</span><span class="p">),</span> <span class="n">utf8_version</span>
 <span class="go">(&lt;type &#39;str&#39;&gt;, &#39;\xea\x80\x80abcd\xde\xb4&#39;)</span>
@@ -281,7 +281,7 @@
 <h3>Python ソースコード内の Unicode リテラル<a class="headerlink" href="#unicode-literals-in-python-source-code" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Python のソースコード内では Unicode リテラルは &#8216;u&#8217; または &#8216;U&#8217; の文字を最初に付けた文字列として書かれます: <code class="docutils literal"><span class="pre">u'abcdefghijk'</span></code> 。特定のコードポイントはエスケープシーケンス <code class="docutils literal"><span class="pre">\u</span></code> を使い、続けてコードポイントを4桁の16進数を書きます。エスケープシーケンス <code class="docutils literal"><span class="pre">\U</span></code> も同様です、ただし4桁ではなく8桁の16進数を使います。</p>
 <p>Unicode リテラルは 8-bit 文字列と同じエスケープシーケンスを使うことができます、使えるエスケープシーケンスには <code class="docutils literal"><span class="pre">\x</span></code> も含みます、ただし <code class="docutils literal"><span class="pre">\x</span></code> は2桁の16進数しかとることができないので任意のコードポイントを表現することはできません。 8進エスケープは8進数の777を示す U+01ff まで使うことができます。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s2">u&quot;a</span><span class="se">\xac\u1234\u20ac\U00008000</span><span class="s2">&quot;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;a</span><span class="se">\xac\u1234\u20ac\U00008000</span><span class="s2">&quot;</span>
 <span class="gp">... </span><span class="c1">#      ^^^^ two-digit hex escape</span>
 <span class="gp">... </span><span class="c1">#          ^^^^^^ four-digit Unicode escape</span>
 <span class="gp">... </span><span class="c1">#                      ^^^^^^^^^^ eight-digit Unicode escape</span>
@@ -296,14 +296,14 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: latin-1 -*-</span>
 
-<span class="n">u</span> <span class="o">=</span> <span class="s1">u&#39;abcdé&#39;</span>
+<span class="n">u</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;abcdé&#39;</span>
 <span class="nb">print</span> <span class="nb">ord</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>この構文は Emacs のファイル固有の変数を指定する表記から影響を受けています。Emacs は様々な変数をサポートしていますが、Python がサポートしているのは &#8216;coding&#8217; のみです。 <code class="docutils literal"><span class="pre">-*-</span></code> の記法はコメントが特別であることを示します; これは Python にとって意味はありませんが慣習です。 Python はコメント中に <code class="docutils literal"><span class="pre">coding:</span> <span class="pre">name</span></code> または <code class="docutils literal"><span class="pre">coding=name</span></code> を探します。</p>
 <p>このコメントを含まない場合には、デフォルトエンコーディングとして ASCII が利用されます。 Python のバージョンが 2.4 より前の場合には Euro-centric と Latin-1 が文字列リテラルのデフォルトエンコーディングであると仮定されていました; Python 2.4 では 127 より大きい文字でも動作しますが、警告を発することになります。例えば、以下のエンコーディング宣言のないプログラムは:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="n">u</span> <span class="o">=</span> <span class="s1">u&#39;abcdé&#39;</span>
+<span class="n">u</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;abcdé&#39;</span>
 <span class="nb">print</span> <span class="nb">ord</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -340,7 +340,7 @@ SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
 </pre></div>
 </div>
 <p>実行時には、このように印字されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">00</span><span class="n">e9</span> <span class="n">Ll</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">E</span> <span class="n">WITH</span> <span class="n">ACUTE</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mf">00e9</span> <span class="n">Ll</span> <span class="n">LATIN</span> <span class="n">SMALL</span> <span class="n">LETTER</span> <span class="n">E</span> <span class="n">WITH</span> <span class="n">ACUTE</span>
 <span class="mi">1</span> <span class="mi">0</span><span class="n">bf2</span> <span class="n">No</span> <span class="n">TAMIL</span> <span class="n">NUMBER</span> <span class="n">ONE</span> <span class="n">THOUSAND</span>
 <span class="mi">2</span> <span class="mi">0</span><span class="n">f84</span> <span class="n">Mn</span> <span class="n">TIBETAN</span> <span class="n">MARK</span> <span class="n">HALANTA</span>
 <span class="mi">3</span> <span class="mi">1770</span> <span class="n">Lo</span> <span class="n">TAGBANWA</span> <span class="n">LETTER</span> <span class="n">SA</span>
@@ -375,7 +375,7 @@ SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
 </div>
 <p>読み書きの両方ができる update モードでファイルを開くことも可能です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w+&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">u&#39;</span><span class="se">\u4500</span><span class="s1"> blah blah blah</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u4500</span><span class="s1"> blah blah blah</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -386,7 +386,7 @@ SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
 <h3>Unicode ファイル名<a class="headerlink" href="#unicode-filenames" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>多くの OS では現在任意の Unicode 文字を含むファイル名をサポートしています。通常 Unicode 文字列をシステム依存のエンコーディングに変換することによって実装されています。例えば、Mac OS X は UTF-8 を利用し、Windows ではエンコーディングが設定で変更することが可能です; Windows では Python は &#8220;mbcs&#8221; という名前に現在設定されているエンコーディングを問い合わせて利用します。 Unix システムでは <code class="docutils literal"><span class="pre">LANG</span></code> や <code class="docutils literal"><span class="pre">LC_CTYPE</span></code> 環境変数を設定していれば、それだけがファイルシステムのエンコーディングとなります; もしエンコーディングを設定しなければ、デフォルトエンコーディングは ASCII になります。</p>
 <p><a class="reference internal" href="../library/sys.html#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><code class="xref py py-func docutils literal"><span class="pre">sys.getfilesystemencoding()</span></code></a> 関数は現在のシステムで利用するエンコーディングを返し、エンコーディングを手動で設定したい場合利用します、ただしわざわざそうする積極的な理由はありません。読み書きのためにファイルを開く時には、ファイル名を Unicode 文字列として渡すだけで正しいエンコーディングに自動的に変更されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">u&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
 <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;blah</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -394,13 +394,13 @@ SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
 </div>
 <p><a class="reference internal" href="../library/os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal"><span class="pre">os.stat()</span></code></a> のような <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールの関数も Unicode のファイル名を受け付けます。</p>
 <p>ファイル名を返す <a class="reference internal" href="../library/os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></code></a> は問題を引き起こします: この関数はファイル名を返すべきでしょうか、それともエンコードされた内容の 8-bit 文字列を返すべきでしょうか? <a class="reference internal" href="../library/os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal"><span class="pre">os.listdir()</span></code></a> は与えられたデイレクトリへのパスが 8-bit 文字列か Unicode 文字列で与えたかに応じてその両方を返します。パスを Unicode 文字列で与えた場合、ファイル名はファイルシステムのエンコーディングを利用してデコードされ、 Unicode 文字列のリストが返されます、8-bit パスを与えるとファイル名は 8-bit 文字列で返されます。例えば、デフォルトのファイルシステムエンコーディングが UTF-8 と仮定される場合、以下のプログラムを実行すると:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="o">=</span> <span class="s1">u&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;filename</span><span class="se">\u4500</span><span class="s1">abc&#39;</span>
 <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-<span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">u&#39;.&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>以下の出力結果が生成されます:</p>
@@ -545,7 +545,7 @@ and that the HOWTO only covers 2.x.</p>
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

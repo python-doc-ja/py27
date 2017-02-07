@@ -516,7 +516,7 @@
 <span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;:memory:&quot;</span><span class="p">)</span>
 <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-<span class="n">AUSTRIA</span> <span class="o">=</span> <span class="s2">u&quot;</span><span class="se">\xd6</span><span class="s2">sterreich&quot;</span>
+<span class="n">AUSTRIA</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;</span><span class="se">\xd6</span><span class="s2">sterreich&quot;</span>
 
 <span class="c1"># by default, rows are returned as Unicode</span>
 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;select ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">AUSTRIA</span><span class="p">,))</span>
@@ -537,7 +537,7 @@
 <span class="c1"># decoded from UTF-8</span>
 <span class="n">con</span><span class="o">.</span><span class="n">text_factory</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">unicode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;select ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;this is latin1 and would normally create errors&quot;</span> <span class="o">+</span>
-                         <span class="s2">u&quot;</span><span class="se">\xe4\xf6\xfc</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;latin1&quot;</span><span class="p">),))</span>
+                         <span class="sa">u</span><span class="s2">&quot;</span><span class="se">\xe4\xf6\xfc</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;latin1&quot;</span><span class="p">),))</span>
 <span class="n">row</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
 <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">is</span> <span class="n">unicode</span>
 
@@ -1265,7 +1265,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

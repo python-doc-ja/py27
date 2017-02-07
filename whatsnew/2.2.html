@@ -158,8 +158,8 @@
 </li>
 </ul>
 <p>例えば、あなたが <code class="docutils literal"><span class="pre">obj.x</span></code> と書いたときに Python が実際に行うことは以下です:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">descriptor</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">x</span>
-<span class="n">descriptor</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">descriptor</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">x</span>
+<span class="n">descriptor</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>メソッドに対しては、 <code class="xref py py-meth docutils literal"><span class="pre">descriptor.__get__()</span></code> は、そのインスタンスとその上で呼び出されるメソッドをまとめた、呼び出し可能な一時オブジェクトを返します,これはどうして静的メソッドとクラスメソッドが今や可能となったのか、の理由でもあります; それらは各々、メソッドだけ、メソッドとクラスをまとめる、とするデスクリプタを持っているのです。これら新種のメソッドの簡単な説明としては、静的メソッドはインスタンスを渡さないので、普通の関数に似ていて、クラスメソッドはオブジェクトそのものではなくクラスを渡します。静的メソッドとクラスメソッドはこのように定義します:</p>
@@ -168,7 +168,7 @@
         <span class="o">...</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
         <span class="o">...</span>
     <span class="n">g</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
@@ -256,7 +256,7 @@
 <p>これは確実に、より明快であり書くのが容易です。 <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a>/<a class="reference internal" href="../reference/datamodel.html#object.__setattr__" title="object.__setattr__"><code class="xref py py-meth docutils literal"><span class="pre">__setattr__()</span></code></a> メソッドのペアでは、全てのほかの属性をインスタンスの <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> から抽出しながら <code class="xref py py-attr docutils literal"><span class="pre">size</span></code> 属性を特別に処理しなければならないところでした。<code class="xref py py-attr docutils literal"><span class="pre">size</span></code> へのアクセス時に行われるのは仕掛けた関数を呼び出すことだけなので、ほかの属性への参照が速度を落とすことはありません。</p>
 <p>もう一つ最後、新しいクラス属性 <a class="reference internal" href="../reference/datamodel.html#__slots__" title="__slots__"><code class="xref py py-attr docutils literal"><span class="pre">__slots__</span></code></a> を使うと、オブジェクトで参照出来る属性リストを制約することが出来ます。Python オブジェクトは普通非常に動的で、どんなときにもインスタンスに対して単に <code class="docutils literal"><span class="pre">obj.new_attr=1</span></code> とするだけで新しい属性を定義出来ます。新スタイルクラスは <a class="reference internal" href="../reference/datamodel.html#__slots__" title="__slots__"><code class="xref py py-attr docutils literal"><span class="pre">__slots__</span></code></a> という名前のクラス属性を定義出来、これにより適正な属性名集合を特定の集合に制限出来ます。実例をみるのが早いです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">obj</span><span class="o">.</span><span class="n">template</span>
@@ -790,7 +790,7 @@ Wise 5.0a, which was beginning to show its age.  (Packaged up by Tim Peters.)</p
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

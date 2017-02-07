@@ -195,7 +195,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;C:\some</span><span class="se">\n</span><span class="s1">ame&#39;</span>  <span class="c1"># here \n means newline!</span>
 <span class="go">C:\some</span>
 <span class="go">ame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">r&#39;C:\some\name&#39;</span>  <span class="c1"># note the r before the quote</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="sa">r</span><span class="s1">&#39;C:\some\name&#39;</span>  <span class="c1"># note the r before the quote</span>
 <span class="go">C:\some\name</span>
 </pre></div>
 </div>
@@ -356,41 +356,41 @@
 <p>Python 2.0 から、プログラマはテキスト・データを格納するための新しいデータ型、 Unicode オブジェクトを利用できるようになりました。 Unicode オブジェクトを使うと、Unicode データ (<a class="reference external" href="http://www.unicode.org/">http://www.unicode.org/</a> 参照) を記憶したり、操作したりできます。また、 Unicode オブジェクトは既存の文字列オブジェクトとよく統合されていて、必要に応じて自動変換されます。</p>
 <p>Unicode には、古今のテキストで使われているあらゆる書き文字のあらゆる文字について、対応付けを行うための一つの序数を規定しているという利点があります。これまでは、書き文字のために利用可能な序数は 256 個しかなく、テキストは書き文字の対応付けを行っているコードページに束縛されているのが通常でした。このことは、とりわけソフトウェアの国際化 (internationalization. よく、 <code class="docutils literal"><span class="pre">i18n</span></code> と書かれます &#8212; <code class="docutils literal"><span class="pre">'i'</span></code> + 18 文字 + <code class="docutils literal"><span class="pre">'n'</span></code> の意) に対して大きな混乱をもたらしました。Unicode では、すべての書き文字に対して単一のコードページを定義することで、これらの問題を解決しています。</p>
 <p>Python では、Unicode 文字列の作成は通常の文字列を作成するのと同じように単純なものです。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">u&#39;Hello World !&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s1">&#39;Hello World !&#39;</span>
 <span class="go">u&#39;Hello World !&#39;</span>
 </pre></div>
 </div>
 <p>クオートの前にある小文字の <code class="docutils literal"><span class="pre">'u'</span></code> は、Unicode 文字列を生成することになっていることを示します。文字列に特殊な文字を含めたければ、Python の <em>Unicode-Escape</em> エンコーディングを使って行えます。以下はその方法を示しています。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">u&#39;Hello</span><span class="se">\u0020</span><span class="s1">World !&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s1">&#39;Hello</span><span class="se">\u0020</span><span class="s1">World !&#39;</span>
 <span class="go">u&#39;Hello World !&#39;</span>
 </pre></div>
 </div>
 <p>エスケープシーケンス <code class="docutils literal"><span class="pre">\u0020</span></code> は、序数の値 0x0020 を持つ Unicode 文字 (スペース文字) を、指定場所に挿入することを示します。</p>
 <p>他の文字は、それぞれの序数値をそのまま Unicode の序数値に用いて解釈されます。多くの西洋諸国で使われている標準 Latin-1 エンコーディングのリテラル文字列があれば、Unicode の下位 256 文字が Latin-1 の 256 文字と同じになっていて便利だと思うことでしょう。</p>
 <p>上級者のために、通常の文字列の場合と同じく raw モードもあります。これには、文字列を開始するクオート文字の前に &#8216;ur&#8217; を付けて、 Python に <em>Raw-Unicode-Escape</em> エンコーディングを使わせなければなりません。このモードでは、上記の <code class="docutils literal"><span class="pre">\uXXXX</span></code> の変換は、小文字の &#8216;u&#8217; の前に奇数個のバックスラッシュがあるときにだけ適用されます。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">ur&#39;Hello\u0020World !&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">ur</span><span class="s1">&#39;Hello\u0020World !&#39;</span>
 <span class="go">u&#39;Hello World !&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s1">ur&#39;Hello</span><span class="se">\\</span><span class="s1">u0020World !&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">ur</span><span class="s1">&#39;Hello</span><span class="se">\\</span><span class="s1">u0020World !&#39;</span>
 <span class="go">u&#39;Hello\\\\u0020World !&#39;</span>
 </pre></div>
 </div>
 <p>raw モードは、正規表現を記述する時のように、沢山のバックスラッシュを入力しなければならないときとても役に立ちます。</p>
 <p>これら標準のエンコーディングにとは別に、Python では、既知の文字エンコーディングに基づいて Unicode 文字列を生成する一連の手段を提供しています。</p>
 <p id="index-0">組込み関数 <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a> は、登録されているすべての Unicode codecs (COder: エンコーダと DECoder デコーダ) へのアクセス機能を提供します。codecs が変換できるエンコーディングには、よく知られているものとして <em>Latin-1</em>, <em>ASCII</em>, <em>UTF-8</em> および <em>UTF-16</em> があります。後者の二つは可変長のエンコードで、各 Unicode 文字を 1 バイトまたはそれ以上のバイト列に保存します。デフォルトのエンコーディングは通常 ASCIIに設定されています。ASCIIでは 0 から 127 の範囲の文字だけを通過させ、それ以外の文字は受理せずエラーを出します。 Unicode 文字列を印字したり、ファイルに書き出したり、 <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> で変換すると、デフォルトのエンコーディングを使った変換が行われます。(訳注: IDLE をはじめ、ほとんどの Python 2 用のインタラクティブシェルは、非ASCII 文字を含む Unicode リテラルを利用することができません。このサンプルを実行するには、インタプリタ内蔵のインタラクティブシェルを利用する必要があります。この問題は Python 3 では解決されています。)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">u&quot;abc&quot;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s2">&quot;abc&quot;</span>
 <span class="go">u&#39;abc&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="s2">u&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
 <span class="go">&#39;abc&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s2">u&quot;äöü&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s2">&quot;äöü&quot;</span>
 <span class="go">u&#39;\xe4\xf6\xfc&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="s2">u&quot;äöü&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;äöü&quot;</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">UnicodeEncodeError</span>: <span class="n">&#39;ascii&#39; codec can&#39;t encode characters in position 0-2: ordinal not in range(128)</span>
 </pre></div>
 </div>
 <p>特定のエンコーディングを使って Unicode 文字列を 8 ビットの文字列に変換するために、Unicode オブジェクトは <code class="xref py py-func docutils literal"><span class="pre">encode()</span></code> メソッドを提供しています。このメソッドは第一引数としてエンコーディングの名前をとります。エンコーディング名には小文字の使用が推奨されています。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">u&quot;äöü&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s2">&quot;äöü&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 <span class="go">&#39;\xc3\xa4\xc3\xb6\xc3\xbc&#39;</span>
 </pre></div>
 </div>
@@ -623,7 +623,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

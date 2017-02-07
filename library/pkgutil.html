@@ -92,7 +92,7 @@
 <code class="descclassname">pkgutil.</code><code class="descname">extend_path</code><span class="sig-paren">(</span><em>path</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pkgutil.extend_path" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>パッケージを構成するモジュールの検索パスを拡張します。パッケージの <code class="file docutils literal"><span class="pre">__init__.py</span></code> で次のように書くことを意図したものです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pkgutil</span> <span class="k">import</span> <span class="n">extend_path</span>
-<span class="n">__path__</span> <span class="o">=</span> <span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>上記はパッケージの <code class="docutils literal"><span class="pre">__path__</span></code> に <code class="docutils literal"><span class="pre">sys.path</span></code> の全ディレクトリのサブディレクトリとしてパッケージ名と同じ名前を追加します。これは1つの論理的なパッケージの異なる部品を複数のディレクトリに分けて配布したいときに役立ちます。</p>
@@ -170,7 +170,7 @@
 <span class="n">walk_packages</span><span class="p">()</span>
 
 <span class="c1"># list all submodules of ctypes</span>
-<span class="n">walk_packages</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">__path__</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">walk_packages</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">__path__</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -182,7 +182,7 @@
 <p>この関数は <span class="target" id="index-34"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> ローダーの <a class="reference internal" href="#pkgutil.get_data" title="pkgutil.get_data"><code class="xref py py-func docutils literal"><span class="pre">get_data()</span></code></a> API のラッパーです。 <em>package</em> 引数は標準的なモジュール形式 (<code class="docutils literal"><span class="pre">foo.bar</span></code>) のパッケージ名でなければなりません。 <em>resource</em> 引数は <code class="docutils literal"><span class="pre">/</span></code> をパス区切りに使った相対ファイル名の形式です。親ディレクトリを <code class="docutils literal"><span class="pre">..</span></code> としたり、ルートからの (<code class="docutils literal"><span class="pre">/</span></code> で始まる) 名前を使うことはできません。</p>
 <p>この関数が返すのは指定されたリソースの内容であるバイナリ文字列です。</p>
 <p>ファイルシステム中に位置するパッケージで既にインポートされているものに対しては、次と大体同じです:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">package</span><span class="p">]</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">package</span><span class="p">]</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">resource</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -260,7 +260,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

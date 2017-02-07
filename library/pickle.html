@@ -302,7 +302,7 @@
 <dt id="object.__getnewargs__">
 <code class="descclassname">object.</code><code class="descname">__getnewargs__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__getnewargs__" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>新スタイルクラスでは、プロトコル 2 で呼び出される <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getnewargs__()</span></code></a> を定義する事ができます。インスタンス生成時に内部的な不変条件が成立する必要があったり、（タプルや文字列のように）型の <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドに指定する引数によってメモリの割り当てを変更する必要がある場合には <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getnewargs__()</span></code></a> を定義してください。新スタイルクラス <code class="xref py py-class docutils literal"><span class="pre">C</span></code> のインスタンスは、次のように生成されます。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>ここで <em>args</em> は元のオブジェクトの <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getnewargs__()</span></code></a> メソッドを呼び出した時の戻り値となります。 <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getnewargs__()</span></code></a> を定義していない場合、 <em>args</em> は空のタプルとなります。</p>
@@ -435,7 +435,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
 
 <span class="n">data1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">6</span><span class="n">j</span><span class="p">],</span>
-         <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">u&#39;Unicode string&#39;</span><span class="p">),</span>
+         <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unicode string&#39;</span><span class="p">),</span>
          <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
 
 <span class="n">selfref_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -486,7 +486,7 @@
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">odict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># copy the dict since we change it</span>
+        <span class="n">odict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># copy the dict since we change it</span>
         <span class="k">del</span> <span class="n">odict</span><span class="p">[</span><span class="s1">&#39;fh&#39;</span><span class="p">]</span>              <span class="c1"># remove filehandle entry</span>
         <span class="k">return</span> <span class="n">odict</span>
 
@@ -496,7 +496,7 @@
         <span class="k">while</span> <span class="n">count</span><span class="p">:</span>                 <span class="c1"># until line count is restored</span>
             <span class="n">fh</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
             <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>   <span class="c1"># update attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>   <span class="c1"># update attributes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="n">fh</span>                 <span class="c1"># save the file object</span>
 </pre></div>
 </div>
@@ -704,7 +704,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

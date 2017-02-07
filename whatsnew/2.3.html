@@ -623,7 +623,7 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
 </pre></div>
 </div>
 <p>ビルトインのシーケンスの <a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a> メソッドに slice オブジェクトを渡すことも出来るようになりました:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">[0, 2, 4]</span>
 </pre></div>
 </div>
@@ -702,7 +702,7 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span><span class="s1">&#39;docstring&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
 <span class="go">&lt;module &#39;abc&#39; (built-in)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="vm">__doc__</span>
 <span class="go">&#39;docstring&#39;</span>
 </pre></div>
 </div>
@@ -721,12 +721,12 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
 </li>
 <li><p class="first">マイナーですが広範囲に渡る変更として、拡張型の名前の変更があります。Python と一緒に含まれるモジュールで定義される拡張型の名前が、モジュール名と <code class="docutils literal"><span class="pre">'.'</span></code> が型名に前置されるようになりました。例えば Python 2.2 ではソケットオブジェクトを作って <code class="xref py py-attr docutils literal"><span class="pre">__class__</span></code> を出力すると、このような出力だったでしょう:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">__class__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="vm">__class__</span>
 <span class="go">&lt;type &#39;socket&#39;&gt;</span>
 </pre></div>
 </div>
 <p>2.3 ではこうなります:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">__class__</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="vm">__class__</span>
 <span class="go">&lt;type &#39;_socket.socket&#39;&gt;</span>
 </pre></div>
 </div>
@@ -755,7 +755,7 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
 <span class="go">&#39;abc&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;&gt;&lt;&gt;&lt;abc&lt;&gt;&lt;&gt;&lt;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">)</span>
 <span class="go">&#39;abc&lt;&gt;&lt;&gt;&lt;&gt;\n&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s1">u&#39;</span><span class="se">\u4000\u4001</span><span class="s1">abc</span><span class="se">\u4000</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">u&#39;</span><span class="se">\u4000</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u4000\u4001</span><span class="s1">abc</span><span class="se">\u4000</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u4000</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="go">u&#39;\u4001abc&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -1052,7 +1052,7 @@ platforms.</p>
 <li><p class="first">新規モジュール <a class="reference internal" href="../library/docxmlrpcserver.html#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-mod docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> は、セルフ-ドキュメンティング XML-RPC サーバを書くのに使えます。実際のところをみるためにはデモモード (つまりプログラムとして) 実行してみてください。ウェブブラウザを RPC サーバに向ければ pydoc スタイルのドキュメントを生成します。xmlrpclib をサーバに向ければ実際のメソッドを呼び出せます。(Contributed by Brian Quinlan.)</p>
 </li>
 <li><p class="first">internationalized domain names (RFC 3454, 3490, 3491, 3492) のサポートが追加されました。Unicode ドメイン名とその名前の ASCII 互換エンコーディング (ACE=ASCII-compatible encoding) の間の変換をするのに &#8220;idna&#8221; エンコーディングを使用出来ます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">{}</span><span class="o">&gt;</span> <span class="s2">u&quot;www.Alliancefrançaise.nu&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;idna&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">{}</span><span class="o">&gt;</span> <span class="sa">u</span><span class="s2">&quot;www.Alliancefrançaise.nu&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;idna&quot;</span><span class="p">)</span>
 <span class="s1">&#39;www.xn--alliancefranaise-npb.nu&#39;</span>
 </pre></div>
 </div>
@@ -1375,7 +1375,7 @@ source distribution, were updated for 2.3.  (Contributed by Sean Reifschneider.)
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -1071,13 +1071,13 @@
 </pre></div>
 </div>
 <p>これは次のと等価です:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">a_list</span><span class="o">.</span><span class="n">__iadd__</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">a_list</span><span class="o">.</span><span class="fm">__iadd__</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="n">result</span>
 </pre></div>
 </div>
 <p>a_list が指していたオブジェクトは更新され、更新されたオブジェクトへのポインタは再度 <code class="docutils literal"><span class="pre">a_list</span></code> に代入されます。代入しているのは、<code class="docutils literal"><span class="pre">a_list</span></code> が更新前まで指していた同じオブジェクトへのポインタなので、代入は最終的には何もしていないのですが、代入処理自体は起きています。</p>
 <p>従って、今のタプルの例では、次のと同じことが起きています:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">a_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__iadd__</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">a_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="fm">__iadd__</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
 <span class="gt">Traceback (most recent call last):</span>
   <span class="c">...</span>
@@ -1100,7 +1100,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;{{</span><span class="si">{}</span><span class="s2">}}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
 
-    <span class="n">__str__</span> <span class="o">=</span> <span class="n">__repr__</span>
+    <span class="fm">__str__</span> <span class="o">=</span> <span class="fm">__repr__</span>
 </pre></div>
 </div>
 <p>これは完璧な解法とは程遠いですが、多くの状況でうまく働くでしょう。最大の欠点は、辞書内のどれかの値がまた辞書であった場合に、それらの値はどんな特定の順序でも表示されないことです。</p>
@@ -1226,7 +1226,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">X</span><span class="p">:</span>
     <span class="o">...</span>
     <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="o">...</span>
 </pre></div>
 </div>
@@ -1387,7 +1387,7 @@
     <span class="nb">print</span> <span class="s1">&#39;Running test...&#39;</span>
     <span class="o">...</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1460,17 +1460,17 @@
 </div>
 <p>のような文を含むモジュールは、インポートされたオブジェクトの古いバージョンを使い続けます。そのモジュールにクラス定義が含まれていたら、存在するクラスインスタンスは新しいクラス定義を使うようにアップデート <em>されません</em>。これによって以下の矛盾した振舞いがなされえます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cls</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">C</span><span class="p">()</span>                <span class="c1"># Create an instance of C</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">reload</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">C</span><span class="p">()</span>                <span class="c1"># Create an instance of C</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reload</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 <span class="go">&lt;module &#39;cls&#39; from &#39;cls.pyc&#39;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">C</span><span class="p">)</span>       <span class="c1"># isinstance is false?!?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">C</span><span class="p">)</span>       <span class="c1"># isinstance is false?!?</span>
 <span class="go">False</span>
 </pre></div>
 </div>
 <p>この問題の本質は、クラスオブジェクトを印字することで明らかになります:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">__class__</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="vm">__class__</span>
 <span class="go">&lt;class cls.C at 0x7352a0&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cls</span><span class="o">.</span><span class="n">C</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">cls</span><span class="o">.</span><span class="n">C</span>
 <span class="go">&lt;class cls.C at 0x4198d0&gt;</span>
 </pre></div>
 </div>
@@ -1557,7 +1557,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

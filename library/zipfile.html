@@ -333,9 +333,9 @@
 <code class="descclassname">PyZipFile.</code><code class="descname">writepy</code><span class="sig-paren">(</span><em>pathname</em><span class="optional">[</span>, <em>basename</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zipfile.PyZipFile.writepy" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><code class="file docutils literal"><span class="pre">*.py</span></code> ファイルを探し、 <code class="file docutils literal"><span class="pre">*.py</span></code> ファイルに対応するファイルをアーカイブに追加します。対応するファイルとは、もしあれば <code class="file docutils literal"><span class="pre">*.pyo</span></code> であり、そうでなければ <code class="file docutils literal"><span class="pre">*.pyc</span></code> で、必要に応じて <code class="file docutils literal"><span class="pre">*.py</span></code> からコンパイルします。もし pathname がファイルなら、ファイル名は <code class="file docutils literal"><span class="pre">.py</span></code> で終わっていなければなりません。また、(<code class="file docutils literal"><span class="pre">*.py</span></code> に対応する <code class="file docutils literal"><span class="pre">*.py[co]</span></code>) ファイルはアーカイブのトップレベルに (パス情報なしで) 追加されます。もし pathname が <code class="file docutils literal"><span class="pre">.py</span></code> で終わらないファイル名なら <a class="reference internal" href="exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> を送出します。もし pathname がディレクトリで、ディレクトリがパッケージディレクトリでないなら、全ての <code class="file docutils literal"><span class="pre">*.py[co]</span></code> ファイルはトップレベルに追加されます。もしディレクトリがパッケージディレクトリなら、全ての <code class="file docutils literal"><span class="pre">*.py[co]</span></code> ファイルはパッケージ名の名前をもつファイルパスの下に追加されます。サブディレクトリがパッケージディレクトリなら、それらは再帰的に追加されます。 <em>basename</em> はクラス内部での呼び出しに使用するためのものです。 <a class="reference internal" href="#zipfile.PyZipFile.writepy" title="zipfile.PyZipFile.writepy"><code class="xref py py-meth docutils literal"><span class="pre">writepy()</span></code></a> メソッドは以下のようなファイル名を持ったアーカイブを生成します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">string</span><span class="o">.</span><span class="n">pyc</span>                                <span class="c1"># Top level name</span>
-<span class="n">test</span><span class="o">/</span><span class="n">__init__</span><span class="o">.</span><span class="n">pyc</span>                         <span class="c1"># Package directory</span>
+<span class="n">test</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">pyc</span>                         <span class="c1"># Package directory</span>
 <span class="n">test</span><span class="o">/</span><span class="n">test_support</span><span class="o">.</span><span class="n">pyc</span>                          <span class="c1"># Module test.test_support</span>
-<span class="n">test</span><span class="o">/</span><span class="n">bogus</span><span class="o">/</span><span class="n">__init__</span><span class="o">.</span><span class="n">pyc</span>                   <span class="c1"># Subpackage directory</span>
+<span class="n">test</span><span class="o">/</span><span class="n">bogus</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">pyc</span>                   <span class="c1"># Subpackage directory</span>
 <span class="n">test</span><span class="o">/</span><span class="n">bogus</span><span class="o">/</span><span class="n">myfile</span><span class="o">.</span><span class="n">pyc</span>                     <span class="c1"># Submodule test.bogus.myfile</span>
 </pre></div>
 </div>
@@ -570,7 +570,7 @@
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-06.
+    Last updated on 2017-02-07.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

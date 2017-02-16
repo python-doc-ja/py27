@@ -37,6 +37,7 @@
     <link rel="next" title="18.3. mailcap — mailcap ファイルの操作" href="mailcap.html" />
     <link rel="prev" title="18.1.11. email: 使用例" href="email-examples.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/json.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,7 +85,12 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
-<p><a class="reference external" href="http://json.org">JSON (JavaScript Object Notation)</a> は <span class="target" id="index-10"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> (<span class="target" id="index-11"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4627.html"><strong>RFC 4627</strong></a> は廃止されました) と <a class="reference external" href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">ECMA-404</a> によって規定されている、 <a class="reference external" href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> のオブジェクトリテラル構文から発想を得た (しかしながら JavaScript の厳密なサブセットではありません  <a class="footnote-reference" href="#rfc-errata" id="id1">[1]</a>) 軽量なデータ交換フォーマットです。</p>
+<p><a class="reference external" href="http://json.org">JSON (JavaScript Object Notation)</a>, specified by
+<span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> (which obsoletes <span class="target" id="index-1"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4627.html"><strong>RFC 4627</strong></a>) and by
+<a class="reference external" href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">ECMA-404</a>,
+is a lightweight data interchange format inspired by
+<a class="reference external" href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a> object literal syntax
+(although it is not a strict subset of JavaScript <a class="footnote-reference" href="#rfc-errata" id="id1">[1]</a> ).</p>
 <p><a class="reference internal" href="#module-json" title="json: Encode and decode the JSON format."><code class="xref py py-mod docutils literal"><span class="pre">json</span></code></a> の API は標準ライブラリの <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> や <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> のユーザに馴染み深いものです。</p>
 <p>基本的な Python オブジェクト階層のエンコーディング:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
@@ -165,8 +171,8 @@
 <span class="go">[&#39;[&#39;, &#39;2.0&#39;, &#39;, &#39;, &#39;1.0&#39;, &#39;]&#39;]</span>
 </pre></div>
 </div>
-<p>シェルから json.tool を使って妥当性チェックをして見やすく表示:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>$ echo &#39;{&quot;json&quot;:&quot;obj&quot;}&#39; | python -mjson.tool
+<p>Using <code class="xref py py-mod docutils literal"><span class="pre">json.tool</span></code> from the shell to validate and pretty-print:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ echo &#39;{&quot;json&quot;:&quot;obj&quot;}&#39; | python -m json.tool
 {
     &quot;json&quot;: &quot;obj&quot;
 }
@@ -184,19 +190,41 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 <dt id="json.dump">
 <code class="descclassname">json.</code><code class="descname">dump</code><span class="sig-paren">(</span><em>obj</em>, <em>fp</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>cls=None</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding=&quot;utf-8&quot;</em>, <em>default=None</em>, <em>sort_keys=False</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#json.dump" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この <a class="reference internal" href="#py-to-json-table"><span class="std std-ref">変換表</span></a> を使って、 <em>obj</em> を JSON 形式の <em>fp</em> (<code class="docutils literal"><span class="pre">.write()</span></code> がサポートされている <a class="reference internal" href="../glossary.html#term-file-like-object"><span class="xref std std-term">file-like object</span></a>) へのストリームとして直列化します。</p>
-<p><em>skipkeys</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルトは <code class="docutils literal"><span class="pre">False</span></code>) ならば、基本型 (<a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>, <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>, <code class="docutils literal"><span class="pre">None</span></code>) 以外の辞書のキーは <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出せずに読み飛ばされます。</p>
-<p><em>ensure_ascii</em> が <code class="docutils literal"><span class="pre">True</span></code> (これがデフォルトです) ならば全ての非 ASCII 文字は出力において <code class="docutils literal"><span class="pre">\uXXXX</span></code> エスケープされて、結果は ASCII 文字のみからなる <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> インスタンスになります。 <em>ensure_ascii</em> が <code class="docutils literal"><span class="pre">False</span></code> の場合、 <em>fp</em> へ書き込まれるチャンクは <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> インスタンスになることがあります。これは普通は入力に Unicode 文字列を含むか、 <em>encoding</em> パラメータを使う場合に起こります。 <code class="docutils literal"><span class="pre">fp.write()</span></code> が (<a class="reference internal" href="codecs.html#codecs.getwriter" title="codecs.getwriter"><code class="xref py py-func docutils literal"><span class="pre">codecs.getwriter()</span></code></a> でのように)  <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> であると明示的に理解していない限り、これはエラーを引き起こすかもしれません。</p>
-<p><em>check_circular</em> が <code class="docutils literal"><span class="pre">False</span></code> (デフォルトは <code class="docutils literal"><span class="pre">True</span></code>) ならば、コンテナ型の循環参照チェックが省かれ、循環参照があれば <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a> (またはもっと悪い結果) に終わります。</p>
-<p><em>allow_nan</em> が <code class="docutils literal"><span class="pre">False</span></code> (デフォルトは <code class="docutils literal"><span class="pre">True</span></code>) ならば、許容範囲外の <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> 値 (<code class="docutils literal"><span class="pre">nan</span></code>, <code class="docutils literal"><span class="pre">inf</span></code>, <code class="docutils literal"><span class="pre">-inf</span></code>) を直列化しようとした場合、 JSON 仕様を厳格に守って JavaScript の等価なもの (<code class="docutils literal"><span class="pre">NaN</span></code>, <code class="docutils literal"><span class="pre">Infinity</span></code>, <code class="docutils literal"><span class="pre">-Infinity</span></code>) を使うことなく <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> になります。</p>
+<p>If <em>skipkeys</em> is true (default: <code class="docutils literal"><span class="pre">False</span></code>), then dict keys that are not
+of a basic type (<a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>, <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>,
+<a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>, <code class="docutils literal"><span class="pre">None</span></code>) will be skipped instead of raising a
+<a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>.</p>
+<p>If <em>ensure_ascii</em> is true (the default), all non-ASCII characters in the
+output are escaped with <code class="docutils literal"><span class="pre">\uXXXX</span></code> sequences, and the result is a
+<a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> instance consisting of ASCII characters only.  If
+<em>ensure_ascii</em> is false, some chunks written to <em>fp</em> may be
+<a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> instances.  This usually happens because the input contains
+unicode strings or the <em>encoding</em> parameter is used.  Unless <code class="docutils literal"><span class="pre">fp.write()</span></code>
+explicitly understands <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> (as in <a class="reference internal" href="codecs.html#codecs.getwriter" title="codecs.getwriter"><code class="xref py py-func docutils literal"><span class="pre">codecs.getwriter()</span></code></a>)
+this is likely to cause an error.</p>
+<p>If <em>check_circular</em> is false (default: <code class="docutils literal"><span class="pre">True</span></code>), then the circular
+reference check for container types will be skipped and a circular reference
+will result in an <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a> (or worse).</p>
+<p>If <em>allow_nan</em> is false (default: <code class="docutils literal"><span class="pre">True</span></code>), then it will be a
+<a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> to serialize out of range <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> values (<code class="docutils literal"><span class="pre">nan</span></code>,
+<code class="docutils literal"><span class="pre">inf</span></code>, <code class="docutils literal"><span class="pre">-inf</span></code>) in strict compliance of the JSON specification.
+If <em>allow_nan</em> is true, their JavaScript equivalents (<code class="docutils literal"><span class="pre">NaN</span></code>,
+<code class="docutils literal"><span class="pre">Infinity</span></code>, <code class="docutils literal"><span class="pre">-Infinity</span></code>) will be used.</p>
 <p><em>indent</em> が非負の整数であれば、JSON の配列要素とオブジェクトメンバはそのインデントレベルで見やすく表示されます。インデントレベルが 0 か負であれば改行だけが挿入されます。 <code class="docutils literal"><span class="pre">None</span></code> (デフォルト) では最もコンパクトな表現が選択されます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">デフォルトの要素のセパレータが <code class="docutils literal"><span class="pre">',</span> <span class="pre">'</span></code> なので、 <em>indent</em> が指定されたときは出力の末尾に空白文字が付くかもしれません。これを避けるために <code class="docutils literal"><span class="pre">separators=(',',</span> <span class="pre">':</span> <span class="pre">')</span></code> が使えます。</p>
 </div>
-<p><em>separators</em> がタプル <code class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">dict_separator)</span></code> ならば、デフォルト区切り文字 <code class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> の代わりに使われます。 <code class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></code> が最もコンパクトな JSON の表現です。</p>
+<p>If specified, <em>separators</em> should be an <code class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">key_separator)</span></code>
+tuple.  By default, <code class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> are used.  To get the most compact JSON
+representation, you should specify <code class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></code> to eliminate whitespace.</p>
 <p><em>encoding</em> は文字列のエンコーディングで、デフォルトは UTF-8 です。</p>
-<p><em>default(obj)</em> は関数で、 <em>obj</em> の直列化可能なバージョンを返すか、さもなくば <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。デフォルトでは単に <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
-<p><em>sort_keys</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルトでは <code class="docutils literal"><span class="pre">False</span></code> です)であれば、辞書の出力がキーでソートされます。</p>
+<p>If specified, <em>default</em> should be a function that gets called for objects that
+can&#8217;t otherwise be serialized.  It should return a JSON encodable version of
+the object or raise a <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>.  If not specified, <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>
+is raised.</p>
+<p>If <em>sort_keys</em> is true (default: <code class="docutils literal"><span class="pre">False</span></code>), then the output of
+dictionaries will be sorted by key.</p>
 <p>カスタマイズされた <a class="reference internal" href="#json.JSONEncoder" title="json.JSONEncoder"><code class="xref py py-class docutils literal"><span class="pre">JSONEncoder</span></code></a> のサブクラス (たとえば追加の型を直列化するように <code class="xref py py-meth docutils literal"><span class="pre">default()</span></code> メソッドをオーバーライドしたもの) を使うには、 <em>cls</em> キーワード引数に指定します; 指定しなければ <a class="reference internal" href="#json.JSONEncoder" title="json.JSONEncoder"><code class="xref py py-class docutils literal"><span class="pre">JSONEncoder</span></code></a> が使われます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -207,7 +235,10 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 <dl class="function">
 <dt id="json.dumps">
 <code class="descclassname">json.</code><code class="descname">dumps</code><span class="sig-paren">(</span><em>obj</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>cls=None</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding=&quot;utf-8&quot;</em>, <em>default=None</em>, <em>sort_keys=False</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#json.dumps" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この <a class="reference internal" href="#py-to-json-table"><span class="std std-ref">変換表</span></a> を使って、 <em>obj</em> を JSON 形式の <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> オブジェクトに直列化します。 <em>ensure_ascii</em> が <code class="docutils literal"><span class="pre">False</span></code> の場合は結果は非 ASCII を含むかもしれず、戻り値が <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> のインスタンスになることがあります。</p>
+<dd><p>Serialize <em>obj</em> to a JSON formatted <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> using this <a class="reference internal" href="#py-to-json-table"><span class="std std-ref">conversion
+table</span></a>.  If <em>ensure_ascii</em> is false, the result may
+contain non-ASCII characters and the return value may be a <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>
+instance.</p>
 <p>引数は <a class="reference internal" href="#json.dump" title="json.dump"><code class="xref py py-func docutils literal"><span class="pre">dump()</span></code></a> のものと同じ意味になります。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -298,7 +329,10 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 <p><em>parse_float</em> は、もし指定されれば、全てのデコードされる JSON の浮動小数点数文字列に対して呼ばれます。デフォルトでは、 <code class="docutils literal"><span class="pre">float(num_str)</span></code> と等価です。これは JSON 浮動小数点数に対して他のデータ型やパーサ (たとえば <a class="reference internal" href="decimal.html#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">decimal.Decimal</span></code></a>) を使うのに使えます。</p>
 <p><em>parse_int</em> は、もし指定されれば、全てのデコードされる JSON の整数文字列に対して呼ばれます。デフォルトでは、 <code class="docutils literal"><span class="pre">int(num_str)</span></code> と等価です。これは JSON 整数に対して他のデータ型やパーサ (たとえば <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>) を使うのに使えます。</p>
 <p><em>parse_constant</em> は、もし指定されれば、次の文字列に対して呼ばれます: <code class="docutils literal"><span class="pre">'-Infinity'</span></code>, <code class="docutils literal"><span class="pre">'Infinity'</span></code>, <code class="docutils literal"><span class="pre">'NaN'</span></code>, <code class="docutils literal"><span class="pre">'null'</span></code>, <code class="docutils literal"><span class="pre">'true'</span></code>, <code class="docutils literal"><span class="pre">'false'</span></code>。これは不正な JSON 数値に遭遇したときに例外を送出するのに使えます。</p>
-<p><em>strict</em> が <code class="docutils literal"><span class="pre">False</span></code> (デフォルトは <code class="docutils literal"><span class="pre">True</span></code>) の場合、制御文字を文字列に含めることができます。ここで言う制御文字とは、<code class="docutils literal"><span class="pre">'\t'</span></code> (タブ)、<code class="docutils literal"><span class="pre">'\n'</span></code>、<code class="docutils literal"><span class="pre">'\r'</span></code>、<code class="docutils literal"><span class="pre">'\0'</span></code> を含む 0-31 の範囲のコードを持つ文字のことです。</p>
+<p>If <em>strict</em> is false (<code class="docutils literal"><span class="pre">True</span></code> is the default), then control characters
+will be allowed inside strings.  Control characters in this context are
+those with character codes in the 0&#8211;31 range, including <code class="docutils literal"><span class="pre">'\t'</span></code> (tab),
+<code class="docutils literal"><span class="pre">'\n'</span></code>, <code class="docutils literal"><span class="pre">'\r'</span></code> and <code class="docutils literal"><span class="pre">'\0'</span></code>.</p>
 <p>脱直列化しようとしているデータが不正な JSON ドキュメントだった場合、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</p>
 <dl class="method">
 <dt id="json.JSONDecoder.decode">
@@ -355,18 +389,39 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 </tbody>
 </table>
 <p>このクラスを拡張して他のオブジェクトも認識するようにするには、サブクラスを作って <a class="reference internal" href="#json.JSONEncoder.default" title="json.JSONEncoder.default"><code class="xref py py-meth docutils literal"><span class="pre">default()</span></code></a> メソッドを次のように実装します。もう一つ別のメソッドでオブジェクト <code class="docutils literal"><span class="pre">o</span></code> に対する直列化可能なオブジェクトを返すものを呼び出すようにします。変換できない時はスーパークラスの実装を (<a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出させるために) 呼ばなければなりません。</p>
-<p><em>skipkeys</em> が <code class="docutils literal"><span class="pre">False</span></code> (デフォルト) ならば、str, int, long, float, None 以外のキーをエンコードする試みは <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> に終わります。 <em>skipkeys</em> が <code class="docutils literal"><span class="pre">True</span></code> の場合は、それらのアイテムは単に読み飛ばされます。</p>
-<p><em>ensure_ascii</em> が <code class="docutils literal"><span class="pre">True</span></code> (これがデフォルトです) ならば全ての非 ASCII 文字は出力において <code class="docutils literal"><span class="pre">\uXXXX</span></code> エスケープされて、結果は ASCII 文字のみからなる <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> インスタンスになります。 <em>ensure_ascii</em> が <code class="docutils literal"><span class="pre">False</span></code> の場合、 結果は <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> インスタンスになることがあります。これは普通は入力に Unicode 文字列を含むか、 <em>encoding</em> パラメータを使う場合に起こります。</p>
-<p><em>check_circular</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルト) ならば、リスト、辞書および自作でエンコードしたオブジェクトは循環参照がないかエンコード中にチェックされ、無限再帰 (これは <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a> を引き起こします) を防止します。 <code class="docutils literal"><span class="pre">True</span></code> でない場合は、そういったチェックは施されません。</p>
-<p><em>allow_nan</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルト) ならば、 <code class="docutils literal"><span class="pre">NaN</span></code>, <code class="docutils literal"><span class="pre">Infinity</span></code>, <code class="docutils literal"><span class="pre">-Infinity</span></code> はそのままエンコードされます。この振る舞いは JSON 仕様に従っていませんが、大半の JavaScript ベースのエンコーダ、デコーダと矛盾しません。 <code class="docutils literal"><span class="pre">True</span></code> でない場合は、そのような浮動小数点数をエンコードすると <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</p>
-<p><em>sort_keys</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルトは <code class="docutils literal"><span class="pre">False</span></code>) ならば、辞書の出力がキーでソートされます。これは JSON の直列化がいつでも比較できるようになるので回帰試験の際に便利です。</p>
+<p>If <em>skipkeys</em> is false (the default), then it is a <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> to
+attempt encoding of keys that are not str, int, long, float or <code class="docutils literal"><span class="pre">None</span></code>.  If
+<em>skipkeys</em> is true, such items are simply skipped.</p>
+<p>If <em>ensure_ascii</em> is true (the default), all non-ASCII characters in the
+output are escaped with <code class="docutils literal"><span class="pre">\uXXXX</span></code> sequences, and the results are
+<a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> instances consisting of ASCII characters only. If
+<em>ensure_ascii</em> is false, a result may be a <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>
+instance. This usually happens if the input contains unicode strings or the
+<em>encoding</em> parameter is used.</p>
+<p>If <em>check_circular</em> is true (the default), then lists, dicts, and custom
+encoded objects will be checked for circular references during encoding to
+prevent an infinite recursion (which would cause an <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a>).
+Otherwise, no such check takes place.</p>
+<p>If <em>allow_nan</em> is true (the default), then <code class="docutils literal"><span class="pre">NaN</span></code>, <code class="docutils literal"><span class="pre">Infinity</span></code>, and
+<code class="docutils literal"><span class="pre">-Infinity</span></code> will be encoded as such.  This behavior is not JSON
+specification compliant, but is consistent with most JavaScript based
+encoders and decoders.  Otherwise, it will be a <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> to encode
+such floats.</p>
+<p>If <em>sort_keys</em> is true (default: <code class="docutils literal"><span class="pre">False</span></code>), then the output of dictionaries
+will be sorted by key; this is useful for regression tests to ensure that
+JSON serializations can be compared on a day-to-day basis.</p>
 <p><em>indent</em> が非負の整数であれば (デフォルトは <code class="docutils literal"><span class="pre">None</span></code> です)、JSON の配列要素とオブジェクトメンバはそのインデントレベルで見やすく表示されます。インデントレベルが 0 であれば 改行だけが挿入されます。<code class="docutils literal"><span class="pre">None</span></code> では最もコンパクトな表現が選択されます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">デフォルトの要素のセパレータが <code class="docutils literal"><span class="pre">',</span> <span class="pre">'</span></code> なので、 <em>indent</em> が指定されたときは出力の末尾に空白文字が付くかもしれません。これを避けるために <code class="docutils literal"><span class="pre">separators=(',',</span> <span class="pre">':</span> <span class="pre">')</span></code> が使えます。</p>
 </div>
-<p><em>separators</em> はもし指定するなら <code class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">key_separator)</span></code> というタプルでなければなりません。デフォルトは <code class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> です。最もコンパクトな JSON の表現を得たければ空白を削った <code class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></code> を指定すればいいでしょう。</p>
-<p><em>default</em> はもし指定するなら関数で、それがなければ直列化できないオブジェクトに対して呼び出されます。その関数はオブジェクトを JSON でエンコードできるバージョンにして返すか、さもなければ <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出しなければなりません。</p>
+<p>If specified, <em>separators</em> should be an <code class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">key_separator)</span></code>
+tuple.  By default, <code class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></code> are used.  To get the most compact JSON
+representation, you should specify <code class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></code> to eliminate whitespace.</p>
+<p>If specified, <em>default</em> should be a function that gets called for objects that
+can&#8217;t otherwise be serialized.  It should return a JSON encodable version of
+the object or raise a <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>.  If not specified, <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>
+is raised.</p>
 <p><em>encoding</em> が <code class="docutils literal"><span class="pre">None</span></code> でなければ、入力文字列は全て JSON エンコーディングに先立ってこのエンコーディングで Unicode に変換されます。デフォルトは UTF-8 です。</p>
 <dl class="method">
 <dt id="json.JSONEncoder.default">
@@ -411,7 +466,7 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 </div>
 <div class="section" id="standard-compliance-and-interoperability">
 <h2>18.2.3. 標準への準拠と互換性<a class="headerlink" href="#standard-compliance-and-interoperability" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>JSON 形式の仕様は <span class="target" id="index-12"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> と <a class="reference external" href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">ECMA-404</a> で規定されています。 この節では、このモジュールの RFC への準拠水準について詳しく述べます。 簡単のために、 <a class="reference internal" href="#json.JSONEncoder" title="json.JSONEncoder"><code class="xref py py-class docutils literal"><span class="pre">JSONEncoder</span></code></a> および <a class="reference internal" href="#json.JSONDecoder" title="json.JSONDecoder"><code class="xref py py-class docutils literal"><span class="pre">JSONDecoder</span></code></a> の子クラスと、明示的に触れられていないパラメータについては考慮しないことにします。</p>
+<p>JSON 形式の仕様は <span class="target" id="index-8"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> と <a class="reference external" href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">ECMA-404</a> で規定されています。 この節では、このモジュールの RFC への準拠水準について詳しく述べます。 簡単のために、 <a class="reference internal" href="#json.JSONEncoder" title="json.JSONEncoder"><code class="xref py py-class docutils literal"><span class="pre">JSONEncoder</span></code></a> および <a class="reference internal" href="#json.JSONDecoder" title="json.JSONDecoder"><code class="xref py py-class docutils literal"><span class="pre">JSONDecoder</span></code></a> の子クラスと、明示的に触れられていないパラメータについては考慮しないことにします。</p>
 <p>このモジュールは、JavaScript では正しいが JSON では不正ないくつかの拡張が実装されているため、厳密な意味では RFC に準拠していません。特に:</p>
 <ul class="simple">
 <li><p class="first">無限および NaN の数値を受け付け、また出力します;</p>
@@ -457,7 +512,7 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 </div>
 <div class="section" id="top-level-non-object-non-array-values">
 <h3>18.2.3.4. トップレベルの非オブジェクト、非配列の値の扱い<a class="headerlink" href="#top-level-non-object-non-array-values" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>廃止された <span class="target" id="index-13"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4627.html"><strong>RFC 4627</strong></a> によって規定された古いバージョンの JSON では、JSON テキストのトップレベルの値は JSON オブジェクトか配列(Python での <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> か <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>)であることを要求していて、JSON の null, boolean, number, string であることは許されていませんでしたが、この制限は <span class="target" id="index-14"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> により取り払われました。このモジュールはこの制限を持っていませんし、シリアライザでもデシリアライズでも、一度としてこの制限で実装されたことはありません。</p>
+<p>廃止された <span class="target" id="index-9"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4627.html"><strong>RFC 4627</strong></a> によって規定された古いバージョンの JSON では、JSON テキストのトップレベルの値は JSON オブジェクトか配列(Python での <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> か <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>)であることを要求していて、JSON の null, boolean, number, string であることは許されていませんでしたが、この制限は <span class="target" id="index-10"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7159.html"><strong>RFC 7159</strong></a> により取り払われました。このモジュールはこの制限を持っていませんし、シリアライザでもデシリアライズでも、一度としてこの制限で実装されたことはありません。</p>
 <p>それにも関わらず、相互運用可能性を最大化したいならば、あなた自身の手で自発的にその制約に忠実に従いたいと思うでしょう。</p>
 </div>
 <div class="section" id="implementation-limitations">
@@ -479,8 +534,10 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 <table class="docutils footnote" frame="void" id="rfc-errata" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last"><a class="reference external" href="http://www.rfc-editor.org/errata_search.php?rfc=7159">RFC 7159 正誤表</a> で述べられている通り、JSON は U+2028 (LINE SEPARATOR) と U+2029 (PARAGRAPH SEPARATOR) が文字列内に含まれることを許容しています。(ECMAScript Edition 5.1 の) JavaScript がそうでないにも関わらず、です。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>As noted in <a class="reference external" href="https://www.rfc-editor.org/errata_search.php?rfc=7159">the errata for RFC 7159</a>,
+JSON permits literal U+2028 (LINE SEPARATOR) and
+U+2029 (PARAGRAPH SEPARATOR) characters in strings, whereas JavaScript
+(as of ECMAScript Edition 5.1) does not.</td></tr>
 </tbody>
 </table>
 </div>
@@ -519,8 +576,9 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/json.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/json.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -565,12 +623,12 @@ Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -2,8 +2,9 @@
   'use strict';
 
   var all_versions = {
+    '3.6': '3.6',
     '3.5': '3.5',
-    '2.7': '2.7'
+    '2.7': '2.7',
   };
 
   function build_select(current_version, current_release) {

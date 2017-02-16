@@ -33,10 +33,11 @@
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
     <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python モジュールの配布" href="index.html" />
+    <link rel="up" title="Distributing Python Modules (Legacy version)" href="index.html" />
     <link rel="next" title="4. ソースコード配布物を作成する" href="sourcedist.html" />
     <link rel="prev" title="2. setup スクリプトを書く" href="setupscript.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/distutils/configfile.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -69,7 +70,7 @@
           <a href="../index.html">Documentation</a> &#187;
         </li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python モジュールの配布</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Distributing Python Modules (Legacy version)</a> &#187;</li> 
       </ul>
     </div>    
 
@@ -97,7 +98,8 @@
 </pre></div>
 </div>
 <p>ここで、 <em>command</em> は Distutils コマンドのうちの一つ (例えば <strong class="command">build_py</strong>, <strong class="command">install</strong>) で、 <em>option</em>  はそのコマンドでサポートされているオプションのうちの一つです。各コマンドには任意の数のオプションを設定でき、一つの設定ファイル中には任意の数のコマンドセクションを収められます。空白行は無視されます、 <code class="docutils literal"><span class="pre">'#'</span></code> 文字で開始して行末まで続くコメントも同様に無視されます。長いオプション設定値は、継続行をインデントするだけで複数行にわたって記述できます。</p>
-<p>あるコマンドがサポートしているオプションのリストは、 <a class="reference internal" href="../using/cmdline.html#cmdoption--help"><code class="xref std std-option docutils literal"><span class="pre">--help</span></code></a> オプションで調べられます。例えば以下のように。</p>
+<p>You can find out the list of options supported by a particular command with the
+universal <code class="xref std std-option docutils literal"><span class="pre">--help</span></code> option, e.g.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">help</span> <span class="n">build_ext</span>
 <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 <span class="n">Options</span> <span class="k">for</span> <span class="s1">&#39;build_ext&#39;</span> <span class="n">command</span><span class="p">:</span>
@@ -112,12 +114,20 @@
 <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>コマンドライン上で <code class="xref std std-option docutils literal"><span class="pre">--foo-bar</span></code> と綴るオプションは、設定ファイル上では <code class="docutils literal"><span class="pre">foo_bar</span></code> と綴るので注意してください。</p>
-<p id="distutils-build-ext-inplace">例えば、拡張モジュールを &#8220;インプレース (in-place)&#8221; でビルドしたいとします &#8212; すなわち、 <code class="xref py py-mod docutils literal"><span class="pre">pkg.ext</span></code> という拡張モジュールを持っていて、コンパイル済みの拡張モジュールファイル (例えば Unix では <code class="file docutils literal"><span class="pre">ext.so</span></code>) を pure Python モジュール <code class="xref py py-mod docutils literal"><span class="pre">pkg.mod1</span></code> および <code class="xref py py-mod docutils literal"><span class="pre">pkg.mod2</span></code> と同じソースディレクトリに置きたいとします。こんなときには、 <code class="xref std std-option docutils literal"><span class="pre">--inplace</span></code> を使えば、確実にビルドを行えます:</p>
+<p>Note that an option spelled <code class="xref std std-option docutils literal"><span class="pre">--foo-bar</span></code> on the command-line  is spelled
+<code class="docutils literal"><span class="pre">foo_bar</span></code> in configuration files.</p>
+<p id="distutils-build-ext-inplace">For example, say you want your extensions to be built &#8220;in-place&#8221;&#8212;that is, you
+have an extension <code class="xref py py-mod docutils literal"><span class="pre">pkg.ext</span></code>, and you want the compiled extension file
+(<code class="file docutils literal"><span class="pre">ext.so</span></code> on Unix, say) to be put in the same source directory as your
+pure Python modules <code class="xref py py-mod docutils literal"><span class="pre">pkg.mod1</span></code> and <code class="xref py py-mod docutils literal"><span class="pre">pkg.mod2</span></code>.  You can always use the
+<code class="xref std std-option docutils literal"><span class="pre">--inplace</span></code> option on the command-line to ensure this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
 </pre></div>
 </div>
-<p>しかし、この操作では、常に <strong class="command">build_ext</strong> を明示的に指定しなければならず、 <code class="xref std std-option docutils literal"><span class="pre">--inplace</span></code> オプションを忘れずに与えなければなりません。こうした設定を &#8220;設定しっ放しにする&#8221; 簡単な方法は、 <code class="file docutils literal"><span class="pre">setup.cfg</span></code> に書いておくやり方で、設定ファイルは以下のようになります:</p>
+<p>But this requires that you always specify the <strong class="command">build_ext</strong> command
+explicitly, and remember to provide <code class="xref std std-option docutils literal"><span class="pre">--inplace</span></code>. An easier way is to
+&#8220;set and forget&#8221; this option, by encoding it in <code class="file docutils literal"><span class="pre">setup.cfg</span></code>, the
+configuration file for this distribution:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">build_ext</span><span class="p">]</span>
 <span class="n">inplace</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
@@ -168,8 +178,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/distutils/configfile.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/distutils/configfile.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -209,16 +220,16 @@
           <a href="../index.html">Documentation</a> &#187;
         </li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Python モジュールの配布</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Distributing Python Modules (Legacy version)</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

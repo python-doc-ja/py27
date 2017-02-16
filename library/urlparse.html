@@ -37,6 +37,7 @@
     <link rel="next" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク" href="socketserver.html" />
     <link rel="prev" title="20.15. uuid — RFC 4122 に準拠した UUID オブジェクト" href="uuid.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/urlparse.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -85,7 +86,7 @@
 <p class="first admonition-title">注釈</p>
 <p class="last"><a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-mod docutils literal"><span class="pre">urlparse</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">urllib.parse</span></code> にリネームされました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードの import を修正します。</p>
 </div>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/urlparse.py">Lib/urlparse.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/urlparse.py">Lib/urlparse.py</a></p>
 <hr class="docutils" />
 <p>このモジュールでは URL (Uniform Resource Locator) 文字列をその構成要素 (アドレススキーム、ネットワーク上の位置、パスその他) に分解したり、構成要素を URL に組みなおしたり、&#8221;相対 URL (relative URL)&#8221; を指定した &#8220;基底 URL (base URL)&#8221; に基づいて絶対 URL に変換するための標準的なインタフェースを定義しています。</p>
 <p>このモジュールは Relative Uniform Resource Locators (相対 URL) に関する RFC に適合するよう設計されていおり、次のスキームをサポートしています: <code class="docutils literal"><span class="pre">file</span></code>, <code class="docutils literal"><span class="pre">ftp</span></code>, <code class="docutils literal"><span class="pre">gopher</span></code>, <code class="docutils literal"><span class="pre">hdl</span></code>, <code class="docutils literal"><span class="pre">http</span></code>, <code class="docutils literal"><span class="pre">https</span></code>, <code class="docutils literal"><span class="pre">imap</span></code>, <code class="docutils literal"><span class="pre">mailto</span></code>, <code class="docutils literal"><span class="pre">mms</span></code>, <code class="docutils literal"><span class="pre">news</span></code>, <code class="docutils literal"><span class="pre">nntp</span></code>, <code class="docutils literal"><span class="pre">prospero</span></code>, <code class="docutils literal"><span class="pre">rsync</span></code>, <code class="docutils literal"><span class="pre">rtsp</span></code>, <code class="docutils literal"><span class="pre">rtspu</span></code>, <code class="docutils literal"><span class="pre">sftp</span></code>, <code class="docutils literal"><span class="pre">shttp</span></code>, <code class="docutils literal"><span class="pre">sip</span></code>, <code class="docutils literal"><span class="pre">sips</span></code>, <code class="docutils literal"><span class="pre">snews</span></code>, <code class="docutils literal"><span class="pre">svn</span></code>, <code class="docutils literal"><span class="pre">svn+ssh</span></code>, <code class="docutils literal"><span class="pre">telnet</span></code>, <code class="docutils literal"><span class="pre">wais</span></code>.</p>
@@ -387,8 +388,10 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><span class="target" id="index-3"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3986.html"><strong>RFC 3986</strong></a> - Uniform Resource Identifiers</dt>
-<dd><p class="first last">これが現在の標準規格 (STD66) です。 urlparse モジュールに対するすべての変更はこの規格に準拠していなければなりませんが、若干の逸脱はありえます。これは主には後方互換性のため、また主要なブラウザに一般的に見られる、事実上標準となったいくつかのURL 解析上の要求に対応するためです。</p>
-</dd>
+<dd>This is the current standard (STD66). Any changes to urlparse module
+should conform to this. Certain deviations could be observed, which are
+mostly for backward compatibility purposes and for certain de-facto
+parsing requirements as commonly observed in major browsers.</dd>
 <dt><span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2732.html"><strong>RFC 2732</strong></a> - Format for Literal IPv6 Addresses in URL&#8217;s.</dt>
 <dd><p class="first last">この規格は IPv6 の URL を解析するときの要求事項を記述しています。</p>
 </dd>
@@ -396,8 +399,7 @@
 <dd><p class="first last">この RFC では Uniform Resource Name (URN) と Uniform Resource Locator (URL) の両方に対する一般的な文法的要求事項を記述しています。</p>
 </dd>
 <dt><span class="target" id="index-6"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2368.html"><strong>RFC 2368</strong></a> - The mailto URL scheme.</dt>
-<dd><p class="first last">mailto URL スキームに対する文法的要求事項です。</p>
-</dd>
+<dd>Parsing requirements for mailto URL schemes.</dd>
 <dt><span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> - Relative Uniform Resource Locators</dt>
 <dd><p class="first last">この RFC には絶対 URL と相対 URL を結合するための規則がボーダケースの取扱い方を決定する &#8220;異常な例&#8221; つきで収められています。</p>
 </dd>
@@ -435,21 +437,15 @@
 
 <p>以下のクラスが解析結果の実装を提供します:</p>
 <dl class="class">
-<dt id="urlparse.BaseResult">
-<em class="property">class </em><code class="descclassname">urlparse.</code><code class="descname">BaseResult</code><a class="headerlink" href="#urlparse.BaseResult" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>具象の結果クラスたちの基底クラスです。このクラスがほとんどの属性の定義を与えます。しかし <code class="xref py py-meth docutils literal"><span class="pre">geturl()</span></code> メソッドは提供しません。このクラスは <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> から派生していますが、 <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> や <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> をオーバーライドしません。</p>
-</dd></dl>
-
-<dl class="class">
 <dt id="urlparse.ParseResult">
 <em class="property">class </em><code class="descclassname">urlparse.</code><code class="descname">ParseResult</code><span class="sig-paren">(</span><em>scheme</em>, <em>netloc</em>, <em>path</em>, <em>params</em>, <em>query</em>, <em>fragment</em><span class="sig-paren">)</span><a class="headerlink" href="#urlparse.ParseResult" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-func docutils literal"><span class="pre">urlparse()</span></code></a> の結果のための具象クラスです。 <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドをオーバーライドして正しい個数の引数が引き渡されたことを確認するようにしています。</p>
+<dd><p>Concrete class for <a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-func docutils literal"><span class="pre">urlparse()</span></code></a> results.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="urlparse.SplitResult">
 <em class="property">class </em><code class="descclassname">urlparse.</code><code class="descname">SplitResult</code><span class="sig-paren">(</span><em>scheme</em>, <em>netloc</em>, <em>path</em>, <em>query</em>, <em>fragment</em><span class="sig-paren">)</span><a class="headerlink" href="#urlparse.SplitResult" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#urlparse.urlsplit" title="urlparse.urlsplit"><code class="xref py py-func docutils literal"><span class="pre">urlsplit()</span></code></a> の結果のための具象クラスです。 <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドをオーバーライドして正しい個数の引数が引き渡されたことを確認するようにしています。</p>
+<dd><p>Concrete class for <a class="reference internal" href="#urlparse.urlsplit" title="urlparse.urlsplit"><code class="xref py py-func docutils literal"><span class="pre">urlsplit()</span></code></a> results.</p>
 </dd></dl>
 
 </div>
@@ -478,8 +474,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/urlparse.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/urlparse.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -524,12 +521,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="16.8. readline — GNU readline のインタフェース" href="readline.html" />
     <link rel="prev" title="16.6. multiprocessing — プロセスベースの “並列処理” インタフェース" href="multiprocessing.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/mmap.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -82,7 +83,13 @@
   <div class="section" id="module-mmap">
 <span id="mmap-memory-mapped-file-support"></span><h1>16.7. <a class="reference internal" href="#module-mmap" title="mmap: Interface to memory-mapped files for Unix and Windows."><code class="xref py py-mod docutils literal"><span class="pre">mmap</span></code></a> &#8212; メモリマップファイル<a class="headerlink" href="#module-mmap" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>メモリにマップされたファイルオブジェクトは、文字列とファイルオブジェクトの両方のように振舞います。しかし通常の文字列オブジェクトとは異なり、これらは可変です。文字列が期待されるほとんどの場所で mmap オブジェクトを利用できます。例えば、メモリマップファイルを探索するために <a class="reference internal" href="re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールを使うことができます。それらは可変なので、 <code class="docutils literal"><span class="pre">obj[index]</span> <span class="pre">=</span> <span class="pre">'a'</span></code> のように文字を変換できますし、スライスを使うことで <code class="docutils literal"><span class="pre">obj[i1:i2]</span> <span class="pre">=</span> <span class="pre">'...'</span></code> のように部分文字列を変換することができます。現在のファイル位置をデータの始めとする読込みや書込み、ファイルの異なる位置へ <code class="xref py py-meth docutils literal"><span class="pre">seek()</span></code> することもできます。</p>
-<p>メモリマップファイルは Unix 上と Windows 上とでは異なる <a class="reference internal" href="#module-mmap" title="mmap: Interface to memory-mapped files for Unix and Windows."><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a> コンストラクタによって作られます。いずれの場合も、開いたファイルのファイル記述子を、更新のために提供しなければなりません。すでに存在する Python ファイルオブジェクトをマップしたい場合は、 <em>fileno</em> パラメータに渡す値を手に入れるために、 <code class="xref py py-meth docutils literal"><span class="pre">fileno()</span></code> メソッドを使用して下さい。そうでなければ、ファイル記述子を直接返す <a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal"><span class="pre">os.open()</span></code></a> 関数 (呼び出すときにはまだファイルが閉じている必要があります) を使って、ファイルを開くことができます。</p>
+<p>A memory-mapped file is created by the <a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a> constructor, which is
+different on Unix and on Windows.  In either case you must provide a file
+descriptor for a file opened for update. If you wish to map an existing Python
+file object, use its <code class="xref py py-meth docutils literal"><span class="pre">fileno()</span></code> method to obtain the correct value for the
+<em>fileno</em> parameter.  Otherwise, you can open the file using the
+<a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal"><span class="pre">os.open()</span></code></a> function, which returns a file descriptor directly (the file
+still needs to be closed when done).</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">書き込み可能でバッファされたファイルへのメモリマップファイルを作りたいのであれば、まず最初にファイルの <a class="reference internal" href="io.html#io.IOBase.flush" title="io.IOBase.flush"><code class="xref py py-func docutils literal"><span class="pre">flush()</span></code></a> を呼び出すべきです。これはバッファへのローカルな修正がマッピングで実際に利用可能になることを保障するために必要です。</p>
@@ -105,13 +112,16 @@
 <dl class="class">
 <dt>
 <em class="property">class </em><code class="descclassname">mmap.</code><code class="descname">mmap</code><span class="sig-paren">(</span><em>fileno</em>, <em>length</em><span class="optional">[</span>, <em>flags</em><span class="optional">[</span>, <em>prot</em><span class="optional">[</span>, <em>access</em><span class="optional">[</span>, <em>offset</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
-<dd><p><strong>(Unix バージョン)</strong> ファイル記述子 <em>fileno</em> によって指定されたファイルから <em>length</em> バイトをマップし、 mmap オブジェクトを返します。 <em>length</em> が <code class="docutils literal"><span class="pre">0</span></code> の場合、マップの最大長は <a class="reference internal" href="#module-mmap" title="mmap: Interface to memory-mapped files for Unix and Windows."><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a> が呼び出された時点のファイルサイズになります。</p>
+<dd><p><strong>(Unix version)</strong> Maps <em>length</em> bytes from the file specified by the file
+descriptor <em>fileno</em>, and returns a mmap object.  If <em>length</em> is <code class="docutils literal"><span class="pre">0</span></code>, the
+maximum length of the map will be the current size of the file when
+<a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a> is called.</p>
 <p><em>flags</em> はマップの種類を指定します。 <code class="xref py py-const docutils literal"><span class="pre">MAP_PRIVATE</span></code> はプライベートな copy-on-write(書込み時コピー)のマップを作成します。従って、mmap オブジェクトの内容への変更はこのプロセス内にのみ有効です。 <code class="xref py py-const docutils literal"><span class="pre">MAP_SHARED</span></code> はファイルの同じ領域をマップする他のすべてのプロセスと共有されたマップを作成します。デフォルトは <code class="xref py py-const docutils literal"><span class="pre">MAP_SHARED</span></code> です。</p>
 <p><em>prot</em> が指定された場合、希望のメモリ保護を与えます。 2つの最も有用な値は、 <code class="xref py py-const docutils literal"><span class="pre">PROT_READ</span></code> と <code class="xref py py-const docutils literal"><span class="pre">PROT_WRITE</span></code> です。これは、読込み可能または書込み可能を指定するものです。 <em>prot</em> のデフォルトは <code class="xref py py-const docutils literal"><span class="pre">PROT_READ</span> <span class="pre">|</span> <span class="pre">PROT_WRITE</span></code> です。</p>
 <p><em>access</em> はオプションのキーワード・パラメータとして、 <em>flags</em> と <em>prot</em> の代わりに指定してもかまいません。 <em>flags</em>, <em>prot</em> と <em>access</em> の両方を指定することは間違っています。このパラメーターを使用法についての情報は、先に述べた <em>access</em> の記述を参照してください。</p>
 <p><em>offset</em> は非負整数のオフセットとして指定できます。 mmap の参照はファイルの先頭からのオフセットに相対的になります。 <em>offset</em> のデフォルトは 0 です。 <em>offset</em> は PAGESIZE または ALLOCATIONGRANULARITY の倍数でなければなりません。</p>
 <p>Mac OS X と OpenVMS において、作成された memory mapping の正当性を確実にするために <em>fileno</em> で指定されたファイルディスクリプタは内部で自動的に物理的なストレージ (physical backing store) と同期されます。</p>
-<p>以下の例は <a class="reference internal" href="#module-mmap" title="mmap: Interface to memory-mapped files for Unix and Windows."><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a> の簡単な使い方です:</p>
+<p>This example shows a simple way of using <a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-class docutils literal"><span class="pre">mmap</span></code></a>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mmap</span>
 
 <span class="c1"># write a simple example file</span>
@@ -144,7 +154,7 @@
 
 <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
 
-<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># In a child process</span>
+<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># In a child process</span>
     <span class="n">mm</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="nb">print</span> <span class="n">mm</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
 
@@ -257,8 +267,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/mmap.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/mmap.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -303,12 +314,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

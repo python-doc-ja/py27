@@ -37,6 +37,7 @@
     <link rel="next" title="25.3. unittest — ユニットテストフレームワーク" href="unittest.html" />
     <link rel="prev" title="25.1. pydoc — ドキュメント生成とオンラインヘルプシステム" href="pydoc.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/doctest.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -154,32 +155,35 @@
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><code class="file docutils literal"><span class="pre">example.py</span></code> をコマンドラインから直接実行すると、 <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> はその魔法を働かせます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ python example.py
-$
+<p>If you run <code class="file docutils literal"><span class="pre">example.py</span></code> directly from the command line, <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a>
+works its magic:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python example.py
+<span class="gp">$</span>
 </pre></div>
 </div>
-<p>出力は何もありません！しかしこれが正常で、すべての実行例が正しく動作することを意味しています。スクリプトに <code class="docutils literal"><span class="pre">-v</span></code> を与えると、 <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> は何を行おうとしているのかを記録した詳細なログを出力し、最後にまとめを出力します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ python example.py -v
-Trying:
-    factorial(5)
-Expecting:
-    120
-ok
-Trying:
-    [factorial(n) for n in range(6)]
-Expecting:
-    [1, 1, 2, 6, 24, 120]
-ok
-Trying:
-    [factorial(long(n)) for n in range(6)]
-Expecting:
-    [1, 1, 2, 6, 24, 120]
-ok
+<p>There&#8217;s no output!  That&#8217;s normal, and it means all the examples worked.  Pass
+<code class="docutils literal"><span class="pre">-v</span></code> to the script, and <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> prints a detailed log of what
+it&#8217;s trying, and prints a summary at the end:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python example.py -v
+<span class="go">Trying:</span>
+<span class="go">    factorial(5)</span>
+<span class="go">Expecting:</span>
+<span class="go">    120</span>
+<span class="go">ok</span>
+<span class="go">Trying:</span>
+<span class="go">    [factorial(n) for n in range(6)]</span>
+<span class="go">Expecting:</span>
+<span class="go">    [1, 1, 2, 6, 24, 120]</span>
+<span class="go">ok</span>
+<span class="go">Trying:</span>
+<span class="go">    [factorial(long(n)) for n in range(6)]</span>
+<span class="go">Expecting:</span>
+<span class="go">    [1, 1, 2, 6, 24, 120]</span>
+<span class="go">ok</span>
 </pre></div>
 </div>
-<p>といった具合で、最後には:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Trying:
+<p>And so on, eventually ending with:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Trying:
     factorial(1e100)
 Expecting:
     Traceback (most recent call last):
@@ -230,8 +234,11 @@ $
 <span class="n">doctest</span><span class="o">.</span><span class="n">testfile</span><span class="p">(</span><span class="s2">&quot;example.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>この短いスクリプトは、 <code class="file docutils literal"><span class="pre">example.txt</span></code> というファイルの中に入っている対話モードの Python 操作例すべてを実行して、その内容を検証します。ファイルの内容は一つの巨大な docstring であるかのように扱われます; ファイルが Python プログラムである必要はありません！例えば、 <code class="file docutils literal"><span class="pre">example.txt</span></code> には以下のような内容が入っているとします:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>The ``example`` module
+<p>That short script executes and verifies any interactive Python examples
+contained in the file <code class="file docutils literal"><span class="pre">example.txt</span></code>.  The file content is treated as if it
+were a single giant docstring; the file doesn&#8217;t need to contain a Python
+program!   For example, perhaps <code class="file docutils literal"><span class="pre">example.txt</span></code> contains this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>The ``example`` module
 ======================
 
 Using ``factorial``
@@ -420,7 +427,10 @@ Now use it:
 </div>
 <div class="section" id="option-flags">
 <span id="doctest-options"></span><span id="option-flags-and-directives"></span><h3>25.2.3.5. オプションフラグ<a class="headerlink" href="#option-flags" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>doctest の振る舞いは、数多くのオプションフラグによって様々な側面から制御されています。フラグのシンボル名はモジュールの定数として提供され、 &#8216;or&#8217; でつないで様々な関数に渡すことができます。シンボル名は <a class="reference internal" href="#doctest-directives"><span class="std std-ref">doctest directives</span></a> でも使用できます。</p>
+<p>A number of option flags control various aspects of doctest&#8217;s behavior.
+Symbolic names for the flags are supplied as module constants, which can be
+<a class="reference internal" href="../reference/expressions.html#bitwise"><span class="std std-ref">bitwise ORed</span></a> together and passed to various functions.
+The names can also be used in <a class="reference internal" href="#doctest-directives"><span class="std std-ref">doctest directives</span></a>.</p>
 <p>最初に説明するオプション群は、テストのセマンティクスを決めます。すなわち、実際にテストを実行したときの出力と実行例中の期待する出力とが一致しているかどうかを doctest がどのように判断するかを制御します:</p>
 <dl class="data">
 <dt id="doctest.DONT_ACCEPT_TRUE_FOR_1">
@@ -779,7 +789,16 @@ Now use it:
 <code class="descclassname">doctest.</code><code class="descname">set_unittest_reportflags</code><span class="sig-paren">(</span><em>flags</em><span class="sig-paren">)</span><a class="headerlink" href="#doctest.set_unittest_reportflags" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> のレポートフラグをセットします。</p>
 <p>引数 <em>flags</em> にはオプションフラグを OR で結合して渡します。 <a class="reference internal" href="#doctest-options"><span class="std std-ref">オプションフラグ</span></a> 節を参照してください。「レポートフラグ」しか使えません。</p>
-<p>この関数で設定した内容はモジュール全体にわたるものであり、関数呼び出し以後に <a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> モジュールから実行されるすべての doctest に影響します: <code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code> の <code class="xref py py-meth docutils literal"><span class="pre">runTest()</span></code> メソッドは、 <code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code> インスタンスが作成された際に、現在のテストケースに指定されたオプションフラグを見に行きます。レポートフラグが指定されていない場合 (通常の場合で、望ましいケースです)、 <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> の <a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> レポートフラグが OR で結合され、doctest を実行するために作成される <a class="reference internal" href="#doctest.DocTestRunner" title="doctest.DocTestRunner"><code class="xref py py-class docutils literal"><span class="pre">DocTestRunner</span></code></a>  インスタンスに渡されます。 <code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code> インスタンスを構築する際に何らかのレポートフラグが指定されていた場合、 <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> の <a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> レポートフラグは無視されます。</p>
+<p>This is a module-global setting, and affects all future doctests run by module
+<a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a>:  the <code class="xref py py-meth docutils literal"><span class="pre">runTest()</span></code> method of <code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code> looks at
+the option flags specified for the test case when the <code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code>
+instance was constructed.  If no reporting flags were specified (which is the
+typical and expected case), <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a>&#8216;s <a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> reporting flags are
+<a class="reference internal" href="../reference/expressions.html#bitwise"><span class="std std-ref">bitwise ORed</span></a> into the option flags, and the option flags
+so augmented are passed to the <a class="reference internal" href="#doctest.DocTestRunner" title="doctest.DocTestRunner"><code class="xref py py-class docutils literal"><span class="pre">DocTestRunner</span></code></a> instance created to
+run the doctest.  If any reporting flags were specified when the
+<code class="xref py py-class docutils literal"><span class="pre">DocTestCase</span></code> instance was constructed, <a class="reference internal" href="#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a>&#8216;s
+<a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> reporting flags are ignored.</p>
 <p>この関数は、関数を呼び出す前に有効になっていた <a class="reference internal" href="unittest.html#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> レポートフラグの値を返します。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
@@ -862,7 +881,8 @@ Now use it:
 <dl class="attribute">
 <dt id="doctest.DocTest.docstring">
 <code class="descname">docstring</code><a class="headerlink" href="#doctest.DocTest.docstring" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>テストを取り出した docstring 自体を現す文字列です。docstring 文字列を得られない場合や、文字列からテスト実行例を取り出したのでない場合には <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
+<dd><p>The string that the test was extracted from, or <code class="docutils literal"><span class="pre">None</span></code> if the string is
+unavailable, or if the test was not extracted from a string.</p>
 </dd></dl>
 
 </dd></dl>
@@ -936,7 +956,9 @@ Now use it:
 <code class="descname">find</code><span class="sig-paren">(</span><em>obj[, name][, module][, globs][, extraglobs]</em><span class="sig-paren">)</span><a class="headerlink" href="#doctest.DocTestFinder.find" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>obj</em> または <em>obj</em> 内に入っているオブジェクトの docstring 中で定義されている <a class="reference internal" href="#doctest.DocTest" title="doctest.DocTest"><code class="xref py py-class docutils literal"><span class="pre">DocTest</span></code></a> のリストを返します。</p>
 <p>オプション引数 <em>name</em> には、オブジェクトの名前を指定します。この名前は、関数が返す <a class="reference internal" href="#doctest.DocTest" title="doctest.DocTest"><code class="xref py py-class docutils literal"><span class="pre">DocTest</span></code></a> の名前になります。 <em>name</em> を指定しない場合、 <code class="docutils literal"><span class="pre">obj.__name__</span></code> を使います。</p>
-<p>オプションのパラメータ <em>module</em> は、指定したオブジェクトを収めているモジュールを指定します。<em>module</em> を指定しないか、<a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> を指定した場合には、正しいモジュールを自動的に決定しようと試みます。オブジェクトのモジュールは以下のような役割を果たします:</p>
+<p>The optional parameter <em>module</em> is the module that contains the given object.
+If the module is not specified or is <code class="docutils literal"><span class="pre">None</span></code>, then the test finder will attempt
+to automatically determine the correct module.  The object&#8217;s module is used:</p>
 <ul class="simple">
 <li><p class="first"><em>globs</em> を指定していない場合、オブジェクトのモジュールはデフォルトの名前空間になります。</p>
 </li>
@@ -1369,8 +1391,9 @@ Now use it:
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/doctest.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/doctest.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1415,12 +1438,12 @@ Now use it:
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

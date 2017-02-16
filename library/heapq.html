@@ -37,6 +37,7 @@
     <link rel="next" title="8.5. bisect — 配列二分法アルゴリズム" href="bisect.html" />
     <link rel="prev" title="8.3. collections — 高性能なコンテナ・データ型" href="collections.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/heapq.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,7 +85,7 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/heapq.py">Lib/heapq.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/heapq.py">Lib/heapq.py</a></p>
 <hr class="docutils" />
 <p>このモジュールではヒープキューアルゴリズムの一実装を提供しています。優先度キューアルゴリズムとしても知られています。</p>
 <p>ヒープとは、全ての親ノードの値が、その全ての子の値以下であるようなバイナリツリーです。この実装は、全ての <em>k</em> に対して、ゼロから要素を数えていった際に、<code class="docutils literal"><span class="pre">heap[k]</span> <span class="pre">&lt;=</span> <span class="pre">heap[2*k+1]</span></code> かつ <code class="docutils literal"><span class="pre">heap[k]</span> <span class="pre">&lt;=</span> <span class="pre">heap[2*k+2]</span></code> となる配列を使っています。比較のために、存在しない要素は無限大として扱われます。ヒープの興味深い性質は、最小の要素が常にルート、つまり <code class="docutils literal"><span class="pre">heap[0]</span></code> になることです。</p>
@@ -165,7 +166,9 @@
 <p>後ろ二つの関数は <em>n</em> の値が小さな場合に最適な動作をします。大きな値の時には <a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> 関数の方が効率的です。さらに、 <code class="docutils literal"><span class="pre">n==1</span></code> の時には <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a> および <a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a> 関数の方が効率的です。この関数を繰り返し使うことが必要なら、iterable を実際のヒープに変えることを考えてください。</p>
 <div class="section" id="basic-examples">
 <h2>8.4.1. 基本的な例<a class="headerlink" href="#basic-examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference external" href="http://ja.wikipedia.org/wiki/%E3%83%92%E3%83%BC%E3%83%97%E3%82%BD%E3%83%BC%E3%83%88">ヒープソート</a> は、すべての値をヒープに push し、それから最小の値を一つづつ pop することで実装できます:</p>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Heapsort">heapsort</a> can be implemented by
+pushing all values onto a heap and then popping off the smallest values one at a
+time:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">heapsort</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">h</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
@@ -190,7 +193,8 @@
 </div>
 <div class="section" id="priority-queue-implementation-notes">
 <h2>8.4.2. 優先度キュー実装の注釈<a class="headerlink" href="#priority-queue-implementation-notes" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference external" href="http://ja.wikipedia.org/wiki/%E5%84%AA%E5%85%88%E5%BA%A6%E3%81%A4%E3%81%8D%E3%82%AD%E3%83%A5%E3%83%BC">優先度つきキュー</a> は、ヒープの一般的な使い方で、実装にはいくつか困難な点があります:</p>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Priority_queue">priority queue</a> is common use
+for a heap, and it presents several implementation challenges:</p>
 <ul class="simple">
 <li><p class="first">ソート安定性: 優先度が等しい二つのタスクが、もともと追加された順序で返されるためにはどうしたらいいでしょうか？</p>
 </li>
@@ -249,7 +253,14 @@
 <span class="mi">15</span> <span class="mi">16</span>   <span class="mi">17</span> <span class="mi">18</span>   <span class="mi">19</span> <span class="mi">20</span>   <span class="mi">21</span> <span class="mi">22</span>   <span class="mi">23</span> <span class="mi">24</span>   <span class="mi">25</span> <span class="mi">26</span>   <span class="mi">27</span> <span class="mi">28</span>   <span class="mi">29</span> <span class="mi">30</span>
 </pre></div>
 </div>
-<p>上の木構造では、各セル <em>k</em> は <code class="docutils literal"><span class="pre">2*k+1</span></code> および <code class="docutils literal"><span class="pre">2*k+2</span></code> を最大値としています。スポーツに見られるような通常の 2 つ組勝ち抜き戦では、各セルはその下にある二つのセルに対する勝者となっていて、個々のセルの勝者を追跡していくことにより、そのセルに対する全ての相手を見ることができます。しかしながら、このような勝ち抜き戦を使う計算機アプリケーションの多くでは、勝歴を追跡する必要はりません。メモリ効率をより高めるために、勝者が上位に進級した際、下のレベルから持ってきて置き換えることにすると、あるセルとその下位にある二つのセルは異なる三つの要素を含み、かつ上位のセルは二つの下位のセルに対して &#8220;勝者と&#8221; なります。</p>
+<p>In the tree above, each cell <em>k</em> is topping <code class="docutils literal"><span class="pre">2*k+1</span></code> and <code class="docutils literal"><span class="pre">2*k+2</span></code>. In a usual
+binary tournament we see in sports, each cell is the winner over the two cells
+it tops, and we can trace the winner down the tree to see all opponents s/he
+had.  However, in many computer applications of such tournaments, we do not need
+to trace the history of a winner. To be more memory efficient, when a winner is
+promoted, we try to replace it by something else at a lower level, and the rule
+becomes that a cell and the two cells it tops contain three different items, but
+the top cell &#8220;wins&#8221; over the two topped cells.</p>
 <p>このヒープ不変式が常に守られれば、インデクス 0 は明らかに最勝者となります。最勝者の要素を除去し、&#8221;次の&#8221; 勝者を見つけるための最も単純なアルゴリズム的手法は、ある敗者要素 (ここでは上図のセル 30 とします) を 0 の場所に持っていき、この新しい 0 を濾過するようにしてツリーを下らせて値を交換してゆきます。不変関係が再構築されるまでこれを続けます。この操作は明らかに、ツリー内の全ての要素数に対して対数的な計算量となります。全ての要素について繰り返すと、O(n log n) のソート(並べ替え)になります。</p>
 <p>このソートの良い点は、新たに挿入する要素が、その最に取り出す 0 番目の要素よりも &#8220;良い値&#8221; でない限り、ソートを行っている最中に新たな要素を効率的に追加できるというところです。この性質は、シミュレーション的な状況で、ツリーで全ての入力イベントを保持し、&#8221;勝者となる状況&#8221; を最小のスケジュール時刻にするような場合に特に便利です。あるイベントが他のイベント群の実行をスケジュールする際、それらは未来にスケジュールされることになるので、それらのイベント群を容易にヒープに積むことができます。すなわち、ヒープはスケジューラを実装する上で良いデータ構造であるといえます (私は MIDI シーケンサで使っているものです :-)。</p>
 <p>これまでスケジューラを実装するための様々なデータ構造が広範に研究されています。ヒープは十分高速で、速度もおおむね一定であり、最悪の場合でも平均的な速度とさほど変わらないため良いデータ構造といえます。しかし、最悪の場合がひどい速度になることを除き、たいていでより効率の高い他のデータ構造表現も存在します。</p>
@@ -292,8 +303,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/heapq.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/heapq.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -338,12 +350,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="13.3. robotparser — robots.txt のためのパーザ" href="robotparser.html" />
     <link rel="prev" title="13.1. csv — CSV ファイルの読み書き" href="csv.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/configparser.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -85,7 +86,11 @@
 <p class="first admonition-title">注釈</p>
 <p class="last"><a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></code></a> モジュールは Python 3 で <code class="xref py py-mod docutils literal"><span class="pre">configparser</span></code> に改名されました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソース内の import を修正します。</p>
 </div>
-<p id="index-0">このモジュールでは、 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> クラスを定義しています。 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> クラスは、Microsoft Windows の INI ファイルに見られるような構造をもつ、基礎的な設定ファイルを実装しています。このモジュールを使って、エンドユーザーが簡単にカスタマイズできるような Python プログラムを書くことができます。</p>
+<p id="index-0">This module defines the class <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a>.   The <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a>
+class implements a basic configuration file parser language which provides a
+structure similar to what you would find on Microsoft Windows INI files.  You
+can use this to write Python programs which can be customized by end users
+easily.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">このライブラリでは、Windowsのレジストリ用に拡張された INI 文法はサポート <em>していません</em> 。</p>
@@ -113,8 +118,13 @@
 </pre></div>
 </div>
 <p>この場合 <code class="docutils literal"><span class="pre">%(dir)s</span></code> は変数 <code class="docutils literal"><span class="pre">dir</span></code> (この場合は <code class="docutils literal"><span class="pre">frob</span></code>)に展開されます。参照の展開は必要に応じて実行されます。</p>
-<p>デフォルト値は <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> のコンストラクタに辞書として渡すことで設定できます。追加の(他の値をオーバーライドする)デフォルト値は <code class="xref py py-meth docutils literal"><span class="pre">get()</span></code> メソッドに渡すことができます。</p>
-<p>セクションは通常、組み込みの辞書型に格納されます。 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> コンストラクタの引数として、代替の辞書型を渡すことができます。例えば、キーをソートするような辞書型が渡された場合、iniファイルに書き戻すときにセクションはソートされます。</p>
+<p>Default values can be specified by passing them into the <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a>
+constructor as a dictionary.  Additional defaults  may be passed into the
+<code class="xref py py-meth docutils literal"><span class="pre">get()</span></code> method which will override all others.</p>
+<p>Sections are normally stored in a built-in dictionary. An alternative dictionary
+type can be passed to the <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> constructor. For example, if a
+dictionary type is passed that sorts its keys, the sections will be sorted on
+write-back, as will be the keys within each section.</p>
 <dl class="class">
 <dt id="ConfigParser.RawConfigParser">
 <em class="property">class </em><code class="descclassname">ConfigParser.</code><code class="descname">RawConfigParser</code><span class="sig-paren">(</span><span class="optional">[</span><em>defaults</em><span class="optional">[</span>, <em>dict_type</em><span class="optional">[</span>, <em>allow_no_value</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.RawConfigParser" title="この定義へのパーマリンク">¶</a></dt>
@@ -151,7 +161,10 @@
 <dl class="class">
 <dt id="ConfigParser.SafeConfigParser">
 <em class="property">class </em><code class="descclassname">ConfigParser.</code><code class="descname">SafeConfigParser</code><span class="sig-paren">(</span><span class="optional">[</span><em>defaults</em><span class="optional">[</span>, <em>dict_type</em><span class="optional">[</span>, <em>allow_no_value</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.SafeConfigParser" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> の派生クラスでより安全な値の置換を実装しています。この実装はより予測可能性が高くなっています。新規に書くアプリケーションでは、古いバージョンの Python と互換性を持たせる必要がない限り、このバージョンを利用することが望ましいです。</p>
+<dd><p>Derived class of <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> that implements a more-sane variant of
+the magical interpolation feature.  This implementation is more predictable as
+well. New applications should prefer this version if they don&#8217;t need to be
+compatible with older versions of Python.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
@@ -232,7 +245,8 @@
 <dl class="data">
 <dt id="ConfigParser.MAX_INTERPOLATION_DEPTH">
 <code class="descclassname">ConfigParser.</code><code class="descname">MAX_INTERPOLATION_DEPTH</code><a class="headerlink" href="#ConfigParser.MAX_INTERPOLATION_DEPTH" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>raw</em> が偽だった場合の <code class="xref py py-meth docutils literal"><span class="pre">get()</span></code> による再帰的な文字列置換の繰り返しの最大値です。 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> クラスだけに関係します。</p>
+<dd><p>The maximum depth for recursive interpolation for <code class="xref py py-meth docutils literal"><span class="pre">get()</span></code> when the <em>raw</em>
+parameter is false.  This is relevant only for the <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> class.</p>
 </dd></dl>
 
 <div class="admonition seealso">
@@ -288,7 +302,17 @@
 <dl class="method">
 <dt id="ConfigParser.RawConfigParser.read">
 <code class="descclassname">RawConfigParser.</code><code class="descname">read</code><span class="sig-paren">(</span><em>filenames</em><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.RawConfigParser.read" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ファイル名のリストを読んで解析をこころみ、解析に成功したファイル名のリストを返します。もし <em>filenames</em> が文字列か Unicode 文字列なら、1つのファイル名として扱われます。 <em>filenames</em> で指定されたファイルが開けない場合、そのファイルは無視されます。この挙動は設定ファイルが置かれる可能性のある場所(例えば、カレントディレクトリ、ホームディレクトリ、システム全体の設定を行うディレクトリ)を設定して、そこに存在する設定ファイルを読むことを想定して設計されています。設定ファイルが存在しなかった場合、 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> のインスタンスは空のデータセットを持ちます。初期値の設定ファイルを先に読み込んでおく必要があるアプリケーションでは、 <a class="reference internal" href="#ConfigParser.RawConfigParser.readfp" title="ConfigParser.RawConfigParser.readfp"><code class="xref py py-meth docutils literal"><span class="pre">readfp()</span></code></a> を <a class="reference internal" href="#ConfigParser.RawConfigParser.read" title="ConfigParser.RawConfigParser.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> の前に呼び出すことでそのような動作を実現できます:</p>
+<dd><p>Attempt to read and parse a list of filenames, returning a list of filenames
+which were successfully parsed.  If <em>filenames</em> is a string or Unicode string,
+it is treated as a single filename. If a file named in <em>filenames</em> cannot be
+opened, that file will be ignored.  This is designed so that you can specify a
+list of potential configuration file locations (for example, the current
+directory, the user&#8217;s home directory, and some system-wide directory), and all
+existing configuration files in the list will be read.  If none of the named
+files exist, the <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> instance will contain an empty dataset.
+An application which requires initial values to be loaded from a file should
+load the required file or files using <a class="reference internal" href="#ConfigParser.RawConfigParser.readfp" title="ConfigParser.RawConfigParser.readfp"><code class="xref py py-meth docutils literal"><span class="pre">readfp()</span></code></a> before calling <a class="reference internal" href="#ConfigParser.RawConfigParser.read" title="ConfigParser.RawConfigParser.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a>
+for any optional files:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ConfigParser</span><span class="o">,</span> <span class="nn">os</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
@@ -340,7 +364,11 @@
 <dl class="method">
 <dt id="ConfigParser.RawConfigParser.set">
 <code class="descclassname">RawConfigParser.</code><code class="descname">set</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.RawConfigParser.set" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>与えられたセクションが存在していれば、オプションを指定された値に設定します。セクションが存在しなければ <a class="reference internal" href="#ConfigParser.NoSectionError" title="ConfigParser.NoSectionError"><code class="xref py py-exc docutils literal"><span class="pre">NoSectionError</span></code></a> を発生させます。 <a class="reference internal" href="#ConfigParser.RawConfigParser" title="ConfigParser.RawConfigParser"><code class="xref py py-class docutils literal"><span class="pre">RawConfigParser</span></code></a> (あるいは <em>raw</em> パラメータをセットした <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a>) を文字列型でない値の <em>内部的な</em> 格納場所として使うことは可能ですが、すべての機能 (置換やファイルへの出力を含む) がサポートされるのは文字列を値として使った場合だけです。</p>
+<dd><p>If the given section exists, set the given option to the specified value;
+otherwise raise <a class="reference internal" href="#ConfigParser.NoSectionError" title="ConfigParser.NoSectionError"><code class="xref py py-exc docutils literal"><span class="pre">NoSectionError</span></code></a>.  While it is possible to use
+<a class="reference internal" href="#ConfigParser.RawConfigParser" title="ConfigParser.RawConfigParser"><code class="xref py py-class docutils literal"><span class="pre">RawConfigParser</span></code></a> (or <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> with <em>raw</em> parameters set to
+true) for <em>internal</em> storage of non-string values, full functionality (including
+interpolation and output to files) can only be achieved using string values.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 1.6 で追加.</span></p>
 </div>
@@ -386,7 +414,8 @@
 </div>
 <div class="section" id="configparser-objects">
 <span id="id2"></span><h2>13.2.2. ConfigParser オブジェクト<a class="headerlink" href="#configparser-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> クラスは <a class="reference internal" href="#ConfigParser.RawConfigParser" title="ConfigParser.RawConfigParser"><code class="xref py py-class docutils literal"><span class="pre">RawConfigParser</span></code></a> のインターフェースをいくつかのメソッドについて拡張し、省略可能な引数を追加しています。</p>
+<p>The <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> class extends some methods of the
+<a class="reference internal" href="#ConfigParser.RawConfigParser" title="ConfigParser.RawConfigParser"><code class="xref py py-class docutils literal"><span class="pre">RawConfigParser</span></code></a> interface, adding some optional arguments.</p>
 <dl class="method">
 <dt id="ConfigParser.ConfigParser.get">
 <code class="descclassname">ConfigParser.</code><code class="descname">get</code><span class="sig-paren">(</span><em>section</em>, <em>option</em><span class="optional">[</span>, <em>raw</em><span class="optional">[</span>, <em>vars</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.ConfigParser.get" title="この定義へのパーマリンク">¶</a></dt>
@@ -406,7 +435,8 @@
 </div>
 <div class="section" id="safeconfigparser-objects">
 <span id="id3"></span><h2>13.2.3. SafeConfigParser オブジェクト<a class="headerlink" href="#safeconfigparser-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#ConfigParser.SafeConfigParser" title="ConfigParser.SafeConfigParser"><code class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></code></a> は <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> と同様の拡張インターフェイスをもっていますが、以下のような機能が追加されています:</p>
+<p>The <a class="reference internal" href="#ConfigParser.SafeConfigParser" title="ConfigParser.SafeConfigParser"><code class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></code></a> class implements the same extended interface as
+<a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a>, with the following addition:</p>
 <dl class="method">
 <dt id="ConfigParser.SafeConfigParser.set">
 <code class="descclassname">SafeConfigParser.</code><code class="descname">set</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#ConfigParser.SafeConfigParser.set" title="この定義へのパーマリンク">¶</a></dt>
@@ -462,15 +492,16 @@
     <span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>置換機能を利用するには、 <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Configuration file parser."><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> か <a class="reference internal" href="#ConfigParser.SafeConfigParser" title="ConfigParser.SafeConfigParser"><code class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></code></a> クラスを利用します:</p>
+<p>To get interpolation, you will need to use a <a class="reference internal" href="#ConfigParser.ConfigParser" title="ConfigParser.ConfigParser"><code class="xref py py-class docutils literal"><span class="pre">ConfigParser</span></code></a> or
+<a class="reference internal" href="#ConfigParser.SafeConfigParser" title="ConfigParser.SafeConfigParser"><code class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></code></a>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ConfigParser</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
 <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;example.cfg&#39;</span><span class="p">)</span>
 
 <span class="c1"># Set the third, optional argument of get to 1 if you wish to use raw mode.</span>
-<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># -&gt; &quot;Python is fun!&quot;</span>
-<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># -&gt; &quot;%(bar)s is %(baz)s!&quot;</span>
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># -&gt; &quot;Python is fun!&quot;</span>
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># -&gt; &quot;%(bar)s is %(baz)s!&quot;</span>
 
 <span class="c1"># The optional fourth argument is a dict with members that will take</span>
 <span class="c1"># precedence in interpolation.</span>
@@ -485,10 +516,10 @@
 <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">({</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="s1">&#39;Life&#39;</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">:</span> <span class="s1">&#39;hard&#39;</span><span class="p">})</span>
 <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;example.cfg&#39;</span><span class="p">)</span>
 
-<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="c1"># -&gt; &quot;Python is fun!&quot;</span>
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>  <span class="c1"># -&gt; &quot;Python is fun!&quot;</span>
 <span class="n">config</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="n">config</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">)</span>
-<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="c1"># -&gt; &quot;Life is hard!&quot;</span>
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Section1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>  <span class="c1"># -&gt; &quot;Life is hard!&quot;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">opt_move</span></code> 関数は、オプションをセクション間で移動することができます:</p>
@@ -562,8 +593,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/configparser.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/configparser.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -608,12 +640,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

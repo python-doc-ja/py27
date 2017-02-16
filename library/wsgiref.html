@@ -37,6 +37,7 @@
     <link rel="next" title="20.5. urllib — URL による任意のリソースへのアクセス" href="urllib.html" />
     <link rel="prev" title="20.3. cgitb — CGI スクリプトのトレースバック管理機構" href="cgitb.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/wsgiref.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -87,7 +88,8 @@
 <p>Web Server Gateway Interface (WSGI) は、Web サーバソフトウェアと Python で記述された Web アプリケーションとの標準インターフェースです。標準インターフェースを持つことで、WSGI をサポートするアプリケーションを幾つもの異なる Web サーバで使うことが容易になります。</p>
 <p>Web サーバとプログラミングフレームワークの作者だけが、WSGI デザインのあらゆる細部や特例などを知る必要があります。WSGI アプリケーションをインストールしたり、既存のフレームワークを使ったアプリケーションを記述するだけの皆さんは、全てについて理解する必要はありません。</p>
 <p><a class="reference internal" href="#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> は WSGI 仕様のリファレンス実装で、これは Web サーバやフレームワークに WSGI サポートを加えるのに利用できます。これは WSGI 環境変数やレスポンスヘッダを操作するユーティリティ、 WSGI サーバ実装時のベースクラス、WSGI アプリケーションを提供する  デモ用 HTTP サーバ、それと WSGI サーバとアプリケーションの WSGI 仕様 (<span class="target" id="index-30"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a>) 準拠のバリデーションツールを提供します。</p>
-<p><a class="reference external" href="http://www.wsgi.org">http://www.wsgi.org</a> に、WSGIに関するさらなる情報と、チュートリアルやその他のリソースへのリンクがあります。</p>
+<p>See <a class="reference external" href="https://wsgi.readthedocs.org/">https://wsgi.readthedocs.org/</a> for more information about WSGI, and links to
+tutorials and other resources.</p>
 <div class="section" id="module-wsgiref.util">
 <span id="wsgiref-util-wsgi-environment-utilities"></span><h2>20.4.1. <a class="reference internal" href="#module-wsgiref.util" title="wsgiref.util: WSGI environment utilities."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref.util</span></code></a> &#8211; WSGI 環境のユーティリティ<a class="headerlink" href="#module-wsgiref.util" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>このモジュールは WSGI 環境で使う様々なユーティリティ関数を提供します。 WSGI 環境は <span class="target" id="index-31"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> で記述されているような HTTP リクエスト変数を含む辞書です。全ての <em>environ</em> パラメータを取る関数は WSGI 準拠の辞書を与えられることを期待しています; 細かい仕様については <span class="target" id="index-32"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> を参照してください。</p>
@@ -306,8 +308,8 @@
 <span class="c1"># Our callable object which is intentionally not compliant to the</span>
 <span class="c1"># standard, so the validator is going to break</span>
 <span class="k">def</span> <span class="nf">simple_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span> <span class="c1"># HTTP Status</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span> <span class="c1"># HTTP Headers</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>  <span class="c1"># HTTP Status</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>  <span class="c1"># HTTP Headers</span>
     <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
 
     <span class="c1"># This is going to break because we need to return a list, and</span>
@@ -515,11 +517,11 @@
 <span class="c1"># object that accepts two arguments. For that purpose, we&#39;re going to</span>
 <span class="c1"># use a function (note that you&#39;re not limited to a function, you can</span>
 <span class="c1"># use a class for example). The first argument passed to the function</span>
-<span class="c1"># is a dictionary containing CGI-style envrironment variables and the</span>
+<span class="c1"># is a dictionary containing CGI-style environment variables and the</span>
 <span class="c1"># second variable is the callable object (see PEP 333).</span>
 <span class="k">def</span> <span class="nf">hello_world_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span> <span class="c1"># HTTP Status</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span> <span class="c1"># HTTP Headers</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>  <span class="c1"># HTTP Status</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>  <span class="c1"># HTTP Headers</span>
     <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
 
     <span class="c1"># The returned object is going to be printed</span>
@@ -563,8 +565,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/wsgiref.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/wsgiref.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -609,12 +612,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

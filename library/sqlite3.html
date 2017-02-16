@@ -37,6 +37,7 @@
     <link rel="next" title="12. データ圧縮とアーカイブ" href="archiving.html" />
     <link rel="prev" title="11.12. dumbdbm — 可搬性のある DBM 実装" href="dumbdbm.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/sqlite3.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -116,7 +117,10 @@
 <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>たいてい、SQL 操作は Python 変数の値を使う必要があります。この時、クエリーを Python の文字列操作を使って構築することは、安全とは言えないので、すべきではありません。そのようなことをするとプログラムが SQL インジェクション攻撃に対し脆弱になりかねません。(とうなっちまうのか知りたけりゃ <a class="reference external" href="http://xkcd.com/327/">http://xkcd.com/327/</a> に聞いてみ…てください)</p>
+<p>Usually your SQL operations will need to use values from Python variables.  You
+shouldn&#8217;t assemble your query using Python&#8217;s string operations because doing so
+is insecure; it makes your program vulnerable to an SQL injection attack
+(see <a class="reference external" href="https://xkcd.com/327/">https://xkcd.com/327/</a> for humorous example of what can go wrong).</p>
 <p>代わりに、DB-API のパラメータ割り当てを使います。 <code class="docutils literal"><span class="pre">?</span></code> を変数の値を使いたいところに埋めておきます。その上で、値のタプルをカーソルの <a class="reference internal" href="#sqlite3.Cursor.execute" title="sqlite3.Cursor.execute"><code class="xref py py-meth docutils literal"><span class="pre">execute()</span></code></a> メソッドの第2引数として引き渡します。(他のデータベースモジュールでは変数の場所を示すのに <code class="docutils literal"><span class="pre">%s</span></code> や <code class="docutils literal"><span class="pre">:1</span></code> などの異なった表記を用いることがあります。) 例を示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Never do this -- insecure!</span>
 <span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;RHAT&#39;</span>
@@ -152,7 +156,7 @@
 <dt><a class="reference external" href="https://github.com/ghaering/pysqlite">https://github.com/ghaering/pysqlite</a></dt>
 <dd><p class="first last">pysqlite のウェブページ &#8211; sqlite3 は「pysqlite」という名の下、外部で開発されています。</p>
 </dd>
-<dt><a class="reference external" href="http://www.sqlite.org">http://www.sqlite.org</a></dt>
+<dt><a class="reference external" href="https://www.sqlite.org">https://www.sqlite.org</a></dt>
 <dd><p class="first last">SQLite のウェブページ。ここの文書ではサポートされる SQL 方言の文法と使えるデータ型を説明しています。</p>
 </dd>
 <dt><a class="reference external" href="http://www.w3schools.com/sql/">http://www.w3schools.com/sql/</a></dt>
@@ -288,8 +292,10 @@
 
 <dl class="method">
 <dt id="sqlite3.Connection.cursor">
-<code class="descname">cursor</code><span class="sig-paren">(</span><span class="optional">[</span><em>cursorClass</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlite3.Connection.cursor" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>cursor メソッドはオプション引数 <em>cursorClass</em> を受け付けます。これを指定するならば、指定されたクラスは <a class="reference internal" href="#sqlite3.Cursor" title="sqlite3.Cursor"><code class="xref py py-class docutils literal"><span class="pre">sqlite3.Cursor</span></code></a> を継承したカーソルクラスでなければなりません。</p>
+<code class="descname">cursor</code><span class="sig-paren">(</span><em>factory=Cursor</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlite3.Connection.cursor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>The cursor method accepts a single optional parameter <em>factory</em>. If
+supplied, this must be a callable returning an instance of <a class="reference internal" href="#sqlite3.Cursor" title="sqlite3.Cursor"><code class="xref py py-class docutils literal"><span class="pre">Cursor</span></code></a>
+or its subclasses.</p>
 </dd></dl>
 
 <dl class="method">
@@ -332,7 +338,8 @@
 <dt id="sqlite3.Connection.create_function">
 <code class="descname">create_function</code><span class="sig-paren">(</span><em>name</em>, <em>num_params</em>, <em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlite3.Connection.create_function" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>後から SQL 文中で <em>name</em> という名前の関数として使えるユーザ定義関数を作成します。<em>num_params</em> は関数が受け付ける引数の数、<em>func</em> は SQL 関数として使われる Python の呼び出し可能オブジェクトです。</p>
-<p>関数は SQLite でサポートされている任意の型を返すことができます。具体的には unicode, str, int, long, float, buffer および None です。</p>
+<p>The function can return any of the types supported by SQLite: unicode, str, int,
+long, float, buffer and <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p>例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="kn">import</span> <span class="nn">md5</span>
@@ -354,7 +361,8 @@
 <code class="descname">create_aggregate</code><span class="sig-paren">(</span><em>name</em>, <em>num_params</em>, <em>aggregate_class</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlite3.Connection.create_aggregate" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ユーザ定義の集計関数を作成します。</p>
 <p>集計クラスにはパラメータ <em>num_params</em> で指定される個数の引数を取る <code class="docutils literal"><span class="pre">step</span></code> メソッドおよび最終的な集計結果を返す <code class="docutils literal"><span class="pre">finalize</span></code> メソッドを実装しなければなりません。</p>
-<p><code class="docutils literal"><span class="pre">finalize</span></code> メソッドは SQLite でサポートされている任意の型を返すことができます。具体的には unicode, str, int, long, float, buffer および None です。</p>
+<p>The <code class="docutils literal"><span class="pre">finalize</span></code> method can return any of the types supported by SQLite:
+unicode, str, int, long, float, buffer and <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p>例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
 
@@ -403,7 +411,7 @@
 <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>照合順序を取り除くには <code class="docutils literal"><span class="pre">create_collation</span></code> を callable として None を渡して呼び出します:</p>
+<p>To remove a collation, call <code class="docutils literal"><span class="pre">create_collation</span></code> with <code class="docutils literal"><span class="pre">None</span></code> as callable:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">con</span><span class="o">.</span><span class="n">create_collation</span><span class="p">(</span><span class="s2">&quot;reverse&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -731,7 +739,10 @@
 <dl class="attribute">
 <dt id="sqlite3.Cursor.lastrowid">
 <code class="descname">lastrowid</code><a class="headerlink" href="#sqlite3.Cursor.lastrowid" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この読み込み専用の属性は、最後に変更した row の rowid を提供します。この属性は、 <a class="reference internal" href="#sqlite3.Cursor.execute" title="sqlite3.Cursor.execute"><code class="xref py py-meth docutils literal"><span class="pre">execute()</span></code></a> メソッドを利用して <code class="docutils literal"><span class="pre">INSERT</span></code> 文を実行したときのみ設定されます。 <code class="docutils literal"><span class="pre">INSERT</span></code> 以外の操作や、 <a class="reference internal" href="#sqlite3.Cursor.executemany" title="sqlite3.Cursor.executemany"><code class="xref py py-meth docutils literal"><span class="pre">executemany()</span></code></a> メソッドを利用した場合は、 <a class="reference internal" href="#sqlite3.Cursor.lastrowid" title="sqlite3.Cursor.lastrowid"><code class="xref py py-attr docutils literal"><span class="pre">lastrowid</span></code></a> は <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> に設定されます。</p>
+<dd><p>This read-only attribute provides the rowid of the last modified row. It is
+only set if you issued an <code class="docutils literal"><span class="pre">INSERT</span></code> statement using the <a class="reference internal" href="#sqlite3.Cursor.execute" title="sqlite3.Cursor.execute"><code class="xref py py-meth docutils literal"><span class="pre">execute()</span></code></a>
+method. For operations other than <code class="docutils literal"><span class="pre">INSERT</span></code> or when <a class="reference internal" href="#sqlite3.Cursor.executemany" title="sqlite3.Cursor.executemany"><code class="xref py py-meth docutils literal"><span class="pre">executemany()</span></code></a> is
+called, <a class="reference internal" href="#sqlite3.Cursor.lastrowid" title="sqlite3.Cursor.lastrowid"><code class="xref py py-attr docutils literal"><span class="pre">lastrowid</span></code></a> is set to <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -739,6 +750,21 @@
 <code class="descname">description</code><a class="headerlink" href="#sqlite3.Cursor.description" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この読み込み専用の属性は、最後のクエリの結果のカラム名を提供します。 Python DB API との互換性を維持するために、各カラムに対して 7つのタプルを返しますが、タプルの後ろ6つの要素は全て <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> です。</p>
 <p>この属性は <code class="docutils literal"><span class="pre">SELECT</span></code> 文にマッチする row が1つもなかった場合でもセットされます。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlite3.Cursor.connection">
+<code class="descname">connection</code><a class="headerlink" href="#sqlite3.Cursor.connection" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>This read-only attribute provides the SQLite database <a class="reference internal" href="#sqlite3.Connection" title="sqlite3.Connection"><code class="xref py py-class docutils literal"><span class="pre">Connection</span></code></a>
+used by the <a class="reference internal" href="#sqlite3.Cursor" title="sqlite3.Cursor"><code class="xref py py-class docutils literal"><span class="pre">Cursor</span></code></a> object.  A <a class="reference internal" href="#sqlite3.Cursor" title="sqlite3.Cursor"><code class="xref py py-class docutils literal"><span class="pre">Cursor</span></code></a> object created by
+calling <a class="reference internal" href="#sqlite3.Connection.cursor" title="sqlite3.Connection.cursor"><code class="xref py py-meth docutils literal"><span class="pre">con.cursor()</span></code></a> will have a
+<a class="reference internal" href="#sqlite3.Cursor.connection" title="sqlite3.Cursor.connection"><code class="xref py py-attr docutils literal"><span class="pre">connection</span></code></a> attribute that refers to <em>con</em>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;:memory:&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">connection</span> <span class="o">==</span> <span class="n">con</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1072,7 +1098,7 @@
 <p>デフォルトでは、 <a class="reference internal" href="#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></code></a> モジュールはデータ変更言語(DML)文(すなわち <code class="docutils literal"><span class="pre">INSERT</span></code>/<code class="docutils literal"><span class="pre">UPDATE</span></code>/<code class="docutils literal"><span class="pre">DELETE</span></code>/<code class="docutils literal"><span class="pre">REPLACE</span></code>)の前に暗黙のうちにトランザクションを開始し、非DML、非クエリ文(すなわち <code class="docutils literal"><span class="pre">SELECT</span></code> や上記のいずれでもないもの。)の前にトランザクションをコミットします。</p>
 <p>そのため、トランザクション内で <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">...</span></code>, <code class="docutils literal"><span class="pre">VACUUM</span></code>, <code class="docutils literal"><span class="pre">PRAGMA</span></code>  のようなコマンドを発行した場合、 <a class="reference internal" href="#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></code></a> モジュールはそのコマンドを実行する前に暗黙にコミットします。これには2つの理由があります。 1番目は、これらのコマンドのうちのいくつかがトランザクション内では動かないということです。 2番目の理由は、 sqlite3 がトランザクション状態 (トランザクションがアクティブかどうか) を追跡する必要があるためです。</p>
 <p>sqlite3 が暗黙のうちに実行する <code class="docutils literal"><span class="pre">BEGIN</span></code> 文の種類(またはそういうものを使わないこと)を <a class="reference internal" href="#sqlite3.connect" title="sqlite3.connect"><code class="xref py py-func docutils literal"><span class="pre">connect()</span></code></a> 呼び出しの <em>isolation_level</em> パラメータを通じて、または接続の <code class="xref py py-attr docutils literal"><span class="pre">isolation_level</span></code> プロパティを通じて、制御することができます。</p>
-<p>もし <strong>自動コミットモード</strong> が使いたければ、 <code class="xref py py-attr docutils literal"><span class="pre">isolation_level</span></code> は None にしてください。</p>
+<p>If you want <strong>autocommit mode</strong>, then set <code class="xref py py-attr docutils literal"><span class="pre">isolation_level</span></code> to <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p>そうでなければデフォルトのまま <code class="docutils literal"><span class="pre">BEGIN</span></code> 文を使い続けるか、SQLite がサポートする分離レベル &#8220;DEFERRED&#8221;, &#8220;IMMEDIATE&#8221; または &#8220;EXCLUSIVE&#8221; を設定してください。</p>
 </div>
 <div class="section" id="using-sqlite3-efficiently">
@@ -1214,8 +1240,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/sqlite3.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/sqlite3.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1260,12 +1287,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="Python で Curses プログラミング" href="curses.html" />
     <link rel="prev" title="Python 2 から Python 3 への移植" href="pyporting.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/cporting.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -148,7 +149,10 @@
 </div>
 <div class="section" id="long-int-unification">
 <h3>long/int の統合<a class="headerlink" href="#long-int-unification" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Python 3 には整数タイプが一つ、 <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> しかありません。しかし、実際には Python 2 の <a class="reference internal" href="../library/functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a> タイプと同じものですPython 2 で使われていた <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> は取り除かれました。C-API では <code class="docutils literal"><span class="pre">PyInt_*</span></code> 関数群が、等価な <code class="docutils literal"><span class="pre">PyLong_*</span></code> に交換されています。</p>
+<p>Python 3 has only one integer type, <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>.  But it actually
+corresponds to Python 2&#8217;s <a class="reference internal" href="../library/functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a> type—the <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> type
+used in Python 2 was removed.  In the C-API, <code class="docutils literal"><span class="pre">PyInt_*</span></code> functions
+are replaced by their <code class="docutils literal"><span class="pre">PyLong_*</span></code> equivalents.</p>
 </div>
 </div>
 <div class="section" id="module-initialization-and-state">
@@ -206,7 +210,7 @@
 
 <span class="cp">#define INITERROR return NULL</span>
 
-<span class="n">PyObject</span> <span class="o">*</span>
+<span class="n">PyMODINIT_FUNC</span>
 <span class="nf">PyInit_myextension</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 
 <span class="cp">#else</span>
@@ -241,7 +245,7 @@
 </div>
 <div class="section" id="cobject-replaced-with-capsule">
 <h2>CObject の Capsule への変更<a class="headerlink" href="#cobject-replaced-with-capsule" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Python 3.1 と 2.7 に <code class="xref c c-type docutils literal"><span class="pre">Capsule</span></code> オブジェクトが導入されました。これは <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> のかわりになるものです。  CObject は便利でしたが、 <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> API には問題がありました: 有効な CObject であればそれ以上の識別が不可能なので、合わない CObject を混ぜて使うとインタープリタをクラッシュさせかねなかったこと、そして API の一部が C の未定義な挙動に依存していたことです。 (Capsule の背景について詳しくは <a class="reference external" href="https://bugs.python.org/issue5630">issue 5630</a> をご覧ください。)</p>
+<p>Python 3.1 と 2.7 に <code class="xref c c-type docutils literal"><span class="pre">Capsule</span></code> オブジェクトが導入されました。これは <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> のかわりになるものです。  CObject は便利でしたが、 <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> API には問題がありました: 有効な CObject であればそれ以上の識別が不可能なので、合わない CObject を混ぜて使うとインタープリタをクラッシュさせかねなかったこと、そして API の一部が C の未定義な挙動に依存していたことです。 (Capsule の背景について詳しくは <a class="reference external" href="https://bugs.python.org/issue5630">bpo-5630</a> をご覧ください。)</p>
 <p>現時点で CObject を使っているのであれば、3.1 以降へ移行するには Capsule へ切り換える必要があります。 <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> は 3.1 および 2.7 で非推奨となり、Python 3.2 では完全に削除されたからです。  2.7 と 3.1 以上だけの対応でいいなら、単に <code class="xref c c-type docutils literal"><span class="pre">Capsule</span></code> へ切り換えるだけです。  しかし Python 3.0 や、あるいは 2.7 未満のバージョンに対応しなければならない場合は、CObject と Capsule の両方に対応する必要が出てきます。(ただし Python 3.0 はサポートが終了しているため現場利用には推奨されません。)</p>
 <p>そうした問題は、下に例示する <code class="file docutils literal"><span class="pre">capsulethunk.h</span></code> ヘッダファイルで解決できるかもしれません。  必要な作業は、 <code class="xref c c-type docutils literal"><span class="pre">Capsule</span></code> API でコードを書き、このヘッダファイルを <code class="file docutils literal"><span class="pre">Python.h</span></code> の後でインクルードするだけです。  すると自動的に、Capsule のあるバージョンの Python では Capsule を使い、なければ CObject を使うようになります。</p>
 <p>その場合 <code class="file docutils literal"><span class="pre">capsulethunk.h</span></code> は CObject を使って Capsule をシミュレートします。  しかし <code class="xref c c-type docutils literal"><span class="pre">CObject</span></code> には capsule の &#8220;name&#8221; を保持する余地がありません。  よって、 <code class="file docutils literal"><span class="pre">capsulethunk.h</span></code> でシミュレートされた <code class="xref c c-type docutils literal"><span class="pre">Capsule</span></code> オブジェクトの動作は、本物の Capsule とは少し異なります。  具体的には:</p>
@@ -257,7 +261,7 @@
 </li>
 </ul>
 </div></blockquote>
-<p><code class="file docutils literal"><span class="pre">capsulethunk.h</span></code> は Python のソースの中に <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Doc/includes/capsulethunk.h">Doc/includes/capsulethunk.h</a> という名前で入っています。  読者の便宜のため、ここにも引用しておきましょう:</p>
+<p><code class="file docutils literal"><span class="pre">capsulethunk.h</span></code> は Python のソースの中に <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Doc/includes/capsulethunk.h">Doc/includes/capsulethunk.h</a> という名前で入っています。  読者の便宜のため、ここにも引用しておきましょう:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="cp">#ifndef __CAPSULETHUNK_H</span>
 <span class="cp">#define __CAPSULETHUNK_H</span>
 
@@ -432,8 +436,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/cporting.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/cporting.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -477,12 +482,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

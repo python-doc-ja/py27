@@ -37,6 +37,7 @@
     <link rel="next" title="21.7. colorsys — 色体系間の変換" href="colorsys.html" />
     <link rel="prev" title="21.5. wave — WAVファイルの読み書き" href="wave.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/chunk.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -123,7 +124,11 @@
 </table>
 <p>IDはチャンクの種類を識別する4バイトの文字列です。</p>
 <p>サイズフィールド（big-endianでエンコードされた32ビット値）は、8バイトのヘッダを含まないチャンクデータのサイズを示します。</p>
-<p>普通、IFFタイプのファイルは1個かそれ以上のチャンクからなります。このモジュールで定義される <a class="reference internal" href="#chunk.Chunk" title="chunk.Chunk"><code class="xref py py-class docutils literal"><span class="pre">Chunk</span></code></a> クラスの使い方として提案しているのは、それぞれのチャンクの始めにインスタンスを作り、終わりに達するまでそのインスタンスから読み取り、その後で新しいインスタンスを作るということです。ファイルの終わりで新しいインスタンスを作ろうとすると、 <a class="reference internal" href="exceptions.html#exceptions.EOFError" title="exceptions.EOFError"><code class="xref py py-exc docutils literal"><span class="pre">EOFError</span></code></a> の例外が発生して失敗します。</p>
+<p>Usually an IFF-type file consists of one or more chunks.  The proposed usage of
+the <a class="reference internal" href="#chunk.Chunk" title="chunk.Chunk"><code class="xref py py-class docutils literal"><span class="pre">Chunk</span></code></a> class defined here is to instantiate an instance at the start
+of each chunk and read from the instance until it reaches the end, after which a
+new instance can be instantiated. At the end of the file, creating a new
+instance will fail with an <a class="reference internal" href="exceptions.html#exceptions.EOFError" title="exceptions.EOFError"><code class="xref py py-exc docutils literal"><span class="pre">EOFError</span></code></a> exception.</p>
 <dl class="class">
 <dt id="chunk.Chunk">
 <em class="property">class </em><code class="descclassname">chunk.</code><code class="descname">Chunk</code><span class="sig-paren">(</span><em>file</em><span class="optional">[</span>, <em>align</em>, <em>bigendian</em>, <em>inclheader</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#chunk.Chunk" title="この定義へのパーマリンク">¶</a></dt>
@@ -205,8 +210,9 @@ Arts, January 1985.</td></tr>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/chunk.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/chunk.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -251,12 +257,12 @@ Arts, January 1985.</td></tr>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

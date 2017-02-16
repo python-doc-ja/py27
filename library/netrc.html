@@ -37,6 +37,7 @@
     <link rel="next" title="13.5. xdrlib — XDR データのエンコードおよびデコード" href="xdrlib.html" />
     <link rel="prev" title="13.3. robotparser — robots.txt のためのパーザ" href="robotparser.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/netrc.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,13 +85,24 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 1.5.2 で追加.</span></p>
 </div>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/netrc.py">Lib/netrc.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/netrc.py">Lib/netrc.py</a></p>
 <hr class="docutils" />
-<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> クラスは、Unix <strong class="program">ftp</strong> プログラムや他の FTP クライアントで用いられる netrc ファイル形式を解析し、カプセル化 (encapsulate) します。</p>
+<p>The <a class="reference internal" href="#netrc.netrc" title="netrc.netrc"><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> class parses and encapsulates the netrc file format used by
+the Unix <strong class="program">ftp</strong> program and other FTP clients.</p>
 <dl class="class">
 <dt id="netrc.netrc">
 <em class="property">class </em><code class="descclassname">netrc.</code><code class="descname">netrc</code><span class="sig-paren">(</span><span class="optional">[</span><em>file</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#netrc.netrc" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> のインスタンスやサブクラスのインスタンスは netrc ファイルのデータをカプセル化します。初期化の際の引数が存在する場合、解析対象となるファイルの指定になります。引数がない場合、ユーザのホームディレクトリ下にある <code class="file docutils literal"><span class="pre">.netrc</span></code> が読み出されます。解析エラーが発生した場合、ファイル名、行番号、解析を中断したトークンに関する情報の入った <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> を送出します。POSIX システムにおいて引数を指定しない場合、ファイルのオーナシップやパーミッションが安全でない (プロセスを実行しているユーザ以外が所有者であるか、誰にでも読み書き出来てしまう) のに <code class="file docutils literal"><span class="pre">.netrc</span></code> ファイル内にパスワードが含まれていると、 <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> を送出します。このセキュリティ的な振る舞いは、 ftp などの <code class="file docutils literal"><span class="pre">.netrc</span></code> を使うプログラムと同じものです。</p>
+<dd><p>A <a class="reference internal" href="#netrc.netrc" title="netrc.netrc"><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> instance or subclass instance encapsulates data from  a netrc
+file.  The initialization argument, if present, specifies the file to parse.  If
+no argument is given, the file <code class="file docutils literal"><span class="pre">.netrc</span></code> in the user&#8217;s home directory will
+be read.  Parse errors will raise <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> with diagnostic
+information including the file name, line number, and terminating token.
+If no argument is specified on a POSIX system, the presence of passwords in
+the <code class="file docutils literal"><span class="pre">.netrc</span></code> file will raise a <a class="reference internal" href="#netrc.NetrcParseError" title="netrc.NetrcParseError"><code class="xref py py-exc docutils literal"><span class="pre">NetrcParseError</span></code></a> if the file
+ownership or permissions are insecure (owned by a user other than the user
+running the process, or accessible for read or write by any other user).
+This implements security behavior equivalent to that of ftp and other
+programs that use <code class="file docutils literal"><span class="pre">.netrc</span></code>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.7.6 で変更: </span>POSIX パーミッションのチェックが追加されました。</p>
 </div>
@@ -99,12 +111,16 @@
 <dl class="exception">
 <dt id="netrc.NetrcParseError">
 <em class="property">exception </em><code class="descclassname">netrc.</code><code class="descname">NetrcParseError</code><a class="headerlink" href="#netrc.NetrcParseError" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ソースファイルのテキスト中で文法エラーに遭遇した場合に <a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a>  クラスによって送出される例外です。この例外のインスタンスは 3 つのインスタンス変数を持っています: <code class="xref py py-attr docutils literal"><span class="pre">msg</span></code> はテキストによるエラーの説明で、 <code class="xref py py-attr docutils literal"><span class="pre">filename</span></code> はソースファイルの名前、そして <code class="xref py py-attr docutils literal"><span class="pre">lineno</span></code> はエラーが発見された行番号です。</p>
+<dd><p>Exception raised by the <a class="reference internal" href="#netrc.netrc" title="netrc.netrc"><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> class when syntactical errors are
+encountered in source text.  Instances of this exception provide three
+interesting attributes:  <code class="xref py py-attr docutils literal"><span class="pre">msg</span></code> is a textual explanation of the error,
+<code class="xref py py-attr docutils literal"><span class="pre">filename</span></code> is the name of the source file, and <code class="xref py py-attr docutils literal"><span class="pre">lineno</span></code> gives the
+line number on which the error was found.</p>
 </dd></dl>
 
 <div class="section" id="netrc-objects">
 <span id="id1"></span><h2>13.4.1. netrc オブジェクト<a class="headerlink" href="#netrc-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> インスタンスは以下のメソッドを持っています:</p>
+<p>A <a class="reference internal" href="#netrc.netrc" title="netrc.netrc"><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> instance has the following methods:</p>
 <dl class="method">
 <dt id="netrc.netrc.authenticators">
 <code class="descclassname">netrc.</code><code class="descname">authenticators</code><span class="sig-paren">(</span><em>host</em><span class="sig-paren">)</span><a class="headerlink" href="#netrc.netrc.authenticators" title="この定義へのパーマリンク">¶</a></dt>
@@ -117,7 +133,7 @@
 <dd><p>クラスの持っているデータを netrc ファイルの書式に従った文字列で出力します。(コメントは無視され、エントリが並べ替えられる可能性があります。)</p>
 </dd></dl>
 
-<p><a class="reference internal" href="#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> のインスタンスは以下の公開されたインスタンス変数を持っています:</p>
+<p>Instances of <a class="reference internal" href="#netrc.netrc" title="netrc.netrc"><code class="xref py py-class docutils literal"><span class="pre">netrc</span></code></a> have public instance variables:</p>
 <dl class="attribute">
 <dt id="netrc.netrc.hosts">
 <code class="descclassname">netrc.</code><code class="descname">hosts</code><a class="headerlink" href="#netrc.netrc.hosts" title="この定義へのパーマリンク">¶</a></dt>
@@ -160,8 +176,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/netrc.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/netrc.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -206,12 +223,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

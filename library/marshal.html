@@ -37,6 +37,7 @@
     <link rel="next" title="11.6. anydbm — DBM 形式のデータベースへの汎用アクセスインタフェース" href="anydbm.html" />
     <link rel="prev" title="11.4. shelve — Python オブジェクトの永続化" href="shelve.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/marshal.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -87,7 +88,7 @@
 <p class="first admonition-title">警告</p>
 <p class="last"><a class="reference internal" href="#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> モジュールは、誤ったデータや悪意を持って作成されたデータに対する安全性を考慮していません。信頼できない、もしくは認証されていない出所からのデータを非整列化してはなりません。</p>
 </div>
-<p>すべての Python オブジェクト型がサポートされるわけではありません。一般に、その値が Python の特定の起動から独立しているオブジェクトだけが、このモジュールによって読み書きすることができます。次の型がサポートされます: 真偽値、整数、長整数、浮動小数点数、複素数、文字列、 Unicode 文字列、タプル、リスト、 set 、frozensets 、辞書、コードオブジェクト。ここで、タプル、リスト、 set 、 frozenset 、辞書は、その中に含まれる値がそれ自身サポートされる場合に限りサポートされることを理解すべきです; また、再帰的なリスト、 set 、辞書は書かれるべきではありません (無限ループを起こします)。シングルトン <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> 、 <a class="reference internal" href="constants.html#Ellipsis" title="Ellipsis"><code class="xref py py-const docutils literal"><span class="pre">Ellipsis</span></code></a> 、 <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> も読み書きできます。</p>
+<p id="index-1">すべての Python オブジェクト型がサポートされるわけではありません。一般に、その値が Python の特定の起動から独立しているオブジェクトだけが、このモジュールによって読み書きすることができます。次の型がサポートされます: 真偽値、整数、長整数、浮動小数点数、複素数、文字列、 Unicode 文字列、タプル、リスト、 set 、frozensets 、辞書、コードオブジェクト。ここで、タプル、リスト、 set 、 frozenset 、辞書は、その中に含まれる値がそれ自身サポートされる場合に限りサポートされることを理解すべきです; また、再帰的なリスト、 set 、辞書は書かれるべきではありません (無限ループを起こします)。シングルトン <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> 、 <a class="reference internal" href="constants.html#Ellipsis" title="Ellipsis"><code class="xref py py-const docutils literal"><span class="pre">Ellipsis</span></code></a> 、 <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> も読み書きできます。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
 <p class="last">(DEC Alpha のように) C言語の <code class="docutils literal"><span class="pre">long</span> <span class="pre">int</span></code> が 32 ビットよりも長いビット長を持つ場合、 32 ビットよりも長い Python 整数を作成することが可能です。そのような整数が整列化された後、 C 言語の <code class="docutils literal"><span class="pre">long</span> <span class="pre">int</span></code> のビット長が 32 ビットしかないマシン上で読み戻された場合、通常整数の代わりに Python 長整数が返されます。型は異なりますが、数値は同じです。 (この動作は Python 2.2 で新たに追加されたものです。それ以前のバージョンでは、値のうち最小桁から 32 ビット以外の情報は失われ、警告メッセージが出力されていました。)</p>
@@ -97,7 +98,11 @@
 <dl class="function">
 <dt id="marshal.dump">
 <code class="descclassname">marshal.</code><code class="descname">dump</code><span class="sig-paren">(</span><em>value</em>, <em>file</em><span class="optional">[</span>, <em>version</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#marshal.dump" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>開かれたファイルに値を書き込みます。値はサポートされている型でなくてはなりません。ファイルは <code class="docutils literal"><span class="pre">sys.stdout</span></code> か、 <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> や <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal"><span class="pre">os.popen()</span></code></a> が返すようなファイルオブジェクトでなくてはなりません。Windows では TemporaryFile のようなラッパーは使えません。またファイルはバイナリモード (<code class="docutils literal"><span class="pre">'wb'</span></code> または <code class="docutils literal"><span class="pre">'w+b'</span></code>) で開かれていなければなりません。</p>
+<dd><p>Write the value on the open file.  The value must be a supported type.  The
+file must be an open file object such as <code class="docutils literal"><span class="pre">sys.stdout</span></code> or returned by
+<a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> or <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal"><span class="pre">os.popen()</span></code></a>.  It may not be a wrapper such as
+TemporaryFile on Windows. It must be opened in binary mode (<code class="docutils literal"><span class="pre">'wb'</span></code>
+or <code class="docutils literal"><span class="pre">'w+b'</span></code>).</p>
 <p>値 (または値に含まれるオブジェクト) がサポートされていない型の場合、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> 例外が送出されます &#8212; しかし、同時にごみのデータがファイルに書き込まれます。このオブジェクトは <a class="reference internal" href="#marshal.load" title="marshal.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> で適切に読み出されることはありません。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加: </span><em>version</em> 引数は <code class="docutils literal"><span class="pre">dump</span></code> が使用するデータフォーマットを指定します (下記を参照してください)。</p>
@@ -164,8 +169,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/marshal.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/marshal.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -210,12 +216,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

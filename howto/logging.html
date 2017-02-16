@@ -37,6 +37,7 @@
     <link rel="next" title="Logging クックブック" href="logging-cookbook.html" />
     <link rel="prev" title="関数型プログラミング HOWTO" href="functional.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/logging.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -177,12 +178,12 @@
 <span id="howto-minimal-example"></span><h3>簡単な例<a class="headerlink" href="#a-simple-example" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ごく簡単な例は:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Watch out!&#39;</span><span class="p">)</span> <span class="c1"># will print a message to the console</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;I told you so&#39;</span><span class="p">)</span> <span class="c1"># will not print anything</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Watch out!&#39;</span><span class="p">)</span>  <span class="c1"># will print a message to the console</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;I told you so&#39;</span><span class="p">)</span>  <span class="c1"># will not print anything</span>
 </pre></div>
 </div>
-<p>これらの行をスクリプトにタイプして実行すると、次のようにコンソールに出力されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>WARNING:root:Watch out!
+<p>If you type these lines into a script and run it, you&#8217;ll see:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>WARNING:root:Watch out!
 </pre></div>
 </div>
 <p>デフォルトのレベルは <code class="docutils literal"><span class="pre">WARNING</span></code> なので、<code class="docutils literal"><span class="pre">INFO</span></code> メッセージは現れません。表示されたメッセージには、レベルの表示と、ロギングの呼び出しで提供された、イベントの説明すなわち &#8216;Watch out!&#8217; が含まれます。&#8217;root&#8217; の部分は今は気にしないでください。あとで説明します。実際の出力は、必要に応じてかなり柔軟に書式化できます。書式化操作もあとで説明します。</p>
@@ -268,8 +269,8 @@
 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> before you </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;Look&#39;</span><span class="p">,</span> <span class="s1">&#39;leap!&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>により、次のように表示されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>WARNING:root:Look before you leap!
+<p>will display:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>WARNING:root:Look before you leap!
 </pre></div>
 </div>
 <p>ご覧の通り、イベント記述メッセージに変数データを統合するために、古い、% スタイルの文字列フォーマットを使っています。これは後方互換性のためです。logging パッケージは、 <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a> や <a class="reference internal" href="../library/string.html#string.Template" title="string.Template"><code class="xref py py-class docutils literal"><span class="pre">string.Template</span></code></a> のような新しいフォーマットオプションよりも先に生まれました。新しいフォーマットオプションはサポートされて <em>います</em> が、その探求はこのチュートリアルでは対象としません。</p>
@@ -319,7 +320,11 @@
 <div class="section" id="next-steps">
 <h3>次のステップ<a class="headerlink" href="#next-steps" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>基本チュートリアルはこれで終わりです。あなたがロギングを使っていくためには、これで十分でしょう。logging パッケージが提供するものはもっとありますが、それを使いこなすためには、もうちょっと時間をかけて、以下のセクションを読む必要があります。その用意ができたら、好きな飲み物を持って、次に進みましょう。</p>
-<p>ロギングを簡潔に行いたいなら、上記の例を使って、ロギングをあなたのスクリプトに組み込んでください。そして問題があったり、理解出来ないことがあったら、comp.lang.python Usenet group (<a class="reference external" href="http://groups.google.com/group/comp.lang.python">http://groups.google.com/group/comp.lang.python</a> から利用できます) に質問を投稿してくだされば、そう遠くないうちに助けが得られるでしょう。</p>
+<p>If your logging needs are simple, then use the above examples to incorporate
+logging into your own scripts, and if you run into problems or don&#8217;t
+understand something, please post a question on the comp.lang.python Usenet
+group (available at <a class="reference external" href="https://groups.google.com/group/comp.lang.python">https://groups.google.com/group/comp.lang.python</a>) and you
+should receive help before too long.</p>
 <p>まだいますか？もう少し上級の、踏み込んだチュートリアルを綴った、幾つかの節を読み続けることができます。その後で、 <a class="reference internal" href="logging-cookbook.html#logging-cookbook"><span class="std std-ref">Logging クックブック</span></a> もご覧ください。</p>
 </div>
 </div>
@@ -381,7 +386,12 @@
 </ul>
 <p><a class="reference internal" href="../library/logging.html#logging.getLogger" title="logging.getLogger"><code class="xref py py-func docutils literal"><span class="pre">getLogger()</span></code></a> は、指定されればその特定の名前の、そうでなければ <code class="docutils literal"><span class="pre">root</span></code> のロガーインスタンスへの参照を返します。ロガーの名前はピリオド区切りの階層構造を表します。同じ名前で <a class="reference internal" href="../library/logging.html#logging.getLogger" title="logging.getLogger"><code class="xref py py-func docutils literal"><span class="pre">getLogger()</span></code></a> を複数回呼び出した場合、同一のロガーオブジェクトへの参照が返されます。階層リストを下ったロガーはリスト上位のロガーの子です。たとえば、名前が <code class="docutils literal"><span class="pre">foo</span></code> であるロガーがあったとして、 <code class="docutils literal"><span class="pre">foo.bar</span></code>, <code class="docutils literal"><span class="pre">foo.bar.baz</span></code>, <code class="docutils literal"><span class="pre">foo.bam</span></code> といった名前のロガーはすべて <code class="docutils literal"><span class="pre">foo</span></code> の子孫になります。</p>
 <p>ロガーには、<em>有効レベル (effective level)</em> の概念があります。ロガーにレベルが明示的に設定されていなければ、代わりに親のレベルがその有効レベルとして使われます。親のレベルが設定されなければ、<em>その</em> 親のレベルが確かめられ、以下同様に、明示的に設定されたレベルが見つかるまで祖先が探されます。ルートロガーは、必ず明示的なレベルが設定されています (デフォルトでは <code class="docutils literal"><span class="pre">WARNING</span></code> です)。イベントを処理するかを決定するとき、ロガーの有効レベルを使って、イベントがロガーのハンドラに渡されるかが決められます。</p>
-<p>子ロガーはメッセージを親ロガーのハンドラに伝えます。このため、アプリケーションが使っているすべてのロガーのためのハンドラを定義して設定する必要はありません。トップレベルのロガーのためのハンドラだけ設定しておいて必要に応じて子ロガーを作成すれば十分です。(しかし、ロガーの <em>propagate</em> 属性を <em>False</em> に設定することで、伝播を抑制できます。)</p>
+<p>Child loggers propagate messages up to the handlers associated with their
+ancestor loggers. Because of this, it is unnecessary to define and configure
+handlers for all the loggers an application uses. It is sufficient to
+configure handlers for a top-level logger and create child loggers as needed.
+(You can, however, turn off propagation by setting the <em>propagate</em>
+attribute of a logger to <code class="docutils literal"><span class="pre">False</span></code>.)</p>
 </div>
 <div class="section" id="handlers">
 <span id="handler-basic"></span><h3>ハンドラ<a class="headerlink" href="#handlers" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -457,13 +467,13 @@
 <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;critical message&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>このモジュールを実行すると、コマンドラインによって以下の出力がなされます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ python simple_logging_module.py
-2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message
-2005-03-19 15:10:26,620 - simple_example - INFO - info message
-2005-03-19 15:10:26,695 - simple_example - WARNING - warn message
-2005-03-19 15:10:26,697 - simple_example - ERROR - error message
-2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message
+<p>Running this module from the command line produces the following output:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python simple_logging_module.py
+<span class="go">2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message</span>
+<span class="go">2005-03-19 15:10:26,620 - simple_example - INFO - info message</span>
+<span class="go">2005-03-19 15:10:26,695 - simple_example - WARNING - warn message</span>
+<span class="go">2005-03-19 15:10:26,697 - simple_example - ERROR - error message</span>
+<span class="go">2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message</span>
 </pre></div>
 </div>
 <p>以下の Python モジュールは、ロガー、ハンドラ、フォーマッタをほとんど上述の例と同じように生成していますが、オブジェクト名だけが異なります:</p>
@@ -514,13 +524,13 @@
 <span class="n">datefmt</span><span class="o">=</span>
 </pre></div>
 </div>
-<p>出力は、設定ファイルに基づく例とだいたい同じです:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ python simple_logging_config.py
-2005-03-19 15:38:55,977 - simpleExample - DEBUG - debug message
-2005-03-19 15:38:55,979 - simpleExample - INFO - info message
-2005-03-19 15:38:56,054 - simpleExample - WARNING - warn message
-2005-03-19 15:38:56,055 - simpleExample - ERROR - error message
-2005-03-19 15:38:56,130 - simpleExample - CRITICAL - critical message
+<p>The output is nearly identical to that of the non-config-file-based example:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python simple_logging_config.py
+<span class="go">2005-03-19 15:38:55,977 - simpleExample - DEBUG - debug message</span>
+<span class="go">2005-03-19 15:38:55,979 - simpleExample - INFO - info message</span>
+<span class="go">2005-03-19 15:38:56,054 - simpleExample - WARNING - warn message</span>
+<span class="go">2005-03-19 15:38:56,055 - simpleExample - ERROR - error message</span>
+<span class="go">2005-03-19 15:38:56,130 - simpleExample - CRITICAL - critical message</span>
 </pre></div>
 </div>
 <p>この通り、設定ファイルの方法は、主に設定とコードが分かれ、非コーダがロギングプロパティを変えやすくなるという点で、Python コードの方法より少し優れています。</p>
@@ -559,10 +569,10 @@
 <p>ロギング環境設定を与えられないと、ロギングイベントを出力しなければならないのに、イベントを出力するハンドラが見つからないことがあります。この状況での logging パッケージの振る舞いは、Python のバージョンに依ります。</p>
 <p>Python 2.x では、振る舞いは以下の通りです:</p>
 <ul class="simple">
-<li><p class="first"><em>logging.raiseExceptions</em> が <em>False</em> (製品モード) なら、イベントは黙って捨てられます。</p>
-</li>
-<li><p class="first"><em>logging.raiseExceptions</em> が <em>True</em> (開発モード) なら、メッセージ &#8216;No handlers could be found for logger X.Y.Z&#8217; が一度表示されます。</p>
-</li>
+<li>If <em>logging.raiseExceptions</em> is <code class="docutils literal"><span class="pre">False</span></code> (production mode), the event is
+silently dropped.</li>
+<li>If <em>logging.raiseExceptions</em> is <code class="docutils literal"><span class="pre">True</span></code> (development mode), a message
+&#8216;No handlers could be found for logger X.Y.Z&#8217; is printed once.</li>
 </ul>
 </div>
 <div class="section" id="configuring-logging-for-a-library">
@@ -795,8 +805,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/logging.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/logging.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -840,12 +851,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

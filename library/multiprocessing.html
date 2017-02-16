@@ -37,6 +37,7 @@
     <link rel="next" title="16.7. mmap — メモリマップファイル" href="mmap.html" />
     <link rel="prev" title="16.5. dummy_thread — thread の代替モジュール" href="dummy_thread.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/multiprocessing.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -237,7 +238,11 @@
 <p><strong>サーバープロセス (Server process)</strong></p>
 <blockquote>
 <div><p><code class="xref py py-func docutils literal"><span class="pre">Manager()</span></code> 関数により生成されたマネージャーオブジェクトはサーバープロセスを管理します。マネージャーオブジェクトは Python のオブジェクトを保持して、他のプロセスがプロキシ経由でその Python オブジェクトを操作することができます。</p>
-<p><code class="xref py py-func docutils literal"><span class="pre">Manager()</span></code> 関数が返すマネージャは <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> 、 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> 、 <code class="xref py py-class docutils literal"><span class="pre">Namespace</span></code> 、 <a class="reference internal" href="#multiprocessing.Lock" title="multiprocessing.Lock"><code class="xref py py-class docutils literal"><span class="pre">Lock</span></code></a> 、 <a class="reference internal" href="#multiprocessing.RLock" title="multiprocessing.RLock"><code class="xref py py-class docutils literal"><span class="pre">RLock</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Semaphore" title="multiprocessing.Semaphore"><code class="xref py py-class docutils literal"><span class="pre">Semaphore</span></code></a> 、 <a class="reference internal" href="#multiprocessing.BoundedSemaphore" title="multiprocessing.BoundedSemaphore"><code class="xref py py-class docutils literal"><span class="pre">BoundedSemaphore</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Condition" title="multiprocessing.Condition"><code class="xref py py-class docutils literal"><span class="pre">Condition</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Event" title="multiprocessing.Event"><code class="xref py py-class docutils literal"><span class="pre">Event</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Queue" title="multiprocessing.Queue"><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Value" title="multiprocessing.Value"><code class="xref py py-class docutils literal"><span class="pre">Value</span></code></a> 、 <a class="reference internal" href="#multiprocessing.Array" title="multiprocessing.Array"><code class="xref py py-class docutils literal"><span class="pre">Array</span></code></a> をサポートします。以下にサンプルコードを示します。</p>
+<p>A manager returned by <code class="xref py py-func docutils literal"><span class="pre">Manager()</span></code> will support types <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>,
+<a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>, <a class="reference internal" href="#multiprocessing.managers.Namespace" title="multiprocessing.managers.Namespace"><code class="xref py py-class docutils literal"><span class="pre">Namespace</span></code></a>, <a class="reference internal" href="#multiprocessing.Lock" title="multiprocessing.Lock"><code class="xref py py-class docutils literal"><span class="pre">Lock</span></code></a>, <a class="reference internal" href="#multiprocessing.RLock" title="multiprocessing.RLock"><code class="xref py py-class docutils literal"><span class="pre">RLock</span></code></a>,
+<a class="reference internal" href="#multiprocessing.Semaphore" title="multiprocessing.Semaphore"><code class="xref py py-class docutils literal"><span class="pre">Semaphore</span></code></a>, <a class="reference internal" href="#multiprocessing.BoundedSemaphore" title="multiprocessing.BoundedSemaphore"><code class="xref py py-class docutils literal"><span class="pre">BoundedSemaphore</span></code></a>, <a class="reference internal" href="#multiprocessing.Condition" title="multiprocessing.Condition"><code class="xref py py-class docutils literal"><span class="pre">Condition</span></code></a>,
+<a class="reference internal" href="#multiprocessing.Event" title="multiprocessing.Event"><code class="xref py py-class docutils literal"><span class="pre">Event</span></code></a>, <a class="reference internal" href="#multiprocessing.Queue" title="multiprocessing.Queue"><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a>, <a class="reference internal" href="#multiprocessing.Value" title="multiprocessing.Value"><code class="xref py py-class docutils literal"><span class="pre">Value</span></code></a> and <a class="reference internal" href="#multiprocessing.Array" title="multiprocessing.Array"><code class="xref py py-class docutils literal"><span class="pre">Array</span></code></a>.  For
+example,</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">Manager</span>
 
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
@@ -272,16 +277,41 @@
 <h3>16.6.1.5. ワーカープロセスのプールを使用<a class="headerlink" href="#using-a-pool-of-workers" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="xref py py-class docutils literal"><span class="pre">Pool</span></code> クラスは、ワーカープロセスをプールする機能を備えています。このクラスには、異なる方法でワーカープロセスへタスクを割り当てるいくつかのメソッドがあります。</p>
 <p>例えば:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Pool</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="ne">TimeoutError</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>              <span class="c1"># start 4 worker processes</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>    <span class="c1"># evaluate &quot;f(10)&quot; asynchronously</span>
-    <span class="nb">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># prints &quot;100&quot; unless your computer is *very* slow</span>
-    <span class="nb">print</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>          <span class="c1"># prints &quot;[0, 1, 4,..., 81]&quot;</span>
+
+    <span class="c1"># print &quot;[0, 1, 4,..., 81]&quot;</span>
+    <span class="nb">print</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+    <span class="c1"># print same numbers in arbitrary order</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)):</span>
+        <span class="nb">print</span> <span class="n">i</span>
+
+    <span class="c1"># evaluate &quot;f(20)&quot; asynchronously</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="mi">20</span><span class="p">,))</span>      <span class="c1"># runs in *only* one process</span>
+    <span class="nb">print</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># prints &quot;400&quot;</span>
+
+    <span class="c1"># evaluate &quot;os.getpid()&quot; asynchronously</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">,</span> <span class="p">())</span> <span class="c1"># runs in *only* one process</span>
+    <span class="nb">print</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># prints the PID of that process</span>
+
+    <span class="c1"># launching multiple evaluations asynchronously *may* use more processes</span>
+    <span class="n">multiple_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">,</span> <span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+    <span class="nb">print</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">multiple_results</span><span class="p">]</span>
+
+    <span class="c1"># make a single worker sleep for 10 secs</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s2">&quot;We lacked patience and got a multiprocessing.TimeoutError&quot;</span>
 </pre></div>
 </div>
 <p>プールオブジェクトのメソッドは、そのプールを作成したプロセスのみが呼び出すべきです。</p>
@@ -535,7 +565,7 @@
 
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">このクラスに含まれる機能には、ホストとなるオペレーティングシステム上で動作している共有セマフォ (shared semaphore) を使用しているものがあります。これが使用できない場合には、このクラスが無効になり、 <a class="reference internal" href="queue.html#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> をインスタンス化する時に <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。詳細は <a class="reference external" href="https://bugs.python.org/issue3770">issue 3770</a> を参照してください。同様のことが、以下に列挙されている特殊なキューでも成り立ちます。</p>
+<p class="last">このクラスに含まれる機能には、ホストとなるオペレーティングシステム上で動作している共有セマフォ (shared semaphore) を使用しているものがあります。これが使用できない場合には、このクラスが無効になり、 <a class="reference internal" href="queue.html#module-Queue" title="Queue: A synchronized queue class."><code class="xref py py-class docutils literal"><span class="pre">Queue</span></code></a> をインスタンス化する時に <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。詳細は <a class="reference external" href="https://bugs.python.org/issue3770">bpo-3770</a> を参照してください。同様のことが、以下に列挙されている特殊なキューでも成り立ちます。</p>
 </div>
 </dd></dl>
 
@@ -623,7 +653,10 @@
 </pre></div>
 </div>
 <p>もし <code class="docutils literal"><span class="pre">freeze_support()</span></code> の行がない場合、固まった実行可能形式を実行しようとすると <a class="reference internal" href="exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> を発生させます。</p>
-<p>そのモジュールが Python インタープリターによって普通に実行されるなら <a class="reference internal" href="#multiprocessing.freeze_support" title="multiprocessing.freeze_support"><code class="xref py py-func docutils literal"><span class="pre">freeze_support()</span></code></a> は何の影響もありません。</p>
+<p>Calling <code class="docutils literal"><span class="pre">freeze_support()</span></code> has no effect when invoked on any operating
+system other than Windows.  In addition, if the module is being run
+normally by the Python interpreter on Windows (the program has not been
+frozen), then <code class="docutils literal"><span class="pre">freeze_support()</span></code> has no effect.</p>
 </dd></dl>
 
 <dl class="function">
@@ -832,7 +865,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">このパッケージに含まれる機能には、ホストとなるオペレーティングシステム上で動作している共有セマフォを使用しているものがあります。これが使用できない場合には、<code class="xref py py-mod docutils literal"><span class="pre">multiprocessing.synchronize</span></code> モジュールが無効になり、このモジュールのインポート時に <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。詳細は <a class="reference external" href="https://bugs.python.org/issue3770">issue 3770</a> を参照してください。</p>
+<p class="last">このパッケージに含まれる機能には、ホストとなるオペレーティングシステム上で動作している共有セマフォを使用しているものがあります。これが使用できない場合には、<code class="xref py py-mod docutils literal"><span class="pre">multiprocessing.synchronize</span></code> モジュールが無効になり、このモジュールのインポート時に <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。詳細は <a class="reference external" href="https://bugs.python.org/issue3770">bpo-3770</a> を参照してください。</p>
 </div>
 </div>
 <div class="section" id="shared-ctypes-objects">
@@ -1105,7 +1138,7 @@ HELLO WORLD
 <dl class="method">
 <dt id="multiprocessing.managers.SyncManager.Namespace">
 <code class="descname">Namespace</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#multiprocessing.managers.SyncManager.Namespace" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>共有 <a class="reference internal" href="#multiprocessing.managers.SyncManager.Namespace" title="multiprocessing.managers.SyncManager.Namespace"><code class="xref py py-class docutils literal"><span class="pre">Namespace</span></code></a> オブジェクトを作成して、そのプロキシを返します。</p>
+<dd><p>共有 <a class="reference internal" href="#multiprocessing.managers.Namespace" title="multiprocessing.managers.Namespace"><code class="xref py py-class docutils literal"><span class="pre">Namespace</span></code></a> オブジェクトを作成して、そのプロキシを返します。</p>
 </dd></dl>
 
 <dl class="method">
@@ -1174,8 +1207,10 @@ HELLO WORLD
 </div>
 </dd></dl>
 
-<div class="section" id="namespace-objects">
-<h4>16.6.2.7.1. Namespace オブジェクト<a class="headerlink" href="#namespace-objects" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<dl class="class">
+<dt id="multiprocessing.managers.Namespace">
+<em class="property">class </em><code class="descclassname">multiprocessing.managers.</code><code class="descname">Namespace</code><a class="headerlink" href="#multiprocessing.managers.Namespace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>A type that can register with <a class="reference internal" href="#multiprocessing.managers.SyncManager" title="multiprocessing.managers.SyncManager"><code class="xref py py-class docutils literal"><span class="pre">SyncManager</span></code></a>.</p>
 <p>Namespace オブジェクトにはパブリックなメソッドはありませんが、書き込み可能な属性を持ちます。そのオブジェクト表現はその属性の値を表示します。</p>
 <p>しかし、Namespace オブジェクトのためにプロキシを使用するとき <code class="docutils literal"><span class="pre">'_'</span></code> が先頭に付く属性はプロキシの属性になり、参照対象の属性にはなりません:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
@@ -1187,9 +1222,10 @@ HELLO WORLD
 <span class="go">Namespace(x=10, y=&#39;hello&#39;)</span>
 </pre></div>
 </div>
-</div>
+</dd></dl>
+
 <div class="section" id="customized-managers">
-<h4>16.6.2.7.2. カスタマイズされたマネージャー<a class="headerlink" href="#customized-managers" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>16.6.2.7.1. カスタマイズされたマネージャー<a class="headerlink" href="#customized-managers" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>独自のマネージャーを作成するには、<a class="reference internal" href="#multiprocessing.managers.BaseManager" title="multiprocessing.managers.BaseManager"><code class="xref py py-class docutils literal"><span class="pre">BaseManager</span></code></a> のサブクラスを作成して、 マネージャークラスで呼び出し可能なオブジェクトか新たな型を登録するために <a class="reference internal" href="#multiprocessing.managers.BaseManager.register" title="multiprocessing.managers.BaseManager.register"><code class="xref py py-meth docutils literal"><span class="pre">register()</span></code></a> クラスメソッドを使用します。例えば:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span>
 
@@ -1214,7 +1250,7 @@ HELLO WORLD
 </div>
 </div>
 <div class="section" id="using-a-remote-manager">
-<h4>16.6.2.7.3. リモートマネージャーを使用する<a class="headerlink" href="#using-a-remote-manager" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>16.6.2.7.2. リモートマネージャーを使用する<a class="headerlink" href="#using-a-remote-manager" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>あるマシン上でマネージャーサーバーを実行して、他のマシンからそのサーバーを使用するクライアントを持つことができます(ファイアウォールを通過できることが前提)。</p>
 <p>次のコマンドを実行することでリモートクライアントからアクセスを受け付ける1つの共有キューのためにサーバーを作成します:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span>
@@ -1380,7 +1416,10 @@ HELLO WORLD
 <p><em>processes</em> は使用するワーカープロセスの数です。 <em>processes</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合 <code class="xref py py-func docutils literal"><span class="pre">cpu_count()</span></code> が返す数を使用します。 <em>initializer</em> が <code class="docutils literal"><span class="pre">None</span></code> でない場合、各ワーカープロセスが開始時に <code class="docutils literal"><span class="pre">initializer(*initargs)</span></code> を呼び出します。</p>
 <p>プールオブジェクトのメソッドは、そのプールを作成したプロセスのみが呼び出すべきです。</p>
 <div class="versionadded">
-<p><span class="versionmodified">バージョン 2.7 で追加: </span><em>maxtasksperchild</em> は、ワーカープロセスが exit して新たなワーカープロセスと置き替えられるまでの間に、ワーカープロセスが完了することのできるタスクの数です。この設定により未利用のリソースが解放されるようなります。デフォルトの <em>maxtasksperchild</em> は None で、これはワーカープロセスがプールと同じ期間だけ生き続けるということを意味します。</p>
+<p><span class="versionmodified">バージョン 2.7 で追加: </span><em>maxtasksperchild</em> is the number of tasks a worker process can complete
+before it will exit and be replaced with a fresh worker process, to enable
+unused resources to be freed. The default <em>maxtasksperchild</em> is <code class="docutils literal"><span class="pre">None</span></code>, which
+means worker processes will live as long as the pool.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -1479,6 +1518,7 @@ HELLO WORLD
 
 <p>次の例はプールの使用例を紹介します:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
@@ -1486,7 +1526,7 @@ HELLO WORLD
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>              <span class="c1"># start 4 worker processes</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,))</span>    <span class="c1"># evaluate &quot;f(10)&quot; asynchronously</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,))</span>   <span class="c1"># evaluate &quot;f(10)&quot; asynchronously in a single process</span>
     <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># prints &quot;100&quot; unless your computer is *very* slow</span>
 
     <span class="k">print</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>          <span class="c1"># prints &quot;[0, 1, 4,..., 81]&quot;</span>
@@ -1496,9 +1536,8 @@ HELLO WORLD
     <span class="k">print</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>                       <span class="c1"># prints &quot;1&quot;</span>
     <span class="k">print</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># prints &quot;4&quot; unless your computer is *very* slow</span>
 
-    <span class="kn">import</span> <span class="nn">time</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,))</span>
-    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># raises TimeoutError</span>
+    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># raises multiprocessing.TimeoutError</span>
 </pre></div>
 </div>
 </div>
@@ -1540,7 +1579,8 @@ HELLO WORLD
 <p><em>family</em> は使用するソケット(名前付きパイプ)の種別です。これは <code class="docutils literal"><span class="pre">'AF_INET'</span></code> (TCP ソケット), <code class="docutils literal"><span class="pre">'AF_UNIX'</span></code> (Unix ドメインソケット) または <code class="docutils literal"><span class="pre">'AF_PIPE'</span></code> (Windows 名前付きパイプ) という文字列のどれか1つになります。これらのうち <code class="docutils literal"><span class="pre">'AF_INET'</span></code> のみが利用可能であることが保証されています。 <em>family</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合 <em>address</em> のフォーマットから推測されたものが使用されます。 <em>address</em> も <code class="docutils literal"><span class="pre">None</span></code> の場合はデフォルトが選択されます。詳細は <a class="reference internal" href="#multiprocessing-address-formats"><span class="std std-ref">アドレスフォーマット</span></a> を参照してください。 <em>family</em> が <code class="docutils literal"><span class="pre">'AF_UNIX'</span></code> で <em>address</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合 <a class="reference internal" href="tempfile.html#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal"><span class="pre">tempfile.mkstemp()</span></code></a> を使用して作成されたプライベートな一時ディレクトリにソケットが作成されます。</p>
 <p>リスナーオブジェクトがソケットを使用する場合、ソケットに束縛されるときに <em>backlog</em> (デフォルトでは1つ) がソケットの <a class="reference internal" href="socket.html#socket.socket.listen" title="socket.socket.listen"><code class="xref py py-meth docutils literal"><span class="pre">listen()</span></code></a> メソッドに対して渡されます。</p>
 <p><em>authenticate</em> が <code class="docutils literal"><span class="pre">True</span></code> (デフォルトでは <code class="docutils literal"><span class="pre">False</span></code>) か <em>authkey</em> が <code class="docutils literal"><span class="pre">None</span></code> ではない場合、ダイジェスト認証が使用されます。</p>
-<p><em>authkey</em> が文字列の場合、認証キーとして使用されます。そうでない場合は <em>None</em> でなければいけません。</p>
+<p>If <em>authkey</em> is a string then it will be used as the authentication key;
+otherwise it must be <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p><em>authkey</em> が <code class="docutils literal"><span class="pre">None</span></code> 且つ <em>authenticate</em> が <code class="docutils literal"><span class="pre">True</span></code> の場合 <code class="docutils literal"><span class="pre">current_process().authkey</span></code> が認証キーとして使用されます。 <em>authkey</em> が <code class="docutils literal"><span class="pre">None</span></code> 且つ <em>authentication</em> が <code class="docutils literal"><span class="pre">False</span></code> の場合、認証は行われません。もし認証が失敗した場合 <a class="reference internal" href="#multiprocessing.connection.AuthenticationError" title="multiprocessing.connection.AuthenticationError"><code class="xref py py-exc docutils literal"><span class="pre">AuthenticationError</span></code></a> が発生します。詳細 <a class="reference internal" href="#multiprocessing-auth-keys"><span class="std std-ref">認証キー</span></a> を参照してください。</p>
 <dl class="method">
 <dt id="multiprocessing.connection.Listener.accept">
@@ -1636,7 +1676,13 @@ HELLO WORLD
 <span id="multiprocessing-auth-keys"></span><h3>16.6.2.11. 認証キー<a class="headerlink" href="#authentication-keys" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference internal" href="#multiprocessing.Connection.recv" title="multiprocessing.Connection.recv"><code class="xref py py-meth docutils literal"><span class="pre">Connection.recv</span></code></a> を使用するとき、データは自動的に unpickle されて受信します。信頼できない接続元からのデータを unpickle することはセキュリティリスクがあります。そのため <a class="reference internal" href="#multiprocessing.connection.Listener" title="multiprocessing.connection.Listener"><code class="xref py py-class docutils literal"><span class="pre">Listener</span></code></a> や <a class="reference internal" href="#multiprocessing.connection.Client" title="multiprocessing.connection.Client"><code class="xref py py-func docutils literal"><span class="pre">Client()</span></code></a> はダイジェスト認証を提供するために <a class="reference internal" href="hmac.html#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal"><span class="pre">hmac</span></code></a> モジュールを使用します。</p>
 <p>認証キーはパスワードとしてみなされる文字列です。コネクションが確立すると、双方の終点で正しい接続先であることを証明するために知っているお互いの認証キーを要求します。 (双方の終点が同じキーを使用して通信しようとしても、コネクション上でそのキーを送信することは <strong>できません</strong> 。)</p>
-<p>認証が要求されて認証キーが指定されている場合 <code class="docutils literal"><span class="pre">current_process().authkey</span></code> の返す値が使用されます。 (詳細は <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> を参照してください。) この値はカレントプロセスを作成する <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> オブジェクトによって自動的に継承されます。これは(デフォルトでは)複数プロセスのプログラムの全プロセスが相互にコネクションを確立するときに使用される1つの認証キーを共有することを意味します。</p>
+<p>If authentication is requested but no authentication key is specified then the
+return value of <code class="docutils literal"><span class="pre">current_process().authkey</span></code> is used (see
+<a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a>).  This value will be automatically inherited by
+any <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> object that the current process creates.
+This means that (by default) all processes of a multi-process program will share
+a single authentication key which can be used when setting up connections
+between themselves.</p>
 <p>適当な認証キーを <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> を使用して生成することもできます。</p>
 </div>
 <div class="section" id="logging">
@@ -1783,8 +1829,8 @@ HELLO WORLD
     <span class="o">...</span> <span class="n">do</span> <span class="n">something</span> <span class="n">using</span> <span class="s2">&quot;lock&quot;</span> <span class="o">...</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
-   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1795,8 +1841,8 @@ HELLO WORLD
     <span class="o">...</span> <span class="n">do</span> <span class="n">something</span> <span class="n">using</span> <span class="s2">&quot;l&quot;</span> <span class="o">...</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
-   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lock</span><span class="p">,))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1823,7 +1869,7 @@ HELLO WORLD
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span>
 </pre></div>
 </div>
-<p>より詳しい情報は <a class="reference external" href="https://bugs.python.org/issue5155">issue 5155</a> 、 <a class="reference external" href="https://bugs.python.org/issue5313">issue 5313</a> 、 <a class="reference external" href="https://bugs.python.org/issue5331">issue 5331</a> を見てください</p>
+<p>より詳しい情報は <a class="reference external" href="https://bugs.python.org/issue5155">bpo-5155</a> 、 <a class="reference external" href="https://bugs.python.org/issue5313">bpo-5313</a> 、 <a class="reference external" href="https://bugs.python.org/issue5331">bpo-5331</a> を見てください</p>
 </div></blockquote>
 </div>
 <div class="section" id="windows">
@@ -3010,9 +3056,8 @@ HELLO WORLD
 </ul>
 </li>
 <li><a class="reference internal" href="#managers">16.6.2.7. マネージャー</a><ul>
-<li><a class="reference internal" href="#namespace-objects">16.6.2.7.1. Namespace オブジェクト</a></li>
-<li><a class="reference internal" href="#customized-managers">16.6.2.7.2. カスタマイズされたマネージャー</a></li>
-<li><a class="reference internal" href="#using-a-remote-manager">16.6.2.7.3. リモートマネージャーを使用する</a></li>
+<li><a class="reference internal" href="#customized-managers">16.6.2.7.1. カスタマイズされたマネージャー</a></li>
+<li><a class="reference internal" href="#using-a-remote-manager">16.6.2.7.2. リモートマネージャーを使用する</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#proxy-objects">16.6.2.8. Proxy オブジェクト</a><ul>
@@ -3048,8 +3093,9 @@ HELLO WORLD
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/multiprocessing.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/multiprocessing.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -3094,12 +3140,12 @@ HELLO WORLD
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

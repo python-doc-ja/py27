@@ -37,6 +37,7 @@
     <link rel="next" title="19.3. htmllib — HTML 文書の解析器" href="htmllib.html" />
     <link rel="prev" title="19.1. HTMLParser — HTML および XHTML のシンプルなパーサー" href="htmlparser.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/sgmllib.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -183,7 +184,12 @@
 <dl class="method">
 <dt id="sgmllib.SGMLParser.convert_charref">
 <code class="descclassname">SGMLParser.</code><code class="descname">convert_charref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.convert_charref" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>文字参照を文字列に変換するか、 <code class="docutils literal"><span class="pre">None</span></code> を返します。 <em>ref</em> は文字列として渡される参照です。基底クラスでは <em>ref</em> は 0-255 の範囲の十進数でなければなりません。そしてコードポイントをメソッド <a class="reference internal" href="#sgmllib.SGMLParser.convert_codepoint" title="sgmllib.SGMLParser.convert_codepoint"><code class="xref py py-meth docutils literal"><span class="pre">convert_codepoint()</span></code></a> を使って変換します。もし <em>ref</em> が不正もしくは範囲外ならば、 <code class="docutils literal"><span class="pre">None</span></code> を返します。このメソッドはデフォルト実装の <a class="reference internal" href="#sgmllib.SGMLParser.handle_charref" title="sgmllib.SGMLParser.handle_charref"><code class="xref py py-meth docutils literal"><span class="pre">handle_charref()</span></code></a> と属性値パーザから呼び出されます。</p>
+<dd><p>Convert a character reference to a string, or <code class="docutils literal"><span class="pre">None</span></code>.  <em>ref</em> is the reference
+passed in as a string.  In the base implementation, <em>ref</em> must be a decimal
+number in the range 0&#8211;255.  It converts the code point found using the
+<a class="reference internal" href="#sgmllib.SGMLParser.convert_codepoint" title="sgmllib.SGMLParser.convert_codepoint"><code class="xref py py-meth docutils literal"><span class="pre">convert_codepoint()</span></code></a> method. If <em>ref</em> is invalid or out of range, this
+method returns <code class="docutils literal"><span class="pre">None</span></code>.  This method is called by the default
+<a class="reference internal" href="#sgmllib.SGMLParser.handle_charref" title="sgmllib.SGMLParser.handle_charref"><code class="xref py py-meth docutils literal"><span class="pre">handle_charref()</span></code></a> implementation and by the attribute value parser.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
@@ -201,7 +207,12 @@
 <dl class="method">
 <dt id="sgmllib.SGMLParser.handle_entityref">
 <code class="descclassname">SGMLParser.</code><code class="descname">handle_entityref</code><span class="sig-paren">(</span><em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#sgmllib.SGMLParser.handle_entityref" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このメソッドは <em>ref</em> を一般エンティティ参照として、 <code class="docutils literal"><span class="pre">&amp;ref;</span></code> 形式のエンティティ参照を処理するために呼び出されます。このメソッドは、 <em>ref</em> を <a class="reference internal" href="#sgmllib.SGMLParser.convert_entityref" title="sgmllib.SGMLParser.convert_entityref"><code class="xref py py-meth docutils literal"><span class="pre">convert_entityref()</span></code></a> に渡して変換します。変換結果が返された場合、変換された文字を引数にして <a class="reference internal" href="#sgmllib.SGMLParser.handle_data" title="sgmllib.SGMLParser.handle_data"><code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code></a> を呼び出します; そうでない場合、 <code class="docutils literal"><span class="pre">unknown_entityref(ref)</span></code> を呼び出します。標準では <code class="xref py py-attr docutils literal"><span class="pre">entitydefs</span></code> は <code class="docutils literal"><span class="pre">&amp;amp;</span></code> 、 <code class="docutils literal"><span class="pre">&amp;apos</span></code> 、 <code class="docutils literal"><span class="pre">&amp;gt;</span></code> 、 <code class="docutils literal"><span class="pre">&amp;lt;</span></code> 、および <code class="docutils literal"><span class="pre">&amp;quot;</span></code> の変換を定義しています。</p>
+<dd><p>This method is called to process a general entity reference of the form
+<code class="docutils literal"><span class="pre">&amp;ref;</span></code> where <em>ref</em> is a general entity reference.  It converts <em>ref</em> by
+passing it to <a class="reference internal" href="#sgmllib.SGMLParser.convert_entityref" title="sgmllib.SGMLParser.convert_entityref"><code class="xref py py-meth docutils literal"><span class="pre">convert_entityref()</span></code></a>.  If a translation is returned, it calls
+the method <a class="reference internal" href="#sgmllib.SGMLParser.handle_data" title="sgmllib.SGMLParser.handle_data"><code class="xref py py-meth docutils literal"><span class="pre">handle_data()</span></code></a> with the translation; otherwise, it calls the
+method <code class="docutils literal"><span class="pre">unknown_entityref(ref)</span></code>. The default <code class="xref py py-attr docutils literal"><span class="pre">entitydefs</span></code> defines
+translations for <code class="docutils literal"><span class="pre">&amp;amp;</span></code>, <code class="docutils literal"><span class="pre">&amp;apos</span></code>, <code class="docutils literal"><span class="pre">&amp;gt;</span></code>, <code class="docutils literal"><span class="pre">&amp;lt;</span></code>, and <code class="docutils literal"><span class="pre">&amp;quot;</span></code>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span>ハードコードされた変換ではなく <a class="reference internal" href="#sgmllib.SGMLParser.convert_entityref" title="sgmllib.SGMLParser.convert_entityref"><code class="xref py py-meth docutils literal"><span class="pre">convert_entityref()</span></code></a> を使うようになりました。</p>
 </div>
@@ -295,8 +306,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/sgmllib.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/sgmllib.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -341,12 +353,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

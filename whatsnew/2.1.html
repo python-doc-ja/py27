@@ -37,6 +37,7 @@
     <link rel="next" title="What’s New in Python 2.0" href="2.0.html" />
     <link rel="prev" title="What’s New in Python 2.2" href="2.2.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/whatsnew/2.1.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -157,7 +158,17 @@
 </div>
 <div class="section" id="pep-207-rich-comparisons">
 <h2>PEP 207: 拡張比較<a class="headerlink" href="#pep-207-rich-comparisons" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>以前のバージョンでは、ユーザ定義クラスや拡張型の比較を実装するための Python のサポートはとても単純なものでした。クラスは 2 つのインスタンスを与えられる <a class="reference internal" href="../reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> メソッドを実装でき、実際の値がどうあれ、同値の場合には 0 、そうでないなら +1 か -1 を返せるだけでした; メソッドは例外を上げることも、ブール値以外のものを返すこともできませんでした。Numeric Python が使われるような複雑な計算プログラムでは、要素ごとに与えられた比較結果を含む行列を返し、2 つの行列を要素単位で比較できることがより便利なので、Numeric Python のユーザはこのモデルがとても脆弱で限定的であることにしばしば気付きました。もし 2 つの行列サイズが異なる場合、この比較はエラー通知の例外を上げられなければなりません。</p>
+<p>In earlier versions, Python&#8217;s support for implementing comparisons on user-defined
+classes and extension types was quite simple. Classes could implement a
+<a class="reference internal" href="../reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> method that was given two instances of a class, and could only
+return 0 if they were equal or +1 or -1 if they weren&#8217;t; the method couldn&#8217;t
+raise an exception or return anything other than a Boolean value.  Users of
+Numeric Python often found this model too weak and restrictive, because in the
+number-crunching programs that numeric Python is used for, it would be more
+useful to be able to perform elementwise comparisons of two matrices, returning
+a matrix containing the results of a given comparison for each element.  If the
+two matrices are of different sizes, then the compare has to be able to raise an
+exception to signal the error.</p>
 <p>Python2.1で、このニーズを満たすために拡張比較が追加されました。Pythonのクラスは、<code class="docutils literal"><span class="pre">&lt;</span></code>、<code class="docutils literal"><span class="pre">&lt;=</span></code>、<code class="docutils literal"><span class="pre">&gt;</span></code>、<code class="docutils literal"><span class="pre">&gt;=</span></code>、<code class="docutils literal"><span class="pre">==</span></code>、<code class="docutils literal"><span class="pre">!=</span></code> の各演算を個別にオーバーロードできます。この新しい特殊メソッドの名前は:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -195,12 +206,17 @@
 <p>(特殊メソッドはFortranの <code class="docutils literal"><span class="pre">.LT.</span></code> や <code class="docutils literal"><span class="pre">.LE.</span></code> 等々の演算子にちなんで命名されています。プログラマはほぼ確実にこれらの名前を熟知していますので、覚えやすいでしょう。)</p>
 <p>これらの特殊メソッドは <code class="docutils literal"><span class="pre">method(self,</span> <span class="pre">other)</span></code> の形式になっており、<code class="docutils literal"><span class="pre">self</span></code> が演算子の左辺、<code class="docutils literal"><span class="pre">other</span></code> が右辺のオブジェクトになります。例えば、式 <code class="docutils literal"><span class="pre">A</span> <span class="pre">&lt;</span> <span class="pre">B</span></code> は <code class="docutils literal"><span class="pre">A.__lt__(B)</span></code> を呼び出します。</p>
 <p>これらの特殊メソッドは何でも、つまり真偽値や行列、リストや他のPython オブジェクトを返せます。もし比較が不可能であったり、矛盾していたり、意味がない場合は、代わりに例外を上げることができます。</p>
-<p>ビルトインの <code class="xref py py-func docutils literal"><span class="pre">cmp(A,B)()</span></code> 関数は拡張比較機構を利用出来、使用する比較演算を指定する省略可能引数を受け付けるようになっています。指定には文字列 <code class="docutils literal"><span class="pre">&quot;&lt;&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&lt;=&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&gt;&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&gt;=&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;==&quot;</span></code>, or <code class="docutils literal"><span class="pre">&quot;!=&quot;</span></code> のいずれか一つを渡します。省略可能のその 3 番目引数が省略されて呼ばれれば、 <a class="reference internal" href="../library/functions.html#cmp" title="cmp"><code class="xref py py-func docutils literal"><span class="pre">cmp()</span></code></a> は以前のバージョンの Python のように -1, 0, または +1 だけを返します; 指定されれば、それはその適切なメソッドを呼び出し、任意の Python オブジェクトを返せます。(訳注: 2015年の今となって、ここに書かれている cmp の仕様が実在したのか不明な状態になっている。ビルトインの cmp リファレンスにはこれに関係する履歴は書かれていない。What&#8217;s New を 2.7 まで追いかけても以後変更された記録はない。)</p>
+<p>The built-in <code class="docutils literal"><span class="pre">cmp(A,B)</span></code> function can use the rich comparison machinery,
+and now accepts an optional argument specifying which comparison operation to
+use; this is given as one of the strings <code class="docutils literal"><span class="pre">&quot;&lt;&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&lt;=&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&gt;&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;&gt;=&quot;</span></code>,
+<code class="docutils literal"><span class="pre">&quot;==&quot;</span></code>, or <code class="docutils literal"><span class="pre">&quot;!=&quot;</span></code>.  If called without the optional third argument,
+<a class="reference internal" href="../library/functions.html#cmp" title="cmp"><code class="xref py py-func docutils literal"><span class="pre">cmp()</span></code></a> will only return -1, 0, or +1 as in previous versions of Python;
+otherwise it will call the appropriate method and can return any Python object.</p>
 <p>C プログラマにとって興味深い関連する変更があります。型オブジェクトに新しい <code class="docutils literal"><span class="pre">tp_richcmp</span></code> スロットと、この拡張された比較を行うAPIが追加されました。ここではC APIについて言及しませんが、あながた関連する関数のリストを見たければ、PEP 207かバージョン2.1のC APIドキュメントを参照してください。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0207"><strong>PEP 207</strong></a> - Rich Comparisions</dt>
+<dt><span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0207"><strong>PEP 207</strong></a> - Rich Comparisons</dt>
 <dd><p class="first last">David Ascher によるかつての仕事に大きく拠りますが  Guido van Rossum によって著され、実装されました。</p>
 </dd>
 </dl>
@@ -263,7 +279,9 @@
 <h2>PEP 205: 弱参照<a class="headerlink" href="#pep-205-weak-references" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference internal" href="../library/weakref.html#module-weakref" title="weakref: Support for weak references and weak dictionaries."><code class="xref py py-mod docutils literal"><span class="pre">weakref</span></code></a> モジュールを通して利用出来る弱参照(weak references)は、ささやかですが有用な、Python プログラマの道具箱に新たに加わったデータ型です。</p>
 <p>オブジェクトへの参照(辞書内やリスト内を思い浮かべてください)を記憶しておくということは、オブジェクトを生き永らえさせるという副作用を持っています。少しばかりの、この振る舞いが望ましくない特殊なケースがあります。オブジェクトのキャッシュがその最もありがちな一つで、もう一つはツリーのようなデータ構造での循環参照です。</p>
-<p>例えば、 ひとさまの関数 <code class="xref py py-func docutils literal"><span class="pre">f(x)()</span></code> の結果をキャッシュしておくメモ化関数を考えてみましょう。関数 <code class="xref py py-func docutils literal"><span class="pre">f(x)()</span></code> の引数ごとに辞書に記憶します:</p>
+<p>For example, consider a memoizing function that caches the results of another
+function <code class="docutils literal"><span class="pre">f(x)</span></code> by storing the function&#8217;s argument and its result in a
+dictionary:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">_cache</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -324,7 +342,12 @@
 <span class="n">f</span><span class="o">.</span><span class="n">grammar</span> <span class="o">=</span> <span class="s2">&quot;A ::= B (C D)*&quot;</span>
 </pre></div>
 </div>
-<p>属性を含んだ辞書に、関数の属性 <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> としてアクセス出来ます。クラスインスタンスの <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性とは違って、関数では実際には、 <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> に別の辞書を代入出来ます。ですが、新しい値は普通の Python 辞書に制限されています; ズルは <em>出来ません</em> し、 <a class="reference internal" href="../library/userdict.html#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> インスタンスやなにかほかのマッピングのように振舞うデタラメなオブジェクトはセット出来ません。</p>
+<p>The dictionary containing attributes can be accessed as the function&#8217;s
+<a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>. Unlike the <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute of class instances, in
+functions you can actually assign a new dictionary to <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>, though
+the new value is restricted to a regular Python dictionary; you <em>can&#8217;t</em> be
+tricky and set it to a <a class="reference internal" href="../library/userdict.html#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> instance, or any other random object
+that behaves like a mapping.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
@@ -337,11 +360,20 @@
 <div class="section" id="pep-235-importing-modules-on-case-insensitive-platforms">
 <h2>PEP 235: 大文字小文字を区別しないプラットフォームでのモジュールの読み込み<a class="headerlink" href="#pep-235-importing-modules-on-case-insensitive-platforms" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>いくつかのオペレーティングシステムは、大小文字区別に無関心なファイルシステムを持っています。MacOS と Windows がその代表例です。それらシステムにおいてはファイル名 <code class="docutils literal"><span class="pre">FILE.PY</span></code> と <code class="docutils literal"><span class="pre">file.py</span></code> の区別が出来ません。たとえそれが元のファイル名を尊重して格納出来たとしてもです(それらは大小文字維持、でもあります)。</p>
-<p>Python 2.1 では <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文が、case-insensitive (大小文字に無関心)なプラットフォームで case-sensitivity (大小文字への繊細さ)をシミュレートして動作します。Python は今や、まずはデフォルトで case-sensitive なマッチによる検索をし、それで見つからなければ <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> を投げます。ですから <code class="docutils literal"><span class="pre">import</span> <span class="pre">file</span></code> は <code class="docutils literal"><span class="pre">FILE.PY</span></code> をインポートしません。case-insensitive マッチングは Python インタプリタ開始前に環境変数 <span class="target" id="index-14"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONCASEOK"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONCASEOK</span></code></a> をセットすることで要求出来ます。</p>
+<p>In Python 2.1, the <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> statement will work to simulate case-sensitivity
+on case-insensitive platforms.  Python will now search for the first
+case-sensitive match by default, raising an <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> if no such file
+is found, so <code class="docutils literal"><span class="pre">import</span> <span class="pre">file</span></code> will not import a module named <code class="docutils literal"><span class="pre">FILE.PY</span></code>.
+Case-insensitive matching can be requested by setting the <span class="target" id="index-8"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONCASEOK"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONCASEOK</span></code></a>
+environment variable before starting the Python interpreter.</p>
 </div>
 <div class="section" id="pep-217-interactive-display-hook">
 <h2>PEP 217: 対話モード用 Display Hook<a class="headerlink" href="#pep-217-interactive-display-hook" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Python インタプリタを対話的に使う際には、コマンドの出力結果表示にはビルトインの <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> 関数が使われます。Python 2.1 ではこの <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> の代わりに呼び出される呼び出し可能オブジェクトを、 <a class="reference internal" href="../library/sys.html#sys.displayhook" title="sys.displayhook"><code class="xref py py-func docutils literal"><span class="pre">sys.displayhook()</span></code></a> 変数にセット出来ます。たとえば特別な pretty- printing 関数をセット出来ます:</p>
+<p>When using the Python interpreter interactively, the output of commands is
+displayed using the built-in <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> function. In Python 2.1, the variable
+<a class="reference internal" href="../library/sys.html#sys.displayhook" title="sys.displayhook"><code class="xref py py-func docutils literal"><span class="pre">sys.displayhook()</span></code></a> can be set to a callable object which will be called
+instead of <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a>. For example, you can set it to a special
+pretty-printing function:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a recursive data structure</span>
 <span class="gp">... </span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
@@ -380,8 +412,23 @@
 <div class="section" id="pep-241-metadata-in-python-packages">
 <h2>PEP 241: Pythonソフトウェアパッケージのためのメタデータ<a class="headerlink" href="#pep-241-metadata-in-python-packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python ユーザからの日常的な不平は、既にある全ての Python モジュールの単一のカタログがないことです。T. Middleton の <a class="reference external" href="http://www.vex.net/parnassus/">http://www.vex.net/parnassus/</a> にある Vaults of Parnassus が Python モジュールの最小限のカタログとしてありますが、Vaults にソフトウェアを登録することはオプショナルであって、多くの人々はわざわざそれをしません。</p>
-<p>この問題をどうにかするための最初の小さな一歩として、Distutils の <strong class="command">sdist</strong> コマンドを使ってパッケージ化する Python ソフトウェアに <code class="file docutils literal"><span class="pre">PKG-INFO</span></code> と名付けられたファイルを含むようにしました。これには名前、バージョン、著者 (カタログ化の用語ではメタデータ) のような情報を含んでいます。PEP 241 が <code class="file docutils literal"><span class="pre">PKG-INFO</span></code> ファイルに持てるフィールドの完全なリストを記述しています。Python 2.1 を使ったソフトウェアをパッケージ化し始めた人々によってパッケージがどんどんメタデータを含み、自動的なカタログ化システムを構築し、それを実験することが出来るようになります。その結果の経験により、おそらく本当に良いカタログを設計出来、Python 2.2 でそのサポートを構築出来るでしょう。例えば Distutils の <strong class="command">sdist</strong> コマンドと <strong class="command">bdist_*</strong> コマンド群はあなたのパッケージをカタログサーバに自動的にアップロードする <code class="docutils literal"><span class="pre">upload</span></code> オプションをサポート出来るでしょう。</p>
-<p><code class="file docutils literal"><span class="pre">PKG-INFO</span></code> を含んだパッケージの作成は Python 2.1 を使っていなくても開始することが出来ます。Distutils の新しいリリースが以前のバージョンの Python ユーザ向けにも作られているからです。Distutils のバージョン 1.0.2 が、多数のバグフィックスや拡張とともに、 PEP 241 の変更を含んでいます。これは <a class="reference external" href="https://www.python.org/sigs/distutils-sig/">https://www.python.org/sigs/distutils-sig/</a> にある Distutils SIG から入手可能です。</p>
+<p>As a first small step toward fixing the problem, Python software packaged using
+the Distutils <strong class="command">sdist</strong> command will include a file named
+<code class="file docutils literal"><span class="pre">PKG-INFO</span></code> containing information about the package such as its name,
+version, and author (metadata, in cataloguing terminology).  PEP 241 contains
+the full list of fields that can be present in the <code class="file docutils literal"><span class="pre">PKG-INFO</span></code> file.  As
+people began to package their software using Python 2.1, more and more packages
+will include metadata, making it possible to build automated cataloguing systems
+and experiment with them.  With the result experience, perhaps it&#8217;ll be possible
+to design a really good catalog and then build support for it into Python 2.2.
+For example, the Distutils <strong class="command">sdist</strong> and <strong class="command">bdist_*</strong> commands
+could support an <code class="docutils literal"><span class="pre">upload</span></code> option that would automatically upload your
+package to a catalog server.</p>
+<p>You can start creating packages containing <code class="file docutils literal"><span class="pre">PKG-INFO</span></code> even if you&#8217;re not
+using Python 2.1, since a new release of the Distutils will be made for users of
+earlier Python versions.  Version 1.0.2 of the Distutils includes the changes
+described in PEP 241, as well as various bugfixes and enhancements.  It will be
+available from the Distutils SIG at <a class="reference external" href="https://www.python.org/community/sigs/current/distutils-sig/">https://www.python.org/community/sigs/current/distutils-sig/</a>.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
@@ -429,13 +476,25 @@
 <li><p class="first"><code class="xref py py-func docutils literal"><span class="pre">asctime()</span></code> や <code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code> のような <a class="reference internal" href="../library/time.html#module-time" title="time: Time access and conversions."><code class="xref py py-mod docutils literal"><span class="pre">time</span></code></a> モジュールの多くの関数が、エポックからの秒数での浮動小数点数の引数を必要とします。これら関数の最も一般的な使い方は現在時刻とともに用いるものですから、浮動小数点数引数が省略可能となりました。値が与えられなければ現在時刻が使われます。例えばログファイルのエントリは普通現在時刻を含んだ文字列が必要なものですが、Python 2.1 では、以前では長々しい <code class="docutils literal"><span class="pre">time.asctime(time.localtime(time.time()))</span></code> と書かなければならなかったものを代わりに <code class="docutils literal"><span class="pre">time.asctime()</span></code> とすることが出来ます。</p>
 <p>この変更は Thomas Wouters により提案され、実装されました。</p>
 </li>
-<li><p class="first"><a class="reference internal" href="../library/ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> モジュールがデフォルトでパッシブモードでファイルを取得するようになりました。これはパッシブモードがファイアウォール配下ではより良く動作するようだからです。この要望は Debian のバグトラッキングシステムから起こりました。ほかの Debian パッケージがファイル取得に <a class="reference internal" href="../library/ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> を使い、ファイアウォールの元で動作しなかったのです。このことが誰かの問題になるとは思えません。Netscape のデフォルトがパッシブモードですし、苦情を言う人々も稀でした。ですがもしもパッシブモードがあなたのアプリケーションやネットワーク構成にとって不適切である場合には、FTP オブジェクトの <code class="docutils literal"><span class="pre">set_pasv(0)</span></code> を呼び出して、パッシブモードを無効にしてください。</p>
+<li><p class="first">The <a class="reference internal" href="../library/ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> module now defaults to retrieving files in passive mode,
+because passive mode is more likely to work from behind a firewall.  This
+request came from the Debian bug tracking system, since other Debian packages
+use <a class="reference internal" href="../library/ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> to retrieve files and then don&#8217;t work from behind a firewall.
+It&#8217;s deemed unlikely that this will cause problems for anyone, because Netscape
+defaults to passive mode and few people complain, but if passive mode is
+unsuitable for your application or network setup, call <code class="docutils literal"><span class="pre">set_pasv(0)</span></code> on
+FTP objects to disable passive mode.</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールに、Grant Edwards により寄稿された、生のソケットへのアクセスのサポートが追加されました。</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/profile.html#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal"><span class="pre">pstats</span></code></a> モジュールに、Python プログラムの時間計測プロファイルを表示する単純な対話的統計ブラウザが含まれるようになり、これはモジュールがスクリプトとして実行された場合に呼び出されます。Eric S. Raymond によって寄稿されました。</p>
 </li>
-<li><p class="first">実装依存の関数ですが <code class="docutils literal"><span class="pre">sys._getframe([depth])</span></code> が、現在の呼び出しスタックより、指定したフレームオブジェクトを返すものとして追加されました。 <a class="reference internal" href="../library/sys.html#sys._getframe" title="sys._getframe"><code class="xref py py-func docutils literal"><span class="pre">sys._getframe()</span></code></a> は呼び出しスタックの一番上のフレームを返します。オプショナルな整数引数 <em>depth</em> を与えると、関数はスタックの一番上から下 <em>depth</em> ぶんの呼び出しのフレームを返します。例えば <code class="docutils literal"><span class="pre">sys._getframe(1)</span></code> は呼び出し元のフレームオブジェクトを返します。</p>
+<li><p class="first">A new implementation-dependent function, <code class="docutils literal"><span class="pre">sys._getframe([depth])</span></code>, has
+been added to return a given frame object from the current call stack.
+<a class="reference internal" href="../library/sys.html#sys._getframe" title="sys._getframe"><code class="xref py py-func docutils literal"><span class="pre">sys._getframe()</span></code></a> returns the frame at the top of the call stack;  if the
+optional integer argument <em>depth</em> is supplied, the function returns the frame
+that is <em>depth</em> calls below the top of the stack.  For example,
+<code class="docutils literal"><span class="pre">sys._getframe(1)</span></code> returns the caller&#8217;s frame object.</p>
 <p>この関数は CPython のみに含まれ、 Jython や .NET 実装にはありません。デバッグのためだけに用い、製品コード内にこれを書いてしまう誘惑に打ち克ってください。</p>
 </li>
 </ul>
@@ -444,7 +503,12 @@
 <h2>その他の変更と修正<a class="headerlink" href="#other-changes-and-fixes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>短めのリリースサイクルだったため Python 2.1 では比較的少ない変更でした。CVS 変更ログの検索では 117 のパッチ適用と 136 のバグフィックスが見つかります。ともに少なく見積もっています。いくつかの注目に値する変更を紹介します:</p>
 <ul>
-<li><p class="first">特殊化されたオブジェクトアロケータがオプショナルで利用可能になっています。これはシステムの <code class="xref py py-func docutils literal"><span class="pre">malloc()</span></code> よりも速くて省メモリであるはずです。このアロケータは C の <code class="xref py py-func docutils literal"><span class="pre">malloc()</span></code> 関数を大きなメモリプールを得るのに使い、それより小さなメモリ要求はこれらプールで実現しています。この機能は <strong class="program">configure</strong> スクリプトに <code class="xref std std-option docutils literal"><span class="pre">--with-pymalloc</span></code> オプションを与えることで有効化出来ます。実装の詳細については <code class="file docutils literal"><span class="pre">Objects/obmalloc.c</span></code> をみてください。</p>
+<li><p class="first">A specialized object allocator is now optionally available, that should be
+faster than the system <code class="xref py py-func docutils literal"><span class="pre">malloc()</span></code> and have less memory overhead.  The
+allocator uses C&#8217;s <code class="xref py py-func docutils literal"><span class="pre">malloc()</span></code> function to get large pools of memory, and
+then fulfills smaller memory requests from these pools.  It can be enabled by
+providing the <code class="xref std std-option docutils literal"><span class="pre">--with-pymalloc</span></code> option to the <strong class="program">configure</strong>
+script; see <code class="file docutils literal"><span class="pre">Objects/obmalloc.c</span></code> for the implementation details.</p>
 <p>C 拡張モジュールの作者はこのオブジェクトアロケータを有効にしてテストすべきです。というのもある種の誤ったコードが破壊されて、ランタイムにコアダンプを引き起こしうるからです。Python の C API 内には数多くのメモリアロケーション関数がありますが、これは以前は単に C ライブラリの <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> と <code class="xref c c-func docutils literal"><span class="pre">free()</span></code> への別名であり、何かの間違いでミスマッチな関数呼び出しをしても、誤りは気付かれないものでした。今回のこのオブジェクトアロケータを有効化すると、これら関数は <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> と <code class="xref c c-func docutils literal"><span class="pre">free()</span></code> への別名ではまったくなくて、メモリ解放に誤った関数を呼び出すとコアダンプし得ます。例えば <code class="xref py py-func docutils literal"><span class="pre">PyMem_New()</span></code> を使って獲得したメモリは <code class="xref c c-func docutils literal"><span class="pre">free()</span></code> ではなく <code class="xref py py-func docutils literal"><span class="pre">PyMem_Del()</span></code> を使って解放する必要があります。Python に含まれるいくつかのモジュールがまさにこれに抵触し、修正の必要がありました。間違いなく多くのサードパーティモジュールが同じ問題を抱えているでしょう。</p>
 <p>オブジェクトアロケータは Vladimir Marangozov により寄稿されました。</p>
 </li>
@@ -468,7 +532,7 @@ does. You&#8217;d use it like this:</p>
 </pre></div>
 </div>
 <p>For a fuller discussion of the line I/O changes, see the python-dev summary for
-January 1-15, 2001 at <a class="reference external" href="https://www.python.org/dev/summary/2001-01-1/">https://www.python.org/dev/summary/2001-01-1/</a>.</p>
+January 1&#8211;15, 2001 at <a class="reference external" href="https://mail.python.org/pipermail/python-dev/2001-January/">https://mail.python.org/pipermail/python-dev/2001-January/</a>.</p>
 </li>
 <li><p class="first">辞書に新しくメソッド <code class="xref py py-meth docutils literal"><span class="pre">popitem()</span></code> が追加されました。これで辞書の内容を破壊的にイテレートすることが出来ます。これは大きな辞書では速くなりえます。全てのキーまたは値を含んだリストを構築する必要がないからです。 <code class="docutils literal"><span class="pre">D.popitem()</span></code> は辞書 <code class="docutils literal"><span class="pre">D</span></code> からランダムに <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> ペアを削除して、その 2 要素タプルを返します。これは Moshe Zadka による示唆と事前のパッチののちに、Tim Peters と Guido van Rossum によりほとんどが実装されました。(&#8212;訳注: 速くなる理由の説明が、イテレータもジェネレータもなかった Python 2.1 時点での説明であることに注意してください。&#8212;)</p>
 </li>
@@ -535,8 +599,9 @@ January 1-15, 2001 at <a class="reference external" href="https://www.python.org
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/whatsnew/2.1.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/whatsnew/2.1.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -580,12 +645,12 @@ January 1-15, 2001 at <a class="reference external" href="https://www.python.org
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

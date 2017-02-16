@@ -37,6 +37,7 @@
     <link rel="next" title="数値型プロトコル (number protocol)" href="number.html" />
     <link rel="prev" title="抽象オブジェクトレイヤ (abstract objects layer)" href="abstract.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/object.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -120,19 +121,36 @@ int <code class="descname">PyObject_HasAttrString</code><span class="sig-paren">
 <dl class="function">
 <dt id="c.PyObject_SetAttr">
 int <code class="descname">PyObject_SetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*attr_name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetAttr" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性に、値 <em>v</em> を設定します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+<dd><p>Set the value of the attribute named <em>attr_name</em>, for object <em>o</em>, to the value
+<em>v</em>. Raise an exception and return <code class="docutils literal"><span class="pre">-1</span></code> on failure;
+return <code class="docutils literal"><span class="pre">0</span></code> on success.  This is the equivalent of the Python statement
+<code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code>.</p>
+<p>If <em>v</em> is <em>NULL</em>, the attribute is deleted, however this feature is
+deprecated in favour of using <a class="reference internal" href="#c.PyObject_DelAttr" title="PyObject_DelAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_DelAttr()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyObject_SetAttrString">
 int <code class="descname">PyObject_SetAttrString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, const char<em>&nbsp;*attr_name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetAttrString" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>オブジェクト <em>o</em> の <em>attr_name</em> という名の属性に、値 <em>v</em> を設定します。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。この関数は Python の式 <code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+<dd><p>Set the value of the attribute named <em>attr_name</em>, for object <em>o</em>, to the value
+<em>v</em>. Raise an exception and return <code class="docutils literal"><span class="pre">-1</span></code> on failure;
+return <code class="docutils literal"><span class="pre">0</span></code> on success.  This is the equivalent of the Python statement
+<code class="docutils literal"><span class="pre">o.attr_name</span> <span class="pre">=</span> <span class="pre">v</span></code>.</p>
+<p>If <em>v</em> is <em>NULL</em>, the attribute is deleted, however this feature is
+deprecated in favour of using <a class="reference internal" href="#c.PyObject_DelAttrString" title="PyObject_DelAttrString"><code class="xref c c-func docutils literal"><span class="pre">PyObject_DelAttrString()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyObject_GenericSetAttr">
 int <code class="descname">PyObject_GenericSetAttr</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GenericSetAttr" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>型オブジェクトの <code class="docutils literal"><span class="pre">tp_setattro</span></code> スロットに置かれる、属性を設定する総称的な関数です。この関数は、オブジェクトの MRO にあるクラスの辞書からデータデスクリプタを探し、見付かった場合は、インスタンスの辞書の属性への設定よりも優先されます。そうでない場合は、(もし存在すれば) オブジェクトの <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> に属性を設定します。存在しない場合は、 <a class="reference internal" href="../library/exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> が送出され、 <code class="docutils literal"><span class="pre">-1</span></code> が返されます。</p>
+<dd><p>Generic attribute setter and deleter function that is meant
+to be put into a type object&#8217;s <a class="reference internal" href="typeobj.html#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a>
+slot.  It looks for a data descriptor in the
+dictionary of classes in the object&#8217;s MRO, and if found it takes preference
+over setting or deleting the attribute in the instance dictionary. Otherwise, the
+attribute is set or deleted in the object&#8217;s <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> (if present).
+On success, <code class="docutils literal"><span class="pre">0</span></code> is returned, otherwise an <a class="reference internal" href="../library/exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a>
+is raised and <code class="docutils literal"><span class="pre">-1</span></code> is returned.</p>
 </dd></dl>
 
 <dl class="function">
@@ -190,7 +208,8 @@ int <code class="descname">PyObject_Compare</code><span class="sig-paren">(</spa
 <dl class="function">
 <dt id="c.PyObject_Bytes">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject_Bytes</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Bytes" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-4"><em>o</em> オブジェクトの bytes 表現を計算します。 2.x では、単に <a class="reference internal" href="#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> のエイリアスです。</p>
+<dd><p id="index-4">Compute a bytes representation of object <em>o</em>.  In 2.x, this is just an alias
+for <a class="reference internal" href="#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -343,7 +362,9 @@ Py_ssize_t <code class="descname">PyObject_Size</code><span class="sig-paren">(<
 <dl class="function">
 <dt id="c.PyObject_SetItem">
 int <code class="descname">PyObject_SetItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*key</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_SetItem" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>オブジェクト <em>key</em> を値 <em>v</em> に対応付けます。失敗すると <code class="docutils literal"><span class="pre">-1</span></code> を返します。 Python の文 <code class="docutils literal"><span class="pre">o[key]</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+<dd><p>Map the object <em>key</em> to the value <em>v</em>.  Raise an exception and
+return <code class="docutils literal"><span class="pre">-1</span></code> on failure; return <code class="docutils literal"><span class="pre">0</span></code> on success.  This is the
+equivalent of the Python statement <code class="docutils literal"><span class="pre">o[key]</span> <span class="pre">=</span> <span class="pre">v</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -387,8 +408,9 @@ int <code class="descname">PyObject_AsFileDescriptor</code><span class="sig-pare
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/object.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/object.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -433,12 +455,12 @@ int <code class="descname">PyObject_AsFileDescriptor</code><span class="sig-pare
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

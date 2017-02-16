@@ -37,6 +37,7 @@
     <link rel="next" title="20.7. httplib — HTTP プロトコルクライアント" href="httplib.html" />
     <link rel="prev" title="20.5. urllib — URL による任意のリソースへのアクセス" href="urllib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/urllib2.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -88,7 +89,8 @@
 <p><a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> モジュールは基本的な認証、暗号化認証、リダイレクション、クッキー、その他の介在する複雑なアクセス環境において (大抵は HTTP で)  URL を開くための関数とクラスを定義します。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">より高いレベルの http クライアントインターフェイスとしては、 <a class="reference external" href="http://requests.readthedocs.org/">Requests package</a> がお奨めです。</p>
+<p class="last">The <a class="reference external" href="http://requests.readthedocs.org/">Requests package</a>
+is recommended for a higher-level HTTP client interface.</p>
 </div>
 <p><a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> モジュールでは以下の関数を定義しています:</p>
 <dl class="function">
@@ -104,8 +106,9 @@
 <ul class="simple">
 <li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">geturl()</span></code> &#8212; 取得されたリソースの URL を返します。 主に、リダイレクトが発生したかどうかを確認するために利用します。</p>
 </li>
-<li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> &#8212; 取得されたページのヘッダーなどのメタ情報を、 <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> インスタンスとして返します。 (<a class="reference external" href="http://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a> を参照してください)</p>
-</li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> &#8212; return the meta-information of the page, such as headers,
+in the form of an <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> instance
+(see <a class="reference external" href="https://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a>)</li>
 <li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">getcode()</span></code> &#8212; レスポンスの HTTP ステータスコードを返します。</p>
 </li>
 </ul>
@@ -172,7 +175,13 @@
 <dd><p>このクラスは URL リクエストを抽象化したものです。</p>
 <p><em>url</em> は有効な URL を指す文字列でなくてはなりません。</p>
 <p><em>data</em> はサーバに送信する追加のデータを示す文字列か、そのようなデータが無ければ <em>None</em> を指定します。現時点でHTTP リクエストは <em>data</em> をサポートする唯一のリクエスト形式です; <em>data</em> パラメタが指定が指定された場合、HTTP リクエストは GET でなく POST になります。 <em>data</em> は標準的な <em class="mimetype">application/x-www-form-urlencoded</em> 形式のバッファでなくてはなりません。 <a class="reference internal" href="urllib.html#urllib.urlencode" title="urllib.urlencode"><code class="xref py py-func docutils literal"><span class="pre">urllib.urlencode()</span></code></a> 関数はマップ型か2タプルのシーケンスを取り、この形式の文字列を返します。</p>
-<p><em>headers</em> は辞書でなくてはなりません。この辞書は <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a> を辞書のキーおよび値を引数として呼び出した時と 同じように扱われます。 この引数はよく、ブラウザが何であるかを特定する <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダを偽装するために用いられます。 幾つかのHTTPサーバーが、スクリプトからのアクセスを禁止するために、一般的なブラウザの <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーしか許可しないからです。 例えば、 Mozilla Firefox は <code class="docutils literal"><span class="pre">User-Agent</span></code> に <code class="docutils literal"><span class="pre">&quot;Mozilla/5.</span> <span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code> のように設定し、 <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> はデフォルトで <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (Python 2.6の場合)と設定します。</p>
+<p><em>headers</em> should be a dictionary, and will be treated as if <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a>
+was called with each key and value as arguments.  This is often used to &#8220;spoof&#8221;
+the <code class="docutils literal"><span class="pre">User-Agent</span></code> header value, which is used by a browser to identify itself &#8211;
+some HTTP servers only allow requests coming from common browsers as opposed
+to scripts.  For example, Mozilla Firefox may identify itself as <code class="docutils literal"><span class="pre">&quot;Mozilla/5.0</span>
+<span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code>, while <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a>&#8216;s
+default user agent string is <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (on Python 2.6).</p>
 <p>最後の二つの引数は、サードパーティの HTTP クッキーを正しく扱いたい場合にのみ関係してきます:</p>
 <p><em>origin_req_host</em> は、 <span class="target" id="index-18"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> で定義されている元のトランザクションにおけるリクエストホスト (request-host of the origin transaction) です。デフォルトの値は <code class="docutils literal"><span class="pre">cookielib.request_host(self)</span></code> です。 この値は、ユーザによって開始された元々のリクエストにおけるホスト名や IP アドレスです。例えば、もしリクエストがある HTML ドキュメント内の画像を指していれば、この値は画像を含んでいるページへのリクエストにおけるリクエストホストになるはずです。</p>
 <p><em>unverifiable</em> は、 <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> の定義において、該当するリクエストが証明不能 (unverifiable) であるかどうかを示します。デフォルトの値は <code class="docutils literal"><span class="pre">False</span></code> です。証明不能なリクエストとは、ユーザが受け入れの可否を選択できないような URL を持つリクエストのことです。例えば、リクエストが HTML ドキュメント中の画像であり、ユーザがこの画像を自動的に取得するか どうかを選択できない場合には、証明不能フラグは True になります。</p>
@@ -213,6 +222,13 @@
 <em class="property">class </em><code class="descclassname">urllib2.</code><code class="descname">ProxyHandler</code><span class="sig-paren">(</span><span class="optional">[</span><em>proxies</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#urllib2.ProxyHandler" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>このクラスはプロキシを通過してリクエストを送らせます。引数 <em>proxies</em> を与える場合、プロトコル名からプロキシの URL へ対応付ける辞書でなくてはなりません。標準では、プロキシのリストを環境変数 <span class="target" id="index-20"></span><code class="xref std std-envvar docutils literal"><span class="pre">&lt;protocol&gt;_proxy</span></code>  から読み出します。プロキシ環境変数が設定されていない場合は、 Windows 環境では、 レジストリのインターネット設定セクションからプロキシ設定を手に入れ、 Mac OS X 環境では、 OS X システム設定フレームワーク (System Configuration Framework) からプロキシ情報を取得します。</p>
 <p>自動検出されたproxyを無効にするには、空の辞書を渡してください。</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><code class="docutils literal"><span class="pre">HTTP_PROXY</span></code> will be ignored if a variable <code class="docutils literal"><span class="pre">REQUEST_METHOD</span></code> is set;
+see the documentation on <a class="reference internal" href="urllib.html#urllib.getproxies" title="urllib.getproxies"><code class="xref py py-func docutils literal"><span class="pre">getproxies()</span></code></a>.</p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="class">
@@ -766,6 +782,8 @@
 </div>
 <div class="section" id="examples">
 <span id="urllib2-examples"></span><h2>20.6.21. 例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>In addition to the examples below, more examples are given in
+<a class="reference internal" href="../howto/urllib2.html#urllib-howto"><span class="std std-ref">urllib2 を使ってインターネット上のリソースを取得するには</span></a>.</p>
 <p>以下の例では、 python.org のメインページを取得して、その最初の 100 バイト分を表示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;http://www.python.org/&#39;</span><span class="p">)</span>
@@ -820,6 +838,8 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/&#39;</span><span class="p">)</span>
 <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Referer&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.python.org/&#39;</span><span class="p">)</span>
+<span class="c1"># Customize the default User-Agent header value:</span>
+<span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">,</span> <span class="s1">&#39;urllib-example/0.1 (Contact: . . .)&#39;</span><span class="p">)</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -877,8 +897,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/urllib2.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/urllib2.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -923,12 +944,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

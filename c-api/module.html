@@ -37,6 +37,7 @@
     <link rel="next" title="イテレータオブジェクト (iterator object)" href="iterator.html" />
     <link rel="prev" title="ファイルオブジェクト" href="file.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/module.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -115,7 +116,11 @@ int <code class="descname">PyModule_CheckExact</code><span class="sig-paren">(</
 <dl class="function">
 <dt id="c.PyModule_GetDict">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyModule_GetDict</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*module</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyModule_GetDict" title="この定義へのパーマリンク">¶</a></dt>
-<dd><em class="refcount">Return value: Borrowed reference.</em><p id="index-3"><em>module</em> の名前空間を実現する辞書オブジェクトを返します; このオブジェクトはモジュールオブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> と同じです。この関数が失敗することはありません。  拡張モジュールでは、この関数で得たモジュールの <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> を直接いじるより、他の <code class="xref c c-func docutils literal"><span class="pre">PyModule_*()</span></code> および <code class="xref c c-func docutils literal"><span class="pre">PyObject_*()</span></code> 関数を使うよう勧めます。</p>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p id="index-3">Return the dictionary object that implements <em>module</em>&#8216;s namespace; this object
+is the same as the <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute of the module object.  This
+function never fails.  It is recommended extensions use other
+<code class="xref c c-func docutils literal"><span class="pre">PyModule_*()</span></code> and <code class="xref c c-func docutils literal"><span class="pre">PyObject_*()</span></code> functions rather than directly
+manipulate a module&#8217;s <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -194,8 +199,9 @@ int <code class="descname">PyModule_AddStringMacro</code><span class="sig-paren"
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/module.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/module.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -240,12 +246,12 @@ int <code class="descname">PyModule_AddStringMacro</code><span class="sig-paren"
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

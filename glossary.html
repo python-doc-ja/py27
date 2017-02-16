@@ -36,6 +36,7 @@
     <link rel="next" title="このドキュメントについて" href="about.html" />
     <link rel="prev" title="“なぜ Python が私のコンピュータにインストールされているのですか？” FAQ" href="faq/installed.html" />
     <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/glossary.html" />
     <script type="text/javascript" src="_static/copybutton.js"></script>
     <script type="text/javascript" src="_static/_jp.js"></script>
     
@@ -233,7 +234,11 @@
 <dt id="term-hashable">hashable</dt>
 <dd><p class="first">(ハッシュ可能) <em>ハッシュ可能</em> なオブジェクトとは、生存期間中変わらないハッシュ値を持ち (<a class="reference internal" href="reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> メソッドが必要)、他のオブジェクトと比較ができる (<a class="reference internal" href="reference/datamodel.html#object.__eq__" title="object.__eq__"><code class="xref py py-meth docutils literal"><span class="pre">__eq__()</span></code></a> か <a class="reference internal" href="reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> メソッドが必要) オブジェクトです。 同値なハッシュ可能オブジェクトは必ず同じハッシュ値を持つ必要があります。</p>
 <p>ハッシュ可能なオブジェクトは辞書のキーや集合のメンバーとして使えます。辞書や集合のデータ構造は内部でハッシュ値を使っているからです。</p>
-<p class="last">Python の全てのイミュータブルな組み込みオブジェクトはハッシュ可能で、いかなるミュータブルなコンテナ (リストや辞書等) もハッシュ可能ではありません。ユーザー定義のクラスのインスタンスであるオブジェクトはデフォルトでハッシュ可能です; その全ての比較は (それ自身以外とは) 不等で、ハッシュ値は <a class="reference internal" href="library/functions.html#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a> です。</p>
+<p class="last">All of Python&#8217;s immutable built-in objects are hashable, while no mutable
+containers (such as lists or dictionaries) are.  Objects which are
+instances of user-defined classes are hashable by default; they all
+compare unequal (except with themselves), and their hash value is derived
+from their <a class="reference internal" href="library/functions.html#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a>.</p>
 </dd>
 <dt id="term-idle">IDLE</dt>
 <dd><p class="first last">Python の統合開発環境 (Integrated DeveLopment Environment) です。IDLE は Python の標準的な配布に同梱されている基本的な機能のエディタとインタプリタ環境です。</p>
@@ -298,8 +303,9 @@
 <dd><p class="first last">(メソッド) クラス本体の中で定義された関数。そのクラスのインスタンスの属性として呼び出された場合、メソッドはインスタンスオブジェクトを第一引数 (<a class="reference internal" href="#term-argument"><span class="xref std std-term">argument</span></a>) として受け取ります (この第一引数は通常 <code class="docutils literal"><span class="pre">self</span></code> と呼ばれます)。 <a class="reference internal" href="#term-function"><span class="xref std std-term">関数</span></a> と <a class="reference internal" href="#term-nested-scope"><span class="xref std std-term">ネストされたスコープ</span></a> も参照してください。</p>
 </dd>
 <dt id="term-method-resolution-order">method resolution order</dt>
-<dd><p class="first last">(メソッド解決順序) 探索の際に基底クラスが構成要素を検索される順番です。<a class="reference external" href="https://www.python.org/download/releases/2.3/mro/">The Python 2.3 Method Resolution Order</a> を参照してください。</p>
-</dd>
+<dd>Method Resolution Order is the order in which base classes are searched
+for a member during lookup. See <a class="reference external" href="https://www.python.org/download/releases/2.3/mro/">The Python 2.3 Method Resolution Order</a> for details of the
+algorithm used by the Python interpreter since the 2.3 release.</dd>
 <dt id="term-module">モジュール</dt>
 <dd><p class="first">(モジュール) Python コードの組織単位としてはたらくオブジェクトです。モジュールは任意の Python オブジェクトを含む名前空間を持ちます。モジュールは <a class="reference internal" href="#term-importing"><span class="xref std std-term">importing</span></a> の処理によって Python に読み込まれます。</p>
 <p class="last"><a class="reference internal" href="#term-package"><span class="xref std std-term">パッケージ</span></a> を参照してください。</p>
@@ -426,8 +432,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="bugs.html">Report a Bug</a></li>
-  <li><a href="_sources/glossary.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/glossary.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -470,12 +477,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

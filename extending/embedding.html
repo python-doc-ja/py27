@@ -37,6 +37,7 @@
     <link rel="next" title="Python/C API リファレンスマニュアル" href="../c-api/index.html" />
     <link rel="prev" title="4. Windows 上での C および C++ 拡張モジュールのビルド" href="windows.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/extending/embedding.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -219,10 +220,10 @@
     <span class="k">return</span> <span class="n">c</span>
 </pre></div>
 </div>
-<p>実行結果は以下のようになるはずです:</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span>$ call multiply multiply 3 2
-Will compute 3 times 2
-Result of call: 6
+<p>then the result should be:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> call multiply multiply <span class="m">3</span> <span class="m">2</span>
+<span class="go">Will compute 3 times 2</span>
+<span class="go">Result of call: 6</span>
 </pre></div>
 </div>
 <p>この程度の機能を実現するにはプログラムがいささか大きすぎますが、ほとんどは Python から C へのデータ変換やエラー報告のためのコードです。Python の埋め込みという観点から最も興味深い部分は以下のコードから始まる部分です:</p>
@@ -290,15 +291,17 @@ Result of call: 6
 <p>Python インタプリタをアプリケーションに埋め込むためにコンパイラ (とリンカ) に渡すべき正しいフラグを見出すのは簡単でないかもしれません。これは特に、Python がライブラリモジュールに対してリンクされた C 動的拡張 (<code class="file docutils literal"><span class="pre">.so</span></code> ファイル) として実装されたものをロードする必要があるためです。</p>
 <p>必要なコンパイル・リンクのオプションを知るために、 <code class="file docutils literal"><span class="pre">python</span><em><span class="pre">X.Y</span></em><span class="pre">-config</span></code> スクリプトが使えます(これは Python インストール時に生成されたもので、バージョン付けされていない命名の <code class="file docutils literal"><span class="pre">python-config</span></code> スクリプトも利用出来るかもしれません)。このスクリプトにはオプションが多くありますが、直接的に有用なのはこれでしょう:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">pythonX.Y-config</span> <span class="pre">--cflags</span></code> は推奨のコンパイルオプションを出力します:</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span>$ /opt/bin/python2.7-config --cflags
--I/opt/include/python2.7 -fno-strict-aliasing -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
+<li><p class="first"><code class="docutils literal"><span class="pre">pythonX.Y-config</span> <span class="pre">--cflags</span></code> will give you the recommended flags when
+compiling:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /opt/bin/python2.7-config --cflags
+<span class="go">-I/opt/include/python2.7 -fno-strict-aliasing -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">pythonX.Y-config</span> <span class="pre">--ldflags</span></code> は推奨のリンクオプションを出力します:</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span>$ /opt/bin/python2.7-config --ldflags
--L/opt/lib/python2.7/config -lpthread -ldl -lutil -lm -lpython2.7 -Xlinker -export-dynamic
+<li><p class="first"><code class="docutils literal"><span class="pre">pythonX.Y-config</span> <span class="pre">--ldflags</span></code> will give you the recommended flags when
+linking:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /opt/bin/python2.7-config --ldflags
+<span class="go">-L/opt/lib/python2.7/config -lpthread -ldl -lutil -lm -lpython2.7 -Xlinker -export-dynamic</span>
 </pre></div>
 </div>
 </li>
@@ -346,8 +349,9 @@ Result of call: 6
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/extending/embedding.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/extending/embedding.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -391,12 +395,12 @@ Result of call: 6
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

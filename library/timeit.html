@@ -37,6 +37,7 @@
     <link rel="next" title="26.7. trace — Python ステートメント実行のトレースと追跡" href="trace.html" />
     <link rel="prev" title="26.5. hotshot — ハイパフォーマンス・ロギング・プロファイラ" href="hotshot.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/timeit.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,12 +85,17 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/timeit.py">Lib/timeit.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/timeit.py">Lib/timeit.py</a></p>
 <hr class="docutils" />
-<p>このモジュールは小さい Python コードをの時間を計測するシンプルな手段を提供しています。<a class="reference internal" href="#command-line-interface"><span class="std std-ref">コマンドラインインターフェイス</span></a> の他 <a class="reference internal" href="#python-interface"><span class="std std-ref">呼び出しも可能</span></a> です。このモジュールは実行時間を計測するときに共通するいくつかの罠を回避します。O&#8217;Reilly 出版の <em>Python Cookbook</em> にある、Tim Peter による &#8220;Algorithms&#8221; 章も参照してください。</p>
+<p>This module provides a simple way to time small bits of Python code. It has both
+a <a class="reference internal" href="#timeit-command-line-interface"><span class="std std-ref">コマンドラインインターフェイス</span></a> as well as a <a class="reference internal" href="#python-interface"><span class="std std-ref">callable</span></a>
+one.  It avoids a number of common traps for measuring execution times.
+See also Tim Peters&#8217; introduction to the &#8220;Algorithms&#8221; chapter in the <em>Python
+Cookbook</em>, published by O&#8217;Reilly.</p>
 <div class="section" id="basic-examples">
 <h2>26.6.1. 基本的な例<a class="headerlink" href="#basic-examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>次の例は <a class="reference internal" href="#command-line-interface"><span class="std std-ref">コマンドラインインターフェイス</span></a> を使って 3 つの異なる式の時間を測定する方法を示しています:</p>
+<p>The following example shows how the <a class="reference internal" href="#timeit-command-line-interface"><span class="std std-ref">コマンドラインインターフェイス</span></a>
+can be used to compare three different expressions:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>$ python -m timeit <span class="s1">&#39;&quot;-&quot;.join(str(n) for n in range(100))&#39;</span>
 <span class="m">10000</span> loops, best of <span class="m">3</span>: <span class="m">40</span>.3 usec per loop
 $ python -m timeit <span class="s1">&#39;&quot;-&quot;.join([str(n) for n in range(100)])&#39;</span>
@@ -189,7 +195,7 @@ $ python -m timeit <span class="s1">&#39;&quot;-&quot;.join(map(str, range(100))
 
 </div>
 <div class="section" id="command-line-interface">
-<span id="id2"></span><h2>26.6.3. コマンドラインインターフェイス<a class="headerlink" href="#command-line-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="timeit-command-line-interface"></span><h2>26.6.3. コマンドラインインターフェイス<a class="headerlink" href="#command-line-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>コマンドラインからプログラムとして呼び出す場合は、次の書式を使います:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">timeit</span> <span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="n">N</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">r</span> <span class="n">N</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">S</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">statement</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -242,7 +248,13 @@ $ python -m timeit <span class="s1">&#39;&quot;-&quot;.join(map(str, range(100))
 <p><a class="reference internal" href="#timeit.default_timer" title="timeit.default_timer"><code class="xref py py-func docutils literal"><span class="pre">default_timer()</span></code></a> の結果は同じコンピュータ上で動作している別のプロセスに影響を受けることがあります。そのため、正確な時間を計測する必要がある場合に最善の方法は、時間の取得を数回くり返してその中の最短の時間を採用することです。 <a class="reference internal" href="#cmdoption-timeit-r"><code class="xref std std-option docutils literal"><span class="pre">-r</span></code></a> オプションはこれをおこなうもので、デフォルトのくり返し回数は3回になっています。多くの場合はデフォルトのままで充分でしょう。 Unix の場合 <a class="reference internal" href="time.html#time.clock" title="time.clock"><code class="xref py py-func docutils literal"><span class="pre">time.clock()</span></code></a> を使って CPU 時間で測定することもできます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">pass 文の実行による基本的なオーバーヘッドが存在することに注意してください。ここにあるコードはこの事実を隠そうとはしていませんが、注意する必要があります。基本的なオーバーヘッドは引数なしでプログラムを起動することにより計測でき、それは Python のバージョンによって異なるでしょう。 Python 2.3 とそれ以前の Python の公平な比較をおこなう場合、古い Python では <code class="xref std std-option docutils literal"><span class="pre">-O</span></code> オプションを付けて起動して <code class="docutils literal"><span class="pre">SET_LINENO</span></code> 命令の実行時間が含まれないようにする必要があります。</p>
+<p class="last">There is a certain baseline overhead associated with executing a pass statement.
+The code here doesn&#8217;t try to hide it, but you should be aware of it.  The
+baseline overhead can be measured by invoking the program without arguments, and
+it might differ between Python versions.  Also, to fairly compare older Python
+versions to Python 2.3, you may want to use Python&#8217;s <code class="xref std std-option docutils literal"><span class="pre">-O</span></code>
+option (see <a class="reference internal" href="../using/cmdline.html#using-on-optimizations"><span class="std std-ref">Optimizations</span></a>) for
+the older versions to avoid timing <code class="docutils literal"><span class="pre">SET_LINENO</span></code> instructions.</p>
 </div>
 </div>
 <div class="section" id="examples">
@@ -351,8 +363,9 @@ $ python -m timeit <span class="s1">&#39;if hasattr(int, &quot;__nonzero__&quot;
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/timeit.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/timeit.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -397,12 +410,12 @@ $ python -m timeit <span class="s1">&#39;if hasattr(int, &quot;__nonzero__&quot;
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="18.13. binhex — binhex4 形式ファイルのエンコードおよびデコード" href="binhex.html" />
     <link rel="prev" title="18.11. rfc822 — RFC 2822 準拠のメールヘッダ読み出し" href="rfc822.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/base64.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,13 +82,17 @@
             
   <div class="section" id="module-base64">
 <span id="base64-rfc-3548-base16-base32-base64-data-encodings"></span><h1>18.12. <a class="reference internal" href="#module-base64" title="base64: RFC 3548: Base16, Base32, Base64 Data Encodings"><code class="xref py py-mod docutils literal"><span class="pre">base64</span></code></a> &#8212; RFC 3548: Base16, Base32, Base64 データの符号化<a class="headerlink" href="#module-base64" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p id="index-0">このモジュールは、 <span class="target" id="index-8"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> で定められた仕様によるデータの符号化 (エンコード、 encoding) および復元 (デコード、 decoding) を提供します。この RFC 標準では Base16, Base32 および Base64 が定義されており、これはバイナリ文字列とテキスト文字列とをエンコードあるいはデコードするためのアルゴリズムです。変換されたテキスト文字列は email で確実に送信したり、 URL の一部として使用したり、 HTTP POST リクエストの一部に含めることができます。これらの符号化アルゴリズムは <strong class="program">uuencode</strong> で使われているものとは別物です。</p>
-<p>このモジュールでは 2 つのインターフェイスが提供されています。現代的なインターフェイスは、 <span class="target" id="index-9"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> が定義する 3 種類のアルファベット集合 (ノーマル, URL セーフ, ファイルシステムセーフ) を使った文字列オブジェクトのエンコードおよびデコードをすべてサポートします。一方、レガシーなインターフェイスは、文字列とともにファイル風のオブジェクトに対するエンコード / デコードを提供しますが、Base64 標準のアルファベット集合しか使いません。</p>
+<p id="index-0">このモジュールは、 <span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> で定められた仕様によるデータの符号化 (エンコード、 encoding) および復元 (デコード、 decoding) を提供します。この RFC 標準では Base16, Base32 および Base64 が定義されており、これはバイナリ文字列とテキスト文字列とをエンコードあるいはデコードするためのアルゴリズムです。変換されたテキスト文字列は email で確実に送信したり、 URL の一部として使用したり、 HTTP POST リクエストの一部に含めることができます。これらの符号化アルゴリズムは <strong class="program">uuencode</strong> で使われているものとは別物です。</p>
+<p>There are two interfaces provided by this module.  The modern interface supports
+encoding and decoding string objects using both base-64 alphabets defined
+in <span class="target" id="index-2"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> (normal, and URL- and filesystem-safe).  The legacy
+interface provides for encoding and decoding to and from file-like objects as
+well as strings, but only using the Base64 standard alphabet.</p>
 <p>Python 2.4 で導入された現代的なインターフェイスは以下のものを提供します :</p>
 <dl class="function">
 <dt id="base64.b64encode">
 <code class="descclassname">base64.</code><code class="descname">b64encode</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>altchars</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base64.b64encode" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Base64 をつかって、文字列をエンコード ( 符号化 ) します。</p>
+<dd><p>Encode a string using Base64.</p>
 <p><em>s</em> はエンコードする文字列です。オプション引数 <em>altchars</em> は最低でも 2 の長さをもつ文字列で (これ以降の文字は無視されます)、これは <code class="docutils literal"><span class="pre">+</span></code> と <code class="docutils literal"><span class="pre">/</span></code> の代わりに使われる代替アルファベットを指定します。これにより、アプリケーションはたとえば URL やファイルシステムの影響をうけない Base64 文字列を生成することができます。デフォルトの値は <code class="docutils literal"><span class="pre">None</span></code> で、これは標準の Base64 アルファベット集合が使われることを意味します。</p>
 <p>エンコードされた文字列が返されます。</p>
 </dd></dl>
@@ -97,7 +102,10 @@
 <code class="descclassname">base64.</code><code class="descname">b64decode</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>altchars</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base64.b64decode" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Base64 文字列をデコード ( 復元 ) します。</p>
 <p><em>s</em> にはデコードする文字列を渡します。オプション引数の <em>altchars</em> は最低でも 2 の長さをもつ文字列で ( これ以降の文字は無視されます ) 、これは <code class="docutils literal"><span class="pre">+</span></code> と <code class="docutils literal"><span class="pre">/</span></code> の代わりに使われる代替アルファベットを指定します。</p>
-<p>デコードされた文字列が返されます。 <em>s</em> が正しくパディングされていない場合、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が発生します。base64 アルファベットでない文字はパディングチェックに先立って読み捨てられます。</p>
+<p>The decoded string is returned.  A <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> is raised if <em>s</em> is
+incorrectly padded.  Characters that are neither
+in the normal base-64 alphabet nor the alternative alphabet are
+discarded prior to the padding check.</p>
 </dd></dl>
 
 <dl class="function">
@@ -115,13 +123,18 @@
 <dl class="function">
 <dt id="base64.urlsafe_b64encode">
 <code class="descclassname">base64.</code><code class="descname">urlsafe_b64encode</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#base64.urlsafe_b64encode" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>URL 用に安全なアルファベット集合をもちいて文字列 <em>s</em> をエンコード ( 符号化 ) します。これは、標準の Base64 アルファベット集合にある <code class="docutils literal"><span class="pre">+</span></code> のかわりに <code class="docutils literal"><span class="pre">-</span></code> を使い、 <code class="docutils literal"><span class="pre">/</span></code> のかわりに <code class="docutils literal"><span class="pre">_</span></code> を使用します。出来上がった文字列には <code class="docutils literal"><span class="pre">=</span></code> が残っている可能性があります。</p>
+<dd><p>Encode string <em>s</em> using the URL- and filesystem-safe
+alphabet, which substitutes <code class="docutils literal"><span class="pre">-</span></code> instead of
+<code class="docutils literal"><span class="pre">+</span></code> and <code class="docutils literal"><span class="pre">_</span></code> instead of <code class="docutils literal"><span class="pre">/</span></code> in the standard Base64 alphabet.  The result
+can still contain <code class="docutils literal"><span class="pre">=</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="base64.urlsafe_b64decode">
 <code class="descclassname">base64.</code><code class="descname">urlsafe_b64decode</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#base64.urlsafe_b64decode" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>URL 用に安全なアルファベット集合をもちいて文字列 <em>s</em> をデコード ( 復元 ) します。これは、標準の Base64 アルファベット集合にある <code class="docutils literal"><span class="pre">+</span></code> のかわりに <code class="docutils literal"><span class="pre">-</span></code> を使い、 <code class="docutils literal"><span class="pre">/</span></code> のかわりに <code class="docutils literal"><span class="pre">_</span></code> を使用します。</p>
+<dd><p>Decode string <em>s</em> using the URL- and filesystem-safe
+alphabet, which substitutes <code class="docutils literal"><span class="pre">-</span></code> instead of
+<code class="docutils literal"><span class="pre">+</span></code> and <code class="docutils literal"><span class="pre">_</span></code> instead of <code class="docutils literal"><span class="pre">/</span></code> in the standard Base64 alphabet.</p>
 </dd></dl>
 
 <dl class="function">
@@ -135,7 +148,7 @@
 <code class="descclassname">base64.</code><code class="descname">b32decode</code><span class="sig-paren">(</span><em>s</em><span class="optional">[</span>, <em>casefold</em><span class="optional">[</span>, <em>map01</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base64.b32decode" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Base32 をつかって、文字列をデコード ( 復元 ) します。</p>
 <p><em>s</em> にはエンコードする文字列を渡します。オプション引数 <em>casefold</em> は小文字のアルファベットを受けつけるかどうかを指定します。セキュリティ上の理由により、デフォルトではこれは <code class="docutils literal"><span class="pre">False</span></code> になっています。</p>
-<p><span class="target" id="index-10"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> は付加的なマッピングとして、数字の 0 (零) をアルファベットの O (オー) に、数字の 1 (壱) をアルファベットの I (アイ) または L (エル) に対応させることを許しています。オプション引数は <em>map01</em> は、 <code class="docutils literal"><span class="pre">None</span></code> でないときは、数字の 1 をどの文字に対応づけるかを指定します (<em>map01</em> が <code class="docutils literal"><span class="pre">None</span></code> でないとき、数字の 0 はつねにアルファベットの O (オー) に対応づけられます)。セキュリティ上の理由により、これはデフォルトでは <code class="docutils literal"><span class="pre">None</span></code> になっているため、 0 および 1 は入力として許可されていません。</p>
+<p><span class="target" id="index-8"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> は付加的なマッピングとして、数字の 0 (零) をアルファベットの O (オー) に、数字の 1 (壱) をアルファベットの I (アイ) または L (エル) に対応させることを許しています。オプション引数は <em>map01</em> は、 <code class="docutils literal"><span class="pre">None</span></code> でないときは、数字の 1 をどの文字に対応づけるかを指定します (<em>map01</em> が <code class="docutils literal"><span class="pre">None</span></code> でないとき、数字の 0 はつねにアルファベットの O (オー) に対応づけられます)。セキュリティ上の理由により、これはデフォルトでは <code class="docutils literal"><span class="pre">None</span></code> になっているため、 0 および 1 は入力として許可されていません。</p>
 <p>デコードされた文字列が返されます。 <em>s</em> が正しくパディングされていなかったり、規定のアルファベット以外の文字が含まれていた場合には <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が発生します。</p>
 </dd></dl>
 
@@ -217,8 +230,9 @@ base64 encoding.</dd>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/base64.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/base64.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -263,12 +277,12 @@ base64 encoding.</dd>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

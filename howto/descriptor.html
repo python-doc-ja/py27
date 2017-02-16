@@ -37,6 +37,7 @@
     <link rel="next" title="Python 良い慣用句、悪い慣用句" href="doanddont.html" />
     <link rel="prev" title="Python で Curses プログラミング" href="curses.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/descriptor.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -132,13 +133,13 @@
 <p>ディスクリプタは、メソッド名で直接呼ぶことも出来ます。例えば、 <code class="docutils literal"><span class="pre">d.__get__(obj)</span></code> です。</p>
 <p>または、一般的に、ディスクリプタは属性アクセスから自動的に呼び出されます。例えば、 <code class="docutils literal"><span class="pre">obj.d</span></code> は <code class="docutils literal"><span class="pre">obj</span></code> の辞書から <code class="docutils literal"><span class="pre">d</span></code> を探索します。 <code class="docutils literal"><span class="pre">d</span></code> がメソッド <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> を定義していたら、以下に列挙する優先順位に従って、 <code class="docutils literal"><span class="pre">d.__get__(obj)</span></code> が呼び出されます。</p>
 <p>呼び出しの詳細は、 <code class="docutils literal"><span class="pre">obj</span></code> がオブジェクトかクラスかに依ります。どちらにしても、ディスクリプタは新スタイルのオブジェクトやクラスにのみ働きます。クラスは、それが <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> のサブクラスであるなら新スタイルです。</p>
-<p>オブジェクトでは、その機構は <code class="docutils literal"><span class="pre">b.x</span></code> を <code class="docutils literal"><span class="pre">type(b).__dict__['x'].__get__(b,</span> <span class="pre">type(b))</span></code> に変換する <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">object.__getattribute__()</span></code></a> にあります。データディスクリプタの優先度はインスタンス変数より高く、インスタンス変数の優先度は非データディスクリプタより高く、(提供されていれば) <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> の優先度が最も低いように実装されています。完全な C 実装は、 <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Objects/object.c">Objects/object.c</a> の <a class="reference internal" href="../c-api/object.html#c.PyObject_GenericGetAttr" title="PyObject_GenericGetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_GenericGetAttr()</span></code></a> で見つかります。</p>
+<p>オブジェクトでは、その機構は <code class="docutils literal"><span class="pre">b.x</span></code> を <code class="docutils literal"><span class="pre">type(b).__dict__['x'].__get__(b,</span> <span class="pre">type(b))</span></code> に変換する <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">object.__getattribute__()</span></code></a> にあります。データディスクリプタの優先度はインスタンス変数より高く、インスタンス変数の優先度は非データディスクリプタより高く、(提供されていれば) <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> の優先度が最も低いように実装されています。完全な C 実装は、 <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Objects/object.c">Objects/object.c</a> の <a class="reference internal" href="../c-api/object.html#c.PyObject_GenericGetAttr" title="PyObject_GenericGetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_GenericGetAttr()</span></code></a> で見つかります。</p>
 <p>クラスでは、その機構は <code class="docutils literal"><span class="pre">B.x</span></code> を <code class="docutils literal"><span class="pre">B.__dict__['x'].__get__(None,</span> <span class="pre">B)</span></code> に変換する <code class="xref py py-meth docutils literal"><span class="pre">type.__getattribute__()</span></code> にあります。 pure Python では、このようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="s2">&quot;Emulate type_getattro() in Objects/typeobject.c&quot;</span>
     <span class="n">v</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;__get__&#39;</span><span class="p">):</span>
-       <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">v</span>
 </pre></div>
 </div>
@@ -158,7 +159,7 @@
 </li>
 </ul>
 <p><code class="docutils literal"><span class="pre">super()</span></code> が返したオブジェクトにはさらにディスクリプタを起動するカスタム <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">__getattribute__()</span></code></a> メソッドがあります。 <code class="docutils literal"><span class="pre">super(B,</span> <span class="pre">obj).m()</span></code> の呼び出しは、 <code class="docutils literal"><span class="pre">B</span></code> に続き基底クラス <code class="docutils literal"><span class="pre">A</span></code> を見つけるために <code class="docutils literal"><span class="pre">obj.__class__.__mro__</span></code> を探索し、 <code class="docutils literal"><span class="pre">A.__dict__['m'].__get__(obj,</span> <span class="pre">B)</span></code> を返します。ディスクリプタではない場合、 <code class="docutils literal"><span class="pre">m</span></code> が変更されずに返されます。辞書になければ、  <code class="docutils literal"><span class="pre">m</span></code> は <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">object.__getattribute__()</span></code></a> を使用した探索に戻ります。</p>
-<p>なお、Python 2.2 では、 <code class="docutils literal"><span class="pre">m</span></code> がデータディスクリプタなら、 <code class="docutils literal"><span class="pre">super(B,</span> <span class="pre">obj).m()</span></code> は <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> を呼び出すだけです。 Python 2.3 では、旧スタイルクラスが呼び出されなければ、非データディスクリプタも呼び出されます。実装の詳細は、 <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Objects/typeobject.c">Objects/typeobject.c</a> 内の <code class="xref c c-func docutils literal"><span class="pre">super_getattro()</span></code> を参照してください。</p>
+<p>なお、Python 2.2 では、 <code class="docutils literal"><span class="pre">m</span></code> がデータディスクリプタなら、 <code class="docutils literal"><span class="pre">super(B,</span> <span class="pre">obj).m()</span></code> は <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> を呼び出すだけです。 Python 2.3 では、旧スタイルクラスが呼び出されなければ、非データディスクリプタも呼び出されます。実装の詳細は、 <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Objects/typeobject.c">Objects/typeobject.c</a> 内の <code class="xref c c-func docutils literal"><span class="pre">super_getattro()</span></code> を参照してください。</p>
 <p>上述の詳細は、ディスクリプタの機構が、 <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">__getattribute__()</span></code></a> メソッドに埋めこまれ、 <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>, <a class="reference internal" href="../library/functions.html#type" title="type"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a>, そして <a class="reference internal" href="../library/functions.html#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> に使われているということを表しています。クラスは、 <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> から導出されたとき、または、同じような機能を提供するメタクラスをもつとき、この機構を継承します。同様に、 <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">__getattribute__()</span></code></a> をオーバーライドすることで、ディスクリプタの呼び出しを無効にできます。</p>
 </div>
 <div class="section" id="descriptor-example">
@@ -182,9 +183,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">RevealAccess</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;var &quot;x&quot;&#39;</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
-
+<span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">RevealAccess</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;var &quot;x&quot;&#39;</span><span class="p">)</span>
+<span class="o">...</span>     <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="o">...</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span>
 <span class="n">Retrieving</span> <span class="n">var</span> <span class="s2">&quot;x&quot;</span>
@@ -279,19 +280,23 @@
 </div>
 <p>インタプリタを起動すると、この関数ディスクリプタが実際にどうはたらくかを見られます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="go">     def f(self, x):</span>
-<span class="go">          return x</span>
-
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">x</span>
+<span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span> <span class="c1"># Stored internally as a function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span>  <span class="c1"># Stored internally as a function</span>
 <span class="go">&lt;function f at 0x00C45070&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">f</span>             <span class="c1"># Get from a class becomes an unbound method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">f</span>              <span class="c1"># Get from a class becomes an unbound method</span>
 <span class="go">&lt;unbound method D.f&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">f</span>             <span class="c1"># Get from an instance becomes a bound method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">f</span>              <span class="c1"># Get from an instance becomes a bound method</span>
 <span class="go">&lt;bound method D.f of &lt;__main__.D object at 0x00B18C90&gt;&gt;</span>
 </pre></div>
 </div>
-<p>この出力が暗示するのは、束縛メソッドと非束縛メソッドは 2 つの異なる型であるということです。これらは、異なる型として実装することも出来ますが、 <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Objects/classobject.c">Objects/classobject.c</a> における <a class="reference internal" href="../c-api/method.html#c.PyMethod_Type" title="PyMethod_Type"><code class="xref c c-type docutils literal"><span class="pre">PyMethod_Type</span></code></a> の実際の C 実装は、 <code class="xref py py-attr docutils literal"><span class="pre">im_self</span></code> が <em>NULL</em> (C での <em>None</em> の等価物) に設定されているかに依って 2 つの異なる表現を持つ、 1 つのオブジェクトです。</p>
+<p>The output suggests that bound and unbound methods are two different types.
+While they could have been implemented that way, the actual C implementation of
+<a class="reference internal" href="../c-api/method.html#c.PyMethod_Type" title="PyMethod_Type"><code class="xref c c-type docutils literal"><span class="pre">PyMethod_Type</span></code></a> in <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Objects/classobject.c">Objects/classobject.c</a> is a single object
+with two different representations depending on whether the <code class="xref py py-attr docutils literal"><span class="pre">im_self</span></code>
+field is set or is <em>NULL</em> (the C equivalent of <code class="docutils literal"><span class="pre">None</span></code>).</p>
 <p>同様に、メソッドオブジェクトを呼び出すことの効果も、 <code class="xref py py-attr docutils literal"><span class="pre">im_self</span></code> フィールドに依ります。設定されていれば (束縛を意味し)、期待通り (<code class="xref py py-attr docutils literal"><span class="pre">im_func</span></code> フィールドに保存されている) 元の関数が、第一引数をインスタンスとして、呼び出されます。非束縛なら、すべての引数がそのまま元の関数に渡されます。 <code class="xref py py-func docutils literal"><span class="pre">instancemethod_call()</span></code> の実際の C 実装は、型チェックがあるため、もう少しだけ複雑です。</p>
 </div>
 <div class="section" id="static-methods-and-class-methods">
@@ -339,10 +344,10 @@
 <p>例えば、統計パッケージに、実験データのコンテナがあるとします。そのクラスは、平均、メジアン、その他の、データに依る記述統計を計算する標準メソッドを提供します。しかし、概念上は関係があっても、データには依らないような便利な関数もあります。例えば、 <code class="docutils literal"><span class="pre">erf(x)</span></code> は統計上の便利な変換ルーチンですが、特定のデータセットに直接には依存しません。これは、オブジェクトからでもクラスからでも呼び出せます: <code class="docutils literal"><span class="pre">s.erf(1.5)</span> <span class="pre">--&gt;</span> <span class="pre">.9332</span></code> または <code class="docutils literal"><span class="pre">Sample.erf(1.5)</span> <span class="pre">--&gt;</span> <span class="pre">.9332</span></code> 。</p>
 <p>静的メソッドは下にある関数をそのまま返すので、呼び出しの例は面白くありません:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="go">     def f(x):</span>
-<span class="go">          print x</span>
-<span class="go">     f = staticmethod(f)</span>
-
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span> <span class="n">x</span>
+<span class="gp">... </span>    <span class="n">f</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">E</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">E</span><span class="p">()</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -351,21 +356,21 @@
 </div>
 <p>非データディスクリプタプロトコルを使うと、pure Python 版の <a class="reference internal" href="../library/functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal"><span class="pre">staticmethod()</span></code></a> は以下のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StaticMethod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
- <span class="s2">&quot;Emulate PyStaticMethod_Type() in Objects/funcobject.c&quot;</span>
+    <span class="s2">&quot;Emulate PyStaticMethod_Type() in Objects/funcobject.c&quot;</span>
 
- <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
 
- <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
 </pre></div>
 </div>
 <p>静的メソッドとは違って、クラスメソッドは関数を呼び出す前にクラス参照を引数リストの先頭に加えます。このフォーマットは、呼び出し元がオブジェクトでもクラスでも同じです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="go">     def f(klass, x):</span>
-<span class="go">          return klass.__name__, x</span>
-<span class="go">     f = classmethod(f)</span>
-
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>         <span class="k">return</span> <span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">x</span>
+<span class="gp">... </span>    <span class="n">f</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">E</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">(&#39;E&#39;, 3)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">E</span><span class="p">()</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -391,17 +396,17 @@
 </div>
 <p>非データディスクリプタプロトコルを使った、 <a class="reference internal" href="../library/functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal"><span class="pre">classmethod()</span></code></a> の pure Python 版はこのようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClassMethod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-     <span class="s2">&quot;Emulate PyClassMethod_Type() in Objects/funcobject.c&quot;</span>
+    <span class="s2">&quot;Emulate PyClassMethod_Type() in Objects/funcobject.c&quot;</span>
 
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
 
-     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-          <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-               <span class="n">klass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-          <span class="k">def</span> <span class="nf">newfunc</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-               <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-          <span class="k">return</span> <span class="n">newfunc</span>
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">newfunc</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">newfunc</span>
 </pre></div>
 </div>
 </div>
@@ -437,8 +442,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/descriptor.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/descriptor.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -482,12 +488,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

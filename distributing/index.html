@@ -36,6 +36,7 @@
     <link rel="next" title="Python モジュールのインストール" href="../installing/index.html" />
     <link rel="prev" title="循環参照ガベージコレクションをサポートする" href="../c-api/gcsupport.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/distributing/index.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -98,13 +99,17 @@
 <ul class="simple">
 <li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi">Python Packaging Index</a> は Python パッケージのパブリック・リポジトリです。このリポジトリのパッケージは、他の Python ユーザが利用できるように、オープンソースでライセンスされています。</p>
 </li>
-<li><p class="first"><a class="reference external" href="https://packaging.python.org/en/latest/future.html">Python Packaging Authority</a> は、標準のパッケージングツール、関連するメタデータとファイルフォーマット標準の保守と発展を担っている、開発者・ドキュメントの著者のグループです。彼らは様々なツールやドキュメント、issue tracker を <a class="reference external" href="https://github.com/pypa">GitHub</a> と <a class="reference external" href="https://bitbucket.org/pypa/">BitBucket</a> の両方で管理しています。</p>
-</li>
+<li>the <a class="reference external" href="https://www.pypa.io/">Python Packaging Authority</a> are the group of
+developers and documentation authors responsible for the maintenance and
+evolution of the standard packaging tools and the associated metadata and
+file format standards. They maintain a variety of tools, documentation
+and issue trackers on both <a class="reference external" href="https://github.com/pypa">GitHub</a> and
+<a class="reference external" href="https://bitbucket.org/pypa/">BitBucket</a>.</li>
 <li><p class="first"><a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> はオリジナルのビルド・配布システムで、 Python 標準ライブラリに 1998 年に最初に追加されました。 <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> の直接的な利用は段階的に取り払われていきますが、それは今でも現時点でのパッケージングと配布のインフラストラクチャの基礎として鎮座していて、標準ライブラリの一部として残っているだけでなく、その名前はほかの文脈でも生き続けています(Python のパッケージング標準の開発をまとめるのに使われているメーリングリストの名前のように)。</p>
 </li>
-<li><p class="first"><a class="reference external" href="https://setuptools.pypa.io/en/latest/setuptools.html">setuptools</a> は 2004 年に最初に公開された、 <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> に対する(とても大きな)取り外し容易な置き換えです。その、未修正の <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> に対する最も顕著な機能追加は、他のパッケージへの依存関係を宣言できることでした。これは今では <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> よりももっと定期的に更新される代替品として推奨されていて、もっと最新の、Python バージョンの広範囲に渡るパッケージングの標準についての一貫したサポートを提供しています。</p>
+<li><p class="first"><a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a> は 2004 年に最初に公開された、 <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> に対する(とても大きな)取り外し容易な置き換えです。その、未修正の <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> に対する最も顕著な機能追加は、他のパッケージへの依存関係を宣言できることでした。これは今では <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> よりももっと定期的に更新される代替品として推奨されていて、もっと最新の、Python バージョンの広範囲に渡るパッケージングの標準についての一貫したサポートを提供しています。</p>
 </li>
-<li><p class="first"><a class="reference external" href="http://wheel.readthedocs.org">wheel</a> (このドキュメントの文脈では) <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a>/<a class="reference external" href="https://setuptools.pypa.io/en/latest/setuptools.html">setuptools</a> に <code class="docutils literal"><span class="pre">bdist_wheel</span></code> コマンドを追加するプロジェクトです。これは、それがバイナリの拡張を含んでいようと、Python ライブラリをローカルでビルドする必要性なしでシステムにインストール出来るようにする、クロスプラットフォームのバイナリのパッケージング形式(&#8220;wheels&#8221; または &#8220;wheel files&#8221; と呼ばれ、 <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0427"><strong>PEP 427</strong></a> で定義されています)を生成します。</p>
+<li><p class="first"><a class="reference external" href="https://wheel.readthedocs.org">wheel</a> (このドキュメントの文脈では) <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a>/<a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a> に <code class="docutils literal"><span class="pre">bdist_wheel</span></code> コマンドを追加するプロジェクトです。これは、それがバイナリの拡張を含んでいようと、Python ライブラリをローカルでビルドする必要性なしでシステムにインストール出来るようにする、クロスプラットフォームのバイナリのパッケージング形式(&#8220;wheels&#8221; または &#8220;wheel files&#8221; と呼ばれ、 <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0427"><strong>PEP 427</strong></a> で定義されています)を生成します。</p>
 </li>
 </ul>
 </div>
@@ -127,15 +132,15 @@
 <p>POSIX ユーザ(Max OS X と Linux ユーザを含みます)向けには、このガイド内の指示は、 <a class="reference internal" href="../glossary.html#term-virtual-environment"><span class="xref std std-term">virtual environment</span></a> の利用を前提にしています。</p>
 <p class="last">Windows ユーザ向けには、このガイド内の指示は、Python インストール時にシステムの PATH 環境変数が調整されていることを前提にしています。</p>
 </div>
-<p>Python Packaging User Guide にはさらに詳しい情報  <a class="reference external" href="https://packaging.python.org/en/latest/current.html#packaging-tool-recommendations">currently recommended tools</a> があります。</p>
+<p>Python Packaging User Guide にはさらに詳しい情報  <a class="reference external" href="https://packaging.python.org/en/latest/current/#packaging-tool-recommendations">currently recommended tools</a> があります。</p>
 </div>
 <div class="section" id="reading-the-guide">
 <h2>ガイドを読む<a class="headerlink" href="#reading-the-guide" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python Packaging User Guide は、プロジェクトの作成に関わる様々な鍵となるステップと要素をカバーしています。</p>
 <ul class="simple">
-<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing.html#creating-your-own-project">Project structure</a></li>
-<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing.html#packaging-your-project">Building and packaging the project</a></li>
-<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing.html#uploading-your-project-to-pypi">Uploading the project to the Python Packaging Index</a></li>
+<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing/">Project structure</a></li>
+<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing/#packaging-your-project">Building and packaging the project</a></li>
+<li><a class="reference external" href="https://packaging.python.org/en/latest/distributing/#uploading-your-project-to-pypi">Uploading the project to the Python Packaging Index</a></li>
 </ul>
 </div>
 <div class="section" id="how-do-i">
@@ -160,7 +165,7 @@
 <p>これは大変複雑なトピックで、あなたが何を達成したいのかに完全に依存する、数多くの選択肢があります。Python Packaging User Guide にはもっと詳しい情報と提案がありますので、ご参照ください。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/extensions.html">Python Packaging User Guide: Binary Extensions</a></p>
+<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/extensions">Python Packaging User Guide: Binary Extensions</a></p>
 </div>
 </div>
 </div>
@@ -197,8 +202,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/distributing/index.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/distributing/index.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -241,12 +247,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

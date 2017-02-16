@@ -37,6 +37,7 @@
     <link rel="next" title="Unicode HOWTO" href="unicode.html" />
     <link rel="prev" title="ソケットプログラミング HOWTO" href="sockets.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/sorting.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -99,7 +100,10 @@
 <span class="go">[1, 2, 3, 4, 5]</span>
 </pre></div>
 </div>
-<p>リストの <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> メソッドを呼びだしても同じことができます。この方法はリストをインプレースに変更します (そして sorted との混乱を避けるため <em>None</em> を返します)。多くの場合、こちらの方法は <a class="reference internal" href="../library/functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> と比べると不便です - ただし、元々のリストが不要な場合には、わずかですがより効率的です。</p>
+<p>You can also use the <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> method of a list. It modifies the list
+in-place (and returns <code class="docutils literal"><span class="pre">None</span></code> to avoid confusion). Usually it&#8217;s less convenient
+than <a class="reference internal" href="../library/functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> - but if you don&#8217;t need the original list, it&#8217;s slightly
+more efficient.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
@@ -123,29 +127,29 @@
 <p><em>key</em> パラメータは単一の引数をとり、ソートに利用される key を返さなければいけません。この制約によりソートを高速に行えます、キー関数は各入力レコードに対してきっちり一回だけ呼び出されるからです。</p>
 <p>よくある利用パターンはいくつかの要素から成る対象をインデクスのどれかをキーとしてソートすることです。例えば:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">student_tuples</span> <span class="o">=</span> <span class="p">[</span>
-<span class="go">    (&#39;john&#39;, &#39;A&#39;, 15),</span>
-<span class="go">    (&#39;jane&#39;, &#39;B&#39;, 12),</span>
-<span class="go">    (&#39;dave&#39;, &#39;B&#39;, 10),</span>
-<span class="go">]</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;john&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;jane&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;dave&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">student_tuples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">student</span><span class="p">:</span> <span class="n">student</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>   <span class="c1"># sort by age</span>
 <span class="go">[(&#39;dave&#39;, &#39;B&#39;, 10), (&#39;jane&#39;, &#39;B&#39;, 12), (&#39;john&#39;, &#39;A&#39;, 15)]</span>
 </pre></div>
 </div>
 <p>同じテクニックは名前づけされた属性 (named attributes) を使うことでオブジェクトに対しても動作します。例えば:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
-<span class="go">        def __init__(self, name, grade, age):</span>
-<span class="go">            self.name = name</span>
-<span class="go">            self.grade = grade</span>
-<span class="go">            self.age = age</span>
-<span class="go">        def __repr__(self):</span>
-<span class="go">            return repr((self.name, self.grade, self.age))</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">grade</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">grade</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="nb">repr</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">student_objects</span> <span class="o">=</span> <span class="p">[</span>
-<span class="go">    Student(&#39;john&#39;, &#39;A&#39;, 15),</span>
-<span class="go">    Student(&#39;jane&#39;, &#39;B&#39;, 12),</span>
-<span class="go">    Student(&#39;dave&#39;, &#39;B&#39;, 10),</span>
-<span class="go">]</span>
+<span class="gp">... </span>    <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;john&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;jane&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;dave&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">student_objects</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">student</span><span class="p">:</span> <span class="n">student</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># sort by age</span>
 <span class="go">[(&#39;dave&#39;, &#39;B&#39;, 10), (&#39;jane&#39;, &#39;B&#39;, 12), (&#39;john&#39;, &#39;A&#39;, 15)]</span>
 </pre></div>
@@ -153,7 +157,10 @@
 </div>
 <div class="section" id="operator-module-functions">
 <h2>operator モジュール関数<a class="headerlink" href="#operator-module-functions" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>上述した key 関数のパターンはとても一般的です、そのため、Python は高速で扱いやすいアクセサ関数を提供しています。 operator モジュールには <a class="reference internal" href="../library/operator.html#operator.itemgetter" title="operator.itemgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.itemgetter()</span></code></a>, <a class="reference internal" href="../library/operator.html#operator.attrgetter" title="operator.attrgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.attrgetter()</span></code></a>, そして Python 2.5 から利用できるようになった <a class="reference internal" href="../library/operator.html#operator.methodcaller" title="operator.methodcaller"><code class="xref py py-func docutils literal"><span class="pre">operator.methodcaller()</span></code></a> 関数があります。</p>
+<p>The key-function patterns shown above are very common, so Python provides
+convenience functions to make accessor functions easier and faster. The operator
+module has <a class="reference internal" href="../library/operator.html#operator.itemgetter" title="operator.itemgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.itemgetter()</span></code></a>, <a class="reference internal" href="../library/operator.html#operator.attrgetter" title="operator.attrgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.attrgetter()</span></code></a>, and
+starting in Python 2.5 an <a class="reference internal" href="../library/operator.html#operator.methodcaller" title="operator.methodcaller"><code class="xref py py-func docutils literal"><span class="pre">operator.methodcaller()</span></code></a> function.</p>
 <p>これらの関数を利用すると、上の例はもっと簡単で高速になります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span><span class="p">,</span> <span class="n">attrgetter</span>
 </pre></div>
@@ -176,7 +183,8 @@
 </pre></div>
 </div>
 <p><a class="reference internal" href="../library/operator.html#operator.methodcaller" title="operator.methodcaller"><code class="xref py py-func docutils literal"><span class="pre">operator.methodcaller()</span></code></a> 関数は、オブジェクトが比較される際に呼ばれる固定パラメータでのメソッド呼び出しを作ります。例えば、エクスクラメーションマークの数でメッセージの重要度を計算するのに <a class="reference internal" href="../library/stdtypes.html#str.count" title="str.count"><code class="xref py py-meth docutils literal"><span class="pre">str.count()</span></code></a> を使えるでしょう:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;critical!!!&#39;</span><span class="p">,</span> <span class="s1">&#39;hurry!&#39;</span><span class="p">,</span> <span class="s1">&#39;standby&#39;</span><span class="p">,</span> <span class="s1">&#39;immediate!!&#39;</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">methodcaller</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;critical!!!&#39;</span><span class="p">,</span> <span class="s1">&#39;hurry!&#39;</span><span class="p">,</span> <span class="s1">&#39;standby&#39;</span><span class="p">,</span> <span class="s1">&#39;immediate!!&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">methodcaller</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">))</span>
 <span class="go">[&#39;standby&#39;, &#39;hurry!&#39;, &#39;immediate!!&#39;, &#39;critical!!!&#39;]</span>
 </pre></div>
@@ -196,7 +204,8 @@
 </div>
 <div class="section" id="sort-stability-and-complex-sorts">
 <h2>ソートの安定性と複合的なソート<a class="headerlink" href="#sort-stability-and-complex-sorts" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Python 2.2 からソートは、 <a class="reference external" href="http://en.wikipedia.org/wiki/Sorting_algorithm#Stability">stable</a> であることが保証されるようになりました。これはレコードの中に同じキーがある場合、元々の順序が維持されるということを意味します。</p>
+<p>Starting with Python 2.2, sorts are guaranteed to be <a class="reference external" href="https://en.wikipedia.org/wiki/Sorting_algorithm#Stability">stable</a>. That means that
+when multiple records have the same key, their original order is preserved.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="go">[(&#39;blue&#39;, 1), (&#39;blue&#39;, 2), (&#39;red&#39;, 1), (&#39;red&#39;, 2)]</span>
@@ -209,7 +218,9 @@
 <span class="go">[(&#39;dave&#39;, &#39;B&#39;, 10), (&#39;jane&#39;, &#39;B&#39;, 12), (&#39;john&#39;, &#39;A&#39;, 15)]</span>
 </pre></div>
 </div>
-<p>Python では <a class="reference external" href="http://en.wikipedia.org/wiki/Timsort">Timsort</a> アルゴリズムが利用されていて、効率良く複数のソートを行うことができます、これは現在のデータセット中のあらゆる順序をそのまま利用できるからです。</p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Timsort">Timsort</a> algorithm used in Python
+does multiple sorts efficiently because it can take advantage of any ordering
+already present in a dataset.</p>
 </div>
 <div class="section" id="the-old-way-using-decorate-sort-undecorate">
 <h2>デコレート-ソート-アンデコレートを利用した古いやり方<a class="headerlink" href="#the-old-way-using-decorate-sort-undecorate" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -237,7 +248,9 @@
 <li><p class="first">元々の要素が比較可能な要素を持つとは限りません、なぜならデコレートされたタブルの順序は多くの場合、最初の二つの要素で決定されるからです。例として元のリストは直接比較できない複素数を含むことができます。</p>
 </li>
 </ul>
-<p>このイディオムの別名に <a class="reference external" href="http://en.wikipedia.org/wiki/Schwartzian_transform">Schwartzian transform</a> があります。これは Perl プログラマの間で有名な Randal L. Schwartz にちなんでいます。</p>
+<p>Another name for this idiom is
+<a class="reference external" href="https://en.wikipedia.org/wiki/Schwartzian_transform">Schwartzian transform</a>,
+after Randal L. Schwartz, who popularized it among Perl programmers.</p>
 <p>巨大なリストや比較の情報を得る計算が高くつくリストに対するソートや Python のバージョンが 2.4 より前の場合には、 DSU はリストをソートするのに最速な方法のようです。 2.4 以降では、key 関数が同じ機能を提供します。</p>
 </div>
 <div class="section" id="the-old-way-using-the-cmp-parameter">
@@ -246,15 +259,15 @@
 <p>Python 3 では <em>cmp</em> パラメータは完全に削除されました (ぜいたくな比較と <a class="reference internal" href="../reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> マジックメソッドの衝突を除き、言語を単純化しまとめるための多大な労力の一環として)。</p>
 <p>Python 2 では <code class="xref py py-meth docutils literal"><span class="pre">sort()</span></code> にオプションとして比較に利用できる関数を与えることができます。関数は比較される二つの引数をとり、小さい場合には負の値を、等しい場合には 0 を、大きい場合には正の値を返さなければいけません。例えば、以下のようにできます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">numeric_compare</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="go">        return x - y</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">numeric_compare</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">numeric_compare</span><span class="p">)</span> 
 <span class="go">[1, 2, 3, 4, 5]</span>
 </pre></div>
 </div>
 <p>また、比較順を逆にすることもできます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">reverse_numeric</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="go">        return y - x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">reverse_numeric</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">reverse_numeric</span><span class="p">)</span> 
 <span class="go">[5, 4, 3, 2, 1]</span>
 </pre></div>
 </div>
@@ -293,7 +306,11 @@
 </li>
 <li><p class="first"><em>reverse</em> パラメータはソートの安定性を保ちます (つまり、レコードのキーが等しい場合元々の順序が維持されます)。面白いことにこの影響はパラメータ無しで <a class="reference internal" href="../library/functions.html#reversed" title="reversed"><code class="xref py py-func docutils literal"><span class="pre">reversed()</span></code></a> 関数を二回使うことで模倣することができます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">data</span><span class="p">))))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">standard_way</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">double_reversed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">standard_way</span> <span class="o">==</span> <span class="n">double_reversed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">standard_way</span>
+<span class="go">[(&#39;red&#39;, 1), (&#39;red&#39;, 2), (&#39;blue&#39;, 1), (&#39;blue&#39;, 2)]</span>
 </pre></div>
 </div>
 </li>
@@ -352,8 +369,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/sorting.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/sorting.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -397,12 +415,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

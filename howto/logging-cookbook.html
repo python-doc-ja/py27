@@ -37,6 +37,7 @@
     <link rel="next" title="正規表現 HOWTO" href="regex.html" />
     <link rel="prev" title="Logging HOWTO" href="logging.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/logging-cookbook.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -133,6 +134,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;spam_application.auxiliary.Auxiliary&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;creating an instance of Auxiliary&#39;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;doing something&#39;</span><span class="p">)</span>
         <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
@@ -165,6 +167,60 @@
    <span class="n">done</span> <span class="k">with</span> <span class="n">auxiliary_module</span><span class="o">.</span><span class="n">some_function</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="logging-from-multiple-threads">
+<h2>Logging from multiple threads<a class="headerlink" href="#logging-from-multiple-threads" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Logging from multiple threads requires no special effort. The following example
+shows logging from the main (initIal) thread and another thread:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">arg</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Hi from myfunc&#39;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(relativeCreated)6d</span><span class="s1"> </span><span class="si">%(threadName)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;stop&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">info</span><span class="p">,))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Hello from main&#39;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When run, the script should print something like the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>   <span class="mi">0</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+   <span class="mi">3</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+ <span class="mi">505</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+ <span class="mi">755</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">1007</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">1507</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">1508</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">2010</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">2258</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">2512</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">3009</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">3013</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">3515</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">3761</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">4017</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+<span class="mi">4513</span> <span class="n">MainThread</span> <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">main</span>
+<span class="mi">4518</span> <span class="n">Thread</span><span class="o">-</span><span class="mi">1</span> <span class="n">Hi</span> <span class="kn">from</span> <span class="nn">myfunc</span>
+</pre></div>
+</div>
+<p>This shows the logging output interspersed as one might expect. This approach
+works for more threads than shown here, of course.</p>
 </div>
 <div class="section" id="multiple-handlers-and-formatters">
 <h2>複数の handler と formatter<a class="headerlink" href="#multiple-handlers-and-formatters" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -494,21 +550,21 @@
         <span class="k">return</span> <span class="kc">True</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">levels</span> <span class="o">=</span> <span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
-   <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
-                       <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)-15s</span><span class="s1"> </span><span class="si">%(name)-5s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> IP: </span><span class="si">%(ip)-15s</span><span class="s1"> User: </span><span class="si">%(user)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
-   <span class="n">a1</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">)</span>
-   <span class="n">a2</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;d.e.f&#39;</span><span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                        <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)-15s</span><span class="s1"> </span><span class="si">%(name)-5s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> IP: </span><span class="si">%(ip)-15s</span><span class="s1"> User: </span><span class="si">%(user)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;d.e.f&#39;</span><span class="p">)</span>
 
-   <span class="n">f</span> <span class="o">=</span> <span class="n">ContextFilter</span><span class="p">()</span>
-   <span class="n">a1</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-   <span class="n">a2</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-   <span class="n">a1</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A debug message&#39;</span><span class="p">)</span>
-   <span class="n">a1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;An info message with </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;some parameters&#39;</span><span class="p">)</span>
-   <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-       <span class="n">lvl</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
-       <span class="n">lvlname</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span>
-       <span class="n">a2</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">lvl</span><span class="p">,</span> <span class="s1">&#39;A message at </span><span class="si">%s</span><span class="s1"> level with </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lvlname</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">ContextFilter</span><span class="p">()</span>
+    <span class="n">a1</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">a2</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">a1</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A debug message&#39;</span><span class="p">)</span>
+    <span class="n">a1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;An info message with </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;some parameters&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">lvl</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
+        <span class="n">lvlname</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span>
+        <span class="n">a2</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">lvl</span><span class="p">,</span> <span class="s1">&#39;A message at </span><span class="si">%s</span><span class="s1"> level with </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lvlname</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>そして、実行時に、以下のようになります:</p>
@@ -577,7 +633,9 @@
 </div>
 <div class="section" id="an-example-dictionary-based-configuration">
 <h2>辞書ベースで構成する例<a class="headerlink" href="#an-example-dictionary-based-configuration" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>次の例は辞書を使った logging の構成です。この例は <a class="reference external" href="https://docs.djangoproject.com/en/1.3/topics/logging/#configuring-logging">Django プロジェクトのドキュメント</a> から持ってきました。この辞書を <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> に渡して設定を有効にします:</p>
+<p>Below is an example of a logging configuration dictionary - it&#8217;s taken from
+the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/logging/#configuring-logging">documentation on the Django project</a>.
+This dictionary is passed to <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> to put the configuration into effect:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
@@ -631,11 +689,17 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>この構成方法についてのより詳しい情報は、Django のドキュメントの <a class="reference external" href="https://docs.djangoproject.com/en/1.6/topics/logging/#configuring-logging">該当のセクション</a> で見ることができます。</p>
+<p>For more information about this configuration, you can see the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/logging/#configuring-logging">relevant
+section</a>
+of the Django documentation.</p>
 </div>
 <div class="section" id="inserting-a-bom-into-messages-sent-to-a-sysloghandler">
 <h2>SysLogHandler に送るメッセージに BOM を挿入する<a class="headerlink" href="#inserting-a-bom-into-messages-sent-to-a-sysloghandler" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference external" href="http://tools.ietf.org/html/rfc5424">RFC 5424</a> は syslog デーモンに Unicode メッセージを送る時、次の構造を要求しています: オプショナルなピュア ASCII部分、続けて UTF-8 の Byte Order Mark (BOM)、続けて UTF-8 でエンコードされた Unicode. (<a class="reference external" href="http://tools.ietf.org/html/rfc5424#section-6">仕様の該当セクション</a> を参照)</p>
+<p><a class="reference external" href="https://tools.ietf.org/html/rfc5424">RFC 5424</a> requires that a
+Unicode message be sent to a syslog daemon as a set of bytes which have the
+following structure: an optional pure-ASCII component, followed by a UTF-8 Byte
+Order Mark (BOM), followed by Unicode encoded using UTF-8. (See the <a class="reference external" href="https://tools.ietf.org/html/rfc5424#section-6">relevant
+section of the specification</a>.)</p>
 <p>Python 2.6, 2.7 で <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SysLogHandler" title="logging.handlers.SysLogHandler"><code class="xref py py-class docutils literal"><span class="pre">SysLogHandler</span></code></a> に、 message に BOM を挿入するコードが追加されました。しかし、そのときの実装が悪くて、 message の先頭に BOM をつけてしまうのでピュアASCII 部分をその前に書くことができませんでした。</p>
 <p>この動作は壊れているので、Python 2.7.4 以降では BOM を挿入するコードが、削除されました。書き直されるのではなく削除されたので、RFC 5424 準拠の、BOM と、オプションのピュア ASCII部分をBOMの前に、任意の Unicode を BOM の後ろに持つ UTF-8 でエンコードされた message を生成したい場合、次の手順に従う必要があります:</p>
 <ol class="arabic">
@@ -815,12 +879,12 @@
 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A debug message&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>これを実行するには、<code class="docutils literal"><span class="pre">root</span></code> 権限で実行する必要があるかもしれません:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo python3.3 chowntest.py
-$ cat chowntest.log
-2013-11-05 09:34:51,128 DEBUG mylogger A debug message
-$ ls -l chowntest.log
--rw-r--r-- 1 pulse pulse 55 2013-11-05 09:34 chowntest.log
+<p>To run this, you will probably need to run as <code class="docutils literal"><span class="pre">root</span></code>:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo python3.3 chowntest.py
+<span class="gp">$</span> cat chowntest.log
+<span class="go">2013-11-05 09:34:51,128 DEBUG mylogger A debug message</span>
+<span class="gp">$</span> ls -l chowntest.log
+<span class="go">-rw-r--r-- 1 pulse pulse 55 2013-11-05 09:34 chowntest.log</span>
 </pre></div>
 </div>
 <p><code class="xref py py-func docutils literal"><span class="pre">shutil.chown()</span></code> が追加されたのが Python 3.3 からなので、この例は Python 3.3 を使っています。このアプローチ自体は <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal"><span class="pre">dictConfig()</span></code></a> をサポートした全ての Python バージョン - Python 2.7, 3.2 以降 - で利用できます。 3.3 以前のバージョンでは、オーナーを変更するのに <a class="reference internal" href="../library/os.html#os.chown" title="os.chown"><code class="xref py py-func docutils literal"><span class="pre">os.chown()</span></code></a> を利用する必要があるでしょう。</p>
@@ -944,7 +1008,18 @@ $ ls -l chowntest.log
 </div>
 <div class="section" id="speaking-logging-messages">
 <span id="spoken-messages"></span><h2>ロギングメッセージを喋る<a class="headerlink" href="#speaking-logging-messages" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ロギングメッセージを目で見る形式ではなく音で聴く形式として出力したい、という状況があるかもしれません。これはあなたのシステムで text- to-speech (TTS) 機能が利用可能であれば、容易です。それが Python バインディングを持っていなくとも、です。ほとんどの TTS システムはあなたが実行出来るコマンドラインプログラムを持っていて、このことで、 <a class="reference internal" href="../library/subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> を使うことでハンドラが呼び出せます。ここでは、TTS コマンドラインプログラムはユーザとの対話を期待せず、完了には時間がかかり、そしてログメッセージの頻度はユーザをメッセージで圧倒してしまうほどには高くはなく、そして並列で喋るよりはメッセージ一つにつき一回喋ることが受け容れられる、としておきます。ここでお見せする実装例では、次が処理される前に一つのメッセージを喋り終わるまで待ち、結果としてほかのハンドラを待たせることになります。 <code class="docutils literal"><span class="pre">espeak</span></code> TTS パッケージが手許にあるとして、このアプローチによる短い例はこのようなものです:</p>
+<p>There might be situations when it is desirable to have logging messages rendered
+in an audible rather than a visible format. This is easy to do if you have
+text-to-speech (TTS) functionality available in your system, even if it doesn&#8217;t have
+a Python binding. Most TTS systems have a command line program you can run, and
+this can be invoked from a handler using <a class="reference internal" href="../library/subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a>. It&#8217;s assumed here
+that TTS command line programs won&#8217;t expect to interact with users or take a
+long time to complete, and that the frequency of logged messages will be not so
+high as to swamp the user with messages, and that it&#8217;s acceptable to have the
+messages spoken one at a time rather than concurrently, The example implementation
+below waits for one message to be spoken before the next is processed, and this
+might cause other handlers to be kept waiting. Here is a short example showing
+the approach, which assumes that the <code class="docutils literal"><span class="pre">espeak</span></code> TTS package is available:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -982,7 +1057,11 @@ $ ls -l chowntest.log
 <span id="buffered-logging"></span><h2>ロギングメッセージをバッファリングし、条件に従って出力する<a class="headerlink" href="#buffering-logging-messages-and-outputting-them-conditionally" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>メッセージを一次領域に記録し、ある種の特定の状況になった場合にだけ出力したい、ということがあるかもしれません。たとえばある関数内でのデバッグのためのログ出力をしたくても、エラーなしで終了する限りにおいては収集されたデバッグ情報による混雑は喰らいたくはなく、エラーがあった場合にだけエラー出力とともにデバッグ情報を見たいのだ、のようなことがあるでしょう。</p>
 <p>このような振る舞いをするロギングをしたい関数に対して、デコレータを用いてこれを行う例をお見せします。それには <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.MemoryHandler" title="logging.handlers.MemoryHandler"><code class="xref py py-class docutils literal"><span class="pre">logging.handlers.MemoryHandler</span></code></a> を使います。これにより何か条件を満たすまでロギングイベントを溜め込むことが出来、条件を満たせば溜め込まれたイベントが <code class="docutils literal"><span class="pre">flushed</span></code> として他のハンドラ (<code class="docutils literal"><span class="pre">target</span></code> のハンドラ)に渡されます。デフォルトでは、 <code class="docutils literal"><span class="pre">MemoryHandler</span></code> はそのバッファが一杯になるか、指定された閾値のレベル以上のイベントが起こるとフラッシュされます。何か特別なフラッシュの振る舞いをしたければ、このレシピはさらに特殊化した <code class="docutils literal"><span class="pre">MemoryHandler</span></code> とともに利用出来ます。</p>
-<p>スクリプト例では、 <code class="docutils literal"><span class="pre">foo</span></code> という、単に全てのログレベルについて、 <code class="docutils literal"><span class="pre">sys.stderr</span></code> にもどのレベルを出力したのかについて書き出しながら実際のログ出力も行う、という単純な関数を使っています。 <code class="docutils literal"><span class="pre">foo</span></code> に真を与えると ERROR と CRITICAL の出力をし、そうでなければ DEBUG, INFO, WARNING だけを出力します。</p>
+<p>The example script has a simple function, <code class="docutils literal"><span class="pre">foo</span></code>, which just cycles through
+all the logging levels, writing to <code class="docutils literal"><span class="pre">sys.stderr</span></code> to say what level it&#8217;s about
+to log at, and then actually logging a message at that level. You can pass a
+parameter to <code class="docutils literal"><span class="pre">foo</span></code> which, if true, will log at ERROR and CRITICAL levels -
+otherwise, it only logs at DEBUG, INFO and WARNING levels.</p>
 <p>スクリプトが行うことは単に、 <code class="docutils literal"><span class="pre">foo</span></code> を必要とされている特定の条件でのロギングを行うようにするデコレータで修飾することだけです。このデコレータはパラメータとしてロガーを取り、修飾された関数が呼ばれている間だけメモリハンドラをアタッチします。追加のパラメータとして、ターゲットのハンドラ、フラッシュが発生すべきレベル、バッファの容量も受け取れます。これらのデフォルトは順に <code class="docutils literal"><span class="pre">sys.stderr</span></code> へ書き出す <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal"><span class="pre">StreamHandler</span></code></a>, <code class="docutils literal"><span class="pre">logging.ERROR</span></code>, <code class="docutils literal"><span class="pre">100</span></code> です。</p>
 <p>スクリプトはこれです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
@@ -1140,6 +1219,101 @@ $ ls -l chowntest.log
 </div>
 <p>時刻をローカル時刻と UTC の両方に書式化するのに、それぞれのハンドラにそれぞれフォーマッタを与えています。</p>
 </div>
+<div class="section" id="using-a-context-manager-for-selective-logging">
+<span id="context-manager"></span><h2>Using a context manager for selective logging<a class="headerlink" href="#using-a-context-manager-for-selective-logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>There are times when it would be useful to temporarily change the logging
+configuration and revert it back after doing something. For this, a context
+manager is the most obvious way of saving and restoring the logging context.
+Here is a simple example of such a context manager, which allows you to
+optionally change the logging level and add a logging handler purely in the
+scope of the context manager:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">LoggingContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">close</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">old_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">et</span><span class="p">,</span> <span class="n">ev</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">old_level</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># implicit return of None =&gt; don&#39;t swallow exceptions</span>
+</pre></div>
+</div>
+<p>If you specify a level value, the logger&#8217;s level is set to that value in the
+scope of the with block covered by the context manager. If you specify a
+handler, it is added to the logger on entry to the block and removed on exit
+from the block. You can also ask the manager to close the handler for you on
+block exit - you could do this if you don&#8217;t need the handler any more.</p>
+<p>To illustrate how it works, we can add the following block of code to the
+above:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;1. This should appear just once on stderr.&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;2. This should not appear.&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">LoggingContext</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;3. This should appear once on stderr.&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;4. This should not appear.&#39;</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">LoggingContext</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;5. This should appear twice - once on stderr and once on stdout.&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;6. This should appear just once on stderr.&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;7. This should not appear.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We initially set the logger&#8217;s level to <code class="docutils literal"><span class="pre">INFO</span></code>, so message #1 appears and
+message #2 doesn&#8217;t. We then change the level to <code class="docutils literal"><span class="pre">DEBUG</span></code> temporarily in the
+following <code class="docutils literal"><span class="pre">with</span></code> block, and so message #3 appears. After the block exits, the
+logger&#8217;s level is restored to <code class="docutils literal"><span class="pre">INFO</span></code> and so message #4 doesn&#8217;t appear. In the
+next <code class="docutils literal"><span class="pre">with</span></code> block, we set the level to <code class="docutils literal"><span class="pre">DEBUG</span></code> again but also add a handler
+writing to <code class="docutils literal"><span class="pre">sys.stdout</span></code>. Thus, message #5 appears twice on the console (once
+via <code class="docutils literal"><span class="pre">stderr</span></code> and once via <code class="docutils literal"><span class="pre">stdout</span></code>). After the <code class="docutils literal"><span class="pre">with</span></code> statement&#8217;s
+completion, the status is as it was before so message #6 appears (like message
+#1) whereas message #7 doesn&#8217;t (just like message #2).</p>
+<p>If we run the resulting script, the result is as follows:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python logctx.py
+<span class="go">1. This should appear just once on stderr.</span>
+<span class="go">3. This should appear once on stderr.</span>
+<span class="go">5. This should appear twice - once on stderr and once on stdout.</span>
+<span class="go">5. This should appear twice - once on stderr and once on stdout.</span>
+<span class="go">6. This should appear just once on stderr.</span>
+</pre></div>
+</div>
+<p>If we run it again, but pipe <code class="docutils literal"><span class="pre">stderr</span></code> to <code class="docutils literal"><span class="pre">/dev/null</span></code>, we see the following,
+which is the only message written to <code class="docutils literal"><span class="pre">stdout</span></code>:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python logctx.py <span class="m">2</span>&gt;/dev/null
+<span class="go">5. This should appear twice - once on stderr and once on stdout.</span>
+</pre></div>
+</div>
+<p>Once again, but piping <code class="docutils literal"><span class="pre">stdout</span></code> to <code class="docutils literal"><span class="pre">/dev/null</span></code>, we get:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python logctx.py &gt;/dev/null
+<span class="go">1. This should appear just once on stderr.</span>
+<span class="go">3. This should appear once on stderr.</span>
+<span class="go">5. This should appear twice - once on stderr and once on stdout.</span>
+<span class="go">6. This should appear just once on stderr.</span>
+</pre></div>
+</div>
+<p>In this case, the message #5 printed to <code class="docutils literal"><span class="pre">stdout</span></code> doesn&#8217;t appear, as expected.</p>
+<p>Of course, the approach described here can be generalised, for example to attach
+logging filters temporarily. Note that the above code works in Python 2 as well
+as Python 3.</p>
+</div>
 </div>
 
 
@@ -1152,6 +1326,7 @@ $ ls -l chowntest.log
   <ul>
 <li><a class="reference internal" href="#">Logging クックブック</a><ul>
 <li><a class="reference internal" href="#using-logging-in-multiple-modules">複数のモジュールで logging を使う</a></li>
+<li><a class="reference internal" href="#logging-from-multiple-threads">Logging from multiple threads</a></li>
 <li><a class="reference internal" href="#multiple-handlers-and-formatters">複数の handler と formatter</a></li>
 <li><a class="reference internal" href="#logging-to-multiple-destinations">複数の出力先にログを出力する</a></li>
 <li><a class="reference internal" href="#configuration-server-example">設定サーバの例</a></li>
@@ -1175,6 +1350,7 @@ $ ls -l chowntest.log
 <li><a class="reference internal" href="#speaking-logging-messages">ロギングメッセージを喋る</a></li>
 <li><a class="reference internal" href="#buffering-logging-messages-and-outputting-them-conditionally">ロギングメッセージをバッファリングし、条件に従って出力する</a></li>
 <li><a class="reference internal" href="#formatting-times-using-utc-gmt-via-configuration">設定によって時刻を UTC(GMT) で書式化する</a></li>
+<li><a class="reference internal" href="#using-a-context-manager-for-selective-logging">Using a context manager for selective logging</a></li>
 </ul>
 </li>
 </ul>
@@ -1188,8 +1364,9 @@ $ ls -l chowntest.log
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/logging-cookbook.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/logging-cookbook.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1233,12 +1410,12 @@ $ ls -l chowntest.log
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

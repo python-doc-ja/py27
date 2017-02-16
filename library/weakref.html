@@ -37,6 +37,7 @@
     <link rel="next" title="8.12. UserDict — 辞書オブジェクトのためのクラスラッパー" href="userdict.html" />
     <link rel="prev" title="8.10. Queue — 同期キュークラス" href="queue.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/weakref.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,7 +85,7 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
 </div>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/weakref.py">Lib/weakref.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/weakref.py">Lib/weakref.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-weakref" title="weakref: Support for weak references and weak dictionaries."><code class="xref py py-mod docutils literal"><span class="pre">weakref</span></code></a> モジュールは、Pythonプログラマがオブジェクトへの弱参照 (<em class="dfn">weak refarence</em>)を作成できるようにします。</p>
 <p>以下では、用語リファレント(<em class="dfn">referent</em>) は弱参照が参照するオブジェクトを意味します。</p>
@@ -179,7 +180,9 @@
 </div>
 </dd></dl>
 
-<p><a class="reference internal" href="#weakref.WeakValueDictionary" title="weakref.WeakValueDictionary"><code class="xref py py-class docutils literal"><span class="pre">WeakValueDictionary</span></code></a> オブジェクトは、以下の追加のメソッドを持ちます。これらのメソッドは、 <a class="reference internal" href="#weakref.WeakKeyDictionary" title="weakref.WeakKeyDictionary"><code class="xref py py-class docutils literal"><span class="pre">WeakKeyDictionary</span></code></a> クラスの <code class="xref py py-meth docutils literal"><span class="pre">iterkeyrefs()</span></code> と <code class="xref py py-meth docutils literal"><span class="pre">keyrefs()</span></code> メソッドと同じ目的を持っています。</p>
+<p><a class="reference internal" href="#weakref.WeakValueDictionary" title="weakref.WeakValueDictionary"><code class="xref py py-class docutils literal"><span class="pre">WeakValueDictionary</span></code></a> objects have the following additional methods.
+These methods have the same issues as the <code class="xref py py-meth docutils literal"><span class="pre">iterkeyrefs()</span></code> and
+<code class="xref py py-meth docutils literal"><span class="pre">keyrefs()</span></code> methods of <a class="reference internal" href="#weakref.WeakKeyDictionary" title="weakref.WeakKeyDictionary"><code class="xref py py-class docutils literal"><span class="pre">WeakKeyDictionary</span></code></a> objects.</p>
 <dl class="method">
 <dt id="weakref.WeakValueDictionary.itervaluerefs">
 <code class="descclassname">WeakValueDictionary.</code><code class="descname">itervaluerefs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#weakref.WeakValueDictionary.itervaluerefs" title="この定義へのパーマリンク">¶</a></dt>
@@ -240,7 +243,7 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0205"><strong>PEP 0205</strong></a> - Weak References</dt>
+<dt><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0205"><strong>PEP 205</strong></a> - Weak References</dt>
 <dd><p class="first last">この機能の提案と理論的根拠。初期の実装と他の言語における類似の機能についての情報へのリンクを含んでいます。</p>
 </dd>
 </dl>
@@ -302,7 +305,10 @@
 </div>
 <div class="section" id="example">
 <span id="weakref-example"></span><h2>8.11.2. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>この簡単な例では、アプリケーションが以前に参照したオブジェクトを取り出すためにオブジェクトIDを利用する方法を示します。オブジェクトに生きたままであることを強制することなく、オブジェクトの IDを他のデータ構造の中で使うことができ、必要に応じてIDからオブジェクトを取り出せます。</p>
+<p>This simple example shows how an application can use object IDs to retrieve
+objects that it has seen before.  The IDs of the objects can then be used in
+other data structures without forcing the objects to remain alive, but the
+objects can still be retrieved by ID if they do.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">weakref</span>
 
 <span class="n">_id2obj_dict</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
@@ -343,8 +349,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/weakref.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/weakref.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -389,12 +396,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

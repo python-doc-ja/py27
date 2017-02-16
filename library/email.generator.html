@@ -37,6 +37,7 @@
     <link rel="next" title="18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成" href="email.mime.html" />
     <link rel="prev" title="18.1.2. email.parser: 電子メールメッセージを解析(パース)する" href="email.parser.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/email.generator.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -89,7 +90,13 @@
 <dt id="email.generator.Generator">
 <em class="property">class </em><code class="descclassname">email.generator.</code><code class="descname">Generator</code><span class="sig-paren">(</span><em>outfp</em><span class="optional">[</span>, <em>mangle_from_</em><span class="optional">[</span>, <em>maxheaderlen</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#email.generator.Generator" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference internal" href="#email.generator.Generator" title="email.generator.Generator"><code class="xref py py-class docutils literal"><span class="pre">Generator</span></code></a> クラスのコンストラクタは <em>outfp</em> と呼ばれるストリーム形式 (file-like) のオブジェクトひとつを引数にとります。 <em>outfp</em> は <a class="reference internal" href="#email.generator.Generator.write" title="email.generator.Generator.write"><code class="xref py py-meth docutils literal"><span class="pre">write()</span></code></a> メソッドをサポートし、 Python 拡張 print 文の出力ファイルとして使えるようになっている必要があります。</p>
-<p>オプション引数 <em>mangle_from_</em> はフラグで、<code class="docutils literal"><span class="pre">True</span></code> のときはメッセージ本体に現れる行頭のすべての <code class="docutils literal"><span class="pre">From</span></code> という文字列の最初に <code class="docutils literal"><span class="pre">&gt;</span></code> という文字を追加します。これは、このような行が Unix の mailbox 形式のエンペローブヘッダ区切り文字列として誤認識されるのを防ぐための、移植性ある唯一の方法です (詳しくは <a class="reference external" href="http://www.jwz.org/doc/content-length.html">WHY THE CONTENT-LENGTH FORMAT IS BAD (なぜ Content-Length 形式が有害か)</a> を参照してください)。デフォルトでは <em>mangle_from_</em> は <code class="docutils literal"><span class="pre">True</span></code> になっていますが、Unix の mailbox 形式ファイルに出力しないのならばこれは <code class="docutils literal"><span class="pre">False</span></code> に設定してもかまいません。</p>
+<p>Optional <em>mangle_from_</em> is a flag that, when <code class="docutils literal"><span class="pre">True</span></code>, puts a <code class="docutils literal"><span class="pre">&gt;</span></code> character in
+front of any line in the body that starts exactly as <code class="docutils literal"><span class="pre">From</span></code>, i.e. <code class="docutils literal"><span class="pre">From</span></code>
+followed by a space at the beginning of the line.  This is the only guaranteed
+portable way to avoid having such lines be mistaken for a Unix mailbox format
+envelope header separator (see <a class="reference external" href="https://www.jwz.org/doc/content-length.html">WHY THE CONTENT-LENGTH FORMAT IS BAD</a> for details).  <em>mangle_from_</em>
+defaults to <code class="docutils literal"><span class="pre">True</span></code>, but you might want to set this to <code class="docutils literal"><span class="pre">False</span></code> if you are not
+writing Unix mailbox format files.</p>
 <p>オプション引数 <em>maxheaderlen</em> は連続していないヘッダの最大長を指定します。ひとつのヘッダ行が <em>maxheaderlen</em> (これは文字数です、tab は空白 8文字に展開されます) よりも長い場合、ヘッダは <a class="reference internal" href="email.header.html#email.header.Header" title="email.header.Header"><code class="xref py py-class docutils literal"><span class="pre">Header</span></code></a> クラスで定義されているように途中で折り返され、間にはセミコロンが挿入されます。もしセミコロンが見つからない場合、そのヘッダは放置されます。ヘッダの折り返しを禁止するにはこの値にゼロを指定してください。デフォルトは 78 文字で、 <span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> で推奨されている (ですが強制ではありません) 値です。</p>
 <p>これ以外のパブリックな <a class="reference internal" href="#email.generator.Generator" title="email.generator.Generator"><code class="xref py py-class docutils literal"><span class="pre">Generator</span></code></a> メソッドは以下のとおりです:</p>
 <dl class="method">
@@ -178,8 +185,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/email.generator.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.generator.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -225,12 +233,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

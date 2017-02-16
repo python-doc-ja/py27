@@ -37,6 +37,7 @@
     <link rel="next" title="タプルオブジェクト (tuple object)" href="tuple.html" />
     <link rel="prev" title="Unicode オブジェクトと codec" href="unicode.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/buffer.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -118,7 +119,9 @@ const char *<code class="descname">format</code></dt>
 <dl class="member">
 <dt id="c.Py_buffer.ndim">
 int <code class="descname">ndim</code><a class="headerlink" href="#c.Py_buffer.ndim" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>メモリが多次元配列を表している時の次元数。 0 の場合、 <code class="xref c c-data docutils literal"><span class="pre">strides</span></code> と <code class="xref c c-data docutils literal"><span class="pre">suboffsets</span></code> は <em>NULL</em> でなければなりません。</p>
+<dd><p>The number of dimensions the memory represents as a multi-dimensional
+array.  If it is <code class="docutils literal"><span class="pre">0</span></code>, <code class="xref c c-data docutils literal"><span class="pre">strides</span></code> and <code class="xref c c-data docutils literal"><span class="pre">suboffsets</span></code> must be
+<em>NULL</em>.</p>
 </dd></dl>
 
 <dl class="member">
@@ -175,7 +178,7 @@ void *<code class="descname">internal</code><a class="headerlink" href="#c.Py_bu
 <dl class="function">
 <dt id="c.PyObject_CheckBuffer">
 int <code class="descname">PyObject_CheckBuffer</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_CheckBuffer" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>obj</em> がバッファインタフェースをサポートしている場合に 1 を、それ以外の場合に 0 を返します。</p>
+<dd><p>Return <code class="docutils literal"><span class="pre">1</span></code> if <em>obj</em> supports the buffer interface otherwise <code class="docutils literal"><span class="pre">0</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -183,7 +186,7 @@ int <code class="descname">PyObject_CheckBuffer</code><span class="sig-paren">(<
 int <code class="descname">PyObject_GetBuffer</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em>, <a class="reference internal" href="#c.Py_buffer" title="Py_buffer">Py_buffer</a><em>&nbsp;*view</em>, int<em>&nbsp;flags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_GetBuffer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>obj</em> を <a class="reference internal" href="#c.Py_buffer" title="Py_buffer"><code class="xref c c-type docutils literal"><span class="pre">Py_buffer</span></code></a> <em>view</em> へエクスポートします。これらの引数は <em>NULL</em> であってはなりません。 <em>flag</em> 引数は呼び出し側がどんなバッファを扱おうとしているのか、バッファ提供側がどんなバッファを返すことが許されているのかを示す、ビットフィールドです。バッファインタフェースは複雑なメモリ共有を可能にしていますが、呼び出し元はすべての複雑なバッファを扱えるとは限らず、バッファ提供側がシンプルなビューを提供できるならそれを利用したいとかもしれません。</p>
 <p>バッファ提供側はすべての方法でメモリを共有できるとは限らず、呼び出し側に何かが不可能であることを伝えるためにエラーを発生させる必要があるかもしれません。その場合のエラーは、もしその問題を実際に引き起こしているのが別のエラーだったとしても、 <a class="reference internal" href="../library/exceptions.html#exceptions.BufferError" title="exceptions.BufferError"><code class="xref py py-exc docutils literal"><span class="pre">BufferError</span></code></a> でなければなりません。バッファ提供側は flag の情報を使って <a class="reference internal" href="#c.Py_buffer" title="Py_buffer"><code class="xref c c-data docutils literal"><span class="pre">Py_buffer</span></code></a> 構造体のどのフィールドへの非デフォルト値の設定を省略したり、要求されたシンプルな view を提供できない場合はエラーを発生させたりすることができます。</p>
-<p>成功したら 0 が、エラー時には -1 が返されます。</p>
+<p><code class="docutils literal"><span class="pre">0</span></code> is returned on success and <code class="docutils literal"><span class="pre">-1</span></code> on error.</p>
 <p>次のテーブルは、 <em>flags</em> 引数が取りうる値です。</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -278,7 +281,9 @@ Py_ssize_t <code class="descname">PyBuffer_SizeFromFormat</code><span class="sig
 <dl class="function">
 <dt id="c.PyBuffer_IsContiguous">
 int <code class="descname">PyBuffer_IsContiguous</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_buffer" title="Py_buffer">Py_buffer</a><em>&nbsp;*view</em>, char<em>&nbsp;fortran</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyBuffer_IsContiguous" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>view</em> で定義されているメモリが、 C スタイル (<em>fortran</em> == <code class="docutils literal"><span class="pre">'C'</span></code>) のときか、 Fortran スタイル (<em>fortran</em> == <code class="docutils literal"><span class="pre">'F'</span></code>) のときか、そのいずれか (<em>fortran</em> == <code class="docutils literal"><span class="pre">'A'</span></code>) であれば 1 を返します。それ以外の場合は 0 を返します。</p>
+<dd><p>Return <code class="docutils literal"><span class="pre">1</span></code> if the memory defined by the <em>view</em> is C-style (<em>fortran</em> is
+<code class="docutils literal"><span class="pre">'C'</span></code>) or Fortran-style (<em>fortran</em> is <code class="docutils literal"><span class="pre">'F'</span></code>) contiguous or either one
+(<em>fortran</em> is <code class="docutils literal"><span class="pre">'A'</span></code>).  Return <code class="docutils literal"><span class="pre">0</span></code> otherwise.</p>
 </dd></dl>
 
 <dl class="function">
@@ -290,7 +295,9 @@ void <code class="descname">PyBuffer_FillContiguousStrides</code><span class="si
 <dl class="function">
 <dt id="c.PyBuffer_FillInfo">
 int <code class="descname">PyBuffer_FillInfo</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_buffer" title="Py_buffer">Py_buffer</a><em>&nbsp;*view</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em>, void<em>&nbsp;*buf</em>, Py_ssize_t<em>&nbsp;len</em>, int<em>&nbsp;readonly</em>, int<em>&nbsp;infoflags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyBuffer_FillInfo" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>バッファ提供側が与えられた長さの &#8220;unsigned bytes&#8221; の連続した1つのメモリブロックしか提供できないものとして、 <em>view</em> バッファ情報構造体を正しく埋める。成功したら 0 を、エラー時には (例外を発生させつつ) -1 を返す。</p>
+<dd><p>Fill in a buffer-info structure, <em>view</em>, correctly for an exporter that can
+only share a contiguous chunk of memory of &#8220;unsigned bytes&#8221; of the given
+length.  Return <code class="docutils literal"><span class="pre">0</span></code> on success and <code class="docutils literal"><span class="pre">-1</span></code> (with raising an error) on error.</p>
 </dd></dl>
 
 </div>
@@ -434,8 +441,9 @@ int <code class="descname">PyBuffer_Check</code><span class="sig-paren">(</span>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/buffer.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/buffer.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -480,12 +488,12 @@ int <code class="descname">PyBuffer_Check</code><span class="sig-paren">(</span>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

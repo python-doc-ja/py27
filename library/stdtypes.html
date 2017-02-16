@@ -37,6 +37,7 @@
     <link rel="next" title="6. 組み込み例外" href="exceptions.html" />
     <link rel="prev" title="4. 組み込み定数" href="constants.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/stdtypes.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -233,7 +234,16 @@
 <div class="section" id="numeric-types-int-float-long-complex">
 <span id="typesnumeric"></span><h2>5.4. 数値型 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-class docutils literal"><span class="pre">complex</span></code></a><a class="headerlink" href="#numeric-types-int-float-long-complex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-13">4 つの異なる数値型があります: <em class="dfn">通常の整数型</em>, <em class="dfn">長整数型</em>, <em class="dfn">浮動小数点型</em>, <em class="dfn">複素数型</em> です。さらに、真偽値(Boolean)型も通常の整数型のサブタイプです。通常の整数 (単に <em class="dfn">整数型</em> とも呼ばれます) は C言語の <code class="xref c c-type docutils literal"><span class="pre">long</span></code> 型を使って実装されており、少なくとも 32 ビットの精度があります (<code class="docutils literal"><span class="pre">sys.maxint</span></code> は常に通常の整数の各プラットフォームにおける最大値にセットされており、最小値は <code class="docutils literal"><span class="pre">-sys.maxint</span> <span class="pre">-</span> <span class="pre">1</span></code> になります)。長整数型には精度の制限がありません。浮動小数点型はたいていは C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> を使って実装されています; あなたのプログラムが動作するマシンでの浮動小数点型の精度と内部表現は、 <a class="reference internal" href="sys.html#sys.float_info" title="sys.float_info"><code class="xref py py-data docutils literal"><span class="pre">sys.float_info</span></code></a> から利用できます。複素数型は実部と虚部を持ち、それぞれ浮動小数点数です。複素数 <em>z</em> から実部および虚部を取り出すには、 <code class="docutils literal"><span class="pre">z.real</span></code> および <code class="docutils literal"><span class="pre">z.imag</span></code> を使ってください。 (標準ライブラリには、追加の数値型、分数を保持する <a class="reference internal" href="fractions.html#module-fractions" title="fractions: Rational numbers."><code class="xref py py-mod docutils literal"><span class="pre">fractions</span></code></a> や、ユーザ定義の精度の浮動小数点数を保持する <a class="reference internal" href="decimal.html#module-decimal" title="decimal: Implementation of the General Decimal Arithmetic  Specification."><code class="xref py py-mod docutils literal"><span class="pre">decimal</span></code></a> があります。)</p>
-<p id="index-14">数値は、数値リテラルや組み込み関数や演算子の戻り値として生成されます。修飾のない整数リテラル ( 2 進表現や、 16 進表現や 8 進表現の値も含みます) は、通常の整数値を表します。値が通常の整数で表すには大きすぎる場合、 <code class="docutils literal"><span class="pre">'L'</span></code> または <code class="docutils literal"><span class="pre">'l'</span></code> が末尾につく整数リテラルは長整数型を表します (<code class="docutils literal"><span class="pre">'L'</span></code> が望ましいです。というのは <code class="docutils literal"><span class="pre">1l</span></code> は 11 と非常に紛らわしいからです!) 小数点または指数表記のある数値リテラルは浮動小数点数を表します。数値リテラルに <code class="docutils literal"><span class="pre">'j'</span></code> または <code class="docutils literal"><span class="pre">'J'</span></code> をつけると実数部がゼロの複素数を表します。複素数の数値リテラルは実数部と虚数部を足したものです。</p>
+<p id="index-14">Numbers are created by numeric literals or as the result of built-in functions
+and operators.  Unadorned integer literals (including binary, hex, and octal
+numbers) yield plain integers unless the value they denote is too large to be
+represented as a plain integer, in which case they yield a long integer.
+Integer literals with an <code class="docutils literal"><span class="pre">'L'</span></code> or <code class="docutils literal"><span class="pre">'l'</span></code> suffix yield long integers (<code class="docutils literal"><span class="pre">'L'</span></code>
+is preferred because <code class="docutils literal"><span class="pre">1l</span></code> looks too much like eleven!).  Numeric literals
+containing a decimal point or an exponent sign yield floating point numbers.
+Appending <code class="docutils literal"><span class="pre">'j'</span></code> or <code class="docutils literal"><span class="pre">'J'</span></code> to a numeric literal yields an imaginary number
+(a complex number with a zero real part) which you can add to an integer or
+float to get a complex number with real and imaginary parts.</p>
 <p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より &#8220;制限された&#8221; 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
 <p>全ての組み込み数値型は以下の演算をサポートします。演算子の優先度については、 <a class="reference internal" href="../reference/expressions.html#power"><span class="std std-ref">べき乗演算 (power operator)</span></a>,および、あとのセクションを参照下さい。</p>
 <table border="1" class="docutils">
@@ -365,38 +375,30 @@
 <table border="1" class="docutils">
 <colgroup>
 <col width="31%" />
-<col width="56%" />
-<col width="13%" />
+<col width="69%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"><p class="first last">演算</p>
 </th>
 <th class="head"><p class="first last">結果</p>
 </th>
-<th class="head"><p class="first last">注釈</p>
-</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">math.trunc(x)</span></code></td>
-<td><p class="first last"><em>x</em> を整数に切り捨てます</p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-even"><td><a class="reference internal" href="math.html#math.trunc" title="math.trunc"><code class="xref py py-func docutils literal"><span class="pre">math.trunc(x)</span></code></a></td>
+<td><em>x</em> truncated to <a class="reference internal" href="numbers.html#numbers.Integral" title="numbers.Integral"><code class="xref py py-class docutils literal"><span class="pre">Integral</span></code></a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">round(x[,</span> <span class="pre">n])</span></code></td>
-<td><p class="first last"><em>x</em> を n 桁に丸めます。丸め方は四捨五入です。 n が省略されれば 0 がデフォルトとなります。(&#8211;訳注: Python 3 と仕様が違うので注意してください。1.5 と 2.5 の round は、Python 2 ではそれぞれ 2、3 となり、Python 3 では 2、2 となります。後者の丸めは .5 を丸める際に偶数になる方へ丸めるので、「偶数丸め」と言います。&#8211;)</p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-odd"><td><a class="reference internal" href="functions.html#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round(x[,</span>
+<span class="pre">n])</span></code></a></td>
+<td><em>x</em> rounded to <em>n</em> digits,
+rounding ties away from zero. If <em>n</em>
+is omitted, it defaults to 0.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">math.floor(x)</span></code></td>
-<td><p class="first last"><em>x</em> 以下の最大の整数値を持つ浮動小数点数です</p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-even"><td><a class="reference internal" href="math.html#math.floor" title="math.floor"><code class="xref py py-func docutils literal"><span class="pre">math.floor(x)</span></code></a></td>
+<td>the greatest integer as a float &lt;= <em>x</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">math.ceil(x)</span></code></td>
-<td><p class="first last"><em>x</em> 以上の最小の整数値を持つ浮動小数点数です</p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-odd"><td><a class="reference internal" href="math.html#math.ceil" title="math.ceil"><code class="xref py py-func docutils literal"><span class="pre">math.ceil(x)</span></code></a></td>
+<td>the least integer as a float &gt;= <em>x</em></td>
 </tr>
 </tbody>
 </table>
@@ -707,11 +709,21 @@
 </div>
 <p>別の説明が FAQ エントリ <a class="reference internal" href="../faq/programming.html#faq-multidimensional-list"><span class="std std-ref">多次元のリストを作るにはどうしますか？</span></a> にあります。</p>
 </li>
-<li><p class="first"><em>i</em> または <em>j</em> が負の数の場合、インデクスは文字列の末端からの相対インデクスになります: <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">i</span></code>  または <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">j</span></code> が代入されます。しかし <code class="docutils literal"><span class="pre">-0</span></code> は <code class="docutils literal"><span class="pre">0</span></code> のままなので注意してください。</p>
+<li><p class="first">If <em>i</em> or <em>j</em> is negative, the index is relative to the end of sequence <em>s</em>:
+<code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">i</span></code> or <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">j</span></code> is substituted.  But note that <code class="docutils literal"><span class="pre">-0</span></code> is still
+<code class="docutils literal"><span class="pre">0</span></code>.</p>
 </li>
 <li><p class="first"><em>s</em> の <em>i</em> から <em>j</em> へのスライスは <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となるようなインデクス <em>k</em> を持つ要素からなるシーケンスとして定義されます。 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> よりも大きい場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">0</span></code> を使います。 <em>j</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が <em>j</em> 以上の場合、スライスは空のシーケンスになります。</p>
 </li>
-<li><p class="first"><em>s</em> の <em>i</em> 番目から <em>j</em> 番目まで  <em>k</em> 毎のスライスは、 <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code> となるような、インデクス <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> を持つ要素からなるシーケンスとして定義されます。言い換えるとインデクスは <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> などであり、 <em>j</em> に達したところ (しかし <em>j</em> は含みません)でストップします。 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> より大きい場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> または <em>j</em> を省略するか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 &#8220;最後&#8221; (<em>k</em> の符号に依存) を示す値を使います。 <em>k</em> はゼロにできないので注意してください。 <em>k</em> が <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">1</span></code> として扱われます。</p>
+<li><p class="first">The slice of <em>s</em> from <em>i</em> to <em>j</em> with step <em>k</em> is defined as the sequence of
+items with index  <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> such that <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code>.  In other words,
+the indices are <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> and so on, stopping when
+<em>j</em> is reached (but never including <em>j</em>).  When <em>k</em> is positive,
+<em>i</em> and <em>j</em> are reduced to <code class="docutils literal"><span class="pre">len(s)</span></code> if they are greater.
+When <em>k</em> is negative, <em>i</em> and <em>j</em> are reduced to <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> if
+they are greater.  If <em>i</em> or <em>j</em> are omitted or <code class="docutils literal"><span class="pre">None</span></code>, they become
+&#8220;end&#8221; values (which end depends on the sign of <em>k</em>).  Note, <em>k</em> cannot be zero.
+If <em>k</em> is <code class="docutils literal"><span class="pre">None</span></code>, it is treated like <code class="docutils literal"><span class="pre">1</span></code>.</p>
 </li>
 <li><div class="impl-detail first compound">
 <p><strong>CPython 実装の詳細:</strong> <em>s</em> と <em>t</em> の両者が文字列であるとき、 CPython のようないくつかの Python 実装では、 <code class="docutils literal"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">s</span> <span class="pre">+</span> <span class="pre">t</span></code> や <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code> という書式で代入をするのに in-place optimization が働きます。このような時、最適化は二乗の実行時間の低減をもたらします。この最適化はバージョンや実装に依存します。実行効率が必要なコードでは、バージョンと実装が変わっても、連結の線形的実行効率を保証する <a class="reference internal" href="#str.join" title="str.join"><code class="xref py py-meth docutils literal"><span class="pre">str.join()</span></code></a> を使うのがより望ましいでしょう。</p>
@@ -801,7 +813,9 @@
 <dl class="method">
 <dt id="str.find">
 <code class="descclassname">str.</code><code class="descname">find</code><span class="sig-paren">(</span><em>sub</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>end</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#str.find" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>文字列のスライス <code class="docutils literal"><span class="pre">s[start:end]</span></code> に <em>sub</em> が含まれる場合、その最小のインデクスを返します。オプション引数 <em>start</em> および <em>end</em> はスライス表記と同様に解釈されます。 <em>sub</em> が見つからなかった場合 <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+<dd><p>Return the lowest index in the string where substring <em>sub</em> is found within
+the slice <code class="docutils literal"><span class="pre">s[start:end]</span></code>.  Optional arguments <em>start</em> and <em>end</em> are
+interpreted as in slice notation.  Return <code class="docutils literal"><span class="pre">-1</span></code> if <em>sub</em> is not found.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p><a class="reference internal" href="#str.find" title="str.find"><code class="xref py py-meth docutils literal"><span class="pre">find()</span></code></a> メソッドは、 <em>sub</em> の位置を知りたいときにのみ使うべきです。 <em>sub</em> が部分文字列であるかどうかのみを調べるには、 <a class="reference internal" href="../reference/expressions.html#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> 演算子を使ってください:</p>
@@ -1001,8 +1015,89 @@
 <dt id="str.splitlines">
 <code class="descclassname">str.</code><code class="descname">splitlines</code><span class="sig-paren">(</span><span class="optional">[</span><em>keepends</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#str.splitlines" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>文字列を改行部分で分解し、各行からなるリストを返します。 このメソッドは、行の分割に <a class="reference internal" href="../glossary.html#term-universal-newlines"><span class="xref std std-term">universal newlines</span></a> アプローチを使います。<em>keepends</em> に真が与えらない限り、返されるリストに改行は含まれません。</p>
-<p>例えば、<code class="docutils literal"><span class="pre">'ab</span> <span class="pre">c\n\nde</span> <span class="pre">fg\rkl\r\n'.splitlines()</span></code> は <code class="docutils literal"><span class="pre">['ab</span> <span class="pre">c',</span> <span class="pre">'',</span> <span class="pre">'de</span> <span class="pre">fg',</span> <span class="pre">'kl']</span></code> を返し、<code class="docutils literal"><span class="pre">splitlines(True)</span></code> で同じ呼び出しをすると <code class="docutils literal"><span class="pre">['ab</span> <span class="pre">c\n',</span> <span class="pre">'\n',</span> <span class="pre">'de</span> <span class="pre">fg\r',</span> <span class="pre">'kl\r\n']</span></code> を返します。</p>
-<p><a class="reference internal" href="#str.split" title="str.split"><code class="xref py py-meth docutils literal"><span class="pre">split()</span></code></a> とは違って、デリミタ文字列 <em>sep</em> が与えられたとき、このメソッドは空文字列に空リストを返し、終末の改行は結果に行を追加しません。</p>
+<p>Python recognizes <code class="docutils literal"><span class="pre">&quot;\r&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code>, and <code class="docutils literal"><span class="pre">&quot;\r\n&quot;</span></code> as line boundaries for
+8-bit strings.</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;ab c</span><span class="se">\n\n</span><span class="s1">de fg</span><span class="se">\r</span><span class="s1">kl</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="go">[&#39;ab c&#39;, &#39;&#39;, &#39;de fg&#39;, &#39;kl&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;ab c</span><span class="se">\n\n</span><span class="s1">de fg</span><span class="se">\r</span><span class="s1">kl</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">[&#39;ab c\n&#39;, &#39;\n&#39;, &#39;de fg\r&#39;, &#39;kl\r\n&#39;]</span>
+</pre></div>
+</div>
+<p>Unlike <a class="reference internal" href="#str.split" title="str.split"><code class="xref py py-meth docutils literal"><span class="pre">split()</span></code></a> when a delimiter string <em>sep</em> is given, this
+method returns an empty list for the empty string, and a terminal line
+break does not result in an extra line:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;One line</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="go">[&#39;One line&#39;]</span>
+</pre></div>
+</div>
+<p>For comparison, <code class="docutils literal"><span class="pre">split('\n')</span></code> gives:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">[&#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;Two lines</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">[&#39;Two lines&#39;, &#39;&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="unicode.splitlines">
+<code class="descclassname">unicode.</code><code class="descname">splitlines</code><span class="sig-paren">(</span><span class="optional">[</span><em>keepends</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#unicode.splitlines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Return a list of the lines in the string, like <a class="reference internal" href="#str.splitlines" title="str.splitlines"><code class="xref py py-meth docutils literal"><span class="pre">str.splitlines()</span></code></a>.
+However, the Unicode method splits on the following line boundaries,
+which are a superset of the <a class="reference internal" href="../glossary.html#term-universal-newlines"><span class="xref std std-term">universal newlines</span></a> recognized for
+8-bit strings.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Representation</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\n</span></code></td>
+<td>Line Feed</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\r</span></code></td>
+<td>Carriage Return</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\r\n</span></code></td>
+<td>Carriage Return + Line Feed</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\v</span></code> or <code class="docutils literal"><span class="pre">\x0b</span></code></td>
+<td>Line Tabulation</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\f</span></code> or <code class="docutils literal"><span class="pre">\x0c</span></code></td>
+<td>Form Feed</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\x1c</span></code></td>
+<td>File Separator</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\x1d</span></code></td>
+<td>Group Separator</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\x1e</span></code></td>
+<td>Record Separator</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\x85</span></code></td>
+<td>Next Line (C1 Control Code)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\u2028</span></code></td>
+<td>Line Separator</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\u2029</span></code></td>
+<td>Paragraph Separator</td>
+</tr>
+</tbody>
+</table>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><code class="docutils literal"><span class="pre">\v</span></code> and <code class="docutils literal"><span class="pre">\f</span></code> added to list of line boundaries.</p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1273,7 +1368,8 @@
 <ol class="arabic">
 <li><p class="first">この形式の出力にした場合、変換結果の先頭の数字がゼロ (<code class="docutils literal"><span class="pre">'0'</span></code>) でないときには、数字の先頭と左側のパディングとの間にゼロを挿入します。</p>
 </li>
-<li><p class="first">この形式にした場合、変換結果の先頭の数字がゼロでないときには、数字の先頭と左側のパディングとの間に <code class="docutils literal"><span class="pre">'0x'</span></code> または <code class="docutils literal"><span class="pre">'0X'</span></code> (フォーマット文字が <code class="docutils literal"><span class="pre">'x'</span></code> か <code class="docutils literal"><span class="pre">'X'</span></code> かに依存します) が挿入されます。</p>
+<li><p class="first">The alternate form causes a leading <code class="docutils literal"><span class="pre">'0x'</span></code> or <code class="docutils literal"><span class="pre">'0X'</span></code> (depending on whether
+the <code class="docutils literal"><span class="pre">'x'</span></code> or <code class="docutils literal"><span class="pre">'X'</span></code> format was used) to be inserted before the first digit.</p>
 </li>
 <li><p class="first">この形式にした場合、変換結果には常に小数点が含まれ、それはその後ろに数字が続かない場合にも適用されます。</p>
 <p>指定精度は小数点の後の桁数を決定し、そのデフォルトは 6 です。</p>
@@ -1350,10 +1446,10 @@
 </td>
 <td>(2)</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><code class="docutils literal"><span class="pre">s.extend(x)</span></code> または <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code></p>
-</td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">x</span></code> とほとんど同じ</p>
-</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">s.extend(t)</span></code> or
+<code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code></td>
+<td>for the most part the same as
+<code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">t</span></code></td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span> <span class="pre">*=</span> <span class="pre">n</span></code></td>
@@ -1405,7 +1501,7 @@
 </li>
 <li><p class="first">かつての Python の C 実装では、複数パラメタを受理し、暗黙にそれらをタプルに結合していました。この間違った機能は Python 1.4 で撤廃され、 Python 2.0 の導入とともにエラーにするようになりました。</p>
 </li>
-<li><p class="first"><em>x</em> は任意のイテラブル (繰り返し可能オブジェクト) にできます。</p>
+<li><p class="first"><em>t</em> can be any iterable object.</p>
 </li>
 <li><p class="first"><em>x</em> が <em>s</em> 中に見つからなかった場合 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。負のインデクスが二番目または三番目のパラメタとして <code class="xref py py-meth docutils literal"><span class="pre">index()</span></code> メソッドに渡されると、これらの値にはスライスのインデクスと同様にリストの長さが加算されます。加算後もまだ負の場合、その値はスライスのインデクスと同様にゼロに切り詰められます。</p>
 <div class="versionchanged">
@@ -1464,7 +1560,7 @@
 <dl class="describe">
 <dt>
 <code class="descname">len(s)</code></dt>
-<dd><p>集合 <em>s</em> の要素数を返します。</p>
+<dd><p>Return the number of elements in set <em>s</em> (cardinality of <em>s</em>).</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1518,7 +1614,7 @@
 
 <dl class="method">
 <dt id="set.union">
-<code class="descname">union</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.union" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">union</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.union" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set | other | ...</code></dt>
 <dd><p>set と全ての other の要素からなる新しい集合を返します。</p>
@@ -1529,7 +1625,7 @@
 
 <dl class="method">
 <dt id="set.intersection">
-<code class="descname">intersection</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">intersection</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &amp; other &amp; ...</code></dt>
 <dd><p>set と全ての other に共通する要素を持つ、新しい集合を返します。</p>
@@ -1540,7 +1636,7 @@
 
 <dl class="method">
 <dt id="set.difference">
-<code class="descname">difference</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">difference</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set - other - ...</code></dt>
 <dd><p>set に含まれて、かつ、全ての other に含まれない要素を持つ、新しい集合を返します。</p>
@@ -1573,7 +1669,7 @@
 <p>以下の表に挙げる演算は <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> に適用されますが、<a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> のイミュータブルなインスタンスには適用されません:</p>
 <dl class="method">
 <dt id="set.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.update" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set |= other | ...</code></dt>
 <dd><p>全ての other の要素を追加し、 set を更新します。</p>
@@ -1584,7 +1680,7 @@
 
 <dl class="method">
 <dt id="set.intersection_update">
-<code class="descname">intersection_update</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection_update" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">intersection_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection_update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &amp;= other &amp; ...</code></dt>
 <dd><p>元の set と全ての other に共通する要素だけを残して set を更新します。</p>
@@ -1595,7 +1691,7 @@
 
 <dl class="method">
 <dt id="set.difference_update">
-<code class="descname">difference_update</code><span class="sig-paren">(</span><em>other</em>, <em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference_update" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">difference_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference_update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set -= other | ...</code></dt>
 <dd><p><em>other</em> に含まれる要素を取り除き、 set を更新します。</p>
@@ -2264,7 +2360,8 @@
 <dl class="attribute">
 <dt id="memoryview.shape">
 <code class="descname">shape</code><a class="headerlink" href="#memoryview.shape" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>メモリの形状を N 次元配列として与える、長さ <a class="reference internal" href="#memoryview.ndim" title="memoryview.ndim"><code class="xref py py-attr docutils literal"><span class="pre">ndim</span></code></a> の整数のタプルです。</p>
+<dd><p>A tuple of integers the length of <a class="reference internal" href="#memoryview.ndim" title="memoryview.ndim"><code class="xref py py-attr docutils literal"><span class="pre">ndim</span></code></a> giving the shape of the
+memory as an N-dimensional array.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -2321,7 +2418,13 @@
 <div class="section" id="modules">
 <span id="typesmodules"></span><h3>5.12.1. モジュール<a class="headerlink" href="#modules" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>モジュールに対する唯一の特殊な演算は属性アクセス: <code class="docutils literal"><span class="pre">m.name</span></code> です。ここで <em>m</em> はモジュールで、 <em>name</em> は <em>m</em> のシンボルテーブル上に定義された名前にアクセスします。モジュール属性に代入することもできます。 (なお、<a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文は、厳密にいえば、モジュールオブジェクトに対する演算ではありません; <code class="docutils literal"><span class="pre">import</span> <span class="pre">foo</span></code> は <em>foo</em> と名づけられたモジュールオブジェクトの存在を必要とはせず、<em>foo</em> と名づけられたモジュールの (外部の) <em>定義</em> を必要とします。)</p>
-<p>全てのモジュールにある特殊属性が <a class="reference internal" href="#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> です。これはモジュールのシンボルテーブルを含む辞書です。この辞書を書き換えると実際にモジュールのシンボルテーブルを変更することができますが、<code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> 属性を直接代入することはできません (<code class="docutils literal"><span class="pre">m.__dict__['a']</span> <span class="pre">=</span> <span class="pre">1</span></code> と書いて <code class="docutils literal"><span class="pre">m.a</span></code> を <code class="docutils literal"><span class="pre">1</span></code> に定義することはできますが、<code class="docutils literal"><span class="pre">m.__dict__</span> <span class="pre">=</span> <span class="pre">{}</span></code> と書くことはできません)。 <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> を直接書き換えることは推奨されません。</p>
+<p>A special attribute of every module is <a class="reference internal" href="#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>. This is the
+dictionary containing the module&#8217;s symbol table. Modifying this dictionary will
+actually change the module&#8217;s symbol table, but direct assignment to the
+<a class="reference internal" href="#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute is not possible (you can write
+<code class="docutils literal"><span class="pre">m.__dict__['a']</span> <span class="pre">=</span> <span class="pre">1</span></code>, which defines <code class="docutils literal"><span class="pre">m.a</span></code> to be <code class="docutils literal"><span class="pre">1</span></code>, but you can&#8217;t write
+<code class="docutils literal"><span class="pre">m.__dict__</span> <span class="pre">=</span> <span class="pre">{}</span></code>).  Modifying <a class="reference internal" href="#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> directly is
+not recommended.</p>
 <p>インタプリタ内に組み込まれたモジュールは、 <code class="docutils literal"><span class="pre">&lt;module</span> <span class="pre">'sys'</span> <span class="pre">(built-in)&gt;</span></code> のように書かれます。ファイルから読み出された場合、 <code class="docutils literal"><span class="pre">&lt;module</span> <span class="pre">'os'</span> <span class="pre">from</span> <span class="pre">'/usr/local/lib/pythonX.Y/os.pyc'&gt;</span></code> と書かれます。</p>
 </div>
 <div class="section" id="classes-and-class-instances">
@@ -2357,8 +2460,8 @@
 <p>詳細は、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照下さい。</p>
 </div>
 <div class="section" id="code-objects">
-<span id="bltin-code-objects"></span><h3>5.12.5. コードオブジェクト<a class="headerlink" href="#code-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<span class="target" id="index-39"></span><p id="index-40">コードオブジェクトは、関数本体のような &#8220;擬似コンパイルされた&#8221; Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
+<span id="bltin-code-objects"></span><span id="index-39"></span><h3>5.12.5. コードオブジェクト<a class="headerlink" href="#code-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p id="index-40">コードオブジェクトは、関数本体のような &#8220;擬似コンパイルされた&#8221; Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
 <p id="index-41">コードオブジェクトは、 <code class="xref py py-func docutils literal"><span class="pre">exec()</span></code> 文や組み込み関数 <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> に (ソース文字列の代わりに) 渡すことで、実行や評価できます。</p>
 <p>詳細は、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照下さい。</p>
 </div>
@@ -2430,9 +2533,10 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="class.__name__">
-<code class="descclassname">class.</code><code class="descname">__name__</code><a class="headerlink" href="#class.__name__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>クラスまたは型の名前です。</p>
+<dt id="definition.__name__">
+<code class="descclassname">definition.</code><code class="descname">__name__</code><a class="headerlink" href="#definition.__name__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>The name of the class, type, function, method, descriptor, or
+generator instance.</p>
 </dd></dl>
 
 <p>以下の属性は、新スタイルクラス (<a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a>) でのみサポートされます。</p>
@@ -2569,8 +2673,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/stdtypes.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/stdtypes.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -2614,12 +2719,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

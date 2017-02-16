@@ -37,6 +37,7 @@
     <link rel="next" title="19.7. xml.etree.ElementTree — ElementTree XML API" href="xml.etree.elementtree.html" />
     <link rel="prev" title="19.3. htmllib — HTML 文書の解析器" href="htmllib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/xml.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -111,16 +112,16 @@
 <div class="section" id="xml-vulnerabilities">
 <span id="id1"></span><h1>19.6. XML の脆弱性<a class="headerlink" href="#xml-vulnerabilities" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>XML処理モジュールは悪意を持って生成されたデータに対して安全ではありません。攻撃者は脆弱性を使って、 DoS攻撃、ローカルファイルへのアクセス、他マシンへのネットワーク接続、ファイアーウォールの迂回などが可能になります。
-XML に対する攻撃は、エンティティに対するインライン <a class="reference external" href="http://en.wikipedia.org/wiki/Document_Type_Definition">DTD</a> (Document Type Definition) などのマイナーな機能を悪用します。</p>
+XML に対する攻撃は、エンティティに対するインライン <a class="reference external" href="https://en.wikipedia.org/wiki/Document_type_definition">DTD</a> (Document Type Definition) などのマイナーな機能を悪用します。</p>
 <p>以下のテーブルは知られている攻撃と、各モジュールがそれに対して脆弱であるかどうかを示しています。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="37%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="12%" />
-<col width="13%" />
+<col width="26%" />
+<col width="15%" />
+<col width="16%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"><p class="first last">種類</p>
@@ -134,39 +135,39 @@ XML に対する攻撃は、エンティティに対するインライン <a cla
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>billion laughs</td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
 </tr>
 <tr class="row-odd"><td>quadratic blowup</td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
-<td><strong>Yes</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
+<td><strong>Vulnerable</strong></td>
 </tr>
 <tr class="row-even"><td>external entity expansion</td>
-<td><strong>Yes</strong></td>
-<td>No    (1)</td>
-<td>No    (2)</td>
-<td><strong>Yes</strong></td>
-<td>No    (3)</td>
+<td><strong>Vulnerable</strong></td>
+<td>Safe    (1)</td>
+<td>Safe    (2)</td>
+<td><strong>Vulnerable</strong></td>
+<td>Safe    (3)</td>
 </tr>
-<tr class="row-odd"><td>DTD retrieval</td>
-<td><strong>Yes</strong></td>
-<td>No</td>
-<td>No</td>
-<td><strong>Yes</strong></td>
-<td>No</td>
+<tr class="row-odd"><td><a class="reference external" href="https://en.wikipedia.org/wiki/Document_type_definition">DTD</a> retrieval</td>
+<td><strong>Vulnerable</strong></td>
+<td>Safe</td>
+<td>Safe</td>
+<td><strong>Vulnerable</strong></td>
+<td>Safe</td>
 </tr>
 <tr class="row-even"><td>decompression bomb</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td><strong>Yes</strong></td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td><strong>Vulnerable</strong></td>
 </tr>
 </tbody>
 </table>
@@ -180,11 +181,11 @@ XML に対する攻撃は、エンティティに対するインライン <a cla
 </ol>
 <dl class="docutils">
 <dt>billion laughs / exponential entity expansion</dt>
-<dd><p class="first last"><a class="reference external" href="http://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃 &#8211; exponential entity expansion とも呼ばれる &#8211; は、複数レベルにネストしたエンティティを用います。各エンティティは他のエンティティを複数回参照し、最後のエンティティ定義は小さい文字列を含みます。最終的に、その小さい文字列は数ギガバイトにまで展開されます。
+<dd><p class="first last"><a class="reference external" href="https://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃 &#8211; exponential entity expansion とも呼ばれる &#8211; は、複数レベルにネストしたエンティティを用います。各エンティティは他のエンティティを複数回参照し、最後のエンティティ定義は小さい文字列を含みます。最終的に、その小さい文字列は数ギガバイトにまで展開されます。
 exponential expansion は大量の CPU 時間も消費します。</p>
 </dd>
 <dt>quadratic blowup entity expansion</dt>
-<dd><p class="first last">quadratic blowup 攻撃は <a class="reference external" href="http://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃と似ています。こちらもエンティティの展開を利用します。ネストしたエンティティを用いる代わりに、数千文字のエンティティ1つを繰り返し利用します。この攻撃は指数関数的な効率はありませんが、パーサーのエンティティのネスト対策を回避します。</p>
+<dd><p class="first last">quadratic blowup 攻撃は <a class="reference external" href="https://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a> 攻撃と似ています。こちらもエンティティの展開を利用します。ネストしたエンティティを用いる代わりに、数千文字のエンティティ1つを繰り返し利用します。この攻撃は指数関数的な効率はありませんが、パーサーのエンティティのネスト対策を回避します。</p>
 </dd>
 <dt>external entity expansion</dt>
 <dd><p class="first last">エンティティの定義はただのテキスト置換以上のことができます。
@@ -192,11 +193,11 @@ public identifier や system identifier を使って外部のリソースを参�
 system identifier は標準的な URI やローカルファイルを参照できます。
 XML パーサーはリソースを HTTP や FTP リクエストを用いて取得し、その内容を XML ドキュメントに埋め込みます。</p>
 </dd>
-<dt>DTD retrieval</dt>
+<dt><a class="reference external" href="https://en.wikipedia.org/wiki/Document_type_definition">DTD</a> retrieval</dt>
 <dd><p class="first last">Python の <a class="reference internal" href="xml.dom.pulldom.html#module-xml.dom.pulldom" title="xml.dom.pulldom: Support for building partial DOM trees from SAX events."><code class="xref py py-mod docutils literal"><span class="pre">xml.dom.pulldom</span></code></a> のような XML ライブラリは DTD をリモートやローカルの場所から読み込みます。この機能には外部エンティティ展開の問題と同じことが予想されます。</p>
 </dd>
 <dt>decompression bomb</dt>
-<dd><p class="first last">decompression bomb (<a class="reference external" href="http://en.wikipedia.org/wiki/Zip_bomb">ZIP bomb</a> とも呼ばれる) 問題は、 gzipped HTTP ストリームや LZMA ファイルなどの圧縮された XML ストリームをパースできる全ての XML ライブラリに適用されます。攻撃者は送信するデータ量を1/3かそれ以下に減らすことができます。</p>
+<dd><p class="first last">decompression bomb (<a class="reference external" href="https://en.wikipedia.org/wiki/Zip_bomb">ZIP bomb</a> とも呼ばれる) 問題は、 gzipped HTTP ストリームや LZMA ファイルなどの圧縮された XML ストリームをパースできる全ての XML ライブラリに適用されます。攻撃者は送信するデータ量を1/3かそれ以下に減らすことができます。</p>
 </dd>
 </dl>
 <p>PyPI にある <a class="reference external" href="https://pypi.python.org/pypi/defusedxml/">defusedxml</a> のドキュメントは、全ての知られている攻撃手法についてのさらなる情報を、例や参照つきで提供しています。</p>
@@ -234,8 +235,9 @@ defusedexpat は、安全で設定可能な量のエンティティ展開を許�
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/xml.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/xml.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -280,12 +282,12 @@ defusedexpat は、安全で設定可能な量のエンティティ展開を許�
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="32.8. tabnanny — あいまいなインデントの検出" href="tabnanny.html" />
     <link rel="prev" title="32.6. keyword — Python キーワードチェック" href="keyword.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/tokenize.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,7 +82,7 @@
             
   <div class="section" id="module-tokenize">
 <span id="tokenize-tokenizer-for-python-source"></span><h1>32.7. <a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">tokenize</span></code></a> &#8212; Pythonソースのためのトークナイザ<a class="headerlink" href="#module-tokenize" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/tokenize.py">Lib/tokenize.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/tokenize.py">Lib/tokenize.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">tokenize</span></code></a> モジュールでは、Python で実装された Python ソースコードの字句解析器を提供します。さらに、このモジュールの字句解析器はコメントもトークンとして返します。このため、このモジュールはスクリーン上で表示する際の色付け機能 (colorizers) を含む &#8220;清書出力器 (pretty-printer)&#8221; を実装する上で便利です。</p>
 <p>トークンストリームの扱いをシンプルにするために、全ての <a class="reference internal" href="../reference/lexical_analysis.html#operators"><span class="std std-ref">演算子 (operator)</span></a> と <a class="reference internal" href="../reference/lexical_analysis.html#delimiters"><span class="std std-ref">デリミタ (delimiter)</span></a> トークンはジェネリックな <a class="reference internal" href="token.html#token.OP" title="token.OP"><code class="xref py py-data docutils literal"><span class="pre">token.OP</span></code></a> トークンタイプとして返されます。正確な型は <a class="reference internal" href="#tokenize.generate_tokens" title="tokenize.generate_tokens"><code class="xref py py-func docutils literal"><span class="pre">tokenize.generate_tokens()</span></code></a> からの戻り値のタプルの 2 番目のフィールド (実際のマッチしたトークン文字列を含んでいます) を特定の演算子トークンを識別する文字シーケンスかチェックすれば決定出来ます。</p>
@@ -89,7 +90,12 @@
 <dl class="function">
 <dt id="tokenize.generate_tokens">
 <code class="descclassname">tokenize.</code><code class="descname">generate_tokens</code><span class="sig-paren">(</span><em>readline</em><span class="sig-paren">)</span><a class="headerlink" href="#tokenize.generate_tokens" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#tokenize.generate_tokens" title="tokenize.generate_tokens"><code class="xref py py-func docutils literal"><span class="pre">generate_tokens()</span></code></a> ジェネレータは一つの引数 <em>readline</em> を必要とします。この引数は呼び出し可能オブジェクトで、組み込みファイルオブジェクトにおける <a class="reference internal" href="readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> メソッドと同じインタフェースを提供していなければなりません (<a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> 節を参照してください)。この関数は呼び出しのたびに入力内の一行を文字列で返さなければなりません。もしくは、 <em>readline</em> を <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> を送出することで完了を知らせる呼び出し可能オブジェクトとすることもできます。</p>
+<dd><p>The <a class="reference internal" href="#tokenize.generate_tokens" title="tokenize.generate_tokens"><code class="xref py py-func docutils literal"><span class="pre">generate_tokens()</span></code></a> generator requires one argument, <em>readline</em>,
+which must be a callable object which provides the same interface as the
+<a class="reference internal" href="stdtypes.html#file.readline" title="file.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> method of built-in file objects (see section
+<a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a>).  Each call to the function should return one line
+of input as a string. Alternately, <em>readline</em> may be a callable object that
+signals completion by raising <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a>.</p>
 <p>このジェネレータは次の 5 要素のタプルを返します; トークンタイプ; トークン文字列; ソース内でそのトークンがどの行、列で開始するかを示す int の <code class="docutils literal"><span class="pre">(srow,</span> <span class="pre">scol)</span></code> タプル; どの行、列で終了するかを示す int の <code class="docutils literal"><span class="pre">(erow,</span> <span class="pre">ecol)</span></code> タプル; トークンが見つかった行。 (タプルの最後の要素にある) 行は <em>論理</em> 行で、継続行が含まれます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
@@ -100,15 +106,22 @@
 <dl class="function">
 <dt id="tokenize.tokenize">
 <code class="descclassname">tokenize.</code><code class="descname">tokenize</code><span class="sig-paren">(</span><em>readline</em><span class="optional">[</span>, <em>tokeneater</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#tokenize.tokenize" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a> 関数は二つのパラメータを取ります: 一つは入力ストリームを表し、もう一つは <a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a> のための出力メカニズムを与えます。</p>
-<p>最初のパラメータ、 <em>readline</em> は、組み込みファイルオブジェクトの <a class="reference internal" href="readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> メソッドと同じインタフェイスを提供する呼び出し可能オブジェクトでなければなりません ( <a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> 節を参照)。この関数は呼び出しのたびに入力内の一行を文字列で返さなければなりません。もしくは、 <em>readline</em> を <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> を送出することで完了を知らせる呼び出し可能オブジェクトとすることもできます。</p>
+<dd><p>The <a class="reference internal" href="#tokenize.tokenize" title="tokenize.tokenize"><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a> function accepts two parameters: one representing the input
+stream, and one providing an output mechanism for <a class="reference internal" href="#tokenize.tokenize" title="tokenize.tokenize"><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a>.</p>
+<p>The first parameter, <em>readline</em>, must be a callable object which provides the
+same interface as the <a class="reference internal" href="stdtypes.html#file.readline" title="file.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> method of built-in file objects (see
+section <a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a>).  Each call to the function should return one
+line of input as a string. Alternately, <em>readline</em> may be a callable object that
+signals completion by raising <a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span><a class="reference internal" href="exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> サポートの追加。</p>
 </div>
 <p>二番目のパラメータ <em>tokeneater</em> も呼び出し可能オブジェクトでなければなりません。この関数は各トークンに対して一度だけ呼び出され、 <a class="reference internal" href="#tokenize.generate_tokens" title="tokenize.generate_tokens"><code class="xref py py-func docutils literal"><span class="pre">generate_tokens()</span></code></a> が生成するタプルに対応する 5 つの引数をとります。</p>
 </dd></dl>
 
-<p><a class="reference internal" href="token.html#module-token" title="token: Constants representing terminal nodes of the parse tree."><code class="xref py py-mod docutils literal"><span class="pre">token</span></code></a> モジュールの全ての定数は <a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">tokenize</span></code></a> でも公開されており、これに加え、以下の二つのトークン値が <a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a> の <em>tokeneater</em> 関数に渡される可能性があります:</p>
+<p>All constants from the <a class="reference internal" href="token.html#module-token" title="token: Constants representing terminal nodes of the parse tree."><code class="xref py py-mod docutils literal"><span class="pre">token</span></code></a> module are also exported from
+<a class="reference internal" href="#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-mod docutils literal"><span class="pre">tokenize</span></code></a>, as are two additional token type values that might be passed to
+the <em>tokeneater</em> function by <a class="reference internal" href="#tokenize.tokenize" title="tokenize.tokenize"><code class="xref py py-func docutils literal"><span class="pre">tokenize()</span></code></a>:</p>
 <dl class="data">
 <dt id="tokenize.COMMENT">
 <code class="descclassname">tokenize.</code><code class="descname">COMMENT</code><a class="headerlink" href="#tokenize.COMMENT" title="この定義へのパーマリンク">¶</a></dt>
@@ -196,8 +209,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/tokenize.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/tokenize.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -242,12 +256,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

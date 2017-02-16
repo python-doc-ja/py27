@@ -35,8 +35,9 @@
     <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
     <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
     <link rel="next" title="Boolean オブジェクト" href="bool.html" />
-    <link rel="prev" title="None オブジェクト" href="none.html" />
+    <link rel="prev" title="The None Object" href="none.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/int.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -59,7 +60,7 @@
           <a href="bool.html" title="Boolean オブジェクト"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="none.html" title="None オブジェクト"
+          <a href="none.html" title="The None Object"
              accesskey="P">前へ</a> |</li>
         <li><img src="../_static/py.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
@@ -145,7 +146,10 @@ int <code class="descname">PyInt_CheckExact</code><span class="sig-paren">(</spa
 <dl class="function">
 <dt id="c.PyInt_AsLong">
 long <code class="descname">PyInt_AsLong</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*io</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInt_AsLong" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>オブジェクトがまだ <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a> でなければまず型キャストを試み、次にその値を返します。エラーが発生した場合、 <code class="docutils literal"><span class="pre">-1</span></code> が返されます。その時呼び出し側は、 <code class="docutils literal"><span class="pre">PyErr_Occurred()</span></code> を使って、エラーが発生したのか、単に値が -1 だったのかを判断するべきです。</p>
+<dd><p>Will first attempt to cast the object to a <a class="reference internal" href="#c.PyIntObject" title="PyIntObject"><code class="xref c c-type docutils literal"><span class="pre">PyIntObject</span></code></a>, if it is not
+already one, and then return its value. If there is an error, <code class="docutils literal"><span class="pre">-1</span></code> is
+returned, and the caller should check <code class="docutils literal"><span class="pre">PyErr_Occurred()</span></code> to find out whether
+there was an error, or whether the value just happened to be <code class="docutils literal"><span class="pre">-1</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -206,15 +210,16 @@ int <code class="descname">PyInt_ClearFreeList</code><span class="sig-paren">(</
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="none.html"
-                        title="前の章へ">None オブジェクト</a></p>
+                        title="前の章へ">The <code class="docutils literal"><span class="pre">None</span></code> Object</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="bool.html"
                         title="次の章へ">Boolean オブジェクト</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/int.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/int.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -244,7 +249,7 @@ int <code class="descname">PyInt_ClearFreeList</code><span class="sig-paren">(</
           <a href="bool.html" title="Boolean オブジェクト"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="none.html" title="None オブジェクト"
+          <a href="none.html" title="The None Object"
              >前へ</a> |</li>
         <li><img src="../_static/py.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
@@ -259,12 +264,12 @@ int <code class="descname">PyInt_ClearFreeList</code><span class="sig-paren">(</
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

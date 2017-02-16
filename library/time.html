@@ -37,6 +37,7 @@
     <link rel="next" title="15.4. argparse — コマンドラインオプション、引数、サブコマンドのパーサー" href="argparse.html" />
     <link rel="prev" title="15.2. io — ストリームを扱うコアツール" href="io.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/time.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -492,7 +493,13 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
-<p>C の構造体と違って、月の値が 0-11 でなく 1-12 であることに注意してください。西暦年の値は上の <a class="reference internal" href="#time-y2kissues"><span class="std std-ref">2000年問題 (Y2K)</span></a> で述べたように扱われます。夏時間フラグを <code class="docutils literal"><span class="pre">-1</span></code> にして <a class="reference internal" href="#time.mktime" title="time.mktime"><code class="xref py py-func docutils literal"><span class="pre">mktime()</span></code></a> に渡すと、たいていは正確な夏時間の状態を実現します。</p>
+<p>Note that unlike the C structure, the month value is a range of [1, 12], not
+[0, 11].  A year value will be handled as described under <a class="reference internal" href="#time-y2kissues"><span class="std std-ref">Year 2000
+(Y2K) issues</span></a> above.</p>
+<p>In calls to <a class="reference internal" href="#time.mktime" title="time.mktime"><code class="xref py py-func docutils literal"><span class="pre">mktime()</span></code></a>, <code class="xref py py-attr docutils literal"><span class="pre">tm_isdst</span></code> may be set to 1 when daylight
+savings time is in effect, and 0 when it is not.  A value of -1 indicates
+that this is not known, and will usually result in the correct state being
+filled in.</p>
 <p><a class="reference internal" href="#time.struct_time" title="time.struct_time"><code class="xref py py-class docutils literal"><span class="pre">struct_time</span></code></a> を引数とする関数に正しくない長さの <a class="reference internal" href="#time.struct_time" title="time.struct_time"><code class="xref py py-class docutils literal"><span class="pre">struct_time</span></code></a> や要素の型が正しくない <a class="reference internal" href="#time.struct_time" title="time.struct_time"><code class="xref py py-class docutils literal"><span class="pre">struct_time</span></code></a> を与えた場合には、 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> が送出されます。</p>
 </dd></dl>
 
@@ -517,17 +524,23 @@
 <dl class="function">
 <dt id="time.tzset">
 <code class="descclassname">time.</code><code class="descname">tzset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#time.tzset" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ライブラリで使われている時刻変換規則をリセットします。どのように行われるかは、環境変数 <span class="target" id="index-36"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> で指定されます。</p>
+<dd><p>Reset the time conversion rules used by the library routines. The environment
+variable <span class="target" id="index-10"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> specifies how this is done. It will also set the variables
+<code class="docutils literal"><span class="pre">tzname</span></code> (from the <span class="target" id="index-11"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> environment variable), <code class="docutils literal"><span class="pre">timezone</span></code> (non-DST
+seconds West of UTC), <code class="docutils literal"><span class="pre">altzone</span></code> (DST seconds west of UTC) and <code class="docutils literal"><span class="pre">daylight</span></code>
+(to 0 if this timezone does not have any daylight saving time rules, or to
+nonzero if there is a time, past, present or future when daylight saving time
+applies).</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 <p>利用できる環境: Unix。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p>多くの場合、環境変数 <span class="target" id="index-37"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> を変更すると、 <a class="reference internal" href="#time.tzset" title="time.tzset"><code class="xref py py-func docutils literal"><span class="pre">tzset()</span></code></a> を呼ばない限り <a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> のような関数の出力に影響を及ぼすため、値が信頼できなくなってしまいます。</p>
-<p class="last"><span class="target" id="index-38"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> 環境変数には空白文字を含めてはなりません。</p>
+<p>多くの場合、環境変数 <span class="target" id="index-36"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> を変更すると、 <a class="reference internal" href="#time.tzset" title="time.tzset"><code class="xref py py-func docutils literal"><span class="pre">tzset()</span></code></a> を呼ばない限り <a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> のような関数の出力に影響を及ぼすため、値が信頼できなくなってしまいます。</p>
+<p class="last"><span class="target" id="index-37"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> 環境変数には空白文字を含めてはなりません。</p>
 </div>
-<p>環境変数 <span class="target" id="index-39"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> の標準的な書式は以下の通りです (分かりやすいように空白を入れています):</p>
+<p>環境変数 <span class="target" id="index-38"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> の標準的な書式は以下の通りです (分かりやすいように空白を入れています):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">std</span> <span class="n">offset</span> <span class="p">[</span><span class="n">dst</span> <span class="p">[</span><span class="n">offset</span> <span class="p">[,</span><span class="n">start</span><span class="p">[</span><span class="o">/</span><span class="n">time</span><span class="p">],</span> <span class="n">end</span><span class="p">[</span><span class="o">/</span><span class="n">time</span><span class="p">]]]]</span>
 </pre></div>
 </div>
@@ -565,7 +578,7 @@
 <span class="go">&#39;16:08:12 05/08/03 AEST&#39;</span>
 </pre></div>
 </div>
-<p>多くの Unix システム (*BSD, Linux, Solaris, および Darwin を含む) では、システムの zoneinfo (<em class="manpage">tzfile(5)</em>) データベースを使ったほうが、タイムゾーンごとの規則を指定する上で便利です。これを行うには、必要なタイムゾーンデータファイルへのパスをシステムの &#8216;zoneinfo&#8217; タイムゾーンデータベースからの相対で表した値を環境変数 <span class="target" id="index-40"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> に設定します。システムの &#8216;zoneinfo&#8217; は通常 <code class="file docutils literal"><span class="pre">/usr/share/zoneinfo</span></code> にあります。例えば、 <code class="docutils literal"><span class="pre">'US/Eastern'</span></code> 、 <code class="docutils literal"><span class="pre">'Australia/Melbourne'</span></code> 、 <code class="docutils literal"><span class="pre">'Egypt'</span></code>  ないし <code class="docutils literal"><span class="pre">'Europe/Amsterdam'</span></code> と指定します。</p>
+<p>多くの Unix システム (*BSD, Linux, Solaris, および Darwin を含む) では、システムの zoneinfo (<em class="manpage">tzfile(5)</em>) データベースを使ったほうが、タイムゾーンごとの規則を指定する上で便利です。これを行うには、必要なタイムゾーンデータファイルへのパスをシステムの &#8216;zoneinfo&#8217; タイムゾーンデータベースからの相対で表した値を環境変数 <span class="target" id="index-39"></span><code class="xref std std-envvar docutils literal"><span class="pre">TZ</span></code> に設定します。システムの &#8216;zoneinfo&#8217; は通常 <code class="file docutils literal"><span class="pre">/usr/share/zoneinfo</span></code> にあります。例えば、 <code class="docutils literal"><span class="pre">'US/Eastern'</span></code> 、 <code class="docutils literal"><span class="pre">'Australia/Melbourne'</span></code> 、 <code class="docutils literal"><span class="pre">'Egypt'</span></code>  ないし <code class="docutils literal"><span class="pre">'Europe/Amsterdam'</span></code> と指定します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TZ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;US/Eastern&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">tzset</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">tzname</span>
@@ -596,7 +609,7 @@
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last"><code class="docutils literal"><span class="pre">%Z</span></code> の使用は現在非推奨です。ただし、ここで実現したい時間および分オフセットへの展開を行ってくれる <code class="docutils literal"><span class="pre">%z</span></code> エスケープはすべての ANSI C ライブラリでサポートされているわけではありません。また、1982 年に提出されたオリジナルの <span class="target" id="index-41"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> 標準では西暦の表現を 2 桁とするよう要求している (%Y でなく%y ) ものの、実際には 2000 年になるだいぶ以前から 4 桁の西暦表現に移行しています。その後 <span class="target" id="index-42"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> は撤廃され、4 桁の西暦表現は <span class="target" id="index-43"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1123.html"><strong>RFC 1123</strong></a> で初めて勧告され、<span class="target" id="index-44"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> において義務付けられました。</p>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last"><code class="docutils literal"><span class="pre">%Z</span></code> の使用は現在非推奨です。ただし、ここで実現したい時間および分オフセットへの展開を行ってくれる <code class="docutils literal"><span class="pre">%z</span></code> エスケープはすべての ANSI C ライブラリでサポートされているわけではありません。また、1982 年に提出されたオリジナルの <span class="target" id="index-40"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> 標準では西暦の表現を 2 桁とするよう要求している (%Y でなく%y ) ものの、実際には 2000 年になるだいぶ以前から 4 桁の西暦表現に移行しています。その後 <span class="target" id="index-41"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> は撤廃され、4 桁の西暦表現は <span class="target" id="index-42"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1123.html"><strong>RFC 1123</strong></a> で初めて勧告され、<span class="target" id="index-43"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> において義務付けられました。</p>
 </td></tr>
 </tbody>
 </table>
@@ -617,8 +630,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/time.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/time.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -663,12 +677,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

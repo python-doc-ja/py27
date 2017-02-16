@@ -37,6 +37,7 @@
     <link rel="next" title="26. デバッグとプロファイル" href="debug.html" />
     <link rel="prev" title="25.4. 2to3 - Python 2 から 3 への自動コード変換" href="2to3.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/test.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -191,7 +192,16 @@
 <div class="section" id="running-tests-using-the-command-line-interface">
 <span id="regrtest"></span><h2>25.5.2. コマンドラインインタフェースを利用してテストを実行する<a class="headerlink" href="#running-tests-using-the-command-line-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> はスクリプトとして Python の回帰テストスイートを実行できます。 <a class="reference internal" href="../using/cmdline.html#cmdoption-m"><code class="xref std std-option docutils literal"><span class="pre">-m</span></code></a> オプションを利用して、 <strong class="program">python -m test.regrtest</strong> として実行します。スクリプトを実行すると、自動的に <a class="reference internal" href="#module-test" title="test: Regression tests package containing the testing suite for Python."><code class="xref py py-mod docutils literal"><span class="pre">test</span></code></a> パッケージ内のすべての回帰テストを実行し始めます。パッケージ内の名前が <code class="docutils literal"><span class="pre">test_</span></code> で始まる全モジュールを見つけ、それをインポートし、もしあるなら関数 <code class="xref py py-func docutils literal"><span class="pre">test_main()</span></code> を実行してテストを行います。実行するテストの名前もスクリプトに渡される可能性があります。単一の回帰テストを指定 (<strong class="program">python -m test.regrtest test_spam</strong>) すると、出力を最小限にします。テストが成功したかあるいは失敗したかだけを出力するので、出力は最小限になります。</p>
-<p>直接 <code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> を実行すると、テストに利用するリソースを設定できます。これを行うには、 <code class="docutils literal"><span class="pre">-u</span></code> コマンドラインオプションを使います。 <code class="docutils literal"><span class="pre">-u</span></code> のオプションに <code class="docutils literal"><span class="pre">all</span></code> を指定すると、すべてのリソースを有効にします: <strong class="program">python -m test -uall</strong> 。(よくある場合ですが) 何か一つを除く全てが必要な場合、カンマで区切った不要なリソースのリストを <code class="docutils literal"><span class="pre">all</span></code> の後に並べます。コマンド <strong class="program">python -m test.regrtest -uall,-audio,-largefile</strong> とすると、 <code class="docutils literal"><span class="pre">audio</span></code> と <code class="docutils literal"><span class="pre">largefile</span></code> リソースを除く全てのリソースを使って <code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> を実行します。すべてのリソースのリストと追加のコマンドラインオプションを出力するには、 <strong class="program">python -m test.regrtest -h</strong> を実行してください。</p>
+<p>Running <code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> directly allows what resources are available for
+tests to use to be set. You do this by using the <code class="docutils literal"><span class="pre">-u</span></code> command-line
+option. Specifying <code class="docutils literal"><span class="pre">all</span></code> as the value for the <code class="docutils literal"><span class="pre">-u</span></code> option enables all
+possible resources: <strong class="program">python -m test.regrtest -uall</strong>.
+If all but one resource is desired (a more common case), a
+comma-separated list of resources that are not desired may be listed after
+<code class="docutils literal"><span class="pre">all</span></code>. The command <strong class="program">python -m test.regrtest -uall,-audio,-largefile</strong>
+will run <code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> with all resources except the <code class="docutils literal"><span class="pre">audio</span></code> and
+<code class="docutils literal"><span class="pre">largefile</span></code> resources. For a list of all resources and more command-line
+options, run <strong class="program">python -m test.regrtest -h</strong>.</p>
 <p>テストを実行しようとするプラットフォームによっては、回帰テストを実行する別の方法があります。 Unix では、Python をビルドしたトップレベルディレクトリで <strong class="program">make test</strong> を実行できます。 Windows上では、 <code class="file docutils literal"><span class="pre">PCBuild</span></code> ディレクトリから <strong class="program">rt.bat</strong> を実行すると、すべての回帰テストを実行します。</p>
 </div>
 </div>
@@ -363,7 +373,8 @@
 <p><em>blocked</em> もモジュール名の iterable で、 import 中にモジュールキャッシュ内でその名前を <code class="xref py py-const docutils literal"><span class="pre">0</span></code> に置き換えることで、そのモジュールを import しようとすると <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> を発生させます。</p>
 <p>指定されたモジュールと <em>fresh</em> や <em>blocked</em> 引数内のモジュール名は import 前に保存され、 fresh import が完了したら <code class="docutils literal"><span class="pre">sys.modules</span></code> に戻されます。</p>
 <p><em>deprecated</em> が <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> の場合、 import 中はモジュールとパッケージの廃止メッセージが抑制されます。</p>
-<p>この関数はモジュールを import できなかった場合に <a class="reference internal" href="unittest.html#unittest.SkipTest" title="unittest.SkipTest"><code class="xref py py-exc docutils literal"><span class="pre">unittest.SkipTest</span></code></a> 例外を発生させます。</p>
+<p>This function will raise <a class="reference internal" href="unittest.html#unittest.SkipTest" title="unittest.SkipTest"><code class="xref py py-exc docutils literal"><span class="pre">unittest.SkipTest</span></code></a> if the named module
+cannot be imported.</p>
 <p>使用例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Get copies of the warnings module for testing without</span>
 <span class="c1"># affecting the version being used by the rest of the test suite</span>
@@ -448,8 +459,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/test.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/test.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -494,12 +506,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

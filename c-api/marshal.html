@@ -37,6 +37,7 @@
     <link rel="next" title="引数の解釈と値の構築" href="arg.html" />
     <link rel="prev" title="モジュールのインポート" href="import.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/marshal.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -83,7 +84,11 @@
 <span id="marshalling-utils"></span><h1>データ整列化 (data marshalling) のサポート<a class="headerlink" href="#data-marshalling-support" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>以下のルーチン群は、 <a class="reference internal" href="../library/marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> モジュールと同じ形式を使った整列化オブジェクトを C コードから使えるようにします。整列化形式でデータを書き出す関数に加えて、データを読み戻す関数もあります。整列化されたデータを記録するファイルはバイナリモードで開かれていなければなりません。</p>
 <p>数値は最小桁が先にくるように記録されます。</p>
-<p>このモジュールでは、3つのバージョンのデータ形式をサポートしています。バージョン 0 は従来のもので、(Python 2.4 で新たに追加された) バージョン 1 は intern 化された文字列をファイル内で共有し、逆マーシャル化の時にも共有されるようにします。 (Python 2.5 で新たに追加された) バージョン2は、浮動小数点数に対してバイナリフォーマットを利用します。 <em>PY_MARSHAL_VERSION</em> は現在のバージョン (バージョン 2) を示します。</p>
+<p>The module supports two versions of the data format: version <code class="docutils literal"><span class="pre">0</span></code> is the
+historical version, version <code class="docutils literal"><span class="pre">1</span></code> (new in Python 2.4) shares interned strings in
+the file, and upon unmarshalling.  Version 2 (new in Python 2.5) uses a binary
+format for floating point numbers.  <em>Py_MARSHAL_VERSION</em> indicates the current
+file format (currently 2).</p>
 <dl class="function">
 <dt id="c.PyMarshal_WriteLongToFile">
 void <code class="descname">PyMarshal_WriteLongToFile</code><span class="sig-paren">(</span>long<em>&nbsp;value</em>, FILE<em>&nbsp;*file</em>, int<em>&nbsp;version</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_WriteLongToFile" title="この定義へのパーマリンク">¶</a></dt>
@@ -167,8 +172,9 @@ int <code class="descname">PyMarshal_ReadShortFromFile</code><span class="sig-pa
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/marshal.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/marshal.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -213,12 +219,12 @@ int <code class="descname">PyMarshal_ReadShortFromFile</code><span class="sig-pa
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

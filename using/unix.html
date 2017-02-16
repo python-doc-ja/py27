@@ -37,6 +37,7 @@
     <link rel="next" title="3. Windows で Python を使う" href="windows.html" />
     <link rel="prev" title="1. コマンドラインと環境" href="cmdline.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/using/unix.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -89,13 +90,13 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><a class="reference external" href="http://www.debian.org/doc/manuals/maint-guide/first.ja.html">http://www.debian.org/doc/manuals/maint-guide/first.ja.html</a></dt>
+<dt><a class="reference external" href="https://www.debian.org/doc/manuals/maint-guide/first.en.html">https://www.debian.org/doc/manuals/maint-guide/first.en.html</a></dt>
 <dd><p class="first last">Debian ユーザー向け</p>
 </dd>
-<dt><a class="reference external" href="http://en.opensuse.org/Portal:Packaging">http://en.opensuse.org/Portal:Packaging</a></dt>
+<dt><a class="reference external" href="https://en.opensuse.org/Portal:Packaging">https://en.opensuse.org/Portal:Packaging</a></dt>
 <dd><p class="first last">OpenSuse ユーザー向け</p>
 </dd>
-<dt><a class="reference external" href="http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-creating-rpms.html">http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-creating-rpms.html</a></dt>
+<dt><a class="reference external" href="https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-creating-rpms.html">https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-creating-rpms.html</a></dt>
 <dd><p class="first last">Fedora ユーザー向け</p>
 </dd>
 <dt><a class="reference external" href="http://www.slackbook.org/html/package-management-making-packages.html">http://www.slackbook.org/html/package-management-making-packages.html</a></dt>
@@ -125,19 +126,23 @@
 </div>
 <div class="section" id="on-opensolaris">
 <h3>2.1.3. OpenSolaris<a class="headerlink" href="#on-opensolaris" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><a class="reference external" href="http://www.opencsw.org/">OpenCSW</a> から Python を入手することが出来ます。 Python の様々なバージョンが利用可能でインストールすることが出来ます。e.g. <code class="docutils literal"><span class="pre">pkgutil</span> <span class="pre">-i</span> <span class="pre">python27</span></code>.</p>
+<p>You can get Python from <a class="reference external" href="https://www.opencsw.org/">OpenCSW</a>.  Various versions
+of Python are available and can be installed with e.g. <code class="docutils literal"><span class="pre">pkgutil</span> <span class="pre">-i</span> <span class="pre">python27</span></code>.</p>
 </div>
 </div>
 <div class="section" id="building-python">
 <span id="building-python-on-unix"></span><h2>2.2. Python のビルド<a class="headerlink" href="#building-python" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>CPython を自分でコンパイルしたい場合は、まず <a class="reference external" href="https://www.python.org/download/source/">ソース</a> を入手します。最新リリース版のソースをダウンロード、あるいはソースリポジトリから <a class="reference external" href="https://docs.python.org/devguide/setup.html#getting-the-source-code">クローン</a> を作成してください (パッチの作成に貢献したい場合はクローンが必要になるでしょう)</p>
+<p>If you want to compile CPython yourself, first thing you should do is get the
+<a class="reference external" href="https://www.python.org/downloads/source/">source</a>. You can download either the
+latest release&#8217;s source or just grab a fresh <a class="reference external" href="https://docs.python.org/devguide/setup.html#getting-the-source-code">clone</a>.  (If you want
+to contribute patches, you will need a clone.)</p>
 <p>ビルドは通常次の手順で行います</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>./configure
 make
 make install
 </pre></div>
 </div>
-<p>configure のオプションや特定の Unix プラットフォームにおける注意点は Python ソースツリーのルートにある <a class="reference external" href="https://hg.python.org/cpython/file/2.7/README">README</a> に細かく記載されています。</p>
+<p>configure のオプションや特定の Unix プラットフォームにおける注意点は Python ソースツリーのルートにある <a class="reference external" href="https://github.com/python/cpython/tree/2.7/README">README</a> に細かく記載されています。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
 <p class="last"><code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> は <code class="file docutils literal"><span class="pre">python</span></code> バイナリを上書きまたは覆い隠すかもしれません。そのため、 <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> の代わりに <code class="file docutils literal"><em><span class="pre">exec_prefix</span></em><span class="pre">/bin/python</span><em><span class="pre">version</span></em></code> しかインストールしない <code class="docutils literal"><span class="pre">make</span> <span class="pre">altinstall</span></code> が推奨されます。</p>
@@ -194,15 +199,13 @@ make install
 <p>で、 <span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal"><span class="pre">PATH</span></code> 全体から Python インタプリタを探します。しかし、幾つかの Unix は <strong class="program">env</strong> コマンドをもっていないので、インタプリタのパスを <code class="docutils literal"><span class="pre">/usr/bin/python</span></code> のようにハードコードしなければならないかもしれません。</p>
 <p>シェルコマンドを Python スクリプトから使うには、 <a class="reference internal" href="../library/subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを参照してください。</p>
 </div>
-<div class="section" id="editors">
-<h2>2.5. エディタ<a class="headerlink" href="#editors" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Vim と Emacs は Python をよくサポートした、素晴らしいエディタです。これらのエディタで Python のコードを書く方法についての詳しい情報は、次の場所を参照してください。</p>
-<ul class="simple">
-<li><a class="reference external" href="http://www.vim.org/scripts/script.php?script_id=790">http://www.vim.org/scripts/script.php?script_id=790</a></li>
-<li><a class="reference external" href="http://sourceforge.net/projects/python-mode">http://sourceforge.net/projects/python-mode</a></li>
-</ul>
-<p>Geany は多くの言語をサポートする優れた IDE です。より詳しい情報は <a class="reference external" href="http://www.geany.org/">http://www.geany.org/</a> を参照してください</p>
-<p>Komodo edit も非常に良い IDE です。これもたくさんの言語をサポートしています。より詳しい情報は、<a class="reference external" href="http://komodoide.com/">http://komodoide.com/</a> を参照してください。</p>
+<div class="section" id="editors-and-ides">
+<h2>2.5. Editors and IDEs<a class="headerlink" href="#editors-and-ides" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>There are a number of IDEs that support Python programming language.
+Many editors and IDEs provide syntax highlighting, debugging tools, and PEP-8 checks.</p>
+<p>Please go to <a class="reference external" href="https://wiki.python.org/moin/PythonEditors">Python Editors</a> and
+<a class="reference external" href="https://wiki.python.org/moin/IntegratedDevelopmentEnvironments">Integrated Development Environments</a>
+for a comprehensive list.</p>
 </div>
 </div>
 
@@ -224,7 +227,7 @@ make install
 <li><a class="reference internal" href="#building-python">2.2. Python のビルド</a></li>
 <li><a class="reference internal" href="#python-related-paths-and-files">2.3. Python に関係するパスとファイル</a></li>
 <li><a class="reference internal" href="#miscellaneous">2.4. その他</a></li>
-<li><a class="reference internal" href="#editors">2.5. エディタ</a></li>
+<li><a class="reference internal" href="#editors-and-ides">2.5. Editors and IDEs</a></li>
 </ul>
 </li>
 </ul>
@@ -238,8 +241,9 @@ make install
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/using/unix.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/using/unix.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -283,12 +287,12 @@ make install
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

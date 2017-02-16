@@ -37,6 +37,7 @@
     <link rel="next" title="7.3. struct — 文字列データをパックされたバイナリデータとして解釈する" href="struct.html" />
     <link rel="prev" title="7.1. string — 一般的な文字列操作" href="string.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/re.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -92,6 +93,11 @@
 <p>以下で正規表現の形式に関する簡単な説明をしておきます。より詳細な情報やよりやさしい説明に関しては、 <a class="reference internal" href="../howto/regex.html#regex-howto"><span class="std std-ref">正規表現 HOWTO</span></a> を参照下さい。</p>
 <p>正規表現には、特殊文字と通常文字の両方を含められます。 <code class="docutils literal"><span class="pre">'A'</span></code> 、 <code class="docutils literal"><span class="pre">'a'</span></code> 、あるいは <code class="docutils literal"><span class="pre">'0'</span></code> のようなほとんどの通常文字は最も簡単な正規表現になります。こうした文字は、単純にその文字自体にマッチします。通常の文字は連結できるので、 <code class="docutils literal"><span class="pre">last</span></code> は文字列 <code class="docutils literal"><span class="pre">'last'</span></code> とマッチします。 (この節の以降の説明では、正規表現を引用符を使わずに <code class="docutils literal"><span class="pre">この表示スタイル:</span> <span class="pre">special</span> <span class="pre">style</span></code> で書き、マッチ対象の文字列は、 <code class="docutils literal"><span class="pre">'引用符で括って'</span></code> 書きます。)</p>
 <p><code class="docutils literal"><span class="pre">'|'</span></code> や <code class="docutils literal"><span class="pre">'('</span></code> といったいくつかの文字は特殊文字です。特殊文字は通常の文字の種別を表したり、あるいは特殊文字の周辺にある通常の文字に対する解釈方法に影響します。正規表現パターン文字列には、 null byte を含めることができませんが、 <code class="docutils literal"><span class="pre">\number</span></code> 記法や、 <code class="docutils literal"><span class="pre">'\x00'</span></code> などとして指定することができます。</p>
+<p>Repetition qualifiers (<code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">+</span></code>, <code class="docutils literal"><span class="pre">?</span></code>, <code class="docutils literal"><span class="pre">{m,n}</span></code>, etc) cannot be
+directly nested. This avoids ambiguity with the non-greedy modifier suffix
+<code class="docutils literal"><span class="pre">?</span></code>, and with other modifiers in other implementations. To apply a second
+repetition to an inner repetition, parentheses may be used. For example,
+the expression <code class="docutils literal"><span class="pre">(?:a{6})*</span></code> matches any multiple of six <code class="docutils literal"><span class="pre">'a'</span></code> characters.</p>
 <p>特殊文字を以下に示します:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">'.'</span></code></dt>
@@ -113,8 +119,13 @@
 <dd><p class="first last">直前にある RE に作用して、 RE を 0 回か 1 回繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab?</span></code> は &#8216;a&#8217; あるいは &#8216;ab&#8217; にマッチします。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">*?</span></code>, <code class="docutils literal"><span class="pre">+?</span></code>, <code class="docutils literal"><span class="pre">??</span></code></dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">'*'</span></code> 、 <code class="docutils literal"><span class="pre">'+'</span></code> 、 <code class="docutils literal"><span class="pre">'?'</span></code> といった修飾子は、すべて <em class="dfn">貪欲 (greedy)</em> マッチ、すなわちできるだけ多くのテキストにマッチするようになっています。時にはこの動作が望ましくない場合もあります。例えば正規表現 <code class="docutils literal"><span class="pre">&lt;.*&gt;</span></code> を <code class="docutils literal"><span class="pre">'&lt;H1&gt;title&lt;/H1&gt;'</span></code> にマッチさせると、 <code class="docutils literal"><span class="pre">'&lt;H1&gt;'</span></code> だけにマッチするのではなく全文字列にマッチしてしまいます。 <code class="docutils literal"><span class="pre">'?'</span></code> を修飾子の後に追加すると、 <em class="dfn">非貪欲 (non-greedy)</em> あるいは <em class="dfn">最小一致 (minimal)</em> のマッチになり、できるだけ <em>少ない</em> 文字数のマッチになります。例えば上の式で <code class="docutils literal"><span class="pre">.*?</span></code> を使うと <code class="docutils literal"><span class="pre">'&lt;H1&gt;'</span></code> だけにマッチします。</p>
-</dd>
+<dd>The <code class="docutils literal"><span class="pre">'*'</span></code>, <code class="docutils literal"><span class="pre">'+'</span></code>, and <code class="docutils literal"><span class="pre">'?'</span></code> qualifiers are all <em class="dfn">greedy</em>; they match
+as much text as possible.  Sometimes this behaviour isn&#8217;t desired; if the RE
+<code class="docutils literal"><span class="pre">&lt;.*&gt;</span></code> is matched against <code class="docutils literal"><span class="pre">&lt;a&gt;</span> <span class="pre">b</span> <span class="pre">&lt;c&gt;</span></code>, it will match the entire
+string, and not just <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.  Adding <code class="docutils literal"><span class="pre">?</span></code> after the qualifier makes it
+perform the match in <em class="dfn">non-greedy</em> or <em class="dfn">minimal</em> fashion; as <em>few</em>
+characters as possible will be matched.  Using the RE <code class="docutils literal"><span class="pre">&lt;.*?&gt;</span></code> will match
+only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</dd>
 <dt><code class="docutils literal"><span class="pre">{m}</span></code></dt>
 <dd><p class="first last">前にある RE の <em>m</em> 回の正確なコピーとマッチすべきであることを指定します；マッチ回数が少なければ、RE 全体ではマッチしません。例えば、 <code class="docutils literal"><span class="pre">a{6}</span></code> は、正確に 6個の <code class="docutils literal"><span class="pre">'a'</span></code> 文字とマッチしますが、 5個ではマッチしません。</p>
 </dd>
@@ -863,14 +874,14 @@
 <span id="id2"></span><h3>7.2.5.3. search() vs. match()<a class="headerlink" href="#search-vs-match" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Python は正規表現ベースの 2 個の基本的な関数、文字列の先頭でのみのマッチを確認する <a class="reference internal" href="#re.match" title="re.match"><code class="xref py py-func docutils literal"><span class="pre">re.match()</span></code></a> および、文字列内の位置にかかわらずマッチを確認する <a class="reference internal" href="#re.search" title="re.search"><code class="xref py py-func docutils literal"><span class="pre">re.search()</span></code></a> (Perl でのデフォルトの挙動) を提供しています。</p>
 <p>例えば:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>  <span class="c1"># No match</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span> <span class="c1"># Match</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>    <span class="c1"># No match</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>   <span class="c1"># Match</span>
 <span class="go">&lt;_sre.SRE_Match object at ...&gt;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">'^'</span></code> で始まる正規表現は、 <a class="reference internal" href="#re.search" title="re.search"><code class="xref py py-func docutils literal"><span class="pre">search()</span></code></a> において、マッチを文字列の先頭からに制限するために使用します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>  <span class="c1"># No match</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;^c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span> <span class="c1"># No match</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>    <span class="c1"># No match</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;^c&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>  <span class="c1"># No match</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;^a&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">)</span>  <span class="c1"># Match</span>
 <span class="go">&lt;_sre.SRE_Match object at ...&gt;</span>
 </pre></div>
@@ -925,9 +936,9 @@
 <h3>7.2.5.5. テキストの秘匿<a class="headerlink" href="#text-munging" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> はパターンにマッチした部分を文字列や関数の返り値で置き換えます。この例では、&#8221;秘匿&#8221; する文字列に、関数と共に <a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> を適用する例を示します。言い換えると、最初と最後の文字を除く、単語中の文字の位置をランダム化します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">repl</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-<span class="gp">... </span>  <span class="n">inner_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="gp">... </span>  <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">inner_word</span><span class="p">)</span>
-<span class="gp">... </span>  <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inner_word</span><span class="p">)</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">inner_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">inner_word</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inner_word</span><span class="p">)</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Professor Abdolmalek, please report your absences promptly.&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\w)(\w+)(\w)&quot;</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="go">&#39;Poefsrosr Aealmlobdk, pslaee reorpt your abnseces plmrptoy.&#39;</span>
@@ -1013,8 +1024,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/re.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/re.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1059,12 +1071,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

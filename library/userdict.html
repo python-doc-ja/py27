@@ -37,6 +37,7 @@
     <link rel="next" title="8.15. types — 組み込み型の名前" href="types.html" />
     <link rel="prev" title="8.11. weakref — 弱参照" href="weakref.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/userdict.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,32 +82,46 @@
             
   <div class="section" id="module-UserDict">
 <span id="userdict-class-wrapper-for-dictionary-objects"></span><h1>8.12. <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-mod docutils literal"><span class="pre">UserDict</span></code></a> &#8212; 辞書オブジェクトのためのクラスラッパー<a class="headerlink" href="#module-UserDict" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/UserDict.py">Lib/UserDict.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/UserDict.py">Lib/UserDict.py</a></p>
 <hr class="docutils" />
 <p>このモジュールは最小限のマッピングインターフェイスをすでに持っているクラスのために、すべての辞書メソッドを定義しているmixin、 <a class="reference internal" href="#UserDict.DictMixin" title="UserDict.DictMixin"><code class="xref py py-class docutils literal"><span class="pre">DictMixin</span></code></a> を定義しています。これによって、 (shelveモジュールのような) 辞書の代わりをする必要があるクラスを書くことが非常に簡単になります。</p>
-<p>このモジュールでは <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> クラスも定義しています。これは辞書オブジェクトのラッパーとして動作します。これの必要性については既に <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> を直接的にサブクラス化出来るようになった (Python 2.2 から利用可能な機能です) ことによって大幅に取って代わられています。 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> の導入以前に、 <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> クラスは辞書風のサブクラスをオーバライドや新メソッドの定義によって作成するために使われていました。</p>
-<p><a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-mod docutils literal"><span class="pre">UserDict</span></code></a> モジュールは <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> クラスと <a class="reference internal" href="#UserDict.DictMixin" title="UserDict.DictMixin"><code class="xref py py-class docutils literal"><span class="pre">DictMixin</span></code></a> を定義しています:</p>
+<p>This module also defines a class, <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a>, that acts as a wrapper
+around dictionary objects.  The need for this class has been largely supplanted
+by the ability to subclass directly from <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> (a feature that became
+available starting with Python version 2.2).  Prior to the introduction of
+<a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>, the <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> class was used to create dictionary-like
+sub-classes that obtained new behaviors by overriding existing methods or adding
+new ones.</p>
+<p>The <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-mod docutils literal"><span class="pre">UserDict</span></code></a> module defines the <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> class and
+<a class="reference internal" href="#UserDict.DictMixin" title="UserDict.DictMixin"><code class="xref py py-class docutils literal"><span class="pre">DictMixin</span></code></a>:</p>
 <dl class="class">
 <dt id="UserDict.UserDict">
 <em class="property">class </em><code class="descclassname">UserDict.</code><code class="descname">UserDict</code><span class="sig-paren">(</span><span class="optional">[</span><em>initialdata</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#UserDict.UserDict" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>辞書をシミュレートするクラスです。インスタンスの内容は通常の辞書に保存され、 <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> インスタンスの <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> 属性を通してアクセスできます。 <em>initialdata</em> が与えられれば、 <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> はその内容で初期化されます。他の目的のために使えるように、 <em>initialdata</em> への参照が保存されないことがあるということに注意してください。</p>
+<dd><p>Class that simulates a dictionary.  The instance&#8217;s contents are kept in a
+regular dictionary, which is accessible via the <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> attribute of
+<a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> instances.  If <em>initialdata</em> is provided, <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> is
+initialized with its contents; note that a reference to <em>initialdata</em> will not
+be kept, allowing it be used for other purposes.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">後方互換性のために、 <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> のインスタンスはイテレート可能ではありません。</p>
+<p class="last">For backward compatibility, instances of <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> are not iterable.</p>
 </div>
 </dd></dl>
 
 <dl class="class">
 <dt id="UserDict.IterableUserDict">
 <em class="property">class </em><code class="descclassname">UserDict.</code><code class="descname">IterableUserDict</code><span class="sig-paren">(</span><span class="optional">[</span><em>initialdata</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#UserDict.IterableUserDict" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> のイテレーションをサポートするサブクラス (使用例: <code class="docutils literal"><span class="pre">for</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">myDict</span></code>).</p>
+<dd><p>Subclass of <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> that supports direct iteration (e.g.  <code class="docutils literal"><span class="pre">for</span> <span class="pre">key</span> <span class="pre">in</span>
+<span class="pre">myDict</span></code>).</p>
 </dd></dl>
 
-<p>マッピングのメソッドと演算 (<a class="reference internal" href="stdtypes.html#typesmapping"><span class="std std-ref">マッピング型 &#8212; dict</span></a> を参照) に加えて、 <a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> 、 <a class="reference internal" href="#UserDict.IterableUserDict" title="UserDict.IterableUserDict"><code class="xref py py-class docutils literal"><span class="pre">IterableUserDict</span></code></a> インスタンスは次の属性を提供します:</p>
+<p>In addition to supporting the methods and operations of mappings (see section
+<a class="reference internal" href="stdtypes.html#typesmapping"><span class="std std-ref">マッピング型 &#8212; dict</span></a>), <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> and <a class="reference internal" href="#UserDict.IterableUserDict" title="UserDict.IterableUserDict"><code class="xref py py-class docutils literal"><span class="pre">IterableUserDict</span></code></a> instances
+provide the following attribute:</p>
 <dl class="attribute">
 <dt id="UserDict.IterableUserDict.data">
 <code class="descclassname">IterableUserDict.</code><code class="descname">data</code><a class="headerlink" href="#UserDict.IterableUserDict.data" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-UserDict" title="UserDict: Class wrapper for dictionary objects."><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> クラスの内容を保存するために使われる実際の辞書です。</p>
+<dd><p>A real dictionary used to store the contents of the <a class="reference internal" href="#UserDict.UserDict" title="UserDict.UserDict"><code class="xref py py-class docutils literal"><span class="pre">UserDict</span></code></a> class.</p>
 </dd></dl>
 
 <dl class="class">
@@ -117,6 +132,8 @@
 <p>4 つの基底メソッドに加えて、 <a class="reference internal" href="../reference/datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> 、 <a class="reference internal" href="../reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal"><span class="pre">__iter__()</span></code></a> および <code class="xref py py-meth docutils literal"><span class="pre">iteritems()</span></code> を定義すれば、順次能力を増やしていけます。</p>
 <p>mixin はサブクラスのコンストラクタについて何も知らないので、 <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> や <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-meth docutils literal"><span class="pre">copy()</span></code></a> は定義していません。</p>
 <p>Python 2.6 からは、 <a class="reference internal" href="#UserDict.DictMixin" title="UserDict.DictMixin"><code class="xref py py-class docutils literal"><span class="pre">DictMixin</span></code></a> の代わりに、 <a class="reference internal" href="collections.html#collections.MutableMapping" title="collections.MutableMapping"><code class="xref py py-class docutils literal"><span class="pre">collections.MutableMapping</span></code></a> を利用することが推奨されています。</p>
+<p>Note that DictMixin does not implement the <a class="reference internal" href="stdtypes.html#dict.viewkeys" title="dict.viewkeys"><code class="xref py py-meth docutils literal"><span class="pre">viewkeys()</span></code></a>,
+<a class="reference internal" href="stdtypes.html#dict.viewvalues" title="dict.viewvalues"><code class="xref py py-meth docutils literal"><span class="pre">viewvalues()</span></code></a>, or <a class="reference internal" href="stdtypes.html#dict.viewitems" title="dict.viewitems"><code class="xref py py-meth docutils literal"><span class="pre">viewitems()</span></code></a> methods.</p>
 </dd></dl>
 
 </div>
@@ -126,28 +143,45 @@
 <p class="first admonition-title">注釈</p>
 <p>Python 2.2 がリリースされた際、 <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> から直接的にサブクラス化することがこのクラスの多くのユースケースを包含することとなりました。ですがわずかばかりのユースケースが健在です。</p>
 <p>このモジュールは下層のデータストアを包むリストインターフェイスを提供します。デフォルトではデータストアは <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> ですが、(例えば永続化記憶のような) 他のオブジェクトに対してリストのようなインターフェイスで包むのに使うことが出来ます。</p>
-<p class="last">加えて、このクラスは多重継承を使った、組み込みクラスとの mixin になれます。これは時として有用です。例えば <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> と <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> の両方から同時に継承出来ます。本物の <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> と本物の <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> ではこれは可能ではないところです。</p>
+<p class="last">In addition, this class can be mixed-in with built-in classes using multiple
+inheritance.  This can sometimes be useful.  For example, you can inherit
+from <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> and <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> at the same time.  That would not be
+possible with both a real <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> and a real <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>.</p>
 </div>
 <p>このモジュールはリストオブジェクトのラッパーとして働くクラスを定義します。独自のリストに似たクラスのために役に立つ基底クラスで、これを継承し既存のメソッドをオーバーライドしたり、あるいは、新しいものを追加したりすることができます。このような方法で、リストに新しい振る舞いを追加できます。</p>
-<p><a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-mod docutils literal"><span class="pre">UserList</span></code></a> モジュールは <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> クラスを定義しています:</p>
+<p>The <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-mod docutils literal"><span class="pre">UserList</span></code></a> module defines the <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> class:</p>
 <dl class="class">
 <dt id="UserList.UserList">
 <em class="property">class </em><code class="descclassname">UserList.</code><code class="descname">UserList</code><span class="sig-paren">(</span><span class="optional">[</span><em>list</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#UserList.UserList" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>リストをシミュレートするクラスです。インスタンスの内容は通常のリストに保存され、 <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> インスタンスの <a class="reference internal" href="#UserList.UserList.data" title="UserList.UserList.data"><code class="xref py py-attr docutils literal"><span class="pre">data</span></code></a> 属性を通してアクセスできます。インスタンスの内容は最初に <em>list</em> のコピーに設定されますが、デフォルトでは空リスト <code class="docutils literal"><span class="pre">[]</span></code> です。 <em>list</em> は何らかのイテラブル、例えば通常の Python リストや <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> オブジェクト、です。</p>
+<dd><p>Class that simulates a list.  The instance&#8217;s contents are kept in a regular
+list, which is accessible via the <a class="reference internal" href="#UserList.UserList.data" title="UserList.UserList.data"><code class="xref py py-attr docutils literal"><span class="pre">data</span></code></a> attribute of <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a>
+instances.  The instance&#8217;s contents are initially set to a copy of <em>list</em>,
+defaulting to the empty list <code class="docutils literal"><span class="pre">[]</span></code>.  <em>list</em> can be any iterable, e.g. a
+real Python list or a <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> object.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last"><a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-mod docutils literal"><span class="pre">UserList</span></code></a> モジュールは、Python 3 では <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> に移動しました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールは、自動的にソースコードの import を Python 3 用に修正します。</p>
+<p class="last">The <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> class has been moved to the <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a>
+module in Python 3. The <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> tool will automatically adapt
+imports when converting your sources to Python 3.</p>
 </div>
 </dd></dl>
 
-<p>変更可能シーケンスのメソッドと演算 (<a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> を参照) に加えて、 <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> インスタンスは次の属性を提供します:</p>
+<p>In addition to supporting the methods and operations of mutable sequences (see
+section <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a>), <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> instances provide the following
+attribute:</p>
 <dl class="attribute">
 <dt id="UserList.UserList.data">
 <code class="descclassname">UserList.</code><code class="descname">data</code><a class="headerlink" href="#UserList.UserList.data" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> クラスの内容を保存するために使われる実際の Python リストオブジェクト。</p>
+<dd><p>A real Python list object used to store the contents of the <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a>
+class.</p>
 </dd></dl>
 
-<p><strong>サブクラス化の要件:</strong> <a class="reference internal" href="#module-UserList" title="UserList: Class wrapper for list objects."><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> のサブクラスは引数なしか、あるいは一つの引数のどちらかとともに呼び出せるコンストラクタを提供することが期待されています。新しいシーケンスを返すリスト演算は現在の実装クラスのインスタンスを作成しようとします。そのために、データ元として使われるシーケンスオブジェクトである一つのパラメータとともにコンストラクタを呼び出せると想定しています。</p>
+<p><strong>Subclassing requirements:</strong> Subclasses of <a class="reference internal" href="#UserList.UserList" title="UserList.UserList"><code class="xref py py-class docutils literal"><span class="pre">UserList</span></code></a> are expected to
+offer a constructor which can be called with either no arguments or one
+argument.  List operations which return a new sequence attempt to create an
+instance of the actual implementation class.  To do so, it assumes that the
+constructor can be called with a single parameter, which is a sequence object
+used as a data source.</p>
 <p>派生クラスがこの要求に従いたくないならば、このクラスがサポートしているすべての特殊メソッドはオーバーライドされる必要があります。その場合に提供される必要のあるメソッドについての情報は、ソースを参考にしてください。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.0 で変更: </span>Python バージョン 1.5.2 と 1.6 では、コンストラクタが引数なしで呼び出し可能であることと変更可能な <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> 属性を提供するということも要求されていました。Pythonの初期のバージョンでは、派生クラスのインスタンスを作成しようとはしません。</p>
@@ -157,7 +191,11 @@
 <span id="userstring-class-wrapper-for-string-objects"></span><h1>8.14. <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-mod docutils literal"><span class="pre">UserString</span></code></a> &#8212; 文字列オブジェクトのためのクラスラッパー<a class="headerlink" href="#module-UserString" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">このモジュールの <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> クラスは後方互換性のためだけに残されています。Python 2.2 より前のバージョンの Python で動作する必要のないコードを書いているのならば、 <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> を使う代わりに組み込み <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> 型から直接サブクラス化することを検討してください (組み込みの <a class="reference internal" href="#UserString.MutableString" title="UserString.MutableString"><code class="xref py py-class docutils literal"><span class="pre">MutableString</span></code></a> と等価なものはありません)。</p>
+<p class="last">This <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> class from this module is available for backward
+compatibility only.  If you are writing code that does not need to work with
+versions of Python earlier than Python 2.2, please consider subclassing directly
+from the built-in <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> type instead of using <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> (there
+is no built-in equivalent to <a class="reference internal" href="#UserString.MutableString" title="UserString.MutableString"><code class="xref py py-class docutils literal"><span class="pre">MutableString</span></code></a>).</p>
 </div>
 <p>このモジュールは文字列オブジェクトのラッパーとして働くクラスを定義します。独自の文字列に似たクラスのために役に立つ基底クラスで、これを継承し既存のメソッドをオーバーライドしたり、あるいは、新しいものを追加したりすることができます。このような方法で、文字列に新しい振る舞いを追加できます。</p>
 <p>これらのクラスは本物の文字列や Unicode オブジェクトに比べてとてつもなく非効率であるということに注意すべきです。これは特に <a class="reference internal" href="#UserString.MutableString" title="UserString.MutableString"><code class="xref py py-class docutils literal"><span class="pre">MutableString</span></code></a> に対して当てはまります。</p>
@@ -165,27 +203,44 @@
 <dl class="class">
 <dt id="UserString.UserString">
 <em class="property">class </em><code class="descclassname">UserString.</code><code class="descname">UserString</code><span class="sig-paren">(</span><span class="optional">[</span><em>sequence</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#UserString.UserString" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>文字列または Unicode 文字列オブジェクトをシミュレートするクラスです。インスタンスの内容は通常の文字列または Unicode 文字列オブジェクトに保存され、 <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> インスタンスの <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> 属性を通してアクセスできます。インスタンスの内容は最初に <em>sequence</em> のコピーに設定されます。 <em>sequence</em> は通常の Python 文字列または Unicode 文字列、 <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> (またはサブクラス) のインスタンス、あるいは組み込み <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> 関数を使って文字列に変換できる任意のシーケンスのいずれかです。</p>
+<dd><p>Class that simulates a string or a Unicode string object.  The instance&#8217;s
+content is kept in a regular string or Unicode string object, which is
+accessible via the <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> attribute of <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> instances.  The
+instance&#8217;s contents are initially set to a copy of <em>sequence</em>.  <em>sequence</em> can
+be either a regular Python string or Unicode string, an instance of
+<a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> (or a subclass) or an arbitrary sequence which can be
+converted into a string using the built-in <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> function.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last"><a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-mod docutils literal"><span class="pre">UserString</span></code></a> モジュールは、Python 3 では <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> に移動しました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールは、自動的にソースコードの import を Python 3 用に修正します。</p>
+<p class="last">The <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> class has been moved to the <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a>
+module in Python 3. The <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> tool will automatically adapt
+imports when converting your sources to Python 3.</p>
 </div>
 </dd></dl>
 
 <dl class="class">
 <dt id="UserString.MutableString">
 <em class="property">class </em><code class="descclassname">UserString.</code><code class="descname">MutableString</code><span class="sig-paren">(</span><span class="optional">[</span><em>sequence</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#UserString.MutableString" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このクラスは上の <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> から派生し、 <em>変更可能に</em> なるように文字列を再定義します。変更可能な文字列は辞書のキーとして使うことができません。なぜなら、辞書はキーとして <em>変更不能な</em> オブジェクトを要求するからです。このクラスの主な目的は、辞書のキーとして変更可能なオブジェクトを使うという試みを捕捉するために、継承と <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> メソッドを取り除く (オーバーライドする) 必要があることを示す教育的な例を提供することです。そうしなければ、非常にエラーになりやすく、突き止めることが困難でしょう。</p>
+<dd><p>This class is derived from the <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> above and redefines strings
+to be <em>mutable</em>.  Mutable strings can&#8217;t be used as dictionary keys, because
+dictionaries require <em>immutable</em> objects as keys.  The main intention of this
+class is to serve as an educational example for inheritance and necessity to
+remove (override) the <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> method in order to trap attempts to use a
+mutable object as dictionary key, which would be otherwise very error prone and
+hard to track down.</p>
 <div class="deprecated">
 <p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#UserString.MutableString" title="UserString.MutableString"><code class="xref py py-class docutils literal"><span class="pre">MutableString</span></code></a> クラスは Python 3 で削除されました。</p>
 </div>
 </dd></dl>
 
-<p>文字列と Unicode オブジェクトのメソッドと演算 (<a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a> を参照) に加えて、 <a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> インスタンスは次の属性を提供します:</p>
+<p>In addition to supporting the methods and operations of string and Unicode
+objects (see section <a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a>), <a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> instances
+provide the following attribute:</p>
 <dl class="attribute">
 <dt id="UserString.MutableString.data">
 <code class="descclassname">MutableString.</code><code class="descname">data</code><a class="headerlink" href="#UserString.MutableString.data" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#module-UserString" title="UserString: Class wrapper for string objects."><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> クラスの内容を保存するために使われる実際の Python 文字列または Unicode オブジェクト。</p>
+<dd><p>A real Python string or Unicode object used to store the content of the
+<a class="reference internal" href="#UserString.UserString" title="UserString.UserString"><code class="xref py py-class docutils literal"><span class="pre">UserString</span></code></a> class.</p>
 </dd></dl>
 
 </div>
@@ -212,8 +267,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/userdict.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/userdict.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -258,12 +314,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="6. 単純文 (simple statement)" href="simple_stmts.html" />
     <link rel="prev" title="4. 実行モデル" href="executionmodel.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/reference/expressions.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -148,7 +149,7 @@
 <strong id="grammar-token-list_iter">list_iter          </strong> ::=  <a class="reference internal" href="#grammar-token-list_for"><code class="xref docutils literal"><span class="pre">list_for</span></code></a> | <a class="reference internal" href="#grammar-token-list_if"><code class="xref docutils literal"><span class="pre">list_if</span></code></a>
 <strong id="grammar-token-list_if">list_if            </strong> ::=  &quot;if&quot; <a class="reference internal" href="#grammar-token-old_expression"><code class="xref docutils literal"><span class="pre">old_expression</span></code></a> [<a class="reference internal" href="#grammar-token-list_iter"><code class="xref docutils literal"><span class="pre">list_iter</span></code></a>]
 </pre>
-<p id="index-14">リスト表現は、新に作成されたリストオブジェクトを表します。新たなリストの内容は、式のリストを与えるか、リストの内包表記 (list comprehension) で指定します。カンマで区切られた式のリストを与えた場合、リストの各要素は左から右へと順に評価され、評価された順番にリスト内に配置されます。リストの内包表記を与える場合、内包表記はまず単一の式、続いて少なくとも一つの <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 節、続いてゼロ個以上の <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 節か <a class="reference internal" href="compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節になります。この場合、新たに作成されるリストの各要素は、各々の <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> や <a class="reference internal" href="compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節を左から右の順にネストしたブロックとみなして実行し、ネストの最内ブロックに到達する度に式を評価した値となります。 <a class="footnote-reference" href="#id20" id="id3">[1]</a></p>
+<p id="index-14">リスト表現は、新に作成されたリストオブジェクトを表します。新たなリストの内容は、式のリストを与えるか、リストの内包表記 (list comprehension) で指定します。カンマで区切られた式のリストを与えた場合、リストの各要素は左から右へと順に評価され、評価された順番にリスト内に配置されます。リストの内包表記を与える場合、内包表記はまず単一の式、続いて少なくとも一つの <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 節、続いてゼロ個以上の <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 節か <a class="reference internal" href="compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節になります。この場合、新たに作成されるリストの各要素は、各々の <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> や <a class="reference internal" href="compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節を左から右の順にネストしたブロックとみなして実行し、ネストの最内ブロックに到達する度に式を評価した値となります。 <a class="footnote-reference" href="#id19" id="id3">[1]</a></p>
 </div>
 <div class="section" id="displays-for-sets-and-dictionaries">
 <span id="comprehensions"></span><h3>5.2.5. 集合と辞書の表現<a class="headerlink" href="#displays-for-sets-and-dictionaries" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -283,7 +284,7 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-27"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 0342</strong></a> - Coroutines via Enhanced Generators</dt>
+<dt><span class="target" id="index-27"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> - Coroutines via Enhanced Generators</dt>
 <dd><p class="first last">シンプルなコルーチンとして利用できるように、ジェネレータの構文と API を拡張する提案です。</p>
 </dd>
 </dl>
@@ -365,7 +366,7 @@
 <p id="index-40">関数呼び出しの際に構文 <code class="docutils literal"><span class="pre">*expression</span></code> が使われるなら、 <code class="docutils literal"><span class="pre">expression</span></code> の評価はシーケンスでなくてはなりません。このシーケンスの要素は、追加の固定引数のように扱われます; すなわち、固定引数 <em>x1</em> ,..., <em>xN</em> があり、 <code class="docutils literal"><span class="pre">expression</span></code> の評価がシーケンス <em>y1</em> ,..., <em>yM</em> であるなら、M+N 個の固定引数 <em>x1</em> ,..., <em>xN</em> , <em>y1</em> ,..., <em>yM</em> を使った呼び出しと同じになります。</p>
 <p><code class="docutils literal"><span class="pre">*expression</span></code> 構文はキーワード引数の <em>後ろ</em> で指定しても良いですが、キーワード引数よりも <em>前</em> で指定されたものとして処理されます (<code class="docutils literal"><span class="pre">**expression</span></code> 引数を指定したときの振る舞いは以下を参照)。従って、このようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="gp">... </span> <span class="nb">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
 <span class="go">2 1</span>
@@ -433,8 +434,8 @@
 </pre>
 <p id="index-53"><code class="docutils literal"><span class="pre">*</span></code> (乗算: multiplication) 演算は、引数間の積になります。引数の組は、双方ともに数値型であるか、片方が整数 (通常の整数または長整数) 型で他方がシーケンス型かのどちらかでなければなりません。前者の場合、数値は共通の型に変換された後乗算されます。後者の場合、シーケンスの繰り返し操作が行われます。繰り返し数を負にすると、空のシーケンスになります。</p>
 <p id="index-54"><code class="docutils literal"><span class="pre">/</span></code> (除算: division) および <code class="docutils literal"><span class="pre">//</span></code> (切り捨て除算: floor division) は、引数間の商になります。数値引数はまず共通の型に変換されます。整数または長整数の除算結果は、同じ型の整数になります; この場合、結果は数学的な除算に関数 &#8216;floor&#8217; を適用したものになります。ゼロによる除算を行うと <a class="reference internal" href="../library/exceptions.html#exceptions.ZeroDivisionError" title="exceptions.ZeroDivisionError"><code class="xref py py-exc docutils literal"><span class="pre">ZeroDivisionError</span></code></a> 例外を送出します。</p>
-<p id="index-55"><code class="docutils literal"><span class="pre">%</span></code> (モジュロ: modulo) 演算は、第一引数を第二引数で除算したときの剰余になります。数値引数はまず共通の型に変換されます。右引数値がゼロの場合には <a class="reference internal" href="../library/exceptions.html#exceptions.ZeroDivisionError" title="exceptions.ZeroDivisionError"><code class="xref py py-exc docutils literal"><span class="pre">ZeroDivisionError</span></code></a> 例外が送出されます。引数値は浮動小数点でもよく。例えば <code class="docutils literal"><span class="pre">3.14%0.7</span></code> は <code class="docutils literal"><span class="pre">0.34</span></code> になります (<code class="docutils literal"><span class="pre">3.14</span></code> は <code class="docutils literal"><span class="pre">4*0.7</span> <span class="pre">+</span> <span class="pre">0.34</span></code> だからです)。モジュロ演算子は常に第二引数と同じ符号 (またはゼロ) の結果になります; モジュロ演算の結果の絶対値は、常に第二引数の絶対値よりも小さくなります。 <a class="footnote-reference" href="#id21" id="id10">[2]</a></p>
-<p>整数による除算演算やモジュロ演算は、恒等式: <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">(x/y)*y</span> <span class="pre">+</span> <span class="pre">(x%y)</span></code> と関係しています。整数除算やモジュロはまた、組み込み関数 <a class="reference internal" href="../library/functions.html#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a>: <code class="docutils literal"><span class="pre">divmod(x,</span> <span class="pre">y)</span> <span class="pre">==</span> <span class="pre">(x/y,</span> <span class="pre">x%y)</span></code> と関係しています。これらの恒等関係は浮動小数点の場合には維持されません; <code class="docutils literal"><span class="pre">x/y</span></code> が <code class="docutils literal"><span class="pre">floor(x/y)</span></code> や <code class="docutils literal"><span class="pre">floor(x/y)</span> <span class="pre">-</span> <span class="pre">1</span></code> に置き換えられた場合、これらの恒等式は近似性を維持します。 <a class="footnote-reference" href="#id22" id="id11">[3]</a></p>
+<p id="index-55"><code class="docutils literal"><span class="pre">%</span></code> (モジュロ: modulo) 演算は、第一引数を第二引数で除算したときの剰余になります。数値引数はまず共通の型に変換されます。右引数値がゼロの場合には <a class="reference internal" href="../library/exceptions.html#exceptions.ZeroDivisionError" title="exceptions.ZeroDivisionError"><code class="xref py py-exc docutils literal"><span class="pre">ZeroDivisionError</span></code></a> 例外が送出されます。引数値は浮動小数点でもよく。例えば <code class="docutils literal"><span class="pre">3.14%0.7</span></code> は <code class="docutils literal"><span class="pre">0.34</span></code> になります (<code class="docutils literal"><span class="pre">3.14</span></code> は <code class="docutils literal"><span class="pre">4*0.7</span> <span class="pre">+</span> <span class="pre">0.34</span></code> だからです)。モジュロ演算子は常に第二引数と同じ符号 (またはゼロ) の結果になります; モジュロ演算の結果の絶対値は、常に第二引数の絶対値よりも小さくなります。 <a class="footnote-reference" href="#id20" id="id10">[2]</a></p>
+<p>整数による除算演算やモジュロ演算は、恒等式: <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">(x/y)*y</span> <span class="pre">+</span> <span class="pre">(x%y)</span></code> と関係しています。整数除算やモジュロはまた、組み込み関数 <a class="reference internal" href="../library/functions.html#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a>: <code class="docutils literal"><span class="pre">divmod(x,</span> <span class="pre">y)</span> <span class="pre">==</span> <span class="pre">(x/y,</span> <span class="pre">x%y)</span></code> と関係しています。これらの恒等関係は浮動小数点の場合には維持されません; <code class="docutils literal"><span class="pre">x/y</span></code> が <code class="docutils literal"><span class="pre">floor(x/y)</span></code> や <code class="docutils literal"><span class="pre">floor(x/y)</span> <span class="pre">-</span> <span class="pre">1</span></code> に置き換えられた場合、これらの恒等式は近似性を維持します。 <a class="footnote-reference" href="#id21" id="id11">[3]</a></p>
 <p>数値に対するモジュロ演算の実行に加えて <code class="docutils literal"><span class="pre">%</span></code> 演算子は文字列 (string) とユニコードオブジェクトにオーバーロードされ、文字列の書式化 (文字列の挿入としても知られる) を行います。文字列の書式化の構文は Python ライブラリリファレンス <a class="reference internal" href="../library/stdtypes.html#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> 節を参照してください。</p>
 <div class="deprecated">
 <p><span class="versionmodified">バージョン 2.3 で撤廃: </span>切り捨て除算演算子、モジュロ演算子、および <a class="reference internal" href="../library/functions.html#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a> 関数は、複素数に対してはもはや定義されていません。目的に合うならば、代わりに <a class="reference internal" href="../library/functions.html#abs" title="abs"><code class="xref py py-func docutils literal"><span class="pre">abs()</span></code></a> を使って浮動小数点に変換してください。</p>
@@ -467,8 +468,8 @@
 <p id="index-62"><code class="docutils literal"><span class="pre">^</span></code> 演算子は、引数間でビット単位の XOR (排他的 OR) をとった値になります。引数は整数または長整数でなければなりません。引数は共通の型に変換されます。</p>
 <p id="index-63"><code class="docutils literal"><span class="pre">|</span></code> 演算子は、引数間でビット単位の OR (非排他的 OR) をとった値になります。引数は整数または長整数でなければなりません。引数は共通の型に変換されます。</p>
 </div>
-<div class="section" id="not-in">
-<span id="in"></span><span id="is-not"></span><span id="is"></span><span id="comparisons"></span><span id="id12"></span><h2>5.9. 比較<a class="headerlink" href="#not-in" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="comparisons">
+<span id="id12"></span><h2>5.9. 比較<a class="headerlink" href="#comparisons" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <span class="target" id="index-64"></span><p id="index-65">C 言語と違って、Python における比較演算子は同じ優先順位をもっており、全ての算術演算子、シフト演算子、ビット単位演算子よりも低くなっています。また <code class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> が数学で伝統的に用いられているのと同じ解釈になる点も C 言語と違います:</p>
 <pre>
 <strong id="grammar-token-comparison">comparison   </strong> ::=  <a class="reference internal" href="#grammar-token-or_expr"><code class="xref docutils literal"><span class="pre">or_expr</span></code></a> ( <a class="reference internal" href="#grammar-token-comp_operator"><code class="xref docutils literal"><span class="pre">comp_operator</span></code></a> <a class="reference internal" href="#grammar-token-or_expr"><code class="xref docutils literal"><span class="pre">or_expr</span></code></a> )*
@@ -480,24 +481,136 @@
 <p>形式的には、 <em>a</em>, <em>b</em>, <em>c</em>, ..., <em>y</em>, <em>z</em> が式で <em>op1</em>, <em>op2</em>, ..., <em>opN</em> が比較演算子である場合、 <code class="docutils literal"><span class="pre">a</span> <span class="pre">op1</span> <span class="pre">b</span> <span class="pre">op2</span> <span class="pre">c</span> <span class="pre">...</span> <span class="pre">y</span> <span class="pre">opN</span> <span class="pre">z</span></code> は <code class="docutils literal"><span class="pre">a</span> <span class="pre">op1</span> <span class="pre">b</span> <span class="pre">and</span> <span class="pre">b</span> <span class="pre">op2</span> <span class="pre">c</span> <span class="pre">and</span> <span class="pre">...</span> <span class="pre">y</span> <span class="pre">opN</span> <span class="pre">z</span></code> と等価になります。ただし、前者では各式は多くても一度しか評価されません。</p>
 <p><code class="docutils literal"><span class="pre">a</span> <span class="pre">op1</span> <span class="pre">b</span> <span class="pre">op2</span> <span class="pre">c</span></code> と書いた場合、 <em>a</em> から <em>c</em> までの範囲にあるかどうかのテストを指すのではないことに注意してください。例えば <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span> <span class="pre">&gt;</span> <span class="pre">z</span></code> は (きれいな書き方ではありませんが) 完全に正しい文法です。</p>
 <p><code class="docutils literal"><span class="pre">&lt;&gt;</span></code> と <code class="docutils literal"><span class="pre">!=</span></code> の二つの形式は等価です; C との整合性を持たせるためには <code class="docutils literal"><span class="pre">!=</span></code> を推奨します; 以下で <code class="docutils literal"><span class="pre">!=</span></code> について触れている部分では <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> を使うこともできます。 <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> のような書き方は、現在では古い書き方とみなされています。</p>
-<p>演算子 <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">==</span></code>, <code class="docutils literal"><span class="pre">&gt;=</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, および <code class="docutils literal"><span class="pre">!=</span></code> は、二つのオブジェクト間の値を比較します。オブジェクトは同じ型である必要はありません。双方のオブジェクトが数値であれば、共通型への変換が行われます。それ以外の場合、異なる型のオブジェクトは <em>常に</em> 不等であるとみなされ、一貫してはいるが規定されていない方法で並べられます。組み込み型でないオブジェクト比較の振る舞いは <code class="docutils literal"><span class="pre">__cmp__</span></code> メソッドや <code class="docutils literal"><span class="pre">__gt__</span></code> といったリッチな比較メソッドを定義することでコントロールすることができます。これは <a class="reference internal" href="datamodel.html#specialnames"><span class="std std-ref">特殊メソッド名</span></a> セクションで説明されています。</p>
+<div class="section" id="value-comparisons">
+<h3>5.9.1. Value comparisons<a class="headerlink" href="#value-comparisons" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>The operators <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">==</span></code>, <code class="docutils literal"><span class="pre">&gt;=</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, and <code class="docutils literal"><span class="pre">!=</span></code> compare the
+values of two objects.  The objects do not need to have the same type.</p>
+<p>Chapter <a class="reference internal" href="datamodel.html#objects"><span class="std std-ref">オブジェクト、値、および型</span></a> states that objects have a value (in addition to type
+and identity).  The value of an object is a rather abstract notion in Python:
+For example, there is no canonical access method for an object&#8217;s value.  Also,
+there is no requirement that the value of an object should be constructed in a
+particular way, e.g. comprised of all its data attributes. Comparison operators
+implement a particular notion of what the value of an object is.  One can think
+of them as defining the value of an object indirectly, by means of their
+comparison implementation.</p>
+<p>Types can customize their comparison behavior by implementing
+a <a class="reference internal" href="datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> method or
+<em class="dfn">rich comparison methods</em> like <a class="reference internal" href="datamodel.html#object.__lt__" title="object.__lt__"><code class="xref py py-meth docutils literal"><span class="pre">__lt__()</span></code></a>, described in
+<a class="reference internal" href="datamodel.html#customization"><span class="std std-ref">基本的なカスタマイズ</span></a>.</p>
+<p>The default behavior for equality comparison (<code class="docutils literal"><span class="pre">==</span></code> and <code class="docutils literal"><span class="pre">!=</span></code>) is based on
+the identity of the objects.  Hence, equality comparison of instances with the
+same identity results in equality, and equality comparison of instances with
+different identities results in inequality.  A motivation for this default
+behavior is the desire that all objects should be reflexive (i.e. <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y</span></code>
+implies <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code>).</p>
+<p>The default order comparison (<code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, and <code class="docutils literal"><span class="pre">&gt;=</span></code>) gives a
+consistent but arbitrary order.</p>
 <p>(このような比較演算の変則的な定義は、ソートのような操作や <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> および <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> といった演算子の定義を単純化するためのものです。将来、異なる型のオブジェクト間における比較規則は変更されるかもしれません。)</p>
-<p>同じ型のオブジェクト間における比較は、型によって異なります:</p>
+<p>The behavior of the default equality comparison, that instances with different
+identities are always unequal, may be in contrast to what types will need that
+have a sensible definition of object value and value-based equality.  Such
+types will need to customize their comparison behavior, and in fact, a number
+of built-in types have done that.</p>
+<p>The following list describes the comparison behavior of the most important
+built-in types.</p>
 <ul>
-<li><p class="first">数値間の比較では、算術的な比較が行われます。</p>
+<li><p class="first">Numbers of built-in numeric types (<a class="reference internal" href="../library/stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a>) and of the standard
+library types <a class="reference internal" href="../library/fractions.html#fractions.Fraction" title="fractions.Fraction"><code class="xref py py-class docutils literal"><span class="pre">fractions.Fraction</span></code></a> and <a class="reference internal" href="../library/decimal.html#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">decimal.Decimal</span></code></a> can be
+compared within and across their types, with the restriction that complex
+numbers do not support order comparison.  Within the limits of the types
+involved, they compare mathematically (algorithmically) correct without loss
+of precision.</p>
 </li>
-<li><p class="first">文字列間の比較では、各文字に対する等価な数値型 (組み込み関数 <a class="reference internal" href="../library/functions.html#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a> の結果) を使って辞書的な (lexicographically) 比較が行われます。Unicode および 8 ビット文字列は、この動作に関しては完全に互換です。 <a class="footnote-reference" href="#id23" id="id13">[4]</a></p>
+<li><p class="first">Strings (instances of <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>)
+compare lexicographically using the numeric equivalents (the
+result of the built-in function <a class="reference internal" href="../library/functions.html#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a>) of their characters. <a class="footnote-reference" href="#id22" id="id13">[4]</a>
+When comparing an 8-bit string and a Unicode string, the 8-bit string
+is converted to Unicode.  If the conversion fails, the strings
+are considered unequal.</p>
 </li>
-<li><p class="first">タプルやリスト間の比較では、対応する各要素の比較結果を使って辞書的な比較が行われます。このため、二つのシーケンスを等価にするためには、各要素が完全に等価でなくてはならず、シーケンスは同じ型で同じ長さをもっていなければなりません。</p>
-<p>二つのシーケンスが等価でない場合、異なる値を持つ最初の要素間での比較に従った順序関係になります。例えば <code class="docutils literal"><span class="pre">cmp([1,2,x],</span> <span class="pre">[1,2,y])</span></code> は <code class="docutils literal"><span class="pre">cmp(x,y)</span></code> と等しい結果を返します。片方の要素に対応する要素が他方にない場合、より短いシーケンスが前に並びます (例えば、 <code class="docutils literal"><span class="pre">[1,2]</span> <span class="pre">&lt;</span> <span class="pre">[1,2,3]</span></code> となります)。</p>
+<li><p class="first">Instances of <a class="reference internal" href="../library/functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> or <a class="reference internal" href="../library/functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> can be compared only
+within each of their types.  Equality comparison across these types
+results in unequality, and ordering comparison across these types
+gives an arbitrary order.</p>
+<p>These sequences compare lexicographically using comparison of corresponding
+elements, whereby reflexivity of the elements is enforced.</p>
+<p>In enforcing reflexivity of elements, the comparison of collections assumes
+that for a collection element <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">x</span></code> is always true.  Based on
+that assumption, element identity is compared first, and element comparison
+is performed only for distinct elements.  This approach yields the same
+result as a strict element comparison would, if the compared elements are
+reflexive.  For non-reflexive elements, the result is different than for
+strict element comparison.</p>
+<p>Lexicographical comparison between built-in collections works as follows:</p>
+<ul class="simple">
+<li>For two collections to compare equal, they must be of the same type, have
+the same length, and each pair of corresponding elements must compare
+equal (for example, <code class="docutils literal"><span class="pre">[1,2]</span> <span class="pre">==</span> <span class="pre">(1,2)</span></code> is false because the type is not the
+same).</li>
+<li>Collections are ordered the same as their
+first unequal elements (for example, <code class="docutils literal"><span class="pre">cmp([1,2,x],</span> <span class="pre">[1,2,y])</span></code> returns the
+same as <code class="docutils literal"><span class="pre">cmp(x,y)</span></code>).  If a corresponding element does not exist, the
+shorter collection is ordered first (for example, <code class="docutils literal"><span class="pre">[1,2]</span> <span class="pre">&lt;</span> <span class="pre">[1,2,3]</span></code> is
+true).</li>
+</ul>
 </li>
-<li><p class="first">マップ (辞書) 間の比較では、(key, value) からなるリストをソートしたものが等しい場合に等価になります。 <a class="footnote-reference" href="#id24" id="id14">[5]</a> 等価性評価以外の結果は一貫したやりかたで解決されるか、定義されないかのいずれかです。 <a class="footnote-reference" href="#id25" id="id15">[6]</a></p>
+<li><p class="first">Mappings (instances of <a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) compare equal if and only if they have
+equal <cite>(key, value)</cite> pairs. Equality comparison of the keys and elements
+enforces reflexivity.</p>
+<p>Outcomes other than equality are resolved
+consistently, but are not otherwise defined. <a class="footnote-reference" href="#id23" id="id14">[5]</a></p>
 </li>
 <li><p class="first">その他のほとんどの組み込み型のオブジェクト比較では、同じオブジェクトでないかぎり等価にはなりません; あるオブジェクトの他のオブジェクトに対する大小関係は任意に決定され、一つのプログラムの実行中は一貫したものとなります。</p>
 </li>
 </ul>
-<p id="membership-test-details">演算子 <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> および <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> は、コレクション型の要素であるかどうか (メンバシップ、membership) を調べます。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> は、 <em>x</em> がコレクション型 <em>s</em> のメンバである場合には真となり、それ以外の場合には偽となります。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">s</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> の否定 (negation) を返します。コレクション型のメンバシップテストは、伝統的にはシーケンス型に限定されてきました; すなわち、あるオブジェクトがコレクション型のメンバとなるのは、そのコレクション型がシーケンスであり、シーケンスがオブジェクトと等価な要素を含む場合でした。しかし、他の多くのオブジェクトのためにシーケンスでなくてもメンバシップテストをサポートしています。特に、辞書型では、(キーのための)メンバシップテストをサポートしています。</p>
-<p>リストやタプル型について <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> となるようなインデクス <em>i</em> が存在するとき、かつそのときに限り真になります。</p>
+<p>User-defined classes that customize their comparison behavior should follow
+some consistency rules, if possible:</p>
+<ul>
+<li><p class="first">Equality comparison should be reflexive.
+In other words, identical objects should compare equal:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y</span></code> implies <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">Comparison should be symmetric.
+In other words, the following expressions should have the same result:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">y</span> <span class="pre">==</span> <span class="pre">x</span></code></p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">y</span> <span class="pre">!=</span> <span class="pre">x</span></code></p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">y</span> <span class="pre">&gt;</span> <span class="pre">x</span></code></p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">x</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">Comparison should be transitive.
+The following (non-exhaustive) examples illustrate that:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span> <span class="pre">and</span> <span class="pre">y</span> <span class="pre">&gt;</span> <span class="pre">z</span></code> implies <code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">z</span></code></p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span> <span class="pre">and</span> <span class="pre">y</span> <span class="pre">&lt;=</span> <span class="pre">z</span></code> implies <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">z</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">Inverse comparison should result in the boolean negation.
+In other words, the following expressions should have the same result:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">not</span> <span class="pre">x</span> <span class="pre">!=</span> <span class="pre">y</span></code></p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">not</span> <span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">y</span></code> (for total ordering)</p>
+<p><code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">not</span> <span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">y</span></code> (for total ordering)</p>
+</div></blockquote>
+<p>The last two expressions apply to totally ordered collections (e.g. to
+sequences, but not to sets or mappings). See also the
+<a class="reference internal" href="../library/functools.html#functools.total_ordering" title="functools.total_ordering"><code class="xref py py-func docutils literal"><span class="pre">total_ordering()</span></code></a> decorator.</p>
+</li>
+<li><p class="first">The <a class="reference internal" href="../library/functions.html#hash" title="hash"><code class="xref py py-func docutils literal"><span class="pre">hash()</span></code></a> result should be consistent with equality.
+Objects that are equal should either have the same hash value,
+or be marked as unhashable.</p>
+</li>
+</ul>
+<p>Python does not enforce these consistency rules.</p>
+</div>
+<div class="section" id="membership-test-operations">
+<span id="membership-test-details"></span><span id="not-in"></span><span id="in"></span><h3>5.9.2. Membership test operations<a class="headerlink" href="#membership-test-operations" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>演算子 <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> および <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> は、コレクション型の要素であるかどうか (メンバシップ、membership) を調べます。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> は、 <em>x</em> がコレクション型 <em>s</em> のメンバである場合には真となり、それ以外の場合には偽となります。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">s</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> の否定 (negation) を返します。コレクション型のメンバシップテストは、伝統的にはシーケンス型に限定されてきました; すなわち、あるオブジェクトがコレクション型のメンバとなるのは、そのコレクション型がシーケンスであり、シーケンスがオブジェクトと等価な要素を含む場合でした。しかし、他の多くのオブジェクトのためにシーケンスでなくてもメンバシップテストをサポートしています。特に、辞書型では、(キーのための)メンバシップテストをサポートしています。</p>
+<p>For the list and tuple types, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> is true if and only if there exists an
+index <em>i</em> such that either <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y[i]</span></code> or <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> is true.</p>
 <p>Unicode 文字列または文字列型については、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <em>x</em> が <em>y</em> の部分文字列であるとき、かつそのときに限り真になります。この演算と等価なテストは <code class="docutils literal"><span class="pre">y.find(x)</span> <span class="pre">!=</span> <span class="pre">-1</span></code> です。 <em>x</em> および <em>y</em> は同じ型である必要はないので注意してください。すなわち <code class="docutils literal"><span class="pre">u'ab'</span> <span class="pre">in</span> <span class="pre">'abc'</span></code> は <code class="docutils literal"><span class="pre">True</span></code> を返すことになります。空文字列は、他のどんな文字列に対しても常に部分文字列とみなされます。従って <code class="docutils literal"><span class="pre">&quot;&quot;</span> <span class="pre">in</span> <span class="pre">&quot;abc&quot;</span></code> は <code class="docutils literal"><span class="pre">True</span></code> を返すことになります。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.3 で変更: </span>以前は、 <em>x</em> は長さ <code class="docutils literal"><span class="pre">1</span></code> の文字列型でなければなりませんでした.</p>
@@ -506,7 +619,11 @@
 <p><a class="reference internal" href="datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> を定義していないが <a class="reference internal" href="datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal"><span class="pre">__iter__()</span></code></a> は定義しているユーザ定義クラスでは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">z</span></code> となるようなある値 <code class="docutils literal"><span class="pre">z</span></code> が <code class="docutils literal"><span class="pre">y</span></code> 内にわたる反復で生成された場合、 true となります。もし、反復の間に例外が発生すれば、 <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> が例外を発生させたようにみえます。</p>
 <p>最終的には、旧式の反復プロトコルの実行を試みます、もし <a class="reference internal" href="datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a> を定義しているようなユーザ定義クラスでは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> となるような非負の整数インデクス <em>i</em> が存在するとき、かつそのときにかぎり真となります。インデクス <em>i</em> が負である場合に <a class="reference internal" href="../library/exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a> 例外が送出されることはありません。 (別の何らかの例外が送出された場合、例外は <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> から送出されたかのようになります)。</p>
 <p id="index-67">演算子 <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> は <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> の真値を反転した値として定義されています。</p>
-<p id="index-68">演算子 <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> および <a class="reference internal" href="#is-not"><code class="xref std std-keyword docutils literal"><span class="pre">is</span> <span class="pre">not</span></code></a> は、オブジェクトのアイデンティティに対するテストを行います: <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y</span></code> は、 <em>x</em> と <em>y</em> が同じオブジェクトを指すとき、かつそのときに限り真になります。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">y</span></code> は <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> の真値を反転したものになります。 <a class="footnote-reference" href="#id26" id="id16">[7]</a></p>
+</div>
+<div class="section" id="is-not">
+<span id="is"></span><span id="index-68"></span><span id="identity-comparisons"></span><h3>5.9.3. Identity comparisons<a class="headerlink" href="#is-not" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>演算子 <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> および <a class="reference internal" href="#is-not"><code class="xref std std-keyword docutils literal"><span class="pre">is</span> <span class="pre">not</span></code></a> は、オブジェクトのアイデンティティに対するテストを行います: <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y</span></code> は、 <em>x</em> と <em>y</em> が同じオブジェクトを指すとき、かつそのときに限り真になります。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">y</span></code> は <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> の真値を反転したものになります。 <a class="footnote-reference" href="#id24" id="id15">[6]</a></p>
+</div>
 </div>
 <div class="section" id="boolean-operations">
 <span id="not"></span><span id="or"></span><span id="and"></span><span id="booleans"></span><h2>5.10. ブール演算 (boolean operation)<a class="headerlink" href="#boolean-operations" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -535,7 +652,7 @@
 <p>条件演算に関してより詳しくは <span class="target" id="index-82"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0308"><strong>PEP 308</strong></a> を参照してください。</p>
 </div>
 <div class="section" id="lambda">
-<span id="lambdas"></span><span id="id17"></span><h2>5.12. ラムダ (lambda)<a class="headerlink" href="#lambda" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="lambdas"></span><span id="id16"></span><h2>5.12. ラムダ (lambda)<a class="headerlink" href="#lambda" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <pre id="index-75">
 <strong id="grammar-token-lambda_expr">lambda_expr    </strong> ::=  &quot;lambda&quot; [<a class="reference internal" href="compound_stmts.html#grammar-token-parameter_list"><code class="xref docutils literal"><span class="pre">parameter_list</span></code></a>]: <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal"><span class="pre">expression</span></code></a>
 <strong id="grammar-token-old_lambda_expr">old_lambda_expr</strong> ::=  &quot;lambda&quot; [<a class="reference internal" href="compound_stmts.html#grammar-token-parameter_list"><code class="xref docutils literal"><span class="pre">parameter_list</span></code></a>]: <a class="reference internal" href="#grammar-token-old_expression"><code class="xref docutils literal"><span class="pre">old_expression</span></code></a>
@@ -631,7 +748,7 @@
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">/</span></code>, <code class="docutils literal"><span class="pre">//</span></code>, <code class="docutils literal"><span class="pre">%</span></code></td>
-<td><p class="first last">乗算、除算、剰余 <a class="footnote-reference" href="#id27" id="id18">[8]</a></p>
+<td><p class="first last">乗算、除算、剰余 <a class="footnote-reference" href="#id25" id="id17">[7]</a></p>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">+x</span></code>, <code class="docutils literal"><span class="pre">-x</span></code>, <code class="docutils literal"><span class="pre">~x</span></code></td>
@@ -639,7 +756,7 @@
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">**</span></code></td>
-<td><p class="first last">べき乗 <a class="footnote-reference" href="#id28" id="id19">[9]</a></p>
+<td><p class="first last">べき乗 <a class="footnote-reference" href="#id26" id="id18">[8]</a></p>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x[index]</span></code>, <code class="docutils literal"><span class="pre">x[index:index]</span></code>,
@@ -657,66 +774,74 @@
 </tbody>
 </table>
 <p class="rubric">注記</p>
-<table class="docutils footnote" frame="void" id="id20" rules="none">
+<table class="docutils footnote" frame="void" id="id19" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><p class="first last">Python 2.3 以降のリスト内包は <code class="docutils literal"><span class="pre">for</span></code> の中で使う制御変数を内包表記内のスコープに「リーク」します。しかし、この挙動は廃止予定です。Python 3 ではこの挙動に依存したコードは動作しなくなります。</p>
 </td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id21" rules="none">
+<table class="docutils footnote" frame="void" id="id20" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id10">[2]</a></td><td><p class="first last"><code class="docutils literal"><span class="pre">abs(x%y)</span> <span class="pre">&lt;</span> <span class="pre">abs(y)</span></code> は数学的には真となりますが、浮動小数点に対する演算の場合には、値丸め (roundoff) のために数値計算的に真にならない場合があります。例えば、Python の浮動小数点型が IEEE754 倍精度数型になっているプラットフォームを仮定すると、 <code class="docutils literal"><span class="pre">-1e-100</span> <span class="pre">%</span> <span class="pre">1e100</span></code> は <code class="docutils literal"><span class="pre">1e100</span></code> と同じ符号になるはずなのに、計算結果は <code class="docutils literal"><span class="pre">-1e-100</span> <span class="pre">+</span> <span class="pre">1e100</span></code> となります。これは数値計算的には厳密に <code class="docutils literal"><span class="pre">1e100</span></code> と等価です。関数 <a class="reference internal" href="../library/math.html#math.fmod" title="math.fmod"><code class="xref py py-func docutils literal"><span class="pre">math.fmod()</span></code></a> は、最初の引数と符号が一致するような値を返すので、上記の場合には <code class="docutils literal"><span class="pre">-1e-100</span></code> を返します。どちらのアプローチが適切かは、アプリケーションに依存します。</p>
 </td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id22" rules="none">
+<table class="docutils footnote" frame="void" id="id21" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id11">[3]</a></td><td><p class="first last">x が y の整数倍に非常に近い場合、丸め誤差によって <code class="docutils literal"><span class="pre">floor(x/y)</span></code> は <code class="docutils literal"><span class="pre">(x-x%y)/y</span></code> よりも大きな値になる可能性があります。そのような場合、 Python は <code class="docutils literal"><span class="pre">divmod(x,y)[0]</span> <span class="pre">*</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> が <code class="docutils literal"><span class="pre">x</span></code> に非常に近くなるという関係を保つために、後者の値を返します。</p>
 </td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="id22" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[4]</a></td><td><p class="first">The Unicode standard distinguishes between <em class="dfn">code points</em>
+(e.g. U+0041) and <em class="dfn">abstract characters</em> (e.g. &#8220;LATIN CAPITAL LETTER A&#8221;).
+While most abstract characters in Unicode are only represented using one
+code point, there is a number of abstract characters that can in addition be
+represented using a sequence of more than one code point.  For example, the
+abstract character &#8220;LATIN CAPITAL LETTER C WITH CEDILLA&#8221; can be represented
+as a single <em class="dfn">precomposed character</em> at code position U+00C7, or as a
+sequence of a <em class="dfn">base character</em> at code position U+0043 (LATIN CAPITAL
+LETTER C), followed by a <em class="dfn">combining character</em> at code position U+0327
+(COMBINING CEDILLA).</p>
+<p>The comparison operators on unicode strings compare at the level of Unicode code
+points. This may be counter-intuitive to humans.  For example,
+<code class="docutils literal"><span class="pre">u&quot;\u00C7&quot;</span> <span class="pre">==</span> <span class="pre">u&quot;\u0043\u0327&quot;</span></code> is <code class="docutils literal"><span class="pre">False</span></code>, even though both strings
+represent the same abstract character &#8220;LATIN CAPITAL LETTER C WITH CEDILLA&#8221;.</p>
+<p class="last">To compare strings at the level of abstract characters (that is, in a way
+intuitive to humans), use <a class="reference internal" href="../library/unicodedata.html#unicodedata.normalize" title="unicodedata.normalize"><code class="xref py py-func docutils literal"><span class="pre">unicodedata.normalize()</span></code></a>.</p>
+</td></tr>
+</tbody>
+</table>
 <table class="docutils footnote" frame="void" id="id23" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[4]</a></td><td><p class="first last">ユニコード文字列間の比較はバイトレベルでは当然とはいえ、ユーザにとっては直感的ではないかもしれません。例えば、文字列 <code class="docutils literal"><span class="pre">u&quot;\u00C7&quot;</span></code> と <code class="docutils literal"><span class="pre">u&quot;\u0043\u0327&quot;</span></code> の比較は、両方の文字列が同じユニコード文字(LATIN CAPITAL LETTER C WITH CEDILLA)で表されたとしても違います。人間が分かり易い方法で文字列を比較するために <a class="reference internal" href="../library/unicodedata.html#unicodedata.normalize" title="unicodedata.normalize"><code class="xref py py-func docutils literal"><span class="pre">unicodedata.normalize()</span></code></a> を使用して比較してください。</p>
+<tr><td class="label"><a class="fn-backref" href="#id14">[5]</a></td><td><p class="first last">Python の初期のバージョンでは、ソートされた (key, value) のリストに対して辞書的な比較を行っていましたが、これは等価性の計算のようなよくある操作を実現するには非常にコストの高い操作でした。もっと以前のバージョンの Python では、辞書はアイデンティティだけで比較されていました。しかしこの仕様は、 <code class="docutils literal"><span class="pre">{}</span></code> との比較によって辞書が空であるか確かめられると期待していた人々を混乱させていました。</p>
 </td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id24" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id14">[5]</a></td><td><p class="first last">実装では、この演算をリストを構築したりソートしたりすることなく効率的に行います。</p>
+<tr><td class="label"><a class="fn-backref" href="#id15">[6]</a></td><td><p class="first last">自動的なガベージコレクション、フリーリスト、ディスクリプタの動的特性のために、インスタンスメソッドや定数の比較を行うようなときに <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> 演算子の利用は、一見すると普通ではない振る舞いだと気付くかもしれません。詳細はそれぞれのドキュメントを確認してください。</p>
 </td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id25" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[6]</a></td><td><p class="first last">Python の初期のバージョンでは、ソートされた (key, value) のリストに対して辞書的な比較を行っていましたが、これは等価性の計算のようなよくある操作を実現するには非常にコストの高い操作でした。もっと以前のバージョンの Python では、辞書はアイデンティティだけで比較されていました。しかしこの仕様は、 <code class="docutils literal"><span class="pre">{}</span></code> との比較によって辞書が空であるか確かめられると期待していた人々を混乱させていました。</p>
+<tr><td class="label"><a class="fn-backref" href="#id17">[7]</a></td><td><p class="first last"><code class="docutils literal"><span class="pre">%</span></code> 演算子は文字列フォーマットにも使われ、同じ優先順位が当てはまります。</p>
 </td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id26" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id16">[7]</a></td><td><p class="first last">自動的なガベージコレクション、フリーリスト、ディスクリプタの動的特性のために、インスタンスメソッドや定数の比較を行うようなときに <a class="reference internal" href="#is"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> 演算子の利用は、一見すると普通ではない振る舞いだと気付くかもしれません。詳細はそれぞれのドキュメントを確認してください。</p>
-</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id27" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id18">[8]</a></td><td><p class="first last"><code class="docutils literal"><span class="pre">%</span></code> 演算子は文字列フォーマットにも使われ、同じ優先順位が当てはまります。</p>
-</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id28" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id19">[9]</a></td><td><p class="first last">べき乗演算子 <code class="docutils literal"><span class="pre">**</span></code> はその右側にある単項演算子かビット単位演算子よりも優先して束縛されます。つまり <code class="docutils literal"><span class="pre">2**-1</span></code> は <code class="docutils literal"><span class="pre">0.5</span></code> になります。</p>
+<tr><td class="label"><a class="fn-backref" href="#id18">[8]</a></td><td><p class="first last">べき乗演算子 <code class="docutils literal"><span class="pre">**</span></code> はその右側にある単項演算子かビット単位演算子よりも優先して束縛されます。つまり <code class="docutils literal"><span class="pre">2**-1</span></code> は <code class="docutils literal"><span class="pre">0.5</span></code> になります。</p>
 </td></tr>
 </tbody>
 </table>
@@ -761,7 +886,12 @@
 <li><a class="reference internal" href="#binary-arithmetic-operations">5.6. 二項算術演算 (binary arithmetic operation)</a></li>
 <li><a class="reference internal" href="#shifting-operations">5.7. シフト演算 (shifting operation)</a></li>
 <li><a class="reference internal" href="#binary-bitwise-operations">5.8. ビット単位演算の二項演算 (binary bitwise operation)</a></li>
-<li><a class="reference internal" href="#not-in">5.9. 比較</a></li>
+<li><a class="reference internal" href="#comparisons">5.9. 比較</a><ul>
+<li><a class="reference internal" href="#value-comparisons">5.9.1. Value comparisons</a></li>
+<li><a class="reference internal" href="#membership-test-operations">5.9.2. Membership test operations</a></li>
+<li><a class="reference internal" href="#is-not">5.9.3. Identity comparisons</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#boolean-operations">5.10. ブール演算 (boolean operation)</a></li>
 <li><a class="reference internal" href="#conditional-expressions">5.11. 条件演算 (Conditional Expressions)</a></li>
 <li><a class="reference internal" href="#lambda">5.12. ラムダ (lambda)</a></li>
@@ -781,8 +911,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/reference/expressions.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/reference/expressions.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -826,12 +957,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

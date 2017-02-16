@@ -37,6 +37,7 @@
     <link rel="next" title="19.15. xml.parsers.expat — Expat を使った高速な XML 解析" href="pyexpat.html" />
     <link rel="prev" title="19.13. xml.sax.saxutils — SAX ユーティリティ" href="xml.sax.utils.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/xml.sax.reader.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -134,7 +135,12 @@ SAX リーダは、通常はファイル全体を読み込みませんが、チ�
 <dl class="method">
 <dt id="xml.sax.xmlreader.XMLReader.parse">
 <code class="descclassname">XMLReader.</code><code class="descname">parse</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.xmlreader.XMLReader.parse" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>入力ソースを処理し、SAX イベントを作成します。 <em>source</em> オブジェクトはシステム識別子 (入力ソースを特定する文字列 &#8211; 一般にファイル名や URL)、ファイル様オブジェクト、または <a class="reference internal" href="#xml.sax.xmlreader.InputSource" title="xml.sax.xmlreader.InputSource"><code class="xref py py-class docutils literal"><span class="pre">InputSource</span></code></a> オブジェクトです。 <a class="reference internal" href="#xml.sax.xmlreader.XMLReader.parse" title="xml.sax.xmlreader.XMLReader.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> が return したとき、入力データの処理は完了し、パーサ・オブジェクトは破棄ないしリセットされます。制限として、現在の実装はバイト・ストリームのみをサポートしており、文字ストリームの処理は将来の課題になっています。</p>
+<dd><p>Process an input source, producing SAX events. The <em>source</em> object can be a
+system identifier (a string identifying the input source &#8211; typically a file
+name or a URL), a file-like object, or an <a class="reference internal" href="#xml.sax.xmlreader.InputSource" title="xml.sax.xmlreader.InputSource"><code class="xref py py-class docutils literal"><span class="pre">InputSource</span></code></a> object. When
+<a class="reference internal" href="#xml.sax.xmlreader.XMLReader.parse" title="xml.sax.xmlreader.XMLReader.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> returns, the input is completely processed, and the parser object
+can be discarded or reset. As a limitation, the current implementation only
+accepts byte streams; processing of character streams is for further study.</p>
 </dd></dl>
 
 <dl class="method">
@@ -248,13 +254,13 @@ SAX リーダは、通常はファイル全体を読み込みませんが、チ�
 <dl class="method">
 <dt id="xml.sax.xmlreader.Locator.getColumnNumber">
 <code class="descclassname">Locator.</code><code class="descname">getColumnNumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.xmlreader.Locator.getColumnNumber" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>現在のイベントが終了する列番号を返します。</p>
+<dd><p>Return the column number where the current event begins.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xml.sax.xmlreader.Locator.getLineNumber">
 <code class="descclassname">Locator.</code><code class="descname">getLineNumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.xmlreader.Locator.getLineNumber" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>現在のイベントが終了する行番号を返します。</p>
+<dd><p>Return the line number where the current event begins.</p>
 </dd></dl>
 
 <dl class="method">
@@ -322,7 +328,8 @@ SAX リーダは、通常はファイル全体を読み込みませんが、チ�
 <dt id="xml.sax.xmlreader.InputSource.getByteStream">
 <code class="descclassname">InputSource.</code><code class="descname">getByteStream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.xmlreader.InputSource.getByteStream" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この入力ソースのバイトストリームを取得します。</p>
-<p>getEncoding メソッドは、このバイトストリームの文字エンコーディングを返します。不明なときは None を返します。</p>
+<p>The getEncoding method will return the character encoding for this byte stream,
+or <code class="docutils literal"><span class="pre">None</span></code> if unknown.</p>
 </dd></dl>
 
 <dl class="method">
@@ -426,8 +433,9 @@ SAX リーダは、通常はファイル全体を読み込みませんが、チ�
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/xml.sax.reader.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/xml.sax.reader.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -472,12 +480,12 @@ SAX リーダは、通常はファイル全体を読み込みませんが、チ�
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

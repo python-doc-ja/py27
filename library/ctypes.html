@@ -37,6 +37,7 @@
     <link rel="next" title="16. オプションのオペレーティングシステムサービス" href="someos.html" />
     <link rel="prev" title="15.16. errno — 標準の errno システムシンボル" href="errno.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/ctypes.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -95,20 +96,20 @@
 <p>これらのオブジェクトの属性としてライブラリにアクセスすることでライブラリをロードします。 <em>cdll</em> は標準 <code class="docutils literal"><span class="pre">cdecl</span></code> 呼び出し規約を用いて関数をエクスポートしているライブラリをロードします。それに対して、 <em>windll</em> ライブラリは <code class="docutils literal"><span class="pre">stdcall</span></code> 呼び出し規約を用いる関数を呼び出します。 <em>oledll</em> も <code class="docutils literal"><span class="pre">stdcall</span></code> 呼び出し規約を使いますが、関数が Windows <code class="xref c c-type docutils literal"><span class="pre">HRESULT</span></code> エラーコードを返すことを想定しています。このエラーコードは関数呼び出しが失敗したとき、 <code class="xref py py-class docutils literal"><span class="pre">WindowsError</span></code> 例外を自動的に送出させるために使われます。</p>
 <p>Windows用の例ですが、 <code class="docutils literal"><span class="pre">msvcrt</span></code> はほとんどの標準 C 関数が含まれている MS 標準 C ライブラリであり、 cdecl 呼び出し規約を使うことに注意してください:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ctypes</span> <span class="k">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span>  
 <span class="go">&lt;WinDLL &#39;kernel32&#39;, handle ... at ...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span>      
 <span class="go">&lt;CDLL &#39;msvcrt&#39;, handle ... at ...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span>     
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p>Windows では通常の <code class="docutils literal"><span class="pre">.dll</span></code> ファイル拡張子を自動的に追加します。</p>
 <p>Linux ではライブラリをロードするために拡張子を <em>含む</em> ファイル名を指定する必要があるので、ロードしたライブラリに対する属性アクセスはできません。 dll ローダーの <code class="xref py py-meth docutils literal"><span class="pre">LoadLibrary()</span></code> メソッドを使うか、コンストラクタを呼び出して CDLL のインスタンスを作ることでライブラリをロードするかのどちらかを行わなければなりません:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&quot;libc.so.6&quot;</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&quot;libc.so.6&quot;</span><span class="p">)</span>  
 <span class="go">&lt;CDLL &#39;libc.so.6&#39;, handle ... at ...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span> <span class="o">=</span> <span class="n">CDLL</span><span class="p">(</span><span class="s2">&quot;libc.so.6&quot;</span><span class="p">)</span>     
-<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span>                         
+<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span> <span class="o">=</span> <span class="n">CDLL</span><span class="p">(</span><span class="s2">&quot;libc.so.6&quot;</span><span class="p">)</span>       
+<span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span>                           
 <span class="go">&lt;CDLL &#39;libc.so.6&#39;, handle ... at ...&gt;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -120,9 +121,9 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ctypes</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">libc</span><span class="o">.</span><span class="n">printf</span>
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span>  
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">MyOwnFunction</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">MyOwnFunction</span>     
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
   File <span class="nb">&quot;ctypes.py&quot;</span>, line <span class="m">239</span>, in <span class="n">__getattr__</span>
@@ -140,15 +141,15 @@
 </div>
 <p><em>windll</em> は魔法を使ってどちらか一つを選ぶようなことはしません。 <code class="docutils literal"><span class="pre">GetModuleHandleA</span></code> もしくは <code class="docutils literal"><span class="pre">GetModuleHandleW</span></code> を明示的に指定して必要とするバージョンにアクセスし、文字列か Unicode 文字列を使ってそれぞれ呼び出さなければなりません。</p>
 <p>時には、 dll が関数を <code class="docutils literal"><span class="pre">&quot;??2&#64;YAPAXI&#64;Z&quot;</span></code> のような Python 識別子として有効でない名前でエクスポートすることがあります。このような場合に関数を取り出すには、 <a class="reference internal" href="functions.html#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a> を使わなければなりません。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span><span class="p">,</span> <span class="s2">&quot;??2@YAPAXI@Z&quot;</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">cdll</span><span class="o">.</span><span class="n">msvcrt</span><span class="p">,</span> <span class="s2">&quot;??2@YAPAXI@Z&quot;</span><span class="p">)</span>  
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p>Windows では、名前ではなく序数によって関数をエクスポートする dll もあります。こうした関数には序数を使って dll オブジェクトにインデックス指定することでアクセスします:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
   File <span class="nb">&quot;ctypes.py&quot;</span>, line <span class="m">310</span>, in <span class="n">__getitem__</span>
@@ -162,19 +163,19 @@
 <span id="ctypes-calling-functions"></span><h3>15.17.1.3. 関数を呼び出す<a class="headerlink" href="#calling-functions" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>これらの関数は他の Python 呼び出し可能オブジェクトと同じように呼び出すことができます。この例では <code class="docutils literal"><span class="pre">time()</span></code> 関数 (Unixエポックからのシステム時間を秒単位で返す) と、 <code class="docutils literal"><span class="pre">GetModuleHandleA()</span></code> 関数 (win32モジュールハンドルを返す) を使います。</p>
 <p>この例は両方の関数を NULL ポインタとともに呼び出します (<code class="docutils literal"><span class="pre">None</span></code> を NULL ポインタとして使う必要があります):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">libc</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">libc</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  
 <span class="go">1150640792</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>  
 <span class="go">0x1d000000</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は引数の数を間違えたり、あるいは呼び出し規約を間違えた関数呼び出しからあなたを守ろうとします。残念ながら、これは Windows でしか機能しません。関数が返った後にスタックを調べることでこれを行います。したがって、エラーは発生しますが、その関数は呼び出された <em>後です</em>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">()</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">()</span>      
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with not enough arguments (4 bytes missing)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with too many arguments (4 bytes in excess)</span>
@@ -182,13 +183,13 @@
 </pre></div>
 </div>
 <p>同じ例外が <code class="docutils literal"><span class="pre">cdecl</span></code> 呼び出し規約を使って <code class="docutils literal"><span class="pre">stdcall</span></code> 関数を呼び出したときに送出されますし、逆の場合も同様です。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with not enough arguments (4 bytes missing)</span>
 <span class="go">&gt;&gt;&gt;</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">msvcrt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;spam&quot;</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">msvcrt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;spam&quot;</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with too many arguments (4 bytes in excess)</span>
@@ -197,7 +198,7 @@
 </div>
 <p>正しい呼び出し規約を知るためには、呼び出したい関数についての C ヘッダファイルもしくはドキュメントを見なければなりません。</p>
 <p>Windows では、関数が無効な引数とともに呼び出された場合の一般保護例外によるクラッシュを防ぐために、 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は win32 構造化例外処理を使います:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
 <span class="gr">WindowsError</span>: <span class="n">exception: access violation reading 0x00000020</span>
@@ -460,9 +461,9 @@
 <p>デフォルトでは、関数は C <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を返すと仮定されます。他の戻り値の型を指定するには、関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">restype</span></code> 属性に設定します。</p>
 <p>さらに高度な例として、 <code class="docutils literal"><span class="pre">strchr</span></code> 関数を使います。この関数は文字列ポインタと char を受け取り、文字列へのポインタを返します。:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">strchr</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span>  
 <span class="go">8059983</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">c_char_p</span> <span class="c1"># c_char_p is a pointer to a string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">c_char_p</span>   <span class="c1"># c_char_p is a pointer to a string</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">))</span>
 <span class="go">&#39;def&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
@@ -487,17 +488,17 @@
 </pre></div>
 </div>
 <p>外部関数が整数を返す場合は、 <code class="xref py py-attr docutils literal"><span class="pre">restype</span></code> 属性として呼び出し可能な Python オブジェクト (例えば、関数またはクラス) を使うこともできます。呼び出し可能オブジェクトは C 関数が返す <em>整数</em> とともに呼び出され、この呼び出しの結果は関数呼び出しの結果として使われるでしょう。これはエラーの戻り値をチェックして自動的に例外を送出させるために役に立ちます。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span> <span class="o">=</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span> <span class="o">=</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span>  
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ValidHandle</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="k">raise</span> <span class="n">WinError</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">value</span>
 <span class="gp">...</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ValidHandle</span> 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ValidHandle</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  
 <span class="go">486539264</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="p">(</span><span class="s2">&quot;something silly&quot;</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="p">(</span><span class="s2">&quot;something silly&quot;</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">3</span>, in <span class="n">ValidHandle</span>
@@ -608,15 +609,16 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TenPointsArrayType</span> <span class="o">=</span> <span class="n">POINT</span> <span class="o">*</span> <span class="mi">10</span>
 </pre></div>
 </div>
-<p>ややわざとらしいデータ型の例になりますが、他のものに混ざって 4 個の POINT がある構造体です。:</p>
+<p>Here is an example of a somewhat artificial data type, a structure containing 4
+POINTs among other stuff:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ctypes</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">POINT</span><span class="p">(</span><span class="n">Structure</span><span class="p">):</span>
-<span class="gp">... </span>   <span class="n">_fields_</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">Structure</span><span class="p">):</span>
-<span class="gp">... </span>   <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">),</span>
-<span class="gp">... </span>               <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">c_float</span><span class="p">),</span>
-<span class="gp">... </span>               <span class="p">(</span><span class="s2">&quot;point_array&quot;</span><span class="p">,</span> <span class="n">POINT</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)]</span>
+<span class="gp">... </span>    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">c_float</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;point_array&quot;</span><span class="p">,</span> <span class="n">POINT</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)]</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">MyStruct</span><span class="p">()</span><span class="o">.</span><span class="n">point_array</span><span class="p">)</span>
 <span class="go">4</span>
@@ -652,7 +654,8 @@
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>ポインタインスタンスはポインタが指すオブジェクト (上の例では <code class="docutils literal"><span class="pre">i</span></code> ) を返す <code class="xref py py-attr docutils literal"><span class="pre">contents</span></code> 属性を持ちます。:</p>
+<p>Pointer instances have a <a class="reference internal" href="#ctypes._Pointer.contents" title="ctypes._Pointer.contents"><code class="xref py py-attr docutils literal"><span class="pre">contents</span></code></a> attribute which
+returns the object to which the pointer points, the <code class="docutils literal"><span class="pre">i</span></code> object above:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span><span class="o">.</span><span class="n">contents</span>
 <span class="go">c_long(42)</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -826,7 +829,8 @@
 </div>
 <div class="section" id="callback-functions">
 <span id="ctypes-callback-functions"></span><h3>15.17.1.17. コールバック関数<a class="headerlink" href="#callback-functions" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は C の呼び出し可能な関数ポインタを Python 呼び出し可能オブジェクトから作成できるようにします。これらは <em>コールバック関数</em> と呼ばれることがあります。</p>
+<p><a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> allows creating C callable function pointers from Python callables.
+These are sometimes called <em>callback functions</em>.</p>
 <p>最初に、コールバック関数のためのクラスを作る必要があります。そのクラスには呼び出し規約、戻り値の型およびこの関数が受け取る引数の数と型についての情報があります。</p>
 <p>CFUNCTYPE ファクトリ関数は通常の cdecl 呼び出し規約を用いてコールバック関数のための型を作成します。 Windows では、 WINFUNCTYPE ファクトリ関数が stdcall 呼び出し規約を用いてコールバック関数の型を作成します。</p>
 <p>これらのファクトリ関数はともに最初の引数に戻り値の型、残りの引数としてコールバック関数が想定する引数の型を渡して呼び出されます。</p>
@@ -897,7 +901,7 @@
 </pre></div>
 </div>
 <p>linux ではソート関数がはるかに効率的に動作しており、実施する比較の数が少ないように見えるのが不思議です。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qsort</span><span class="p">(</span><span class="n">ia</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ia</span><span class="p">),</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">cmp_func</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qsort</span><span class="p">(</span><span class="n">ia</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ia</span><span class="p">),</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">cmp_func</span><span class="p">)</span>  
 <span class="go">py_cmp_func 5 1</span>
 <span class="go">py_cmp_func 33 99</span>
 <span class="go">py_cmp_func 7 33</span>
@@ -985,9 +989,9 @@
 </div>
 <p><code class="docutils literal"><span class="pre">table</span></code> が <code class="docutils literal"><span class="pre">struct_frozen</span></code> レコードの配列への <code class="docutils literal"><span class="pre">pointer</span></code> なので、その配列に対して反復処理を行えます。しかし、ループが確実に終了するようにする必要があります。なぜなら、ポインタに大きさの情報がないからです。遅かれ早かれ、アクセス違反か何かでクラッシュすることになるでしょう。 NULL エントリに達したときはループを抜ける方が良いです。:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">table</span><span class="p">:</span>
-<span class="gp">... </span>   <span class="nb">print</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">size</span>
-<span class="gp">... </span>   <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="gp">... </span>       <span class="k">break</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">size</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">break</span>
 <span class="gp">...</span>
 <span class="go">__hello__ 104</span>
 <span class="go">__phello__ -104</span>
@@ -1085,7 +1089,10 @@ other than what actually happens.</p>
 <dl class="data">
 <dt>
 <code class="descclassname">ctypes.util.</code><code class="descname">find_library</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span></dt>
-<dd><p>ライブラリを見つけてパス名を返そうと試みます。 <em>name</em> は <code class="docutils literal"><span class="pre">lib</span></code> のような接頭辞、 <code class="docutils literal"><span class="pre">.so</span></code>, <code class="docutils literal"><span class="pre">.dylib</span></code> のような接尾辞、あるいは、バージョン番号が何も付いていないライブラリの名前です (これは posix リンカのオプション <code class="xref std std-option docutils literal"><span class="pre">-l</span></code> に使われている形式です)。もしライブラリが見つからなければ、 <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+<dd><p>Try to find a library and return a pathname.  <em>name</em> is the library name without
+any prefix like <em>lib</em>, suffix like <code class="docutils literal"><span class="pre">.so</span></code>, <code class="docutils literal"><span class="pre">.dylib</span></code> or version number (this
+is the form used for the posix linker option <code class="xref std std-option docutils literal"><span class="pre">-l</span></code>).  If no library can
+be found, returns <code class="docutils literal"><span class="pre">None</span></code>.</p>
 </dd></dl>
 
 <p>厳密な機能はシステムに依存します。</p>
@@ -1118,7 +1125,8 @@ other than what actually happens.</p>
 </div>
 <div class="section" id="loading-shared-libraries">
 <span id="ctypes-loading-shared-libraries"></span><h3>15.17.2.2. 共有ライブラリをロードする<a class="headerlink" href="#loading-shared-libraries" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>共有ライブラリを Python プロセスへロードする方法はいくつかあります。一つの方法は下記のクラスの一つをインスタンス化することです。:</p>
+<p>There are several ways to load shared libraries into the Python process.  One
+way is to instantiate one of the following classes:</p>
 <dl class="class">
 <dt id="ctypes.CDLL">
 <em class="property">class </em><code class="descclassname">ctypes.</code><code class="descname">CDLL</code><span class="sig-paren">(</span><em>name</em>, <em>mode=DEFAULT_MODE</em>, <em>handle=None</em>, <em>use_errno=False</em>, <em>use_last_error=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.CDLL" title="この定義へのパーマリンク">¶</a></dt>
@@ -1147,10 +1155,22 @@ other than what actually happens.</p>
 </dd></dl>
 
 <p>これらすべてのクラスは少なくとも一つの引数、すなわちロードする共有ライブラリのパスを渡して呼び出すことでインスタンス化されます。すでにロード済みの共有ライブラリへのハンドルがあるなら、 <code class="docutils literal"><span class="pre">handle</span></code> 名前付き引数として渡すことができます。土台となっているプラットフォームの <code class="docutils literal"><span class="pre">dlopen</span></code> または <code class="docutils literal"><span class="pre">LoadLibrary</span></code> 関数がプロセスへライブラリをロードするために使われ、そのライブラリに対するハンドルを得ます。</p>
-<p><em>mode</em> パラメータはライブラリがどうやってロードされたかを特定するために使うことができます。詳細は、 <em class="manpage">dlopen(3)</em> マニュアルページを参考にしてください。 Windows では <em>mode</em> は無視されます。</p>
-<p><em>use_errno</em> 変数が True に設定されたとき、システムの <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> エラーナンバーに安全にアクセスする ctypes の仕組みが有効化されます。 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> はシステムの <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> 変数のスレッド限定のコピーを管理します。もし、 <code class="docutils literal"><span class="pre">use_errno=True</span></code> の状態で作られた外部関数を呼び出したなら、関数呼び出し前の <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> 変数は ctypes のプライベートコピーと置き換えられ、同じことが関数呼び出しの直後にも発生します。</p>
+<p>The <em>mode</em> parameter can be used to specify how the library is loaded.  For
+details, consult the <em class="manpage">dlopen(3)</em> manpage.  On Windows, <em>mode</em> is
+ignored.  On posix systems, RTLD_NOW is always added, and is not
+configurable.</p>
+<p>The <em>use_errno</em> parameter, when set to true, enables a ctypes mechanism that
+allows accessing the system <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> error number in a safe way.
+<a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> maintains a thread-local copy of the systems <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a>
+variable; if you call foreign functions created with <code class="docutils literal"><span class="pre">use_errno=True</span></code> then the
+<a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> value before the function call is swapped with the ctypes private
+copy, the same happens immediately after the function call.</p>
 <p><a class="reference internal" href="#ctypes.get_errno" title="ctypes.get_errno"><code class="xref py py-func docutils literal"><span class="pre">ctypes.get_errno()</span></code></a> 関数は ctypes のプライベートコピーの値を返します。そして、 <a class="reference internal" href="#ctypes.set_errno" title="ctypes.set_errno"><code class="xref py py-func docutils literal"><span class="pre">ctypes.set_errno()</span></code></a> 関数は ctypes のプライベートコピーを置き換え、以前の値を返します。</p>
-<p><em>use_last_error</em> パラメータは、 True に設定されたとき、 <a class="reference internal" href="#ctypes.GetLastError" title="ctypes.GetLastError"><code class="xref py py-func docutils literal"><span class="pre">GetLastError()</span></code></a> と <code class="xref py py-func docutils literal"><span class="pre">SetLastError()</span></code> Windows API によって管理される Windows エラーコードに対するのと同じ仕組みが有効化されます。 <a class="reference internal" href="#ctypes.get_last_error" title="ctypes.get_last_error"><code class="xref py py-func docutils literal"><span class="pre">ctypes.get_last_error()</span></code></a> と <a class="reference internal" href="#ctypes.set_last_error" title="ctypes.set_last_error"><code class="xref py py-func docutils literal"><span class="pre">ctypes.set_last_error()</span></code></a> は Windows エラーコードの ctypes プライベートコピーを変更したり要求したりするのに使われます。</p>
+<p>The <em>use_last_error</em> parameter, when set to true, enables the same mechanism for
+the Windows error code which is managed by the <a class="reference internal" href="#ctypes.GetLastError" title="ctypes.GetLastError"><code class="xref py py-func docutils literal"><span class="pre">GetLastError()</span></code></a> and
+<code class="xref py py-func docutils literal"><span class="pre">SetLastError()</span></code> Windows API functions; <a class="reference internal" href="#ctypes.get_last_error" title="ctypes.get_last_error"><code class="xref py py-func docutils literal"><span class="pre">ctypes.get_last_error()</span></code></a> and
+<a class="reference internal" href="#ctypes.set_last_error" title="ctypes.set_last_error"><code class="xref py py-func docutils literal"><span class="pre">ctypes.set_last_error()</span></code></a> are used to request and change the ctypes private
+copy of the windows error code.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加: </span><em>use_last_error</em> と <em>use_errno</em> オプション変数が追加されました。</p>
 </div>
@@ -1197,7 +1217,9 @@ other than what actually happens.</p>
 <dt id="ctypes.LibraryLoader">
 <em class="property">class </em><code class="descclassname">ctypes.</code><code class="descname">LibraryLoader</code><span class="sig-paren">(</span><em>dlltype</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.LibraryLoader" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>共有ライブラリをロードするクラス。 <em>dlltype</em> は <a class="reference internal" href="#ctypes.CDLL" title="ctypes.CDLL"><code class="xref py py-class docutils literal"><span class="pre">CDLL</span></code></a> 、 <a class="reference internal" href="#ctypes.PyDLL" title="ctypes.PyDLL"><code class="xref py py-class docutils literal"><span class="pre">PyDLL</span></code></a> 、 <a class="reference internal" href="#ctypes.WinDLL" title="ctypes.WinDLL"><code class="xref py py-class docutils literal"><span class="pre">WinDLL</span></code></a> もしくは <a class="reference internal" href="#ctypes.OleDLL" title="ctypes.OleDLL"><code class="xref py py-class docutils literal"><span class="pre">OleDLL</span></code></a> 型の一つであるべきです。</p>
-<p><a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> は特別なはたらきをします: ライブラリローダーインスタンスの属性として共有ライブラリにアクセスするとそれがロードされるということを可能にします。結果はキャッシュされます。そのため、繰り返し属性アクセスを行うといつも同じライブラリが返されます。</p>
+<p><a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-meth docutils literal"><span class="pre">__getattr__()</span></code></a> has special behavior: It allows loading a shared library by
+accessing it as attribute of a library loader instance.  The result is cached,
+so repeated attribute accesses return the same library each time.</p>
 <dl class="method">
 <dt id="ctypes.LibraryLoader.LoadLibrary">
 <code class="descname">LoadLibrary</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.LibraryLoader.LoadLibrary" title="この定義へのパーマリンク">¶</a></dt>
@@ -1252,15 +1274,28 @@ other than what actually happens.</p>
 <dt id="ctypes._FuncPtr.restype">
 <code class="descname">restype</code><a class="headerlink" href="#ctypes._FuncPtr.restype" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>外部関数の結果の型を指定するために ctypes 型を代入する。何も返さない関数を表す <code class="xref c c-type docutils literal"><span class="pre">void</span></code> に対しては <code class="docutils literal"><span class="pre">None</span></code> を使います。</p>
-<p>ctypes 型ではない呼び出し可能な Python オブジェクトを代入することは可能です。このような場合、関数が C <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を返すと仮定され、呼び出し可能オブジェクトはこの整数を引数に呼び出されます。さらに処理を行ったり、エラーチェックをしたりできるようにするためです。これの使用は推奨されません。より柔軟な後処理やエラーチェックのためには <a class="reference internal" href="#ctypes._FuncPtr.restype" title="ctypes._FuncPtr.restype"><code class="xref py py-attr docutils literal"><span class="pre">restype</span></code></a> として ctypes 型を使い、 <a class="reference internal" href="#ctypes._FuncPtr.errcheck" title="ctypes._FuncPtr.errcheck"><code class="xref py py-attr docutils literal"><span class="pre">errcheck</span></code></a> 属性へ呼び出し可能オブジェクトを代入してください。</p>
+<p>It is possible to assign a callable Python object that is not a ctypes
+type, in this case the function is assumed to return a C <code class="xref c c-type docutils literal"><span class="pre">int</span></code>, and
+the callable will be called with this integer, allowing further
+processing or error checking.  Using this is deprecated, for more flexible
+post processing or error checking use a ctypes data type as
+<a class="reference internal" href="#ctypes._FuncPtr.restype" title="ctypes._FuncPtr.restype"><code class="xref py py-attr docutils literal"><span class="pre">restype</span></code></a> and assign a callable to the <a class="reference internal" href="#ctypes._FuncPtr.errcheck" title="ctypes._FuncPtr.errcheck"><code class="xref py py-attr docutils literal"><span class="pre">errcheck</span></code></a> attribute.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ctypes._FuncPtr.argtypes">
 <code class="descname">argtypes</code><a class="headerlink" href="#ctypes._FuncPtr.argtypes" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>関数が受け取る引数の型を指定するために ctypes 型のタプルを代入します。 <code class="docutils literal"><span class="pre">stdcall</span></code> 呼び出し規約をつかう関数はこのタプルの長さと同じ数の引数で呼び出されます。その上、 C 呼び出し規約をつかう関数は追加の不特定の引数も取ります。</p>
-<p>外部関数が呼ばれたとき、それぞれの実引数は <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> タプルの要素の <code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> クラスメソッドへ渡されます。このメソッドは実引数を外部関数が受け取るオブジェクトに合わせて変えられるようにします。例えば、 <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> タプルの <a class="reference internal" href="#ctypes.c_char_p" title="ctypes.c_char_p"><code class="xref py py-class docutils literal"><span class="pre">c_char_p</span></code></a> 要素は、 ctypes 変換規則にしたがって引数として渡された Unicode 文字列をバイト文字列へ変換するでしょう。</p>
-<p>新: ctypes 型でない要素を argtypes に入れることができますが、個々の要素は引数として使える値 ( 整数、文字列、 ctypes インスタンス ) を返す <code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> メソッドを持っていなければなりません。これにより関数パラメータとしてカスタムオブジェクトを適合するように変更できるアダプタが定義可能となります。</p>
+<p>When a foreign function is called, each actual argument is passed to the
+<code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> class method of the items in the <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a>
+tuple, this method allows adapting the actual argument to an object that
+the foreign function accepts.  For example, a <a class="reference internal" href="#ctypes.c_char_p" title="ctypes.c_char_p"><code class="xref py py-class docutils literal"><span class="pre">c_char_p</span></code></a> item in
+the <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> tuple will convert a unicode string passed as
+argument into a byte string using ctypes conversion rules.</p>
+<p>New: It is now possible to put items in argtypes which are not ctypes
+types, but each item must have a <code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> method which returns a
+value usable as argument (integer, string, ctypes instance).  This allows
+defining adapters that can adapt custom objects as function parameters.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1271,8 +1306,12 @@ other than what actually happens.</p>
 <dt>
 <code class="descname">callable</code><span class="sig-paren">(</span><em>result</em>, <em>func</em>, <em>arguments</em><span class="sig-paren">)</span></dt>
 <dd><p><em>result</em> は外部関数が返すもので、 <a class="reference internal" href="#ctypes._FuncPtr.restype" title="ctypes._FuncPtr.restype"><code class="xref py py-attr docutils literal"><span class="pre">restype</span></code></a> 属性で指定されます。</p>
-<p><em>func</em> は外部関数オブジェクト自身で、これにより複数の関数の処理結果をチェックまたは後処理するために、同じ呼び出し可能オブジェクトを再利用できるようになります。</p>
-<p><em>arguments</em> は関数呼び出しに最初に渡されたパラメータが入ったタプルです。これにより使われた引数に基づた特別な振る舞いをさせることができるようになります。</p>
+<p><em>func</em> is the foreign function object itself, this allows reusing the
+same callable object to check or post process the results of several
+functions.</p>
+<p><em>arguments</em> is a tuple containing the parameters originally passed to
+the function call, this allows specializing the behavior on the
+arguments used.</p>
 </dd></dl>
 
 <p>この関数が返すオブジェクトは外部関数呼び出しから返された値でしょう。しかし、戻り値をチェックして、外部関数呼び出しが失敗しているなら例外を送出させることもできます。</p>
@@ -1293,7 +1332,12 @@ other than what actually happens.</p>
 <dl class="function">
 <dt id="ctypes.CFUNCTYPE">
 <code class="descclassname">ctypes.</code><code class="descname">CFUNCTYPE</code><span class="sig-paren">(</span><em>restype</em>, <em>*argtypes</em>, <em>use_errno=False</em>, <em>use_last_error=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.CFUNCTYPE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>返された関数プロトタイプは標準 C 呼び出し規約をつかう関数を作成します。関数は呼び出されている間 GIL を解放します。 <em>use_errno</em> が True に設定されれば、呼び出しの前後で System 変数 <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> の ctypesプライベートコピーは本当の <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> の値と交換されます。 <em>use_last_error</em> も Windows エラーコードに対するのと同様です。</p>
+<dd><p>The returned function prototype creates functions that use the standard C
+calling convention.  The function will release the GIL during the call.  If
+<em>use_errno</em> is set to true, the ctypes private copy of the system
+<a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> variable is exchanged with the real <a class="reference internal" href="errno.html#module-errno" title="errno: Standard errno system symbols."><code class="xref py py-data docutils literal"><span class="pre">errno</span></code></a> value before
+and after the call; <em>use_last_error</em> does the same for the Windows error
+code.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.6 で変更: </span>オプションの <em>use_errno</em> と <em>use_last_error</em> 変数が追加されました。</p>
 </div>
@@ -1461,7 +1505,10 @@ other than what actually happens.</p>
 <code class="descclassname">ctypes.</code><code class="descname">create_string_buffer</code><span class="sig-paren">(</span><em>init_or_size</em><span class="optional">[</span>, <em>size</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.create_string_buffer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この関数は変更可能な文字バッファを作成します。返されるオブジェクトは <a class="reference internal" href="#ctypes.c_char" title="ctypes.c_char"><code class="xref py py-class docutils literal"><span class="pre">c_char</span></code></a> の ctypes 配列です。</p>
 <p><em>init_or_size</em> は配列のサイズを指定する整数もしくは配列要素を初期化するために使われる文字列である必要があります。</p>
-<p>第一引数として文字列が指定された場合は、バッファが文字列の長さより一要素分大きく作られます。配列の最後の要素が NUL 終端文字であるためです。文字列の長さを使うべきでない場合は、配列のサイズを指定するために整数を第二引数として渡すことができます。</p>
+<p>If a string is specified as first argument, the buffer is made one item larger
+than the length of the string so that the last element in the array is a NUL
+termination character. An integer can be passed as second argument which allows
+specifying the size of the array if the length of the string should not be used.</p>
 <p>第一引数が Unicode 文字列ならば、 ctypes 変換規則にしたがい 8 ビット文字列へ変換されます。</p>
 </dd></dl>
 
@@ -1470,26 +1517,38 @@ other than what actually happens.</p>
 <code class="descclassname">ctypes.</code><code class="descname">create_unicode_buffer</code><span class="sig-paren">(</span><em>init_or_size</em><span class="optional">[</span>, <em>size</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.create_unicode_buffer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この関数は変更可能な Unicode 文字バッファを作成します。返されるオブジェクトは <a class="reference internal" href="#ctypes.c_wchar" title="ctypes.c_wchar"><code class="xref py py-class docutils literal"><span class="pre">c_wchar</span></code></a> の ctypes 配列です。</p>
 <p><em>init_or_size</em> は配列のサイズを指定する整数もしくは配列要素を初期化するために使われる Unicode 文字列です。</p>
-<p>第一引数として Unicode 文字列が指定された場合は、バッファが文字列の長さより一要素分大きく作られます。配列の最後の要素が NUL 終端文字であるためです。文字列の長さを使うべきでない場合は、配列のサイズを指定するために整数を第二引数として渡すことができます。</p>
-<p>第一引数が 8 ビット文字列ならば、 ctypes 変換規則にしたがい Unicode 文字列へ変換されます。</p>
+<p>If a unicode string is specified as first argument, the buffer is made one item
+larger than the length of the string so that the last element in the array is a
+NUL termination character. An integer can be passed as second argument which
+allows specifying the size of the array if the length of the string should not
+be used.</p>
+<p>If the first parameter is an 8-bit string, it is converted into a unicode string
+according to ctypes conversion rules.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ctypes.DllCanUnloadNow">
 <code class="descclassname">ctypes.</code><code class="descname">DllCanUnloadNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.DllCanUnloadNow" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Windows用: この関数は ctypes をつかってインプロセス COM サーバーを実装できるようにするためのフックです。 _ctypes 拡張 dll がエクスポートしている DllCanUnloadNow 関数から呼び出されます。</p>
+<dd><p>Windows only: This function is a hook which allows implementing in-process
+COM servers with ctypes.  It is called from the DllCanUnloadNow function that
+the _ctypes extension dll exports.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ctypes.DllGetClassObject">
 <code class="descclassname">ctypes.</code><code class="descname">DllGetClassObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.DllGetClassObject" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Windows用: この関数は ctypes をつかってインプロセス COM サーバーを実装できるようにするためのフックです。 <code class="docutils literal"><span class="pre">_ctypes</span></code> 拡張 dll がエクスポートしている DllGetClassObject 関数から呼び出されます。</p>
+<dd><p>Windows only: This function is a hook which allows implementing in-process
+COM servers with ctypes.  It is called from the DllGetClassObject function
+that the <code class="docutils literal"><span class="pre">_ctypes</span></code> extension dll exports.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ctypes.util.find_library">
 <code class="descclassname">ctypes.util.</code><code class="descname">find_library</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.util.find_library" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ライブラリを検索し、パス名を返します。 <em>name</em> は <code class="docutils literal"><span class="pre">lib</span></code> のような接頭辞、 <code class="docutils literal"><span class="pre">.so</span></code> や <code class="docutils literal"><span class="pre">.dylib</span></code> のような接尾辞、そして、バージョンナンバーを除くライブラリ名です (これは posix のリンカーオプション <code class="xref std std-option docutils literal"><span class="pre">-l</span></code> で使われる書式です) 。もしライブラリが見つからなければ、 <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+<dd><p>Try to find a library and return a pathname.  <em>name</em> is the library name
+without any prefix like <code class="docutils literal"><span class="pre">lib</span></code>, suffix like <code class="docutils literal"><span class="pre">.so</span></code>, <code class="docutils literal"><span class="pre">.dylib</span></code> or version
+number (this is the form used for the posix linker option <code class="xref std std-option docutils literal"><span class="pre">-l</span></code>).  If
+no library can be found, returns <code class="docutils literal"><span class="pre">None</span></code>.</p>
 <p>厳密な機能はシステムに依存します。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.6 で変更: </span>Windows 用: <code class="docutils literal"><span class="pre">find_library(&quot;m&quot;)</span></code> もしくは <code class="docutils literal"><span class="pre">find_library(&quot;c&quot;)</span></code> は <code class="docutils literal"><span class="pre">find_msvcrt()</span></code> の呼び出し結果を返します。</p>
@@ -1551,7 +1610,9 @@ other than what actually happens.</p>
 <dl class="function">
 <dt id="ctypes.POINTER">
 <code class="descclassname">ctypes.</code><code class="descname">POINTER</code><span class="sig-paren">(</span><em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.POINTER" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このファクトリ関数は新しい ctypes ポインタ型を作成して返します。ポインタ型はキャッシュされ、内部で再利用されます。したがって、この関数を繰り返し呼び出してもコストは小さいです。 <em>type</em> は ctypes 型でなければなりません。</p>
+<dd><p>This factory function creates and returns a new ctypes pointer type. Pointer
+types are cached and reused internally, so calling this function repeatedly is
+cheap. <em>type</em> must be a ctypes type.</p>
 </dd></dl>
 
 <dl class="function">
@@ -1934,7 +1995,9 @@ other than what actually happens.</p>
 <dd><p>構造体のフィールドを定義するシーケンス。要素は2要素タプルか3要素タプルでなければなりません。第一要素はフィールドの名前です。第二要素はフィールドの型を指定します。それはどんな ctypes データ型でも構いません。</p>
 <p><a class="reference internal" href="#ctypes.c_int" title="ctypes.c_int"><code class="xref py py-class docutils literal"><span class="pre">c_int</span></code></a> のような整数型のために、オプションの第三要素を与えることができます。フィールドのビット幅を定義する正の小整数である必要があります。</p>
 <p>一つの構造体と共用体の中で、フィールド名はただ一つである必要があります。これはチェックされません。名前が繰り返しでてきたときにアクセスできるのは一つのフィールドだけです。</p>
-<p>Structure サブクラスを定義するクラス文の <em>後で</em> 、 <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> クラス変数を定義することができます。これにより自身を直接または間接的に参照するデータ型を作成できるようになります。:</p>
+<p>It is possible to define the <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> class variable <em>after</em> the
+class statement that defines the Structure subclass, this allows creating
+data types that directly or indirectly reference themselves:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">List</span><span class="p">(</span><span class="n">Structure</span><span class="p">):</span>
     <span class="k">pass</span>
 <span class="n">List</span><span class="o">.</span><span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;pnext&quot;</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">List</span><span class="p">)),</span>
@@ -1949,14 +2012,19 @@ other than what actually happens.</p>
 <dl class="attribute">
 <dt id="ctypes.Structure._pack_">
 <code class="descname">_pack_</code><a class="headerlink" href="#ctypes.Structure._pack_" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>インスタンスの構造体フィールドのアライメントを上書きできるようにするオブションの小整数。 <a class="reference internal" href="#ctypes.Structure._pack_" title="ctypes.Structure._pack_"><code class="xref py py-attr docutils literal"><span class="pre">_pack_</span></code></a> は <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> が代入されたときすでに定義されていなければなりません。そうでなければ、何ら影響はありません。</p>
+<dd><p>An optional small integer that allows overriding the alignment of
+structure fields in the instance.  <a class="reference internal" href="#ctypes.Structure._pack_" title="ctypes.Structure._pack_"><code class="xref py py-attr docutils literal"><span class="pre">_pack_</span></code></a> must already be defined
+when <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> is assigned, otherwise it will have no effect.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ctypes.Structure._anonymous_">
 <code class="descname">_anonymous_</code><a class="headerlink" href="#ctypes.Structure._anonymous_" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>無名 (匿名) フィールドの名前が並べあげられたオプションのシーケンス。 <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> が代入されたとき、 <a class="reference internal" href="#ctypes.Structure._anonymous_" title="ctypes.Structure._anonymous_"><code class="xref py py-attr docutils literal"><span class="pre">_anonymous_</span></code></a> がすでに定義されていなければなりません。そうでなければ、何ら影響はありません。</p>
-<p>この変数に並べあげられたフィールドは構造体型もしくは共用体型フィールドである必要があります。構造体フィールドまたは共用体フィールドを作る必要なく、入れ子になったフィールドに直接アクセスできるようにするために、 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は構造体型の中に記述子を作成します。</p>
+<p>The fields listed in this variable must be structure or union type fields.
+<a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> will create descriptors in the structure type that allow
+accessing the nested fields directly, without the need to create the
+structure or union field.</p>
 <p>型の例です (Windows):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">_U</span><span class="p">(</span><span class="n">Union</span><span class="p">):</span>
     <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;lptdesc&quot;</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">TYPEDESC</span><span class="p">)),</span>
@@ -1985,7 +2053,62 @@ other than what actually happens.</p>
 </div>
 <div class="section" id="arrays-and-pointers">
 <span id="ctypes-arrays-pointers"></span><h3>15.17.2.9. 配列とポインタ<a class="headerlink" href="#arrays-and-pointers" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>未作成 - チュートリアルの節 <a class="reference internal" href="#ctypes-pointers"><span class="std std-ref">ポインタ</span></a> と <a class="reference internal" href="#ctypes-arrays"><span class="std std-ref">配列</span></a> を参照してください。</p>
+<dl class="class">
+<dt id="ctypes.Array">
+<em class="property">class </em><code class="descclassname">ctypes.</code><code class="descname">Array</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.Array" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Abstract base class for arrays.</p>
+<p>The recommended way to create concrete array types is by multiplying any
+<a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> data type with a positive integer.  Alternatively, you can subclass
+this type and define <a class="reference internal" href="#ctypes.Array._length_" title="ctypes.Array._length_"><code class="xref py py-attr docutils literal"><span class="pre">_length_</span></code></a> and <a class="reference internal" href="#ctypes.Array._type_" title="ctypes.Array._type_"><code class="xref py py-attr docutils literal"><span class="pre">_type_</span></code></a> class variables.
+Array elements can be read and written using standard
+subscript and slice accesses; for slice reads, the resulting object is
+<em>not</em> itself an <a class="reference internal" href="#ctypes.Array" title="ctypes.Array"><code class="xref py py-class docutils literal"><span class="pre">Array</span></code></a>.</p>
+<dl class="attribute">
+<dt id="ctypes.Array._length_">
+<code class="descname">_length_</code><a class="headerlink" href="#ctypes.Array._length_" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>A positive integer specifying the number of elements in the array.
+Out-of-range subscripts result in an <a class="reference internal" href="exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a>. Will be
+returned by <a class="reference internal" href="functions.html#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ctypes.Array._type_">
+<code class="descname">_type_</code><a class="headerlink" href="#ctypes.Array._type_" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Specifies the type of each element in the array.</p>
+</dd></dl>
+
+<p>Array subclass constructors accept positional arguments, used to
+initialize the elements in order.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ctypes._Pointer">
+<em class="property">class </em><code class="descclassname">ctypes.</code><code class="descname">_Pointer</code><a class="headerlink" href="#ctypes._Pointer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Private, abstract base class for pointers.</p>
+<p>Concrete pointer types are created by calling <a class="reference internal" href="#ctypes.POINTER" title="ctypes.POINTER"><code class="xref py py-func docutils literal"><span class="pre">POINTER()</span></code></a> with the
+type that will be pointed to; this is done automatically by
+<a class="reference internal" href="#ctypes.pointer" title="ctypes.pointer"><code class="xref py py-func docutils literal"><span class="pre">pointer()</span></code></a>.</p>
+<p>If a pointer points to an array, its elements can be read and
+written using standard subscript and slice accesses.  Pointer objects
+have no size, so <a class="reference internal" href="functions.html#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a> will raise <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>.  Negative
+subscripts will read from the memory <em>before</em> the pointer (as in C), and
+out-of-range subscripts will probably crash with an access violation (if
+you&#8217;re lucky).</p>
+<dl class="attribute">
+<dt id="ctypes._Pointer._type_">
+<code class="descname">_type_</code><a class="headerlink" href="#ctypes._Pointer._type_" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Specifies the type pointed to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ctypes._Pointer.contents">
+<code class="descname">contents</code><a class="headerlink" href="#ctypes._Pointer.contents" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Returns the object to which to pointer points.  Assigning to this
+attribute changes the pointer to point to the assigned object.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -2047,8 +2170,9 @@ other than what actually happens.</p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/ctypes.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ctypes.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -2093,12 +2217,12 @@ other than what actually happens.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

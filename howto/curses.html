@@ -37,6 +37,7 @@
     <link rel="next" title="ディスクリプタ HowTo ガイド" href="descriptor.html" />
     <link rel="prev" title="Python 3 への拡張モジュール移植" href="cporting.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/curses.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -98,7 +99,12 @@
 <h2>curses ってなに?<a class="headerlink" href="#what-is-curses" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>curses ライブラリは、テキストベースの端末、VT100s や Linux コンソールや xterm や rxvt などの X11 プログラムから提供される端末エミュレータなどの端末に依存せずに、スクリーンに描画やキーボード処理する機能を供給します。表示端末は様々な制御コードをサポートしていて、カーソル移動、画面のスクロール、領域の消去などの一般的な操作を実行できます。端末によって大きく異なるコードを使うことがあるので、しばしば独自の癖があります。</p>
 <p>X ディスプレイが当たり前の今となっては、「なんでわざわざ？」と疑問に思うかもしれません。確かに文字表示端末は時代遅れな技術ではありますが、ニッチな領域が存在していて、意匠を凝らすことができるため、未だ価値あるものとなっています。その領域は例えば X サーバを持たない、小さな机上用コンピュータや組み込みの Unix です。他のものとしては OS インストーラーやカーネル設定ツールなどで、これらは X が利用できるようになる前に動作する必要があります。</p>
-<p>curses ライブラリは異なる端末の詳細を全て隠蔽し、プログラマに対して、重なり合わない複数のウィンドウを持つ抽象化されたディスプレイを提供します。ウィンドウの内容は様々な方法で変更されます &#8211; テキストの追加、消去、外観の変更 &#8211; そして curses ライブラリは送るべき制御コードを自動的に理解し、正しい出力を生成してくれます。</p>
+<p>The curses library hides all the details of different terminals, and provides
+the programmer with an abstraction of a display, containing multiple
+non-overlapping windows.  The contents of a window can be changed in various
+ways&#8212;adding text, erasing it, changing its appearance&#8212;and the curses library
+will automagically figure out what control codes need to be sent to the terminal
+to produce the right output.</p>
 <p>curses ライブラリは元々 BSD UNIX 向けに書かれました; 後の AT&amp;T から出た Unix System V バージョンで多くの機能と新機能が追加されました。BSD curses はいまやメンテナンスされておらず、これは AT&amp;T インターフェースのオープンソース実装である ncurses にとって置き換えられました。Linux や FreeBSD のようなオープンソース Unix を利用している場合は、おそらくシステムは ncurses を利用しています。現在のほとんどの商用 Unix は System V のコードを基にしているため、ここで述べる全ての関数が利用できるはずです。しかし、古いバージョンの curses を持ついくつかのプロプライエタリ Unix は全てには対応していないでしょう。</p>
 <p>curses モジュールの Windows 移植は作られていません。 Windows プラットフォーム上では、Fredrik Lundh が書いた Console モジュールを試してみてください。 Console モジュールはカーソル位置を指定してテキスト出力することができ、マウス、キーボード入力の両方を完全にサポートしていて、 <a class="reference external" href="http://effbot.org/zone/console-index.htm">http://effbot.org/zone/console-index.htm</a> から入手できます。</p>
 <div class="section" id="the-python-curses-module">
@@ -135,7 +141,13 @@
 </pre></div>
 </div>
 <p>curses アプリケーションをデバッグするときの一般的な問題は、アプリケーションが端末を以前の状態に復旧することなく異常終了したときに端末がめちゃめちゃになることです。Python ではこの問題はコードにバグがあって、捕捉できない例外が発生したときによく起きます。タイプしたキーはもはやエコーされません、例えば、シェルを使うのが難しくなります。</p>
-<p>Python では <a class="reference internal" href="../library/curses.html#curses.wrapper" title="curses.wrapper"><code class="xref py py-mod docutils literal"><span class="pre">curses.wrapper</span></code></a> をインポートすることでこの複雑な問題を避け、デバッグを容易にすることができます。それは呼び出し可能オブジェクトを引数にとることができる <code class="xref py py-func docutils literal"><span class="pre">wrapper()</span></code> 関数を提供します。これは上に述べた初期化をし、カラーサポートがあればカラーの初期化をします。そして、与えられた呼び出し可能オブジェクトを実行し、最終的に適切に初期化の逆操作 (deinitialization) を行います。呼び出し可能オブジェクトは例外を捕捉する try-catch 節内部で呼び出され、 curses の初期化操作の逆操作を実行します、そして例外が上に渡されます。そうして端末は例外が発生しても端末はおかしな状態にならずにすみます。</p>
+<p>In Python you can avoid these complications and make debugging much easier by
+importing the <a class="reference internal" href="../library/curses.html#curses.wrapper" title="curses.wrapper"><code class="xref py py-func docutils literal"><span class="pre">curses.wrapper()</span></code></a> function.  It takes a callable and does
+the initializations described above, also initializing colors if color support
+is present.  It then runs your provided callable and finally deinitializes
+appropriately.  The callable is called inside a try-catch clause which catches
+exceptions, performs curses deinitialization, and then passes the exception
+upwards.  Thus, your terminal won&#8217;t be left in a funny state on exception.</p>
 </div>
 <div class="section" id="windows-and-pads">
 <h2>ウィンドウとパッド<a class="headerlink" href="#windows-and-pads" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -350,8 +362,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/curses.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/curses.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -395,12 +408,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

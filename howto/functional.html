@@ -37,6 +37,7 @@
     <link rel="next" title="Logging HOWTO" href="logging.html" />
     <link rel="prev" title="Python 良い慣用句、悪い慣用句" href="doanddont.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/functional.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -241,7 +242,10 @@
 <div class="section" id="generator-expressions-and-list-comprehensions">
 <h2>ジェネレータ式とリスト内包表記<a class="headerlink" href="#generator-expressions-and-list-comprehensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>イテレータの出力に対してよく使う操作トップ 2 は、(1) ひとつずつ全要素に操作を実行する、および (2) 条件に合う要素でサブセットを作る、です。たとえば文字列のリストなら、各行のうしろに付いた邪魔なホワイトスペースを削りたいとか、特定の文字列を含む部分をピックアップしたいなどと思うかもしれません。</p>
-<p>リスト内包表記とジェネレータ式 (略して「listcomp」と「genexp」) は、そうした操作向けの簡潔な表記方法です。これは関数型プログラミング言語 Haskell (<a class="reference external" href="http://www.haskell.org">http://www.haskell.org</a>) にインスパイアされました。文字列のストリームからホワイトスペースをすべて削るのは次のコードでできます:</p>
+<p>List comprehensions and generator expressions (short form: &#8220;listcomps&#8221; and
+&#8220;genexps&#8221;) are a concise notation for such operations, borrowed from the
+functional programming language Haskell (<a class="reference external" href="https://www.haskell.org/">https://www.haskell.org/</a>).  You can strip
+all the whitespace from a stream of strings with the following code:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">line_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;  line 1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;line 2  </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 
 <span class="c1"># Generator expression -- returns iterator</span>
@@ -281,14 +285,14 @@
         <span class="k">continue</span>   <span class="c1"># Skip this element</span>
     <span class="k">for</span> <span class="n">expr2</span> <span class="ow">in</span> <span class="n">sequence2</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">condition2</span><span class="p">):</span>
-            <span class="k">continue</span>    <span class="c1"># Skip this element</span>
+            <span class="k">continue</span>   <span class="c1"># Skip this element</span>
         <span class="o">...</span>
         <span class="k">for</span> <span class="n">exprN</span> <span class="ow">in</span> <span class="n">sequenceN</span><span class="p">:</span>
-             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">conditionN</span><span class="p">):</span>
-                 <span class="k">continue</span>   <span class="c1"># Skip this element</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">conditionN</span><span class="p">):</span>
+                <span class="k">continue</span>   <span class="c1"># Skip this element</span>
 
-             <span class="c1"># Output the value of</span>
-             <span class="c1"># the expression.</span>
+            <span class="c1"># Output the value of</span>
+            <span class="c1"># the expression.</span>
 </pre></div>
 </div>
 <p>つまり、複数の <code class="docutils literal"><span class="pre">for...in</span></code> 節があって <code class="docutils literal"><span class="pre">if</span></code> がないときの最終出力は、長さが各シーケンス長の積に等しくなるということです。長さ 3 のリスト二つなら、出力リストの長さは 9 要素です:</p>
@@ -789,19 +793,26 @@ Winter; adds short section on the operator module; a few other edits.</p>
 <h2>参考資料<a class="headerlink" href="#references" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="general">
 <h3>一般論<a class="headerlink" href="#general" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Harold Abelson と Gerald Jay Sussman, Julie Sussman による <strong>Structure and Interpretation of Computer Programs</strong> 。 <a class="reference external" href="http://mitpress.mit.edu/sicp/">http://mitpress.mit.edu/sicp/</a> に全文があります。この計算機科学に関する古典的な教科書では、 2 章と 3 章でデータフローをプログラム内でまとめるためのシーケンスとストリームの利用について議論しています。この本は例として Scheme を使っていますが、これらの章内の多くのデザインアプローチは関数スタイルな Python コードにも適用できます。</p>
+<p><strong>Structure and Interpretation of Computer Programs</strong>, by Harold Abelson and
+Gerald Jay Sussman with Julie Sussman.  Full text at
+<a class="reference external" href="https://mitpress.mit.edu/sicp/">https://mitpress.mit.edu/sicp/</a>.  In this classic textbook of computer science,
+chapters 2 and 3 discuss the use of sequences and streams to organize the data
+flow inside a program.  The book uses Scheme for its examples, but many of the
+design approaches described in these chapters are applicable to functional-style
+Python code.</p>
 <p><a class="reference external" href="http://www.defmacro.org/ramblings/fp.html">http://www.defmacro.org/ramblings/fp.html</a>: 関数プログラミングの一般的な入門で Java での例を利用していて、長大な歴史の紹介があります。</p>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/Functional_programming">http://en.wikipedia.org/wiki/Functional_programming</a>: 関数プログラミングに関する一般的な内容の記事 (訳注: 日本語版 Wikipedia に <a class="reference external" href="http://ja.wikipedia.org/wiki/%E9%96%A2%E6%95%B0%E5%9E%8B%E8%A8%80%E8%AA%9E">関数型言語</a> に関する記事があります。) 。</p>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/Coroutine">http://en.wikipedia.org/wiki/Coroutine</a>: コルーチンに関する記事 (訳注: 日本語版 Wikipedia に <a class="reference external" href="http://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%AB%E3%83%BC%E3%83%81%E3%83%B3">コルーチン</a> に関する記事があります。) 。</p>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/Currying">http://en.wikipedia.org/wiki/Currying</a>: カリー化の概念に関する記事 (訳注: 日本語版 Wikipedia に <a class="reference external" href="http://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AA%E3%83%BC%E5%8C%96">カリー化</a> に関する記事があります。) 。</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Functional_programming">https://en.wikipedia.org/wiki/Functional_programming</a>: General Wikipedia entry
+describing functional programming.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Coroutine">https://en.wikipedia.org/wiki/Coroutine</a>: Entry for coroutines.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Currying">https://en.wikipedia.org/wiki/Currying</a>: Entry for the concept of currying.</p>
 </div>
 <div class="section" id="python-specific">
 <h3>Python 特有の話<a class="headerlink" href="#python-specific" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="http://gnosis.cx/TPiP/">http://gnosis.cx/TPiP/</a>: David Mertz&#8217;s の本の最初の章 <cite>Text Processing in Python</cite> では文書処理のための関数プログラミングについて議論しています、この議論の節には &#8220;Utilizing Higher-Order Functions in Text Processing&#8221; というタイトルがついています。</p>
 <p>Mertz は IBM の DeveloperWorks サイトで関数型プログラミングについての3部作の記事も書いています;</p>
-<p><a class="reference external" href="http://www.ibm.com/developerworks/linux/library/l-prog/index.html">part 1</a>,
-<a class="reference external" href="http://www.ibm.com/developerworks/linux/library/l-prog2/index.html">part 2</a>, and
-<a class="reference external" href="http://www.ibm.com/developerworks/linux/library/l-prog3/index.html">part 3</a>,</p>
+<p><a class="reference external" href="https://www.ibm.com/developerworks/linux/library/l-prog/index.html">part 1</a>,
+<a class="reference external" href="https://www.ibm.com/developerworks/linux/library/l-prog2/index.html">part 2</a>, and
+<a class="reference external" href="https://www.ibm.com/developerworks/linux/library/l-prog3/index.html">part 3</a>,</p>
 </div>
 <div class="section" id="python-documentation">
 <h3>Python 文書<a class="headerlink" href="#python-documentation" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -872,8 +883,9 @@ features in Python 2.5.</p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/functional.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/functional.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -917,12 +929,12 @@ features in Python 2.5.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

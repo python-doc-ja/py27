@@ -37,6 +37,7 @@
     <link rel="next" title="18.8. MimeWriter — 汎用 MIME ファイルライター" href="mimewriter.html" />
     <link rel="prev" title="18.6. mimetools — MIME メッセージを解析するためのツール" href="mimetools.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/mimetypes.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,7 +82,7 @@
             
   <div class="section" id="module-mimetypes">
 <span id="mimetypes-map-filenames-to-mime-types"></span><h1>18.7. <a class="reference internal" href="#module-mimetypes" title="mimetypes: Mapping of filename extensions to MIME types."><code class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></code></a> &#8212; ファイル名を MIME 型へマップする<a class="headerlink" href="#module-mimetypes" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/mimetypes.py">Lib/mimetypes.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/mimetypes.py">Lib/mimetypes.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-mimetypes" title="mimetypes: Mapping of filename extensions to MIME types."><code class="xref py py-mod docutils literal"><span class="pre">mimetypes</span></code></a> モジュールは、ファイル名あるいは URL と、ファイル名拡張子に関連付けられた MIME 型とを変換します。ファイル名から MIME 型へと、 MIME 型からファイル名拡張子への変換が提供されます; 後者の変換では符号化方式はサポートされていません。</p>
 <p>このモジュールは、一つのクラスと多くの便利な関数を提供します。これらの関数がこのモジュールへの標準のインターフェースですが、アプリケーションによっては、そのクラスにも関係するかもしれません。</p>
@@ -91,7 +92,11 @@
 <code class="descclassname">mimetypes.</code><code class="descname">guess_type</code><span class="sig-paren">(</span><em>url</em>, <em>strict=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mimetypes.guess_type" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p id="index-1"><em>url</em> で与えられるファイル名あるいは URL に基づいて、ファイルの型を推定します。戻り値は、タプル <code class="docutils literal"><span class="pre">(type,</span> <span class="pre">encoding)</span></code> です、ここで  <em>type</em> は、もし型が(拡張子がないあるいは未定義のため)推定できない場合は、 <code class="docutils literal"><span class="pre">None</span></code> を、あるいは、 MIME <em class="mailheader">content-type</em> ヘッダ  に利用できる、 <code class="docutils literal"><span class="pre">'type/subtype'</span></code> の形の文字列です。</p>
 <p><em>encoding</em> は、符合化方式がない場合は <code class="docutils literal"><span class="pre">None</span></code> を、あるいは、符号化に使われるプログラムの名前 (たとえば、 <strong class="program">compress</strong> あるいは <strong class="program">gzip</strong>)です。符号化方式は <em class="mailheader">Content-Encoding</em> ヘッダとして使うのに適しており、 <em class="mailheader">Content-Transfer-Encoding</em> ヘッダには適して <strong>いません</strong> 。マッピングはテーブルドリブンです。符号化方式のサフィックスは大/小文字を区別します; データ型サフィックスは、最初大/小文字を区別して試し、それから大/小文字を区別せずに試します。</p>
-<p>省略可能な <em>strict</em> 引数は、既知の MIME 型のリストとして認識されるものが、<a class="reference external" href="http://www.iana.org/assignments/media-types/media-types.xhtml">IANAに登録された</a> 正式な型のみに限定されるかどうかを指定するフラグです。<em>strict</em> が true (デフォルト)の時は、IANA 型のみがサポートされます; <em>strict</em> が false のときは、いくつかの追加の、非標準ではあるが、一般的に使用される MIME 型も認識されます。</p>
+<p>The optional <em>strict</em> argument is a flag specifying whether the list of known MIME types
+is limited to only the official types <a class="reference external" href="https://www.iana.org/assignments/media-types/media-types.xhtml">registered with IANA</a>.
+When <em>strict</em> is <code class="docutils literal"><span class="pre">True</span></code> (the default), only the IANA types are supported; when
+<em>strict</em> is <code class="docutils literal"><span class="pre">False</span></code>, some additional non-standard but commonly used MIME types
+are also recognized.</p>
 </dd></dl>
 
 <dl class="function">
@@ -283,8 +288,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/mimetypes.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/mimetypes.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -329,12 +335,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

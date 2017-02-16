@@ -37,6 +37,7 @@
     <link rel="next" title="31.5. pkgutil — パッケージ拡張ユーティリティ" href="pkgutil.html" />
     <link rel="prev" title="31.3. imputil — Import ユーティリティ" href="imputil.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/zipimport.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -92,7 +93,7 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><a class="reference external" href="http://www.pkware.com/documents/casestudies/APPNOTE.TXT">PKZIP Application Note</a></dt>
+<dt><a class="reference external" href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT">PKZIP Application Note</a></dt>
 <dd><p class="first last">ZIP ファイルフォーマットおよびアルゴリズムを作成した Phil Katz によるドキュメント。</p>
 </dd>
 <dt><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0273"><strong>PEP 273</strong></a> - Import Modules from Zip Archives</dt>
@@ -181,21 +182,22 @@
 </div>
 <div class="section" id="examples">
 <span id="zipimport-examples"></span><h2>31.4.2. 例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>モジュールを ZIP アーカイブから import する例を以下に示します - <a class="reference internal" href="#module-zipimport" title="zipimport: support for importing Python modules from ZIP archives."><code class="xref py py-mod docutils literal"><span class="pre">zipimport</span></code></a> モジュールが明示的に使われていないことに注意してください。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ unzip -l example.zip
-Archive:  example.zip
-  Length     Date   Time    Name
- --------    ----   ----    ----
-     8467  11-26-02 22:30   jwzthreading.py
- --------                   -------
-     8467                   1 file
-$ ./python
-Python 2.3 (#1, Aug 1 2003, 19:54:32)
-&gt;&gt;&gt; import sys
-&gt;&gt;&gt; sys.path.insert(0, &#39;example.zip&#39;)  # Add .zip file to front of path
-&gt;&gt;&gt; import jwzthreading
-&gt;&gt;&gt; jwzthreading.__file__
-&#39;example.zip/jwzthreading.py&#39;
+<p>Here is an example that imports a module from a ZIP archive - note that the
+<a class="reference internal" href="#module-zipimport" title="zipimport: support for importing Python modules from ZIP archives."><code class="xref py py-mod docutils literal"><span class="pre">zipimport</span></code></a> module is not explicitly used.</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> unzip -l example.zip
+<span class="go">Archive:  example.zip</span>
+<span class="go">  Length     Date   Time    Name</span>
+<span class="go"> --------    ----   ----    ----</span>
+<span class="go">     8467  11-26-02 22:30   jwzthreading.py</span>
+<span class="go"> --------                   -------</span>
+<span class="go">     8467                   1 file</span>
+<span class="gp">$</span> ./python
+<span class="go">Python 2.3 (#1, Aug 1 2003, 19:54:32)</span>
+<span class="gp">&gt;</span>&gt;&gt; import sys
+<span class="gp">&gt;</span>&gt;&gt; sys.path.insert<span class="o">(</span><span class="m">0</span>, <span class="s1">&#39;example.zip&#39;</span><span class="o">)</span>  <span class="c1"># Add .zip file to front of path</span>
+<span class="gp">&gt;</span>&gt;&gt; import jwzthreading
+<span class="gp">&gt;</span>&gt;&gt; jwzthreading.__file__
+<span class="go">&#39;example.zip/jwzthreading.py&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -225,8 +227,9 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/zipimport.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/zipimport.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -271,12 +274,12 @@ Python 2.3 (#1, Aug 1 2003, 19:54:32)
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

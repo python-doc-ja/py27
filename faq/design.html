@@ -37,6 +37,7 @@
     <link rel="next" title="ライブラリと拡張 FAQ" href="library.html" />
     <link rel="prev" title="プログラミング FAQ" href="programming.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/faq/design.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -92,7 +93,13 @@
 </div>
 <p>この条件文が真の時のみ実行されるのは <code class="docutils literal"><span class="pre">x++</span></code> 文だけですが、このインデントでは誤解を招きます。経験を積んだ C プログラマでさえ、 <code class="docutils literal"><span class="pre">y</span></code> が <code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code> の時にもデクリメントされるのはなぜか分からず長いこと立ち止まることがあるでしょう。</p>
 <p>開始/終了の括弧がないので、Python はコーディングスタイルの対立が非常に起こりにくくなります。C では多様なカッコの置き方があります。一つのスタイルでのコードの読み書きに慣れてしまうと、他のスタイルを読む (あるいは書く必要がある) ときにむずむずするでしょう。</p>
-<p>多くのコーディングスタイルは開始/終了の括弧にそれぞれ一行を使います。これではプログラムは冗長になって画面を浪費し、プログラムの見通しが悪くなります。一つの関数は一画面 (例えば 20 - 30 行) に収めるのが理想です。 20 行の Python は20行の C よりもはるかに多くの作業ができます。これは開始/終了の括弧がないからだけではありません &#8211; 宣言が不要なことや高レベルなデータ型もその理由です &#8211; が、インデントに基づく構文は確かに役に立っています。</p>
+<p>Many coding styles place begin/end brackets on a line by themselves.  This makes
+programs considerably longer and wastes valuable screen space, making it harder
+to get a good overview of a program.  Ideally, a function should fit on one
+screen (say, 20&#8211;30 lines).  20 lines of Python can do a lot more work than 20
+lines of C.  This is not solely due to the lack of begin/end brackets &#8211; the
+lack of declarations and the high-level data types are also responsible &#8211; but
+the indentation-based syntax certainly helps.</p>
 </div>
 <div class="section" id="why-am-i-getting-strange-results-with-simple-arithmetic-operations">
 <h2>なぜ単純な算術演算が奇妙な結果になるのですか？<a class="headerlink" href="#why-am-i-getting-strange-results-with-simple-arithmetic-operations" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -153,7 +160,7 @@
     <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
         <span class="k">break</span>
-    <span class="o">...</span> <span class="c1"># do something with line</span>
+    <span class="o">...</span>  <span class="c1"># do something with line</span>
 </pre></div>
 </div>
 <p>Python の式中での代入を許さない理由は、この構造によって起こる、他の言語ではありがちで見つけづらいバグです:</p>
@@ -171,14 +178,14 @@
 <p>以下の方法でもこれを綴ることができて、魅力的そうですが、堅牢さでは &#8220;while True&#8221; を使う方法に劣ることが多いです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
 <span class="k">while</span> <span class="n">line</span><span class="p">:</span>
-    <span class="o">...</span> <span class="c1"># do something with line...</span>
+    <span class="o">...</span>  <span class="c1"># do something with line...</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>この方法の問題は、次の行を取得する方法を変えたくなったとき (<code class="docutils literal"><span class="pre">sys.stdin.readline()</span></code> に変更したい時など) にプログラムの二箇所を変えなくてはならないことです &#8211; 二つ目の場所はループの最後に隠れています。</p>
 <p>一番いいのはイテレータを使って、 <code class="docutils literal"><span class="pre">for</span></code> 文でオブジェクトを通してループさせることです。例えば、ファイルオブジェクトはイテレータプロトコルをサポートしているので、単純にこう書けます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-    <span class="o">...</span> <span class="c1"># do something with line...</span>
+    <span class="o">...</span>  <span class="c1"># do something with line...</span>
 </pre></div>
 </div>
 </div>
@@ -282,7 +289,9 @@
 <p>内部的には、Python のソースコードはいつもバイトコード表現に翻訳されていて、そのバイトコードが Python の仮想マシンによって実行されます。めったに変更されないモジュールの解析が繰り返されることによるオーバーヘッドを避けるため、このバイトコードはモジュールが解析されるたびに名前が &#8221;.pic&#8221; で終わるファイルに書きこまれます。対応する .py ファイルが変更されたとき、そのファイルは再び解析および翻訳されて .pyc ファイルは書き直されます。</p>
 <p>一旦 .pyc ファイルが読み込まれればパフォーマンスの差はなく、 .pyc ファイルから読み込まれたバイトコードも、直接の変換により生成されたバイトコードも全く同じです。唯一の違いは、.pyc ファイルからコードを読み込むのは .py ファイルを解析して翻訳するのよりも速いことなので、予めコンパイルされた .pyc ファイルがあると Python スクリプトの起動時間が改善します。必要なら、 Lib/compileall.py モジュールで、与えられたモジュール群の適切な .pyc ファイルを生成できます。</p>
 <p>なお、Python によって実行されるメインスクリプトは、たとえそのファイル名が .py で終わっていても、.pyc ファイルにコンパイルされません。バイトコードには変換されますが、そのバイトコードはファイルに保存されません。たいていメインスクリプトはとても短いので、これでも大きく速度を落とすことにはなりません。</p>
-<p>Python と C のコードを様々な方法で混合して簡単にパフォーマンスを向上させるプログラムがいくつかあります。例えば <a class="reference external" href="http://cython.org/">Cython</a> , <a class="reference external" href="http://psyco.sourceforge.net/">Psyco</a> , <a class="reference external" href="http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/">Pyrex</a> , <a class="reference external" href="http://pyinline.sourceforge.net/">PyInline</a> , <a class="reference external" href="http://sourceforge.net/projects/py2cmod/">Py2Cmod</a> , <a class="reference external" href="http://docs.scipy.org/doc/scipy-dev/reference/tutorial/weave.html">Weave</a> を参照してください。</p>
+<p>There are also several programs which make it easier to intermingle Python and C
+code in various ways to increase performance.  See, for example, <a class="reference external" href="http://cython.org/">Cython</a> , <a class="reference external" href="http://psyco.sourceforge.net/">Psyco</a>, <a class="reference external" href="https://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/">Pyrex</a>, <a class="reference external" href="http://pyinline.sourceforge.net/">PyInline</a>, <a class="reference external" href="http://sourceforge.net/projects/py2cmod/">Py2Cmod</a>, and
+<a class="reference external" href="https://docs.scipy.org/doc/scipy-dev/reference/tutorial/weave.html">Weave</a>.</p>
 </div>
 <div class="section" id="how-does-python-manage-memory">
 <h2>Python はメモリをどのように管理するのですか？<a class="headerlink" href="#how-does-python-manage-memory" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -358,8 +367,10 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ListWrapper</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">the_list</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">the_list</span> <span class="o">=</span> <span class="n">the_list</span>
+
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_list</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">the_list</span>
+
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_list</span>
         <span class="n">result</span> <span class="o">=</span> <span class="mi">98767</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">*</span><span class="mi">555</span>
@@ -380,7 +391,7 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
 <p>パフォーマンスが問題となる状況では、ソートするためだけにリストのコピーを作るのは無駄が多いです。そこで、 <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> はインプレースにリストをソートします。このことを忘れないため、この関数はソートされたリストを返しません。こうすることで、ソートされたコピーが必要で、ソートされていないものも残しておきたいときに、うっかり上書きしてしまうようなことがなくなります。</p>
 <p>Python 2.4 で、新しい関数 &#8211; <a class="reference internal" href="../library/functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> &#8211; が追加されました。この関数は、与えられたイテレート可能から新しいリストを生成し、ソートして返します。例えば、辞書のキーをソートされた順序でイテレートする方法は:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mydict</span><span class="p">):</span>
-    <span class="o">...</span> <span class="c1"># do whatever with mydict[key]...</span>
+    <span class="o">...</span>  <span class="c1"># do whatever with mydict[key]...</span>
 </pre></div>
 </div>
 </div>
@@ -399,11 +410,11 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">label</span><span class="p">:</span> <span class="k">pass</span>  <span class="c1"># declare a label</span>
 
 <span class="k">try</span><span class="p">:</span>
-     <span class="o">...</span>
-     <span class="k">if</span> <span class="n">condition</span><span class="p">:</span> <span class="k">raise</span> <span class="n">label</span><span class="p">()</span>  <span class="c1"># goto label</span>
-     <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="k">if</span> <span class="n">condition</span><span class="p">:</span> <span class="k">raise</span> <span class="n">label</span><span class="p">()</span>  <span class="c1"># goto label</span>
+    <span class="o">...</span>
 <span class="k">except</span> <span class="n">label</span><span class="p">:</span>  <span class="c1"># where to goto</span>
-     <span class="k">pass</span>
+    <span class="k">pass</span>
 <span class="o">...</span>
 </pre></div>
 </div>
@@ -547,8 +558,9 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/faq/design.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/faq/design.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -592,12 +604,12 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

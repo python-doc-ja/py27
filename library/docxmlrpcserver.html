@@ -37,6 +37,7 @@
     <link rel="next" title="21. マルチメディアサービス" href="mm.html" />
     <link rel="prev" title="20.24. SimpleXMLRPCServer — 基本的なXML-RPCサーバー" href="simplexmlrpcserver.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/docxmlrpcserver.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -88,7 +89,10 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
-<p><a class="reference internal" href="#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-mod docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> モジュールは <a class="reference internal" href="simplexmlrpcserver.html#module-SimpleXMLRPCServer" title="SimpleXMLRPCServer: Basic XML-RPC server implementation."><code class="xref py py-mod docutils literal"><span class="pre">SimpleXMLRPCServer</span></code></a> クラスを拡張し、HTTP GET リクエストに対し HTML ドキュメントを返します。サーバは <a class="reference internal" href="#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> を使ったスタンドアロン環境、 <a class="reference internal" href="#DocXMLRPCServer.DocCGIXMLRPCRequestHandler" title="DocXMLRPCServer.DocCGIXMLRPCRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">DocCGIXMLRPCRequestHandler</span></code></a> を使った CGI 環境の2つがあります。</p>
+<p>The <a class="reference internal" href="#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-mod docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> module extends the classes found in
+<a class="reference internal" href="simplexmlrpcserver.html#module-SimpleXMLRPCServer" title="SimpleXMLRPCServer: Basic XML-RPC server implementation."><code class="xref py py-mod docutils literal"><span class="pre">SimpleXMLRPCServer</span></code></a> to serve HTML documentation in response to HTTP GET
+requests. Servers can either be free standing, using <a class="reference internal" href="#DocXMLRPCServer.DocXMLRPCServer" title="DocXMLRPCServer.DocXMLRPCServer"><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a>,
+or embedded in a CGI environment, using <a class="reference internal" href="#DocXMLRPCServer.DocCGIXMLRPCRequestHandler" title="DocXMLRPCServer.DocCGIXMLRPCRequestHandler"><code class="xref py py-class docutils literal"><span class="pre">DocCGIXMLRPCRequestHandler</span></code></a>.</p>
 <dl class="class">
 <dt id="DocXMLRPCServer.DocXMLRPCServer">
 <em class="property">class </em><code class="descclassname">DocXMLRPCServer.</code><code class="descname">DocXMLRPCServer</code><span class="sig-paren">(</span><em>addr</em><span class="optional">[</span>, <em>requestHandler</em><span class="optional">[</span>, <em>logRequests</em><span class="optional">[</span>, <em>allow_none</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>bind_and_activate</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#DocXMLRPCServer.DocXMLRPCServer" title="この定義へのパーマリンク">¶</a></dt>
@@ -104,12 +108,20 @@
 <dl class="class">
 <dt id="DocXMLRPCServer.DocXMLRPCRequestHandler">
 <em class="property">class </em><code class="descclassname">DocXMLRPCServer.</code><code class="descname">DocXMLRPCRequestHandler</code><a class="headerlink" href="#DocXMLRPCServer.DocXMLRPCRequestHandler" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>リクエスト・ハンドラの新たなインスタンスを生成します。このリクエスト・ハンドラは XML-RPC POST リクエスト、ドキュメントの GET、そして <a class="reference internal" href="#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> コンストラクタに与えられた <em>logRequests</em> パラメータ設定を優先するため、ロギングの変更をサポートします。</p>
+<dd><p>Create a new request handler instance. This request handler supports XML-RPC
+POST requests, documentation GET requests, and modifies logging so that the
+<em>logRequests</em> parameter to the <a class="reference internal" href="#DocXMLRPCServer.DocXMLRPCServer" title="DocXMLRPCServer.DocXMLRPCServer"><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> constructor parameter is
+honored.</p>
 </dd></dl>
 
 <div class="section" id="docxmlrpcserver-objects">
 <span id="doc-xmlrpc-servers"></span><h2>20.25.1. DocXMLRPCServer オブジェクト<a class="headerlink" href="#docxmlrpcserver-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#module-DocXMLRPCServer" title="DocXMLRPCServer: Self-documenting XML-RPC server implementation."><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> は <a class="reference internal" href="simplexmlrpcserver.html#SimpleXMLRPCServer.SimpleXMLRPCServer" title="SimpleXMLRPCServer.SimpleXMLRPCServer"><code class="xref py py-class docutils literal"><span class="pre">SimpleXMLRPCServer.SimpleXMLRPCServer</span></code></a> の派生クラスで、セルフ- ドキュメンティングの手段と XML-RPC サーバ機能を提供します。HTTP POST リクエストは XML-RPC メソッドの呼び出しとして扱われます。HTTP GET リクエストは pydoc スタイルの HTML ドキュメント生成のリクエストとして扱われます。これはサーバが自分自身のドキュメントを Web ベースで提供可能であることを意味します。</p>
+<p>The <a class="reference internal" href="#DocXMLRPCServer.DocXMLRPCServer" title="DocXMLRPCServer.DocXMLRPCServer"><code class="xref py py-class docutils literal"><span class="pre">DocXMLRPCServer</span></code></a> class is derived from
+<a class="reference internal" href="simplexmlrpcserver.html#SimpleXMLRPCServer.SimpleXMLRPCServer" title="SimpleXMLRPCServer.SimpleXMLRPCServer"><code class="xref py py-class docutils literal"><span class="pre">SimpleXMLRPCServer.SimpleXMLRPCServer</span></code></a> and provides a means of creating
+self-documenting, stand alone XML-RPC servers. HTTP POST requests are handled as
+XML-RPC method calls. HTTP GET requests are handled by generating pydoc-style
+HTML documentation. This allows a server to provide its own web-based
+documentation.</p>
 <dl class="method">
 <dt id="DocXMLRPCServer.DocXMLRPCServer.set_server_title">
 <code class="descclassname">DocXMLRPCServer.</code><code class="descname">set_server_title</code><span class="sig-paren">(</span><em>server_title</em><span class="sig-paren">)</span><a class="headerlink" href="#DocXMLRPCServer.DocXMLRPCServer.set_server_title" title="この定義へのパーマリンク">¶</a></dt>
@@ -177,8 +189,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/docxmlrpcserver.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/docxmlrpcserver.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -223,12 +236,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

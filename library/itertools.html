@@ -37,6 +37,7 @@
     <link rel="next" title="9.8. functools — 高次関数と呼び出し可能オブジェクトの操作" href="functools.html" />
     <link rel="prev" title="9.6. random — 擬似乱数を生成する" href="random.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/itertools.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -281,7 +282,10 @@
 <dl class="function">
 <dt id="itertools.chain">
 <code class="descclassname">itertools.</code><code class="descname">chain</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.chain" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>先頭の iterable の全要素を返し、次に2番目の iterable の全要素…と全 iterable の要素を返すイテレータを作成します。連続したシーケンスを、一つのシーケンスとして扱う場合に使用します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that returns elements from the first iterable until it is
+exhausted, then proceeds to the next iterable, until all of the iterables are
+exhausted.  Used for treating consecutive sequences as a single sequence.
+Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># chain(&#39;ABC&#39;, &#39;DEF&#39;) --&gt; A B C D E F</span>
     <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">:</span>
@@ -313,7 +317,7 @@
 <dd><p>入力 <em>iterable</em> の要素からなる長さ <em>r</em> の部分列を返します。</p>
 <p>組合せ(combination)は辞書式順序で出力されます。したがって、入力 <em>iterable</em> がソートされていれば、組合せのタプルは整列された形で生成されます。</p>
 <p>各要素は場所に基づいて一意に取り扱われ、値には依りません。入力された要素がバラバラならば、各組合せの中に重複した値は現れません。</p>
-<p>次と等価です:</p>
+<p>Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="c1"># combinations(&#39;ABCD&#39;, 2) --&gt; AB AC AD BC BD CD</span>
     <span class="c1"># combinations(range(4), 3) --&gt; 012 013 023 123</span>
@@ -356,7 +360,7 @@
 <dd><p>入力 <em>iterable</em> から、それぞれの要素が複数回現れることを許して、長さ <em>r</em> の要素の部分列を返します。</p>
 <p>組合せ(combination)は辞書式順序で出力されます。したがって、入力 <em>iterable</em> がソートされていれば、組合せのタプルは整列された形で生成されます。</p>
 <p>要素は、値ではなく位置に基づいて一意に扱われます。ですから、入力の要素が一意であれば、生成された組合せも一意になります。</p>
-<p>次と等価です:</p>
+<p>Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations_with_replacement</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="c1"># combinations_with_replacement(&#39;ABC&#39;, 2) --&gt; AA AB AC BB BC CC</span>
     <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -393,7 +397,10 @@
 <dl class="function">
 <dt id="itertools.compress">
 <code class="descclassname">itertools.</code><code class="descname">compress</code><span class="sig-paren">(</span><em>data</em>, <em>selectors</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.compress" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>data</em> の要素から、<em>selectors</em> の対応する要素が <code class="docutils literal"><span class="pre">True</span></code> と評価されるものだけを返す、フィルタリングしたイテレータを作ります。<em>data</em> と <em>selectors</em> のどちらかが尽きたときに止まります。以下と等価です:</p>
+<dd><p>Make an iterator that filters elements from <em>data</em> returning only those that
+have a corresponding element in <em>selectors</em> that evaluates to <code class="docutils literal"><span class="pre">True</span></code>.
+Stops when either the <em>data</em> or <em>selectors</em> iterables has been exhausted.
+Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compress</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">):</span>
     <span class="c1"># compress(&#39;ABCDEF&#39;, [1,0,1,0,1,1]) --&gt; A C E F</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span><span class="p">)</span>
@@ -426,7 +433,9 @@
 <dl class="function">
 <dt id="itertools.cycle">
 <code class="descclassname">itertools.</code><code class="descname">cycle</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.cycle" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>iterable から要素を取得し、同時にそのコピーを保存するイテレータを作成します。iterable の全要素を返すと、セーブされたコピーから要素を返し、これを無限に繰り返します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator returning elements from the iterable and saving a copy of each.
+When the iterable is exhausted, return elements from the saved copy.  Repeats
+indefinitely.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cycle</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># cycle(&#39;ABCD&#39;) --&gt; A B C D A B C D A B C D ...</span>
     <span class="n">saved</span> <span class="o">=</span> <span class="p">[]</span>
@@ -444,7 +453,10 @@
 <dl class="function">
 <dt id="itertools.dropwhile">
 <code class="descclassname">itertools.</code><code class="descname">dropwhile</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.dropwhile" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>predicate が真である限りは要素を無視し、その後は全ての要素を返すイテレータを作成します。このイテレータは、predicate が最初に偽になるまで <em>全く</em> 要素を返さないため、要素を返し始めるまでに長い時間がかかる場合があります。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that drops elements from the iterable as long as the predicate
+is true; afterwards, returns every element.  Note, the iterator does not produce
+<em>any</em> output until the predicate first becomes false, so it may have a lengthy
+start-up time.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dropwhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># dropwhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 6 4 1</span>
     <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -472,7 +484,7 @@
     <span class="n">uniquekeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal"><span class="pre">groupby()</span></code></a> は以下のコードと等価です:</p>
+<p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal"><span class="pre">groupby()</span></code></a> is roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">groupby</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1"># [k for k, g in groupby(&#39;AAAABBBCCDAABBB&#39;)] --&gt; A B C D A B</span>
     <span class="c1"># [list(g) for k, g in groupby(&#39;AAAABBBCCD&#39;)] --&gt; AAAA BBB CC D</span>
@@ -505,7 +517,9 @@
 <dl class="function">
 <dt id="itertools.ifilter">
 <code class="descclassname">itertools.</code><code class="descname">ifilter</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.ifilter" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>predicateが <code class="docutils literal"><span class="pre">True</span></code> となる要素だけを返すイテレータを作成します。<em>predicate</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、値が真であるアイテムだけを返します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that filters elements from iterable returning only those for
+which the predicate is <code class="docutils literal"><span class="pre">True</span></code>. If <em>predicate</em> is <code class="docutils literal"><span class="pre">None</span></code>, return the items
+that are true. Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ifilter</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># ifilter(lambda x: x%2, range(10)) --&gt; 1 3 5 7 9</span>
     <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -520,7 +534,9 @@
 <dl class="function">
 <dt id="itertools.ifilterfalse">
 <code class="descclassname">itertools.</code><code class="descname">ifilterfalse</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.ifilterfalse" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>predicateが <code class="docutils literal"><span class="pre">False</span></code> となる要素だけを返すイテレータを作成します。<em>predicate</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、値が偽であるアイテムだけを返します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that filters elements from iterable returning only those for
+which the predicate is <code class="docutils literal"><span class="pre">False</span></code>. If <em>predicate</em> is <code class="docutils literal"><span class="pre">None</span></code>, return the items
+that are false. Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ifilterfalse</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># ifilterfalse(lambda x: x%2, range(10)) --&gt; 0 2 4 6 8</span>
     <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -535,7 +551,13 @@
 <dl class="function">
 <dt id="itertools.imap">
 <code class="descclassname">itertools.</code><code class="descname">imap</code><span class="sig-paren">(</span><em>function</em>, <em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.imap" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>iterables の要素を引数として funtion を呼び出すイテレータを作成します。 <em>function</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、  <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> は引数のタプルを返します。 <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> と似ていますが、最短の iterable の末尾まで到達した後は <code class="docutils literal"><span class="pre">None</span></code> を補って処理を続行するのではなく、終了します。これは、 <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> に無限長のイテレータを指定するのは多くの場合誤りですが (全出力が評価されてしまうため)、 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の場合には一般的で役に立つ方法であるためです。この関数は以下のスクリプトと同等です：</p>
+<dd><p>Make an iterator that computes the function using arguments from each of the
+iterables.  If <em>function</em> is set to <code class="docutils literal"><span class="pre">None</span></code>, then <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> returns the
+arguments as a tuple.  Like <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> but stops when the shortest iterable is
+exhausted instead of filling in <code class="docutils literal"><span class="pre">None</span></code> for shorter iterables.  The reason for
+the difference is that infinite iterator arguments are typically an error for
+<a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> (because the output is fully evaluated) but represent a common and
+useful way of supplying arguments to <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a>. Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">imap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># imap(pow, (2,3,10), (5,2,3)) --&gt; 32 9 1000</span>
     <span class="n">iterables</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">iterables</span><span class="p">)</span>
@@ -554,7 +576,15 @@
 <code class="descclassname">itertools.</code><code class="descname">islice</code><span class="sig-paren">(</span><em>iterable</em>, <em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.islice" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descclassname">itertools.</code><code class="descname">islice</code><span class="sig-paren">(</span><em>iterable</em>, <em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
-<dd><p>iterable から要素を選択して返すイテレータを作成します。 <em>start</em> が0以外であれば、iterable の先頭要素は start に達するまでスキップします。以降、 <em>step</em> が1以下なら連続した要素を返し、 1以上なら指定された値分の要素をスキップします。 <em>stop</em> が <code class="docutils literal"><span class="pre">None</span></code> であれば、無限に、もしくは iterable の全要素を返すまで値を返します。 <code class="docutils literal"><span class="pre">None</span></code> 以外ならイテレータは指定された要素位置で停止します。通常のスライスと異なり、 <a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal"><span class="pre">islice()</span></code></a> は <em>start</em> 、 <em>stop</em> 、 <em>step</em> に負の値を指定する事はできません。シーケンス化されたデータから関連するデータを取得する場合（複数行からなるレポートで、三行ごとに名前が指定されている場合など）に使用します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that returns selected elements from the iterable. If <em>start</em> is
+non-zero, then elements from the iterable are skipped until start is reached.
+Afterward, elements are returned consecutively unless <em>step</em> is set higher than
+one which results in items being skipped.  If <em>stop</em> is <code class="docutils literal"><span class="pre">None</span></code>, then iteration
+continues until the iterator is exhausted, if at all; otherwise, it stops at the
+specified position.  Unlike regular slicing, <a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal"><span class="pre">islice()</span></code></a> does not support
+negative values for <em>start</em>, <em>stop</em>, or <em>step</em>.  Can be used to extract related
+fields from data where the internal structure has been flattened (for example, a
+multi-line report may list a name field on every third line).  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="c1"># islice(&#39;ABCDEFG&#39;, 2) --&gt; A B</span>
     <span class="c1"># islice(&#39;ABCDEFG&#39;, 2, 4) --&gt; C D</span>
@@ -578,7 +608,9 @@
 <dl class="function">
 <dt id="itertools.izip">
 <code class="descclassname">itertools.</code><code class="descname">izip</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.izip" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>各 iterable の要素をまとめるイテレータを作成します。 <a class="reference internal" href="functions.html#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> に似ていますが、リストではなくイテレータを返します。複数のイテレート可能オブジェクトに対して、一度に lock-step (横並び) イテレーションを行う場合に使用します。この関数は以下のスクリプトと同等です：</p>
+<dd><p>Make an iterator that aggregates elements from each of the iterables. Like
+<a class="reference internal" href="functions.html#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> except that it returns an iterator instead of a list.  Used for
+lock-step iteration over several iterables at a time.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># izip(&#39;ABCD&#39;, &#39;xy&#39;) --&gt; Ax By</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">iterables</span><span class="p">)</span>
@@ -596,7 +628,9 @@
 <dl class="function">
 <dt id="itertools.izip_longest">
 <code class="descclassname">itertools.</code><code class="descname">izip_longest</code><span class="sig-paren">(</span><em>*iterables</em><span class="optional">[</span>, <em>fillvalue</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.izip_longest" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>各 iterable の要素をまとめるイテレータを作成します。イテレート可能オブジェクトの長さが不揃いならば、足りない値は <em>fillvalue</em> で埋められます。最も長いイテレート可能オブジェクトが尽きるまで繰り返されます。この関数は以下のコードと等価です:</p>
+<dd><p>Make an iterator that aggregates elements from each of the iterables. If the
+iterables are of uneven length, missing values are filled-in with <em>fillvalue</em>.
+Iteration continues until the longest iterable is exhausted.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ZipExhausted</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -631,7 +665,7 @@
 <p><em>r</em> が指定されないかまたは <code class="docutils literal"><span class="pre">None</span></code> であるならば、<em>r</em> のデフォルトは <em>iterable</em> の長さとなり全ての可能な最長の置換が生成されます。</p>
 <p>置換は辞書式にソートされた順序で吐き出されます。したがって入力の <em>iterable</em> がソートされていたならば、置換のタプルはソートされた状態で出力されます。</p>
 <p>要素は位置に基づいて一意的に扱われ、値に基づいてではありません。したがって入力された要素が全て異なっているならば、それぞれの置換に重複した要素が現れないことになります。</p>
-<p>次と等価です:</p>
+<p>Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># permutations(&#39;ABCD&#39;, 2) --&gt; AB AC AD BA BC BD CA CB CD DA DB DC</span>
     <span class="c1"># permutations(range(3)) --&gt; 012 021 102 120 201 210</span>
@@ -678,10 +712,12 @@
 <dt id="itertools.product">
 <code class="descclassname">itertools.</code><code class="descname">product</code><span class="sig-paren">(</span><em>*iterables</em><span class="optional">[</span>, <em>repeat</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.product" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>入力イテラブルの直積(Cartesian product)です。</p>
-<p>ジェネレータ式の入れ子 for ループと等価になります。たとえば <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">B)</span></code> は <code class="docutils literal"><span class="pre">((x,y)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">B)</span></code> と同じものを返します。</p>
+<p>Roughly equivalent to nested for-loops in a generator expression. For example,
+<code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">B)</span></code> returns the same as <code class="docutils literal"><span class="pre">((x,y)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">B)</span></code>.</p>
 <p>入れ子ループは走行距離計と同じように右端の要素がイテレーションごとに更新されていきます。このパターンは辞書式順序を作り出し、入力のイテレート可能オブジェクトたちがソートされていれば、直積タプルもソートされた順に吐き出されます。</p>
 <p>イテラブル自身との直積を計算するためには、オプションの <em>repeat</em> キーワード引数に繰り返し回数を指定します。たとえば <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">repeat=4)</span></code> は  <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">A,</span> <span class="pre">A,</span> <span class="pre">A)</span></code> と同じ意味です。</p>
-<p>この関数は以下のコードと等価ですが、実際の実装ではメモリ中に中間結果を作りません:</p>
+<p>This function is roughly equivalent to the following code, except that the
+actual implementation does not build up intermediate results in memory:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
     <span class="c1"># product(&#39;ABCD&#39;, &#39;xy&#39;) --&gt; Ax Ay Bx By Cx Cy Dx Dy</span>
     <span class="c1"># product(range(2), repeat=3) --&gt; 000 001 010 011 100 101 110 111</span>
@@ -701,7 +737,10 @@
 <dl class="function">
 <dt id="itertools.repeat">
 <code class="descclassname">itertools.</code><code class="descname">repeat</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>times</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.repeat" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>繰り返し <em>object</em> を返すイテレータを作成します。 <em>times</em> を指定しない場合、無限に値を返し続けます。 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> で常に同じオブジェクトを関数の引数として指定する場合に使用します。また、 <a class="reference internal" href="#itertools.izip" title="itertools.izip"><code class="xref py py-func docutils literal"><span class="pre">izip()</span></code></a> で作成するタプルの定数部分を指定する場合にも使用することもできます。この関数は以下のスクリプトと同等です：</p>
+<dd><p>Make an iterator that returns <em>object</em> over and over again. Runs indefinitely
+unless the <em>times</em> argument is specified. Used as argument to <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> for
+invariant function parameters.  Also used with <a class="reference internal" href="#itertools.izip" title="itertools.izip"><code class="xref py py-func docutils literal"><span class="pre">izip()</span></code></a> to create constant
+fields in a tuple record.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># repeat(10, 3) --&gt; 10 10 10</span>
     <span class="k">if</span> <span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -722,7 +761,11 @@
 <dl class="function">
 <dt id="itertools.starmap">
 <code class="descclassname">itertools.</code><code class="descname">starmap</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.starmap" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>iterables の要素を引数として funtion を呼び出すイテレータを作成します。 function の引数が単一の iterable にタプルとして格納されている場合(&#8220;zip済み&#8221;)、 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の代わりに使用します。 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> と <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> ではfunctionの呼び出し方法が異なり、 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> は <code class="docutils literal"><span class="pre">function(a,</span> <span class="pre">b)</span></code> 、 <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> では <code class="docutils literal"><span class="pre">function(*c)</span></code> のように呼び出します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that computes the function using arguments obtained from
+the iterable.  Used instead of <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> when argument parameters are already
+grouped in tuples from a single iterable (the data has been &#8220;pre-zipped&#8221;).  The
+difference between <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> and <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> parallels the distinction
+between <code class="docutils literal"><span class="pre">function(a,b)</span></code> and <code class="docutils literal"><span class="pre">function(*c)</span></code>. Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">starmap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000</span>
     <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
@@ -737,7 +780,8 @@
 <dl class="function">
 <dt id="itertools.takewhile">
 <code class="descclassname">itertools.</code><code class="descname">takewhile</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.takewhile" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>predicate が真である限り iterable から要素を返すイテレータを作成します。この関数は以下のスクリプトと同等です:</p>
+<dd><p>Make an iterator that returns elements from the iterable as long as the
+predicate is true.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">takewhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># takewhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 1 4</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
@@ -752,7 +796,7 @@
 <dl class="function">
 <dt id="itertools.tee">
 <code class="descclassname">itertools.</code><code class="descname">tee</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>n=2</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.tee" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>一つの <em>iterable</em> から <em>n</em> 個の独立したイテレータを生成して返します。以下のコードと等価になります:</p>
+<dd><p>Return <em>n</em> independent iterators from a single iterable.  Roughly equivalent to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="n">deques</span> <span class="o">=</span> <span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
@@ -799,6 +843,11 @@
 <span class="k">def</span> <span class="nf">nth</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="s2">&quot;Returns the nth item or a default value&quot;</span>
     <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">all_equal</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="s2">&quot;Returns True if all the elements are equal to each other&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">quantify</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">pred</span><span class="o">=</span><span class="nb">bool</span><span class="p">):</span>
     <span class="s2">&quot;Count how many times the predicate is true&quot;</span>
@@ -978,8 +1027,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/itertools.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/itertools.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1024,12 +1074,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

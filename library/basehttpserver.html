@@ -37,6 +37,7 @@
     <link rel="next" title="20.19. SimpleHTTPServer — 簡潔な HTTP リクエストハンドラ" href="simplehttpserver.html" />
     <link rel="prev" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク" href="socketserver.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/basehttpserver.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -85,10 +86,10 @@
 <p class="first admonition-title">注釈</p>
 <p class="last"><a class="reference internal" href="#module-BaseHTTPServer" title="BaseHTTPServer: Basic HTTP server (base class for SimpleHTTPServer and CGIHTTPServer)."><code class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">http.server</span></code> モジュールに統合されました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコード内の import を修正します。</p>
 </div>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/BaseHTTPServer.py">Lib/BaseHTTPServer.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/BaseHTTPServer.py">Lib/BaseHTTPServer.py</a></p>
 <hr class="docutils" />
 <p>このモジュールでは、 HTTP サーバ (Web サーバ) を実装するための二つののクラスを定義しています。通常、このモジュールが直接使用されることはなく、特定の機能を持つ Web サーバを構築するために使われます。 <a class="reference internal" href="simplehttpserver.html#module-SimpleHTTPServer" title="SimpleHTTPServer: This module provides a basic request handler for HTTP servers."><code class="xref py py-mod docutils literal"><span class="pre">SimpleHTTPServer</span></code></a> および <a class="reference internal" href="cgihttpserver.html#module-CGIHTTPServer" title="CGIHTTPServer: This module provides a request handler for HTTP servers which can run CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">CGIHTTPServer</span></code></a> モジュールを参照してください。</p>
-<p>最初のクラス <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は <code class="xref py py-class docutils literal"><span class="pre">SocketServer.TCPServer</span></code> のサブクラスで、従って <a class="reference internal" href="socketserver.html#SocketServer.BaseServer" title="SocketServer.BaseServer"><code class="xref py py-class docutils literal"><span class="pre">SocketServer.BaseServer</span></code></a> インタフェースを実装しています。 <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は HTTP ソケットを生成してリクエスト待ち (listen) を行い、リクエストをハンドラに渡します。サーバを作成して動作させるためのコードは以下のようになります:</p>
+<p>最初のクラス <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は <a class="reference internal" href="socketserver.html#SocketServer.TCPServer" title="SocketServer.TCPServer"><code class="xref py py-class docutils literal"><span class="pre">SocketServer.TCPServer</span></code></a> のサブクラスで、従って <a class="reference internal" href="socketserver.html#SocketServer.BaseServer" title="SocketServer.BaseServer"><code class="xref py py-class docutils literal"><span class="pre">SocketServer.BaseServer</span></code></a> インタフェースを実装しています。 <a class="reference internal" href="#BaseHTTPServer.HTTPServer" title="BaseHTTPServer.HTTPServer"><code class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></code></a> は HTTP ソケットを生成してリクエスト待ち (listen) を行い、リクエストをハンドラに渡します。サーバを作成して動作させるためのコードは以下のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">server_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">,</span>
         <span class="n">handler_class</span><span class="o">=</span><span class="n">BaseHTTPServer</span><span class="o">.</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
     <span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
@@ -218,7 +219,13 @@
 <dl class="method">
 <dt id="BaseHTTPServer.BaseHTTPRequestHandler.send_error">
 <code class="descname">send_error</code><span class="sig-paren">(</span><em>code</em><span class="optional">[</span>, <em>message</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseHTTPServer.BaseHTTPRequestHandler.send_error" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>完全なエラー応答をクライアントに送信し、ログ記録します。 <em>code</em> は数値型で、HTTP エラーコードを指定します。 <em>message</em> はオプションで、より詳細なメッセージテキストです。完全なヘッダのセットが送信された後, <a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_message_format" title="BaseHTTPServer.BaseHTTPRequestHandler.error_message_format"><code class="xref py py-attr docutils literal"><span class="pre">error_message_format</span></code></a> クラス変数を使って組み立てられたテキストが送られます。</p>
+<dd><p>Sends and logs a complete error reply to the client. The numeric <em>code</em>
+specifies the HTTP error code, with <em>message</em> as optional, more specific text. A
+complete set of headers is sent, followed by text composed using the
+<a class="reference internal" href="#BaseHTTPServer.BaseHTTPRequestHandler.error_message_format" title="BaseHTTPServer.BaseHTTPRequestHandler.error_message_format"><code class="xref py py-attr docutils literal"><span class="pre">error_message_format</span></code></a> class variable. The body will be empty
+if the method is HEAD or the response code is one of the following:
+<code class="docutils literal"><span class="pre">1xx</span></code>, <code class="docutils literal"><span class="pre">204</span> <span class="pre">No</span> <span class="pre">Content</span></code>, <code class="docutils literal"><span class="pre">205</span> <span class="pre">Reset</span> <span class="pre">Content</span></code>,
+<code class="docutils literal"><span class="pre">304</span> <span class="pre">Not</span> <span class="pre">Modified</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -340,8 +347,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/basehttpserver.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/basehttpserver.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -386,12 +394,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

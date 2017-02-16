@@ -37,6 +37,7 @@
     <link rel="next" title="20.3. cgitb — CGI スクリプトのトレースバック管理機構" href="cgitb.html" />
     <link rel="prev" title="20.1. webbrowser — 便利なウェブブラウザコントローラー" href="webbrowser.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/cgi.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,7 +82,7 @@
             
   <div class="section" id="module-cgi">
 <span id="cgi-common-gateway-interface-support"></span><h1>20.2. <a class="reference internal" href="#module-cgi" title="cgi: Helpers for running Python scripts via the Common Gateway Interface."><code class="xref py py-mod docutils literal"><span class="pre">cgi</span></code></a> &#8212; CGI (ゲートウェイインタフェース規格) のサポート<a class="headerlink" href="#module-cgi" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/cgi.py">Lib/cgi.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/cgi.py">Lib/cgi.py</a></p>
 <hr class="docutils" />
 <p>ゲートウェイインタフェース規格 (CGI) に準拠したスクリプトをサポートするためのモジュールです。</p>
 <p>このモジュールでは、Python で CGI スクリプトを書く際に使える様々なユーティリティを定義しています。</p>
@@ -220,13 +221,15 @@
 <dl class="function">
 <dt id="cgi.parse_qs">
 <code class="descclassname">cgi.</code><code class="descname">parse_qs</code><span class="sig-paren">(</span><em>qs</em><span class="optional">[</span>, <em>keep_blank_values</em><span class="optional">[</span>, <em>strict_parsing</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cgi.parse_qs" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この関数はこのモジュールでは廃止予定です。代わりに <a class="reference internal" href="urlparse.html#urlparse.parse_qs" title="urlparse.parse_qs"><code class="xref py py-func docutils literal"><span class="pre">urlparse.parse_qs()</span></code></a> を利用してください。この関数は後方互換性のためだけに残されています。</p>
+<dd><p>This function is deprecated in this module. Use <a class="reference internal" href="urlparse.html#urlparse.parse_qs" title="urlparse.parse_qs"><code class="xref py py-func docutils literal"><span class="pre">urlparse.parse_qs()</span></code></a>
+instead. It is maintained here only for backward compatibility.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="cgi.parse_qsl">
 <code class="descclassname">cgi.</code><code class="descname">parse_qsl</code><span class="sig-paren">(</span><em>qs</em><span class="optional">[</span>, <em>keep_blank_values</em><span class="optional">[</span>, <em>strict_parsing</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cgi.parse_qsl" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この関数はこのモジュールでは廃止予定です。代わりに <a class="reference internal" href="urlparse.html#urlparse.parse_qsl" title="urlparse.parse_qsl"><code class="xref py py-func docutils literal"><span class="pre">urlparse.parse_qsl()</span></code></a> を利用してください。この関数は後方互換性のためだけに残されています。</p>
+<dd><p>This function is deprecated in this module. Use <a class="reference internal" href="urlparse.html#urlparse.parse_qsl" title="urlparse.parse_qsl"><code class="xref py py-func docutils literal"><span class="pre">urlparse.parse_qsl()</span></code></a>
+instead. It is maintained here only for backward compatibility.</p>
 </dd></dl>
 
 <dl class="function">
@@ -311,8 +314,15 @@
 </div>
 <div class="section" id="debugging-cgi-scripts">
 <h2>20.2.9. CGI スクリプトをデバッグする<a class="headerlink" href="#debugging-cgi-scripts" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p id="index-4">何よりもまず、些細なインストール関連のエラーでないか確認してください &#8212; 上の CGI スクリプトのインストールに関する節を注意深く読めば時間を大いに節約できます。もしインストールの手続きを正しく理解しているか不安なら、このモジュールのファイル (<code class="file docutils literal"><span class="pre">cgi.py</span></code>) をコピーして、CGI スクリプトとしてインストールしてみてください。このファイルはスクリプトとして呼び出すと、スクリプトの実行環境とフォームの内容を HTML フォームに出力します。正しいモードなどをフォームに与えて、リクエストを送ってみてください。標準的な <code class="file docutils literal"><span class="pre">cgi-bin</span></code> ディレクトリにインストールされていれば、以下のような URL をブラウザに入力してリクエストを送信できるはずです:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>http://yourhostname/cgi-bin/cgi.py?name=Joe+Blow&amp;addr=At+Home
+<p id="index-4">First of all, check for trivial installation errors &#8212; reading the section
+above on installing your CGI script carefully can save you a lot of time.  If
+you wonder whether you have understood the installation procedure correctly, try
+installing a copy of this module file (<code class="file docutils literal"><span class="pre">cgi.py</span></code>) as a CGI script.  When
+invoked as a script, the file will dump its environment and the contents of the
+form in HTML form. Give it the right mode etc, and send it a request.  If it&#8217;s
+installed in the standard <code class="file docutils literal"><span class="pre">cgi-bin</span></code> directory, it should be possible to
+send it a request by entering a URL into your browser of the form:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>http://yourhostname/cgi-bin/cgi.py?name=Joe+Blow&amp;addr=At+Home
 </pre></div>
 </div>
 <p>もしタイプ 404 のエラーになるなら、サーバはスクリプトを発見できないでいます &#8211; おそらくあなたはスクリプトを別のディレクトリに入れる必要があるのでしょう。他のエラーになるなら、先に進む前に解決しなければならないインストール上の問題があります。もし実行環境の情報とフォーム内容 (この例では、各フィールドはフィールド名 &#8220;addr&#8221; に対して値 &#8220;At Home&#8221;、およびフィールド名 &#8220;name&#8221; に対して &#8220;Joe Blow&#8221;) が綺麗にフォーマットされて表示されるなら、 <code class="file docutils literal"><span class="pre">cgi.py</span></code> スクリプトは正しくインストールされています。同じ操作をあなたの自作スクリプトに対して行えば、スクリプトをデバッグできるようになるはずです。</p>
@@ -401,8 +411,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/cgi.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/cgi.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -447,12 +458,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="13.2. ConfigParser — 設定ファイルの構文解析器" href="configparser.html" />
     <link rel="prev" title="13. ファイルフォーマット" href="fileformats.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/csv.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -125,7 +126,23 @@
 <dl class="function">
 <dt id="csv.writer">
 <code class="descclassname">csv.</code><code class="descname">writer</code><span class="sig-paren">(</span><em>csvfile</em>, <em>dialect='excel'</em>, <em>**fmtparams</em><span class="sig-paren">)</span><a class="headerlink" href="#csv.writer" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ユーザが与えたデータをデリミタで区切られた文字列に変換し、与えられたファイルオブジェクトに書き込むための writer オブジェクトを返します。 <em>csvfile</em> は <code class="xref py py-func docutils literal"><span class="pre">write()</span></code> メソッドを持つ任意のオブジェクトです。 <em>csvfile</em> がファイルオブジェクトの場合、 &#8216;b&#8217; フラグが意味を持つプラットフォームでは &#8216;b&#8217; フラグを付けて開かなければなりません。 オプションとして <em>dialect</em> 引数を与えることができ、利用するCSV表現形式(dialect)を指定することができます。 <em>dialect</em> パラメタは <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal"><span class="pre">Dialect</span></code></a> クラスのサブクラスのインスタンスか、 <a class="reference internal" href="#csv.list_dialects" title="csv.list_dialects"><code class="xref py py-func docutils literal"><span class="pre">list_dialects()</span></code></a> 関数が返す文字列の1つにすることができます。 別のオプション引数である <em>fmtparams</em> キーワード引数は、現在の表現形式における個々の書式パラメタを上書きするために与えることができます。 <em>dialect</em> と書式パラメタについての詳細は、 <a class="reference internal" href="#csv-fmt-params"><span class="std std-ref">Dialect クラスと書式化パラメタ</span></a> 節を参照してください。 DB API を実装するモジュールとのインタフェースを可能な限り容易にするために、 <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> は空文字列として書き込まれます。 この処理は可逆な変換ではありませんが、SQL で NULL データ値を CSV にダンプする処理を、 <code class="docutils literal"><span class="pre">cursor.fetch*</span></code> 呼び出しによって 返されたデータを前処理することなく簡単に行うことができます。 他の非文字列データは、書き出される前に <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> を使って文字列に変換されます。</p>
+<dd><p>Return a writer object responsible for converting the user&#8217;s data into delimited
+strings on the given file-like object.  <em>csvfile</em> can be any object with a
+<code class="xref py py-func docutils literal"><span class="pre">write()</span></code> method.  If <em>csvfile</em> is a file object, it must be opened with the
+&#8216;b&#8217; flag on platforms where that makes a difference.  An optional <em>dialect</em>
+parameter can be given which is used to define a set of parameters specific to a
+particular CSV dialect.  It may be an instance of a subclass of the
+<a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal"><span class="pre">Dialect</span></code></a> class or one of the strings returned by the
+<a class="reference internal" href="#csv.list_dialects" title="csv.list_dialects"><code class="xref py py-func docutils literal"><span class="pre">list_dialects()</span></code></a> function.  The other optional <em>fmtparams</em> keyword arguments
+can be given to override individual formatting parameters in the current
+dialect.  For full details about the dialect and formatting parameters, see
+section <a class="reference internal" href="#csv-fmt-params"><span class="std std-ref">Dialect クラスと書式化パラメタ</span></a>. To make it
+as easy as possible to interface with modules which implement the DB API, the
+value <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> is written as the empty string.  While this isn&#8217;t a
+reversible transformation, it makes it easier to dump SQL NULL data values to
+CSV files without preprocessing the data returned from a <code class="docutils literal"><span class="pre">cursor.fetch*</span></code> call.
+Floats are stringified with <a class="reference internal" href="functions.html#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a> before being written.
+All other non-string data are stringified with <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> before being written.</p>
 <p>短い利用例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;eggs.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
@@ -579,8 +596,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/csv.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/csv.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -625,12 +643,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

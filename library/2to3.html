@@ -37,6 +37,7 @@
     <link rel="next" title="25.5. test — Python 用回帰テストパッケージ" href="test.html" />
     <link rel="prev" title="25.3. unittest — ユニットテストフレームワーク" href="unittest.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/2to3.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -94,12 +95,15 @@
 <span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>これは、コマンドラインから 2to3 を呼び出すことで、Python 3.x コードに変換されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 example.py
+<p>It can be converted to Python 3.x code via 2to3 on the command line:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 example.py
 </pre></div>
 </div>
-<p>オリジナルのソースファイルに対する差分が表示されます。 2to3 は必要となる変更をソースファイルに書き込むこともできます (<code class="xref std std-option docutils literal"><span class="pre">-n</span></code> も与えたのでない限りオリジナルのバックアップも作成されます)。変更の書き戻しは <code class="xref std std-option docutils literal"><span class="pre">-w</span></code> フラグによって有効化されます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 -w example.py
+<p>A diff against the original source file is printed.  2to3 can also write the
+needed modifications right back to the source file.  (A backup of the original
+file is made unless <code class="xref std std-option docutils literal"><span class="pre">-n</span></code> is also given.)  Writing the changes back is
+enabled with the <code class="xref std std-option docutils literal"><span class="pre">-w</span></code> flag:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 -w example.py
 </pre></div>
 </div>
 <p>変換後、 <code class="file docutils literal"><span class="pre">example.py</span></code> は以下のようになります:</p>
@@ -111,41 +115,65 @@
 </pre></div>
 </div>
 <p>変換処理を通じて、コメントと、インデントは保存されます。</p>
-<p>デフォルトでは、 2to3 は一連の <a class="reference internal" href="#to3-fixers"><span class="std std-ref">事前定義された変換プログラム</span></a> を実行します。 <code class="xref std std-option docutils literal"><span class="pre">-l</span></code> フラグは、利用可能な変換プログラムの一覧を表示します。 <code class="xref std std-option docutils literal"><span class="pre">-f</span></code> フラグにより、実行する変換プログラムを明示的に与えることもできます。同様に、 <a class="reference internal" href="../using/cmdline.html#cmdoption-x"><code class="xref std std-option docutils literal"><span class="pre">-x</span></code></a> は変換プログラムを明示的に無効化します。下記の例では、 <code class="docutils literal"><span class="pre">imports</span></code> と <code class="docutils literal"><span class="pre">has_key</span></code> 変換プログラムだけを実行します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 -f imports -f has_key example.py
+<p>By default, 2to3 runs a set of <a class="reference internal" href="#to3-fixers"><span class="std std-ref">predefined fixers</span></a>.  The
+<code class="xref std std-option docutils literal"><span class="pre">-l</span></code> flag lists all available fixers.  An explicit set of fixers to run
+can be given with <code class="xref std std-option docutils literal"><span class="pre">-f</span></code>.  Likewise the <code class="xref std std-option docutils literal"><span class="pre">-x</span></code> explicitly disables a
+fixer.  The following example runs only the <code class="docutils literal"><span class="pre">imports</span></code> and <code class="docutils literal"><span class="pre">has_key</span></code> fixers:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 -f imports -f has_key example.py
 </pre></div>
 </div>
-<p>このコマンドは <code class="docutils literal"><span class="pre">apply</span></code> 以外のすべての変換プログラムを実行します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 -x apply example.py
+<p>This command runs every fixer except the <code class="docutils literal"><span class="pre">apply</span></code> fixer:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 -x apply example.py
 </pre></div>
 </div>
-<p>いくつかの変換プログラムは <em>明示的</em> 、つまり、デフォルトでは実行されず、コマンドラインで実行するものとして列記する必要があります。デフォルトの変換プログラムに <code class="docutils literal"><span class="pre">idioms</span></code> 変換プログラムを追加して実行するには、下記のようにします:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 -f all -f idioms example.py
+<p>Some fixers are <em>explicit</em>, meaning they aren&#8217;t run by default and must be
+listed on the command line to be run.  Here, in addition to the default fixers,
+the <code class="docutils literal"><span class="pre">idioms</span></code> fixer is run:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 -f all -f idioms example.py
 </pre></div>
 </div>
 <p>ここで、 <code class="docutils literal"><span class="pre">all</span></code> を指定することで、全てのデフォルトの変換プログラムを有効化できることに注意して下さい。</p>
 <p>2to3 がソースコードに修正すべき点を見つけても、自動的には修正できない場合もあります。この場合、 2to3 はファイルの変更点の下に警告を表示します。 3.x に準拠したコードにするために、あなたはこの警告に対処しなくてはなりません。</p>
-<p>2to3 は doctest の修正もできます。このモードを有効化するには <a class="reference internal" href="../using/cmdline.html#cmdoption-d"><code class="xref std std-option docutils literal"><span class="pre">-d</span></code></a> フラグを指定して下さい。 doctest <em>だけ</em> が修正されることに注意して下さい。これは、モジュールが有効な Python コードであることを要求しないということでもあります。例えば、 reST ドキュメント中の doctest に似たサンプルコードなども、このオプションで修正することができます。</p>
-<p><a class="reference internal" href="../using/cmdline.html#cmdoption-v"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> は、変換処理のより詳しい情報の出力を有効化します。</p>
-<p>いくつかの print 文は関数呼び出しとしても文としても解析できるので、 2to3 は print 関数を含むファイルを常に読めるとは限りません。 2to3 は <code class="docutils literal"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">print_function</span></code> コンパイラディレクティブが存在することを検出すると、内部の文法を変更して <a class="reference internal" href="functions.html#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a> を関数として解釈するようになります。 <code class="xref std std-option docutils literal"><span class="pre">-p</span></code> フラグによって手動でこの変更を有効化することもできます。 print 文を変換済みのコードに対して変換プログラムを適用するには <code class="xref std std-option docutils literal"><span class="pre">-p</span></code> を使用してください。</p>
-<p><code class="xref std std-option docutils literal"><span class="pre">-o</span></code> または <code class="xref std std-option docutils literal"><span class="pre">--output-dir</span></code> で処理結果の出力先ディレクトリを変更出来ます。入力ファイルを上書きしないならバックアップは意味をなさないので、オプション <code class="xref std std-option docutils literal"><span class="pre">-n</span></code> フラグが要ります。</p>
+<p>2to3 can also refactor doctests.  To enable this mode, use the <code class="xref std std-option docutils literal"><span class="pre">-d</span></code>
+flag.  Note that <em>only</em> doctests will be refactored.  This also doesn&#8217;t require
+the module to be valid Python.  For example, doctest like examples in a reST
+document could also be refactored with this option.</p>
+<p>The <code class="xref std std-option docutils literal"><span class="pre">-v</span></code> option enables output of more information on the translation
+process.</p>
+<p>Since some print statements can be parsed as function calls or statements, 2to3
+cannot always read files containing the print function.  When 2to3 detects the
+presence of the <code class="docutils literal"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">print_function</span></code> compiler directive, it
+modifies its internal grammar to interpret <a class="reference internal" href="functions.html#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a> as a function.  This
+change can also be enabled manually with the <code class="xref std std-option docutils literal"><span class="pre">-p</span></code> flag.  Use
+<code class="xref std std-option docutils literal"><span class="pre">-p</span></code> to run fixers on code that already has had its print statements
+converted.</p>
+<p>The <code class="xref std std-option docutils literal"><span class="pre">-o</span></code> or <code class="xref std std-option docutils literal"><span class="pre">--output-dir</span></code> option allows specification of an
+alternate directory for processed output files to be written to.  The
+<code class="xref std std-option docutils literal"><span class="pre">-n</span></code> flag is required when using this as backup files do not make sense
+when not overwriting the input files.</p>
 <div class="versionadded">
-<p><span class="versionmodified">バージョン 2.7.3 で追加: </span><code class="xref std std-option docutils literal"><span class="pre">-o</span></code> オプションが追加されました。</p>
+<p><span class="versionmodified">バージョン 2.7.3 で追加: </span>The <code class="xref std std-option docutils literal"><span class="pre">-o</span></code> option was added.</p>
 </div>
-<p><a class="reference internal" href="../using/cmdline.html#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> または <code class="xref std std-option docutils literal"><span class="pre">--write-unchanged-files</span></code> により、たとえファイルに変更が必要なくても常にファイルを出力するように 2to3 に指示することが出来ます。これは、 <code class="xref std std-option docutils literal"><span class="pre">-o</span></code> とともに使って、Python ソースツリー全体を変換して別のディレクトリに書き出す際に最も有用です。</p>
+<p>The <code class="xref std std-option docutils literal"><span class="pre">-W</span></code> or <code class="xref std std-option docutils literal"><span class="pre">--write-unchanged-files</span></code> flag tells 2to3 to always
+write output files even if no changes were required to the file.  This is most
+useful with <code class="xref std std-option docutils literal"><span class="pre">-o</span></code> so that an entire Python source tree is copied with
+translation from one directory to another.
+This option implies the <code class="xref std std-option docutils literal"><span class="pre">-w</span></code> flag as it would not make sense otherwise.</p>
 <div class="versionadded">
-<p><span class="versionmodified">バージョン 2.7.3 で追加: </span><a class="reference internal" href="../using/cmdline.html#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> フラグが追加されました。</p>
+<p><span class="versionmodified">バージョン 2.7.3 で追加: </span>The <code class="xref std std-option docutils literal"><span class="pre">-W</span></code> flag was added.</p>
 </div>
-<p>オプション <code class="xref std std-option docutils literal"><span class="pre">--add-suffix</span></code> で、全ての出力ファイル名に与えた文字列を追加します。これを指定するのであれば別名で書き出されるためバックアップは必要ないので、オプション <code class="xref std std-option docutils literal"><span class="pre">-n</span></code> フラグが要ります。例えば:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 -n -W --add-suffix=3 example.py
+<p>The <code class="xref std std-option docutils literal"><span class="pre">--add-suffix</span></code> option specifies a string to append to all output
+filenames.  The <code class="xref std std-option docutils literal"><span class="pre">-n</span></code> flag is required when specifying this as backups
+are not necessary when writing to different filenames.  Example:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 -n -W --add-suffix<span class="o">=</span><span class="m">3</span> example.py
 </pre></div>
 </div>
 <p>とすれば変換後ファイルは <code class="docutils literal"><span class="pre">example.py3</span></code> として書き出されます。</p>
 <div class="versionadded">
-<p><span class="versionmodified">バージョン 2.7.3 で追加: </span><code class="xref std std-option docutils literal"><span class="pre">--add-suffix</span></code> オプションが追加されました。</p>
+<p><span class="versionmodified">バージョン 2.7.3 で追加: </span>The <code class="xref std std-option docutils literal"><span class="pre">--add-suffix</span></code> option was added.</p>
 </div>
-<p>ひとつのディレクトリツリーからプロジェクト全体を変換したければこのように使います:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ 2to3 --output-dir=python3-version/mycode -W -n python2-version/mycode
+<p>To translate an entire project from one directory tree to another use:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> 2to3 --output-dir<span class="o">=</span>python3-version/mycode -W -n python2-version/mycode
 </pre></div>
 </div>
 </div>
@@ -552,8 +580,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/2to3.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/2to3.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -598,12 +627,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

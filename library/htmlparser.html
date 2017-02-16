@@ -37,6 +37,7 @@
     <link rel="next" title="19.2. sgmllib — 単純な SGML パーザ" href="sgmllib.html" />
     <link rel="prev" title="19. 構造化マークアップツール" href="markup.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/htmlparser.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -88,7 +89,7 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/HTMLParser.py">Lib/HTMLParser.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/HTMLParser.py">Lib/HTMLParser.py</a></p>
 <hr class="docutils" />
 <p>このモジュールでは <a class="reference internal" href="#HTMLParser.HTMLParser" title="HTMLParser.HTMLParser"><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスを定義します。このクラスは HTML (ハイパーテキスト記述言語、 HyperText Mark-up Language) および XHTML で書式化されているテキストファイルを解釈するための基礎となります。 <a class="reference internal" href="htmllib.html#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> にあるパーサーと違って、このパーサーは <a class="reference internal" href="sgmllib.html#module-sgmllib" title="sgmllib: Only as much of an SGML parser as needed to parse HTML. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sgmllib</span></code></a> の SGML パーサーに基づいてはいません。</p>
 <dl class="class">
@@ -115,8 +116,10 @@
 <span class="k">class</span> <span class="nc">MyHTMLParser</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Encountered a start tag:&quot;</span><span class="p">,</span> <span class="n">tag</span>
+
     <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Encountered an end tag :&quot;</span><span class="p">,</span> <span class="n">tag</span>
+
     <span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Encountered some data  :&quot;</span><span class="p">,</span> <span class="n">data</span>
 
@@ -126,8 +129,8 @@
             <span class="s1">&#39;&lt;body&gt;&lt;h1&gt;Parse me!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>出力は以下のようになります:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Encountered a start tag: html
+<p>The output will then be:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Encountered a start tag: html
 Encountered a start tag: head
 Encountered a start tag: title
 Encountered some data  : Test
@@ -181,7 +184,8 @@ Encountered an end tag : html
 <code class="descclassname">HTMLParser.</code><code class="descname">handle_starttag</code><span class="sig-paren">(</span><em>tag</em>, <em>attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#HTMLParser.HTMLParser.handle_starttag" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>このメソッドは開始タグを扱うために呼び出されます (例: <code class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">id=&quot;main&quot;&gt;</span></code>)。</p>
 <p>引数 <em>tag</em> はタグの名前で、小文字に変換されます。引数 <em>attrs</em> は <code class="docutils literal"><span class="pre">(name,</span> <span class="pre">value)</span></code> のペアからなるリストで、タグの <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> 括弧内にある属性が収められています。<em>name</em> は小文字に変換され、<em>value</em> 内の引用符は取り除かれ、文字参照と実態参照は置き換えられます。</p>
-<p>例えば、タグ <code class="docutils literal"><span class="pre">&lt;A</span> <span class="pre">HREF=&quot;http://www.cwi.nl/&quot;&gt;</span></code> を処理する場合、このメソッドは <code class="docutils literal"><span class="pre">handle_starttag('a',</span> <span class="pre">[('href',</span> <span class="pre">'http://www.cwi.nl/')])</span></code> として呼び出されます。</p>
+<p>For instance, for the tag <code class="docutils literal"><span class="pre">&lt;A</span> <span class="pre">HREF=&quot;https://www.cwi.nl/&quot;&gt;</span></code>, this method
+would be called as <code class="docutils literal"><span class="pre">handle_starttag('a',</span> <span class="pre">[('href',</span> <span class="pre">'https://www.cwi.nl/')])</span></code>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.6 で変更: </span>属性中の <a class="reference internal" href="htmllib.html#module-htmlentitydefs" title="htmlentitydefs: Definitions of HTML general entities."><code class="xref py py-mod docutils literal"><span class="pre">htmlentitydefs</span></code></a> の全てのエンティティ参照が置換されるようになりました。</p>
 </div>
@@ -262,21 +266,27 @@ Encountered an end tag : html
         <span class="nb">print</span> <span class="s2">&quot;Start tag:&quot;</span><span class="p">,</span> <span class="n">tag</span>
         <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
             <span class="nb">print</span> <span class="s2">&quot;     attr:&quot;</span><span class="p">,</span> <span class="n">attr</span>
+
     <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;End tag  :&quot;</span><span class="p">,</span> <span class="n">tag</span>
+
     <span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Data     :&quot;</span><span class="p">,</span> <span class="n">data</span>
+
     <span class="k">def</span> <span class="nf">handle_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Comment  :&quot;</span><span class="p">,</span> <span class="n">data</span>
+
     <span class="k">def</span> <span class="nf">handle_entityref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="n">name2codepoint</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
         <span class="nb">print</span> <span class="s2">&quot;Named ent:&quot;</span><span class="p">,</span> <span class="n">c</span>
+
     <span class="k">def</span> <span class="nf">handle_charref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">):</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">16</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
         <span class="nb">print</span> <span class="s2">&quot;Num ent  :&quot;</span><span class="p">,</span> <span class="n">c</span>
+
     <span class="k">def</span> <span class="nf">handle_decl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="nb">print</span> <span class="s2">&quot;Decl     :&quot;</span><span class="p">,</span> <span class="n">data</span>
 
@@ -307,7 +317,7 @@ Encountered an end tag : html
 <span class="go">     attr: (&#39;type&#39;, &#39;text/css&#39;)</span>
 <span class="go">Data     : #python { color: green }</span>
 <span class="go">End tag  : style</span>
-<span class="go">&gt;&gt;&gt;</span>
+
 <span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="s1">&#39;&lt;script type=&quot;text/javascript&quot;&gt;&#39;</span>
 <span class="gp">... </span>            <span class="s1">&#39;alert(&quot;&lt;strong&gt;hello!&lt;/strong&gt;&quot;);&lt;/script&gt;&#39;</span><span class="p">)</span>
 <span class="go">Start tag: script</span>
@@ -380,8 +390,9 @@ Encountered an end tag : html
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/htmlparser.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/htmlparser.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -426,12 +437,12 @@ Encountered an end tag : html
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

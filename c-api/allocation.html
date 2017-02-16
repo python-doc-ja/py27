@@ -37,6 +37,7 @@
     <link rel="next" title="共通のオブジェクト構造体 (common object structure)" href="structures.html" />
     <link rel="prev" title="オブジェクト実装サポート (object implementation support)" href="objimpl.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/allocation.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -156,7 +157,14 @@ void <code class="descname">PyObject_Del</code><span class="sig-paren">(</span><
 <dl class="function">
 <dt id="c.Py_InitModule4">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">Py_InitModule4</code><span class="sig-paren">(</span>char<em>&nbsp;*name</em>, <a class="reference internal" href="structures.html#c.PyMethodDef" title="PyMethodDef">PyMethodDef</a><em>&nbsp;*methods</em>, char<em>&nbsp;*doc</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*self</em>, int<em>&nbsp;apiver</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_InitModule4" title="この定義へのパーマリンク">¶</a></dt>
-<dd><em class="refcount">Return value: Borrowed reference.</em><p><em>name</em> と関数のテーブルに基づいて新たなモジュールオブジェクトを生成し、生成されたモジュールオブジェクトを返します。 <em>doc</em> が <em>NULL</em> でない場合、モジュールの docstring として使われます。 <em>self</em> が <em>NULL</em> でない場合、モジュール内の各関数の第一引数として渡されます (<em>NULL</em> の時には第一引数も <em>NULL</em> になります)。 (この関数は実験的な機能のために追加されたもので、現在の Python のバージョンで使われてはいないはずです。) <em>apiver</em> に渡してよい値は、 <code class="xref py py-const docutils literal"><span class="pre">PYTHON_API_VERSION</span></code> で定義されている定数だけです。</p>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>Create a new module object based on a name and table of functions,
+returning the new module object.  If <em>doc</em> is non-<em>NULL</em>, it will be used
+to define the docstring for the module.  If <em>self</em> is non-<em>NULL</em>, it will
+be passed to the functions of the module as their (otherwise <em>NULL</em>) first
+parameter.  (This was added as an experimental feature, and there are no
+known uses in the current version of Python.)  For <em>apiver</em>, the only value
+which should be passed is defined by the constant
+<code class="xref py py-const docutils literal"><span class="pre">PYTHON_API_VERSION</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">この関数のほとんどの用途は、代わりに <a class="reference internal" href="#c.Py_InitModule3" title="Py_InitModule3"><code class="xref c c-func docutils literal"><span class="pre">Py_InitModule3()</span></code></a> を使えるはずです; 本当にこの関数の必要性を理解しているときにだけ利用してください。</p>
@@ -189,8 +197,9 @@ void <code class="descname">PyObject_Del</code><span class="sig-paren">(</span><
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/allocation.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/allocation.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -235,12 +244,12 @@ void <code class="descname">PyObject_Del</code><span class="sig-paren">(</span><
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

@@ -37,6 +37,7 @@
     <link rel="next" title="7.9. unicodedata — Unicode データベース" href="unicodedata.html" />
     <link rel="prev" title="7.7. textwrap — テキストの折り返しと詰め込み" href="textwrap.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/codecs.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -610,8 +611,28 @@
 </div>
 <div class="section" id="encodings-and-unicode">
 <span id="encodings-overview"></span><h2>7.8.2. エンコーディングと Unicode<a class="headerlink" href="#encodings-and-unicode" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Unicode 文字列は内部的にはコードポイントのシーケンスとして格納されます (正確に言えば <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> 配列です)。 Python がどのようにコンパイルされたか (デフォルトである <code class="docutils literal"><span class="pre">--enable-unicode=ucs2</span></code> かまたは <code class="docutils literal"><span class="pre">--enable-unicode=ucs4</span></code> のどちらか) によって、 <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> は16ビットまたは32ビットのデータ型です。 Unicode オブジェクトが CPU とメモリの外で使われることになると、 CPU のエンディアンやこれらの配列がバイト列としてどのように格納されるかが問題になってきます。 Unicode オブジェクトをバイト列に変換することをエンコーディングと呼び、バイト列から Unicode オブジェクトを再生することをデコーディングと呼びます。どのようにこの変換を行うかには多くの異なった方法があります (これらの方法のこともエンコーディングと言います) 。最も単純な方法はコードポイント 0-255 をバイト <code class="docutils literal"><span class="pre">0x0</span></code>-<code class="docutils literal"><span class="pre">0xff</span></code> に写すことです。これは <code class="docutils literal"><span class="pre">U+00FF</span></code> より上のコードポイントを持つ Unicode オブジェクトはこの方法ではエンコードできないということを意味します (この方法を <code class="docutils literal"><span class="pre">'latin-1'</span></code> とか <code class="docutils literal"><span class="pre">'iso-8859-1'</span></code> と呼びます)。 <code class="xref py py-func docutils literal"><span class="pre">unicode.encode()</span></code> は次のような <a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> を送出することになります: <code class="docutils literal"><span class="pre">UnicodeEncodeError:</span> <span class="pre">'latin-1'</span> <span class="pre">codec</span> <span class="pre">can't</span> <span class="pre">encode</span> <span class="pre">character</span> <span class="pre">u'\u1234'</span> <span class="pre">in</span> <span class="pre">position</span> <span class="pre">3:</span> <span class="pre">ordinal</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">range(256)</span></code></p>
-<p>他のエンコーディングの一群 (charmap エンコーディングと呼ばれます) がありますが、 Unicode コードポイントの別の部分集合とこれらがどのように <code class="docutils literal"><span class="pre">0x0</span></code> - <code class="docutils literal"><span class="pre">0xff</span></code> のバイトに写されるかを選んだものです。これがどのように行なわれるかを知るには、単にたとえば <code class="file docutils literal"><span class="pre">encodings/cp1252.py</span></code> (主に Windows で使われるエンコーディングです) を開いてみてください。256 文字のひとつの文字列定数がありどの文字がどのバイト値に写されるかを示しています。</p>
+<p>Unicode strings are stored internally as sequences of code points (to be precise
+as <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> arrays). Depending on the way Python is compiled (either
+via <code class="docutils literal"><span class="pre">--enable-unicode=ucs2</span></code> or <code class="docutils literal"><span class="pre">--enable-unicode=ucs4</span></code>, with the
+former being the default) <a class="reference internal" href="../c-api/unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> is either a 16-bit or 32-bit data
+type. Once a Unicode object is used outside of CPU and memory, CPU endianness
+and how these arrays are stored as bytes become an issue.  Transforming a
+unicode object into a sequence of bytes is called encoding and recreating the
+unicode object from the sequence of bytes is known as decoding.  There are many
+different methods for how this transformation can be done (these methods are
+also called encodings). The simplest method is to map the code points 0&#8211;255 to
+the bytes <code class="docutils literal"><span class="pre">0x0</span></code>&#8211;<code class="docutils literal"><span class="pre">0xff</span></code>. This means that a unicode object that contains
+code points above <code class="docutils literal"><span class="pre">U+00FF</span></code> can&#8217;t be encoded with this method (which is called
+<code class="docutils literal"><span class="pre">'latin-1'</span></code> or <code class="docutils literal"><span class="pre">'iso-8859-1'</span></code>). <code class="xref py py-func docutils literal"><span class="pre">unicode.encode()</span></code> will raise a
+<a class="reference internal" href="exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> that looks like this: <code class="docutils literal"><span class="pre">UnicodeEncodeError:</span> <span class="pre">'latin-1'</span>
+<span class="pre">codec</span> <span class="pre">can't</span> <span class="pre">encode</span> <span class="pre">character</span> <span class="pre">u'\u1234'</span> <span class="pre">in</span> <span class="pre">position</span> <span class="pre">3:</span> <span class="pre">ordinal</span> <span class="pre">not</span> <span class="pre">in</span>
+<span class="pre">range(256)</span></code>.</p>
+<p>There&#8217;s another group of encodings (the so called charmap encodings) that choose
+a different subset of all unicode code points and how these code points are
+mapped to the bytes <code class="docutils literal"><span class="pre">0x0</span></code>&#8211;<code class="docutils literal"><span class="pre">0xff</span></code>. To see how this is done simply open
+e.g. <code class="file docutils literal"><span class="pre">encodings/cp1252.py</span></code> (which is an encoding that is used primarily on
+Windows). There&#8217;s a string constant with 256 characters that shows you which
+character is mapped to which byte value.</p>
 <p>これらのエンコーディングはすべて、 Unicode に定義された 1114112 のコードポイントのうちの 256 だけをエンコードすることができます。 Unicode のすべてのコードポイントを格納するための単純で直接的な方法は、各コードポイントを連続する4バイトとして格納することです。これには2つの可能性があります: ビッグエンディアンまたはリトルエンディアンの順にバイトを格納することです。これら2つのエンコーディングはそれぞれ <code class="docutils literal"><span class="pre">UTF-32-BE</span></code> および <code class="docutils literal"><span class="pre">UTF-32-LE</span></code> と呼ばれます。それらのデメリットは、例えばリトルエンディアンのマシン上で <code class="docutils literal"><span class="pre">UTF-32-BE</span></code> を使用すると、エンコードでもデコードでも常にバイト順を交換する必要があることです。<code class="docutils literal"><span class="pre">UTF-32</span></code> はこの問題を回避します: バイト順は、常に自然なエンディアンに従います。しかし、これらのバイト順が異なるエンディアン性を持つ CPU によって読まれる場合、結局バイト順を交換しなければなりません。<code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列のエンディアン性を検出する目的で、いわゆる BOM (「バイト・オーダー・マーク」) があります。これは Unicode 文字 <code class="docutils literal"><span class="pre">U+FEFF</span></code> です。この文字はすべての <code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列の前に置くことができます。この文字のバイトが交換されたバージョン (<code class="docutils literal"><span class="pre">0xFFFE</span></code>) は、 Unicode テキストに現われてはならない不正な文字です。したがって、<code class="docutils literal"><span class="pre">UTF-16</span></code> あるいは <code class="docutils literal"><span class="pre">UTF-32</span></code> バイト列中の最初の文字が <code class="docutils literal"><span class="pre">U+FFFE</span></code> であるように見える場合、デコードの際にバイトを交換しなければなりません。不運にも文字 <code class="docutils literal"><span class="pre">U+FEFF</span></code> は <code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> として別の目的を持っていました: 幅を持たず、単語を分割することを許容しない文字。それは、例えばリガチャアルゴリズムにヒントを与えるために使用することができます。 Unicode  4.0 で、<code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> としての <code class="docutils literal"><span class="pre">U+FEFF</span></code> の使用は廃止予定になりました (この役割は <code class="docutils literal"><span class="pre">U+2060</span></code> (<code class="docutils literal"><span class="pre">WORD</span> <span class="pre">JOINER</span></code>) によって引き継がれました)。しかしながら、 Unicode ソフトウェアは、依然として両方の役割の <code class="docutils literal"><span class="pre">U+FEFF</span></code> を扱うことができなければなりません: BOM として、エンコードされたバイトのメモリレイアウトを決定する手段であり、一旦バイト列が文字列にデコードされたならば消えます; <code class="docutils literal"><span class="pre">ZERO</span> <span class="pre">WIDTH</span> <span class="pre">NO-BREAK</span> <span class="pre">SPACE</span></code> として、他の任意の文字のようにデコードされる通常の文字です。</p>
 <p>さらにもう一つ Unicode 文字全てをエンコードできるエンコーディングがあり、UTF-8 と呼ばれています。UTF-8 は8ビットエンコーディングで、したがって UTF-8 にはバイト順の問題はありません。UTF-8 バイト列の各バイトは二つのパートから成ります。二つはマーカ(上位数ビット)とペイロードです。マーカは0ビットから4ビットの <code class="docutils literal"><span class="pre">1</span></code> の列に <code class="docutils literal"><span class="pre">0</span></code> のビットが一つ続いたものです。Unicode 文字は次のようにエンコードされます (x はペイロードを表わし、連結されると一つの Unicode 文字を表わします):</p>
 <table border="1" class="docutils">
@@ -660,8 +681,8 @@
 <ul class="simple">
 <li><p class="first">ISO 8859 コードセット</p>
 </li>
-<li><p class="first">Microsoft Windows コードページで、8859 コード形式から導出されているが、制御文字を追加のグラフィック文字と置き換えたもの</p>
-</li>
+<li>a Microsoft Windows code page, which is typically derived from an 8859 codeset,
+but replaces control characters with additional graphic characters</li>
 <li><p class="first">IBM EBCDIC コードページ</p>
 </li>
 <li><p class="first">ASCII 互換の IBM PC コードページ</p>
@@ -1322,7 +1343,7 @@ quotedprintable</td>
 </div>
 <p>このモジュールでは <span class="target" id="index-17"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> (アプリケーションにおける国際化ドメイン名、 IDNA: Internationalized Domain Names in Applications) および <span class="target" id="index-18"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3492.html"><strong>RFC 3492</strong></a> (Nameprep: 国際化ドメイン名 (IDN) のための stringprep プロファイル) を実装しています。このモジュールは <code class="docutils literal"><span class="pre">punycode</span></code> エンコーディングおよび <a class="reference internal" href="stringprep.html#module-stringprep" title="stringprep: String preparation, as per RFC 3453"><code class="xref py py-mod docutils literal"><span class="pre">stringprep</span></code></a> の上に構築されています。</p>
 <p>これらの RFC はともに、非 ASCII 文字の入ったドメイン名をサポートするためのプロトコルを定義しています。 (<code class="docutils literal"><span class="pre">www.Alliancefrançaise.nu</span></code> のような) 非 ASCII 文字を含むドメイン名は、 ASCII と互換性のあるエンコーディング (ACE、 <code class="docutils literal"><span class="pre">www.xn--alliancefranaise-npb.nu</span></code> のような形式) に変換されます。ドメイン名の ACE 形式は、 DNS クエリ、 HTTP <em class="mailheader">Host</em> フィールドなどといった、プロトコル中で任意の文字を使えないような全ての局面で用いられます。この変換はアプリケーション内で行われます; 可能ならユーザからは不可視となります: アプリケーションは Unicode ドメインラベルをネットワークに載せる際に IDNA に、 ACE ドメインラベルをユーザに提供する前に Unicode に、それぞれ透過的に変換しなければなりません。</p>
-<p>Python ではこの変換をいくつかの方法でサポートします: <code class="docutils literal"><span class="pre">idna</span></code> codec は Unicode と ACE 間の変換を行い、入力文字列を <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> の <a class="reference external" href="http://tools.ietf.org/html/rfc3490#section-3.1">section 3.1</a> (1) で定義されている区切り文字に基づいてラベルに分解し、各ラベルを要求通りに ACE に変換します。逆に、入力のバイト文字列を <code class="docutils literal"><span class="pre">.</span></code> 区切り文字でラベルに分解し、 ACE ラベルを Unicode に変換します。さらに、 <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールは Unicode ホスト名を ACE に透過的に変換するため、アプリケーションはホスト名を <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールに渡す際にホスト名の変換に煩わされることがありません。その上で、ホスト名を関数パラメタとして持つ、 <a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> や <a class="reference internal" href="ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> のようなモジュールでは Unicode ホスト名を受理します (<a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> でもまた、 <code class="docutils literal"><span class="pre">Host:</span></code> フィールドにある IDNA ホスト名を、フィールド全体を送信する場合に透過的に送信します)。</p>
+<p>Python ではこの変換をいくつかの方法でサポートします: <code class="docutils literal"><span class="pre">idna</span></code> codec は Unicode と ACE 間の変換を行い、入力文字列を <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3490.html"><strong>RFC 3490</strong></a> の <a class="reference external" href="https://tools.ietf.org/html/rfc3490#section-3.1">section 3.1</a> (1) で定義されている区切り文字に基づいてラベルに分解し、各ラベルを要求通りに ACE に変換します。逆に、入力のバイト文字列を <code class="docutils literal"><span class="pre">.</span></code> 区切り文字でラベルに分解し、 ACE ラベルを Unicode に変換します。さらに、 <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールは Unicode ホスト名を ACE に透過的に変換するため、アプリケーションはホスト名を <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールに渡す際にホスト名の変換に煩わされることがありません。その上で、ホスト名を関数パラメタとして持つ、 <a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> や <a class="reference internal" href="ftplib.html#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> のようなモジュールでは Unicode ホスト名を受理します (<a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> でもまた、 <code class="docutils literal"><span class="pre">Host:</span></code> フィールドにある IDNA ホスト名を、フィールド全体を送信する場合に透過的に送信します)。</p>
 <p>(逆引きなどによって) ネットワーク越しにホスト名を受信する際、Unicode への自動変換は行われません: こうしたホスト名をユーザに提供したいアプリケーションでは、Unicode にデコードしてやる必要があります。</p>
 <p><a class="reference internal" href="#module-encodings.idna" title="encodings.idna: Internationalized Domain Names implementation"><code class="xref py py-mod docutils literal"><span class="pre">encodings.idna</span></code></a> ではまた、 nameprep 手続きを実装しています。 nameprep はホスト名に対してある正規化を行って、国際化ドメイン名で大小文字を区別しないようにするとともに、類似の文字を一元化します。 nameprep 関数は必要なら直接使うこともできます。</p>
 <dl class="function">
@@ -1390,8 +1411,9 @@ quotedprintable</td>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/codecs.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/codecs.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1436,12 +1458,12 @@ quotedprintable</td>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

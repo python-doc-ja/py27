@@ -37,6 +37,7 @@
     <link rel="next" title="12.2. gzip — gzip ファイルのサポート" href="gzip.html" />
     <link rel="prev" title="12. データ圧縮とアーカイブ" href="archiving.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/zlib.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -117,9 +118,30 @@
 <dl class="function">
 <dt id="zlib.compressobj">
 <code class="descclassname">zlib.</code><code class="descname">compressobj</code><span class="sig-paren">(</span><span class="optional">[</span><em>level</em><span class="optional">[</span>, <em>method</em><span class="optional">[</span>, <em>wbits</em><span class="optional">[</span>, <em>memlevel</em><span class="optional">[</span>, <em>strategy</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.compressobj" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>一度にメモリ上に置くことができないようなデータストリームを圧縮するための圧縮オブジェクトを返します。 <em>level</em> は <code class="docutils literal"><span class="pre">0</span></code> から <code class="docutils literal"><span class="pre">9</span></code> までの整数で、圧縮レベルを制御します。 <code class="docutils literal"><span class="pre">1</span></code> はもっとも高速で最小限の圧縮を、 <code class="docutils literal"><span class="pre">9</span></code> はもっとも低速になりますが最大限の圧縮を行います。 <code class="docutils literal"><span class="pre">0</span></code> は圧縮しません。デフォルトの値は <code class="docutils literal"><span class="pre">6</span></code> です。</p>
+<dd><p>Returns a compression object, to be used for compressing data streams that won&#8217;t
+fit into memory at once.  <em>level</em> is an integer from
+<code class="docutils literal"><span class="pre">0</span></code> to <code class="docutils literal"><span class="pre">9</span></code> or <code class="docutils literal"><span class="pre">-1</span></code>, controlling
+the level of compression; <code class="docutils literal"><span class="pre">1</span></code> is fastest and produces the least compression,
+<code class="docutils literal"><span class="pre">9</span></code> is slowest and produces the most.  <code class="docutils literal"><span class="pre">0</span></code> is no compression.  The default
+value is <code class="docutils literal"><span class="pre">-1</span></code> (Z_DEFAULT_COMPRESSION). Z_DEFAULT_COMPRESSION represents a default
+compromise between speed and compression (currently equivalent to level 6).</p>
 <p><em>method</em> は圧縮アルゴリズムです。現在、 <code class="docutils literal"><span class="pre">DEFLATED</span></code> のみサポートされています。</p>
-<p><em>wbits</em> は、ウィンドウバッファサイズに対する 2 を底とする対数です。この値は <code class="docutils literal"><span class="pre">8</span></code> から <code class="docutils literal"><span class="pre">15</span></code> の整数でなければなりません。大きな値ほど圧縮率が向上しますが、メモリ消費量も増加します。デフォルトは 15 です。</p>
+<p>The <em>wbits</em> argument controls the size of the history buffer (or the
+&#8220;window size&#8221;) used when compressing data, and whether a header and
+trailer is included in the output.  It can take several ranges of values.
+The default is 15.</p>
+<ul class="simple">
+<li>+9 to +15: The base-two logarithm of the window size, which
+therefore ranges between 512 and 32768.  Larger values produce
+better compression at the expense of greater memory usage.  The
+resulting output will include a zlib-specific header and trailer.</li>
+<li>−9 to −15: Uses the absolute value of <em>wbits</em> as the
+window size logarithm, while producing a raw output stream with no
+header or trailing checksum.</li>
+<li>+25 to +31 = 16 + (9 to 15): Uses the low 4 bits of the value as the
+window size logarithm, while including a basic <strong class="program">gzip</strong> header
+and trailing checksum in the output.</li>
+</ul>
 <p><em>memlevel</em> は内部圧縮状態用に使用されるメモリ量を制御します。有効な値は <code class="docutils literal"><span class="pre">1</span></code> から <code class="docutils literal"><span class="pre">9</span></code> です。大きい値ほど多くのメモリを消費しますが、より速く、より小さな出力を作成します。デフォルトは 8 です。</p>
 <p><em>strategy</em> は圧縮アルゴリズムの調整に使用されます。指定可能な値は、 <code class="docutils literal"><span class="pre">Z_DEFAULT_STRATEGY</span></code> 、 <code class="docutils literal"><span class="pre">Z_FILTERED</span></code> 、および <code class="docutils literal"><span class="pre">Z_HUFFMAN_ONLY</span></code> です。デフォルトは <code class="docutils literal"><span class="pre">Z_DEFAULT_STRATEGY</span></code> です。</p>
 </dd></dl>
@@ -144,15 +166,45 @@
 <dl class="function">
 <dt id="zlib.decompress">
 <code class="descclassname">zlib.</code><code class="descname">decompress</code><span class="sig-paren">(</span><em>string</em><span class="optional">[</span>, <em>wbits</em><span class="optional">[</span>, <em>bufsize</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.decompress" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>string</em> 内のデータを展開して、展開されたデータを含む文字列を返します。 <em>wbits</em> パラメータはウィンドウバッファの大きさを制御します。より詳しい説明は後で行います。 <em>bufsize</em> が与えられていれば、出力バッファの初期サイズとして使われます。展開処理に何らかのエラーが生じた場合、 <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> 例外を送出します。</p>
-<p><em>wbits</em> の絶対値は、データを圧縮する際に用いられるヒストリバッファのサイズ (ウィンドウサイズ) に対し、2 を底とする対数をとったものです。最新バージョンの zlib ライブラリを使っている場合、 <em>wbits</em> の絶対値は 8 から 15 にしてください。大きな値ほど圧縮率が向上しますが、メモリ消費量も増加します。ストリームを展開する場合、 <em>wbits</em> は元のストリームを圧縮するために使用したサイズより小さくしてはいけません。小さすぎる値を使用すると例外を送出します。そのため、デフォルトの値は 15 となっています。 <em>wbits</em> の値が負の場合、標準的な <strong class="program">gzip</strong> ヘッダを出力しません。</p>
+<dd><p>Decompresses the data in <em>string</em>, returning a string containing the
+uncompressed data.  The <em>wbits</em> parameter depends on
+the format of <em>string</em>, and is discussed further below.
+If <em>bufsize</em> is given, it is used as the initial size of the output
+buffer.  Raises the <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> exception if any error occurs.</p>
+<p id="decompress-wbits">The <em>wbits</em> parameter controls the size of the history buffer
+(or &#8220;window size&#8221;), and what header and trailer format is expected.
+It is similar to the parameter for <a class="reference internal" href="#zlib.compressobj" title="zlib.compressobj"><code class="xref py py-func docutils literal"><span class="pre">compressobj()</span></code></a>, but accepts
+more ranges of values:</p>
+<ul class="simple">
+<li>+8 to +15: The base-two logarithm of the window size.  The input
+must include a zlib header and trailer.</li>
+<li>0: Automatically determine the window size from the zlib header.
+Only supported since zlib 1.2.3.5.</li>
+<li>−8 to −15: Uses the absolute value of <em>wbits</em> as the window size
+logarithm.  The input must be a raw stream with no header or trailer.</li>
+<li>+24 to +31 = 16 + (8 to 15): Uses the low 4 bits of the value as
+the window size logarithm.  The input must include a gzip header and
+trailer.</li>
+<li>+40 to +47 = 32 + (8 to 15): Uses the low 4 bits of the value as
+the window size logarithm, and automatically accepts either
+the zlib or gzip format.</li>
+</ul>
+<p>When decompressing a stream, the window size must not be smaller
+than the size originally used to compress the stream; using a too-small
+value may result in an <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal"><span class="pre">error</span></code></a> exception. The default <em>wbits</em> value
+is 15, which corresponds to the largest window size and requires a zlib
+header and trailer to be included.</p>
 <p><em>bufsize</em> は展開されたデータを保持するためのバッファサイズの初期値です。バッファの空きは必要に応じて必要なだけ増加するので、必ずしも正確な値を指定する必要はありません。この値のチューニングでできることは、 <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> が呼ばれる回数を数回減らすことぐらいです。デフォルトサイズは 16384 です。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="zlib.decompressobj">
 <code class="descclassname">zlib.</code><code class="descname">decompressobj</code><span class="sig-paren">(</span><span class="optional">[</span><em>wbits</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.decompressobj" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>メモリ上に一度に展開できないようなデータストリームを展開するために用いられる展開オブジェクトを返します。 <em>wbits</em> パラメータはウィンドウバッファのサイズを制御します。</p>
+<dd><p>Returns a decompression object, to be used for decompressing data streams that
+won&#8217;t fit into memory at once.</p>
+<p>The <em>wbits</em> parameter controls the size of the history buffer (or the
+&#8220;window size&#8221;), and what header and trailer format is expected.  It has
+the same meaning as <a class="reference external" href="#decompress-wbits">described for decompress()</a>.</p>
 </dd></dl>
 
 <p>圧縮オブジェクトは以下のメソッドをサポートしています:</p>
@@ -245,8 +297,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/zlib.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/zlib.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -291,12 +344,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

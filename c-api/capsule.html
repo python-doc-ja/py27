@@ -37,6 +37,7 @@
     <link rel="next" title="Cオブジェクト (CObject)" href="cobject.html" />
     <link rel="prev" title="弱参照オブジェクト" href="weakref.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/c-api/capsule.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -154,35 +155,36 @@ void* <code class="descname">PyCapsule_Import</code><span class="sig-paren">(</s
 int <code class="descname">PyCapsule_IsValid</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, const char<em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_IsValid" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> が有効なカプセルであるかどうかをチェックします。有効な <em>capsule</em> は、非 <em>NULL</em> で、 <a class="reference internal" href="#c.PyCapsule_CheckExact" title="PyCapsule_CheckExact"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_CheckExact()</span></code></a> をパスし、非 <em>NULL</em> なポインタを格納していて、内部の name が引数 <em>name</em> とマッチします。 (name の比較方法については <a class="reference internal" href="#c.PyCapsule_GetPointer" title="PyCapsule_GetPointer"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_GetPointer()</span></code></a> を参照)</p>
 <p>言い換えると、 <a class="reference internal" href="#c.PyCapsule_IsValid" title="PyCapsule_IsValid"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_IsValid()</span></code></a> が真を返す場合、全てのアクセッサ (<code class="xref c c-func docutils literal"><span class="pre">PyCapsule_Get()</span></code> で始まる全ての関数) が成功することが保証されます。</p>
-<p>オブジェクトが有効で name がマッチした場合に非0を、それ以外の場合に 0 を返します。この関数は絶対に失敗しません。</p>
+<p>Return a nonzero value if the object is valid and matches the name passed in.
+Return <code class="docutils literal"><span class="pre">0</span></code> otherwise.  This function will not fail.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetContext">
 int <code class="descname">PyCapsule_SetContext</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, void<em>&nbsp;*context</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetContext" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のコンテキストポインタを <em>context</em> に設定します。</p>
-<p>成功したら 0 を、失敗したら例外を設定して非0 を返します。</p>
+<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetDestructor">
 int <code class="descname">PyCapsule_SetDestructor</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, <a class="reference internal" href="#c.PyCapsule_Destructor" title="PyCapsule_Destructor">PyCapsule_Destructor</a><em>&nbsp;destructor</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetDestructor" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のデストラクタを <em>destructor</em> に設定します。</p>
-<p>成功したら 0 を、失敗したら例外を設定して非0 を返します。</p>
+<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetName">
 int <code class="descname">PyCapsule_SetName</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, const char<em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetName" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部の name を <em>name</em> に設定します。<em>name</em> が非 <em>NULL</em> のとき、それは <em>capsule</em> よりも長い寿命を持つ必要があります。もしすでに <em>capsule</em> に非 <em>NULL</em> の <em>name</em> が保存されていた場合、それに対する解放は行われません。</p>
-<p>成功したら 0 を、失敗したら例外を設定して非0 を返します。</p>
+<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetPointer">
 int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, void<em>&nbsp;*pointer</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetPointer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のポインタを <em>pointer</em> に設定します。<em>pointer</em> は <em>NULL</em> であってはなりません。</p>
-<p>成功したら 0 を、失敗したら例外を設定して非0 を返します。</p>
+<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
 </dd></dl>
 
 </div>
@@ -202,8 +204,9 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/c-api/capsule.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/capsule.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -248,12 +251,12 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

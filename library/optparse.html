@@ -37,6 +37,7 @@
     <link rel="next" title="15.6. getopt — C 言語スタイルのコマンドラインオプションパーサ" href="getopt.html" />
     <link rel="prev" title="15.4. argparse — コマンドラインオプション、引数、サブコマンドのパーサー" href="argparse.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/optparse.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -87,12 +88,12 @@
 <div class="deprecated">
 <p><span class="versionmodified">バージョン 2.7 で撤廃: </span><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> モジュールは廃止予定であり、これ以上の開発は行われません。<a class="reference internal" href="argparse.html#module-argparse" title="argparse: Command-line option and argument parsing library."><code class="xref py py-mod docutils literal"><span class="pre">argparse</span></code></a> モジュールを使用してください。</p>
 </div>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/optparse.py">Lib/optparse.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/optparse.py">Lib/optparse.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> モジュールは、昔からある <a class="reference internal" href="getopt.html#module-getopt" title="getopt: Portable parser for command line options; support both short and long option names."><code class="xref py py-mod docutils literal"><span class="pre">getopt</span></code></a> よりも簡便で、柔軟性に富み、かつ強力なコマンドライン解析ライブラリです。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> では、より宣言的なスタイルのコマンドライン解析手法、すなわち <a class="reference internal" href="#optparse.OptionParser" title="optparse.OptionParser"><code class="xref py py-class docutils literal"><span class="pre">OptionParser</span></code></a> のインスタンスを作成してオプションを追加してゆき、そのインスタンスでコマンドラインを解析するという手法をとっています。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> を使うと、GNU/POSIX 構文でオプションを指定できるだけでなく、使用法やヘルプメッセージの生成も行えます。</p>
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> を使った簡単なスクリプトの例を以下に示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">()</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;--file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span>
                   <span class="n">help</span><span class="o">=</span><span class="s2">&quot;write report to FILE&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;FILE&quot;</span><span class="p">)</span>
@@ -203,7 +204,7 @@ Options:
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はとても柔軟で強力でありながら、ほとんどの場合には簡単に利用できます。この節では、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> ベースのプログラムで広く使われているコードパターンについて述べます。</p>
 <p>まず、<a class="reference internal" href="#optparse.OptionParser" title="optparse.OptionParser"><code class="xref py py-class docutils literal"><span class="pre">OptionParser</span></code></a> クラスを import しておかなければなりません。次に、プログラムの冒頭で <a class="reference internal" href="#optparse.OptionParser" title="optparse.OptionParser"><code class="xref py py-class docutils literal"><span class="pre">OptionParser</span></code></a> インスタンスを生成しておきます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -486,9 +487,9 @@ Options:
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">%prog</span></code> は <code class="docutils literal"><span class="pre">usage</span></code> と同じような展開を受けます。その他にも <code class="docutils literal"><span class="pre">version</span></code> には何でも好きな内容を入れられます。 <code class="docutils literal"><span class="pre">version</span></code> を指定した場合、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は自動的に <code class="docutils literal"><span class="pre">--version</span></code> オプションをパーザに渡します。コマンドライン中に <code class="docutils literal"><span class="pre">--version</span></code> が見つかると、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は <code class="docutils literal"><span class="pre">version</span></code> 文字列を展開して (<code class="docutils literal"><span class="pre">%prog</span></code> を置き換えて) 標準出力に出力し、プログラムを終了します。</p>
-<p>例えば、<code class="docutils literal"><span class="pre">/usr/bin/foo</span></code> という名前のスクリプトなら:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ /usr/bin/foo --version
-foo 1.0
+<p>For example, if your script is called <code class="docutils literal"><span class="pre">/usr/bin/foo</span></code>:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo --version
+<span class="go">foo 1.0</span>
 </pre></div>
 </div>
 <p>以下の2つのメソッドを、<code class="docutils literal"><span class="pre">version</span></code> 文字列を表示するために利用できます:</p>
@@ -510,24 +511,25 @@ foo 1.0
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> を使う場合に気を付けなければならないエラーには、大きく分けてプログラマ側のエラーとユーザ側のエラーという二つの種類があります。プログラマ側のエラーの多くは、例えば不正なオプション文字列や定義されていないオプション属性の指定、あるいはオプション属性を指定し忘れるといった、誤った <a class="reference internal" href="#optparse.OptionParser.add_option" title="optparse.OptionParser.add_option"><code class="xref py py-func docutils literal"><span class="pre">OptionParser.add_option()</span></code></a>, 呼び出しによるものです。こうした誤りは通常通りに処理されます。すなわち、例外(<code class="xref py py-exc docutils literal"><span class="pre">optparse.OptionError</span></code> や <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a>) を送出して、プログラムをクラッシュさせます。</p>
 <p>もっと重要なのはユーザ側のエラーの処理です。というのも、ユーザの操作エラーというものはコードの安定性に関係なく起こるからです。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は、誤ったオプション引数の指定 (整数を引数にとるオプション <code class="docutils literal"><span class="pre">-n</span></code> に対して <code class="docutils literal"><span class="pre">-n</span> <span class="pre">4x</span></code> と指定してしまうなど) や、引数を指定し忘れた場合 (<code class="docutils literal"><span class="pre">-n</span></code> が何らかの引数をとるオプションであるのに、 <code class="docutils literal"><span class="pre">-n</span></code> が引数の末尾に来ている場合) といった、ユーザによるエラーを自動的に検出します。また、アプリケーション側で定義されたエラー条件が起きた場合、 <code class="xref py py-func docutils literal"><span class="pre">OptionParser.error()</span></code> を呼び出してエラーを通知できます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">a</span> <span class="ow">and</span> <span class="n">options</span><span class="o">.</span><span class="n">b</span><span class="p">:</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;options -a and -b are mutually exclusive&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>いずれの場合にも <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はエラーを同じやり方で処理します。すなわち、プログラムの使用法メッセージとエラーメッセージを標準エラー出力に出力して、終了ステータス 2 でプログラムを終了させます。</p>
-<p>上に挙げた最初の例、すなわち整数を引数にとるオプションにユーザが <code class="docutils literal"><span class="pre">4x</span></code> を指定した場合を考えてみましょう:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ /usr/bin/foo -n 4x
-Usage: foo [options]
+<p>Consider the first example above, where the user passes <code class="docutils literal"><span class="pre">4x</span></code> to an option
+that takes an integer:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo -n 4x
+<span class="go">Usage: foo [options]</span>
 
-foo: error: option -n: invalid integer value: &#39;4x&#39;
+<span class="go">foo: error: option -n: invalid integer value: &#39;4x&#39;</span>
 </pre></div>
 </div>
-<p>値を全く指定しない場合には、以下のようになります:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ /usr/bin/foo -n
-Usage: foo [options]
+<p>Or, where the user fails to pass a value at all:</p>
+<div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo -n
+<span class="go">Usage: foo [options]</span>
 
-foo: error: -n option requires an argument
+<span class="go">foo: error: -n option requires an argument</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は、常にエラーを引き起こしたオプションについて説明の入ったエラーメッセージを生成するよう気を配ります; 従って、 <code class="xref py py-func docutils literal"><span class="pre">OptionParser.error()</span></code> をアプリケーションコードから呼び出す場合にも、同じようなメッセージになるようにしてください。</p>
@@ -537,7 +539,7 @@ foo: error: -n option requires an argument
 <span id="optparse-putting-it-all-together"></span><h3>15.5.2.9. 全てをつなぎ合わせる<a class="headerlink" href="#putting-it-all-together" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> を使ったスクリプトは、通常以下のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;usage: %prog [options] arg&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="p">)</span>
@@ -547,13 +549,13 @@ foo: error: -n option requires an argument
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;verbose&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;verbose&quot;</span><span class="p">)</span>
-    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="o">...</span>
     <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;incorrect number of arguments&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span> <span class="s2">&quot;reading </span><span class="si">%s</span><span class="s2">...&quot;</span> <span class="o">%</span> <span class="n">options</span><span class="o">.</span><span class="n">filename</span>
-    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="o">...</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -948,8 +950,9 @@ Options:
 <dd><p class="first last">処理する引数のリスト (デフォルト: <code class="docutils literal"><span class="pre">sys.argv[1:]</span></code>)</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">values</span></code></dt>
-<dd><p class="first last">オプション引数を格納する <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> のオブジェクト (デフォルト: 新しい <code class="xref py py-class docutils literal"><span class="pre">Values</span></code> のインスタンス) &#8211; 既存のオブジェクトを指定した場合、オプションのデフォルトは初期化されません</p>
-</dd>
+<dd>an <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> object to store option arguments in (default: a
+new instance of <code class="xref py py-class docutils literal"><span class="pre">Values</span></code>) &#8211; if you give an existing object, the
+option defaults will not be initialized on it</dd>
 </dl>
 <p>であり、戻り値は</p>
 <dl class="docutils">
@@ -1010,7 +1013,7 @@ Options:
 <span id="optparse-conflicts-between-options"></span><h3>15.5.3.9. オプション間の衝突<a class="headerlink" href="#conflicts-between-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>注意が足りないと、衝突するオプションを定義してしまうことがあります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-n&quot;</span><span class="p">,</span> <span class="s2">&quot;--dry-run&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-n&quot;</span><span class="p">,</span> <span class="s2">&quot;--noisy&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1043,7 +1046,7 @@ Options:
 <p>この時点で、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はすでに追加済のオプションがオプション文字列 <code class="docutils literal"><span class="pre">-n</span></code> を使っていることを検出します。 <code class="docutils literal"><span class="pre">conflict_handler</span></code> が <code class="docutils literal"><span class="pre">&quot;resolve&quot;</span></code> なので、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は既に追加済のオプションリストの方から <code class="docutils literal"><span class="pre">-n</span></code> を除去して問題を解決します。従って、 <code class="docutils literal"><span class="pre">-n</span></code> の除去されたオプションは <code class="docutils literal"><span class="pre">--dry-run</span></code> だけでしか有効にできなくなります。ユーザがヘルプ文字列を要求した場合、問題解決の結果を反映したメッセージが出力されます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Options</span><span class="p">:</span>
   <span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>     <span class="n">do</span> <span class="n">no</span> <span class="n">harm</span>
-  <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="o">...</span>
   <span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="o">--</span><span class="n">noisy</span>   <span class="n">be</span> <span class="n">noisy</span>
 </pre></div>
 </div>
@@ -1053,7 +1056,7 @@ Options:
 </div>
 <p>を行った時点で、最初の <code class="docutils literal"><span class="pre">-n</span></code>/<code class="docutils literal"><span class="pre">--dry-run</span></code> オプションはもはやアクセスできなくなります。このため、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はオプションを消去してしまい、ヘルプテキストだけが残ります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Options</span><span class="p">:</span>
-  <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="o">...</span>
   <span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="o">--</span><span class="n">noisy</span>   <span class="n">be</span> <span class="n">noisy</span>
   <span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>     <span class="n">new</span> <span class="n">dry</span><span class="o">-</span><span class="n">run</span> <span class="n">option</span>
 </pre></div>
@@ -1207,7 +1210,7 @@ Options:
     <span class="k">if</span> <span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">b</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">OptionValueError</span><span class="p">(</span><span class="s2">&quot;can&#39;t use -a after -b&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">check_order</span><span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1220,7 +1223,7 @@ Options:
     <span class="k">if</span> <span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">b</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">OptionValueError</span><span class="p">(</span><span class="s2">&quot;can&#39;t use </span><span class="si">%s</span><span class="s2"> after -b&quot;</span> <span class="o">%</span> <span class="n">opt_str</span><span class="p">)</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">check_order</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">check_order</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
@@ -1235,7 +1238,7 @@ Options:
         <span class="k">raise</span> <span class="n">OptionValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> option invalid when moon is full&quot;</span>
                                <span class="o">%</span> <span class="n">opt_str</span><span class="p">)</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--foo&quot;</span><span class="p">,</span>
                   <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">check_moon</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1248,7 +1251,7 @@ Options:
 <p>標準の <code class="docutils literal"><span class="pre">&quot;store&quot;</span></code> アクションをエミュレートする例を以下に示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">store_value</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--foo&quot;</span><span class="p">,</span>
                   <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">store_value</span><span class="p">,</span>
                   <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
@@ -1268,30 +1271,30 @@ Options:
 </ul>
 <p>オプションが可変個の引数をとるようにさせたいなら、いくつかの巧妙で厄介な問題に配慮しなければなりません。どういう実装をとるかは、アプリケーションでどのようなトレードオフを考慮するかによります (このため、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> では可変個の引数に関する問題を直接的に取り扱わないのです)。</p>
 <p>とはいえ、可変個の引数をもつオプションに対するスタブ (stub、仲介インタフェース) を以下に示しておきます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="k">def</span> <span class="nf">vararg_callback</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
-     <span class="k">assert</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span>
-     <span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vararg_callback</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>
 
-     <span class="k">def</span> <span class="nf">floatable</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
-         <span class="k">try</span><span class="p">:</span>
-             <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-             <span class="k">return</span> <span class="kc">True</span>
-         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-             <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">def</span> <span class="nf">floatable</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
-     <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">rargs</span><span class="p">:</span>
-         <span class="c1"># stop on --foo like options</span>
-         <span class="k">if</span> <span class="n">arg</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;--&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-             <span class="k">break</span>
-         <span class="c1"># stop on -a, but not on -3 or -3.0</span>
-         <span class="k">if</span> <span class="n">arg</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">floatable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-             <span class="k">break</span>
-         <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">rargs</span><span class="p">:</span>
+        <span class="c1"># stop on --foo like options</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;--&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="c1"># stop on -a, but not on -3 or -3.0</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">floatable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
-     <span class="k">del</span> <span class="n">parser</span><span class="o">.</span><span class="n">rargs</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span>
-     <span class="nb">setattr</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">parser</span><span class="o">.</span><span class="n">rargs</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="o">...</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--callback&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;vararg_attr&quot;</span><span class="p">,</span>
                   <span class="n">action</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">vararg_callback</span><span class="p">)</span>
 </pre></div>
@@ -1430,7 +1433,15 @@ Options:
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">values</span><span class="o">.</span><span class="n">ensure_value</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">values</span></code> に <code class="docutils literal"><span class="pre">attr</span></code> 属性が無いか None だった場合に、 <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> は最初に <code class="docutils literal"><span class="pre">value</span></code> をセットし、それから <code class="docutils literal"><span class="pre">value</span></code> を返します。この振る舞いは <code class="docutils literal"><span class="pre">&quot;extend&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;append&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;count&quot;</span></code> のように、データを変数に集積し、またその変数がある型 (最初の二つはリスト、最後のは整数) であると期待されるアクションを作るのにとても使い易いものです。 <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> を使えば、作ったアクションを使うスクリプトはオプションに保存先にデフォルト値をセットすることに煩わされずに済みます。デフォルトを None にしておけば <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> がそれが必要になったときに適当な値を返してくれます。</p>
+<p>If the <code class="docutils literal"><span class="pre">attr</span></code> attribute of <code class="docutils literal"><span class="pre">values</span></code> doesn&#8217;t exist or is <code class="docutils literal"><span class="pre">None</span></code>, then
+ensure_value() first sets it to <code class="docutils literal"><span class="pre">value</span></code>, and then returns &#8216;value. This is
+very handy for actions like <code class="docutils literal"><span class="pre">&quot;extend&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;append&quot;</span></code>, and <code class="docutils literal"><span class="pre">&quot;count&quot;</span></code>, all
+of which accumulate data in a variable and expect that variable to be of a
+certain type (a list for the first two, an integer for the latter).  Using
+<code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> means that scripts using your action don&#8217;t have to worry
+about setting a default value for the option destinations in question; they
+can just leave the default as <code class="docutils literal"><span class="pre">None</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> will take care of
+getting it right when it&#8217;s needed.</p>
 </li>
 </ul>
 </div>
@@ -1511,8 +1522,9 @@ Options:
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/optparse.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/optparse.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1557,12 +1569,12 @@ Options:
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

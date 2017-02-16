@@ -37,6 +37,7 @@
     <link rel="next" title="12.3. bz2 — bzip2 互換の圧縮ライブラリ" href="bz2.html" />
     <link rel="prev" title="12.1. zlib — gzip 互換の圧縮" href="zlib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/gzip.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,7 +82,7 @@
             
   <div class="section" id="module-gzip">
 <span id="gzip-support-for-gzip-files"></span><h1>12.2. <a class="reference internal" href="#module-gzip" title="gzip: Interfaces for gzip compression and decompression using file objects."><code class="xref py py-mod docutils literal"><span class="pre">gzip</span></code></a> &#8212; <strong class="program">gzip</strong> ファイルのサポート<a class="headerlink" href="#module-gzip" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/gzip.py">Lib/gzip.py</a></p>
+<p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/gzip.py">Lib/gzip.py</a></p>
 <hr class="docutils" />
 <p>このモジュールは、GNU の <strong class="program">gzip</strong> や <strong class="program">gunzip</strong> のようにファイルを圧縮、展開するシンプルなインターフェイスを提供しています。</p>
 <p>データ圧縮は <a class="reference internal" href="zlib.html#module-zlib" title="zlib: Low-level interface to compression and decompression routines compatible with gzip."><code class="xref py py-mod docutils literal"><span class="pre">zlib</span></code></a> モジュールで提供されています。</p>
@@ -97,7 +98,11 @@
 <p><em>mode</em> 引数は、ファイルを読み出すのか、書き込むのかによって、 <code class="docutils literal"><span class="pre">'r'</span></code>, <code class="docutils literal"><span class="pre">'rb'</span></code>, <code class="docutils literal"><span class="pre">'a'</span></code>, <code class="docutils literal"><span class="pre">'ab'</span></code>, <code class="docutils literal"><span class="pre">'w'</span></code>, そして <code class="docutils literal"><span class="pre">'wb'</span></code> のいずれかになります。 <em>fileobj</em> のファイルモードが認識可能な場合、 <em>mode</em> はデフォルトで <em>fileobj</em> のモードと同じになります。そうでない場合、デフォルトのモードは <code class="docutils literal"><span class="pre">'rb'</span></code> です。 &#8216;b&#8217; フラグがついていなくても、ファイルがバイナリモードで開かれることを保証するために &#8216;b&#8217; フラグが追加されます。これはプラットフォーム間での移植性のためです。</p>
 <p>引数 <em>compresslevel</em> は <code class="docutils literal"><span class="pre">0</span></code> から <code class="docutils literal"><span class="pre">9</span></code> の整数を取り、圧縮レベルを制御します; <code class="docutils literal"><span class="pre">1</span></code> は最も高速で最小限の圧縮を行い、<code class="docutils literal"><span class="pre">9</span></code> は最も低速ですが最大限の圧縮を行います。<code class="docutils literal"><span class="pre">0</span></code> は圧縮しません。デフォルトは <code class="docutils literal"><span class="pre">9</span></code> です。</p>
 <p>引数 <em>mtime</em> はオプションで、圧縮時にストリームに書かれる数値型のタイムスタンプです。<strong class="program">gzip</strong> で圧縮されたすべてのストリームはタイムスタンプを必要とします。省略された場合や <code class="docutils literal"><span class="pre">None</span></code> が渡された場合は、現在の時刻が使用されます。このモジュールは展開時にはタイムスタンプを無視しますが、<strong class="program">gunzip</strong> などの一部のプログラムはタイムスタンプを利用します。タイムスタンプのフォーマットは <code class="docutils literal"><span class="pre">time.time()</span></code> の戻り値や、<code class="docutils literal"><span class="pre">os.stat()</span></code> の戻り値となるオブジェクトの <code class="docutils literal"><span class="pre">st_mtime</span></code> 属性と同じです。</p>
-<p>圧縮したデータの後ろにさらに何か追記したい場合もあるので、 <a class="reference internal" href="#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a> オブジェクトの <code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> メソッド呼び出しは <em>fileobj</em> をクローズしません。この機能によって、書き込みのためにオープンした <a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを <em>fileobj</em> として渡し、(<a class="reference internal" href="#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a> を <code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> した後に) <a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトの <a class="reference internal" href="stringio.html#StringIO.StringIO.getvalue" title="StringIO.StringIO.getvalue"><code class="xref py py-meth docutils literal"><span class="pre">getvalue()</span></code></a> メソッドを使って書き込んだデータの入っているメモリバッファを取得することができます。</p>
+<p>Calling a <a class="reference internal" href="#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a> object&#8217;s <code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> method does not close
+<em>fileobj</em>, since you might wish to append more material after the compressed
+data.  This also allows you to pass a <a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object opened for
+writing as <em>fileobj</em>, and retrieve the resulting memory buffer using the
+<a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object&#8217;s <a class="reference internal" href="stringio.html#StringIO.StringIO.getvalue" title="StringIO.StringIO.getvalue"><code class="xref py py-meth docutils literal"><span class="pre">getvalue()</span></code></a> method.</p>
 <p><a class="reference internal" href="#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a> はイテレーションと <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文をサポートします。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.7 で変更: </span><a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文をサポートしました。</p>
@@ -172,8 +177,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/gzip.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/gzip.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -218,12 +224,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

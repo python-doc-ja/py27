@@ -37,6 +37,7 @@
     <link rel="next" title="ソケットプログラミング HOWTO" href="sockets.html" />
     <link rel="prev" title="Logging クックブック" href="logging-cookbook.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/regex.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -107,8 +108,9 @@
 <h3>文字のマッチング<a class="headerlink" href="#matching-characters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>多くの活字や文字は単純にそれ自身とマッチします。例えば、 <code class="docutils literal"><span class="pre">test</span></code> という正規表現は文字列 <code class="docutils literal"><span class="pre">test</span></code> に厳密にマッチします。(大文字小文字を区別しないモードでその正規表現が <code class="docutils literal"><span class="pre">Test</span></code> や <code class="docutils literal"><span class="pre">TEST</span></code> にも同様にマッチすることもできます; 詳しくは後述します。)</p>
 <p>この規則には例外が存在します; いくつかの文字は特別な <em class="dfn">特殊文字 (metacharacters)</em> で、それら自身にマッチしません。代わりに通常のマッチするものとは違うという合図を出したり、正規表現の一部に対して繰り返したり、意味を変えたりして影響を与えます。このドキュメントの中の多くは様々な特殊文字とそれが何をするかについて論じることになります。</p>
-<p>ここに特殊文字の完全な一覧があります; これらの意味はこの HOWTO の残りの部分で説明します。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>. ^ $ * + ? { } [ ] \ | ( )
+<p>Here&#8217;s a complete list of the metacharacters; their meanings will be discussed
+in the rest of this HOWTO.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>. ^ $ * + ? { } [ ] \ | ( )
 </pre></div>
 </div>
 <p>最初に扱う特殊文字は <code class="docutils literal"><span class="pre">[</span></code> と <code class="docutils literal"><span class="pre">]</span></code> です。これらは文字クラスを指定します、文字クラスはマッチしたい文字の集合です。文字は個別にリストにしても構いませんし、二つの文字を <code class="docutils literal"><span class="pre">'-'</span></code> でつなげて文字を範囲で与えてもかまいません。たとえば <code class="docutils literal"><span class="pre">[abc]</span></code> は <code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code>, または <code class="docutils literal"><span class="pre">c</span></code> のどの文字列にもマッチします; これは <code class="docutils literal"><span class="pre">[a-c]</span></code> で同じ文字集合を範囲で表現しても全く同じです。小文字のアルファベットのみにマッチしたい場合、 <code class="docutils literal"><span class="pre">[a-z]</span></code> の正規表現をつかうことになるでしょう。</p>
@@ -144,7 +146,10 @@
 <p>さまざまな文字集合をマッチさせることは正規表現で最初にできるようになることで、これは文字列に対するメソッドですぐにできることではありません。しかし、正規表現がより力を発揮する場面がこれだけだとすると、正規表現はあまり先進的とはいえません。正規表現の力をもう一つの能力は、正規表現の一部が何度も繰り返されるようものを指定できることです。</p>
 <p>最初にとりあげる繰り返しのための最初の特殊文字は <code class="docutils literal"><span class="pre">*</span></code> です。 <code class="docutils literal"><span class="pre">*</span></code> は文字リテラル <code class="docutils literal"><span class="pre">*</span></code> とはマッチしません; その代わりに前の文字が厳密に1回ではなく、0回以上繰り返されるパターンを指定します。</p>
 <p>例えば <code class="docutils literal"><span class="pre">ca*t</span></code> は <code class="docutils literal"><span class="pre">ct</span></code> (<code class="docutils literal"><span class="pre">a</span></code> が 0 文字), <code class="docutils literal"><span class="pre">cat</span></code> (1 つの <code class="docutils literal"><span class="pre">a</span></code>), <code class="docutils literal"><span class="pre">caaat</span></code> (3 つの <code class="docutils literal"><span class="pre">a</span></code>)、などにマッチします。RE エンジンには、C言語の <code class="docutils literal"><span class="pre">int</span></code> のサイズに起因する色々な内部的な制限があります。それは20億個の <code class="docutils literal"><span class="pre">a</span></code> を超えるマッチを許さないでしょうが、おそらくそれほど大きい文字列を構築するほどの十分なメモリはないので、その制限に達することはありません。</p>
-<p><code class="docutils literal"><span class="pre">*</span></code> のような繰り返しは <em class="dfn">貪欲 (greedy)</em> です; 正規表現を繰り返したいとき、マッチングエンジンは可能な限り何度も繰り返そうと試みます。パターンの後ろの部分にマッチしない場合、マッチングエンジンは戻って少ない繰り返しを再び試みます。</p>
+<p>Repetitions such as <code class="docutils literal"><span class="pre">*</span></code> are <em class="dfn">greedy</em>; when repeating a RE, the matching
+engine will try to repeat it as many times as possible. If later portions of the
+pattern don&#8217;t match, the matching engine will then back up and try again with
+fewer repetitions.</p>
 <p>例をステップ、ステップで進めていくとより明確にわかります。正規表現 <code class="docutils literal"><span class="pre">a[bcd]*b</span></code> を考えましょう。この表現は文字 <code class="docutils literal"><span class="pre">'a'</span></code> と文字クラス <code class="docutils literal"><span class="pre">[bcd]</span></code> の0回以上の文字と最後の <code class="docutils literal"><span class="pre">'b'</span></code> にマッチします。この正規表現が文字列 <code class="docutils literal"><span class="pre">abcbd</span></code> に対してマッチする作業を想像してみましょう。</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -320,7 +325,7 @@
 </tbody>
 </table>
 <p>マッチしない場合 <code class="xref py py-meth docutils literal"><span class="pre">match()</span></code> と <code class="xref py py-meth docutils literal"><span class="pre">search()</span></code> は <code class="docutils literal"><span class="pre">None</span></code> を返します。もしマッチに成功した場合、 <a class="reference internal" href="../library/re.html#match-objects"><span class="std std-ref">Match オブジェクト</span></a> インスタンスを返します、このインスタンスはマッチの情報を含んでいます: どこで始まりどこで終わったか、マッチした部分文字列や等々。</p>
-<p><a class="reference internal" href="../library/re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールで対話的に実験することで学ぶこともできます。 Tkinter が利用できれば、Python に含まれるデモプログラム <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Tools/scripts/redemo.py">Tools/scripts/redemo.py</a> を見るといいかもしれません。このデモは正規表現と文字列を入力し、正規表現がマッチしたかどうかを表示します。 <code class="file docutils literal"><span class="pre">redemo.py</span></code> は複雑な正規表現のデバッグを試みるときにも便利に使うことができます。 Phil Schwartz の <a class="reference external" href="http://kodos.sourceforge.net/">Kodos</a> も正規表現パターンを使った開発とテストのための対話的なツールです。</p>
+<p><a class="reference internal" href="../library/re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールで対話的に実験することで学ぶこともできます。 Tkinter が利用できれば、Python に含まれるデモプログラム <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Tools/scripts/redemo.py">Tools/scripts/redemo.py</a> を見るといいかもしれません。このデモは正規表現と文字列を入力し、正規表現がマッチしたかどうかを表示します。 <code class="file docutils literal"><span class="pre">redemo.py</span></code> は複雑な正規表現のデバッグを試みるときにも便利に使うことができます。 Phil Schwartz の <a class="reference external" href="http://kodos.sourceforge.net/">Kodos</a> も正規表現パターンを使った開発とテストのための対話的なツールです。</p>
 <p>この HOWTO では例として標準の Python インタプリタを使います。最初に Python インタプリタを起動して、 <a class="reference internal" href="../library/re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールをインポートし、正規表現をコンパイルします:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="mf">2.2</span><span class="o">.</span><span class="mi">2</span> <span class="p">(</span><span class="c1">#1, Feb 10 2003, 12:57:01)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
@@ -743,9 +748,14 @@
 <p>三番目の試みでは、 <code class="docutils literal"><span class="pre">sendmail.cf</span></code> のように三文字より短い拡張子とマッチするために第二第三の文字を全てオプションにしています。</p>
 <p>パターンはさらに複雑さを増し、読みにくく、理解が難しくなりました。より悪いことに、問題が <code class="docutils literal"><span class="pre">bat</span></code> と <code class="docutils literal"><span class="pre">exe</span></code> 両方を拡張子から除きたい場合に変わった場合、パターンはより複雑で混乱しやすいものになります。</p>
 <p>否定先読みはこの混乱全てを取り除きます:</p>
-<p><code class="docutils literal"><span class="pre">.*[.](?!bat$).*$</span></code> 否定先読みは以下を意味します: この位置で拡張子 <code class="docutils literal"><span class="pre">bat</span></code> にマッチしない場合、残りのパターンが試行されます; もし <code class="docutils literal"><span class="pre">bat$</span></code> にマッチすればパターン全体が失敗します。 <code class="docutils literal"><span class="pre">$</span></code> を続けることで、 <code class="docutils literal"><span class="pre">sample.batch</span></code> にように <code class="docutils literal"><span class="pre">bat</span></code> で始まる拡張子を許容することを保証しています。</p>
+<p><code class="docutils literal"><span class="pre">.*[.](?!bat$)[^.]*$</span></code>  The negative lookahead means: if the expression <code class="docutils literal"><span class="pre">bat</span></code>
+doesn&#8217;t match at this point, try the rest of the pattern; if <code class="docutils literal"><span class="pre">bat$</span></code> does
+match, the whole pattern will fail.  The trailing <code class="docutils literal"><span class="pre">$</span></code> is required to ensure
+that something like <code class="docutils literal"><span class="pre">sample.batch</span></code>, where the extension only starts with
+<code class="docutils literal"><span class="pre">bat</span></code>, will be allowed.  The <code class="docutils literal"><span class="pre">[^.]*</span></code> makes sure that the pattern works
+when there are multiple dots in the filename.</p>
 <p>他のファイル名の拡張子を除くことも簡単です; 単純にアサーション内に拡張子を代替 (or) で加えます。以下のパターンは <code class="docutils literal"><span class="pre">bat</span></code> や <code class="docutils literal"><span class="pre">exe</span></code> のどちらで終わるファイル名を除外します:</p>
-<p><code class="docutils literal"><span class="pre">.*[.](?!bat$|exe$).*$</span></code></p>
+<p><code class="docutils literal"><span class="pre">.*[.](?!bat$|exe$)[^.]*$</span></code></p>
 </div>
 </div>
 <div class="section" id="modifying-strings">
@@ -825,18 +835,18 @@
 </dd></dl>
 
 <p>ここに <code class="xref py py-meth docutils literal"><span class="pre">sub()</span></code> メソッドを使った単純な例があります。これは色の名前を <code class="docutils literal"><span class="pre">colour</span></code> に置換します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span> <span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
 <span class="go">&#39;colour socks and colour shoes&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span> <span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">&#39;colour socks and red shoes&#39;</span>
 </pre></div>
 </div>
 <p><code class="xref py py-meth docutils literal"><span class="pre">subn()</span></code> メソッドも同じ働きをします、ただ新しい文字列と置換の実行回数を含む 2-タプルを返します:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span> <span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
 <span class="go">(&#39;colour socks and colour shoes&#39;, 2)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span> <span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;no colours at all&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;no colours at all&#39;</span><span class="p">)</span>
 <span class="go">(&#39;no colours at all&#39;, 0)</span>
 </pre></div>
 </div>
@@ -1019,8 +1029,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/regex.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/regex.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1064,12 +1075,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

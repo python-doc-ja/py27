@@ -37,6 +37,7 @@
     <link rel="next" title="17.4. signal — 非同期イベントにハンドラを設定する" href="signal.html" />
     <link rel="prev" title="17.2. socket — 低レベルネットワークインターフェース" href="socket.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/ssl.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -84,7 +85,7 @@
 <span class="target" id="index-0"></span><div class="versionadded" id="index-1">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
-<p><strong>Source code:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/ssl.py">Lib/ssl.py</a></p>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/ssl.py">Lib/ssl.py</a></p>
 <hr class="docutils" />
 <p>このモジュールは Transport Layer Security (よく &#8220;Secure Sockets Layer&#8221; という名前で知られています) 暗号化と、クライアントサイド、サーバーサイド両方のネットワークソケットのためのピア認証の仕組みを提供しています。このモジュールはOpenSSLライブラリを利用しています。OpenSSLは、全てのモダンなUnixシステム、Windows、Mac OS X、その他幾つかの OpenSSLがインストールされているプラットフォームで利用できます。</p>
 <div class="admonition note">
@@ -264,7 +265,8 @@
 <p class="first admonition-title">注釈</p>
 <p class="last">どの接続が成功するかは、 OpenSSL のバージョンに依存して大きく変わります。例えば、OpenSSL 1.0.0 以前は、SSLv23 クライアントは常に SSLv2 接続を試みていました。</p>
 </div>
-<p><em>ciphers</em> 引数はこの SSL オブジェクトで利用可能な暗号化アルゴリズム群を指定します。これは、 <a class="reference external" href="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">OpenSSL cipher list format</a> 形式で書かれた文字列でなければなりません。</p>
+<p>The <em>ciphers</em> parameter sets the available ciphers for this SSL object.
+It should be a string in the <a class="reference external" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER-LIST-FORMAT">OpenSSL cipher list format</a>.</p>
 <p><code class="docutils literal"><span class="pre">do_handshake_on_connect</span></code> 引数は、 <code class="xref py py-meth docutils literal"><span class="pre">socket.connect()</span></code> の後に自動的に SSLハンドシェイクを行うか、それともアプリケーションが明示的に <a class="reference internal" href="#ssl.SSLSocket.do_handshake" title="ssl.SSLSocket.do_handshake"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.do_handshake()</span></code></a> メソッドを実行するかを指定します。 <a class="reference internal" href="#ssl.SSLSocket.do_handshake" title="ssl.SSLSocket.do_handshake"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.do_handshake()</span></code></a> を明示的に呼びだすことで、ハンドシェイクによるソケットI/Oのブロッキング動作を制御できます。</p>
 <p><code class="docutils literal"><span class="pre">suppress_ragged_eofs</span></code> 引数は、 <code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.read()</span></code> メソッドが、接続先から予期しないEOF を受け取った時に通知する方法を指定します。 <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> (デフォルト) の場合、下位のソケットレイヤーから予期せぬEOFエラーが来た場合、通常のEOF (空のバイト列オブジェクト)を返します。 <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> の場合、呼び出し元に例外を投げて通知します。</p>
 <div class="versionchanged">
@@ -301,11 +303,60 @@
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.7.10 で変更: </span>デフォルトの暗号設定から RC4 が除かれました。</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7.13 で変更: </span>ChaCha20/Poly1305 was added to the default cipher string.</p>
+<p>3DES was dropped from the default cipher string.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ssl._https_verify_certificates">
+<code class="descclassname">ssl.</code><code class="descname">_https_verify_certificates</code><span class="sig-paren">(</span><em>enable=True</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl._https_verify_certificates" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Specifies whether or not server certificates are verified when creating
+client HTTPS connections without specifying a particular SSL context.</p>
+<p>Starting with Python 2.7.9, <a class="reference internal" href="httplib.html#module-httplib" title="httplib: HTTP and HTTPS protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">httplib</span></code></a> and modules which use it, such as
+<a class="reference internal" href="urllib2.html#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> and <a class="reference internal" href="xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a>, default to verifying remote server
+certificates received when establishing client HTTPS connections. This
+default verification checks that the certificate is signed by a Certificate
+Authority in the system trust store and that the Common Name (or Subject
+Alternate Name) on the presented certificate matches the requested host.</p>
+<p>Setting <em>enable</em> to <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> ensures this default behaviour is in
+effect.</p>
+<p>Setting <em>enable</em> to <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> reverts the default HTTPS certificate
+handling to that of Python 2.7.8 and earlier, allowing connections to
+servers using self-signed certificates, servers using certificates signed
+by a Certicate Authority not present in the system trust store, and servers
+where the hostname does not match the presented server certificate.</p>
+<p>The leading underscore on this function denotes that it intentionally does
+not exist in any implementation of Python 3 and may not be present in all
+Python 2.7 implementations. The portable approach to bypassing certificate
+checks or the system trust store when necessary is for tools to enable that
+on a case-by-case basis by explicitly passing in a suitably configured SSL
+context, rather than reverting the default behaviour of the standard library
+client modules.</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7.12 で追加.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<ul class="last simple">
+<li><a class="reference external" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9365">CVE-2014-9365</a>
+&#8211; HTTPS man-in-the-middle attack against Python clients using default settings</li>
+<li><span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0476"><strong>PEP 476</strong></a> &#8211; Enabling certificate verification by default for HTTPS</li>
+<li><span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0493"><strong>PEP 493</strong></a> &#8211; HTTPS verification migration tools for Python 2.7</li>
+</ul>
+</div>
 </dd></dl>
 
 </div>
 <div class="section" id="random-generation">
 <h3>17.3.1.3. 乱数生成<a class="headerlink" href="#random-generation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<blockquote>
+<div><div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated <code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_pseudo_bytes()</span></code>, use
+<code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_bytes()</span></code> instead.</p>
+</div>
+</div></blockquote>
 <dl class="function">
 <dt id="ssl.RAND_status">
 <code class="descclassname">ssl.</code><code class="descname">RAND_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ssl.RAND_status" title="この定義へのパーマリンク">¶</a></dt>
@@ -317,13 +368,13 @@
 <code class="descclassname">ssl.</code><code class="descname">RAND_egd</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.RAND_egd" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>もしエントロピー収集デーモン(EGD=entropy-gathering daemon)が動いていて、 <em>path</em> がEGDへのソケットのパスだった場合、この関数はそのソケットから 256バイトのランダム性を読み込み、SSL擬似乱数生成器にそれを渡すことで、生成される暗号鍵のセキュリティを向上させることができます。これは、より良いランダム性のソースが無いシステムでのみ必要です。</p>
 <p>エントロピー収集デーモンについては、 <a class="reference external" href="http://egd.sourceforge.net/">http://egd.sourceforge.net/</a> や <a class="reference external" href="http://prngd.sourceforge.net/">http://prngd.sourceforge.net/</a> を参照してください。</p>
-<p>利用出来る環境: LibreSSL では利用できません。</p>
+<p>Availability: not available with LibreSSL and OpenSSL &gt; 1.1.0</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ssl.RAND_add">
 <code class="descclassname">ssl.</code><code class="descname">RAND_add</code><span class="sig-paren">(</span><em>bytes</em>, <em>entropy</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.RAND_add" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>与えられた <em>bytes</em> をSSL擬似乱数生成器に混ぜます。 <em>entropy</em> 引数(float値)は、その文字列に含まれるエントロピーの下限(lower bound)です。 (なので、いつでも <code class="xref py py-const docutils literal"><span class="pre">0.0</span></code> を使うことができます。) エントロピーのソースについてのより詳しい情報は、 <span class="target" id="index-28"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1750.html"><strong>RFC 1750</strong></a> を参照してください。</p>
+<dd><p>与えられた <em>bytes</em> をSSL擬似乱数生成器に混ぜます。 <em>entropy</em> 引数(float値)は、その文字列に含まれるエントロピーの下限(lower bound)です。 (なので、いつでも <code class="xref py py-const docutils literal"><span class="pre">0.0</span></code> を使うことができます。) エントロピーのソースについてのより詳しい情報は、 <span class="target" id="index-29"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1750.html"><strong>RFC 1750</strong></a> を参照してください。</p>
 </dd></dl>
 
 </div>
@@ -332,7 +383,7 @@
 <dl class="function">
 <dt id="ssl.match_hostname">
 <code class="descclassname">ssl.</code><code class="descname">match_hostname</code><span class="sig-paren">(</span><em>cert</em>, <em>hostname</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.match_hostname" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>(<a class="reference internal" href="#ssl.SSLSocket.getpeercert" title="ssl.SSLSocket.getpeercert"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.getpeercert()</span></code></a> が返してきたようなデコードされたフォーマットの) <em>cert</em> が、与えられた <em>hostname</em> に合致するかを検証します。HTTPS サーバの身元をチェックするために適用されるルールは <span class="target" id="index-29"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2818.html"><strong>RFC 2818</strong></a>, <span class="target" id="index-30"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc6125.html"><strong>RFC 6125</strong></a> で概説されているものです。ただし IP アドレスによるものは現在サポートされていません。HTTPS に加え、この関数は他の SSL ベースのプロトコル、例えば FTPS, IMAPS, POPS などのサーバの身元をチェックするのに相応しいはずです。</p>
+<dd><p>(<a class="reference internal" href="#ssl.SSLSocket.getpeercert" title="ssl.SSLSocket.getpeercert"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.getpeercert()</span></code></a> が返してきたようなデコードされたフォーマットの) <em>cert</em> が、与えられた <em>hostname</em> に合致するかを検証します。HTTPS サーバの身元をチェックするために適用されるルールは <span class="target" id="index-30"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2818.html"><strong>RFC 2818</strong></a>, <span class="target" id="index-31"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc6125.html"><strong>RFC 6125</strong></a> で概説されているものです。ただし IP アドレスによるものは現在サポートされていません。HTTPS に加え、この関数は他の SSL ベースのプロトコル、例えば FTPS, IMAPS, POPS などのサーバの身元をチェックするのに相応しいはずです。</p>
 <p>失敗すれば <a class="reference internal" href="#ssl.CertificateError" title="ssl.CertificateError"><code class="xref py py-exc docutils literal"><span class="pre">CertificateError</span></code></a> が送出されます。成功すれば、この関数は何も返しません:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cert</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="p">(((</span><span class="s1">&#39;commonName&#39;</span><span class="p">,</span> <span class="s1">&#39;example.com&#39;</span><span class="p">),),)}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">match_hostname</span><span class="p">(</span><span class="n">cert</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">)</span>
@@ -362,7 +413,7 @@
 <span class="go">2018-01-05 09:34:43</span>
 </pre></div>
 </div>
-<p>&#8220;notBefore&#8221; や &#8220;notAfter&#8221; の日付には GMT を使わなければなりません(<span class="target" id="index-31"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc5280.html"><strong>RFC 5280</strong></a>)。</p>
+<p>&#8220;notBefore&#8221; や &#8220;notAfter&#8221; の日付には GMT を使わなければなりません(<span class="target" id="index-32"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc5280.html"><strong>RFC 5280</strong></a>)。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.7.9 で変更: </span>入力文字列に指定された &#8216;GMT&#8217; タイムゾーンを UTC として解釈するようになりました。以前はローカルタイムで解釈していました。また、整数を返すようになりました(入力に含まれる秒の端数を含まない)。</p>
 </div>
@@ -394,10 +445,8 @@
 <code class="descclassname">ssl.</code><code class="descname">get_default_verify_paths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ssl.get_default_verify_paths" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>OpenSSL デフォルトの cafile, capath を指すパスを名前付きタプルで返します。パスは <a class="reference internal" href="#ssl.SSLContext.set_default_verify_paths" title="ssl.SSLContext.set_default_verify_paths"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_default_verify_paths()</span></code></a> で使われるものと同じです。戻り値は <a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a> <code class="docutils literal"><span class="pre">DefaultVerifyPaths</span></code> です:</p>
 <ul class="simple">
-<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">cafile</span></code> - cafile のパス、またはファイルが存在しなければ None</p>
-</li>
-<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">capath</span></code> - capath のパス、またはディレクトリが存在しなければ None</p>
-</li>
+<li><code class="xref py py-attr docutils literal"><span class="pre">cafile</span></code> - resolved path to cafile or <code class="docutils literal"><span class="pre">None</span></code> if the file doesn&#8217;t exist,</li>
+<li><code class="xref py py-attr docutils literal"><span class="pre">capath</span></code> - resolved path to capath or <code class="docutils literal"><span class="pre">None</span></code> if the directory doesn&#8217;t exist,</li>
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile_env</span></code> - cafile を指す OpenSSL の環境変数</p>
 </li>
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile</span></code> - OpenSSL にハードコードされた cafile のパス</p>
@@ -407,6 +456,8 @@
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_capath</span></code> - OpenSSL にハードコードされた capath のパス</p>
 </li>
 </ul>
+<p>Availability: LibreSSL ignores the environment vars
+<code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile_env</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">openssl_capath_env</span></code></p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
@@ -510,9 +561,21 @@
 </dd></dl>
 
 <dl class="data">
+<dt id="ssl.PROTOCOL_TLS">
+<code class="descclassname">ssl.</code><code class="descname">PROTOCOL_TLS</code><a class="headerlink" href="#ssl.PROTOCOL_TLS" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>チャンネル暗号化プロトコルとして、クライアントとサーバの両方がサポートする中の、プロトコルバージョンが最も大きなものを選択します。その名前にも関わらず、このオプションは &#8220;SSL&#8221; とともに &#8220;TLS&#8221; プロトコルも選択できます。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7.13 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
 <dt id="ssl.PROTOCOL_SSLv23">
 <code class="descclassname">ssl.</code><code class="descname">PROTOCOL_SSLv23</code><a class="headerlink" href="#ssl.PROTOCOL_SSLv23" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>チャンネル暗号化プロトコルとして、クライアントとサーバの両方がサポートする中の、プロトコルバージョンが最も大きなものを選択します。その名前にも関わらず、このオプションは &#8220;SSL&#8221; とともに &#8220;TLS&#8221; プロトコルも選択できます。</p>
+<dd><p>Alias for <code class="docutils literal"><span class="pre">PROTOCOL_TLS</span></code>.</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>Use <code class="docutils literal"><span class="pre">PROTOCOL_TLS</span></code> instead.</p>
+</div>
 </dd></dl>
 
 <dl class="data">
@@ -523,6 +586,9 @@
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
 <p class="last">SSL version 2 は非セキュアです。このプロトコルは強く非推奨です。</p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has removed support for SSLv2.</p>
 </div>
 </dd></dl>
 
@@ -535,12 +601,20 @@
 <p class="first admonition-title">警告</p>
 <p class="last">SSL version 3 は非セキュアです。このプロトコルは強く非推奨です。</p>
 </div>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated all version specific protocols. Use the default
+protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_SSLv3</span></code> instead.</p>
+</div>
 </dd></dl>
 
 <dl class="data">
 <dt id="ssl.PROTOCOL_TLSv1">
 <code class="descclassname">ssl.</code><code class="descname">PROTOCOL_TLSv1</code><a class="headerlink" href="#ssl.PROTOCOL_TLSv1" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>チャンネル暗号化プロトコルとしてTLSバージョン1.0を選択します。</p>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated all version specific protocols. Use the default
+protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_SSLv3</span></code> instead.</p>
+</div>
 </dd></dl>
 
 <dl class="data">
@@ -550,6 +624,10 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated all version specific protocols. Use the default
+protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_SSLv3</span></code> instead.</p>
+</div>
 </dd></dl>
 
 <dl class="data">
@@ -558,6 +636,10 @@
 <dd><p>チャンネル暗号化プロトコルとしてTLSバージョン1.2を選択します。これは最も現代的で、接続の両サイドが利用できる場合は、たぶん最も安全な選択肢です。 openssl version 1.0.1+ のみで利用可能です。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated all version specific protocols. Use the default
+protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_SSLv3</span></code> instead.</p>
 </div>
 </dd></dl>
 
@@ -655,7 +737,7 @@
 <dl class="data">
 <dt id="ssl.HAS_ALPN">
 <code class="descclassname">ssl.</code><code class="descname">HAS_ALPN</code><a class="headerlink" href="#ssl.HAS_ALPN" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>OpenSSL ライブラリが、組み込みで <span class="target" id="index-32"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7301.html"><strong>RFC 7301</strong></a> で記述されている <em>Application-Layer Protocol Negotiation</em> TLS 拡張をサポートしているかどうか。</p>
+<dd><p>OpenSSL ライブラリが、組み込みで <span class="target" id="index-33"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7301.html"><strong>RFC 7301</strong></a> で記述されている <em>Application-Layer Protocol Negotiation</em> TLS 拡張をサポートしているかどうか。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.10 で追加.</span></p>
 </div>
@@ -673,7 +755,7 @@
 <dl class="data">
 <dt id="ssl.HAS_SNI">
 <code class="descclassname">ssl.</code><code class="descname">HAS_SNI</code><a class="headerlink" href="#ssl.HAS_SNI" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>OpenSSL ライブラリが、組み込みで (<span class="target" id="index-33"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4366.html"><strong>RFC 4366</strong></a> で記述されている) <em>Server Name Indication</em> 拡張をサポートしているかどうか。</p>
+<dd><p>OpenSSL ライブラリが、組み込みで (<span class="target" id="index-34"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4366.html"><strong>RFC 4366</strong></a> で記述されている) <em>Server Name Indication</em> 拡張をサポートしているかどうか。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
@@ -682,7 +764,10 @@
 <dl class="data">
 <dt id="ssl.HAS_NPN">
 <code class="descclassname">ssl.</code><code class="descname">HAS_NPN</code><a class="headerlink" href="#ssl.HAS_NPN" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>OpenSSL ライブラリが、組み込みで、<a class="reference external" href="http://tools.ietf.org/html/draft-agl-tls-nextprotoneg">NPN draft specification</a> で記述されている <em>Next Protocol Negotiation</em> をサポートしているかどうか。真であれば、サポートしたいプロトコルを <a class="reference internal" href="#ssl.SSLContext.set_npn_protocols" title="ssl.SSLContext.set_npn_protocols"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_npn_protocols()</span></code></a> メソッドで提示することが出来ます。</p>
+<dd><p>Whether the OpenSSL library has built-in support for <em>Next Protocol
+Negotiation</em> as described in the <a class="reference external" href="https://tools.ietf.org/html/draft-agl-tls-nextprotoneg">NPN draft specification</a>. When true,
+you can use the <a class="reference internal" href="#ssl.SSLContext.set_npn_protocols" title="ssl.SSLContext.set_npn_protocols"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_npn_protocols()</span></code></a> method to advertise
+which protocols you want to support.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
@@ -745,7 +830,8 @@
 <code class="descclassname">ssl.</code><code class="descname">ALERT_DESCRIPTION_INTERNAL_ERROR</code><a class="headerlink" href="#ssl.ALERT_DESCRIPTION_INTERNAL_ERROR" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">ALERT_DESCRIPTION_*</code></dt>
-<dd><p><span class="target" id="index-34"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc5246.html"><strong>RFC 5246</strong></a> その他からのアラートの種類です。 <a class="reference external" href="http://www.iana.org/assignments/tls-parameters/tls-parameters.xml#tls-parameters-6">IANA TLS Alert Registry</a> にはこのリストとその意味が定義された RFC へのリファレンスが含まれています。</p>
+<dd><p>Alert Descriptions from <span class="target" id="index-10"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc5246.html"><strong>RFC 5246</strong></a> and others. The <a class="reference external" href="https://www.iana.org/assignments/tls-parameters/tls-parameters.xml#tls-parameters-6">IANA TLS Alert Registry</a>
+contains this list and references to the RFCs where their meaning is defined.</p>
 <p><a class="reference internal" href="#ssl.SSLContext.set_servername_callback" title="ssl.SSLContext.set_servername_callback"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_servername_callback()</span></code></a> でのコールバック関数の戻り値として使われます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
@@ -965,7 +1051,9 @@
 <dd><p><a class="reference internal" href="#ssl.SSLContext.verify_mode" title="ssl.SSLContext.verify_mode"><code class="xref py py-data docutils literal"><span class="pre">verify_mode</span></code></a> が <a class="reference internal" href="#ssl.CERT_NONE" title="ssl.CERT_NONE"><code class="xref py py-data docutils literal"><span class="pre">CERT_NONE</span></code></a> でない場合に接続先の証明書ファイルの正当性検証に使われる &#8220;認証局&#8221; (CA=certification authority) 証明書ファイル一式をロードします。少なくとも <em>cafile</em> か <em>capath</em> のどちらかは指定しなければなりません。</p>
 <p>このメソッドは PEM または DER フォーマットの証明書失効リスト (CRLs=certification revocation lists)もロード出来ます。CRLs のために使うには、 <a class="reference internal" href="#ssl.SSLContext.verify_flags" title="ssl.SSLContext.verify_flags"><code class="xref py py-attr docutils literal"><span class="pre">SSLContext.verify_flags</span></code></a> を適切に設定しなければなりません。</p>
 <p><em>cafile</em> を指定する場合は、PEM フォーマットで CA 証明書が結合されたファイルへのパスを指定してください。このファイル内で証明書をどのように編成すれば良いのかについての詳しい情報については、 <a class="reference internal" href="#ssl-certificates"><span class="std std-ref">証明書</span></a> の議論を参照してください。</p>
-<p><em>capath</em> を指定する場合は、PEM フォーマットの CA 証明書が含まれる、<a class="reference external" href="http://www.openssl.org/docs/ssl/SSL_CTX_load_verify_locations.html">OpenSSL specific layout</a> に従ったディレクトリへのパスを指定してください。</p>
+<p>The <em>capath</em> string, if present, is
+the path to a directory containing several CA certificates in PEM format,
+following an <a class="reference external" href="https://www.openssl.org/docs/ssl/SSL_CTX_load_verify_locations.html">OpenSSL specific layout</a>.</p>
 <p><em>cadata</em> オブジェクトを指定する場合は、PEM エンコードの証明書一つ以上の ASCII 文字列か、DER エンコードの証明書のバイトライクなオブジェクトのどちらかを指定してください。PEM エンコードの証明書の周囲の余分な行は無視されますが、少なくとも一つの証明書が含まれている必要があります。</p>
 </dd></dl>
 
@@ -973,6 +1061,10 @@
 <dt id="ssl.SSLContext.get_ca_certs">
 <code class="descclassname">SSLContext.</code><code class="descname">get_ca_certs</code><span class="sig-paren">(</span><em>binary_form=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.get_ca_certs" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ロードされた &#8220;認証局&#8221; (CA=certification authority) 証明書のリストを取得します。 <code class="docutils literal"><span class="pre">binary_form</span></code> パラメータが <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> であれば、リストのそれぞれのエントリは <a class="reference internal" href="#ssl.SSLSocket.getpeercert" title="ssl.SSLSocket.getpeercert"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.getpeercert()</span></code></a> が出力するような辞書になります。そうでない場合このメソッドは、DER エンコード形式の証明書のリストで返します。返却されるリストには、 SSL 接続によって要求されてロードされない限りは <em>capath</em> からの証明書は含みません。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">capath ディレクトリ内の証明書は一度でも使われない限りはロードされません。</p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -984,7 +1076,11 @@
 <dl class="method">
 <dt id="ssl.SSLContext.set_ciphers">
 <code class="descclassname">SSLContext.</code><code class="descname">set_ciphers</code><span class="sig-paren">(</span><em>ciphers</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_ciphers" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このコンテキストによって作られるソケットで利用出来る暗号を設定します。 <a class="reference external" href="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">OpenSSL cipher list format</a> に書かれている形式の文字列でなければなりません。(OpenSSL のコンパイル時オプションや他の設定がそれら全ての暗号の使用を禁止しているなどの理由で)どの暗号も選べない場合、 <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-class docutils literal"><span class="pre">SSLError</span></code></a> が送出されます。</p>
+<dd><p>Set the available ciphers for sockets created with this context.
+It should be a string in the <a class="reference external" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER-LIST-FORMAT">OpenSSL cipher list format</a>.
+If no cipher can be selected (because compile-time options or other
+configuration forbids use of all the specified ciphers), an
+<a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-class docutils literal"><span class="pre">SSLError</span></code></a> will be raised.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">接続時に SSL ソケットの <a class="reference internal" href="#ssl.SSLSocket.cipher" title="ssl.SSLSocket.cipher"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.cipher()</span></code></a> メソッドが、現在選択されているその暗号を使います。</p>
@@ -996,6 +1092,8 @@
 <code class="descclassname">SSLContext.</code><code class="descname">set_alpn_protocols</code><span class="sig-paren">(</span><em>protocols</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_alpn_protocols" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>SSL/TLS ハンドシェイク時にソケットが提示すべきプロトコルを指定します。 <code class="docutils literal"><span class="pre">['http/1.1',</span> <span class="pre">'spdy/2']</span></code> のような推奨順に並べた ASII 文字列のリストでなければなりません。プロトコルの選択は <span class="target" id="index-37"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7301.html"><strong>RFC 7301</strong></a> に従いハンドシェイクの中で行われます。ハンドシェイクが正常に終了後、 <a class="reference internal" href="#ssl.SSLSocket.selected_alpn_protocol" title="ssl.SSLSocket.selected_alpn_protocol"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.selected_alpn_protocol()</span></code></a> メソッドは合意されたプロトコルを返します。</p>
 <p>このメソッドは <a class="reference internal" href="#ssl.HAS_ALPN" title="ssl.HAS_ALPN"><code class="xref py py-data docutils literal"><span class="pre">HAS_ALPN</span></code></a> が偽の場合 <a class="reference internal" href="exceptions.html#exceptions.NotImplementedError" title="exceptions.NotImplementedError"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code></a> を送出します。</p>
+<p>OpenSSL 1.1.0+ will abort the handshake and raise <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal"><span class="pre">SSLError</span></code></a> when
+both sides support ALPN but cannot agree on a protocol.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.10 で追加.</span></p>
 </div>
@@ -1004,7 +1102,12 @@
 <dl class="method">
 <dt id="ssl.SSLContext.set_npn_protocols">
 <code class="descclassname">SSLContext.</code><code class="descname">set_npn_protocols</code><span class="sig-paren">(</span><em>protocols</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_npn_protocols" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>SSL/TLS ハンドシェイク時にソケットが提示すべきプロトコルを指定します。 <code class="docutils literal"><span class="pre">['http/1.1',</span> <span class="pre">'spdy/2']</span></code> のような推奨順に並べた ASII 文字列のリストでなければなりません。プロトコルの選択は <a class="reference external" href="http://tools.ietf.org/html/draft-agl-tls-nextprotoneg">NPN draft specification</a> に従いハンドシェイクの中で行われます。ハンドシェイクが正常に終了後、 <a class="reference internal" href="#ssl.SSLSocket.selected_alpn_protocol" title="ssl.SSLSocket.selected_alpn_protocol"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.selected_alpn_protocol()</span></code></a> メソッドは合意されたプロトコルを返します。</p>
+<dd><p>Specify which protocols the socket should advertise during the SSL/TLS
+handshake. It should be a list of strings, like <code class="docutils literal"><span class="pre">['http/1.1',</span> <span class="pre">'spdy/2']</span></code>,
+ordered by preference. The selection of a protocol will happen during the
+handshake, and will play out according to the <a class="reference external" href="https://tools.ietf.org/html/draft-agl-tls-nextprotoneg">NPN draft specification</a>. After a
+successful handshake, the <a class="reference internal" href="#ssl.SSLSocket.selected_npn_protocol" title="ssl.SSLSocket.selected_npn_protocol"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.selected_npn_protocol()</span></code></a> method will
+return the agreed-upon protocol.</p>
 <p>このメソッドは <a class="reference internal" href="#ssl.HAS_NPN" title="ssl.HAS_NPN"><code class="xref py py-data docutils literal"><span class="pre">HAS_NPN</span></code></a> が偽の場合 <a class="reference internal" href="exceptions.html#exceptions.NotImplementedError" title="exceptions.NotImplementedError"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code></a> を送出します。</p>
 </dd></dl>
 
@@ -1034,7 +1137,7 @@
 <code class="descclassname">SSLContext.</code><code class="descname">set_ecdh_curve</code><span class="sig-paren">(</span><em>curve_name</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_ecdh_curve" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>楕円曲線ディフィー・ヘルマン(ECDH)鍵交換の曲線名を指定します。ECDH はもとの DH に較べて、ほぼ間違いなく同程度に安全である一方で、顕著に高速です。 <em>curve_name</em> パラメータは既知の楕円曲線を表す文字列でなければなりません。例えば <code class="docutils literal"><span class="pre">prime256v1</span></code> が広くサポートされている曲線です。</p>
 <p>この設定はクライアントソケットには適用されません。さらにセキュリティを改善するのに <a class="reference internal" href="#ssl.OP_SINGLE_ECDH_USE" title="ssl.OP_SINGLE_ECDH_USE"><code class="xref py py-data docutils literal"><span class="pre">OP_SINGLE_ECDH_USE</span></code></a> オプションも利用できます。</p>
-<p>このメソッドは <a class="reference internal" href="#ssl.HAS_ECDH" title="ssl.HAS_ECDH"><code class="xref py py-data docutils literal"><span class="pre">HAS_ECDH</span></code></a> が偽の場合は利用出来ません。</p>
+<p>This method is not available if <a class="reference internal" href="#ssl.HAS_ECDH" title="ssl.HAS_ECDH"><code class="xref py py-data docutils literal"><span class="pre">HAS_ECDH</span></code></a> is <code class="docutils literal"><span class="pre">False</span></code>.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
@@ -1058,21 +1161,14 @@
 <dl class="method">
 <dt id="ssl.SSLContext.session_stats">
 <code class="descclassname">SSLContext.</code><code class="descname">session_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.session_stats" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このコンテキストによって作られた、または管理されている SSL セッションについての統計情報を取得します。 <a class="reference external" href="http://www.openssl.org/docs/ssl/SSL_CTX_sess_number.html">piece of information</a> のそれぞれの名前にそれらが持つ数値をマッピングした辞書で返します。例えば、コンテキストが作られてからのセッションキャッシュのキャッシュヒットとキャッシュミスの総計を見るには:</p>
+<dd><p>Get statistics about the SSL sessions created or managed by this context.
+A dictionary is returned which maps the names of each <a class="reference external" href="https://www.openssl.org/docs/ssl/SSL_CTX_sess_number.html">piece of information</a> to their
+numeric values.  For example, here is the total number of hits and misses
+in the session cache since the context was created:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">session_stats</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;hits&#39;</span><span class="p">],</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;misses&#39;</span><span class="p">]</span>
 <span class="go">(0, 0)</span>
 </pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt>
-<code class="descclassname">SSLContext.</code><code class="descname">get_ca_certs</code><span class="sig-paren">(</span><em>binary_form=False</em><span class="sig-paren">)</span></dt>
-<dd><p>ロードされた CA 証明書情報辞書のリストを返します。省略可能引数を真にすると、CA 証明書のコピーの DER エンコード形式で返します。</p>
-<div class="admonition note">
-<p class="first admonition-title">注釈</p>
-<p class="last">capath ディレクトリ内の証明書は一度でも使われない限りはロードされません。</p>
 </div>
 </dd></dl>
 
@@ -1127,9 +1223,9 @@
 <dd><p>接続先の証明書の検証を試みるかどうか、また、検証が失敗した場合にどのように振舞うべきかを制御します。この属性は <a class="reference internal" href="#ssl.CERT_NONE" title="ssl.CERT_NONE"><code class="xref py py-data docutils literal"><span class="pre">CERT_NONE</span></code></a>, <a class="reference internal" href="#ssl.CERT_OPTIONAL" title="ssl.CERT_OPTIONAL"><code class="xref py py-data docutils literal"><span class="pre">CERT_OPTIONAL</span></code></a>, <a class="reference internal" href="#ssl.CERT_REQUIRED" title="ssl.CERT_REQUIRED"><code class="xref py py-data docutils literal"><span class="pre">CERT_REQUIRED</span></code></a> のうちどれか一つでなければなりません。</p>
 </dd></dl>
 
-<span class="target" id="index-13"></span></div>
+<span class="target" id="index-15"></span></div>
 <div class="section" id="certificates">
-<span id="ssl-certificates"></span><span id="index-14"></span><h2>17.3.4. 証明書<a class="headerlink" href="#certificates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="ssl-certificates"></span><span id="index-16"></span><h2>17.3.4. 証明書<a class="headerlink" href="#certificates" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>証明書を大まかに説明すると、公開鍵/秘密鍵システムの一種です。このシステムでは、各 <em>principal</em> (これはマシン、人、組織などです) は、ユニークな2つの暗号鍵を割り当てられます。1つは公開され、 <em>公開鍵(public key)</em> と呼ばれます。もう一方は秘密にされ、 <em>秘密鍵(private key)</em> と呼ばれます。 2つの鍵は関連しており、片方の鍵で暗号化したメッセージは、もう片方の鍵 <strong>のみ</strong> で復号できます。</p>
 <p>証明書は2つの principal の情報を含んでいます。証明書は <em>subject</em> 名とその公開鍵を含んでいます。また、もう一つの principal である <em>発行者(issuer)</em> からの、 subject が本人であることと、その公開鍵が正しいことの宣言(statement)を含んでいます。発行者からの宣言は、その発行者の秘密鍵で署名されています。発行者の秘密鍵は発行者しか知りませんが、誰もがその発行者の公開鍵を利用して宣言を復号し、証明書内の別の情報と比較することで認証することができます。証明書はまた、その証明書が有効である期限に関する情報も含んでいます。この期限は &#8220;notBefore&#8221; と &#8220;notAfter&#8221; と呼ばれる2つのフィールドで表現されています。</p>
 <p>Python において証明書を利用する場合、クライアントもサーバーも自分を証明するために証明書を利用することができます。ネットワーク接続の相手側に証明書の提示を要求する事ができ、そのクライアントやサーバーが認証を必要とするならその証明書を認証することができます。認証が失敗した場合、接続は例外を発生させます。認証は下位層のOpenSSLフレームワークが自動的に行います。アプリケーションは認証機構について意識する必要はありません。しかし、アプリケーションは認証プロセスのために幾つかの証明書を提供する必要があるかもしれません。</p>
@@ -1209,7 +1305,7 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="k">pass</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="o">...</span> <span class="c1"># do something that requires SSL support</span>
+    <span class="o">...</span>  <span class="c1"># do something that requires SSL support</span>
 </pre></div>
 </div>
 </div>
@@ -1399,7 +1495,14 @@
 </div>
 <div class="section" id="cipher-selection">
 <h4>17.3.7.2.3. 暗号の選択<a class="headerlink" href="#cipher-selection" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>より進んだセキュリティ要求があるならば、SSL セッションのネゴシエーションで有効になる暗号の微調整が <a class="reference internal" href="#ssl.SSLContext.set_ciphers" title="ssl.SSLContext.set_ciphers"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_ciphers()</span></code></a> によって可能です。Python 2.7.9 からは ssl モジュールはデフォルトでとりわけ脆弱な暗号化を無効にしていますが、暗号の選択をもっと厳しく制限したいかもしれません。OpenSSL ドキュメントの <a class="reference external" href="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">cipher list format</a> を注意深く読んで下さい。それら cipher list によってどの暗号が有効になるのかチェックしたければ、 <code class="docutils literal"><span class="pre">openssl</span> <span class="pre">ciphers</span></code> コマンドをあなたのシステムで実行してください。</p>
+<p>If you have advanced security requirements, fine-tuning of the ciphers
+enabled when negotiating a SSL session is possible through the
+<a class="reference internal" href="#ssl.SSLContext.set_ciphers" title="ssl.SSLContext.set_ciphers"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_ciphers()</span></code></a> method.  Starting from Python 2.7.9, the
+ssl module disables certain weak ciphers by default, but you may want
+to further restrict the cipher choice. Be sure to read OpenSSL&#8217;s documentation
+about the <a class="reference external" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER-LIST-FORMAT">cipher list format</a>.
+If you want to check which ciphers are enabled by a given cipher list, use the
+<code class="docutils literal"><span class="pre">openssl</span> <span class="pre">ciphers</span></code> command on your system.</p>
 </div>
 </div>
 <div class="section" id="multi-processing">
@@ -1411,22 +1514,22 @@
 <dt>Class <a class="reference internal" href="socket.html#socket.socket" title="socket.socket"><code class="xref py py-class docutils literal"><span class="pre">socket.socket</span></code></a></dt>
 <dd><p class="first last">下位レイヤーの <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> クラスのドキュメント</p>
 </dd>
-<dt><a class="reference external" href="http://httpd.apache.org/docs/trunk/en/ssl/ssl_intro.html">SSL/TLS Strong Encryption: An Introduction</a></dt>
+<dt><a class="reference external" href="https://httpd.apache.org/docs/trunk/en/ssl/ssl_intro.html">SSL/TLS Strong Encryption: An Introduction</a></dt>
 <dd><p class="first last">Apache WEBサーバのドキュメンテーションのイントロ</p>
 </dd>
-<dt><a class="reference external" href="http://www.ietf.org/rfc/rfc1422">RFC 1422: Privacy Enhancement for Internet Electronic Mail: Part II: Certificate-Based Key Management</a></dt>
+<dt><a class="reference external" href="https://www.ietf.org/rfc/rfc1422">RFC 1422: Privacy Enhancement for Internet Electronic Mail: Part II: Certificate-Based Key Management</a></dt>
 <dd>Steve Kent</dd>
-<dt><a class="reference external" href="http://www.ietf.org/rfc/rfc1750">RFC 1750: Randomness Recommendations for Security</a></dt>
+<dt><a class="reference external" href="https://www.ietf.org/rfc/rfc1750">RFC 1750: Randomness Recommendations for Security</a></dt>
 <dd>D. Eastlake et. al.</dd>
-<dt><a class="reference external" href="http://www.ietf.org/rfc/rfc3280">RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a></dt>
+<dt><a class="reference external" href="https://www.ietf.org/rfc/rfc3280">RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a></dt>
 <dd>Housley et. al.</dd>
-<dt><a class="reference external" href="http://www.ietf.org/rfc/rfc4366">RFC 4366: Transport Layer Security (TLS) Extensions</a></dt>
+<dt><a class="reference external" href="https://www.ietf.org/rfc/rfc4366">RFC 4366: Transport Layer Security (TLS) Extensions</a></dt>
 <dd>Blake-Wilson et. al.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc5246">RFC 5246: The Transport Layer Security (TLS) Protocol Version 1.2</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc5246">RFC 5246: The Transport Layer Security (TLS) Protocol Version 1.2</a></dt>
 <dd>T. Dierks et. al.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc6066">RFC 6066: Transport Layer Security (TLS) Extensions</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc6066">RFC 6066: Transport Layer Security (TLS) Extensions</a></dt>
 <dd>D. Eastlake</dd>
-<dt><a class="reference external" href="http://www.iana.org/assignments/tls-parameters/tls-parameters.xml">IANA TLS: Transport Layer Security (TLS) Parameters</a></dt>
+<dt><a class="reference external" href="https://www.iana.org/assignments/tls-parameters/tls-parameters.xml">IANA TLS: Transport Layer Security (TLS) Parameters</a></dt>
 <dd>IANA</dd>
 </dl>
 </div>
@@ -1491,8 +1594,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/ssl.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ssl.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -1537,12 +1641,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

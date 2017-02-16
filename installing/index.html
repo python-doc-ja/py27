@@ -36,6 +36,7 @@
     <link rel="next" title="Python HOWTO" href="../howto/index.html" />
     <link rel="prev" title="Python モジュールの配布" href="../distributing/index.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/installing/index.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -104,8 +105,12 @@
 </li>
 <li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi">Python Packaging Index</a> は Python パッケージのパブリック・リポジトリです。このリポジトリのパッケージは、他の Python ユーザが利用できるように、オープンソースでライセンスされています。</p>
 </li>
-<li><p class="first"><a class="reference external" href="https://packaging.python.org/en/latest/future.html">Python Packaging Authority</a> は、標準のパッケージングツール、関連するメタデータとファイルフォーマット標準の保守と発展を担っている、開発者・ドキュメントの著者のグループです。彼らは様々なツールやドキュメント、issue tracker を <a class="reference external" href="https://github.com/pypa">GitHub</a> と <a class="reference external" href="https://bitbucket.org/pypa/">BitBucket</a> の両方で管理しています。</p>
-</li>
+<li>the <a class="reference external" href="https://www.pypa.io/en/latest/">Python Packaging Authority</a> are the group of
+developers and documentation authors responsible for the maintenance and
+evolution of the standard packaging tools and the associated metadata and
+file format standards. They maintain a variety of tools, documentation
+and issue trackers on both <a class="reference external" href="https://github.com/pypa">GitHub</a> and
+<a class="reference external" href="https://bitbucket.org/pypa/">BitBucket</a>.</li>
 <li><p class="first"><a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> はオリジナルのビルド・配布システムで、 Python 標準ライブラリに 1998 年に最初に追加されました。 <a class="reference internal" href="../library/distutils.html#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> の直接的な利用は段階的に取り払われていきますが、それは今でも現時点でのパッケージングと配布のインフラストラクチャの基礎として鎮座していて、標準ライブラリの一部として残っているだけでなく、その名前はほかの文脈でも生き続けています(Python のパッケージング標準の開発をまとめるのに使われているメーリングリストの名前のように)。</p>
 </li>
 </ul>
@@ -122,9 +127,12 @@
 <p>POSIX ユーザ(Max OS X と Linux ユーザを含みます)向けには、このガイド内の例は、 <a class="reference internal" href="../glossary.html#term-virtual-environment"><span class="xref std std-term">virtual environment</span></a> の利用を前提にしています。そのような環境を作るのに <code class="docutils literal"><span class="pre">virtualenv</span></code> を、 pip (<code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">virtualenv</span></code>) あるいはあなたのシステムのパッケージマネージャを通じて(大抵 <code class="docutils literal"><span class="pre">virtualenv</span></code> か <code class="docutils literal"><span class="pre">python-virtualenv</span></code> で呼ばれています)インストール出来ます。</p>
 <p class="last">Windows ユーザ向けには、このガイド内の例は、Python インストール時にシステムの PATH 環境変数が調整されていることを前提にしています。</p>
 </div>
-<p>完全なバージョンまたは必要最小バージョンを、コマンドラインから直接指定することも出来ます:</p>
+<p>It&#8217;s also possible to specify an exact or minimum version directly on the
+command line. When using comparator operators such as <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code> or some other
+special character which get interpreted by shell, the package name and the
+version should be enclosed within double quotes:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python -m pip install SomePackage==1.0.4    # specific version
-python -m pip install &#39;SomePackage&gt;=1.0.4&#39;  # minimum version
+python -m pip install &quot;SomePackage&gt;=1.0.4&quot;  # minimum version
 </pre></div>
 </div>
 <p>通常、適合するモジュールがインストール済である場合にそれを再度 install 実行を試みても効果はありません。既に存在しているモジュールのアップグレードには、明示的にそれを要求しなければなりません:</p>
@@ -134,7 +142,7 @@ python -m pip install &#39;SomePackage&gt;=1.0.4&#39;  # minimum version
 <p><code class="docutils literal"><span class="pre">pip</span></code> とその機能についての詳しい情報とリソースは <a class="reference external" href="https://packaging.python.org">Python Packaging User Guide</a> にあります。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/installing.html#installing-python-distribution-packages">Python Packaging User Guide: Installing Python Distribution Packages</a></p>
+<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/installing/">Python Packaging User Guide: Installing Python Distribution Packages</a></p>
 </div>
 </div>
 <div class="section" id="how-do-i">
@@ -145,7 +153,7 @@ python -m pip install &#39;SomePackage&gt;=1.0.4&#39;  # minimum version
 <p><code class="docutils literal"><span class="pre">pip</span></code> が Python に付属するのは 2.7.9 以降です。それ以前のバージョンでは、 &#8220;Python Packaging User Guide&#8221; の記載にしたがって <code class="docutils literal"><span class="pre">pip</span></code> 自体をインストールする必要があります。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/installing.html#setup-for-installing-distribution-packages">Python Packaging User Guide: Setup for Installing Distribution Packages</a></p>
+<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages">Python Packaging User Guide: Requirements for Installing Packages</a></p>
 </div>
 </div>
 <div class="section" id="install-packages-just-for-the-current-user">
@@ -154,10 +162,14 @@ python -m pip install &#39;SomePackage&gt;=1.0.4&#39;  # minimum version
 </div>
 <div class="section" id="install-scientific-python-packages">
 <h3>... 科学技術計算用の Python パッケージをインストールするには？<a class="headerlink" href="#install-scientific-python-packages" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>科学技術計算用の Python パッケージの多くが、バイナリモジュールに複雑に依存しており、現在のところ <code class="docutils literal"><span class="pre">pip</span></code> を直接使ってインストールすることは容易ではありません。現時点では <code class="docutils literal"><span class="pre">pip</span></code> を使ってインストールしようとするよりも、 <a class="reference external" href="https://packaging.python.org/en/latest/science.html">別の手段</a> を用いてインストールするほうが、多くの場合簡単でしょう。</p>
+<p>A number of scientific Python packages have complex binary dependencies, and
+aren&#8217;t currently easy to install using <code class="docutils literal"><span class="pre">pip</span></code> directly. At this point in
+time, it will often be easier for users to install these packages by
+<a class="reference external" href="https://packaging.python.org/en/latest/science/">other means</a>
+rather than attempting to install them with <code class="docutils literal"><span class="pre">pip</span></code>.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/science.html">Python Packaging User Guide: Installing Scientific Packages</a></p>
+<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/science/">Python Packaging User Guide: Installing Scientific Packages</a></p>
 </div>
 </div>
 <div class="section" id="work-with-multiple-versions-of-python-installed-in-parallel">
@@ -190,10 +202,12 @@ py -3.4 -m pip install SomePackage  # specifically Python 3.4
 <h3>バイナリの拡張のインストール<a class="headerlink" href="#installing-binary-extensions" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Python プロジェクトの多くはソースに基いた配布に強く依存しており、インストールプロセスの一環として、エンドユーザ環境でソースから拡張モジュールをコンパイルすることを期待します。</p>
 <p>バイナリ <code class="docutils literal"><span class="pre">wheel</span></code> フォーマットのサポートが導入されたことで、また、少なくとも Windows と Mac OS X についての wheels の公開が Python Packaging Index を通して出来るようになったことで、この問題についての開発者の時間の節約と、ユーザにとっては自身でビルドせずにビルド済み拡張をインストールするさらなる標準化に繋がるかもしれません。</p>
-<p>ビルド済み <code class="docutils literal"><span class="pre">wheel</span></code> ファイルが未だ入手出来ない <a class="reference external" href="https://packaging.python.org/en/latest/science.html">scientific software</a>  インストールにおけるいくつかの解法が、ローカルにビルドすることなく他のバイナリ拡張を得る助けになるかもしれません。</p>
+<p>Some of the solutions for installing <a class="reference external" href="https://packaging.python.org/en/latest/science/">scientific software</a>
+that is not yet available as pre-built <code class="docutils literal"><span class="pre">wheel</span></code> files may also help with
+obtaining other binary extensions without needing to build them locally.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/extensions.html">Python Packaging User Guide: Binary Extensions</a></p>
+<p class="last"><a class="reference external" href="https://packaging.python.org/en/latest/extensions/">Python Packaging User Guide: Binary Extensions</a></p>
 </div>
 </div>
 </div>
@@ -235,8 +249,9 @@ py -3.4 -m pip install SomePackage  # specifically Python 3.4
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/installing/index.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/installing/index.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -279,12 +294,12 @@ py -3.4 -m pip install SomePackage  # specifically Python 3.4
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

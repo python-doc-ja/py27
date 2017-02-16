@@ -37,6 +37,7 @@
     <link rel="next" title="Python を Web 上で使うには HOWTO" href="webservers.html" />
     <link rel="prev" title="Unicode HOWTO" href="unicode.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/howto/urllib2.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -79,7 +80,7 @@
           <div class="body" role="main">
             
   <div class="section" id="howto-fetch-internet-resources-using-urllib2">
-<h1>urllib2 を使ってインターネット上のリソースを取得するには<a class="headerlink" href="#howto-fetch-internet-resources-using-urllib2" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="urllib-howto"></span><h1>urllib2 を使ってインターネット上のリソースを取得するには<a class="headerlink" href="#howto-fetch-internet-resources-using-urllib2" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -90,7 +91,8 @@
 </table>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">この HOWTO の前段階の版のフランス語訳が <a class="reference external" href="http://www.voidspace.org.uk/python/articles/urllib2_francais.shtml">urllib2 - Le Manuel manquant</a> で入手できます。</p>
+<p class="last">There is a French translation of an earlier revision of this
+HOWTO, available at <a class="reference external" href="http://www.voidspace.org.uk/python/articles/urllib2_francais.shtml">urllib2 - Le Manuel manquant</a>.</p>
 </div>
 <div class="section" id="introduction">
 <h2>はじめに<a class="headerlink" href="#introduction" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -117,7 +119,10 @@
 <span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>多くの urllib2 の利用法はこのように簡単です (&#8216;http:&#8217; の代わりに URL を &#8216;ftp:&#8217; や &#8216;file:&#8217; 等で始めればできます。)。しかし、このチュートリアルの目的は、得に HTTP に絞って、より複雑な状況を説明することです。</p>
+<p>Many uses of urllib2 will be that simple (note that instead of an &#8216;http:&#8217; URL we
+could have used a URL starting with &#8216;ftp:&#8217;, &#8216;file:&#8217;, etc.).  However, it&#8217;s the
+purpose of this tutorial to explain the more complicated cases, concentrating on
+HTTP.</p>
 <p>HTTP はリクエスト (request) とレスポンス (response) が基本となっています - クライアントがリクエストし、サーバーがレスポンスを送ります。 urllib2 はこれを真似て、作成する HTTP リクエストを表現する <code class="docutils literal"><span class="pre">Request</span></code> オブジェクトを備えています。リクエストオブジェクトを作成する最も簡単な方法は取得したい URL を指定することです。 <code class="docutils literal"><span class="pre">urlopen</span></code> をこのオブジェクトを使って呼び出すと、リクエストした URL のレスポンスオブジェクトが返されます。このレスポンスはファイルライクオブジェクトで、これはつまりレスポンスに <code class="docutils literal"><span class="pre">.read()</span></code> と呼び出せることを意味しています:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib2</span>
 
@@ -148,7 +153,9 @@
 <span class="n">the_page</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>他のエンコーディングが必要な場合があることに注意して下さい (例えば、 HTML フォームからファイルをアップロードするための詳細については <a class="reference external" href="http://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13">HTML Specification, Form Submission</a> を見て下さい</p>
+<p>Note that other encodings are sometimes required (e.g. for file upload from HTML
+forms - see <a class="reference external" href="https://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13">HTML Specification, Form Submission</a> for more
+details).</p>
 <p><code class="docutils literal"><span class="pre">data</span></code> 引数を渡さない場合、urllib2 は <strong>GET</strong> リクエストを利用します。 GET と POST リクエストの一つの違いは、POST リクエストにしばしば、「副作用」があることです: POST リクエストはいくつかの方法によってシステムの状態を変化させます (例えば100ポンドのスパムの缶詰をドアの前まで配達する注文を web サイトで行う)。とはいえ HTTP 標準で明確にされている内容では、POST は <em>常に</em> 副作用を持ち、 GET リクエストが副作用を持つことを禁止していません、副作用の無い POST リクエストはありません。 HTTP の GET リクエストでもデータ自身をエンコーディングすることでデータを渡すことができます。</p>
 <p>以下のようにして行います:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">urllib2</span>
@@ -176,10 +183,10 @@
 
 <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.someserver.com/cgi-bin/register.cgi&#39;</span>
 <span class="n">user_agent</span> <span class="o">=</span> <span class="s1">&#39;Mozilla/5.0 (Windows NT 6.1; Win64; x64)&#39;</span>
-<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="s1">&#39;Michael Foord&#39;</span><span class="p">,</span>
-          <span class="s1">&#39;location&#39;</span> <span class="p">:</span> <span class="s1">&#39;Northampton&#39;</span><span class="p">,</span>
-          <span class="s1">&#39;language&#39;</span> <span class="p">:</span> <span class="s1">&#39;Python&#39;</span> <span class="p">}</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;User-Agent&#39;</span> <span class="p">:</span> <span class="n">user_agent</span> <span class="p">}</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Michael Foord&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;Northampton&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;language&#39;</span><span class="p">:</span> <span class="s1">&#39;Python&#39;</span> <span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">}</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
@@ -214,7 +221,9 @@
 <p>送出された <code class="xref py py-exc docutils literal"><span class="pre">HTTPError</span></code> インスタンスは整数の &#8216;code&#8217; 属性を持っていて、サーバーによって送られた応答に対応しています。</p>
 <div class="section" id="error-codes">
 <h4>エラーコード<a class="headerlink" href="#error-codes" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>デフォルトハンドラーはリダイレクト(コードは300番台にあります) を処理し、 100-299番台のコードは成功を意味しているので、たいていの場合は400-599番台のエラーコードのみを見るだけですみます。</p>
+<p>Because the default handlers handle redirects (codes in the 300 range), and
+codes in the 100&#8211;299 range indicate success, you will usually only see error
+codes in the 400&#8211;599 range.</p>
 <p><code class="docutils literal"><span class="pre">BaseHTTPServer.BaseHTTPRequestHandler.responses</span></code> は RFC2616 で利用されるレスポンスコード全てを示す便利な辞書です。この辞書は便利なのでここに載せておきます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Table mapping response codes to messages; entries have the</span>
 <span class="c1"># form {code: (shortmessage, longmessage)}.</span>
@@ -352,7 +361,10 @@
 <p>レスポンスは urlopen (または <code class="xref py py-exc docutils literal"><span class="pre">HTTPError</span></code> インスタンス) によって返され、 <code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> と <code class="xref py py-meth docutils literal"><span class="pre">geturl()</span></code> の二つの便利なメソッドを持っています。</p>
 <p><strong>geturl</strong> - これは取得したページの実際の URL を返します。 <code class="docutils literal"><span class="pre">urlopen</span></code> (または利用される opener オブジェクト) はリダイレクトに追従するため、有用です。取得したページの URL は要求した URL と同じとは限りません。</p>
 <p><strong>info</strong> - これは取得したページ (特にサーバからヘッダ)を表す辞書風オブジェクトを返します。これは現在では <code class="docutils literal"><span class="pre">httplib.HTTPMessage</span></code> インスタンスです。</p>
-<p>典型的なヘッダは &#8216;Content-length&#8217;, &#8216;Content-type&#8217; 等を含んでいます。 HTTP ヘッダその意味と利用法について簡単な説明がつきの便利な一覧 <a class="reference external" href="http://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a> を参照して下さい、</p>
+<p>Typical headers include &#8216;Content-length&#8217;, &#8216;Content-type&#8217;, and so on. See the
+<a class="reference external" href="https://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a>
+for a useful listing of HTTP headers with brief explanations of their meaning
+and use.</p>
 </div>
 <div class="section" id="openers-and-handlers">
 <h2>Openers と Handlers<a class="headerlink" href="#openers-and-handlers" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -400,7 +412,13 @@
 <p class="first admonition-title">注釈</p>
 <p class="last">上の例では <code class="docutils literal"><span class="pre">build_opener</span></code> に <code class="docutils literal"><span class="pre">HHTPBasicAuthHandler</span></code> のみを与えましたが。デフォルトの opener は普通の状況に適用するために &#8211; <code class="docutils literal"><span class="pre">ProxyHandler</span></code> (<span class="target" id="index-5"></span><code class="xref std std-envvar docutils literal"><span class="pre">http_proxy</span></code> 環境変数のようなプロキシ設定がセットされていれば), <code class="docutils literal"><span class="pre">UnknownHandler</span></code>, <code class="docutils literal"><span class="pre">HTTPHandler</span></code>, <code class="docutils literal"><span class="pre">HTTPDefaultErrorHandler</span></code>, <code class="docutils literal"><span class="pre">HTTPRedirectHandler</span></code>, <code class="docutils literal"><span class="pre">FTPHandler</span></code>, <code class="docutils literal"><span class="pre">FileHandler</span></code>, <code class="docutils literal"><span class="pre">HTTPErrorProcessor</span></code> を備えています。</p>
 </div>
-<p><code class="docutils literal"><span class="pre">top_level_url</span></code> は実際には &#8220;<a class="reference external" href="http://example.com/">http://example.com/</a>&#8221; のような完全な URL (&#8216;http:&#8217; スキームとホスト名、オプションとしてポート番号、含む)  <em>か</em> &#8220;example.com&#8221; や &#8220;example.com:8080&#8221; (後者はポート番号を含む) のような &#8220;authority&#8221; (つまり、ホスト名とオプションとしてポート番号を含む) の <em>どちらでも</em> かまいません。 authority の場合には &#8220;userinfo&#8221; 要素は含んではいけません - 例えば &#8220;<a class="reference external" href="mailto:joe&#37;&#52;&#48;password">joe<span>&#64;</span>password</a>:example.com&#8221; は不適切です。</p>
+<p><code class="docutils literal"><span class="pre">top_level_url</span></code> is in fact <em>either</em> a full URL (including the &#8216;http:&#8217; scheme
+component and the hostname and optionally the port number)
+e.g. &#8220;<a class="reference external" href="http://example.com/">http://example.com/</a>&#8221; <em>or</em> an &#8220;authority&#8221; (i.e. the hostname,
+optionally including the port number) e.g. &#8220;example.com&#8221; or &#8220;example.com:8080&#8221;
+(the latter example includes a port number).  The authority, if present, must
+NOT contain the &#8220;userinfo&#8221; component - for example &#8220;joe:password&#64;example.com&#8221; is
+not correct.</p>
 </div>
 <div class="section" id="proxies">
 <h2>プロキシ<a class="headerlink" href="#proxies" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -413,6 +431,11 @@
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">現在 <code class="docutils literal"><span class="pre">urllib2</span></code> はプロキシ経由で <code class="docutils literal"><span class="pre">https</span></code> ロケーションを取得する機能をサポートしていません。しかし、urllib2 をこのレシピ <a class="footnote-reference" href="#id15" id="id8">[7]</a> で拡張することで可能にすることができます。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><code class="docutils literal"><span class="pre">HTTP_PROXY</span></code> will be ignored if a variable <code class="docutils literal"><span class="pre">REQUEST_METHOD</span></code> is set; see
+the documentation on <a class="reference internal" href="../library/urllib.html#urllib.getproxies" title="urllib.getproxies"><code class="xref py py-func docutils literal"><span class="pre">getproxies()</span></code></a>.</p>
 </div>
 </div>
 <div class="section" id="sockets-and-layers">
@@ -454,8 +477,9 @@
 <table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><p class="first last">ブラウザを検知すること (browser sniffing) は web サイトのデザインにおけるとても悪い習慣です - web 標準を利用する方が賢明でしょう。不幸なことに未だに多くの web サイトが異なるブラウザに対して異なるバージョンを返しています。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Browser sniffing is a very bad practice for website design - building
+sites using web standards is much more sensible. Unfortunately a lot of
+sites still send different versions to different browsers.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id12" rules="none">
@@ -468,7 +492,7 @@
 <table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><p class="first last">HTTP リクエストヘッダの詳細については、 <a class="reference external" href="http://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a> を参照して下さい。</p>
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><p class="first last">HTTP リクエストヘッダの詳細については、 <a class="reference external" href="https://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a> を参照して下さい。</p>
 </td></tr>
 </tbody>
 </table>
@@ -482,7 +506,7 @@
 <table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>urllib2 opener for SSL proxy (CONNECT method): <a class="reference external" href="http://code.activestate.com/recipes/456195/">ASPN Cookbook Recipe</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>urllib2 opener for SSL proxy (CONNECT method): <a class="reference external" href="https://code.activestate.com/recipes/456195/">ASPN Cookbook Recipe</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -535,8 +559,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/howto/urllib2.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/urllib2.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -580,12 +605,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

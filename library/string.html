@@ -37,6 +37,7 @@
     <link rel="next" title="7.2. re — 正規表現操作" href="re.html" />
     <link rel="prev" title="7. 文字列処理" href="strings.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/library/string.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -81,7 +82,7 @@
             
   <div class="section" id="module-string">
 <span id="string-common-string-operations"></span><h1>7.1. <a class="reference internal" href="#module-string" title="string: Common string operations."><code class="xref py py-mod docutils literal"><span class="pre">string</span></code></a> &#8212; 一般的な文字列操作<a class="headerlink" href="#module-string" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://hg.python.org/cpython/file/2.7/Lib/string.py">Lib/string.py</a></p>
+<p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/string.py">Lib/string.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-string" title="string: Common string operations."><code class="xref py py-mod docutils literal"><span class="pre">string</span></code></a> モジュールには便利な定数やクラスが数多く入っています。また、現在は文字列のメソッドとして利用できる、すでに撤廃された古い関数も入っています。さらに、 Python の組み込み文字列クラスは <a class="reference internal" href="stdtypes.html#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> 節に記載のシーケンス型のメソッドと、 <a class="reference internal" href="stdtypes.html#string-methods"><span class="std std-ref">文字列メソッド</span></a> 節に記載の文字列メソッドもサポートします。出力の書式指定には、テンプレート文字列、または、 <a class="reference internal" href="stdtypes.html#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> に記載の <code class="docutils literal"><span class="pre">%</span></code> 演算子を使用して下さい。正規表現に関する文字列操作の関数は <a class="reference internal" href="re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> を参照してください。</p>
 <div class="section" id="string-constants">
@@ -160,12 +161,17 @@
 </dd></dl>
 
 </div>
-<div class="section" id="string-formatting">
-<span id="new-string-formatting"></span><h2>7.1.2. 文字列書式化<a class="headerlink" href="#string-formatting" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="custom-string-formatting">
+<span id="new-string-formatting"></span><h2>7.1.2. Custom String Formatting<a class="headerlink" href="#custom-string-formatting" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
-<p>組み込みの str 、および、 unicode クラスは、 <span class="target" id="index-13"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3101"><strong>PEP 3101</strong></a> に記載される <a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a> メソッドによる、複雑な変数置換と値の書式指定を提供します。 <a class="reference internal" href="#module-string" title="string: Common string operations."><code class="xref py py-mod docutils literal"><span class="pre">string</span></code></a> モジュールの <a class="reference internal" href="#string.Formatter" title="string.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a> クラスは組み込みの <a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-meth docutils literal"><span class="pre">format()</span></code></a> メソッドと同じ実装で、文字列の書式指定の作成とカスタマイズを可能にします。</p>
+<p>The built-in str and unicode classes provide the ability
+to do complex variable substitutions and value formatting via the
+<a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a> method described in <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3101"><strong>PEP 3101</strong></a>.  The <a class="reference internal" href="#string.Formatter" title="string.Formatter"><code class="xref py py-class docutils literal"><span class="pre">Formatter</span></code></a>
+class in the <a class="reference internal" href="#module-string" title="string: Common string operations."><code class="xref py py-mod docutils literal"><span class="pre">string</span></code></a> module allows you to create and customize your own
+string formatting behaviors using the same implementation as the built-in
+<a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">format()</span></code></a> method.</p>
 <dl class="class">
 <dt id="string.Formatter">
 <em class="property">class </em><code class="descclassname">string.</code><code class="descname">Formatter</code><a class="headerlink" href="#string.Formatter" title="この定義へのパーマリンク">¶</a></dt>
@@ -173,7 +179,9 @@
 <dl class="method">
 <dt id="string.Formatter.format">
 <code class="descname">format</code><span class="sig-paren">(</span><em>format_string</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#string.Formatter.format" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-meth docutils literal"><span class="pre">format()</span></code></a> は主要な API メソッドです。それは書式化文字列と、位置引数およびキーワード引数の任意のセットを取ります。 <a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-meth docutils literal"><span class="pre">format()</span></code></a> は <a class="reference internal" href="#string.Formatter.vformat" title="string.Formatter.vformat"><code class="xref py py-meth docutils literal"><span class="pre">vformat()</span></code></a> を呼ぶ単なるラッパーです。</p>
+<dd><p>The primary API method.  It takes a format string and
+an arbitrary set of positional and keyword arguments.
+It is just a wrapper that calls <a class="reference internal" href="#string.Formatter.vformat" title="string.Formatter.vformat"><code class="xref py py-meth docutils literal"><span class="pre">vformat()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -193,7 +201,7 @@
 <dl class="method">
 <dt id="string.Formatter.get_field">
 <code class="descname">get_field</code><span class="sig-paren">(</span><em>field_name</em>, <em>args</em>, <em>kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#string.Formatter.get_field" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>引数として与えた <a class="reference internal" href="#string.Formatter.parse" title="string.Formatter.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> (上記参照) により返される <em>field_name</em> を書式指定対象オブジェクトに変換します。返り値はタプル、 (obj, used_key) です。デフォルトでは <span class="target" id="index-14"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3101"><strong>PEP 3101</strong></a> に規定される &#8220;0[name]&#8221; や &#8220;label.title&#8221; のような形式の文字列を引数としてとります。 <em>args</em> と <em>kwargs</em> は <a class="reference internal" href="#string.Formatter.vformat" title="string.Formatter.vformat"><code class="xref py py-meth docutils literal"><span class="pre">vformat()</span></code></a> に渡されます。返り値 <em>used_key</em> は、 <a class="reference internal" href="#string.Formatter.get_value" title="string.Formatter.get_value"><code class="xref py py-meth docutils literal"><span class="pre">get_value()</span></code></a> の <em>key</em> 引数と同じ意味を持ちます。</p>
+<dd><p>引数として与えた <a class="reference internal" href="#string.Formatter.parse" title="string.Formatter.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> (上記参照) により返される <em>field_name</em> を書式指定対象オブジェクトに変換します。返り値はタプル、 (obj, used_key) です。デフォルトでは <span class="target" id="index-12"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3101"><strong>PEP 3101</strong></a> に規定される &#8220;0[name]&#8221; や &#8220;label.title&#8221; のような形式の文字列を引数としてとります。 <em>args</em> と <em>kwargs</em> は <a class="reference internal" href="#string.Formatter.vformat" title="string.Formatter.vformat"><code class="xref py py-meth docutils literal"><span class="pre">vformat()</span></code></a> に渡されます。返り値 <em>used_key</em> は、 <a class="reference internal" href="#string.Formatter.get_value" title="string.Formatter.get_value"><code class="xref py py-meth docutils literal"><span class="pre">get_value()</span></code></a> の <em>key</em> 引数と同じ意味を持ちます。</p>
 </dd></dl>
 
 <dl class="method">
@@ -251,12 +259,12 @@
 <p><span class="versionmodified">バージョン 2.7 で変更: </span>位置引数指定を省略することができます。<code class="docutils literal"><span class="pre">'{}</span> <span class="pre">{}'</span></code> は <code class="docutils literal"><span class="pre">'{0}</span> <span class="pre">{1}'</span></code> と同じになります。</p>
 </div>
 <p>簡単な書式指定文字列の例を挙げます:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;First, thou shalt count to </span><span class="si">{0}</span><span class="s2">&quot;</span> <span class="c1"># References first positional argument</span>
-<span class="s2">&quot;Bring me a </span><span class="si">{}</span><span class="s2">&quot;</span>                  <span class="c1"># Implicitly references the first positional argument</span>
-<span class="s2">&quot;From </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2">&quot;</span>                  <span class="c1"># Same as &quot;From {0} to {1}&quot;</span>
-<span class="s2">&quot;My quest is </span><span class="si">{name}</span><span class="s2">&quot;</span>             <span class="c1"># References keyword argument &#39;name&#39;</span>
-<span class="s2">&quot;Weight in tons </span><span class="si">{0.weight}</span><span class="s2">&quot;</span>      <span class="c1"># &#39;weight&#39; attribute of first positional arg</span>
-<span class="s2">&quot;Units destroyed: </span><span class="si">{players[0]}</span><span class="s2">&quot;</span>  <span class="c1"># First element of keyword argument &#39;players&#39;.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;First, thou shalt count to </span><span class="si">{0}</span><span class="s2">&quot;</span>  <span class="c1"># References first positional argument</span>
+<span class="s2">&quot;Bring me a </span><span class="si">{}</span><span class="s2">&quot;</span>                   <span class="c1"># Implicitly references the first positional argument</span>
+<span class="s2">&quot;From </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2">&quot;</span>                   <span class="c1"># Same as &quot;From {0} to {1}&quot;</span>
+<span class="s2">&quot;My quest is </span><span class="si">{name}</span><span class="s2">&quot;</span>              <span class="c1"># References keyword argument &#39;name&#39;</span>
+<span class="s2">&quot;Weight in tons </span><span class="si">{0.weight}</span><span class="s2">&quot;</span>       <span class="c1"># &#39;weight&#39; attribute of first positional arg</span>
+<span class="s2">&quot;Units destroyed: </span><span class="si">{players[0]}</span><span class="s2">&quot;</span>   <span class="c1"># First element of keyword argument &#39;players&#39;.</span>
 </pre></div>
 </div>
 <p><em>置換 (conversion)</em> フィールドにより書式変換前に型の強制変換が実施されます。通常、値の書式変換は <code class="xref py py-meth docutils literal"><span class="pre">__format__()</span></code> によって実施されます。しかしながら、場合によっては、文字列として変換することを強制したり、書式指定の定義をオーバーライドしたくなることもあります。 <code class="xref py py-meth docutils literal"><span class="pre">__format__()</span></code> の呼び出し前に値を文字列に変換すると、通常の書式変換の処理は飛ばされます。</p>
@@ -268,7 +276,12 @@
 </div>
 <p><em>format_spec</em> フィールドは、フィールド幅、文字揃え、埋め方、精度などの、値を表現する仕様を含みます。それぞれの値の型は、 &#8220;formatting mini-language&#8221; 、または、 <em>format_spec</em> の実装で定義されます。</p>
 <p>ほとんどの組み込み型は、共通の次のセクションに記載の formatting mini-language をサポートします。</p>
-<p><em>format_spec</em> フィールドは入れ子になった置換フィールドを含むこともできます。入れ子になった置換フィールドはフィールド名だけを含むことができます; 変換フラグや書式指定は不可です。 format_spec 中の置換フィールドは <em>format_spec</em> 文字列が解釈される前に置き換えられます。これにより、値の書式動的に指定することが可能になります。</p>
+<p>A <em>format_spec</em> field can also include nested replacement fields within it.
+These nested replacement fields may contain a field name, conversion flag
+and format specification, but deeper nesting is
+not allowed.  The replacement fields within the
+format_spec are substituted before the <em>format_spec</em> string is interpreted.
+This allows the formatting of a value to be dynamically specified.</p>
 <p><a class="reference internal" href="#formatexamples"><span class="std std-ref">書式指定例</span></a> のいくつかの例も参照して下さい。</p>
 <div class="section" id="format-specification-mini-language">
 <span id="formatspec"></span><h3>7.1.3.1. 書式指定ミニ言語仕様<a class="headerlink" href="#format-specification-mini-language" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -285,7 +298,13 @@
 <strong id="grammar-token-precision">precision  </strong> ::=  <a class="reference internal" href="../reference/lexical_analysis.html#grammar-token-integer"><code class="xref docutils literal"><span class="pre">integer</span></code></a>
 <strong id="grammar-token-type">type       </strong> ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;E&quot; | &quot;f&quot; | &quot;F&quot; | &quot;g&quot; | &quot;G&quot; | &quot;n&quot; | &quot;o&quot; | &quot;s&quot; | &quot;x&quot; | &quot;X&quot; | &quot;%&quot;
 </pre>
-<p>有効な <em>align</em> 値が指定された場合、その前に <em>fill</em> 文字を付けることができ、ここには任意の文字が置け、省略された場合は空白文字と看做されます。 <a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a> メソッドを使っているときは <code class="docutils literal"><span class="pre">{</span></code> と <code class="docutils literal"><span class="pre">}</span></code> は <em>fill</em> 文字としては使えないことに注意してください; しかしこの制限は <a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-func docutils literal"><span class="pre">format()</span></code></a> 関数には影響しません。</p>
+<p>If a valid <em>align</em> value is specified, it can be preceded by a <em>fill</em>
+character that can be any character and defaults to a space if omitted.
+It is not possible to use a literal curly brace (&#8220;<code class="docutils literal"><span class="pre">{</span></code>&#8221; or &#8220;<code class="docutils literal"><span class="pre">}</span></code>&#8221;) as
+the <em>fill</em> character when using the <a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a>
+method.  However, it is possible to insert a curly brace
+with a nested replacement field.  This limitation doesn&#8217;t
+affect the <a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-func docutils literal"><span class="pre">format()</span></code></a> function.</p>
 <p>様々な align オプションの意味は以下のとおりです:</p>
 <blockquote>
 <div><table border="1" class="docutils">
@@ -310,8 +329,11 @@
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'='</span></code></td>
-<td><p class="first last">符号 (があれば) の後ろを埋めます。 &#8216;+000000120&#8217; のような形で表示されます。このオプションは数値型に対してのみ有効です。</p>
-</td>
+<td>Forces the padding to be placed after the sign (if any)
+but before the digits.  This is used for printing fields
+in the form &#8216;+000000120&#8217;. This alignment option is only
+valid for numeric types.  It becomes the default when &#8216;0&#8217;
+immediately precedes the field width.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'^'</span></code></td>
 <td><p class="first last">利用可能なスペースにおいて、中央寄せを強制します。</p>
@@ -355,10 +377,13 @@
 <p><code class="docutils literal"><span class="pre">'#'</span></code> オプションは、整数、かつ、2進数、8進数、16進数の出力に対してのみ有効です。指定されれば、出力は、 <code class="docutils literal"><span class="pre">'0b'</span></code>, <code class="docutils literal"><span class="pre">'0o'</span></code>, もしくは <code class="docutils literal"><span class="pre">'0x'</span></code>, のプリフィックスが付与されます。</p>
 <p><code class="docutils literal"><span class="pre">','</span></code> オプションは、千の位のセパレータにカンマを使うことを合図します。ロケール依存のセパレータには、代わりに <code class="docutils literal"><span class="pre">'n'</span></code> の整数表現形式を使ってください。</p>
 <div class="versionchanged">
-<p><span class="versionmodified">バージョン 2.7 で変更: </span><code class="docutils literal"><span class="pre">','</span></code> オプションが追加されました (<span class="target" id="index-15"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0378"><strong>PEP 378</strong></a> も参照)。</p>
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><code class="docutils literal"><span class="pre">','</span></code> オプションが追加されました (<span class="target" id="index-13"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0378"><strong>PEP 378</strong></a> も参照)。</p>
 </div>
 <p><em>width</em> は10進数の整数で、最小のフィールド幅を規程します。もし指定されなければ、フィールド幅は内容により規程されます。</p>
-<p><em>width</em> フィールドにゼロ (<code class="docutils literal"><span class="pre">'0'</span></code>) 文字を前置することは、数値型のための符号を意識した 0 パディングを可能にします。これは <em>fill</em> 文字に <code class="docutils literal"><span class="pre">'0'</span></code> を指定して、<em>alignment</em> タイプに <code class="docutils literal"><span class="pre">'='</span></code> を指定したことと等価です。</p>
+<p>When no explicit alignment is given, preceding the <em>width</em> field by a zero
+(<code class="docutils literal"><span class="pre">'0'</span></code>) character enables
+sign-aware zero-padding for numeric types.  This is equivalent to a <em>fill</em>
+character of <code class="docutils literal"><span class="pre">'0'</span></code> with an <em>alignment</em> type of <code class="docutils literal"><span class="pre">'='</span></code>.</p>
 <p><em>precision</em> は10進数で、 <code class="docutils literal"><span class="pre">'f'</span></code> および <code class="docutils literal"><span class="pre">'F'</span></code> 、あるいは、 <code class="docutils literal"><span class="pre">'g'</span></code> および <code class="docutils literal"><span class="pre">'G'</span></code> で指定される浮動小数点数の、小数点以下に続く桁数を指定します。非数型に対しては、最大フィールド幅を規程します。言い換えると、フィールドの内容から、何文字使用するかを規程します。 <em>precision</em> は整数型に対しては、許されません。</p>
 <p>最後に、 <em>type</em> は、データがどのように表現されるかを規程します。</p>
 <p>利用可能な文字列の表現型は以下です:</p>
@@ -437,7 +462,10 @@
 </tbody>
 </table>
 </div></blockquote>
-<p>これらの表現型に加えて、整数は (<code class="docutils literal"><span class="pre">'n'</span></code> と空白を除く) 以下の浮動小数点型の表現型で書式指定できます。そうすることで整数は書式変換される前に <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a> を使って浮動小数点数に変換されます。</p>
+<p>In addition to the above presentation types, integers can be formatted
+with the floating point presentation types listed below (except
+<code class="docutils literal"><span class="pre">'n'</span></code> and <code class="docutils literal"><span class="pre">None</span></code>). When doing so, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a> is used to convert the
+integer to a floating point number before formatting.</p>
 <p>利用可能な浮動小数点数と10進数の表現型は以下です:</p>
 <blockquote>
 <div><table border="1" class="docutils">
@@ -498,7 +526,8 @@
 </div>
 <div class="section" id="format-examples">
 <span id="formatexamples"></span><h3>7.1.3.2. 書式指定例<a class="headerlink" href="#format-examples" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>この節には新しい書式指定構文と古い <code class="docutils literal"><span class="pre">%</span></code>-書式の比較例が載っています。</p>
+<p>This section contains examples of the <a class="reference internal" href="stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a> syntax and
+comparison with the old <code class="docutils literal"><span class="pre">%</span></code>-formatting.</p>
 <p>多くの場合、<code class="docutils literal"><span class="pre">{}</span></code> を加え <code class="docutils literal"><span class="pre">%</span></code> の代わりに <code class="docutils literal"><span class="pre">:</span></code> を使うことで新構文は古い <code class="docutils literal"><span class="pre">%</span></code>-書式に類似した書式になります。例えば、 <code class="docutils literal"><span class="pre">'%03.2f'</span></code> は <code class="docutils literal"><span class="pre">'{:03.2f}'</span></code> に翻訳できます。</p>
 <p>以下の例で示すように、新構文はさらに新たに様々なオプションもサポートしています。</p>
 <p>位置引数を使ったアクセス:</p>
@@ -632,7 +661,7 @@
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
 </div>
-<p>テンプレート (template) を使うと、 <span class="target" id="index-16"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0292"><strong>PEP 292</strong></a> で解説されているようにより簡潔に文字列置換 (string substitution) を行えるようになります。通常の <code class="docutils literal"><span class="pre">%</span></code> ベースの置換に代わって、テンプレートでは以下のような規則に従った <code class="docutils literal"><span class="pre">$</span></code> ベースの置換をサポートしています:</p>
+<p>テンプレート (template) を使うと、 <span class="target" id="index-14"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0292"><strong>PEP 292</strong></a> で解説されているようにより簡潔に文字列置換 (string substitution) を行えるようになります。通常の <code class="docutils literal"><span class="pre">%</span></code> ベースの置換に代わって、テンプレートでは以下のような規則に従った <code class="docutils literal"><span class="pre">$</span></code> ベースの置換をサポートしています:</p>
 <ul class="simple">
 <li><p class="first"><code class="docutils literal"><span class="pre">$$</span></code> はエスケープ文字です; <code class="docutils literal"><span class="pre">$</span></code> 一つに置換されます。</p>
 </li>
@@ -922,7 +951,7 @@
   <ul>
 <li><a class="reference internal" href="#">7.1. <code class="docutils literal"><span class="pre">string</span></code> &#8212; 一般的な文字列操作</a><ul>
 <li><a class="reference internal" href="#string-constants">7.1.1. 文字列定数</a></li>
-<li><a class="reference internal" href="#string-formatting">7.1.2. 文字列書式化</a></li>
+<li><a class="reference internal" href="#custom-string-formatting">7.1.2. Custom String Formatting</a></li>
 <li><a class="reference internal" href="#format-string-syntax">7.1.3. 書式指定文字列の文法</a><ul>
 <li><a class="reference internal" href="#format-specification-mini-language">7.1.3.1. 書式指定ミニ言語仕様</a></li>
 <li><a class="reference internal" href="#format-examples">7.1.3.2. 書式指定例</a></li>
@@ -944,8 +973,9 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/library/string.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/string.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -990,12 +1020,12 @@
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

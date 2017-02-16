@@ -37,6 +37,7 @@
     <link rel="next" title="10. 標準ライブラリミニツアー" href="stdlib.html" />
     <link rel="prev" title="8. エラーと例外" href="errors.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="canonical" href="https://docs.python.org/2/tutorial/classes.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
     
@@ -139,6 +140,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A simple example class&quot;&quot;&quot;</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">12345</span>
+
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;hello world&#39;</span>
 </pre></div>
@@ -278,8 +280,10 @@
 
 <span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">f1</span>
+
     <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;hello world&#39;</span>
+
     <span class="n">h</span> <span class="o">=</span> <span class="n">g</span>
 </pre></div>
 </div>
@@ -288,8 +292,10 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bag</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">addtwice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -380,7 +386,7 @@ as when referencing <code class="docutils literal"><span class="pre">__dict__</s
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
     <span class="k">pass</span>
 
-<span class="n">john</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">()</span> <span class="c1"># Create an empty employee record</span>
+<span class="n">john</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">()</span>  <span class="c1"># Create an empty employee record</span>
 
 <span class="c1"># Fill the fields of the record</span>
 <span class="n">john</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>
@@ -465,8 +471,10 @@ as when referencing <code class="docutils literal"><span class="pre">__dict__</s
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
+
     <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">StopIteration</span>
@@ -536,8 +544,11 @@ as when referencing <code class="docutils literal"><span class="pre">__dict__</s
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">例外が一つあります。モジュールオブジェクトには、秘密の読取り専用の属性 <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> があり、モジュールの名前空間を実装するために使われている辞書を返します; <code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code> という名前は属性ですが、グローバルな名前ではありません。この属性を利用すると名前空間の実装に対する抽象化を侵すことになるので、プログラムを検死するデバッガのような用途に限るべきです。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Except for one thing.  Module objects have a secret read-only attribute called
+<a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> which returns the dictionary used to implement the module&#8217;s
+namespace; the name <a class="reference internal" href="../library/stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> is an attribute but not a global name.
+Obviously, using this violates the abstraction of namespace implementation, and
+should be restricted to things like post-mortem debuggers.</td></tr>
 </tbody>
 </table>
 </div>
@@ -586,8 +597,9 @@ as when referencing <code class="docutils literal"><span class="pre">__dict__</s
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">Report a Bug</a></li>
-  <li><a href="../_sources/tutorial/classes.txt"
-         rel="nofollow">Show Source</a></li>
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/tutorial/classes.rst"
+         rel="nofollow">ソースコードを表示</a>
+  </li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -631,12 +643,12 @@ as when referencing <code class="docutils literal"><span class="pre">__dict__</s
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
     The Python Software Foundation is a non-profit corporation.
     <a href="https://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on 2017-02-08.
+    Last updated on 2017-02-16.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.

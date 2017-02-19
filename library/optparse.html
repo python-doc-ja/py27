@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>15.5. optparse — コマンドラインオプション解析器 &#8212; Python 2.7.x ドキュメント</title>
+    <title>15.5. optparse — コマンドラインオプション解析器 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="15. 汎用オペレーティングシステムサービス" href="allos.html" />
     <link rel="next" title="15.6. getopt — C 言語スタイルのコマンドラインオプションパーサ" href="getopt.html" />
     <link rel="prev" title="15.4. argparse — コマンドラインオプション、引数、サブコマンドのパーサー" href="argparse.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -487,7 +487,7 @@ Options:
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">%prog</span></code> は <code class="docutils literal"><span class="pre">usage</span></code> と同じような展開を受けます。その他にも <code class="docutils literal"><span class="pre">version</span></code> には何でも好きな内容を入れられます。 <code class="docutils literal"><span class="pre">version</span></code> を指定した場合、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は自動的に <code class="docutils literal"><span class="pre">--version</span></code> オプションをパーザに渡します。コマンドライン中に <code class="docutils literal"><span class="pre">--version</span></code> が見つかると、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は <code class="docutils literal"><span class="pre">version</span></code> 文字列を展開して (<code class="docutils literal"><span class="pre">%prog</span></code> を置き換えて) 標準出力に出力し、プログラムを終了します。</p>
-<p>For example, if your script is called <code class="docutils literal"><span class="pre">/usr/bin/foo</span></code>:</p>
+<p>例えば、<code class="docutils literal"><span class="pre">/usr/bin/foo</span></code> という名前のスクリプトなら:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo --version
 <span class="go">foo 1.0</span>
 </pre></div>
@@ -517,15 +517,14 @@ Options:
 </pre></div>
 </div>
 <p>いずれの場合にも <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はエラーを同じやり方で処理します。すなわち、プログラムの使用法メッセージとエラーメッセージを標準エラー出力に出力して、終了ステータス 2 でプログラムを終了させます。</p>
-<p>Consider the first example above, where the user passes <code class="docutils literal"><span class="pre">4x</span></code> to an option
-that takes an integer:</p>
+<p>上に挙げた最初の例、すなわち整数を引数にとるオプションにユーザが <code class="docutils literal"><span class="pre">4x</span></code> を指定した場合を考えてみましょう:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo -n 4x
 <span class="go">Usage: foo [options]</span>
 
 <span class="go">foo: error: option -n: invalid integer value: &#39;4x&#39;</span>
 </pre></div>
 </div>
-<p>Or, where the user fails to pass a value at all:</p>
+<p>値を全く指定しない場合には、以下のようになります:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> /usr/bin/foo -n
 <span class="go">Usage: foo [options]</span>
 
@@ -573,34 +572,34 @@ that takes an integer:</p>
 <em class="property">class </em><code class="descclassname">optparse.</code><code class="descname">OptionParser</code><span class="sig-paren">(</span><em>...</em><span class="sig-paren">)</span><a class="headerlink" href="#optparse.OptionParser" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>OptionParser のコンストラクタの引数はどれも必須ではありませんが、いくつものキーワード引数がオプションとして使えます。これらはキーワード引数として渡さなければなりません。すなわち、引数が宣言されている順番に頼ってはいけません。</p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">usage</span></code> (default: <code class="docutils literal"><span class="pre">&quot;%prog</span> <span class="pre">[options]&quot;</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">usage</span></code> (デフォルト: <code class="docutils literal"><span class="pre">&quot;%prog</span> <span class="pre">[options]&quot;</span></code>)</dt>
 <dd><p class="first last">プログラムが間違った方法で実行されるかまたはヘルプオプションを付けて実行された場合に表示される使用法です。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は使用法の文字列を表示する際に <code class="docutils literal"><span class="pre">%prog</span></code> を <code class="docutils literal"><span class="pre">os.path.basename(sys.argv[0])</span></code> (または <code class="docutils literal"><span class="pre">prog</span></code> キーワード引数が指定されていればその値) に展開します。使用法メッセージを抑制するためには特別な <code class="xref py py-data docutils literal"><span class="pre">optparse.SUPPRESS_USAGE</span></code> という値を指定します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">option_list</span></code> (default: <code class="docutils literal"><span class="pre">[]</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">option_list</span></code> (デフォルト: <code class="docutils literal"><span class="pre">[]</span></code>)</dt>
 <dd><p class="first last">パーザに追加する Option オブジェクトのリストです。 <code class="docutils literal"><span class="pre">option_list</span></code> の中のオプションは <code class="docutils literal"><span class="pre">standard_option_list</span></code> (OptionParser のサブクラスでセットされる可能性のあるクラス属性) の後に追加されますが、バージョンやヘルプのオプションよりは前になります。このオプションの使用は推奨されません。パーザを作成した後で、 <a class="reference internal" href="#optparse.OptionParser.add_option" title="optparse.OptionParser.add_option"><code class="xref py py-meth docutils literal"><span class="pre">add_option()</span></code></a> を使って追加してください。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">option_class</span></code> (default: optparse.Option)</dt>
+<dt><code class="docutils literal"><span class="pre">option_class</span></code> (デフォルト: optparse.Option)</dt>
 <dd><p class="first last"><a class="reference internal" href="#optparse.OptionParser.add_option" title="optparse.OptionParser.add_option"><code class="xref py py-meth docutils literal"><span class="pre">add_option()</span></code></a> でパーザにオプションを追加するときに使用されるクラス。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">version</span></code> (default: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">version</span></code> (デフォルト: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
 <dd><p class="first last">ユーザがバージョンオプションを与えたときに表示されるバージョン文字列です。 <code class="docutils literal"><span class="pre">version</span></code> に真の値を与えると、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> は自動的に単独のオプション文字列 <code class="docutils literal"><span class="pre">--version</span></code> とともにバージョンオプションを追加します。部分文字列 <code class="docutils literal"><span class="pre">%prog</span></code> は <code class="docutils literal"><span class="pre">usage</span></code> と同様に展開されます。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">conflict_handler</span></code> (default: <code class="docutils literal"><span class="pre">&quot;error&quot;</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">conflict_handler</span></code> (デフォルト: <code class="docutils literal"><span class="pre">&quot;error&quot;</span></code>)</dt>
 <dd><p class="first last">オプション文字列が衝突するようなオプションがパーザに追加されたときにどうするかを指定します。 <a class="reference internal" href="#optparse-conflicts-between-options"><span class="std std-ref">オプション間の衝突</span></a> 節を参照して下さい。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">description</span></code> (default: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">description</span></code> (デフォルト: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
 <dd><p class="first last">プログラムの概要を表す一段落のテキストです。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はユーザがヘルプを要求したときにこの概要を現在のターミナルの幅に合わせて整形し直して表示します (<code class="docutils literal"><span class="pre">usage</span></code> の後、オプションリストの前に表示されます)。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">formatter</span></code> (default: a new <code class="xref py py-class docutils literal"><span class="pre">IndentedHelpFormatter</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">formatter</span></code> (デフォルト: 新しい <code class="xref py py-class docutils literal"><span class="pre">IndentedHelpFormatter</span></code>)</dt>
 <dd><p class="first last">ヘルプテキストを表示する際に使われる optparse.HelpFormatter のインスタンスです。 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はこの目的のためにすぐ使えるクラスを二つ提供しています。 IndentedHelpFormatter と TitledHelpFormatter がそれです。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">add_help_option</span></code> (default: <code class="docutils literal"><span class="pre">True</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">add_help_option</span></code> (デフォルト: <code class="docutils literal"><span class="pre">True</span></code>)</dt>
 <dd><p class="first last">もし真ならば、 <a class="reference internal" href="#module-optparse" title="optparse: Command-line option parsing library. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a> はパーザにヘルプオプションを (オプション文字列 <code class="docutils literal"><span class="pre">-h</span></code> と <code class="docutils literal"><span class="pre">--help</span></code> とともに)追加します。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">prog</span></code></dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">usage</span></code> や <code class="docutils literal"><span class="pre">version</span></code> の中の <code class="docutils literal"><span class="pre">%prog</span></code> を展開するときに <code class="docutils literal"><span class="pre">os.path.basename(sys.argv[0])</span></code> の代わりに使われる文字列です。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">epilog</span></code> (default: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
+<dt><code class="docutils literal"><span class="pre">epilog</span></code> (デフォルト: <code class="docutils literal"><span class="pre">None</span></code>)</dt>
 <dd><p class="first last">オプションのヘルプの後に表示されるヘルプテキスト.</p>
 </dd>
 </dl>
@@ -950,9 +949,8 @@ Options:
 <dd><p class="first last">処理する引数のリスト (デフォルト: <code class="docutils literal"><span class="pre">sys.argv[1:]</span></code>)</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">values</span></code></dt>
-<dd>an <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> object to store option arguments in (default: a
-new instance of <code class="xref py py-class docutils literal"><span class="pre">Values</span></code>) &#8211; if you give an existing object, the
-option defaults will not be initialized on it</dd>
+<dd><p class="first last">オプション引数を格納する <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> のオブジェクト (デフォルト: 新しい <code class="xref py py-class docutils literal"><span class="pre">Values</span></code> のインスタンス) &#8211; 既存のオブジェクトを指定した場合、オプションのデフォルトは初期化されません</p>
+</dd>
 </dl>
 <p>であり、戻り値は</p>
 <dl class="docutils">
@@ -1029,7 +1027,7 @@ option defaults will not be initialized on it</dd>
 <p>衝突時の処理をおこなうハンドラ(handler)には、以下のものが利用できます:</p>
 <blockquote>
 <div><dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">&quot;error&quot;</span></code> (default)</dt>
+<dt><code class="docutils literal"><span class="pre">&quot;error&quot;</span></code> (デフォルト)</dt>
 <dd><p class="first last">オプション間の衝突をプログラム上のエラーとみなし、 <code class="xref py py-exc docutils literal"><span class="pre">OptionConflictError</span></code> を送出します</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">&quot;resolve&quot;</span></code></dt>
@@ -1433,15 +1431,7 @@ option defaults will not be initialized on it</dd>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">values</span><span class="o">.</span><span class="n">ensure_value</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the <code class="docutils literal"><span class="pre">attr</span></code> attribute of <code class="docutils literal"><span class="pre">values</span></code> doesn&#8217;t exist or is <code class="docutils literal"><span class="pre">None</span></code>, then
-ensure_value() first sets it to <code class="docutils literal"><span class="pre">value</span></code>, and then returns &#8216;value. This is
-very handy for actions like <code class="docutils literal"><span class="pre">&quot;extend&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;append&quot;</span></code>, and <code class="docutils literal"><span class="pre">&quot;count&quot;</span></code>, all
-of which accumulate data in a variable and expect that variable to be of a
-certain type (a list for the first two, an integer for the latter).  Using
-<code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> means that scripts using your action don&#8217;t have to worry
-about setting a default value for the option destinations in question; they
-can just leave the default as <code class="docutils literal"><span class="pre">None</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> will take care of
-getting it right when it&#8217;s needed.</p>
+<p><code class="docutils literal"><span class="pre">values</span></code> に <code class="docutils literal"><span class="pre">attr</span></code> 属性が無いか <code class="docutils literal"><span class="pre">None</span></code> だった場合に、 <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> は最初に <code class="docutils literal"><span class="pre">value</span></code> をセットし、それから <code class="docutils literal"><span class="pre">value</span></code> を返します。この振る舞いは <code class="docutils literal"><span class="pre">&quot;extend&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;append&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;count&quot;</span></code> のように、データを変数に集積し、またその変数がある型 (最初の二つはリスト、最後のは整数) であると期待されるアクションを作るのにとても使い易いものです。 <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> を使えば、作ったアクションを使うスクリプトはオプションに保存先にデフォルト値をセットすることに煩わされずに済みます。デフォルトを <code class="docutils literal"><span class="pre">None</span></code> にしておけば <code class="xref py py-meth docutils literal"><span class="pre">ensure_value()</span></code> がそれが必要になったときに適当な値を返してくれます。</p>
 </li>
 </ul>
 </div>
@@ -1521,9 +1511,9 @@ getting it right when it&#8217;s needed.</p>
                         title="次の章へ">15.6. <code class="docutils literal"><span class="pre">getopt</span></code> &#8212; C 言語スタイルのコマンドラインオプションパーサ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/optparse.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -1545,7 +1535,7 @@ getting it right when it&#8217;s needed.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -1560,8 +1550,8 @@ getting it right when it&#8217;s needed.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -1569,15 +1559,15 @@ getting it right when it&#8217;s needed.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

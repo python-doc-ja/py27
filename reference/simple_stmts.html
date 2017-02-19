@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. 単純文 (simple statement) &#8212; Python 2.7.x ドキュメント</title>
+    <title>6. 単純文 (simple statement) &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python 言語リファレンス" href="index.html" />
     <link rel="next" title="7. 複合文 (compound statement)" href="compound_stmts.html" />
     <link rel="prev" title="5. 式 (expression)" href="expressions.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 言語リファレンス</a> &#187;</li> 
@@ -277,10 +277,10 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-29"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0255"><strong>PEP 255</strong></a> - Simple Generators</dt>
+<dt><span class="target" id="index-64"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0255"><strong>PEP 255</strong></a> - 単純なジェネレータ</dt>
 <dd><p class="first last">Python へのジェネレータと <a class="reference internal" href="#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> 文の導入提案。</p>
 </dd>
-<dt><span class="target" id="index-30"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> - Coroutines via Enhanced Generators</dt>
+<dt><span class="target" id="index-65"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 0342</strong></a> - 拡張されたジェネレータを用いたコルーチン</dt>
 <dd><p class="first last">その他のジェネレータの改善と共に、 <a class="reference internal" href="#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> が <a class="reference internal" href="compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> ... <a class="reference internal" href="compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> ブロックの中に存在することを可能にするための提案</p>
 </dd>
 </dl>
@@ -332,11 +332,11 @@
 <p>import 文は、 (1) モジュールを探し、必要なら初期化 (initialize) する ; (<a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文のあるスコープにおける ) ローカルな名前空間で名前を定義する、の二つの段階を踏んで初期化されます。 <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文には、 <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> を使うか使わないかの 2 種類の形式があります。第一形式 (<a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> のない形式 ) は、上記の段階をリスト中にある各識別子に対して繰り返し実行していきます。 <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> のある形式では、 (1) を一度だけ行い、次いで (2) を繰り返し実行します。</p>
 <p id="index-39">ステップ (1) がどのように行われるのかを理解するには、まず、 Python が階層的なモジュール名をどう扱うのかを理解する必要があります。モジュールを組織化し名前に階層を持たせるために、 Python はパッケージという概念を持っています。モジュールが他のモジュールやパッケージを含むことができないのに対して、パッケージは他のパッケージやモジュールを含むことができます。ファイルシステムの視点から見ると、パッケージはディレクトリでモジュールはファイルです。</p>
 <p id="index-40">モジュール名 ( 特に記述していない場合は、 &#8221; モジュール &#8221; とはパッケージとモジュール両方を指しています ) が判ったとき、モジュールかパッケージの検索が始まります。最初にチェックされる場所は、それまでにインポートされたすべてのモジュールのキャッシュである <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> です。もしモジュールがそこで見つかれば、それが import のステップ (2) で利用されます。</p>
-<p id="index-41">キャッシュにモジュールが見つからなかった場合、次は <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></code></a> が検索されます。 (<a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></code></a> の仕様は <span class="target" id="index-62"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> に見つけることができます。) これは <a class="reference internal" href="../glossary.html#term-finder"><span class="xref std std-term">finder</span></a> オブジェクトのリストで、そのモジュールを読み込む方法を知っているかどうかをその <code class="xref py py-meth docutils literal"><span class="pre">find_module()</span></code> メソッドをモジュール名を引数として呼び出すことで、順番に問い合せていきます。モジュールがパッケージに含まれていた (モジュール名の中にドットが含まれていた) 場合、 <code class="xref py py-meth docutils literal"><span class="pre">find_module()</span></code> の第 2 引数に親パッケージの <code class="xref py py-attr docutils literal"><span class="pre">__path__</span></code> 属性が渡されます。 (モジュール名の最後のドットより前のすべてがインポートされます) finder はモジュールを見つけたとき、 (後で解説する) <a class="reference internal" href="../glossary.html#term-loader"><span class="xref std std-term">loader</span></a> か <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
+<p id="index-41">キャッシュにモジュールが見つからなかった場合、次は <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></code></a> が検索されます。 (<a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></code></a> の仕様は <span class="target" id="index-66"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> に見つけることができます。) これは <a class="reference internal" href="../glossary.html#term-finder"><span class="xref std std-term">finder</span></a> オブジェクトのリストで、そのモジュールを読み込む方法を知っているかどうかをその <code class="xref py py-meth docutils literal"><span class="pre">find_module()</span></code> メソッドをモジュール名を引数として呼び出すことで、順番に問い合せていきます。モジュールがパッケージに含まれていた (モジュール名の中にドットが含まれていた) 場合、 <code class="xref py py-meth docutils literal"><span class="pre">find_module()</span></code> の第 2 引数に親パッケージの <code class="xref py py-attr docutils literal"><span class="pre">__path__</span></code> 属性が渡されます。 (モジュール名の最後のドットより前のすべてがインポートされます) finder はモジュールを見つけたとき、 (後で解説する) <a class="reference internal" href="../glossary.html#term-loader"><span class="xref std std-term">loader</span></a> か <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
 <p id="index-43"><a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></code></a> に含まれるすべての finder が module を見つけられない場合、幾つかの暗黙的に定義されている finder に問い合わせられます。どんな暗黙の meta path finder が定義されているかは Python の実装によって様々です。すべての実装が定義しなければならない 1 つの finder は、 <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal"><span class="pre">sys.path_hooks</span></code></a> を扱います。</p>
 <p>この暗黙の finder は要求されたモジュールを、 2 箇所のどちらかで定義されている &#8220;paths&#8221; から探します。 (&#8220;paths&#8221; がファイルシステムパスである必要はありません ) インポートしようとしているモジュールがパッケージに含まれている場合、親パッケージの <code class="xref py py-attr docutils literal"><span class="pre">__path__</span></code> が <code class="xref py py-meth docutils literal"><span class="pre">find_module()</span></code> の第 2 引数として渡され、それが paths として扱われます。モジュールがパッケージに含まれていない場合、 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> が paths として扱われます。</p>
 <p>paths が決定されたら、それを巡回してその path を扱える finder を探します。 <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal"><span class="pre">sys.path_importer_cache</span></code></a> 辞書は path に対する finder をキャッシュしており、 finder を探すときにチェックされます。 path がキャッシュに登録されていない場合は、 <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal"><span class="pre">sys.path_hooks</span></code></a> の各オブジェクトを 1 つの引数 path で呼び出します。各オブジェクトは finder を返すか、 <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> を発生させます。 finder が返された場合、それを <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal"><span class="pre">sys.path_importer_cache</span></code></a> にキャッシュして、その path に対してその finder を使います。 finder が見つからず、 path が存在している場合、 <code class="docutils literal"><span class="pre">None</span></code> が <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal"><span class="pre">sys.path_importer_cache</span></code></a> に格納されて、暗黙の、単一のファイルとしてモジュールが格納されているとしてあつかうファイルベースの finder をその path に対して利用することを示します。その path が存在しなかった場合、常に <code class="docutils literal"><span class="pre">None</span></code> を返す finder がその path に対するキャッシュとして格納されます。</p>
-<p id="index-44">全ての finder がそのモジュールを見つけられないときは、 <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。そうでなければ、どれかの finder が loader を返し、その <code class="xref py py-meth docutils literal"><span class="pre">load_module()</span></code> メソッドがモジュール名を引数に呼び出されてロードを行ないます。 ( ローダーのオリジナルの定義については <span class="target" id="index-63"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> を参照してください。 ) loader はロードするモジュールに対して幾つかの責任があります。まず、そのモジュールがすでに <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にあれば、 ( ローダーが import 機構の外から呼ばれた場合に有り得ます ) そのモジュールを初期化に使い、新しいモジュールを使いません。 <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にそのモジュールがなければ、初期化を始める前に <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> に追加します。 <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> に追加したあと、モジュールのロード中にエラーが発生した場合は、その辞書から削除します。モジュールが既に <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にあった場合は、エラーが発生してもその辞書に残しておきます。</p>
+<p id="index-44">全ての finder がそのモジュールを見つけられないときは、 <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が発生します。そうでなければ、どれかの finder が loader を返し、その <code class="xref py py-meth docutils literal"><span class="pre">load_module()</span></code> メソッドがモジュール名を引数に呼び出されてロードを行ないます。 ( ローダーのオリジナルの定義については <span class="target" id="index-67"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> を参照してください。 ) loader はロードするモジュールに対して幾つかの責任があります。まず、そのモジュールがすでに <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にあれば、 ( ローダーが import 機構の外から呼ばれた場合に有り得ます ) そのモジュールを初期化に使い、新しいモジュールを使いません。 <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にそのモジュールがなければ、初期化を始める前に <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> に追加します。 <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> に追加したあと、モジュールのロード中にエラーが発生した場合は、その辞書から削除します。モジュールが既に <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal"><span class="pre">sys.modules</span></code></a> にあった場合は、エラーが発生してもその辞書に残しておきます。</p>
 <p id="index-46">ローダーは幾つかの属性をモジュールに設定しなければなりません。モジュール名を <code class="xref py py-data docutils literal"><span class="pre">__name__</span></code> に設定します。ファイルの &#8220;path&#8221; を <code class="xref py py-data docutils literal"><span class="pre">__file__</span></code> に設定しますが、ビルトインモジュール (<a class="reference internal" href="../library/sys.html#sys.builtin_module_names" title="sys.builtin_module_names"><code class="xref py py-data docutils literal"><span class="pre">sys.builtin_module_names</span></code></a> にリストされている ) の場合にはその属性を設定しません。インポートしているのがパッケージだった場合は、そのパッケージが含むモジュールやパッケージを探す場所の path のリストを <code class="xref py py-data docutils literal"><span class="pre">__path_</span></code> に設定します。 <code class="xref py py-data docutils literal"><span class="pre">__package__</span></code> はオプションですが、そのモジュールやパッケージを含むパッケージ名 ( パッケージに含まれていないモジュールには空文字列 ) を設定するべきです。 <code class="xref py py-data docutils literal"><span class="pre">__loader__</span></code> もオプションですが、そのモジュールをロードした loader オブジェクトを設定するべきです。</p>
 <p id="index-47">ロード中にエラーが発生した場合、他の例外がすでに伝播していないのであれば、 loader は <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> を発生させます。それ以外の場合は、 loader はロードして初期化したモジュールを返します。</p>
 <p>段階 (1) が例外を送出することなく完了したなら、段階 (2) を開始します。</p>
@@ -344,7 +344,7 @@
 <p id="index-48"><a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> 形式は、モジュール名の束縛を行いません : <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> 形式では、段階 (1) で見つかったモジュール内から、識別子リストの各名前を順に検索し、見つかったオブジェクトを識別子の名前でローカルな名前空間において束縛します。 <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> の第一形式と同じように、 &#8220;<a class="reference internal" href="compound_stmts.html#as"><code class="xref std std-keyword docutils literal"><span class="pre">as</span></code></a> localname&#8221; で別名を与えることができます。指定された名前が見つからない場合、 <a class="reference internal" href="../library/exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> が送出されます。識別子のリストを星印 (<code class="docutils literal"><span class="pre">'*'</span></code>) で置き換えると、モジュールで公開されている名前 (public name) 全てを <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文のある場所のローカルな名前空間に束縛します。</p>
 <p id="index-49">モジュールで * 公開されている名前 (public names)* は、モジュールの名前空間内にある <code class="docutils literal"><span class="pre">__all__</span></code> という名前の変数を調べて決定します ; <code class="docutils literal"><span class="pre">__all__</span></code> が定義されている場合、 <code class="docutils literal"><span class="pre">__all__</span></code> はモジュールで定義されていたり、 import されているような名前の文字列からなるシーケンスでなければなりません。 <code class="docutils literal"><span class="pre">__all__</span></code> 内にある名前は、全て公開された名前であり、実在するものとみなされます。 <code class="docutils literal"><span class="pre">__all__</span></code> が定義されていない場合、モジュールの名前空間に見つかった名前で、アンダースコア文字 (<code class="docutils literal"><span class="pre">'_'</span></code>) で始まっていない全ての名前が公開された名前になります。 <code class="docutils literal"><span class="pre">__all__</span></code> には、公開されている API 全てを入れなければなりません。 <code class="docutils literal"><span class="pre">__all__</span></code> には、 ( モジュール内で import されて使われているライブラリモジュールのように ) API を構成しない要素を意に反して公開してしまうのを避けるという意図があります。</p>
 <p><code class="docutils literal"><span class="pre">*</span></code> を使った <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> 形式は、モジュールのスコープ内だけに作用します。関数内でワイルドカードの import 文 &#8212; <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> &#8212; を使い、関数が自由変数を伴うネストされたブロックであったり、ブロックを含んでいる場合、コンパイラは <a class="reference internal" href="../library/exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> を送出します。</p>
-<p id="index-50">インポートするモジュールを指定するとき、そのモジュールの絶対名 (absolute name) を指定する必要はありません。モジュールやパッケージが他のパッケージに含まれている場合、共通のトップパッケージからそのパッケージ名を記述することなく相対インポートすることができます。 <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> の後に指定されるモジュールやパッケージの先頭に複数個のドットを付けることで、正確な名前を指定することなしに現在のパッケージ階層からいくつ上の階層へ行くかを指定することができます。先頭のドットが 1 つの場合、 import をおこなっているモジュールが存在する現在のパッケージを示します。 3 つのドットは 2 つ上のレベルを示します。なので、 <code class="docutils literal"><span class="pre">pkg</span></code> パッケージの中のモジュールで <code class="docutils literal"><span class="pre">from</span> <span class="pre">.</span> <span class="pre">import</span> <span class="pre">mod</span></code> を実行すると、 <code class="docutils literal"><span class="pre">pkg.mod</span></code> をインポートすることになります。 <code class="docutils literal"><span class="pre">pkg.subpkg1</span></code> の中から <code class="docutils literal"><span class="pre">from</span> <span class="pre">..subpkg2</span> <span class="pre">import</span> <span class="pre">mod</span></code> を実行すると、 <code class="docutils literal"><span class="pre">pkg.subpkg2.mod</span></code> をインポートします。相対インポートの仕様は <span class="target" id="index-64"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328"><strong>PEP 328</strong></a> に含まれています。</p>
+<p id="index-50">インポートするモジュールを指定するとき、そのモジュールの絶対名 (absolute name) を指定する必要はありません。モジュールやパッケージが他のパッケージに含まれている場合、共通のトップパッケージからそのパッケージ名を記述することなく相対インポートすることができます。 <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> の後に指定されるモジュールやパッケージの先頭に複数個のドットを付けることで、正確な名前を指定することなしに現在のパッケージ階層からいくつ上の階層へ行くかを指定することができます。先頭のドットが 1 つの場合、 import をおこなっているモジュールが存在する現在のパッケージを示します。 3 つのドットは 2 つ上のレベルを示します。なので、 <code class="docutils literal"><span class="pre">pkg</span></code> パッケージの中のモジュールで <code class="docutils literal"><span class="pre">from</span> <span class="pre">.</span> <span class="pre">import</span> <span class="pre">mod</span></code> を実行すると、 <code class="docutils literal"><span class="pre">pkg.mod</span></code> をインポートすることになります。 <code class="docutils literal"><span class="pre">pkg.subpkg1</span></code> の中から <code class="docutils literal"><span class="pre">from</span> <span class="pre">..subpkg2</span> <span class="pre">import</span> <span class="pre">mod</span></code> を実行すると、 <code class="docutils literal"><span class="pre">pkg.subpkg2.mod</span></code> をインポートします。相対インポートの仕様は <span class="target" id="index-68"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328"><strong>PEP 328</strong></a> に含まれています。</p>
 <p>どのモジュールがロードされるべきかを動的に決めたいアプリケーションのために、組み込み関数 <a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal"><span class="pre">importlib.import_module()</span></code></a> が提供されています。</p>
 <div class="section" id="future-statements">
 <span id="future"></span><h3>6.12.1. future 文 (future statement)<a class="headerlink" href="#future-statements" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -468,9 +468,9 @@
                         title="次の章へ">7. 複合文 (compound statement)</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/reference/simple_stmts.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -492,7 +492,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -507,23 +507,23 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 言語リファレンス</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

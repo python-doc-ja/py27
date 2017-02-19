@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installing Python Modules (Legacy version) &#8212; Python 2.7.x ドキュメント</title>
+    <title>Python モジュールのインストール (旧版) &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="prev" title="10. API リファレンス" href="../distutils/apiref.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
     <link rel="canonical" href="https://docs.python.org/2/install/index.html" />
@@ -49,7 +49,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -61,8 +61,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
  
       </ul>
@@ -74,7 +74,7 @@
           <div class="body" role="main">
             
   <div class="section" id="installing-python-modules-legacy-version">
-<span id="install-index"></span><h1>Installing Python Modules (Legacy version)<a class="headerlink" href="#installing-python-modules-legacy-version" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="install-index"></span><h1>Python モジュールのインストール (旧版)<a class="headerlink" href="#installing-python-modules-legacy-version" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -88,7 +88,8 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="../installing/index.html#installing-index"><span class="std std-ref">Python モジュールのインストール</span></a></dt>
-<dd>The up to date module installation documentations</dd>
+<dd><p class="first last">最新のモジュールインストールのドキュメンテーション</p>
+</dd>
 </dl>
 </div>
 <p>このドキュメントでは、Python モジュール配布ユーティリティ (Python Distribution Utilities, &#8220;Distutils&#8221;) について、エンドユーザの視点に立ち、サードパーティ製のモジュールや拡張モジュールの構築やインストールによって標準の Python に機能を追加する方法について述べます。</p>
@@ -100,7 +101,7 @@
 <span id="inst-intro"></span><h2>はじめに<a class="headerlink" href="#introduction" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python の広範な標準ライブラリは、プログラミングにおける多くの要求をカバーしていますが、時には何らかの新たな機能をサードパーティ製モジュールの形で追加する必要に迫られます。自分がプログラムを書くときのサポートとして必要な場合もあるし、自分が使いたいアプリケーションがたまたま Python で書かれていて、そのサポートとして必要な場合もあるでしょう。</p>
 <p>以前は、すでにインストール済みの Python に対して、サードパーティ製モジュールを追加するためのサポートはほとんどありませんでした。しかしPython 配布ユーティリティ (Python Distribution Utilities,  略して Distutils) が Python 2.0 から取り入れられ、状況は変わりました。</p>
-<p>このドキュメントが主要な対象としているのは、サードパーティモジュールをインストールする必要がある人たち: 単に何らかの Python アプリケーションを稼動させたいだけのエンドユーザやシステム管理者、そしてすでに Python プログラマであって、新たな道具を自分のツールキットに加えたいと思っている人たちです。このドキュメントを読むために、 Python について知っておく必要はありません; インストールしたモジュールを調べるために Python の対話モードにちょっとだけ手を出す必要がありますが、それだけです。自作の Python モジュールを他人が使えるようにするために配布する方法を探しているのなら、 <a class="reference internal" href="../distutils/index.html#distutils-index"><span class="std std-ref">Distributing Python Modules (Legacy version)</span></a> マニュアルを参照してください。 <a class="reference internal" href="../distutils/setupscript.html#debug-setup-script"><span class="std std-ref">setup スクリプトをデバッグする</span></a> も面白いかもしれません。</p>
+<p>このドキュメントが主要な対象としているのは、サードパーティモジュールをインストールする必要がある人たち: 単に何らかの Python アプリケーションを稼動させたいだけのエンドユーザやシステム管理者、そしてすでに Python プログラマであって、新たな道具を自分のツールキットに加えたいと思っている人たちです。このドキュメントを読むために、 Python について知っておく必要はありません; インストールしたモジュールを調べるために Python の対話モードにちょっとだけ手を出す必要がありますが、それだけです。自作の Python モジュールを他人が使えるようにするために配布する方法を探しているのなら、 <a class="reference internal" href="../distutils/index.html#distutils-index"><span class="std std-ref">Python モジュールの配布 (レガシーバージョン)</span></a> マニュアルを参照してください。 <a class="reference internal" href="../distutils/setupscript.html#debug-setup-script"><span class="std std-ref">setup スクリプトをデバッグする</span></a> も面白いかもしれません。</p>
 <div class="section" id="best-case-trivial-installation">
 <span id="inst-trivial-install"></span><h3>もっとも簡単な場合: ありふれたインストール作業<a class="headerlink" href="#best-case-trivial-installation" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>最も楽なのは、インストールしたいモジュール配布物の特殊なバージョンをインストールしたいプラットフォーム向けに誰かがすでに用意してくれていて、他のアプリケーションと同じようにインストールするだけであるような場合です。例えば Windows ユーザ向けには実行可能形式のインストーラ、RPM ベースの Linux システム (Red Hat, SuSE, Mandrake その他多数)  向けには RPM パッケージ、Debian ベースの Linux システム向けには  Debian パッケージといった具合に、モジュール開発者はビルド済み配布物を作成しているかもしれません。</p>
@@ -153,11 +154,7 @@ python setup.py install
 </div>
 <div class="section" id="how-building-works">
 <span id="inst-how-build-works"></span><h3>ビルドの仕組み<a class="headerlink" href="#how-building-works" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>As implied above, the <strong class="command">build</strong> command is responsible for putting the
-files to install into a <em>build directory</em>.  By default, this is <code class="file docutils literal"><span class="pre">build</span></code>
-under the distribution root; if you&#8217;re excessively concerned with speed, or want
-to keep the source tree pristine, you can change the build directory with the
-<code class="xref std std-option docutils literal"><span class="pre">--build-base</span></code> option. For example:</p>
+<p>上で示唆したように、 <strong class="command">build</strong> コマンドは、インストールすべきファイルを <em>ビルドディレクトリ</em> に置く働きがあります。デフォルトでは、ビルドディレクトリは配布物ルート下の  <code class="file docutils literal"><span class="pre">build</span></code> になります; システムの処理速度に強いこだわりがあったり、ソースツリーに指一本触れたくないのなら、 <code class="xref std std-option docutils literal"><span class="pre">--build-base</span></code> オプションを使ってビルドディレクトリを変更できます。例えば:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py build --build-base=/path/to/pybuild/foo-1.0
 </pre></div>
 </div>
@@ -319,15 +316,13 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py install --home=&lt;dir&gt;
 </pre></div>
 </div>
-<p>where you can supply any directory you like for the <code class="xref std std-option docutils literal"><span class="pre">--home</span></code> option.  On
-Unix, lazy typists can just type a tilde (<code class="docutils literal"><span class="pre">~</span></code>); the <strong class="command">install</strong> command
-will expand this to your home directory:</p>
+<p>のようにします。このとき、 <code class="xref std std-option docutils literal"><span class="pre">--home</span></code> オプションを使ってディレクトリを指定します。
+Unix では、面倒臭がりの人は単にチルダ (<code class="docutils literal"><span class="pre">~</span></code>) をタイプするだけでかまいません;  <strong class="command">install</strong> コマンドがチルダをホームディレクトリに展開してくれます:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py install --home=~
 </pre></div>
 </div>
 <p>このスキームでインストールされた配布物を Python が見つけられるようにするために、 <a class="reference internal" href="#inst-search-path"><span class="std std-ref">Python サーチパスの変更</span></a> をするか、 <code class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></code> (<a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> 参照) を編集して <a class="reference internal" href="../library/site.html#site.addsitedir" title="site.addsitedir"><code class="xref py py-func docutils literal"><span class="pre">site.addsitedir()</span></code></a> を呼び出すか、 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> を編集するかしないといけないかもしれません。</p>
-<p>The <code class="xref std std-option docutils literal"><span class="pre">--home</span></code> option defines the installation base directory.  Files are
-installed to the following directories under the installation base as follows:</p>
+<p><code class="xref std std-option docutils literal"><span class="pre">--home</span></code> オプションは、インストールのベースディレクトリを指定します。ファイルはインストールベース下の以下のディレクトリに保存されます:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="20%" />
@@ -375,12 +370,9 @@ installed to the following directories under the installation base as follows:</
 <div class="highlight-none"><div class="highlight"><pre><span></span>/usr/local/bin/python setup.py install --prefix=/mnt/@server/export
 </pre></div>
 </div>
-<p>In either case, the <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> option defines the installation base, and
-the <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> option defines the platform-specific installation
-base, which is used for platform-specific files.  (Currently, this just means
-non-pure module distributions, but could be expanded to C libraries, binary
-executables, etc.)  If <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> is not supplied, it defaults to
-<code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code>.  Files are installed as follows:</p>
+<p>どちらの場合も、 <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> オプションでインストール先のベースディレクトリが決まり、 <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> でプラットフォーム固有のファイルのための、プラットフォーム固有となるインストール先のベースディレクトリが決まります。
+(プラットフォーム固有のファイルとは、現状では単に非 pure モジュール配布物のことを意味しますが、 C ライブラリやバイナリ実行可能形式などに拡張されるかもしれません。)
+<code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code>  が指定されていなければ、デフォルトの <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> になります。ファイルは以下のようにインストールされます:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="23%" />
@@ -416,40 +408,18 @@ executables, etc.)  If <code class="xref std std-option docutils literal"><span 
 </tr>
 </tbody>
 </table>
-<p>There is no requirement that <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> or <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code>
-actually point to an alternate Python installation; if the directories listed
-above do not already exist, they are created at installation time.</p>
-<p>Incidentally, the real reason the prefix scheme is important is simply that a
-standard Unix installation uses the prefix scheme, but with <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code>
-and <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> supplied by Python itself as <code class="docutils literal"><span class="pre">sys.prefix</span></code> and
-<code class="docutils literal"><span class="pre">sys.exec_prefix</span></code>.  Thus, you might think you&#8217;ll never use the prefix scheme,
-but every time you run <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> without any other options,
-you&#8217;re using it.</p>
-<p>Note that installing extensions to an alternate Python installation has no
-effect on how those extensions are built: in particular, the Python header files
-(<code class="file docutils literal"><span class="pre">Python.h</span></code> and friends) installed with the Python interpreter used to run
-the setup script will be used in compiling extensions.  It is your
-responsibility to ensure that the interpreter used to run extensions installed
-in this way is compatible with the interpreter used to build them.  The best way
-to do this is to ensure that the two interpreters are the same version of Python
-(possibly different builds, or possibly copies of the same build).  (Of course,
-if your <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> and <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> don&#8217;t even point to an
-alternate Python installation, this is immaterial.)</p>
+<p><code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> や <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> が実際に他のインストール済み Python の場所を指している必要はありません; 上に挙げたディレクトリがまだ存在しなければ、インストール時に作成されます。</p>
+<p>ちなみに、prefix スキームが重要な本当の理由は、単に標準の Unix  インストールが prefix スキームを使っているからです。ただし、そのときには、 <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> や <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code>  は Python 自体が <code class="docutils literal"><span class="pre">sys.prefix</span></code> や <code class="docutils literal"><span class="pre">sys.exec_prefix</span></code> を使って決めます。というわけで、読者は prefix スキームを決して使うことはあるまいと思っているかもしれませんが、 <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>  をオプションを何もつけずに実行していれば、常に prefix スキームを使っていることになるのです。</p>
+<p>拡張モジュールを別のインストール済み Python にインストールしても、拡張モジュールのビルド方法による影響を受けることはありません: 特に、拡張モジュールをコンパイルする際には、 setup スクリプトを実行する際に使う Python インタプリタと一緒にインストールされている Python ヘッダファイル (<code class="file docutils literal"><span class="pre">Python.h</span></code>  とその仲間たち) を使います。上で述べてきたやり方でインストールされた拡張モジュールを実行するインタプリタと、インタプリタをビルドする際に用いた別のインタプリタとの互換性を保証するのはユーザの責任です。これを行うには、二つのインタプリタが同じバージョンの Python  (ビルドが違っていたり、同じビルドのコピーということもあり得ます) であるかどうかを確かめます。(もちろん、 <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> や  <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> が別のインストール済み Python の場所すら指していなければどうにもなりません。)</p>
 </div>
 <div class="section" id="alternate-installation-windows-the-prefix-scheme">
 <span id="inst-alt-install-prefix-windows"></span><h3>別の場所へのインストール (prefix を使う方法): Windows<a class="headerlink" href="#alternate-installation-windows-the-prefix-scheme" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Windows has no concept of a user&#8217;s home directory, and since the standard Python
-installation under Windows is simpler than under Unix, the <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code>
-option has traditionally been used to install additional packages in separate
-locations on Windows.</p>
+<p>Windows はユーザのホームディレクトリという概念がなく、 Windows 環境下で標準的にインストールされた Python は Unixよりも単純な構成をしているので、 Windows で追加のパッケージを別の場所に入れる場合には、伝統的に <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> が使われてきました。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py install --prefix=&quot;\Temp\Python&quot;
 </pre></div>
 </div>
 <p>とすると、モジュールを現在のドライブの <code class="file docutils literal"><span class="pre">\Temp\Python</span></code> ディレクトリにインストールします。</p>
-<p>The installation base is defined by the <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> option; the
-<code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> option is not supported under Windows, which means that
-pure Python modules and extension modules are installed into the same location.
-Files are installed as follows:</p>
+<p>インストールベースディレクトリは、 <code class="xref std std-option docutils literal"><span class="pre">--prefix</span></code> オプションだけで決まります; <code class="xref std std-option docutils literal"><span class="pre">--exec-prefix</span></code> オプションは、Windows ではサポートされていません。pure モジュールと拡張モジュールは同じ場所にインストールされます。ファイルは以下のような構成でインストールされます:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="21%" />
@@ -527,20 +497,11 @@ Files are installed as follows:</p>
 </tbody>
 </table>
 <p>これらの上書きオプションには、相対パス、絶対パス、あるいはインストールのベースディレクトリの一つに関して明示的に定義されたものを指定できます。(2つのインストールのベースディレクトリがあり、普通それらは同じです &#8212; それらは Unix &#8220;prefix scheme&#8221; を使い、 <code class="docutils literal"><span class="pre">--prefix</span></code> と <code class="docutils literal"><span class="pre">--exec-prefix</span></code> に異なる値を与えた場合にのみ違ってきます; <code class="docutils literal"><span class="pre">--install-lib</span></code> を使うと、計算されたものあるいは <code class="docutils literal"><span class="pre">--install-purelib</span></code> と <code class="docutils literal"><span class="pre">--install-platlib</span></code> で与えられるものを上書きしますので、pure モジュールと拡張モジュールでの違いのないスキームではお奨めです。)</p>
-<p>For example, say you&#8217;re installing a module distribution to your home directory
-under Unix&#8212;but you want scripts to go in <code class="file docutils literal"><span class="pre">~/scripts</span></code> rather than
-<code class="file docutils literal"><span class="pre">~/bin</span></code>. As you might expect, you can override this directory with the
-<code class="xref std std-option docutils literal"><span class="pre">--install-scripts</span></code> option; in this case, it makes most sense to supply
-a relative path, which will be interpreted relative to the installation base
-directory (your home directory, in this case):</p>
+<p>例えば、 Unix環境でモジュール配布物をホームディレクトリにインストールしたい &#8212; とはいえ、スクリプトは <code class="file docutils literal"><span class="pre">~/bin</span></code> ではなく <code class="file docutils literal"><span class="pre">~/scripts</span></code> に置きたい &#8212; とします。ご想像の通り、スクリプトを置くディレクトリは、 <code class="xref std std-option docutils literal"><span class="pre">--install-scripts</span></code> オプションで上書きできます; この場合は相対パスで指定もでき、インストールベースディレクトリ (この場合にはホームディレクトリ) からの相対パスとして解釈されます:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py install --home=~ --install-scripts=scripts
 </pre></div>
 </div>
-<p>Another Unix example: suppose your Python installation was built and installed
-with a prefix of <code class="file docutils literal"><span class="pre">/usr/local/python</span></code>, so under a standard  installation
-scripts will wind up in <code class="file docutils literal"><span class="pre">/usr/local/python/bin</span></code>.  If you want them in
-<code class="file docutils literal"><span class="pre">/usr/local/bin</span></code> instead, you would supply this absolute directory for the
-<code class="xref std std-option docutils literal"><span class="pre">--install-scripts</span></code> option:</p>
+<p>Unix 環境での例をもう一つ紹介します: インストール済みの Python が、 <code class="file docutils literal"><span class="pre">/usr/local/python</span></code> を prefix にしてビルドされ、インストールされていて、標準のインストールスクリプトは <code class="file docutils literal"><span class="pre">/usr/local/python/bin</span></code> に入るようになっているとします。 <code class="file docutils literal"><span class="pre">/usr/local/bin</span></code> に入るようにしたければ、絶対パスを <code class="xref std std-option docutils literal"><span class="pre">--install-scripts</span></code> オプションに与えて上書きすることになるでしょう:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py install --install-scripts=/usr/local/bin
 </pre></div>
 </div>
@@ -723,13 +684,11 @@ force=1
 </pre></div>
 </div>
 <p>に対応します。ただし、後者ではコマンドライン上で <strong class="command">build</strong>  コマンドを含めて、そのコマンドを実行するよう意味しているところが違います。特定のコマンドに対するオプションを設定ファイルに含めると、このような関連付けの必要はなくなります; あるコマンドが実行されると、そのコマンドに対するオプションが適用されます。 (また、設定ファイル内からオプションを取得するような他のコマンドを実行した場合、それらのコマンドもまた設定ファイル内の対応するオプションの値を使います。)</p>
-<p>You can find out the complete list of options for any command using the
-<code class="xref std std-option docutils literal"><span class="pre">--help</span></code> option, e.g.:</p>
+<p>あるコマンドに対するオプションの完全なリストは、例えば以下のように、 <code class="xref std std-option docutils literal"><span class="pre">--help</span></code> を使って調べます:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py build --help
 </pre></div>
 </div>
-<p>and you can find out the complete list of global options by using
-<code class="xref std std-option docutils literal"><span class="pre">--help</span></code> without a command:</p>
+<p>グローバルオプションの完全なリストを得るには、コマンドを指定せずに <code class="xref std std-option docutils literal"><span class="pre">--help</span></code> オプションを使います:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>python setup.py --help
 </pre></div>
 </div>
@@ -753,31 +712,24 @@ force=1
 </li>
 <li><p class="first"><em>sourcefile</em> は、少なくともファイル名から何の言語で書かれているかがわかるようになっているソースコードファイル名です。 <code class="file docutils literal"><span class="pre">.c</span></code> で終わるファイルは C で書かれているとみなされ、 <code class="file docutils literal"><span class="pre">.C</span></code> 、 <code class="file docutils literal"><span class="pre">.cc</span></code> 、および <code class="file docutils literal"><span class="pre">.c++</span></code> で終わるファイルは C++ で書かれているとみなされます。 <code class="file docutils literal"><span class="pre">.m</span></code> や <code class="file docutils literal"><span class="pre">.mm</span></code> で終わるファイルは Objective C で書かれているとみなされます。</p>
 </li>
-<li><em>cpparg</em> is an argument for the C preprocessor,  and is anything starting with
-<code class="xref std std-option docutils literal"><span class="pre">-I</span></code>, <code class="xref std std-option docutils literal"><span class="pre">-D</span></code>, <code class="xref std std-option docutils literal"><span class="pre">-U</span></code> or <code class="xref std std-option docutils literal"><span class="pre">-C</span></code>.</li>
-<li><em>library</em> is anything ending in <code class="file docutils literal"><span class="pre">.a</span></code> or beginning with <code class="xref std std-option docutils literal"><span class="pre">-l</span></code> or
-<code class="xref std std-option docutils literal"><span class="pre">-L</span></code>.</li>
+<li><p class="first"><em>cpparg</em> は C プリプロセッサへの引数で、 <code class="xref std std-option docutils literal"><span class="pre">-I</span></code> 、 <code class="xref std std-option docutils literal"><span class="pre">-D</span></code> 、 <code class="xref std std-option docutils literal"><span class="pre">-U</span></code> または <code class="xref std std-option docutils literal"><span class="pre">-C</span></code> のいずれかから始まる文字列です。</p>
+</li>
+<li><p class="first"><em>library</em> は <code class="file docutils literal"><span class="pre">.a</span></code> で終わるか、 <code class="xref std std-option docutils literal"><span class="pre">-l</span></code> または <code class="xref std std-option docutils literal"><span class="pre">-L</span></code> のいずれかから始まる文字列です。</p>
+</li>
 </ul>
 <p>特定のプラットフォームにおいて、プラットフォーム上の特殊なライブラリが必要な場合、 <code class="file docutils literal"><span class="pre">Setup</span></code> ファイルを編集して <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build</span></code> を実行すればライブラリを追加できます。例えば、以下の行</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>foo foomodule.c
 </pre></div>
 </div>
-<p>must be linked with the math library <code class="file docutils literal"><span class="pre">libm.a</span></code> on your platform, simply add
-<code class="xref std std-option docutils literal"><span class="pre">-lm</span></code> to the line:</p>
+<p>で定義されたモジュールを、自分のプラットフォーム上の数学ライブラリ <code class="file docutils literal"><span class="pre">libm.a</span></code> とリンクしなければならない場合、 <code class="file docutils literal"><span class="pre">Setup</span></code> 内の行に <code class="xref std std-option docutils literal"><span class="pre">-lm</span></code> を追加するだけです:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>foo foomodule.c -lm
 </pre></div>
 </div>
-<p>Arbitrary switches intended for the compiler or the linker can be supplied with
-the <code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code> <em>arg</em> and <code class="xref std std-option docutils literal"><span class="pre">-Xlinker</span></code> <em>arg</em> options:</p>
+<p>コンパイラやリンカ向けの任意のスイッチオプションは、 <code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code> <em>arg</em> や <code class="xref std std-option docutils literal"><span class="pre">-Xlinker</span></code> <em>arg</em> オプションで与えます:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>foo foomodule.c -Xcompiler -o32 -Xlinker -shared -lm
 </pre></div>
 </div>
-<p>The next option after <code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code> and <code class="xref std std-option docutils literal"><span class="pre">-Xlinker</span></code> will be
-appended to the proper command line, so in the above example the compiler will
-be passed the <code class="xref std std-option docutils literal"><span class="pre">-o32</span></code> option, and the linker will be passed
-<code class="xref std std-option docutils literal"><span class="pre">-shared</span></code>.  If a compiler option requires an argument, you&#8217;ll have to
-supply multiple <code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code> options; for example, to pass <code class="docutils literal"><span class="pre">-x</span> <span class="pre">c++</span></code>
-the <code class="file docutils literal"><span class="pre">Setup</span></code> file would have to contain <code class="docutils literal"><span class="pre">-Xcompiler</span> <span class="pre">-x</span> <span class="pre">-Xcompiler</span> <span class="pre">c++</span></code>.</p>
+<p><code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code> および <code class="xref std std-option docutils literal"><span class="pre">-Xlinker</span></code> の後にくるオプションは、それぞれ適切なコマンドラインに追加されます。従って、上の例では、コンパイラには <code class="xref std std-option docutils literal"><span class="pre">-o32</span></code> オプションが渡され、リンカには <code class="xref std std-option docutils literal"><span class="pre">-shared</span></code> が渡されます。コンパイラオプションに引数が必要な場合、複数の <code class="xref std std-option docutils literal"><span class="pre">-Xcompiler</span></code>  オプションを与えます; 例えば、 <code class="docutils literal"><span class="pre">-x</span> <span class="pre">c++</span></code> を渡すには、 <code class="file docutils literal"><span class="pre">Setup</span></code> ファイルには <code class="docutils literal"><span class="pre">-Xcompiler</span> <span class="pre">-x</span> <span class="pre">-Xcompiler</span> <span class="pre">c++</span></code> を渡さねばなりません。</p>
 <p>コンパイラフラグは、環境変数 <span class="target" id="index-32"></span><code class="xref std std-envvar docutils literal"><span class="pre">CFLAGS</span></code> の設定でも与えられます。 <span class="target" id="index-33"></span><code class="xref std std-envvar docutils literal"><span class="pre">CFLAGS</span></code> が設定されていれば、 <code class="file docutils literal"><span class="pre">Setup</span></code> ファイル内で指定されているコンパイラフラグに <span class="target" id="index-34"></span><code class="xref std std-envvar docutils literal"><span class="pre">CFLAGS</span></code> の内容が追加されます。</p>
 </div>
 <div class="section" id="using-non-microsoft-compilers-on-windows">
@@ -824,11 +776,7 @@ the <code class="file docutils literal"><span class="pre">Setup</span></code> fi
 <div class="section" id="older-versions-of-python-and-mingw">
 <h5>古いバージョンの Python と MinGW<a class="headerlink" href="#older-versions-of-python-and-mingw" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>以下の手順は Python 2.4.1 以前と MinGW 3.0.0 (binutils-2.13.90-20030111-1) 以前を利用しているときのものです。</p>
-<p>These compilers require some special libraries.  This task is more complex than
-for Borland&#8217;s C++, because there is no program to convert the library.  First
-you have to create a list of symbols which the Python DLL exports. (You can find
-a good program for this task at
-<a class="reference external" href="https://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/">https://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/</a>).</p>
+<p>上記のコンパイラは、いくつかの特殊なライブラリを必要とします。この作業は Borland の C++ よりもやや複雑です。というのは、ライブラリを変換するためのプログラムが存在しないからです。  まず、 Python DLL が公開している全てのシンボルからなるリストを作成しなければなりません。 (この作業むけの良いプログラムは、 <a class="reference external" href="https://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/">https://sourceforge.net/projects/mingw/files/MinGW/Extension/pexports/</a> から入手できます。)</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>pexports python25.dll &gt;python25.def
 </pre></div>
 </div>
@@ -858,8 +806,8 @@ a good program for this task at
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Check <a class="reference external" href="https://www.sourceware.org/cygwin/">https://www.sourceware.org/cygwin/</a> and <a class="reference external" href="http://www.mingw.org/">http://www.mingw.org/</a> for more
-information</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">詳しくは <a class="reference external" href="https://www.sourceware.org/cygwin/">https://www.sourceware.org/cygwin/</a> や <a class="reference external" href="http://www.mingw.org/">http://www.mingw.org/</a> を参照してください</p>
+</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
@@ -883,7 +831,7 @@ information</td></tr>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Installing Python Modules (Legacy version)</a><ul>
+<li><a class="reference internal" href="#">Python モジュールのインストール (旧版)</a><ul>
 <li><a class="reference internal" href="#introduction">はじめに</a><ul>
 <li><a class="reference internal" href="#best-case-trivial-installation">もっとも簡単な場合: ありふれたインストール作業</a></li>
 <li><a class="reference internal" href="#the-new-standard-distutils">新しい標準: Distutils</a></li>
@@ -933,9 +881,9 @@ information</td></tr>
                         title="前の章へ">10. API リファレンス</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/install/index.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -957,7 +905,7 @@ information</td></tr>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -969,22 +917,22 @@ information</td></tr>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
  
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

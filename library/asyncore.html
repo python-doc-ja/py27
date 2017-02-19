@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>17.6. asyncore — 非同期ソケットハンドラ &#8212; Python 2.7.x ドキュメント</title>
+    <title>17.6. asyncore — 非同期ソケットハンドラ &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="17. プロセス間通信とネットワーク" href="ipc.html" />
     <link rel="next" title="17.7. asynchat — 非同期ソケットコマンド/レスポンスハンドラ" href="asynchat.html" />
     <link rel="prev" title="17.5. popen2 — アクセス可能な I/O ストリームを持つサブプロセス生成" href="popen2.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -92,14 +92,7 @@
 <dl class="function">
 <dt id="asyncore.loop">
 <code class="descclassname">asyncore.</code><code class="descname">loop</code><span class="sig-paren">(</span><span class="optional">[</span><em>timeout</em><span class="optional">[</span>, <em>use_poll</em><span class="optional">[</span>, <em>map</em><span class="optional">[</span>, <em>count</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncore.loop" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Enter a polling loop that terminates after count passes or all open
-channels have been closed.  All arguments are optional.  The <em>count</em>
-parameter defaults to <code class="docutils literal"><span class="pre">None</span></code>, resulting in the loop terminating only when all
-channels have been closed.  The <em>timeout</em> argument sets the timeout
-parameter for the appropriate <a class="reference internal" href="select.html#select.select" title="select.select"><code class="xref py py-func docutils literal"><span class="pre">select()</span></code></a> or <a class="reference internal" href="select.html#select.poll" title="select.poll"><code class="xref py py-func docutils literal"><span class="pre">poll()</span></code></a>
-call, measured in seconds; the default is 30 seconds.  The <em>use_poll</em>
-parameter, if true, indicates that <a class="reference internal" href="select.html#select.poll" title="select.poll"><code class="xref py py-func docutils literal"><span class="pre">poll()</span></code></a> should be used in
-preference to <a class="reference internal" href="select.html#select.select" title="select.select"><code class="xref py py-func docutils literal"><span class="pre">select()</span></code></a> (the default is <code class="docutils literal"><span class="pre">False</span></code>).</p>
+<dd><p>ポーリングループを開始し、count 回が過ぎるか、全てのオープン済みチャネルがクローズされた場合のみ終了します。全ての引数はオプションです。引数 <em>count</em> のデフォルト値は <code class="docutils literal"><span class="pre">None</span></code> で、ループは全てのチャネルがクローズされた場合のみ終了します。引数 <em>timeout</em> は <a class="reference internal" href="select.html#select.select" title="select.select"><code class="xref py py-func docutils literal"><span class="pre">select()</span></code></a> または <a class="reference internal" href="select.html#select.poll" title="select.poll"><code class="xref py py-func docutils literal"><span class="pre">poll()</span></code></a> の引数 timeout として渡され、秒単位で指定します。デフォルト値は 30 秒です。引数 <em>use_poll</em> が真の場合、 <a class="reference internal" href="select.html#select.select" title="select.select"><code class="xref py py-func docutils literal"><span class="pre">select()</span></code></a> ではなく <a class="reference internal" href="select.html#select.poll" title="select.poll"><code class="xref py py-func docutils literal"><span class="pre">poll()</span></code></a> が使われます (デフォルト値は <code class="docutils literal"><span class="pre">False</span></code> です)。</p>
 <p>引数 <em>map</em> には、監視するチャネルをアイテムとして格納した辞書を指定します。チャネルがクローズされた時に <em>map</em> からそのチャネルが削除されます。 <em>map</em> が省略された場合、グローバルなマップが使用されます。チャネル (<a class="reference internal" href="#asyncore.dispatcher" title="asyncore.dispatcher"><code class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></code></a>, <a class="reference internal" href="asynchat.html#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">asynchat.async_chat</span></code></a> とそのサブクラス) は自由に混ぜて map に入れることができます。</p>
 </dd></dl>
 
@@ -360,9 +353,9 @@ preference to <a class="reference internal" href="select.html#select.select" tit
                         title="次の章へ">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> &#8212; 非同期ソケットコマンド/レスポンスハンドラ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/asyncore.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -384,7 +377,7 @@ preference to <a class="reference internal" href="select.html#select.select" tit
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -399,8 +392,8 @@ preference to <a class="reference internal" href="select.html#select.select" tit
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -408,15 +401,15 @@ preference to <a class="reference internal" href="select.html#select.select" tit
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

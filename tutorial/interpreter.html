@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Python インタプリタを使う &#8212; Python 2.7.x ドキュメント</title>
+    <title>2. Python インタプリタを使う &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python チュートリアル" href="index.html" />
     <link rel="next" title="3. 形式ばらない Python の紹介" href="introduction.html" />
     <link rel="prev" title="1. やる気を高めよう" href="appetite.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python チュートリアル</a> &#187;</li> 
@@ -105,12 +105,7 @@
 </div>
 <div class="section" id="interactive-mode">
 <span id="tut-interactive"></span><h3>2.1.2. 対話モード<a class="headerlink" href="#interactive-mode" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>When commands are read from a tty, the interpreter is said to be in <em>interactive
-mode</em>.  In this mode it prompts for the next command with the <em>primary prompt</em>,
-usually three greater-than signs (<code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></code>); for continuation lines it prompts
-with the <em>secondary prompt</em>, by default three dots (<code class="docutils literal"><span class="pre">...</span></code>). The interpreter
-prints a welcome message stating its version number and a copyright notice
-before printing the first prompt:</p>
+<p>インタプリタが命令を端末 (tty) やコマンドプロンプトから読み取っている場合、インタプリタは <em>対話モード (interactive mode)</em> で動作しているといいます。このモードでは、インタプリタは <em>一次プロンプト (primary prompt)</em> を表示して、ユーザにコマンドを入力するよう促します。一次プロンプトは普通、三つの「大なり記号」 (<code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></code>) です。一つの入力が次の行まで続く (行継続: continuation line を行う) 場合、インタプリタは <em>二次プロンプト (secondary prompt)</em> を表示します。二次プロンプトは、デフォルトでは三つのドット (<code class="docutils literal"><span class="pre">...</span></code>) です。インタプリタは、最初のプロンプトを出す前にバージョン番号と著作権表示から始まる起動メッセージを出力します:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="go">python</span>
 <span class="go">Python 2.7 (#1, Feb 28 2010, 00:02:06)</span>
 <span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
@@ -132,13 +127,7 @@ before printing the first prompt:</p>
 <span id="tut-interp"></span><h2>2.2. インタプリタとその環境<a class="headerlink" href="#the-interpreter-and-its-environment" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="source-code-encoding">
 <span id="tut-source-encoding"></span><h3>2.2.1. ソースコードの文字コード<a class="headerlink" href="#source-code-encoding" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>By default, Python source files are treated as encoded in UTF-8.  In that
-encoding, characters of most languages in the world can be used simultaneously
-in string literals, identifiers and comments &#8212; although the standard library
-only uses ASCII characters for identifiers, a convention that any portable code
-should follow.  To display all these characters properly, your editor must
-recognize that the file is UTF-8, and it must use a font that supports all the
-characters in the file.</p>
+<p>デフォルトでは、Python のソースコードは UTF-8 でエンコードされているものとして扱われます。UTF-8 では、世界中のほとんどの言語の文字を同時に文字列リテラルや識別子やコメント中に書くことができます。&#8212; ただし、標準ライブラリは識別子に ASCII 文字のみを利用していて、その他のポータブルなコードもその慣習に従うべきです。それらの文字を正しく表示するためには、エディターはそのファイルが UTF-8 である事を識別して、そのファイルに含まれている文字を全てサポートしたフォントを使わなければなりません。</p>
 <p>To declare an encoding other than the default one, a special comment line
 should be added as the <em>first</em> line of the file.  The syntax is as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: encoding -*-</span>
@@ -191,9 +180,9 @@ declaration should be added as the second line of the file.  For example:</p>
                         title="次の章へ">3. 形式ばらない Python の紹介</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/tutorial/interpreter.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -215,7 +204,7 @@ declaration should be added as the second line of the file.  For example:</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -230,23 +219,23 @@ declaration should be added as the second line of the file.  For example:</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python チュートリアル</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

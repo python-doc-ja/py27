@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>15.13. curses.ascii — ASCII 文字に関するユーティリティ &#8212; Python 2.7.x ドキュメント</title>
+    <title>15.13. curses.ascii — ASCII 文字に関するユーティリティ &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="15. 汎用オペレーティングシステムサービス" href="allos.html" />
     <link rel="next" title="15.14. curses.panel — curses のためのパネルスタック拡張" href="curses.panel.html" />
     <link rel="prev" title="15.11. curses — 文字セル表示を扱うための端末操作" href="curses.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -267,13 +267,13 @@
 <dl class="function">
 <dt id="curses.ascii.isblank">
 <code class="descclassname">curses.ascii.</code><code class="descname">isblank</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isblank" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Checks for an ASCII whitespace character; space or horizontal tab.</p>
+<dd><p>ASCII 余白文字、すなわち空白または水平タブかどうかを調べます。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="curses.ascii.iscntrl">
 <code class="descclassname">curses.ascii.</code><code class="descname">iscntrl</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.iscntrl" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Checks for an ASCII control character (in the range 0x00 to 0x1f or 0x7f).</p>
+<dd><p>ASCII 制御文字 (0x00 から 0x1f の範囲または 0x7f) かどうかを調べます。</p>
 </dd></dl>
 
 <dl class="function">
@@ -361,12 +361,9 @@
 <dl class="function">
 <dt id="curses.ascii.unctrl">
 <code class="descclassname">curses.ascii.</code><code class="descname">unctrl</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.unctrl" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return a string representation of the ASCII character <em>c</em>.  If <em>c</em> is printable,
-this string is the character itself.  If the character is a control character
-(0x00&#8211;0x1f) the string consists of a caret (<code class="docutils literal"><span class="pre">'^'</span></code>) followed by the
-corresponding uppercase letter. If the character is an ASCII delete (0x7f) the
-string is <code class="docutils literal"><span class="pre">'^?'</span></code>.  If the character has its meta bit (0x80) set, the meta bit
-is stripped, the preceding rules applied, and <code class="docutils literal"><span class="pre">'!'</span></code> prepended to the result.</p>
+<dd><p>ASCII 文字 <em>c</em> の文字列表現を返します。もし <em>c</em> が印字可能文字であれば、返される文字列は <em>c</em> そのものになります。もし <em>c</em> が制御文字 (0x00&#8211;0x1f) であれば、キャレット (<code class="docutils literal"><span class="pre">'^'</span></code>) と、その後ろに続く <em>c</em> に対応した大文字からなる文字列になります。
+<em>c</em> が ASCII 削除文字 (0x7f) であれば、文字列は <code class="docutils literal"><span class="pre">'^?'</span></code> になります。
+<em>c</em> のメタビット (0x80) がセットされていれば、メタビットは取り去られ、前述のルールが適用され、<code class="docutils literal"><span class="pre">'!'</span></code> が前につけられます。</p>
 </dd></dl>
 
 <dl class="data">
@@ -391,9 +388,9 @@ is stripped, the preceding rules applied, and <code class="docutils literal"><sp
                         title="次の章へ">15.14. <code class="docutils literal"><span class="pre">curses.panel</span></code> &#8212; curses のためのパネルスタック拡張</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/curses.ascii.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -415,7 +412,7 @@ is stripped, the preceding rules applied, and <code class="docutils literal"><sp
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -430,8 +427,8 @@ is stripped, the preceding rules applied, and <code class="docutils literal"><sp
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -439,15 +436,15 @@ is stripped, the preceding rules applied, and <code class="docutils literal"><sp
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

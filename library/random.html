@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.6. random — 擬似乱数を生成する &#8212; Python 2.7.x ドキュメント</title>
+    <title>9.6. random — 擬似乱数を生成する &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="9. 数値と数学モジュール" href="numeric.html" />
     <link rel="next" title="9.7. itertools — 効率的なループ実行のためのイテレータ生成関数" href="itertools.html" />
     <link rel="prev" title="9.5. fractions — 有理数" href="fractions.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -87,14 +87,7 @@
 <p>このモジュールでは様々な分布をもつ擬似乱数生成器を実装しています。</p>
 <p>整数用では、ある値域内の数の選択を一様にします。シーケンス用には、シーケンスからのランダムな要素の一様な選択、リストの要素の順列をランダムに置き換える関数、順列を入れ替えずにランダムに取り出す関数があります。</p>
 <p>実数用としては、一様分布、正規分布 (ガウス分布)、対数正規分布、負の指数分布、ガンマおよびベータ分布を計算する関数があります。角度分布の生成用には、フォンミーゼス分布が利用できます。</p>
-<p>Almost all module functions depend on the basic function <a class="reference internal" href="#random.random" title="random.random"><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a>, which
-generates a random float uniformly in the semi-open range [0.0, 1.0).  Python
-uses the Mersenne Twister as the core generator.  It produces 53-bit precision
-floats and has a period of 2**19937-1.  The underlying implementation in C is
-both fast and threadsafe.  The Mersenne Twister is one of the most extensively
-tested random number generators in existence.  However, being completely
-deterministic, it is not suitable for all purposes, and is completely unsuitable
-for cryptographic purposes.</p>
+<p>ほとんど全てのモジュール関数は、基礎となる関数 <a class="reference internal" href="#random.random" title="random.random"><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a> に依存します。この関数はランダムな浮動小数点数を半開区間 [0.0, 1.0) 内に一様に生成します。Python は中心となる乱数生成器としてメルセンヌツイスタを使います。これは 53 ビット精度の浮動小数点を生成し、周期は 2**19937-1 です、本体は C で実装されていて、高速でスレッドセーフです。メルセンヌツイスタは、現存する中で、最も広範囲にテストされた乱数生成器のひとつです。しかし、完全に決定論的であるため、この乱数生成器は全ての目的に合致しているわけではなく、暗号化の目的には全く向いていません。</p>
 <p>このモジュールで提供されている関数は、実際には <code class="xref py py-class docutils literal"><span class="pre">random.Random</span></code> クラスの隠蔽されたインスタンスのメソッドにバインドされています。内部状態を共有しない生成器を取得するため、自分で <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを生成することができます。異なる <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを各スレッド毎に生成し、 <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> メソッドを使うことで各々のスレッドにおいて生成された乱数列ができるだけ重複しないようにすれば、マルチスレッドプログラムを作成する上で特に便利になります。</p>
 <p>Class <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> can also be subclassed if you want to use a different
 basic generator of your own devising: in that case, override the <code class="xref py py-meth docutils literal"><span class="pre">random()</span></code>,
@@ -200,9 +193,7 @@ are nondeterministic when <span class="target" id="index-0"></span><a class="ref
 <dl class="function">
 <dt id="random.shuffle">
 <code class="descclassname">random.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>x</em><span class="optional">[</span>, <em>random</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random.shuffle" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Shuffle the sequence <em>x</em> in place. The optional argument <em>random</em> is a
-0-argument function returning a random float in [0.0, 1.0); by default, this is
-the function <a class="reference internal" href="#random.random" title="random.random"><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a>.</p>
+<dd><p>シーケンス <em>x</em> をインプレースにシャッフルします。オプションの引数 <em>random</em> は、引数を持たず、 [0.0, 1.0) のランダムな浮動小数点数を返すような関数です。デフォルトでは、これは関数 <a class="reference internal" href="#random.random" title="random.random"><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a> です。</p>
 <p>やや小さい <code class="docutils literal"><span class="pre">len(x)</span></code> であっても、 <em>x</em> の順列の総数はほとんどの乱数生成器の周期よりも大きくなるので注意してください; このことは長いシーケンスに対してはほとんどの順列は生成されないことを意味します。</p>
 </dd></dl>
 
@@ -369,9 +360,9 @@ pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
                         title="次の章へ">9.7. <code class="docutils literal"><span class="pre">itertools</span></code> &#8212; 効率的なループ実行のためのイテレータ生成関数</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/random.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -393,7 +384,7 @@ pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -408,8 +399,8 @@ pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -417,15 +408,15 @@ pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>12.5. tarfile — tar アーカイブファイルの読み書き &#8212; Python 2.7.x ドキュメント</title>
+    <title>12.5. tarfile — tar アーカイブファイルの読み書き &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="12. データ圧縮とアーカイブ" href="archiving.html" />
     <link rel="next" title="13. ファイルフォーマット" href="fileformats.html" />
     <link rel="prev" title="12.4. zipfile — ZIP アーカイブの処理" href="zipfile.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -206,12 +206,12 @@ possible modes:</p>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'w|gz'</span></code></td>
-<td>Open a gzip compressed <em>stream</em> for
-writing.</td>
+<td><p class="first last">gzip 圧縮の <em>stream</em> を書き込み用にオープンします。</p>
+</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'w|bz2'</span></code></td>
-<td>Open a bzip2 compressed <em>stream</em> for
-writing.</td>
+<td><p class="first last">bzip2 圧縮の <em>stream</em> を書き込み用にオープンします。</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -324,7 +324,7 @@ writing.</td>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt>Module <a class="reference internal" href="zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><code class="xref py py-mod docutils literal"><span class="pre">zipfile</span></code></a></dt>
+<dt><a class="reference internal" href="zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><code class="xref py py-mod docutils literal"><span class="pre">zipfile</span></code></a> モジュール</dt>
 <dd><p class="first last"><a class="reference internal" href="zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><code class="xref py py-mod docutils literal"><span class="pre">zipfile</span></code></a> 標準モジュールのドキュメント。</p>
 </dd>
 <dt><a class="reference internal" href="shutil.html#archiving-operations"><span class="std std-ref">アーカイブ化操作</span></a></dt>
@@ -488,13 +488,7 @@ specified as a file object <em>fileobj</em> with a file descriptor.  If
 given, <em>arcname</em> specifies an alternative name for the file in the
 archive, otherwise, the name is taken from <em>fileobj</em>’s
 <a class="reference internal" href="stdtypes.html#file.name" title="file.name"><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></a> attribute, or the <em>name</em> argument.</p>
-<p>You can modify some
-of the <a class="reference internal" href="#tarfile.TarInfo" title="tarfile.TarInfo"><code class="xref py py-class docutils literal"><span class="pre">TarInfo</span></code></a>’s attributes before you add it using <a class="reference internal" href="#tarfile.TarFile.addfile" title="tarfile.TarFile.addfile"><code class="xref py py-meth docutils literal"><span class="pre">addfile()</span></code></a>.
-If the file object is not an ordinary file object positioned at the
-beginning of the file, attributes such as <a class="reference internal" href="#tarfile.TarInfo.size" title="tarfile.TarInfo.size"><code class="xref py py-attr docutils literal"><span class="pre">size</span></code></a> may need
-modifying.  This is the case for objects such as <a class="reference internal" href="gzip.html#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a>.
-The <a class="reference internal" href="#tarfile.TarInfo.name" title="tarfile.TarInfo.name"><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></a> may also be modified, in which case <em>arcname</em>
-could be a dummy string.</p>
+<p><a class="reference internal" href="#tarfile.TarInfo" title="tarfile.TarInfo"><code class="xref py py-class docutils literal"><span class="pre">TarInfo</span></code></a> の属性の一部は、<a class="reference internal" href="#tarfile.TarFile.addfile" title="tarfile.TarFile.addfile"><code class="xref py py-meth docutils literal"><span class="pre">addfile()</span></code></a> を使用して追加する前に修正できます。ファイルオブジェクトが、ファイルの先頭にある通常のファイルオブジェクトでない場合、 <a class="reference internal" href="#tarfile.TarInfo.size" title="tarfile.TarInfo.size"><code class="xref py py-attr docutils literal"><span class="pre">size</span></code></a> などの属性は修正が必要かもしれません。これは、 <a class="reference internal" href="gzip.html#gzip.GzipFile" title="gzip.GzipFile"><code class="xref py py-class docutils literal"><span class="pre">GzipFile</span></code></a> などの属性に当てはまります。<a class="reference internal" href="#tarfile.TarInfo.name" title="tarfile.TarInfo.name"><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></a> も修正できるかもしれず、この場合、<em>arcname</em> はダミーの文字列にすることができます。</p>
 </dd></dl>
 
 <dl class="method">
@@ -808,9 +802,9 @@ could be a dummy string.</p>
                         title="次の章へ">13. ファイルフォーマット</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/tarfile.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -832,7 +826,7 @@ could be a dummy string.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -847,8 +841,8 @@ could be a dummy string.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -856,15 +850,15 @@ could be a dummy string.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. C や C++ による Python の拡張 &#8212; Python 2.7.x ドキュメント</title>
+    <title>1. C や C++ による Python の拡張 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python インタプリタの拡張と埋め込み" href="index.html" />
     <link rel="next" title="2. 新しい型を定義する" href="newtypes.html" />
     <link rel="prev" title="Python インタプリタの拡張と埋め込み" href="index.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python インタプリタの拡張と埋め込み</a> &#187;</li> 
@@ -86,14 +86,7 @@
 <p>拡張モジュールのコンパイル方法は、モジュールの用途やシステムの設定方法に依存します; 詳細は後の章で説明します。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">The C extension interface is specific to CPython, and extension modules do
-not work on other Python implementations.  In many cases, it is possible to
-avoid writing C extensions and preserve portability to other implementations.
-For example, if your use case is calling C library functions or system calls,
-you should consider using the <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> module or the <a class="reference external" href="https://cffi.readthedocs.org">cffi</a> library rather than writing custom C code.
-These modules let you write Python code to interface with C code and are more
-portable between implementations of Python than writing and compiling a C
-extension module.</p>
+<p class="last">C 拡張のインターフェイスは CPython に固有のものであり、これによる拡張モジュールはほかの Python 実装では動作しません。多くの場合、C 拡張を書くことを避けてほかの Python 実装のために移植性を確保することは可能です。たとえば、あなたがしたいことが C ライブラリの関数やシステムコールを呼び出すことである場合、 <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> あるいは <a class="reference external" href="https://cffi.readthedocs.org">cffi</a> ライブラリの利用を検討すべきです。これらのモジュールは C コードとインターフェイスし、C 拡張を書いてコンパイルするのに較べて Python 実装間のより高い移植性をもった Python コードを書かせてくれます。</p>
 </div>
 <div class="section" id="a-simple-example">
 <span id="extending-simpleexample"></span><h2>1.1. 簡単な例<a class="headerlink" href="#a-simple-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -483,7 +476,7 @@ extension module.</p>
 </div>
 <p><a class="reference internal" href="../c-api/arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> は、 <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> の認識する一連の書式化単位に似た書式化単位を認識します。ただし (関数への出力ではなく、入力に使われる) 引数はポインタではなく、ただの値でなければなりません。 Python から呼び出された C 関数が返す値として適切な、新たな Python オブジェクトを返します。</p>
 <p><a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> とは一つ違う点があります: <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> は第一引数をタプルにする必要があります (Python の引数リストは内部的には常にタプルとして表現されるからです) が、 <a class="reference internal" href="../c-api/arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> はタプルを生成するとは限りません。 <a class="reference internal" href="../c-api/arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> は書式化文字列中に書式化単位が二つかそれ以上入っている場合にのみタプルを構築します。書式化文字列が空なら、 <code class="docutils literal"><span class="pre">None</span></code> を返します。きっかり一つの書式化単位なら、その書式化単位が記述している何らかのオブジェクトになります。サイズが 0 や 1 のタプル返させたいのなら、書式化文字列を丸括弧で囲います。</p>
-<p>Examples (to the left the call, to the right the resulting Python value):</p>
+<p>以下に例を示します (左に呼び出し例を、右に構築される Python 値を示します):</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>Py_BuildValue(&quot;&quot;)                        None
 Py_BuildValue(&quot;i&quot;, 123)                  123
 Py_BuildValue(&quot;iii&quot;, 123, 456, 789)      (123, 456, 789)
@@ -807,9 +800,9 @@ module will not be available.</p>
                         title="次の章へ">2. 新しい型を定義する</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/extending/extending.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -831,7 +824,7 @@ module will not be available.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -846,23 +839,23 @@ module will not be available.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python インタプリタの拡張と埋め込み</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>19.15. xml.parsers.expat — Expat を使った高速な XML 解析 &#8212; Python 2.7.x ドキュメント</title>
+    <title>19.15. xml.parsers.expat — Expat を使った高速な XML 解析 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="19. 構造化マークアップツール" href="markup.html" />
     <link rel="next" title="20. インターネットプロトコルとサポート" href="internet.html" />
     <link rel="prev" title="19.14. xml.sax.xmlreader — XML パーサのインタフェース" href="xml.sax.reader.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -122,8 +122,7 @@
 <code class="descclassname">xml.parsers.expat.</code><code class="descname">ParserCreate</code><span class="sig-paren">(</span><span class="optional">[</span><em>encoding</em><span class="optional">[</span>, <em>namespace_separator</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.parsers.expat.ParserCreate" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>新しい <code class="xref py py-class docutils literal"><span class="pre">xmlparser</span></code> オブジェクトを作成し、返します。 <em>encoding</em> が指定されていた場合、XMLデータで使われている文字列のエンコード名でなければなりません。 Expatは、Pythonのように多くのエンコードをサポートしておらず、またエンコーディングのレパートリを拡張することはできません; サポートするエンコードは、UTF-8, UTF-16, ISO-8859-1 (Latin1), ASCII です。 <em>encoding</em> <a class="footnote-reference" href="#id3" id="id1">[1]</a> が指定されると、文書に対する明示的、非明示的なエンコード指定を上書き (override) します。</p>
 <p>Expat はオプションで XML 名前空間の処理を行うことができます。これは引数 <em>namespace_separator</em> に値を指定することで有効になります。この値は、1文字の文字列でなければなりません; 文字列が誤った長さを持つ場合には <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます (<code class="docutils literal"><span class="pre">None</span></code> は値の省略と見なされます)。名前空間の処理が可能なとき、名前空間に属する要素と属性が展開されます。要素のハンドラである <code class="xref py py-attr docutils literal"><span class="pre">StartElementHandler</span></code> と <code class="xref py py-attr docutils literal"><span class="pre">EndElementHandler</span></code> に渡された要素名は、名前空間の URI、名前空間の区切り文字、要素名のローカル部を連結したものになります。名前空間の区切り文字が 0 バイト (<code class="docutils literal"><span class="pre">chr(0)</span></code>) の場合、名前空間の URI とローカル部は区切り文字なしで連結されます。</p>
-<p>For example, if <em>namespace_separator</em> is set to a space character (<code class="docutils literal"><span class="pre">'</span> <span class="pre">'</span></code>) and
-the following document is parsed:</p>
+<p>たとえば、<em>namespace_separator</em> に空白文字(<code class="docutils literal"><span class="pre">'</span> <span class="pre">'</span></code>)がセットされ、次のような文書が解析されるとします:</p>
 <div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="nt">&lt;root</span> <span class="na">xmlns    =</span> <span class="s">&quot;http://default-namespace.org/&quot;</span>
       <span class="na">xmlns:py =</span> <span class="s">&quot;http://www.python.org/ns/&quot;</span><span class="nt">&gt;</span>
@@ -266,10 +265,7 @@ the following document is parsed:</p>
 </div>
 </dd></dl>
 
-<p>The following attributes contain values relating to the most recent error
-encountered by an <code class="xref py py-class docutils literal"><span class="pre">xmlparser</span></code> object, and will only have correct values
-once a call to <code class="xref py py-meth docutils literal"><span class="pre">Parse()</span></code> or <code class="xref py py-meth docutils literal"><span class="pre">ParseFile()</span></code> has raised an
-<a class="reference internal" href="#xml.parsers.expat.ExpatError" title="xml.parsers.expat.ExpatError"><code class="xref py py-exc docutils literal"><span class="pre">xml.parsers.expat.ExpatError</span></code></a> exception.</p>
+<p>以下の属性には、 <code class="xref py py-class docutils literal"><span class="pre">xmlparser</span></code> オブジェクトで最も最近に起きたエラーに関する値が入っており、また <code class="xref py py-meth docutils literal"><span class="pre">Parse()</span></code> または <code class="xref py py-meth docutils literal"><span class="pre">ParseFile()</span></code> メソッドが <a class="reference internal" href="#xml.parsers.expat.ExpatError" title="xml.parsers.expat.ExpatError"><code class="xref py py-exc docutils literal"><span class="pre">xml.parsers.expat.ExpatError</span></code></a> 例外を送出した際にのみ正しい値となります。</p>
 <dl class="attribute">
 <dt id="xml.parsers.expat.xmlparser.ErrorByteIndex">
 <code class="descclassname">xmlparser.</code><code class="descname">ErrorByteIndex</code><a class="headerlink" href="#xml.parsers.expat.xmlparser.ErrorByteIndex" title="この定義へのパーマリンク">¶</a></dt>
@@ -524,9 +520,7 @@ once a call to <code class="xref py py-meth docutils literal"><span class="pre">
 </div>
 <div class="section" id="content-model-descriptions">
 <span id="expat-content-models"></span><h2>19.15.4. 内容モデルの記述<a class="headerlink" href="#content-model-descriptions" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Content models are described using nested tuples.  Each tuple contains four
-values: the type, the quantifier, the name, and a tuple of children.  Children
-are simply additional content model descriptions.</p>
+<p>内容モデルは入れ子になったタプルを使って記述されています。各タプルには以下の 4 つの値が収められています: 型、限定詞 (quantifier)、名前、そして子のタプル。子のタプルは単に内容モデルを記述したものです。</p>
 <p>最初の二つのフィールドの値は <a class="reference internal" href="#module-xml.parsers.expat" title="xml.parsers.expat: An interface to the Expat non-validating XML parser."><code class="xref py py-mod docutils literal"><span class="pre">xml.parsers.expat</span></code></a> モジュールの <code class="docutils literal"><span class="pre">model</span></code> オブジェクトで定義されている定数です。これらの定数は二つのグループ: モデル型 (model type) グループと限定子 (quantifier) グループ、に取りまとめられます。</p>
 <p>以下にモデル型グループにおける定数を示します:</p>
 <dl class="data">
@@ -696,7 +690,7 @@ are simply additional content model descriptions.</p>
 <dl class="data">
 <dt>
 <code class="descclassname">xml.parsers.expat.</code><code class="descname">XML_ERROR_UNDEFINED_ENTITY</code></dt>
-<dd><p>A reference was made to an entity which was not defined.</p>
+<dd><p>定義されていないエンティティへの参照が行われました。</p>
 </dd></dl>
 
 <dl class="data">
@@ -813,10 +807,8 @@ are simply additional content model descriptions.</p>
 <table class="docutils footnote" frame="void" id="id3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td>The encoding string included in XML output should conform to the
-appropriate standards. For example, &#8220;UTF-8&#8221; is valid, but &#8220;UTF8&#8221; is
-not. See <a class="reference external" href="https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-EncodingDecl">https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-EncodingDecl</a>
-and <a class="reference external" href="https://www.iana.org/assignments/character-sets/character-sets.xhtml">https://www.iana.org/assignments/character-sets/character-sets.xhtml</a>.</td></tr>
+<tr><td class="label">[1]</td><td><p class="first last">XML 出力に含まれるエンコーディング文字列は適切な規格に従っていなければなりません。例えば、 &#8220;UTF-8&#8221; は有効ですが、 &#8220;UTF8&#8221; はそうではありません。<a class="reference external" href="https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-EncodingDecl">https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-EncodingDecl</a> と <a class="reference external" href="https://www.iana.org/assignments/character-sets/character-sets.xhtml">https://www.iana.org/assignments/character-sets/character-sets.xhtml</a> を参照してください。</p>
+</td></tr>
 </tbody>
 </table>
 </div>
@@ -848,9 +840,9 @@ and <a class="reference external" href="https://www.iana.org/assignments/charact
                         title="次の章へ">20. インターネットプロトコルとサポート</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/pyexpat.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -872,7 +864,7 @@ and <a class="reference external" href="https://www.iana.org/assignments/charact
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -887,8 +879,8 @@ and <a class="reference external" href="https://www.iana.org/assignments/charact
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -896,15 +888,15 @@ and <a class="reference external" href="https://www.iana.org/assignments/charact
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

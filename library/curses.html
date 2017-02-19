@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>15.11. curses — 文字セル表示を扱うための端末操作 &#8212; Python 2.7.x ドキュメント</title>
+    <title>15.11. curses — 文字セル表示を扱うための端末操作 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="15. 汎用オペレーティングシステムサービス" href="allos.html" />
     <link rel="next" title="15.13. curses.ascii — ASCII 文字に関するユーティリティ" href="curses.ascii.html" />
     <link rel="prev" title="15.10. getpass — 可搬性のあるパスワード入力機構" href="getpass.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -100,13 +100,13 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
-<dt>Module <a class="reference internal" href="curses.ascii.html#module-curses.ascii" title="curses.ascii: Constants and set-membership functions for ASCII characters."><code class="xref py py-mod docutils literal"><span class="pre">curses.ascii</span></code></a></dt>
+<dt><a class="reference internal" href="curses.ascii.html#module-curses.ascii" title="curses.ascii: Constants and set-membership functions for ASCII characters."><code class="xref py py-mod docutils literal"><span class="pre">curses.ascii</span></code></a> モジュール</dt>
 <dd><p class="first last">ロケール設定に関わらず ASCII 文字を扱うためのユーティリティ。</p>
 </dd>
-<dt>Module <a class="reference internal" href="curses.panel.html#module-curses.panel" title="curses.panel: A panel stack extension that adds depth to  curses windows."><code class="xref py py-mod docutils literal"><span class="pre">curses.panel</span></code></a></dt>
+<dt><a class="reference internal" href="curses.panel.html#module-curses.panel" title="curses.panel: A panel stack extension that adds depth to  curses windows."><code class="xref py py-mod docutils literal"><span class="pre">curses.panel</span></code></a> モジュール</dt>
 <dd><p class="first last">curses ウィンドウにデプス機能を追加するパネルスタック拡張。</p>
 </dd>
-<dt>Module <a class="reference internal" href="#module-curses.textpad" title="curses.textpad: Emacs-like input editing in a curses window."><code class="xref py py-mod docutils literal"><span class="pre">curses.textpad</span></code></a></dt>
+<dt><a class="reference internal" href="#module-curses.textpad" title="curses.textpad: Emacs-like input editing in a curses window."><code class="xref py py-mod docutils literal"><span class="pre">curses.textpad</span></code></a> モジュール</dt>
 <dd><p class="first last"><strong class="program">Emacs</strong> ライクなキーバインディングをサポートする編集可能な curses 用テキストウィジェット。</p>
 </dd>
 <dt><a class="reference internal" href="../howto/curses.html#curses-howto"><span class="std std-ref">Python で Curses プログラミング</span></a></dt>
@@ -317,12 +317,8 @@
 <dl class="function">
 <dt id="curses.keyname">
 <code class="descclassname">curses.</code><code class="descname">keyname</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.keyname" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return the name of the key numbered <em>k</em>.  The name of a key generating printable
-ASCII character is the key&#8217;s character.  The name of a control-key combination
-is a two-character string consisting of a caret followed by the corresponding
-printable ASCII character.  The name of an alt-key combination (128&#8211;255) is a
-string consisting of the prefix &#8216;M-&#8216; followed by the name of the corresponding
-ASCII character.</p>
+<dd><p><em>k</em> に番号付けされているキーの名前を返します。印字可能な ASCII 文字を生成するキーの名前はそのキーの文字自体になります。コントロールキーと組み合わせたキーの名前は、キャレットの後に対応する ASCII 文字が続く 2 文字の文字列になります。
+Alt キーと組み合わせたキー (128&#8211;255) の名前は、先頭に &#8216;M-&#8216; が付き、その後に対応する ASCII 文字が続く文字列になります。</p>
 </dd></dl>
 
 <dl class="function">
@@ -2045,9 +2041,9 @@ ASCII character.</p>
                         title="次の章へ">15.13. <code class="docutils literal"><span class="pre">curses.ascii</span></code> &#8212; ASCII 文字に関するユーティリティ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/curses.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -2069,7 +2065,7 @@ ASCII character.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -2084,8 +2080,8 @@ ASCII character.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -2093,15 +2089,15 @@ ASCII character.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

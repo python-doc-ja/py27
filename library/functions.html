@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. 組み込み関数 &#8212; Python 2.7.x ドキュメント</title>
+    <title>2. 組み込み関数 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="4. 組み込み定数" href="constants.html" />
     <link rel="prev" title="1. はじめに" href="intro.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python 標準ライブラリ</a> &#187;</li> 
@@ -387,10 +387,7 @@
 <code class="descname">dir</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dir" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>引数がない場合、現在のローカルスコープにある名前のリストを返します。引数がある場合、そのオブジェクトの有効な属性のリストを返そうと試みます。</p>
 <p>オブジェクトが <code class="xref py py-meth docutils literal"><span class="pre">__dir__()</span></code> という名のメソッドを持つなら、そのメソッドが呼び出され、属性のリストを返さなければなりません。これにより、カスタムの <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-func docutils literal"><span class="pre">__getattr__()</span></code></a> や <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-func docutils literal"><span class="pre">__getattribute__()</span></code></a> 関数を実装するオブジェクトは、<a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> が属性を報告するやり方をカスタマイズできます。</p>
-<p>If the object does not provide <code class="xref py py-meth docutils literal"><span class="pre">__dir__()</span></code>, the function tries its best to
-gather information from the object&#8217;s <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute, if defined, and
-from its type object.  The resulting list is not necessarily complete, and may
-be inaccurate when the object has a custom <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-func docutils literal"><span class="pre">__getattr__()</span></code></a>.</p>
+<p>オブジェクトが <code class="xref py py-meth docutils literal"><span class="pre">__dir__()</span></code> を提供していない場合、定義されていればオブジェクトの <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性から、そして型オブジェクトから、情報を収集しようと試みます。結果のリストは完全であるとは限らず、また、カスタムの <a class="reference internal" href="../reference/datamodel.html#object.__getattr__" title="object.__getattr__"><code class="xref py py-func docutils literal"><span class="pre">__getattr__()</span></code></a> を持つ場合、不正確になるかもしれません。</p>
 <p>デフォルトの <a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a> メカニズムは、完全というより最重要な情報を作成しようとするため、異なる型のオブジェクトでは異なって振る舞います:</p>
 <ul class="simple">
 <li><p class="first">オブジェクトがモジュールオブジェクトの場合、リストにはモジュールの属性の名前が含まれます。</p>
@@ -1102,8 +1099,7 @@ iterable の最小の要素が返されます。
 </div>
 <p>なお、<a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> は <code class="docutils literal"><span class="pre">super().__getitem__(name)</span></code> のような明示的なドット表記属性探索の束縛処理の一部として使うように実装されています。これは、 <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal"><span class="pre">__getattribute__()</span></code></a> メソッドを予測可能な順序でクラスを検索するように実装し、協調的な多重継承をサポートすることで実現されています。従って、 <a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> は <code class="docutils literal"><span class="pre">super()[name]</span></code> のような文や演算子を使った暗黙の探索向けには定義されていません。</p>
 <p>また、 <a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> の使用がメソッド内部に限定されないことにも注目して 下さい。引数を2つ渡す形式の呼び出しは、必要な要素を正確に指定するので、 適当な参照を作ることができます。</p>
-<p>For practical suggestions on how to design cooperative classes using
-<a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a>, see <a class="reference external" href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/">guide to using super()</a>.</p>
+<p><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> を用いて協調的なクラスを設計する方法の実践的な提案は、 <a class="reference external" href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/">guide to using super()</a> を参照してください。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
@@ -1170,8 +1166,7 @@ following two statements create identical <a class="reference internal" href="#t
 <dl class="function">
 <dt id="vars">
 <code class="descname">vars</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#vars" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return the <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute for a module, class, instance,
-or any other object with a <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attribute.</p>
+<dd><p>モジュール、クラス、インスタンス、あるいはそれ以外の <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を持つオブジェクトの、 <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を返します。</p>
 <p>Objects such as modules and instances have an updateable <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>
 attribute; however, other objects may have write restrictions on their
 <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attributes (for example, new-style classes use a
@@ -1329,9 +1324,9 @@ dictproxy to prevent direct dictionary updates).</p>
                         title="次の章へ">4. 組み込み定数</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/functions.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -1353,7 +1348,7 @@ dictproxy to prevent direct dictionary updates).</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -1368,23 +1363,23 @@ dictproxy to prevent direct dictionary updates).</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

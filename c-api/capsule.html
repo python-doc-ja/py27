@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>カプセル &#8212; Python 2.7.x ドキュメント</title>
+    <title>カプセル &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
     <link rel="next" title="Cオブジェクト (CObject)" href="cobject.html" />
     <link rel="prev" title="弱参照オブジェクト" href="weakref.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -155,36 +155,35 @@ void* <code class="descname">PyCapsule_Import</code><span class="sig-paren">(</s
 int <code class="descname">PyCapsule_IsValid</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, const char<em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_IsValid" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> が有効なカプセルであるかどうかをチェックします。有効な <em>capsule</em> は、非 <em>NULL</em> で、 <a class="reference internal" href="#c.PyCapsule_CheckExact" title="PyCapsule_CheckExact"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_CheckExact()</span></code></a> をパスし、非 <em>NULL</em> なポインタを格納していて、内部の name が引数 <em>name</em> とマッチします。 (name の比較方法については <a class="reference internal" href="#c.PyCapsule_GetPointer" title="PyCapsule_GetPointer"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_GetPointer()</span></code></a> を参照)</p>
 <p>言い換えると、 <a class="reference internal" href="#c.PyCapsule_IsValid" title="PyCapsule_IsValid"><code class="xref c c-func docutils literal"><span class="pre">PyCapsule_IsValid()</span></code></a> が真を返す場合、全てのアクセッサ (<code class="xref c c-func docutils literal"><span class="pre">PyCapsule_Get()</span></code> で始まる全ての関数) が成功することが保証されます。</p>
-<p>Return a nonzero value if the object is valid and matches the name passed in.
-Return <code class="docutils literal"><span class="pre">0</span></code> otherwise.  This function will not fail.</p>
+<p>オブジェクトが有効で name がマッチした場合に非 <code class="docutils literal"><span class="pre">0</span></code> を、それ以外の場合に <code class="docutils literal"><span class="pre">0</span></code> を返します。この関数は絶対に失敗しません。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetContext">
 int <code class="descname">PyCapsule_SetContext</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, void<em>&nbsp;*context</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetContext" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のコンテキストポインタを <em>context</em> に設定します。</p>
-<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
+<p>成功したら <code class="docutils literal"><span class="pre">0</span></code> を、失敗したら例外を設定して非 <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetDestructor">
 int <code class="descname">PyCapsule_SetDestructor</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, <a class="reference internal" href="#c.PyCapsule_Destructor" title="PyCapsule_Destructor">PyCapsule_Destructor</a><em>&nbsp;destructor</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetDestructor" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のデストラクタを <em>destructor</em> に設定します。</p>
-<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
+<p>成功したら <code class="docutils literal"><span class="pre">0</span></code> を、失敗したら例外を設定して非 <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetName">
 int <code class="descname">PyCapsule_SetName</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, const char<em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetName" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部の name を <em>name</em> に設定します。<em>name</em> が非 <em>NULL</em> のとき、それは <em>capsule</em> よりも長い寿命を持つ必要があります。もしすでに <em>capsule</em> に非 <em>NULL</em> の <em>name</em> が保存されていた場合、それに対する解放は行われません。</p>
-<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
+<p>成功したら <code class="docutils literal"><span class="pre">0</span></code> を、失敗したら例外を設定して非 <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="c.PyCapsule_SetPointer">
 int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*capsule</em>, void<em>&nbsp;*pointer</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCapsule_SetPointer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>capsule</em> 内部のポインタを <em>pointer</em> に設定します。<em>pointer</em> は <em>NULL</em> であってはなりません。</p>
-<p>Return <code class="docutils literal"><span class="pre">0</span></code> on success.  Return nonzero and set an exception on failure.</p>
+<p>成功したら <code class="docutils literal"><span class="pre">0</span></code> を、失敗したら例外を設定して非 <code class="docutils literal"><span class="pre">0</span></code> を返します。</p>
 </dd></dl>
 
 </div>
@@ -203,9 +202,9 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
                         title="次の章へ">Cオブジェクト (CObject)</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/capsule.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -227,7 +226,7 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -242,8 +241,8 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -251,15 +250,15 @@ int <code class="descname">PyCapsule_SetPointer</code><span class="sig-paren">(<
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

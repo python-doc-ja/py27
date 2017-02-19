@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. setup スクリプトを書く &#8212; Python 2.7.x ドキュメント</title>
+    <title>2. setup スクリプトを書く &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,14 +26,14 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
-    <link rel="up" title="Distributing Python Modules (Legacy version)" href="index.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
+    <link rel="up" title="Python モジュールの配布 (レガシーバージョン)" href="index.html" />
     <link rel="next" title="3. setup 設定ファイル (setup configuration file) を書く" href="configfile.html" />
     <link rel="prev" title="1. Distutilsの紹介" href="introduction.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,11 +66,11 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Distributing Python Modules (Legacy version)</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python モジュールの配布 (レガシーバージョン)</a> &#187;</li> 
       </ul>
     </div>    
 
@@ -165,12 +165,7 @@
 </div>
 <div class="section" id="extension-source-files">
 <h3>2.3.2. 拡張モジュールのソースファイル<a class="headerlink" href="#extension-source-files" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>The second argument to the <a class="reference internal" href="apiref.html#distutils.core.Extension" title="distutils.core.Extension"><code class="xref py py-class docutils literal"><span class="pre">Extension</span></code></a> constructor is
-a list of source
-files.  Since the Distutils currently only support C, C++, and Objective-C
-extensions, these are normally C/C++/Objective-C source files.  (Be sure to use
-appropriate extensions to distinguish C++ source files: <code class="file docutils literal"><span class="pre">.cc</span></code> and
-<code class="file docutils literal"><span class="pre">.cpp</span></code> seem to be recognized by both Unix and Windows compilers.)</p>
+<p><a class="reference internal" href="apiref.html#distutils.core.Extension" title="distutils.core.Extension"><code class="xref py py-class docutils literal"><span class="pre">Extension</span></code></a> コンストラクタの第 2 引数は、ソースファイルのリストです。 Distutils は現在 C 、 C++ 、 Objective-C 拡張モジュールしかサポートしていないため、それらは通常は C/C++/Objective-C ソースファイルです。 (C++ ソースファイルと判別できるように適切な拡張子を使用するようにしてください: <code class="file docutils literal"><span class="pre">.cc</span></code> と <code class="file docutils literal"><span class="pre">.cpp</span></code> が Unix と Windows のコンパイラの両方が認識できるようです。)</p>
 <p>ただし、 SWIG インタフェース (<code class="file docutils literal"><span class="pre">.i</span></code>) ファイルはリストに含められます; <strong class="command">build_ext</strong> コマンドは、 SWIG で書かれた拡張パッケージをどう扱えばよいか心得ています: <strong class="command">build_ext</strong> は、インタフェースファイルを SWIG にかけ、得られた C/C++ ファイルをコンパイルして拡張モジュールを生成します。</p>
 <p>この警告にかかわらず、現在次のようにしてSWIGに対してオプションを渡すことができます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
@@ -330,13 +325,7 @@ appropriate extensions to distinguish C++ source files: <code class="file docuti
 <div class="section" id="installing-scripts">
 <span id="distutils-installing-scripts"></span><h2>2.5. スクリプトをインストールする<a class="headerlink" href="#installing-scripts" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ここまでは、スクリプトから import され、それ自体では実行されないような pure Python モジュールおよび非 pure Python モジュールについて扱ってきました。</p>
-<p>Scripts are files containing Python source code, intended to be started from the
-command line.  Scripts don&#8217;t require Distutils to do anything very complicated.
-The only clever feature is that if the first line of the script starts with
-<code class="docutils literal"><span class="pre">#!</span></code> and contains the word &#8220;python&#8221;, the Distutils will adjust the first line
-to refer to the current interpreter location. By default, it is replaced with
-the current interpreter location.  The <code class="xref std std-option docutils literal"><span class="pre">--executable</span></code> (or <code class="xref std std-option docutils literal"><span class="pre">-e</span></code>)
-option will allow the interpreter path to be explicitly overridden.</p>
+<p>スクリプトとは、Python ソースコードを含むファイルで、コマンドラインから実行できるよう作られているものです。スクリプトは Distutils に複雑なことを一切させません。唯一の気の利いた機能は、スクリプトの最初の行が <code class="docutils literal"><span class="pre">#!</span></code> で始まっていて、 &#8220;python&#8221; という単語が入っていた場合、Distutils は最初の行を現在使っているインタプリタを参照するよう置き換えます。デフォルトでは現在使っているインタプリタと置換しますが、オプション <code class="xref std std-option docutils literal"><span class="pre">--executable</span></code> (または <code class="xref std std-option docutils literal"><span class="pre">-e</span></code>) を指定することで、明示的にインタプリタのパスを指定して上書きすることができます。</p>
 <p><code class="docutils literal"><span class="pre">scripts</span></code> オプションには、単に上で述べた方法で取り扱うべきファイルのリストを指定するだけです。PyXML の setup スクリプトを例に示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
       <span class="n">scripts</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;scripts/xmlproc_parse&#39;</span><span class="p">,</span> <span class="s1">&#39;scripts/xmlproc_val&#39;</span><span class="p">]</span>
@@ -623,9 +612,9 @@ option will allow the interpreter path to be explicitly overridden.</p>
                         title="次の章へ">3. setup 設定ファイル (setup configuration file) を書く</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/distutils/setupscript.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -647,7 +636,7 @@ option will allow the interpreter path to be explicitly overridden.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -662,23 +651,23 @@ option will allow the interpreter path to be explicitly overridden.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
-          <li class="nav-item nav-item-1"><a href="index.html" >Distributing Python Modules (Legacy version)</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Python モジュールの配布 (レガシーバージョン)</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

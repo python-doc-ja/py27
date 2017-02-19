@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>型オブジェクト &#8212; Python 2.7.x ドキュメント</title>
+    <title>型オブジェクト &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="オブジェクト実装サポート (object implementation support)" href="objimpl.html" />
     <link rel="next" title="循環参照ガベージコレクションをサポートする" href="gcsupport.html" />
     <link rel="prev" title="共通のオブジェクト構造体 (common object structure)" href="structures.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -210,15 +210,8 @@ Py_ssize_t <code class="descname">PyVarObject.ob_size</code><a class="headerlink
 char* <code class="descname">PyTypeObject.tp_name</code><a class="headerlink" href="#c.PyTypeObject.tp_name" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>型の名前が入っている NUL 終端された文字列へのポインタです。モジュールのグローバル変数としてアクセスできる型の場合、この文字列は完全なモジュール名、ドット、そして型の名前と続く文字列になります; 組み込み型の場合、ただの型の名前です。モジュールがあるパッケージのサブモジュールの場合、完全なパッケージ名が完全なモジュール名の一部になっています。例えば、パッケージ <code class="xref py py-mod docutils literal"><span class="pre">P</span></code> 内のサブモジュール <code class="xref py py-mod docutils literal"><span class="pre">Q</span></code> に入っているモジュール <code class="xref py py-mod docutils literal"><span class="pre">M</span></code> 内で定義されている <code class="xref py py-class docutils literal"><span class="pre">T</span></code> は、 <a class="reference internal" href="#c.PyTypeObject.tp_name" title="PyTypeObject.tp_name"><code class="xref c c-member docutils literal"><span class="pre">tp_name</span></code></a> を <code class="docutils literal"><span class="pre">&quot;P.Q.M.T&quot;</span></code> に初期化します。</p>
 <p>動的にメモリ確保される型オブジェクトの場合、このフィールドは単に型の名前になり、モジュール名は型の辞書内でキー <code class="docutils literal"><span class="pre">'__module__'</span></code> に対する値として明示的に保存されます。</p>
-<p>For statically allocated type objects, the tp_name field should contain a dot.
-Everything before the last dot is made accessible as the <code class="xref py py-attr docutils literal"><span class="pre">__module__</span></code>
-attribute, and everything after the last dot is made accessible as the
-<a class="reference internal" href="../library/stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> attribute.</p>
-<p>If no dot is present, the entire <a class="reference internal" href="#c.PyTypeObject.tp_name" title="PyTypeObject.tp_name"><code class="xref c c-member docutils literal"><span class="pre">tp_name</span></code></a> field is made accessible as the
-<a class="reference internal" href="../library/stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> attribute, and the <code class="xref py py-attr docutils literal"><span class="pre">__module__</span></code> attribute is undefined
-(unless explicitly set in the dictionary, as explained above).  This means your
-type will be impossible to pickle.  Additionally, it will not be listed in
-module documentations created with pydoc.</p>
+<p>静的にメモリ確保される型オブジェクトの場合、 <code class="xref py py-attr docutils literal"><span class="pre">tp_name</span></code> フィールドにはドットが含まれているはずです。最後のドットよりも前にある部分文字列全体は <code class="xref py py-attr docutils literal"><span class="pre">__module__</span></code> 属性として、またドットよりも後ろにある部分は <a class="reference internal" href="../library/stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> 属性としてアクセスできます。</p>
+<p>ドットが入っていない場合、 <a class="reference internal" href="#c.PyTypeObject.tp_name" title="PyTypeObject.tp_name"><code class="xref c c-member docutils literal"><span class="pre">tp_name</span></code></a> フィールドの内容全てが <a class="reference internal" href="../library/stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> 属性になり、 <code class="xref py py-attr docutils literal"><span class="pre">__module__</span></code> 属性は (前述のように型の辞書内で明示的にセットしないかぎり) 未定義になります。このため、その型は pickle 化できないことになります。さらに、 pydoc が作成するモジュールドキュメントのリストにも載らなくなります。</p>
 <p>サブタイプはこのフィールドを継承しません。</p>
 </dd></dl>
 
@@ -257,9 +250,7 @@ printfunc <code class="descname">PyTypeObject.tp_print</code><a class="headerlin
 <dt id="c.PyTypeObject.tp_getattr">
 getattrfunc <code class="descname">PyTypeObject.tp_getattr</code><a class="headerlink" href="#c.PyTypeObject.tp_getattr" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>オプションのフィールドです。ポインタで、 get-attribute-string を行う関数を指します。</p>
-<p>This field is deprecated.  When it is defined, it should point to a function
-that acts the same as the <a class="reference internal" href="#c.PyTypeObject.tp_getattro" title="PyTypeObject.tp_getattro"><code class="xref c c-member docutils literal"><span class="pre">tp_getattro</span></code></a> function, but taking a C string
-instead of a Python string object to give the attribute name.  The signature is</p>
+<p>このフィールドは非推奨です。このフィールドを定義するときは、 <a class="reference internal" href="#c.PyTypeObject.tp_getattro" title="PyTypeObject.tp_getattro"><code class="xref c c-member docutils literal"><span class="pre">tp_getattro</span></code></a> 関数と同じように動作し、属性名は Python 文字列 オブジェクトではなく C 文字列で指定するような関数を指すようにしなければなりません。シグネチャは次の通りです:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">PyObject</span> <span class="o">*</span> <span class="nf">tp_getattr</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">o</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">attr_name</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -269,17 +260,12 @@ instead of a Python string object to give the attribute name.  The signature is<
 <dl class="member">
 <dt id="c.PyTypeObject.tp_setattr">
 setattrfunc <code class="descname">PyTypeObject.tp_setattr</code><a class="headerlink" href="#c.PyTypeObject.tp_setattr" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>An optional pointer to the function for setting and deleting attributes.</p>
-<p>This field is deprecated.  When it is defined, it should point to a function
-that acts the same as the <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> function, but taking a C string
-instead of a Python string object to give the attribute name.  The signature is</p>
+<dd><p>オプションのポインタで、属性の設定と削除を行う関数を指します。</p>
+<p>このフィールドは非推奨です。このフィールドを定義するときは、 <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> 関数と同じように動作し、属性名は Python 文字列 オブジェクトではなく C 文字列で指定するような関数を指すようにしなければなりません。シグネチャは次の通りです:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">PyObject</span> <span class="o">*</span> <span class="nf">tp_setattr</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">o</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">attr_name</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <em>v</em> argument is set to <em>NULL</em> to delete the attribute.
-This field is inherited by subtypes together with <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a>: a subtype
-inherits both <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> and <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> from its base type when
-the subtype&#8217;s <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> and <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> are both <em>NULL</em>.</p>
+<p>引数 <em>v</em> に <em>NULL</em> を設定すると属性を削除します。このフィールドは <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> と共にサブタイプに継承されます: すなわち、サブタイプの <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> および <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> が両方とも <em>NULL</em> のとき、サブタイプは基底タイプから <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> と <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> を両方とも継承します。</p>
 </dd></dl>
 
 <dl class="member">
@@ -357,11 +343,8 @@ getattrofunc <code class="descname">PyTypeObject.tp_getattro</code><a class="hea
 <dl class="member">
 <dt id="c.PyTypeObject.tp_setattro">
 setattrofunc <code class="descname">PyTypeObject.tp_setattro</code><a class="headerlink" href="#c.PyTypeObject.tp_setattro" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>An optional pointer to the function for setting and deleting attributes.</p>
-<p>The signature is the same as for <a class="reference internal" href="object.html#c.PyObject_SetAttr" title="PyObject_SetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetAttr()</span></code></a>, but setting
-<em>v</em> to <em>NULL</em> to delete an attribute must be supported.  It is usually
-convenient to set this field to <a class="reference internal" href="object.html#c.PyObject_GenericSetAttr" title="PyObject_GenericSetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_GenericSetAttr()</span></code></a>, which
-implements the normal way of setting object attributes.</p>
+<dd><p>オプションのポインタで、属性の設定と削除を行う関数を指します。</p>
+<p>シグネチャは <a class="reference internal" href="object.html#c.PyObject_SetAttr" title="PyObject_SetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetAttr()</span></code></a> と同じですが、 <em>v</em> に <em>NULL</em> を指定して属性を削除できるようにしなければなりません。通常の属性設定を実装している <a class="reference internal" href="object.html#c.PyObject_GenericSetAttr" title="PyObject_GenericSetAttr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_GenericSetAttr()</span></code></a>  をこのフィールドに設定しておくとたいていの場合は便利です。</p>
 <p>このフィールドは <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> と共にサブタイプに継承されます: すなわち、サブタイプの <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> および <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> が共に <em>NULL</em> の場合、サブタイプは基底タイプから <a class="reference internal" href="#c.PyTypeObject.tp_setattr" title="PyTypeObject.tp_setattr"><code class="xref c c-member docutils literal"><span class="pre">tp_setattr</span></code></a> と <a class="reference internal" href="#c.PyTypeObject.tp_setattro" title="PyTypeObject.tp_setattro"><code class="xref c c-member docutils literal"><span class="pre">tp_setattro</span></code></a> を両方とも継承します。</p>
 </dd></dl>
 
@@ -665,14 +648,12 @@ descrgetfunc <code class="descname">PyTypeObject.tp_descr_get</code><a class="he
 <dl class="member">
 <dt id="c.PyTypeObject.tp_descr_set">
 descrsetfunc <code class="descname">PyTypeObject.tp_descr_set</code><a class="headerlink" href="#c.PyTypeObject.tp_descr_set" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>An optional pointer to a function for setting and deleting
-a descriptor&#8217;s value.</p>
+<dd><p>オプションのポインタで、デスクリプタの値の設定と削除を行う関数を指します。</p>
 <p>関数のシグネチャは次のとおりです</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">tp_descr_set</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">value</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <em>value</em> argument is set to <em>NULL</em> to delete the value.
-This field is inherited by subtypes.</p>
+<p><em>value</em> 引数に <em>NULL</em> を設定して値を消します。このフィールドはサブタイプに継承されます。</p>
 </dd></dl>
 
 <dl class="member">
@@ -919,11 +900,8 @@ binaryfunc <code class="descname">PyMappingMethods.mp_subscript</code><a class="
 <dl class="member">
 <dt id="c.PyMappingMethods.mp_ass_subscript">
 objobjargproc <code class="descname">PyMappingMethods.mp_ass_subscript</code><a class="headerlink" href="#c.PyMappingMethods.mp_ass_subscript" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>This function is used by <a class="reference internal" href="object.html#c.PyObject_SetItem" title="PyObject_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetItem()</span></code></a> and
-<a class="reference internal" href="object.html#c.PyObject_DelItem" title="PyObject_DelItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_DelItem()</span></code></a>.  It has the same signature as
-<a class="reference internal" href="object.html#c.PyObject_SetItem" title="PyObject_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetItem()</span></code></a>, but <em>v</em> can also be set to <em>NULL</em> to delete
-an item.  If this slot is <em>NULL</em>, the object does not support item
-assignment and deletion.</p>
+<dd><p>この関数は <a class="reference internal" href="object.html#c.PyObject_SetItem" title="PyObject_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetItem()</span></code></a> および <a class="reference internal" href="object.html#c.PyObject_DelItem" title="PyObject_DelItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_DelItem()</span></code></a> から利用されます。
+<a class="reference internal" href="object.html#c.PyObject_SetItem" title="PyObject_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PyObject_SetItem()</span></code></a> と同じシグネチャを持ちますが、 <em>v</em> に <em>NULL</em> を設定して要素の削除もできます。このスロットが <em>NULL</em> の場合は、このオブジェクトはアイテムの代入と削除をサポートしません。</p>
 </dd></dl>
 
 </div>
@@ -963,9 +941,7 @@ ssizeargfunc <code class="descname">PySequenceMethods.sq_item</code><a class="he
 <dl class="member">
 <dt id="c.PySequenceMethods.sq_ass_item">
 ssizeobjargproc <code class="descname">PySequenceMethods.sq_ass_item</code><a class="headerlink" href="#c.PySequenceMethods.sq_ass_item" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>This function is used by <a class="reference internal" href="sequence.html#c.PySequence_SetItem" title="PySequence_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PySequence_SetItem()</span></code></a> and has the same
-signature.  This slot may be left to <em>NULL</em> if the object does not support
-item assignment and deletion.</p>
+<dd><p>この関数は <a class="reference internal" href="sequence.html#c.PySequence_SetItem" title="PySequence_SetItem"><code class="xref c c-func docutils literal"><span class="pre">PySequence_SetItem()</span></code></a> から利用され、同じシグネチャを持っています。オブジェクトが要素の代入と削除をサポートしていない場合は、このスロットは <em>NULL</em> かもしれません。</p>
 </dd></dl>
 
 <dl class="member">
@@ -1064,9 +1040,9 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
                         title="次の章へ">循環参照ガベージコレクションをサポートする</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/typeobj.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -1088,7 +1064,7 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -1103,8 +1079,8 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -1112,15 +1088,15 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

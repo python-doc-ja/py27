@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Unicode HOWTO &#8212; Python 2.7.x ドキュメント</title>
+    <title>Unicode HOWTO &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python HOWTO" href="index.html" />
     <link rel="next" title="urllib2 を使ってインターネット上のリソースを取得するには" href="urllib2.html" />
     <link rel="prev" title="ソート HOW TO" href="sorting.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python HOWTO</a> &#187;</li> 
@@ -110,9 +110,7 @@ Eventually various commonly used sets of values for the 128&#8211;255 range emer
 Some were true standards, defined by the International Standards Organization,
 and some were <strong>de facto</strong> conventions that were invented by one company or
 another and managed to catch on.</p>
-<p>255 characters aren&#8217;t very many.  For example, you can&#8217;t fit both the accented
-characters used in Western Europe and the Cyrillic alphabet used for Russian
-into the 128&#8211;255 range because there are more than 128 such characters.</p>
+<p>255文字というのは十分多い数ではありません。例えば、西ヨーロッパで使われるアクセント付き文字とロシアで使われるキリルアルファベットの両方は 128文字以上あるので、128&#8211;255の間におさめることはできません。</p>
 <p>異なる文字コードを使ってファイルを作成することは可能です (持っているロシア語のファイル全てを KOI8 と呼ばれるコーディングシステムで、持っているフランス語のファイル全てを別の Latin1 と呼ばれるコーディングシステムにすることで)、しかし、ロシア語の文章を引用するフランス語の文章を書きたい場合にはどうでしょう? 1989年代にこの問題を解決したいという要望が上って、Unicode 標準化の努力が始まりました。</p>
 <p>Unicode started out using 16-bit characters instead of 8-bit characters.  16
 bits means you have 2^16 = 65,536 distinct values available, making it possible
@@ -170,10 +168,7 @@ for translating a Unicode string into a sequence of bytes are called an
 <li><p class="first">コードポイントが128以上の場合、Unicode 文字列はエンコーディングで表示することができません。 (この場合 Python は <a class="reference internal" href="../library/exceptions.html#exceptions.UnicodeEncodeError" title="exceptions.UnicodeEncodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeEncodeError</span></code></a> 例外を送出します。)</p>
 </li>
 </ol>
-<p>Latin-1, also known as ISO-8859-1, is a similar encoding.  Unicode code points
-0&#8211;255 are identical to the Latin-1 values, so converting to this encoding simply
-requires converting code points to byte values; if a code point larger than 255
-is encountered, the string can&#8217;t be encoded into Latin-1.</p>
+<p>Latin-1, ISO-8859-1 として知られるエンコーディングも同様のエンコーディングです。Unicode コードポイントの 0&#8211;255 は Latin-1 の値と等価なので、このエンコーディングの変換するには、単純にコードポイントをバイト値に変換する必要があります; もしコードポイントが255より大きい場合に遭遇した場合、文字列は Latin-1 にエンコードできません。</p>
 <p>エンコーディングは Latin-1 のように単純な一対一対応を持っていません。 IBM メインフレームで使われていた IBM の EBCDIC で考えてみます。文字は一つのブロックに収められていませんでした: &#8216;a&#8217; から &#8216;i&#8217; は 129 から 137 まででしたが、 &#8216;j&#8217; から &#8216;r&#8217; までは 145 から 153 までした。 EBICIC を使いたいと思ったら、おそらく変換を実行するルックアップテーブルの類を使う必要があるでしょう、これは内部の詳細のことになりますが。</p>
 <p>UTF-8 は最もよく使われるエンコーディングの一つです. UTF は &#8220;Unicode Transformation Format&#8221; からとられていて、 8 はエンコーディングに 8-bit の数字を使うことを意味しています。 (同じく UTF-16 エンコーディングもあります、しかしこちらは UTF-8 ほど頻繁に使われていません。) UTF-8 は以下の規則を利用します:</p>
 <ol class="arabic simple">
@@ -519,9 +514,9 @@ and that the HOWTO only covers 2.x.</p>
                         title="次の章へ">urllib2 を使ってインターネット上のリソースを取得するには</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/unicode.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -543,7 +538,7 @@ and that the HOWTO only covers 2.x.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -558,23 +553,23 @@ and that the HOWTO only covers 2.x.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python HOWTO</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>What’s New in Python 2.5 &#8212; Python 2.7.x ドキュメント</title>
+    <title>What’s New in Python 2.5 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="What’s New in Python" href="index.html" />
     <link rel="next" title="What’s New in Python 2.4" href="2.4.html" />
     <link rel="prev" title="What’s New in Python 2.6" href="2.6.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">What&#8217;s New in Python</a> &#187;</li> 
@@ -89,7 +89,7 @@
 </tr>
 </tbody>
 </table>
-<p>この文書は Python 2.5 の新機能について解説します。 Python 2.5 の最終リリースは 2006 年 8 月にスケジュールされました。<span class="target" id="index-43"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0356"><strong>PEP 356</strong></a> が予定されたリリーススケジュールを記述しています。</p>
+<p>この文書は Python 2.5 の新機能について解説します。 Python 2.5 の最終リリースは 2006 年 8 月にスケジュールされました。<span class="target" id="index-53"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0356"><strong>PEP 356</strong></a> が予定されたリリーススケジュールを記述しています。</p>
 <p>Python 2.5 の変更は言語とライブラリの改善の面白い組み合わせになりました。ライブラリの強化のほうが Python ユーザコミュニティにとっては重要でしょう。多数の大変利用価値の高いパッケージが追加されました。新しいモジュールとしては、XML 処理のための ElementTree (<code class="xref py py-mod docutils literal"><span class="pre">xml.etree</span></code>)、SQLite データベースのためのモジュール(<code class="xref py py-mod docutils literal"><span class="pre">sqlite</span></code>)、そして C 関数呼び出しのためのモジュール <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> があります。</p>
 <p>言語の変更の意義は、中程度のものです。いくつかの心地よい機能が入りましたが、そのほとんどの機能は毎日使うというものでもありません。条件式(conditional expressions)がついに言語に追加されました。ちょっと変わった文法です。 <a class="reference internal" href="#pep-308"><span class="std std-ref">PEP 308: 条件式 (Conditional Expressions)</span></a> のセクションを参照してください。新しい &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; 文は後始末のコードを書くのを簡単にします(<a class="reference internal" href="#pep-343"><span class="std std-ref">PEP 343: &#8220;with&#8221; ステートメント</span></a> セクション)。ジェネレータに値を返すことが出来るようになりました(<a class="reference internal" href="#pep-342"><span class="std std-ref">PEP 342: ジェネレータの新機能</span></a> セクション)。インポートが、絶対パス、相対パスのどちらかで可視に出来るようになりました(<a class="reference internal" href="#pep-328"><span class="std std-ref">PEP 328: 絶対インポート、相対インポート</span></a> セクション)。例外ハンドリングのいくつかの境界のケースで、より良いハンドリングを行えるようになりました(<a class="reference internal" href="#pep-341"><span class="std std-ref">PEP 341: try/except/finally の一体化</span></a> セクション)。これらのどの改善も価値が高いですが、それらは言語機能を限定的に改善するものであって、いずれも Python のセマンティクスを広範に修正するものではありません。</p>
 <p>言語とライブラリの追加と同様に、ほかの改善とバグフィックスもソースツリー全体に渡っています。SVN 変更ログを検索すると、Python 2.4 から 2.5 の間で適用されたパッチは 353、フィックスされたバグは 458 ありました(ともに少なく見積もってです)。</p>
@@ -124,11 +124,11 @@
 </pre></div>
 </div>
 <p>最初の版の場合、私は読者の目はおそらくステートメントを「level = 1」「if logging」「else 0」にグループ化すると思います。そして condition は <em>level</em> への代入が行われるのかどうかを決めるのだ、と考えるであろうと。後者の版は読みやすいです、少なくとも私の意見では。代入はいつでも行われることも、選択が 2 つの値の間で起こることもはっきりしますから。</p>
-<p>括弧を含めるもう一つの理由があります: 少し奇妙なリスト内包とラムダの組合せが、不完全な条件式になることがあります。 <span class="target" id="index-44"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0308"><strong>PEP 308</strong></a> にいくつかの例があるので見てください。条件式の周りをいつでも括弧で囲むなら、このケースにぶち当たることもありません。</p>
+<p>括弧を含めるもう一つの理由があります: 少し奇妙なリスト内包とラムダの組合せが、不完全な条件式になることがあります。 <span class="target" id="index-54"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0308"><strong>PEP 308</strong></a> にいくつかの例があるので見てください。条件式の周りをいつでも括弧で囲むなら、このケースにぶち当たることもありません。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0308"><strong>PEP 308</strong></a> - Conditional Expressions</dt>
+<dt><span class="target" id="index-55"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0308"><strong>PEP 308</strong></a> - 条件式 (Conditional Expressions)</dt>
 <dd><p class="first last">PEP 著 Guido van Rossum と Raymond D. Hettinger; 実装 Thomas Wouters.</p>
 </dd>
 </dl>
@@ -189,7 +189,7 @@ function are easier to understand.  For example, you might write:</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0309"><strong>PEP 309</strong></a> - Partial Function Application</dt>
+<dt><span class="target" id="index-56"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0309"><strong>PEP 309</strong></a> - 関数の部分適用</dt>
 <dd><p class="first last">PEP の提案と著:  Peter Harris; 実装: Hye-Shik Chang と Nick Coghlan, また、適応物が Raymond Hettinger により。 (&#8212;訳注: この PEP のタイトルに違和感を憶える人は多いと思います。functools のテリトリが「関数型スタイルのサポート」にあるのに。部分引数サポートのためのパッチが最終的に関数型スタイルに行き着いた (正確には、「partial のような高階関数を置く場所として functools という場所を使いましょう、partial から始めましょう」というのが提案の趣旨)、という経緯がこのタイトルに反映しています。&#8212;)</p>
 </dd>
 </dl>
@@ -264,7 +264,7 @@ using absolute imports as much as possible, so it&#8217;s preferable to begin wr
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-5"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328"><strong>PEP 328</strong></a> - Imports: Multi-Line and Absolute/Relative</dt>
+<dt><span class="target" id="index-57"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328"><strong>PEP 328</strong></a> - マルチラインインポートと、絶対/相対インポート</dt>
 <dd><p class="first last">PEP 著 Aahz; 実装 Thomas Wouters。</p>
 </dd>
 <dt><a class="reference external" href="https://pylib.readthedocs.org/">https://pylib.readthedocs.org/</a></dt>
@@ -280,7 +280,7 @@ using absolute imports as much as possible, so it&#8217;s preferable to begin wr
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-6"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0338"><strong>PEP 338</strong></a> - Executing modules as scripts</dt>
+<dt><span class="target" id="index-58"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0338"><strong>PEP 338</strong></a> - モジュールをスクリプトとして実行する</dt>
 <dd><p class="first last">PEP 著と実装 Nick Coghlan.</p>
 </dd>
 </dl>
@@ -307,7 +307,7 @@ using absolute imports as much as possible, so it&#8217;s preferable to begin wr
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-7"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0341"><strong>PEP 341</strong></a> - Unifying try-except and try-finally</dt>
+<dt><span class="target" id="index-59"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0341"><strong>PEP 341</strong></a> - try-except と try-finally を一体化する</dt>
 <dd><p class="first last">PEP 著 Georg Brandl; 実装 Thomas Lee。</p>
 </dd>
 </dl>
@@ -330,11 +330,8 @@ using absolute imports as much as possible, so it&#8217;s preferable to begin wr
 </pre></div>
 </div>
 <p>戻り値に何かする際は、 <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> 式の周りには括弧は付けておいたほうがいいと思います、この例でのように。括弧はべつに必要はないのですが、どんな場合に必要かを憶えるよりは、いつでも付けるのが簡単でしょう。</p>
-<p>(<span class="target" id="index-45"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> がその規則を正確に説明していますが、それによると <code class="docutils literal"><span class="pre">yield</span></code> -式は、代入式で右辺のトップレベルにあるとき以外はいつも括弧を付ける必要があります。つまり <code class="docutils literal"><span class="pre">val</span> <span class="pre">=</span> <span class="pre">yield</span> <span class="pre">i</span></code> とは書けますが、 <code class="docutils literal"><span class="pre">val</span> <span class="pre">=</span> <span class="pre">(yield</span> <span class="pre">i)</span> <span class="pre">+</span> <span class="pre">12</span></code> のように演算子があるときは括弧を使わなくてはいけません。)</p>
-<p>Values are sent into a generator by calling its <code class="docutils literal"><span class="pre">send(value)</span></code> method.  The
-generator&#8217;s code is then resumed and the <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> expression returns the
-specified <em>value</em>.  If the regular <a class="reference internal" href="../library/functions.html#next" title="next"><code class="xref py py-meth docutils literal"><span class="pre">next()</span></code></a> method is called, the
-<a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> returns <a class="reference internal" href="../library/constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a>.</p>
+<p>(<span class="target" id="index-60"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> がその規則を正確に説明していますが、それによると <code class="docutils literal"><span class="pre">yield</span></code> -式は、代入式で右辺のトップレベルにあるとき以外はいつも括弧を付ける必要があります。つまり <code class="docutils literal"><span class="pre">val</span> <span class="pre">=</span> <span class="pre">yield</span> <span class="pre">i</span></code> とは書けますが、 <code class="docutils literal"><span class="pre">val</span> <span class="pre">=</span> <span class="pre">(yield</span> <span class="pre">i)</span> <span class="pre">+</span> <span class="pre">12</span></code> のように演算子があるときは括弧を使わなくてはいけません。)</p>
+<p>ジェネレータに値を送るには <code class="docutils literal"><span class="pre">send(value)</span></code> メソッドを呼びます。するとジェネレータのコードが実行を再開し、 <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a>  式がその <em>value</em> を返すのです。ふつうの <code class="docutils literal"><span class="pre">next()</span></code> メソッドを呼ぶと、 <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> は <a class="reference internal" href="../library/constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> を返します。</p>
 <p>以下は前のと同じ例ですが、内部カウンタの値の変更を許す修正をしました:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">counter</span> <span class="p">(</span><span class="n">maximum</span><span class="p">):</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -367,9 +364,7 @@ specified <em>value</em>.  If the regular <a class="reference internal" href="..
 <p><code class="docutils literal"><span class="pre">yield</span></code> が <code class="docutils literal"><span class="pre">None</span></code> を返すことはよくあるのですから、そうなっていないかどうか必ずチェックしておくべきです。ジェネレータ関数を再開するために使うメソッドが <code class="xref py py-meth docutils literal"><span class="pre">send()</span></code> しかないのだと確信してるのでない限り、式の値をそのまま使ってはいけません。</p>
 <p>ジェネレータには、 <code class="xref py py-meth docutils literal"><span class="pre">send()</span></code> のほかにも新しいメソッドが二つあります</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">throw(type,</span> <span class="pre">value=None,</span> <span class="pre">traceback=None)</span></code> is used to raise an exception
-inside the generator; the exception is raised by the <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> expression
-where the generator&#8217;s execution is paused.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">throw(type,</span> <span class="pre">value=None,</span> <span class="pre">traceback=None)</span></code> はジェネレータ内で例外を投げるために使います; その例外はジェネレータの実行が停止したところの <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> 式によって投げられます。</p>
 </li>
 <li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> はジェネレータ内で <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> 例外を投げてイテレートを終了させます。この例外を受け取ったジェネレータのコードは <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> か <a class="reference internal" href="../library/exceptions.html#exceptions.StopIteration" title="exceptions.StopIteration"><code class="xref py py-exc docutils literal"><span class="pre">StopIteration</span></code></a> を投げなくてはいけません; この例外を捕捉して何かほかのことをしようとするのは規則違反であり、 <a class="reference internal" href="../library/exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> を引き起こします; 関数が何かほかの例外を投げると、その例外は呼び出し元に伝播します。 <code class="xref py py-meth docutils literal"><span class="pre">close()</span></code> はジェネレータのガーベージコレクトによっても呼ばれます。</p>
 <p><a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> が起こったときにクリーンアップ作業をする必要があるなら、 <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> を捕捉するのではなく <code class="docutils literal"><span class="pre">try:</span> <span class="pre">...</span> <span class="pre">finaly:</span></code> するようお勧めします。</p>
@@ -382,9 +377,9 @@ where the generator&#8217;s execution is paused.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> - Coroutines via Enhanced Generators</dt>
+<dt><span class="target" id="index-61"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 0342</strong></a> - 拡張されたジェネレータを用いたコルーチン</dt>
 <dd><p class="first">PEP は Guido van Rossum と Phillip J. Eby によって書かれ、Phillip J. Eby によって実装されました。コルーチンとしてのジェネレータの用法のいくつかの手が込んだ例が含まれています。</p>
-<p class="last">この機能の初期バージョンは Raymond Hettinger による <span class="target" id="index-46"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0288"><strong>PEP 288</strong></a> と Samuele Pedroni による <span class="target" id="index-47"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0325"><strong>PEP 325</strong></a> で提案されました。</p>
+<p class="last">この機能の初期バージョンは Raymond Hettinger による <span class="target" id="index-62"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0288"><strong>PEP 288</strong></a> と Samuele Pedroni による <span class="target" id="index-63"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0325"><strong>PEP 325</strong></a> で提案されました。</p>
 </dd>
 <dt><a class="reference external" href="https://en.wikipedia.org/wiki/Coroutine">https://en.wikipedia.org/wiki/Coroutine</a></dt>
 <dd><p class="first last">コルーチンに関する WikiPedia エントリ。</p>
@@ -457,13 +452,8 @@ part-way through the block.</p>
 </li>
 <li><p class="first"><em>BLOCK</em> 内のコードが実行されます。</p>
 </li>
-<li>If <em>BLOCK</em> raises an exception, the <code class="docutils literal"><span class="pre">__exit__(type,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></code>
-is called with the exception details, the same values returned by
-<a class="reference internal" href="../library/sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a>.  The method&#8217;s return value controls whether the exception
-is re-raised: any false value re-raises the exception, and <code class="docutils literal"><span class="pre">True</span></code> will result
-in suppressing it.  You&#8217;ll only rarely want to suppress the exception, because
-if you do the author of the code containing the &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; statement will
-never realize anything went wrong.</li>
+<li><p class="first"><em>BLOCK</em> が例外を起こした場合、コンテキストマネージャの <code class="docutils literal"><span class="pre">__exit__</span></code> メソッドが 3 つの引数とともに呼び出されます。これは例外の詳細です (<code class="docutils literal"><span class="pre">type,</span> <span class="pre">value,</span> <span class="pre">traceback</span></code>, これは <a class="reference internal" href="../library/sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a> が返す値と同じで、例外が起こらなければ <code class="docutils literal"><span class="pre">None</span></code> です)。そのメソッドの戻り値は例外を再送出するかどうかを制御します: 全ての偽の値ではその例外が再送出され、 <code class="docutils literal"><span class="pre">True</span></code> では揉み消します。例外を揉み消すなど滅多なことでは欲しいと思わないでしょう。もしそうしてしまったら、 &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; ステートメントを含んだコードの作者は何か間違ったことが起こったことに決して気付かないですから。</p>
+</li>
 <li><p class="first"><em>BLOCK</em> が例外を起こさなかった場合も <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal"><span class="pre">__exit__()</span></code></a> メソッドが呼び出されます。ただし <em>type</em>, <em>value</em>, <em>traceback</em> は全て <code class="docutils literal"><span class="pre">None</span></code> です。</p>
 </li>
 </ul>
@@ -535,17 +525,13 @@ never realize anything went wrong.</li>
     <span class="o">...</span>
 </pre></div>
 </div>
-<p>The <a class="reference internal" href="../library/contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> module also has a <code class="docutils literal"><span class="pre">nested(mgr1,</span> <span class="pre">mgr2,</span> <span class="pre">...)</span></code> function
-that combines a number of context managers so you don&#8217;t need to write nested
-&#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; statements.  In this example, the single &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216;
-statement both starts a database transaction and acquires a thread lock:</p>
+<p><a class="reference internal" href="../library/contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> モジュールには <code class="docutils literal"><span class="pre">nested(mgr1,</span> <span class="pre">mgr2,</span> <span class="pre">...)</span></code> 関数もあって、これはたくさんのコンテキストマネージャを組み合わせることが出来るので、入れ子の &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; を書く必要性をなくしてくれます。この例では、単一の &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; でデータベーストランザクション開始とスレッドのロック獲得の両方をやってのけています:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">nested</span> <span class="p">(</span><span class="n">db_transaction</span><span class="p">(</span><span class="n">db</span><span class="p">),</span> <span class="n">lock</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">locked</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>
-<p>Finally, the <code class="docutils literal"><span class="pre">closing(object)</span></code> function returns <em>object</em> so that it can be
-bound to a variable, and calls <code class="docutils literal"><span class="pre">object.close</span></code> at the end of the block.</p>
+<p>最後になりますが、 <code class="docutils literal"><span class="pre">closing(object)</span></code> 関数は <em>object</em> をそのまま返して変数に束縛出来るようにし、かつブロックの終了で、与えた引数が持つ <code class="docutils literal"><span class="pre">object.close</span></code> を呼び出します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">closing</span>
 
@@ -557,7 +543,7 @@ bound to a variable, and calls <code class="docutils literal"><span class="pre">
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
-<dt><span class="target" id="index-12"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a> - The &#8220;with&#8221; statement</dt>
+<dt><span class="target" id="index-64"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a> - &#8220;with&#8221; ステートメント</dt>
 <dd><p class="first last">PEP は Guido van Rossum と Nick Coghlan によって書かれ、Mike Bland、 Guido van Rossum、Neal Norwitz により実装されました。この PEP は &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; ステートメントによって生成されるコードを見せてくれるので、このステートメントがどうやって動作するのかを知るのに役立ちます。</p>
 </dd>
 </dl>
@@ -592,7 +578,7 @@ bound to a variable, and calls <code class="docutils literal"><span class="pre">
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-13"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0352"><strong>PEP 352</strong></a> - Required Superclass for Exceptions</dt>
+<dt><span class="target" id="index-65"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0352"><strong>PEP 352</strong></a> - 例外のためのスーパークラス</dt>
 <dd><p class="first last">PEP 著: Brett Cannon と Guido van Rossum; 実装: Brett Cannon.</p>
 </dd>
 </dl>
@@ -606,11 +592,11 @@ bound to a variable, and calls <code class="docutils literal"><span class="pre">
 <p>しかしながら 64 ビットプラットフォームではさらに多くのメモリをアドレスすることが出来ます。リストのためのポインタではたった 16 GiB の領域を必要とするだけですから、Python プログラマがそのように巨大なリストを構築しようとすることは理不尽でもありません。それゆえ Python インタプリタは <code class="xref c c-type docutils literal"><span class="pre">int</span></code> に代わる何かほかの型を使う必要に迫られました。それは 64 ビットプラットフォームで 64 ビットを使うことです。その変更は 64 ビット機での非互換性をもたらすので、64 ビットユーザが比較的少数派である間は、今のところ漸近的推移で合意されました。 (5 年もしくは 10 年の間には <em>全て</em> が 64 ビット機であるかもしれませんので、この漸近的推移はより苦痛になるかもしれません。) &#8212; (&#8212;訳注: 16 GiB はどこから出てくる? 2147483647*4 と 2147483647*8 の間らしいが…。このセクション全体として、誤解か説明不足かどちらかです。 ssize_t として 64 ビットプラットフォームで 64 ビットアドレス空間を目いっぱい使える、このセクションはそれだけを言えばいいはずなのですが…。それと「漸近的推移」(transition)についてですが、これはこの変更の意図としては続く文の「まだ int のものがいる」ことを指しているのですが、文章の構造から考えると、この著者は「32 ビット機でさえ 64 ビットにするのが理想だ」を含意していたのではないかという気がします。&#8212;)</p>
 <p>この変更は C 拡張モジュールの著者に大変大きく影響します。Python 文字列とリストやタプルのようなコンテナ型は、そのサイズを表すのに <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> を使うようになっています。 <a class="reference internal" href="../c-api/list.html#c.PyList_Size" title="PyList_Size"><code class="xref c c-func docutils literal"><span class="pre">PyList_Size()</span></code></a> のような関数は <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> を返します。拡張モジュール内のコードでは、ですので、ある程度の変数の <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> への変更が必要でしょう。</p>
 <p><a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> 関数と <a class="reference internal" href="../c-api/arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> 関数は新しい変換コード <code class="docutils literal"><span class="pre">n</span></code> を <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> のために持ちました。 <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> の <code class="docutils literal"><span class="pre">s#</span></code> と <code class="docutils literal"><span class="pre">t#</span></code> はデフォルトではまだ <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を出力しますが、 <code class="xref c c-macro docutils literal"><span class="pre">PY_SSIZE_T_CLEAN</span></code> を定義することが出来ます。 <code class="file docutils literal"><span class="pre">Python.h</span></code> インクルード前に定義してください。 <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> を返すようになります。</p>
-<p><span class="target" id="index-48"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> には、拡張の著者が読んで学ぶべき 64 ビットプラットフォームサポートについてのセクションがあります。</p>
+<p><span class="target" id="index-66"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> には、拡張の著者が読んで学ぶべき 64 ビットプラットフォームサポートについてのセクションがあります。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-15"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> - Using ssize_t as the index type</dt>
+<dt><span class="target" id="index-67"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> - 添え字型に ssize_t を使う</dt>
 <dd><p class="first last">PEP 著と実装 Martin von Löwis.</p>
 </dd>
 </dl>
@@ -627,14 +613,11 @@ bound to a variable, and calls <code class="docutils literal"><span class="pre">
 </pre></div>
 </div>
 <p>戻り値は Python 整数または長整数でなければなりません。インタプリタは戻り値が正しいかどうかをチェックし、要求に合わない場合に <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
-<p>A corresponding <code class="xref py py-attr docutils literal"><span class="pre">nb_index</span></code> slot was added to the C-level
-<a class="reference internal" href="../c-api/typeobj.html#c.PyNumberMethods" title="PyNumberMethods"><code class="xref c c-type docutils literal"><span class="pre">PyNumberMethods</span></code></a> structure to let C extensions implement this protocol.
-<code class="docutils literal"><span class="pre">PyNumber_Index(obj)</span></code> can be used in extension code to call the
-<a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> function and retrieve its result.</p>
+<p>これに呼応する <code class="xref py py-attr docutils literal"><span class="pre">nb_index</span></code> スロットが C レベルの <a class="reference internal" href="../c-api/typeobj.html#c.PyNumberMethods" title="PyNumberMethods"><code class="xref c c-type docutils literal"><span class="pre">PyNumberMethods</span></code></a> 構造体に追加され、C 拡張はこれでこのプロトコルを実装出来ます。 <code class="docutils literal"><span class="pre">PyNumber_Index(obj)</span></code> は拡張コード内で <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> を呼び出してその結果を得るのに使えます。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-16"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0357"><strong>PEP 357</strong></a> - Allowing Any Object to be Used for Slicing</dt>
+<dt><span class="target" id="index-68"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0357"><strong>PEP 357</strong></a> - スライシングのために任意のオブジェクトを使えるようにする</dt>
 <dd><p class="first last">PEP 著と実装 Travis Oliphant.</p>
 </dd>
 </dl>
@@ -644,12 +627,7 @@ bound to a variable, and calls <code class="docutils literal"><span class="pre">
 <span id="other-lang"></span><h2>その他の言語の変更<a class="headerlink" href="#other-language-changes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下が、Python 2.5 言語コアに加えられた全ての変更点です。</p>
 <ul>
-<li><p class="first">The <a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> type has a new hook for letting subclasses provide a default
-value when a key isn&#8217;t contained in the dictionary. When a key isn&#8217;t found, the
-dictionary&#8217;s <code class="docutils literal"><span class="pre">__missing__(key)</span></code> method will be called.  This hook is used
-to implement the new <code class="xref py py-class docutils literal"><span class="pre">defaultdict</span></code> class in the <a class="reference internal" href="../library/collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a>
-module.  The following example defines a dictionary  that returns zero for any
-missing key:</p>
+<li><p class="first"><a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> 型に新たなフックが追加されています。サブクラスが、辞書に含まれないキーに対してデフォルトを提供出来るようにするものです。キーが見つからない場合、辞書の <code class="docutils literal"><span class="pre">__missing__(key)</span></code> メソッドが呼ばれます。このフックは <a class="reference internal" href="../library/collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュール内の新しいクラス <code class="xref py py-class docutils literal"><span class="pre">defaultdict</span></code> で使われています。続く例は存在しないキーに対してゼロを返す辞書を定義しています:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">zerodict</span> <span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__missing__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span>
@@ -660,16 +638,8 @@ missing key:</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Both 8-bit and Unicode strings have new <code class="docutils literal"><span class="pre">partition(sep)</span></code>  and
-<code class="docutils literal"><span class="pre">rpartition(sep)</span></code> methods that simplify a common use case.</p>
-<p>The <code class="docutils literal"><span class="pre">find(S)</span></code> method is often used to get an index which is then used to
-slice the string and obtain the pieces that are before and after the separator.
-<code class="docutils literal"><span class="pre">partition(sep)</span></code> condenses this pattern into a single method call that
-returns a 3-tuple containing the substring before the separator, the separator
-itself, and the substring after the separator.  If the separator isn&#8217;t found,
-the first element of the tuple is the entire string and the other two elements
-are empty.  <code class="docutils literal"><span class="pre">rpartition(sep)</span></code> also returns a 3-tuple but starts searching
-from the end of the string; the <code class="docutils literal"><span class="pre">r</span></code> stands for &#8216;reverse&#8217;.</p>
+<li><p class="first">8 ビット文字列、Unicode ともに、ありがちなユースケースを単純化する  <code class="xref py py-meth docutils literal"><span class="pre">partition(sep)()</span></code> と <code class="xref py py-meth docutils literal"><span class="pre">rpartition(sep)()</span></code>  が追加されました。</p>
+<p>文字列のスライスに使うために <code class="xref py py-meth docutils literal"><span class="pre">find(S)()</span></code> メソッドを使ってインデクスを得るのだけれども、やりたいのはそのセパレータ(S)の前後の部分文字列を得ることだ、といったことはしょっちゅう必要になります。 <code class="xref py py-meth docutils literal"><span class="pre">partition(sep)()</span></code> はこのパターンのコードを、一撃、に圧縮してくれます。これはセパレータ前の部分文字列、セパレータ自身、セパレータ後の部分文字列の 3 要素タプルを返します。セパレータが含まれない場合は、返却値の最初の要素に文字列全体が、残り2つは空文字列で返ります。 <code class="xref py py-meth docutils literal"><span class="pre">rpartition(sep)()</span></code> もほぼ同じことをしますがセパレータの検索をお尻から始めます。 <code class="docutils literal"><span class="pre">r</span></code> は逆順(&#8216;reverse&#8217;)を表します。</p>
 <p>幾つかの例です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="s1">&#39;http://www.python.org&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span>
 <span class="go">(&#39;http&#39;, &#39;://&#39;, &#39;www.python.org&#39;)</span>
@@ -706,7 +676,7 @@ from the end of the string; the <code class="docutils literal"><span class="pre"
 </li>
 <li><p class="first">クラスの <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> メソッドが返す値として、長整数と整数のどちらでも良くなりました。長整数が返されれば、その値のハッシュから取られます。以前のバージョンではこれは普通の整数であることが要求されていましたが、2.5 ではビルトイン関数 <a class="reference internal" href="../library/functions.html#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a> が変更されて常に非負数が返り、ユーザはしばしば <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> 内で <code class="docutils literal"><span class="pre">id(self)</span></code> を使うようです (これはお奨めしませんが)。 (&#8212;訳注: 不思議な論法で意味がわかりません。id が非負を返すとなぜユーザは __hash__ の実装に使おうとするのか? ユーザがそれをしてしまうのは単にデフォルト実装がそうだから、というだけではないかと思います。__cmp__, __eq__ が「身元」以外の意味を使って比較を行うならば、 __cmp__ で id を使うのはシンプルに「ダメ」でしょう。&#8211;)</p>
 </li>
-<li><p class="first">モジュールのデフォルトエンコーディングが ASCII になりました(訳注: Python 3 からはデフォルトは utf-8 (PEP 3120))。8 ビット文字を含んでいるのにエンコーディング宣言がないモジュールが構文エラーになるようになりました。Python 2.4 では構文エラーとはならず警告でした。モジュールのエンコーディングをする方法については <span class="target" id="index-49"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0263"><strong>PEP 263</strong></a> を参照してください; 例えば、ソースコードの先頭付近にこのような行を追加することで出来ます:</p>
+<li><p class="first">モジュールのデフォルトエンコーディングが ASCII になりました(訳注: Python 3 からはデフォルトは utf-8 (PEP 3120))。8 ビット文字を含んでいるのにエンコーディング宣言がないモジュールが構文エラーになるようになりました。Python 2.4 では構文エラーとはならず警告でした。モジュールのエンコーディングをする方法については <span class="target" id="index-69"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0263"><strong>PEP 263</strong></a> を参照してください; 例えば、ソースコードの先頭付近にこのような行を追加することで出来ます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: latin1 -*-</span>
 </pre></div>
 </div>
@@ -840,24 +810,14 @@ startup. (Contributed by Martin von Löwis and Georg Brandl.)</li>
 </div>
 <p>(Contributed by Guido van Rossum.)</p>
 </li>
-<li><p class="first">The <code class="xref py py-class docutils literal"><span class="pre">deque</span></code> double-ended queue type supplied by the <a class="reference internal" href="../library/collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a>
-module now has a <code class="docutils literal"><span class="pre">remove(value)</span></code> method that removes the first occurrence
-of <em>value</em> in the queue, raising <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> if the value isn&#8217;t found.
-(Contributed by Raymond Hettinger.)</p>
+<li><p class="first"><a class="reference internal" href="../library/collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールで提供されている両端キュー (double-ended queue) 型 <code class="xref py py-class docutils literal"><span class="pre">deque</span></code> に、キュー内で最初に現れる <em>value</em> を削除するメソッド <code class="xref py py-meth docutils literal"><span class="pre">remove(value)()</span></code> メソッドが追加されています。 <em>value</em> が見つからなければ <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。 (Contributed by Raymond Hettinger.)</p>
 </li>
 <li><p class="first">新規モジュール: <a class="reference internal" href="../library/contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> モジュールには &#8216;<a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a>&#8216; ステートメントで使えるヘルパ関数が含まれています。詳細は <a class="reference internal" href="#contextlibmod"><span class="std std-ref">contextlib モジュール</span></a> をみてください。</p>
 </li>
 <li><p class="first">新規モジュール: <a class="reference internal" href="../library/profile.html#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal"><span class="pre">cProfile</span></code></a> モジュールは既存の <a class="reference internal" href="../library/profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> モジュールの C 実装で、遥かに小さなオーバヘッドで実行出来ます。モジュールのインターフェイスは <a class="reference internal" href="../library/profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> と同じです: 関数をプロファイルするのには <code class="docutils literal"><span class="pre">cProfile.run('main()')</span></code> と実行し、プロファイル結果をファイルに書き出すなど出来ます。これは Hotshot プロファイラとして知られるものではないですが (これも C で書かれてますが <a class="reference internal" href="../library/profile.html#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal"><span class="pre">profile</span></code></a> モジュールのインターフェイスとは別物です)、将来バージョンの Python で保守が続けられる予定です。(Contributed by Armin Rigo.)</p>
 <p>また、プロファイラによる計測データの解析のための <a class="reference internal" href="../library/profile.html#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal"><span class="pre">pstats</span></code></a> モジュールが、 <code class="xref py py-class docutils literal"><span class="pre">Stats</span></code> コンストラクタの <em>stream</em> 引数による直接ファイル出力に対応しました。 (Contributed by Skip Montanaro.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/csv.html#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal"><span class="pre">csv</span></code></a> module, which parses files in comma-separated value format,
-received several enhancements and a number of bugfixes.  You can now set the
-maximum size in bytes of a field by calling the
-<code class="docutils literal"><span class="pre">csv.field_size_limit(new_limit)</span></code> function; omitting the <em>new_limit</em>
-argument will return the currently-set limit.  The <code class="xref py py-class docutils literal"><span class="pre">reader</span></code> class now has
-a <code class="xref py py-attr docutils literal"><span class="pre">line_num</span></code> attribute that counts the number of physical lines read from
-the source; records can span multiple physical lines, so <code class="xref py py-attr docutils literal"><span class="pre">line_num</span></code> is not
-the same as the number of records read.</p>
+<li><p class="first">カンマ区切りフォーマットで書かれたファイルの解析を行う <a class="reference internal" href="../library/csv.html#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal"><span class="pre">csv</span></code></a> モジュールに、数多くの拡張とバグフィックスがありました。 <code class="xref py py-meth docutils literal"><span class="pre">csv.field_size_limit(new_limit)()</span></code> 関数を呼び出すことにより、フィールドの最大バイト数を制限出来るようになっています; <em>new_limit</em> 引数を省略すると現在設定されている制限値を返します。 <code class="xref py py-class docutils literal"><span class="pre">reader</span></code> クラスに <code class="xref py py-attr docutils literal"><span class="pre">line_num</span></code> 属性が追加されています。これはソースから読み込んだ物理行数を表します; レコードは物理行複数行に渡る場合がありますので、 <code class="xref py py-attr docutils literal"><span class="pre">line_num</span></code> は読み込んだレコード数とは同じではありません。</p>
 <p>CSV パーサは引用符内のマルチラインをより厳密に扱うようになっています。以前は、引用符で囲まれたフィールドが改行文字(newline)で終了することなく終端すると、改行文字が返却フィールドに追加されていました。この振る舞いはフィールドに復帰文字(carriage return)を含んだファイルを読み込む際に問題だったため、改行文字を挿入することなくフィールドを返すように変更されました。このことにより、フィールド内に埋め込まれた改行文字が重要な場合、入力は改行文字が保存される方法で行分割されるはずです。(&#8212;訳注: リファレンスも含めこの説明の表現がわかりにくいです。行指向で読み込む場合改行コードのモード(NL, CR NL, CR)依存で「物理行が終了した」とみなされるわけですが、このモード依存(CR 時)の振る舞いがなくなった、ということです。&#8212;)</p>
 <p>(Contributed by Skip Montanaro and Andrew McNamara.)</p>
 </li>
@@ -907,13 +867,7 @@ by Josh Spoerri. It uses the same format characters as <a class="reference inter
 <p>現在ロケール設定に関連した数字を書式化する <code class="xref py py-func docutils literal"><span class="pre">currency()</span></code> 関数も追加されています。</p>
 <p>(Contributed by Georg Brandl.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/mailbox.html#module-mailbox" title="mailbox: Manipulate mailboxes in various formats"><code class="xref py py-mod docutils literal"><span class="pre">mailbox</span></code></a> module underwent a massive rewrite to add the capability to
-modify mailboxes in addition to reading them.  A new set of classes that include
-<code class="xref py py-class docutils literal"><span class="pre">mbox</span></code>, <code class="xref py py-class docutils literal"><span class="pre">MH</span></code>, and <code class="xref py py-class docutils literal"><span class="pre">Maildir</span></code> are used to read mailboxes, and
-have an <code class="docutils literal"><span class="pre">add(message)</span></code> method to add messages, <code class="docutils literal"><span class="pre">remove(key)</span></code> to
-remove messages, and <code class="xref py py-meth docutils literal"><span class="pre">lock()</span></code>/<code class="xref py py-meth docutils literal"><span class="pre">unlock()</span></code> to lock/unlock the mailbox.
-The following example converts a maildir-format mailbox into an mbox-format
-one:</p>
+<li><p class="first"><a class="reference internal" href="../library/mailbox.html#module-mailbox" title="mailbox: Manipulate mailboxes in various formats"><code class="xref py py-mod docutils literal"><span class="pre">mailbox</span></code></a> モジュールでは、メールボックスについてそれを読むことに加えて修正出来る能力を追加するための、大々的な書き換えが行われています。 <code class="xref py py-class docutils literal"><span class="pre">mbox</span></code>, <code class="xref py py-class docutils literal"><span class="pre">MH</span></code>, <code class="xref py py-class docutils literal"><span class="pre">Maildir</span></code> を含む新しいクラス群はメールボックス読み込みに使われますが、メッセージ追加のための <code class="docutils literal"><span class="pre">add(message)</span></code> 、削除の <code class="docutils literal"><span class="pre">remove(key)</span></code> 、ロック/アンロックのための <code class="xref py py-meth docutils literal"><span class="pre">lock()</span></code>/<code class="xref py py-meth docutils literal"><span class="pre">unlock()</span></code> も持っています。続く例は maildir 形式から mbox 形式に変換する例です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mailbox</span>
 
 <span class="c1"># &#39;factory=None&#39; uses email.Message.Message as the class representing</span>
@@ -938,14 +892,7 @@ Summer of Code.)</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールに多数の変更がありました。 <code class="xref py py-attr docutils literal"><span class="pre">stat_float_times</span></code> 値のデフォルトが真となっていて、これはつまり <a class="reference internal" href="../library/os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal"><span class="pre">os.stat()</span></code></a> が時刻の値を浮動小数点数で返すということです。(ただし必ずしも <a class="reference internal" href="../library/os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal"><span class="pre">os.stat()</span></code></a> が秒の端数が正確な値を返すという意味ではありません; 全てのシステムがそのような精度をサポートしてはいません。)</p>
 <p>定数 <a class="reference internal" href="../library/os.html#os.SEEK_SET" title="os.SEEK_SET"><code class="xref py py-attr docutils literal"><span class="pre">os.SEEK_SET</span></code></a>, <a class="reference internal" href="../library/os.html#os.SEEK_CUR" title="os.SEEK_CUR"><code class="xref py py-attr docutils literal"><span class="pre">os.SEEK_CUR</span></code></a>, <a class="reference internal" href="../library/os.html#os.SEEK_END" title="os.SEEK_END"><code class="xref py py-attr docutils literal"><span class="pre">os.SEEK_END</span></code></a> が追加されました; これらは <a class="reference internal" href="../library/os.html#os.lseek" title="os.lseek"><code class="xref py py-func docutils literal"><span class="pre">os.lseek()</span></code></a> 関数へ渡すパラメータです。ロックに用いる 2 つの定数 <a class="reference internal" href="../library/os.html#os.O_SHLOCK" title="os.O_SHLOCK"><code class="xref py py-attr docutils literal"><span class="pre">os.O_SHLOCK</span></code></a> と <a class="reference internal" href="../library/os.html#os.O_EXLOCK" title="os.O_EXLOCK"><code class="xref py py-attr docutils literal"><span class="pre">os.O_EXLOCK</span></code></a> が追加されました。</p>
-<p>Two new functions, <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> and <code class="xref py py-func docutils literal"><span class="pre">wait4()</span></code>, were added.  They&#8217;re similar
-the <code class="xref py py-func docutils literal"><span class="pre">waitpid()</span></code> function which waits for a child process to exit and returns
-a tuple of the process ID and its exit status, but <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> and
-<code class="xref py py-func docutils literal"><span class="pre">wait4()</span></code> return additional information.  <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> doesn&#8217;t take a
-process ID as input, so it waits for any child process to exit and returns a
-3-tuple of <em>process-id</em>, <em>exit-status</em>, <em>resource-usage</em> as returned from the
-<a class="reference internal" href="../library/resource.html#resource.getrusage" title="resource.getrusage"><code class="xref py py-func docutils literal"><span class="pre">resource.getrusage()</span></code></a> function. <code class="docutils literal"><span class="pre">wait4(pid)</span></code> does take a process ID.
-(Contributed by Chad J. Schroeder.)</p>
+<p>2 つの新しい関数 <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> と <code class="xref py py-func docutils literal"><span class="pre">wait4()</span></code> が追加されています。これらは <code class="xref py py-func docutils literal"><span class="pre">waitpid()</span></code> 関数に似ています。これは子プロセスが終了するのを待ってプロセス ID とその終了コードを返しますが、 <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> と <code class="xref py py-func docutils literal"><span class="pre">wait4()</span></code> は追加の情報を返します。 <code class="xref py py-func docutils literal"><span class="pre">wait3()</span></code> はプロセス ID を入力に取りませんので任意の子プロセス終了を待ち、 <a class="reference internal" href="../library/resource.html#resource.getrusage" title="resource.getrusage"><code class="xref py py-func docutils literal"><span class="pre">resource.getrusage()</span></code></a> 関数から返る <em>process-id</em>, <em>exit-status</em>, <em>resource-usage</em> の 3 要素タプルを返します。 <code class="docutils literal"><span class="pre">wait4(pid)</span></code> はプロセス ID を取ります。 (Contributed by Chad J. Schroeder.)</p>
 <p>FreeBSD では、 <a class="reference internal" href="../library/os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal"><span class="pre">os.stat()</span></code></a> 関数がナノ秒精度の時刻を返し、また、返却オブジェクトが <code class="xref py py-attr docutils literal"><span class="pre">st_gen</span></code> と <code class="xref py py-attr docutils literal"><span class="pre">st_birthtime</span></code> を持つようになっています。 <code class="xref py py-attr docutils literal"><span class="pre">st_flags</span></code> 属性も、プラットフォームがサポートされている場合には利用可能です。 (Contributed by Antti Louko and Diego Pettenò.)</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/pdb.html#module-pdb" title="pdb: The Python debugger for interactive interpreters."><code class="xref py py-mod docutils literal"><span class="pre">pdb</span></code></a> モジュールで提供される Python デバッガが、ブレイクポイントに到達して実行が停止する際に実行するコマンドのリストを記憶するようになりました。ブレイクポイント #1 を作ったら、 <code class="docutils literal"><span class="pre">commands</span> <span class="pre">1</span></code> を入力し、実行するコマンド群を入力し、 <code class="docutils literal"><span class="pre">end</span></code> でリストを終えます。コマンドリストには <code class="docutils literal"><span class="pre">continue</span></code> や <code class="docutils literal"><span class="pre">next</span></code> のような実行再開コマンドを含めることが出来ます。 (Contributed by Grégoire Dooms.)</p>
@@ -978,10 +925,7 @@ mechanism for communications between a user-space process and kernel code; an
 introductory  article about them is at <a class="reference external" href="https://www.linuxjournal.com/article/7356">https://www.linuxjournal.com/article/7356</a>.
 In Python code, netlink addresses are represented as a tuple of 2 integers,
 <code class="docutils literal"><span class="pre">(pid,</span> <span class="pre">group_mask)</span></code>.</p>
-<p>Two new methods on socket objects, <code class="docutils literal"><span class="pre">recv_into(buffer)</span></code> and
-<code class="docutils literal"><span class="pre">recvfrom_into(buffer)</span></code>, store the received data in an object  that
-supports the buffer protocol instead of returning the data as a string.  This
-means you can put the data directly into an array or a memory-mapped file.</p>
+<p>ソケットオブジェクトの 2 つの新たなメソッド、 <code class="docutils literal"><span class="pre">recv_into(buffer)</span></code>, <code class="docutils literal"><span class="pre">recvfrom_into(buffer)</span></code> は、受信データを、文字列データとして返す代わりにバッファプロトコルをサポートするオブジェクトに書き込みます。このことにより、受信データを直接 array やメモリマップドファイルに置けます。</p>
 <p>ソケットオブジェクトには <code class="xref py py-meth docutils literal"><span class="pre">getfamily()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">gettype()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">getproto()</span></code> アクセッサメソッドも追加されています。それぞれソケットについてのアドレスファミリ、タイプ、プロトコルを取得します。</p>
 </li>
 <li><p class="first">新規モジュール: <a class="reference internal" href="../library/spwd.html#module-spwd" title="spwd: The shadow password database (getspnam() and friends). (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">spwd</span></code></a> モジュールは、シャドーパスワードをサポートするシステムにおいて、シャドーパスワードデータベースへのアクセスを提供します。</p>
@@ -1009,15 +953,11 @@ NeedForSpeed sprint.)</p>
 <li><p class="first"><a class="reference internal" href="../library/tarfile.html#module-tarfile" title="tarfile: Read and write tar-format archive files."><code class="xref py py-mod docutils literal"><span class="pre">tarfile</span></code></a> モジュールの <code class="xref py py-class docutils literal"><span class="pre">TarFile</span></code> クラスに <code class="xref py py-meth docutils literal"><span class="pre">extractall()</span></code> メソッドが追加されました。アーカイブから全てのメンバをカレントディレクトリに抽出します。抽出ターゲットとして別のディレクトリも指定できますし、アーカイブメンバのサブセットのみ解凍することも出来ます。</p>
 <p>ストリームモードで開く tarfile に使われる圧縮を、モード <code class="docutils literal"><span class="pre">'r|*'</span></code> を使って自動で検出出来るようになっています。 (Contributed by Lars Gustäbel.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/threading.html#module-threading" title="threading: Higher-level threading interface."><code class="xref py py-mod docutils literal"><span class="pre">threading</span></code></a> module now lets you set the stack size used when new
-threads are created. The <code class="docutils literal"><span class="pre">stack_size([*size*])</span></code> function returns the
-currently configured stack size, and supplying the optional <em>size</em> parameter
-sets a new value.  Not all platforms support changing the stack size, but
-Windows, POSIX threading, and OS/2 all do. (Contributed by Andrew MacIntyre.)</p>
+<li><p class="first"><a class="reference internal" href="../library/threading.html#module-threading" title="threading: Higher-level threading interface."><code class="xref py py-mod docutils literal"><span class="pre">threading</span></code></a> モジュールで、新しいスレッドを作る際に使われるスタックサイズを設定出来るようになりました。 <code class="docutils literal"><span class="pre">stack_size([*size*])</span></code> 関数は現在構成されているスタックサイズを返し、省略可能引数 <em>size</em> パラメータを与えると新しい値を設定します。全てのプラットフォームがスタックサイズ変更をサポートしているわけではなく、Windows、POSIX スレッド、OS/2 で可能です。 (Contributed by Andrew MacIntyre.)</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/unicodedata.html#module-unicodedata" title="unicodedata: Access the Unicode Database."><code class="xref py py-mod docutils literal"><span class="pre">unicodedata</span></code></a> モジュールが、 Unicode 文字データベースのバージョン 4.1.0 を使うように更新されました。いくつかの仕様によってバージョン 3.2.0 が必要とされるので、 <a class="reference internal" href="../library/unicodedata.html#unicodedata.ucd_3_2_0" title="unicodedata.ucd_3_2_0"><code class="xref py py-attr docutils literal"><span class="pre">unicodedata.ucd_3_2_0</span></code></a> としてまだ利用可能です。</p>
 </li>
-<li><p class="first">新モジュール: <a class="reference internal" href="../library/uuid.html#module-uuid" title="uuid: UUID objects (universally unique identifiers) according to RFC 4122"><code class="xref py py-mod docutils literal"><span class="pre">uuid</span></code></a> モジュールは <span class="target" id="index-50"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a> による UUID (universally unique identifiers) を生成します。その RFC ではいくつかの異なる UUID のバージョンを定義しており、文字列から生成するもの、システム特性から生成するもの、純粋に乱数から生成するものがあります。このモジュールでは <code class="xref py py-class docutils literal"><span class="pre">UUID</span></code> クラスと <code class="xref py py-func docutils literal"><span class="pre">uuid1()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid3()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid4()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid5()</span></code> 関数を持っていて、それら異なったバージョンの UUID を生成します。(UUID バージョン 2 は <span class="target" id="index-51"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a> にありませんのでこのモジュールにもないです)</p>
+<li><p class="first">新モジュール: <a class="reference internal" href="../library/uuid.html#module-uuid" title="uuid: UUID objects (universally unique identifiers) according to RFC 4122"><code class="xref py py-mod docutils literal"><span class="pre">uuid</span></code></a> モジュールは <span class="target" id="index-70"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a> による UUID (universally unique identifiers) を生成します。その RFC ではいくつかの異なる UUID のバージョンを定義しており、文字列から生成するもの、システム特性から生成するもの、純粋に乱数から生成するものがあります。このモジュールでは <code class="xref py py-class docutils literal"><span class="pre">UUID</span></code> クラスと <code class="xref py py-func docutils literal"><span class="pre">uuid1()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid3()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid4()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">uuid5()</span></code> 関数を持っていて、それら異なったバージョンの UUID を生成します。(UUID バージョン 2 は <span class="target" id="index-71"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4122.html"><strong>RFC 4122</strong></a> にありませんのでこのモジュールにもないです)</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">uuid</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># make a UUID based on the host ID and current time</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
@@ -1248,11 +1188,7 @@ by Skip Montanaro.)</p>
 <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;md5&#39;</span><span class="p">)</span>          <span class="c1"># Provide algorithm as a string</span>
 </pre></div>
 </div>
-<p>Once a hash object has been created, its methods are the same as before:
-<code class="docutils literal"><span class="pre">update(string)</span></code> hashes the specified string into the  current digest
-state, <code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">hexdigest()</span></code> return the digest value as a binary
-string or a string of hex digits, and <a class="reference internal" href="../library/copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-meth docutils literal"><span class="pre">copy()</span></code></a> returns a new hashing object
-with the same digest state.</p>
+<p>ハッシュオブジェクトを作ってしまえばあとはそのメソッドは以前と同じです: <code class="xref py py-meth docutils literal"><span class="pre">update(string)()</span></code> は指定された文字列を現在のダイジェスト状態にハッシュ更新し、 <code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code> と <code class="xref py py-meth docutils literal"><span class="pre">hexdigest()</span></code> は結果のダイジェスト値をバイナリ文字列・16進数表記文字列として返し、 <a class="reference internal" href="../library/copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-meth docutils literal"><span class="pre">copy()</span></code></a> はダイジェスト状態を複製して新たなハッシュオブジェクトを作ります。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <p class="last"><a class="reference internal" href="../library/hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal"><span class="pre">hashlib</span></code></a> モジュールについてのドキュメント。</p>
@@ -1262,7 +1198,7 @@ with the same digest state.</p>
 <span id="module-sqlite"></span><h3>sqlite3 パッケージ<a class="headerlink" href="#the-sqlite3-package" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>pysqlite モジュール (<a class="reference external" href="http://www.pysqlite.org">http://www.pysqlite.org</a>) は SQLite 埋め込みデータベースへのラッパーであり、これが標準ライブラリに <a class="reference internal" href="../library/sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></code></a> 名のパッケージとして追加されました。</p>
 <p>SQLite は、別にサーバプロセスは必要とせずデータベースのアクセスに SQL 問い合わせ言語の非標準的な一種を使える軽量なディスク上のデータベースを提供する C ライブラリです。ある種のアプリケーションは内部データ保存に SQLite を使えます。また、SQLite を使ってアプリケーションのプロトタイプを作りその後そのコードを PostgreSQL や Oracle のような大規模データベースに移植するということも可能です。</p>
-<p>pysqlite  は Gerhard Häring によって書かれ、 <span class="target" id="index-52"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0249"><strong>PEP 249</strong></a> に記述された DB-API 2.0 仕様に準拠した SQL インタフェースを提供するものです。</p>
+<p>pysqlite  は Gerhard Häring によって書かれ、 <span class="target" id="index-72"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0249"><strong>PEP 249</strong></a> に記述された DB-API 2.0 仕様に準拠した SQL インタフェースを提供するものです。</p>
 <p>ソースコードから Python をビルドする場合は注意してください。Python ソースツリーは SQLite コードを含まずラッパーモジュールのみを含んでいます。Python ビルド前に SQLite ライブラリとヘッダをインストールする必要があります。必要ヘッダが利用可能となっていればモジュールはビルドされます。</p>
 <p>このモジュールを使うには、最初にデータベースを表す <code class="xref py py-class docutils literal"><span class="pre">Connection</span></code> オブジェクトを作ります。ここではデータはファイル <code class="file docutils literal"><span class="pre">/tmp/example</span></code> に格納されているものとします。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;/tmp/example&#39;</span><span class="p">)</span>
@@ -1336,7 +1272,7 @@ with the same digest state.</p>
 </div>
 <div class="section" id="the-wsgiref-package">
 <span id="module-wsgiref"></span><h3>wsgiref パッケージ<a class="headerlink" href="#the-wsgiref-package" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Web Server Gateway Interface (WSGI) v1.0 は、 Web サーバと Python で記述された Web アプリケーションとの標準インターフェースであり、 <span class="target" id="index-53"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> で定義されています。  <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> パッケージは WSGI 仕様のリファレンス実装です。</p>
+<p>Web Server Gateway Interface (WSGI) v1.0 は、 Web サーバと Python で記述された Web アプリケーションとの標準インターフェースであり、 <span class="target" id="index-73"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> で定義されています。  <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> パッケージは WSGI 仕様のリファレンス実装です。</p>
 <p>パッケージには WSGI アプリケーションとして動作する基礎的な HTTP サーバが含まれています; このサーバは製品ユースではないデバッグ目的に有用です。サーバをセットアップするには僅か数行で済みます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wsgiref</span> <span class="k">import</span> <span class="n">simple_server</span>
 
@@ -1365,7 +1301,7 @@ with the same digest state.</p>
 <span id="build-api"></span><h2>ビルドならびに C API の変更<a class="headerlink" href="#build-and-c-api-changes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python のビルド過程と C API の変更は以下の通りです:</p>
 <ul>
-<li><p class="first">Python ソースツリーは CVS から Subversion に変換されました。この複雑な移行手続きは Martin von Löwis によって指揮されつつがなく遂行されました。この手続きは <span class="target" id="index-54"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0347"><strong>PEP 347</strong></a> にて開発されました。</p>
+<li><p class="first">Python ソースツリーは CVS から Subversion に変換されました。この複雑な移行手続きは Martin von Löwis によって指揮されつつがなく遂行されました。この手続きは <span class="target" id="index-74"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0347"><strong>PEP 347</strong></a> にて開発されました。</p>
 </li>
 <li><p class="first">Coverity, a company that markets a source code analysis tool called Prevent,
 provided the results of their examination of the Python source code.  The
@@ -1373,7 +1309,7 @@ analysis found about 60 bugs that  were quickly fixed.  Many of the bugs were
 refcounting problems, often occurring in error-handling code.  See
 <a class="reference external" href="https://scan.coverity.com">https://scan.coverity.com</a> for the statistics.</p>
 </li>
-<li><p class="first"><span class="target" id="index-55"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> に由来する C API の大きな変更がありました。これはインタプリタを <code class="xref c c-type docutils literal"><span class="pre">int</span></code> ではなく <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> 型定義を使うように修正するものです。詳細は前のほうのセクション <a class="reference internal" href="#pep-353"><span class="std std-ref">PEP 353: 添え字型に ssize_t を使う</span></a> を参照して下さい。</p>
+<li><p class="first"><span class="target" id="index-75"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0353"><strong>PEP 353</strong></a> に由来する C API の大きな変更がありました。これはインタプリタを <code class="xref c c-type docutils literal"><span class="pre">int</span></code> ではなく <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> 型定義を使うように修正するものです。詳細は前のほうのセクション <a class="reference internal" href="#pep-353"><span class="std std-ref">PEP 353: 添え字型に ssize_t を使う</span></a> を参照して下さい。</p>
 </li>
 <li><p class="first">The design of the bytecode compiler has changed a great deal,  no longer
 generating bytecode by traversing the parse tree.  Instead the parse tree is
@@ -1443,14 +1379,9 @@ for the module; you should benchmark the results to find out if these
 optimizations actually make the code faster.  (Contributed by Fredrik Lundh at
 the NeedForSpeed sprint.)</p>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PyErr_NewException(name,</span> <span class="pre">base,</span> <span class="pre">dict)</span></code> can now accept a tuple of base
-classes as its <em>base</em> argument.  (Contributed by Georg Brandl.)</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">PyErr_NewException(name,</span> <span class="pre">base,</span> <span class="pre">dict)</span></code> が <em>base</em> 引数としてベースクラスのタプルを受け付けるようになりました。 (Contributed by Georg Brandl.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../c-api/exceptions.html#c.PyErr_Warn" title="PyErr_Warn"><code class="xref c c-func docutils literal"><span class="pre">PyErr_Warn()</span></code></a> function for issuing warnings is now deprecated in
-favour of <code class="docutils literal"><span class="pre">PyErr_WarnEx(category,</span> <span class="pre">message,</span> <span class="pre">stacklevel)</span></code> which lets you
-specify the number of stack frames separating this function and the caller.  A
-<em>stacklevel</em> of 1 is the function calling <a class="reference internal" href="../c-api/exceptions.html#c.PyErr_WarnEx" title="PyErr_WarnEx"><code class="xref c c-func docutils literal"><span class="pre">PyErr_WarnEx()</span></code></a>, 2 is the
-function above that, and so forth.  (Added by Neal Norwitz.)</p>
+<li><p class="first"><a class="reference internal" href="../c-api/exceptions.html#c.PyErr_Warn" title="PyErr_Warn"><code class="xref c c-func docutils literal"><span class="pre">PyErr_Warn()</span></code></a> 関数が、 <code class="docutils literal"><span class="pre">PyErr_WarnEx(category,</span> <span class="pre">message,</span> <span class="pre">stacklevel)</span></code> を採用のために非推奨となっています。後者はこの関数と呼び出し元との間を隔てるスタックフレーム数を指定できます。 <em>stacklevel</em> を 1 とすると関数呼び出しは <a class="reference internal" href="../c-api/exceptions.html#c.PyErr_WarnEx" title="PyErr_WarnEx"><code class="xref c c-func docutils literal"><span class="pre">PyErr_WarnEx()</span></code></a> からとなり、2 であればその一つ上から、などです。 (Added by Neal Norwitz.)</p>
 </li>
 <li><p class="first">CPython は今でも C で書かれていますが、コードは C++ コンパイラでもエラーなしでコンパイル出来るようになりました。   (Implemented by Anthony Baxter, Martin von Löwis, Skip Montanaro.)</p>
 </li>
@@ -1481,7 +1412,7 @@ Oussoren; <a class="reference external" href="https://bugs.python.org/issue2573"
 <ul class="simple">
 <li><p class="first">ASCII がモジュールのデフォルトエンコーディングになっています(訳注: Python 3 からはデフォルトは utf-8 (PEP 3120))。8 ビット文字を含んでいるのにエンコーディング宣言がないモジュールが構文エラーになるようになりました。Python 2.4 では構文エラーとはならず警告でした。</p>
 </li>
-<li><p class="first">以前はジェネレータの <code class="xref py py-attr docutils literal"><span class="pre">gi_frame</span></code> 属性は常にフレームオブジェクトでしたが、 <a class="reference internal" href="#pep-342"><span class="std std-ref">PEP 342: ジェネレータの新機能</span></a> で説明した <span class="target" id="index-56"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> での変更により、 <code class="xref py py-attr docutils literal"><span class="pre">gi_frame</span></code> は <code class="docutils literal"><span class="pre">None</span></code> になりえます。</p>
+<li><p class="first">以前はジェネレータの <code class="xref py py-attr docutils literal"><span class="pre">gi_frame</span></code> 属性は常にフレームオブジェクトでしたが、 <a class="reference internal" href="#pep-342"><span class="std std-ref">PEP 342: ジェネレータの新機能</span></a> で説明した <span class="target" id="index-76"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0342"><strong>PEP 342</strong></a> での変更により、 <code class="xref py py-attr docutils literal"><span class="pre">gi_frame</span></code> は <code class="docutils literal"><span class="pre">None</span></code> になりえます。</p>
 </li>
 <li><p class="first">Unicode 文字列とデフォルトの ASCII エンコーディングで Unicode に変換出来ない 8 ビット文字列との比較を試みると、新しい警告 <code class="xref py py-class docutils literal"><span class="pre">UnicodeWarning</span></code> が引き起こされるようになっています。以前はそのような比較では <code class="xref py py-class docutils literal"><span class="pre">UnicodeDecodeError</span></code> 例外を起こしていました。</p>
 </li>
@@ -1565,9 +1496,9 @@ Rovner, Scott Weikart, Barry Warsaw, Thomas Wouters.</p>
                         title="次の章へ">What&#8217;s New in Python 2.4</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/whatsnew/2.5.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -1589,7 +1520,7 @@ Rovner, Scott Weikart, Barry Warsaw, Thomas Wouters.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -1604,23 +1535,23 @@ Rovner, Scott Weikart, Barry Warsaw, Thomas Wouters.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >What&#8217;s New in Python</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

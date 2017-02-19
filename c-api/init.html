@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>初期化 (initialization)、終了処理 (finalization)、スレッド &#8212; Python 2.7.x ドキュメント</title>
+    <title>初期化 (initialization)、終了処理 (finalization)、スレッド &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="Python/C API リファレンスマニュアル" href="index.html" />
     <link rel="next" title="メモリ管理" href="memory.html" />
     <link rel="prev" title="コードオブジェクト" href="code.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Python/C API リファレンスマニュアル</a> &#187;</li> 
@@ -92,9 +92,8 @@ void <code class="descname">Py_Initialize</code><span class="sig-paren">(</span>
 <dl class="function">
 <dt id="c.Py_InitializeEx">
 void <code class="descname">Py_InitializeEx</code><span class="sig-paren">(</span>int<em>&nbsp;initsigs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_InitializeEx" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>This function works like <a class="reference internal" href="#c.Py_Initialize" title="Py_Initialize"><code class="xref c c-func docutils literal"><span class="pre">Py_Initialize()</span></code></a> if <em>initsigs</em> is <code class="docutils literal"><span class="pre">1</span></code>. If
-<em>initsigs</em> is <code class="docutils literal"><span class="pre">0</span></code>, it skips initialization registration of signal handlers, which
-might be useful when Python is embedded.</p>
+<dd><p><em>initsigs</em> に <code class="docutils literal"><span class="pre">1</span></code> を指定した場合、この関数は <a class="reference internal" href="#c.Py_Initialize" title="Py_Initialize"><code class="xref c c-func docutils literal"><span class="pre">Py_Initialize()</span></code></a> と同じように動作します。
+<em>initsigs</em> に <code class="docutils literal"><span class="pre">0</span></code> を指定した場合、初期化時のシグナルハンドラの登録をスキップすることができ、これは Python の埋め込みで便利でしょう。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
 </div>
@@ -213,10 +212,8 @@ void <code class="descname">PySys_SetArgvEx</code><span class="sig-paren">(</spa
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p>It is recommended that applications embedding the Python interpreter
-for purposes other than executing a single script pass <code class="docutils literal"><span class="pre">0</span></code> as <em>updatepath</em>,
-and update <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> themselves if desired.
-See <a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5983">CVE-2008-5983</a>.</p>
+<p>単一のスクリプトを実行する以外の目的でPython インタプリタを埋め込んでいるアプリケーションでは、 <em>updatepath</em> に <code class="docutils literal"><span class="pre">0</span></code> を渡して、必要な場合は自分で <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> を更新することをおすすめします。
+<a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5983">CVE-2008-5983</a> を参照してください。</p>
 <p>2.6.6 より前のバージョンでは、 <a class="reference internal" href="#c.PySys_SetArgv" title="PySys_SetArgv"><code class="xref c c-func docutils literal"><span class="pre">PySys_SetArgv()</span></code></a> の呼び出しが完了した後に <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> の先頭の要素を取り出すことで、同じ効果が得られます。例えばこのように使います:</p>
 <div class="last highlight-c"><div class="highlight"><pre><span></span><span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">&quot;import sys; sys.path.pop(0)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 </pre></div>
@@ -549,9 +546,7 @@ void <code class="descname">Py_EndInterpreter</code><span class="sig-paren">(</s
 <dl class="function">
 <dt id="c.Py_AddPendingCall">
 int <code class="descname">Py_AddPendingCall</code><span class="sig-paren">(</span>int (<em>*func</em>)(void *), void<em>&nbsp;*arg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_AddPendingCall" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-25">Schedule a function to be called from the main interpreter thread.  On
-success, <code class="docutils literal"><span class="pre">0</span></code> is returned and <em>func</em> is queued for being called in the
-main thread.  On failure, <code class="docutils literal"><span class="pre">-1</span></code> is returned without setting any exception.</p>
+<dd><p id="index-25">インタプリタのメインスレッドから関数が呼び出される予定を組みます。成功すると <code class="docutils literal"><span class="pre">0</span></code> が返り、<em>func</em> はメインスレッドの呼び出しキューに詰められます。失敗すると、例外をセットせずに <code class="docutils literal"><span class="pre">-1</span></code> が返ります。</p>
 <p>無事にキューに詰められると、<em>func</em> は <em>いつかは必ず</em> インタプリタのメインスレッドから、<em>arg</em> を引数として呼び出されます。この関数は、通常の実行中の Python コードに対して非同期に呼び出されますが、次の両方の条件に合致したときに呼び出されます:</p>
 <ul class="simple">
 <li><p class="first"><a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a> 境界上にいるとき、</p>
@@ -559,10 +554,7 @@ main thread.  On failure, <code class="docutils literal"><span class="pre">-1</s
 <li><p class="first">メインスレッドが <a class="reference internal" href="../glossary.html#term-global-interpreter-lock"><span class="xref std std-term">global interpreter lock</span></a> を保持している (すなわち <em>func</em> が全ての C API を呼び出せる) とき。</p>
 </li>
 </ul>
-<p><em>func</em> must return <code class="docutils literal"><span class="pre">0</span></code> on success, or <code class="docutils literal"><span class="pre">-1</span></code> on failure with an exception
-set.  <em>func</em> won&#8217;t be interrupted to perform another asynchronous
-notification recursively, but it can still be interrupted to switch
-threads if the global interpreter lock is released.</p>
+<p>成功したら <em>func</em> は <code class="docutils literal"><span class="pre">0</span></code> を返さねばならず、失敗したら <code class="docutils literal"><span class="pre">-1</span></code> を返し例外をセットしなければいけません。<em>func</em> は、他の非同期通知を行うために、さらに割り込まれることはありませんが、グローバルインタプリタロックが解放された場合は、スレッドの切り替えによって割り込まれる可能性が残っています。</p>
 <p>この関数は実行するのに現在のスレッド状態を必要とせず、グローバルインタプリタロックも必要としません。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
@@ -823,9 +815,9 @@ defined.</p>
                         title="次の章へ">メモリ管理</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/init.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -847,7 +839,7 @@ defined.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -862,23 +854,23 @@ defined.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

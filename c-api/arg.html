@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>引数の解釈と値の構築 &#8212; Python 2.7.x ドキュメント</title>
+    <title>引数の解釈と値の構築 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="ユーティリティ" href="utilities.html" />
     <link rel="next" title="文字列の変換と書式化" href="conversion.html" />
     <link rel="prev" title="データ整列化 (data marshalling) のサポート" href="marshal.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -85,10 +85,7 @@
 <p>これらの関数は独自の拡張モジュール用の関数やメソッドを作成する際に便利です。詳しい情報や用例は <a class="reference internal" href="../extending/index.html#extending-index"><span class="std std-ref">Python インタプリタの拡張と埋め込み</span></a> にあります。</p>
 <p>最初に説明する 3 つの関数、 <a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a>, <a class="reference internal" href="#c.PyArg_ParseTupleAndKeywords" title="PyArg_ParseTupleAndKeywords"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTupleAndKeywords()</span></code></a>,および <a class="reference internal" href="#c.PyArg_Parse" title="PyArg_Parse"><code class="xref c c-func docutils literal"><span class="pre">PyArg_Parse()</span></code></a> はいずれも <em>書式化文字列 (format string)</em> を使います。書式化文字列は、関数が受け取るはずの引数に関する情報を伝えるのに用いられます。いずれの関数における書式化文字列も、同じ書式を使っています。</p>
 <p>書式化文字列は、ゼロ個またはそれ以上の &#8220;書式化単位 (format unit)&#8221; から成り立ちます。 1つの書式化単位は1つの Python オブジェクトを表します; 通常は単一の文字か、書式化単位からなる文字列を括弧で囲ったものになります。例外として、括弧で囲われていない書式化単位文字列が単一のアドレス引数に対応する場合がいくつかあります。以下の説明では、引用符のついた形式は書式化単位です; (丸)括弧で囲った部分は書式化単位に対応する Python のオブジェクト型です; [角] 括弧は値をアドレス渡しする際に使う C の変数型です。</p>
-<p>These formats allow accessing an object as a contiguous chunk of memory.
-You don&#8217;t have to provide raw storage for the returned unicode or bytes
-area.  Also, you won&#8217;t have to release any memory yourself, except with the
-<code class="docutils literal"><span class="pre">es</span></code>, <code class="docutils literal"><span class="pre">es#</span></code>, <code class="docutils literal"><span class="pre">et</span></code> and <code class="docutils literal"><span class="pre">et#</span></code> formats.</p>
+<p>以下のフォーマットはオブジェクトに連続したメモリチャンクとしてアクセスするためのものです。返される unicode や bytes のために生のストレージを用意する必要はありません。また、<code class="docutils literal"><span class="pre">es</span></code>,  <code class="docutils literal"><span class="pre">es#</span></code>, <code class="docutils literal"><span class="pre">et</span></code>, <code class="docutils literal"><span class="pre">et#</span></code> フォーマットの場合を除いて自分でメモリを解放する必要もありません。</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">s</span></code> (string or Unicode) [const char *]</dt>
 <dd><p class="first last">Python の文字列または Unicode オブジェクトを、キャラクタ文字列を指す C のポインタに変換します。変換先の文字列自体の記憶領域を提供する必要はありません; キャラクタ型ポインタ変数のアドレスを渡すと、すでに存在している文字列へのポインタをその変数に記録します。C 文字列は NUL で終端されています。Python の文字列型は、NUL バイトが途中に埋め込まれていてはなりません; もし埋め込まれていれば <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外を送出します。Unicode オブジェクトはデフォルトエンコーディングを使って C 文字列に変換されます。変換に失敗すると <a class="reference internal" href="../library/exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を送出します。</p>
@@ -134,12 +131,7 @@ area.  Also, you won&#8217;t have to release any memory yourself, except with th
 <p>この書式化単位には三つの引数が必要です。一つ目は入力にのみ用いられ、 NUL で終端されたエンコード名文字列を指す <code class="xref c c-type docutils literal"><span class="pre">const</span> <span class="pre">char*</span></code> 型か <em>NULL</em> でなければなりません。 <em>NULL</em> の場合にはデフォルトエンコーディングを使います。指定したエンコード名を Python が理解できない場合には例外を送出します。第二の引数は <code class="xref c c-type docutils literal"><span class="pre">char**</span></code> でなければなりません; この引数が参照しているポインタの値は、引数に指定したテキストの内容が入ったバッファへのポインタになります。テキストは最初の引数に指定したエンコード方式でエンコードされます。第三の引数は整数へのポインタでなければなりません; ポインタが参照している整数の値は出力バッファ内のバイト数にセットされます。</p>
 <p>この書式化単位の処理には二つのモードがあります:</p>
 <p><em>*buffer</em> が <em>NULL</em> ポインタを指している場合、関数は必要なサイズのバッファを確保し、そのバッファにエンコード後のデータをコピーして、 <em>*buffer</em> がこの新たに確保された記憶領域を指すように変更します。呼び出し側には、確保されたバッファを使い終わった後に <a class="reference internal" href="memory.html#c.PyMem_Free" title="PyMem_Free"><code class="xref c c-func docutils literal"><span class="pre">PyMem_Free()</span></code></a> で解放する責任があります。</p>
-<p>If <em>*buffer</em> points to a non-<em>NULL</em> pointer (an already allocated buffer),
-<a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> will use this location as the buffer and
-interpret the initial value of <em>*buffer_length</em> as the buffer size.  It
-will then copy the encoded data into the buffer and NUL-terminate it.  If
-the buffer is not large enough, a <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> will be set.
-Note: starting from Python 3.6 a <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> will be set.</p>
+<p><em>*buffer</em> が非 <em>NULL</em> のポインタ (すでにメモリ確保済みのバッファ) を指している場合、 <a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> はこのメモリ位置をバッファとして用い、 <em>*buffer_length</em> の初期値をバッファサイズとして用います。 <a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> は次にエンコード済みのデータをバッファにコピーして、NUL で終端します。バッファの大きさが足りなければ <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> がセットされます。注意: Python 3.6からは <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a>  がセットされます。</p>
 <p class="last">どちらの場合も、 <em>*buffer_length</em> は終端の NUL バイトを含まないエンコード済みデータの長さにセットされます。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">et#</span></code> (string, Unicode or character buffer compatible object) [const char *encoding, char **buffer, int *buffer_length]</dt>
@@ -454,9 +446,9 @@ string.</p>
                         title="次の章へ">文字列の変換と書式化</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/arg.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -478,7 +470,7 @@ string.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -493,8 +485,8 @@ string.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API リファレンスマニュアル</a> &#187;</li>
@@ -502,15 +494,15 @@ string.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

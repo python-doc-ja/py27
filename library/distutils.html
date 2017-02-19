@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>27.1. distutils — Python モジュールの構築とインストール &#8212; Python 2.7.x ドキュメント</title>
+    <title>27.1. distutils — Python モジュールの構築とインストール &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="27. ソフトウェア・パッケージと配布" href="distribution.html" />
     <link rel="next" title="27.2. ensurepip — pip インストーラのブートストラップ" href="ensurepip.html" />
     <link rel="prev" title="27. ソフトウェア・パッケージと配布" href="distribution.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -83,33 +83,24 @@
   <div class="section" id="module-distutils">
 <span id="distutils-building-and-installing-python-modules"></span><h1>27.1. <a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> &#8212; Python モジュールの構築とインストール<a class="headerlink" href="#module-distutils" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> パッケージは、現在インストールされている Python に追加するためのモジュール構築、および実際のインストールを支援します。新規のモジュールは 100%-pure Python でも、C で書かれた拡張モジュールでも、あるいは Python と C 両方のコードが入っているモジュールからなる Python パッケージでもかまいません。</p>
-<p>Most Python users will <em>not</em> want to use this module directly, but instead
-use the cross-version tools maintained by the Python Packaging Authority. In
-particular,
-<a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a> is an
-enhanced alternative to <a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> that provides:</p>
+<p>Python ユーザの大半はこのパッケージを直接使い <em>たくはない</em> でしょうが、代わりに Python Packaging Authority が保守しているクロスバージョンツールを使うでしょう。特に、<a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a> は <a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> の改良された代替品で、以下を提供しています:</p>
 <ul class="simple">
-<li>support for declaring project dependencies</li>
-<li>additional mechanisms for configuring which files to include in source
-releases (including plugins for integration with version control systems)</li>
-<li>the ability to declare project &#8220;entry points&#8221;, which can be used as the
-basis for application plugin systems</li>
-<li>the ability to automatically generate Windows command line executables at
-installation time rather than needing to prebuild them</li>
-<li>consistent behaviour across all supported Python versions</li>
+<li><p class="first">プロジェクトの依存性の宣言のサポート</p>
+</li>
+<li><p class="first">ソースのリリースの際どのファイルを含めるか指定する追加の機構 (バージョン管理システムとの統合のためのプラグインも含む)</p>
+</li>
+<li><p class="first">プロジェクトの &#8220;エントリーポイント&#8221; を宣言する機能、アプリケーションプラグインシステムとして使うことができます</p>
+</li>
+<li><p class="first">インストール時に事前にビルドすることなく、Windows コマンドライン実行ファイルを自動的に生成する機能</p>
+</li>
+<li><p class="first">サポートしている Python の全バージョンで一貫性のある挙動</p>
+</li>
 </ul>
-<p>The recommended <a class="reference external" href="https://pip.pypa.io/">pip</a> installer runs all
-<code class="docutils literal"><span class="pre">setup.py</span></code> scripts with <code class="docutils literal"><span class="pre">setuptools</span></code>, even if the script itself only
-imports <code class="docutils literal"><span class="pre">distutils</span></code>. Refer to the
-<a class="reference external" href="https://packaging.python.org">Python Packaging User Guide</a> for more
-information.</p>
-<p>For the benefits of packaging tool authors and users seeking a deeper
-understanding of the details of the current packaging and distribution
-system, the legacy <a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> based user documentation and API
-reference remain available:</p>
+<p>たとえスクリプト自身が <code class="docutils literal"><span class="pre">distutils</span></code> のみをインポートしていても、推奨される <a class="reference external" href="https://pip.pypa.io/">pip</a> インストーラは <code class="docutils literal"><span class="pre">setuptools</span></code> で全 <code class="docutils literal"><span class="pre">setup.py</span></code> スクリプトを実行します。詳細は <a class="reference external" href="https://packaging.python.org">Python Packaging User Guide</a> を参照してください。</p>
+<p>現在のパッケージと配布システムへの理解を深めようとしている著者やユーザのために、レガシーな <a class="reference internal" href="#module-distutils" title="distutils: Support for building and installing Python modules into an existing Python installation."><code class="xref py py-mod docutils literal"><span class="pre">distutils</span></code></a> に基づくユーザドキュメントと API のリファレンスは利用可能なままになっています。</p>
 <ul class="simple">
-<li><a class="reference internal" href="../install/index.html#install-index"><span class="std std-ref">Installing Python Modules (Legacy version)</span></a></li>
-<li><a class="reference internal" href="../distutils/index.html#distutils-index"><span class="std std-ref">Distributing Python Modules (Legacy version)</span></a></li>
+<li><a class="reference internal" href="../install/index.html#install-index"><span class="std std-ref">Python モジュールのインストール (旧版)</span></a></li>
+<li><a class="reference internal" href="../distutils/index.html#distutils-index"><span class="std std-ref">Python モジュールの配布 (レガシーバージョン)</span></a></li>
 </ul>
 </div>
 
@@ -127,9 +118,9 @@ reference remain available:</p>
                         title="次の章へ">27.2. <code class="docutils literal"><span class="pre">ensurepip</span></code> &#8212;  <code class="docutils literal"><span class="pre">pip</span></code> インストーラのブートストラップ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/distutils.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -151,7 +142,7 @@ reference remain available:</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -166,8 +157,8 @@ reference remain available:</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -175,15 +166,15 @@ reference remain available:</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

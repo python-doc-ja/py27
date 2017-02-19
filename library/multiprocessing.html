@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>16.6. multiprocessing — プロセスベースの “並列処理” インタフェース &#8212; Python 2.7.x ドキュメント</title>
+    <title>16.6. multiprocessing — プロセスベースの “並列処理” インタフェース &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="16. オプションのオペレーティングシステムサービス" href="someos.html" />
     <link rel="next" title="16.7. mmap — メモリマップファイル" href="mmap.html" />
     <link rel="prev" title="16.5. dummy_thread — thread の代替モジュール" href="dummy_thread.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -653,10 +653,7 @@ example,</p>
 </pre></div>
 </div>
 <p>もし <code class="docutils literal"><span class="pre">freeze_support()</span></code> の行がない場合、固まった実行可能形式を実行しようとすると <a class="reference internal" href="exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> を発生させます。</p>
-<p>Calling <code class="docutils literal"><span class="pre">freeze_support()</span></code> has no effect when invoked on any operating
-system other than Windows.  In addition, if the module is being run
-normally by the Python interpreter on Windows (the program has not been
-frozen), then <code class="docutils literal"><span class="pre">freeze_support()</span></code> has no effect.</p>
+<p><code class="docutils literal"><span class="pre">freeze_support()</span></code> の呼び出しは Windows 以外の OS では効果がありません。さらに、もしモジュールが Windows の通常の Python インタプリタによって実行されているならば（プログラムがフリーズされていなければ） <code class="docutils literal"><span class="pre">freeze_support()</span></code> は効果がありません。</p>
 </dd></dl>
 
 <dl class="function">
@@ -1210,7 +1207,7 @@ HELLO WORLD
 <dl class="class">
 <dt id="multiprocessing.managers.Namespace">
 <em class="property">class </em><code class="descclassname">multiprocessing.managers.</code><code class="descname">Namespace</code><a class="headerlink" href="#multiprocessing.managers.Namespace" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>A type that can register with <a class="reference internal" href="#multiprocessing.managers.SyncManager" title="multiprocessing.managers.SyncManager"><code class="xref py py-class docutils literal"><span class="pre">SyncManager</span></code></a>.</p>
+<dd><p><a class="reference internal" href="#multiprocessing.managers.SyncManager" title="multiprocessing.managers.SyncManager"><code class="xref py py-class docutils literal"><span class="pre">SyncManager</span></code></a> に登録することのできる型です。</p>
 <p>Namespace オブジェクトにはパブリックなメソッドはありませんが、書き込み可能な属性を持ちます。そのオブジェクト表現はその属性の値を表示します。</p>
 <p>しかし、Namespace オブジェクトのためにプロキシを使用するとき <code class="docutils literal"><span class="pre">'_'</span></code> が先頭に付く属性はプロキシの属性になり、参照対象の属性にはなりません:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
@@ -1416,10 +1413,7 @@ HELLO WORLD
 <p><em>processes</em> は使用するワーカープロセスの数です。 <em>processes</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合 <code class="xref py py-func docutils literal"><span class="pre">cpu_count()</span></code> が返す数を使用します。 <em>initializer</em> が <code class="docutils literal"><span class="pre">None</span></code> でない場合、各ワーカープロセスが開始時に <code class="docutils literal"><span class="pre">initializer(*initargs)</span></code> を呼び出します。</p>
 <p>プールオブジェクトのメソッドは、そのプールを作成したプロセスのみが呼び出すべきです。</p>
 <div class="versionadded">
-<p><span class="versionmodified">バージョン 2.7 で追加: </span><em>maxtasksperchild</em> is the number of tasks a worker process can complete
-before it will exit and be replaced with a fresh worker process, to enable
-unused resources to be freed. The default <em>maxtasksperchild</em> is <code class="docutils literal"><span class="pre">None</span></code>, which
-means worker processes will live as long as the pool.</p>
+<p><span class="versionmodified">バージョン 2.7 で追加: </span><em>maxtasksperchild</em> は、ワーカープロセスが exit して新たなワーカープロセスと置き替えられるまでの間に、ワーカープロセスが完了することのできるタスクの数です。この設定により未利用のリソースが解放されるようなります。デフォルトの <em>maxtasksperchild</em> は <code class="docutils literal"><span class="pre">None</span></code> で、これはワーカープロセスがプールと同じ期間だけ生き続けるということを意味します。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -1663,7 +1657,7 @@ otherwise it must be <code class="docutils literal"><span class="pre">None</span
 <li><p class="first"><code class="docutils literal"><span class="pre">'AF_UNIX'</span></code> アドレスはファイルシステム上のファイル名の文字列です。</p>
 </li>
 <li><dl class="first docutils">
-<dt>An <code class="docutils literal"><span class="pre">'AF_PIPE'</span></code> address is a string of the form</dt>
+<dt><code class="docutils literal"><span class="pre">'AF_PIPE'</span></code> アドレスは、次の形式を持つ文字列です</dt>
 <dd><p class="first last"><code class="samp docutils literal"><span class="pre">r'\\.\pipe\</span><em><span class="pre">PipeName</span></em><span class="pre">'</span></code> 。 <em>ServerName</em> という名前のリモートコンピューター上の名前付きパイプに接続するために <a class="reference internal" href="#multiprocessing.connection.Client" title="multiprocessing.connection.Client"><code class="xref py py-func docutils literal"><span class="pre">Client()</span></code></a> を使用するには、代わりに <code class="samp docutils literal"><span class="pre">r'\\</span><em><span class="pre">ServerName</span></em><span class="pre">\pipe\</span><em><span class="pre">PipeName</span></em><span class="pre">'</span></code> 形式のアドレスを使用する必要があります。</p>
 </dd>
 </dl>
@@ -1676,13 +1670,7 @@ otherwise it must be <code class="docutils literal"><span class="pre">None</span
 <span id="multiprocessing-auth-keys"></span><h3>16.6.2.11. 認証キー<a class="headerlink" href="#authentication-keys" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference internal" href="#multiprocessing.Connection.recv" title="multiprocessing.Connection.recv"><code class="xref py py-meth docutils literal"><span class="pre">Connection.recv</span></code></a> を使用するとき、データは自動的に unpickle されて受信します。信頼できない接続元からのデータを unpickle することはセキュリティリスクがあります。そのため <a class="reference internal" href="#multiprocessing.connection.Listener" title="multiprocessing.connection.Listener"><code class="xref py py-class docutils literal"><span class="pre">Listener</span></code></a> や <a class="reference internal" href="#multiprocessing.connection.Client" title="multiprocessing.connection.Client"><code class="xref py py-func docutils literal"><span class="pre">Client()</span></code></a> はダイジェスト認証を提供するために <a class="reference internal" href="hmac.html#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal"><span class="pre">hmac</span></code></a> モジュールを使用します。</p>
 <p>認証キーはパスワードとしてみなされる文字列です。コネクションが確立すると、双方の終点で正しい接続先であることを証明するために知っているお互いの認証キーを要求します。 (双方の終点が同じキーを使用して通信しようとしても、コネクション上でそのキーを送信することは <strong>できません</strong> 。)</p>
-<p>If authentication is requested but no authentication key is specified then the
-return value of <code class="docutils literal"><span class="pre">current_process().authkey</span></code> is used (see
-<a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a>).  This value will be automatically inherited by
-any <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> object that the current process creates.
-This means that (by default) all processes of a multi-process program will share
-a single authentication key which can be used when setting up connections
-between themselves.</p>
+<p>認証が要求されているにもかかわらず認証キーが指定されていない場合 <code class="docutils literal"><span class="pre">current_process().authkey</span></code> の返す値が使用されます。 (詳細は <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> を参照してください。) この値はカレントプロセスを作成する <a class="reference internal" href="#multiprocessing.Process" title="multiprocessing.Process"><code class="xref py py-class docutils literal"><span class="pre">Process</span></code></a> オブジェクトによって自動的に継承されます。 これは(デフォルトでは)複数プロセスのプログラムの全プロセスが相互にコネクションを 確立するときに使用される1つの認証キーを共有することを意味します。</p>
 <p>適当な認証キーを <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> を使用して生成することもできます。</p>
 </div>
 <div class="section" id="logging">
@@ -3092,9 +3080,9 @@ between themselves.</p>
                         title="次の章へ">16.7. <code class="docutils literal"><span class="pre">mmap</span></code> &#8212; メモリマップファイル</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/multiprocessing.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -3116,7 +3104,7 @@ between themselves.</p>
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -3131,8 +3119,8 @@ between themselves.</p>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -3140,15 +3128,15 @@ between themselves.</p>
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

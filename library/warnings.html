@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>28.6. warnings — 警告の制御 &#8212; Python 2.7.x ドキュメント</title>
+    <title>28.6. warnings — 警告の制御 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.7. contextlib — with 文コンテキスト用ユーティリティ" href="contextlib.html" />
     <link rel="prev" title="28.5. __main__ — トップレベルのスクリプト環境" href="__main__.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -202,14 +202,11 @@
 </tbody>
 </table>
 </li>
-<li><p class="first"><em>message</em> is a string containing a regular expression that the start of
-the warning message must match.  The expression is compiled to always be
-case-insensitive.</p>
+<li><p class="first"><em>message</em> は正規表現を含む文字列で、警告メッセージの先頭はこのパターンに一致しなければなりません。正規表現は常に大小文字の区別をしないようにコンパイルされます。</p>
 </li>
 <li><p class="first"><em>category</em> はクラス (<a class="reference internal" href="exceptions.html#exceptions.Warning" title="exceptions.Warning"><code class="xref py py-exc docutils literal"><span class="pre">Warning</span></code></a> のサブクラス) です。警告クラスはこのクラスのサブクラスに一致しなければなりません。</p>
 </li>
-<li><p class="first"><em>module</em> is a string containing a regular expression that the module name must
-match.  The expression is compiled to be case-sensitive.</p>
+<li><p class="first"><em>module</em> は正規表現を含む文字列で、モジュール名はこのパターンに一致しなければなりません。正規表現は常に大小文字の区別をしないようにコンパイルされます。</p>
 </li>
 <li><p class="first"><em>lineno</em> は整数で、警告が発生した場所の行番号に一致しなければなりません。<code class="docutils literal"><span class="pre">0</span></code> の場合はすべての行と一致します。</p>
 </li>
@@ -267,15 +264,8 @@ match.  The expression is compiled to be case-sensitive.</p>
 </div>
 <div class="section" id="updating-code-for-new-versions-of-python">
 <h2>28.6.5. コードを新しいバージョンの Python のために更新する<a class="headerlink" href="#updating-code-for-new-versions-of-python" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Warnings that are only of interest to the developer are ignored by default. As
-such you should make sure to test your code with typically ignored warnings
-made visible. You can do this from the command-line by passing <a class="reference internal" href="../using/cmdline.html#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-Wd</span></code></a>
-to the interpreter (this is shorthand for <code class="xref std std-option docutils literal"><span class="pre">-W</span> <span class="pre">default</span></code>).  This enables
-default handling for all warnings, including those that are ignored by default.
-To change what action is taken for encountered warnings you simply change what
-argument is passed to <a class="reference internal" href="../using/cmdline.html#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a>, e.g. <code class="xref std std-option docutils literal"><span class="pre">-W</span> <span class="pre">error</span></code>. See the
-<a class="reference internal" href="../using/cmdline.html#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> flag for more details on what is possible.</p>
-<p>To programmatically do the same as <code class="xref std std-option docutils literal"><span class="pre">-Wd</span></code>, use:</p>
+<p>開発者にしか興味の無い警告はデフォルトでは無視されるようになりました。なので、通常、コードをテストするときには無視されている例外を表示するようにするべきです。これは <code class="xref std std-option docutils literal"><span class="pre">-Wd</span> <span class="pre">&lt;-W&gt;</span></code> コマンドライン引数 (<code class="xref std std-option docutils literal"><span class="pre">-W</span> <span class="pre">default</span></code> の省略形) をインタプリタに指定することで可能です。これはデフォルトでは無視されているものも含めた全ての警告に対して、デフォルトの動作を有効にします。この動作を変更するためには、 <code class="xref std std-option docutils literal"><span class="pre">-W</span></code> への引数を変更します。例えば、 <code class="xref std std-option docutils literal"><span class="pre">-W</span> <span class="pre">error</span></code> のようにします。何が可能かについての詳細は、 <code class="xref std std-option docutils literal"><span class="pre">-W</span></code> フラグを参照してください。</p>
+<p>プログラムから <code class="xref std std-option docutils literal"><span class="pre">-Wd</span></code> と同じ事をするには、次のようにします:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -405,9 +395,9 @@ argument is passed to <a class="reference internal" href="../using/cmdline.html#
                         title="次の章へ">28.7. <code class="docutils literal"><span class="pre">contextlib</span></code> &#8212; <code class="docutils literal"><span class="pre">with</span></code> 文コンテキスト用ユーティリティ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/warnings.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -429,7 +419,7 @@ argument is passed to <a class="reference internal" href="../using/cmdline.html#
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -444,8 +434,8 @@ argument is passed to <a class="reference internal" href="../using/cmdline.html#
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -453,15 +443,15 @@ argument is passed to <a class="reference internal" href="../using/cmdline.html#
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

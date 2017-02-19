@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>7.2. re — 正規表現操作 &#8212; Python 2.7.x ドキュメント</title>
+    <title>7.2. re — 正規表現操作 &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.x',
+        VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.x ドキュメント 内を検索"
+          title="Python 2.7.13 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.x ドキュメント" href="../contents.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
     <link rel="up" title="7. 文字列処理" href="strings.html" />
     <link rel="next" title="7.3. struct — 文字列データをパックされたバイナリデータとして解釈する" href="struct.html" />
     <link rel="prev" title="7.1. string — 一般的な文字列操作" href="string.html" />
@@ -51,7 +51,7 @@
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -66,8 +66,8 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -93,11 +93,7 @@
 <p>以下で正規表現の形式に関する簡単な説明をしておきます。より詳細な情報やよりやさしい説明に関しては、 <a class="reference internal" href="../howto/regex.html#regex-howto"><span class="std std-ref">正規表現 HOWTO</span></a> を参照下さい。</p>
 <p>正規表現には、特殊文字と通常文字の両方を含められます。 <code class="docutils literal"><span class="pre">'A'</span></code> 、 <code class="docutils literal"><span class="pre">'a'</span></code> 、あるいは <code class="docutils literal"><span class="pre">'0'</span></code> のようなほとんどの通常文字は最も簡単な正規表現になります。こうした文字は、単純にその文字自体にマッチします。通常の文字は連結できるので、 <code class="docutils literal"><span class="pre">last</span></code> は文字列 <code class="docutils literal"><span class="pre">'last'</span></code> とマッチします。 (この節の以降の説明では、正規表現を引用符を使わずに <code class="docutils literal"><span class="pre">この表示スタイル:</span> <span class="pre">special</span> <span class="pre">style</span></code> で書き、マッチ対象の文字列は、 <code class="docutils literal"><span class="pre">'引用符で括って'</span></code> 書きます。)</p>
 <p><code class="docutils literal"><span class="pre">'|'</span></code> や <code class="docutils literal"><span class="pre">'('</span></code> といったいくつかの文字は特殊文字です。特殊文字は通常の文字の種別を表したり、あるいは特殊文字の周辺にある通常の文字に対する解釈方法に影響します。正規表現パターン文字列には、 null byte を含めることができませんが、 <code class="docutils literal"><span class="pre">\number</span></code> 記法や、 <code class="docutils literal"><span class="pre">'\x00'</span></code> などとして指定することができます。</p>
-<p>Repetition qualifiers (<code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">+</span></code>, <code class="docutils literal"><span class="pre">?</span></code>, <code class="docutils literal"><span class="pre">{m,n}</span></code>, etc) cannot be
-directly nested. This avoids ambiguity with the non-greedy modifier suffix
-<code class="docutils literal"><span class="pre">?</span></code>, and with other modifiers in other implementations. To apply a second
-repetition to an inner repetition, parentheses may be used. For example,
-the expression <code class="docutils literal"><span class="pre">(?:a{6})*</span></code> matches any multiple of six <code class="docutils literal"><span class="pre">'a'</span></code> characters.</p>
+<p>繰り返しの修飾子 (<code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">+</span></code>, <code class="docutils literal"><span class="pre">?</span></code>, <code class="docutils literal"><span class="pre">{m,n}</span></code> など) は直接入れ子にはできません。これによって、非貪欲な修飾子の接尾辞 <code class="docutils literal"><span class="pre">?</span></code> や他の実装での他の修飾子についての曖昧さを回避しています。繰り返しのある正規表現の外側にさらに繰り返しを適用するには丸括弧が使えます。例えば、正規表現 <code class="docutils literal"><span class="pre">(?:a{6})*</span></code> は6つの <code class="docutils literal"><span class="pre">'a'</span></code> の0回以上の繰り返しに適合します。</p>
 <p>特殊文字を以下に示します:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">'.'</span></code></dt>
@@ -119,13 +115,8 @@ the expression <code class="docutils literal"><span class="pre">(?:a{6})*</span>
 <dd><p class="first last">直前にある RE に作用して、 RE を 0 回か 1 回繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab?</span></code> は &#8216;a&#8217; あるいは &#8216;ab&#8217; にマッチします。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">*?</span></code>, <code class="docutils literal"><span class="pre">+?</span></code>, <code class="docutils literal"><span class="pre">??</span></code></dt>
-<dd>The <code class="docutils literal"><span class="pre">'*'</span></code>, <code class="docutils literal"><span class="pre">'+'</span></code>, and <code class="docutils literal"><span class="pre">'?'</span></code> qualifiers are all <em class="dfn">greedy</em>; they match
-as much text as possible.  Sometimes this behaviour isn&#8217;t desired; if the RE
-<code class="docutils literal"><span class="pre">&lt;.*&gt;</span></code> is matched against <code class="docutils literal"><span class="pre">&lt;a&gt;</span> <span class="pre">b</span> <span class="pre">&lt;c&gt;</span></code>, it will match the entire
-string, and not just <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.  Adding <code class="docutils literal"><span class="pre">?</span></code> after the qualifier makes it
-perform the match in <em class="dfn">non-greedy</em> or <em class="dfn">minimal</em> fashion; as <em>few</em>
-characters as possible will be matched.  Using the RE <code class="docutils literal"><span class="pre">&lt;.*?&gt;</span></code> will match
-only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</dd>
+<dd><p class="first last"><code class="docutils literal"><span class="pre">'*'</span></code> 、 <code class="docutils literal"><span class="pre">'+'</span></code> 、 <code class="docutils literal"><span class="pre">'?'</span></code> といった修飾子は、すべて <em class="dfn">貪欲 (greedy)</em> マッチ、すなわちできるだけ多くのテキストにマッチするようになっています。時にはこの動作が望ましくない場合もあります。例えば正規表現 <code class="docutils literal"><span class="pre">&lt;.*&gt;</span></code> を <code class="docutils literal"><span class="pre">&lt;a&gt;</span> <span class="pre">b</span> <span class="pre">&lt;c&gt;</span></code> にマッチさせると、 <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> だけにマッチするのではなく全文字列にマッチしてしまいます。 <code class="docutils literal"><span class="pre">?</span></code> を修飾子の後に追加すると、 <em class="dfn">非貪欲 (non-greedy)</em> あるいは <em class="dfn">最小一致 (minimal)</em> のマッチになり、できるだけ <em>少ない</em> 文字数のマッチになります。例えば正規表現 <code class="docutils literal"><span class="pre">&lt;.*?&gt;</span></code> を使うと <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> だけにマッチします。</p>
+</dd>
 <dt><code class="docutils literal"><span class="pre">{m}</span></code></dt>
 <dd><p class="first last">前にある RE の <em>m</em> 回の正確なコピーとマッチすべきであることを指定します；マッチ回数が少なければ、RE 全体ではマッチしません。例えば、 <code class="docutils literal"><span class="pre">a{6}</span></code> は、正確に 6個の <code class="docutils literal"><span class="pre">'a'</span></code> 文字とマッチしますが、 5個ではマッチしません。</p>
 </dd>
@@ -1023,9 +1014,9 @@ only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</
                         title="次の章へ">7.3. <code class="docutils literal"><span class="pre">struct</span></code> &#8212; 文字列データをパックされたバイナリデータとして解釈する</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
-  <li><a href="../bugs.html">Report a Bug</a></li>
+  <li><a href="../bugs.html">バグ報告</a></li>
   <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/re.rst"
-         rel="nofollow">ソースコードを表示</a>
+         rel="nofollow">ソースの表示</a>
   </li>
 </ul>
 
@@ -1047,7 +1038,7 @@ only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
+          <a href="../genindex.html" title="総索引"
              >索引</a></li>
         <li class="right" >
           <a href="../py-modindex.html" title="Pythonモジュール索引"
@@ -1062,8 +1053,8 @@ only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.x</span>
-          <a href="../index.html">Documentation</a> &#187;
+          <span class="version_switcher_placeholder">2.7.13</span>
+          <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
@@ -1071,15 +1062,15 @@ only <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code>.</
       </ul>
     </div>  
     <div class="footer">
-    &copy; <a href="../copyright.html">著作権</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation (translated by Python ドキュメント日本語翻訳プロジェクト).
     <br />
-    The Python Software Foundation is a non-profit corporation.
-    <a href="https://www.python.org/psf/donations/">Please donate.</a>
+    Python Software Foundation は非営利団体です。
+    <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-02-16.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on 2017-02-19.
+    <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
     </div>
 
   </body>

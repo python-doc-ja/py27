@@ -85,23 +85,17 @@
 <div class="deprecated">
 <p><span class="versionmodified">バージョン 2.3 で撤廃: </span><a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージを、 <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></code></a> モジュールよりも優先して使用すべきです。このモジュールは、下位互換性維持のためだけに存在します。</p>
 </div>
-<p>This module defines the class <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a>.  The <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a>
-class implements a basic formatter for creating MIME multi-part files.  It
-doesn&#8217;t seek around the output file nor does it use large amounts of buffer
-space. You must write the parts out in the order that they should occur in the
-final file. <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> does buffer the headers you add, allowing you
-to rearrange their order.</p>
+<p>このモジュールは、クラス <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> を定義します。この <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> クラスは、MIME マルチパートファイルを作成するための基本的なフォーマッタを実装します。これは出力ファイル内をあちこち移動することも、大量のバッファスペースを使うこともありません。最終的にファイルに並ぶべき順番に、パートを書かなければなりません。 <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> は、あなたが追加するヘッダをバッファして、それらの順番を並び替えることができるようにします。</p>
 <dl class="class">
 <dt id="MimeWriter.MimeWriter">
 <em class="property">class </em><code class="descclassname">MimeWriter.</code><code class="descname">MimeWriter</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return a new instance of the <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> class.  The only argument
-passed, <em>fp</em>, is a file object to be used for writing. Note that a
-<a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object could also be used.</p>
+<dd><p><a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> クラスの新しいインスタンスを返します。渡される唯一の引数 <em>fp</em> は、出力先ファイルオブジェクトです。
+<a class="reference internal" href="stringio.html#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトも使えることに注意して下さい。</p>
 </dd></dl>
 
 <div class="section" id="mimewriter-objects">
 <span id="id1"></span><h2>18.8.1. MimeWriter オブジェクト<a class="headerlink" href="#mimewriter-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> instances have the following methods:</p>
+<p><a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> インスタンスには以下のメソッドがあります:</p>
 <dl class="method">
 <dt id="MimeWriter.MimeWriter.addheader">
 <code class="descclassname">MimeWriter.</code><code class="descname">addheader</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.addheader" title="この定義へのパーマリンク">¶</a></dt>
@@ -129,10 +123,7 @@ passed, <em>fp</em>, is a file object to be used for writing. Note that a
 <dl class="method">
 <dt id="MimeWriter.MimeWriter.nextpart">
 <code class="descclassname">MimeWriter.</code><code class="descname">nextpart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MimeWriter.MimeWriter.nextpart" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Returns a new instance of <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> which represents an individual
-part in a multipart message.  This may be used to write the  part as well as
-used for creating recursively complex multipart messages. The message must first
-be initialized with <a class="reference internal" href="#MimeWriter.MimeWriter.startmultipartbody" title="MimeWriter.MimeWriter.startmultipartbody"><code class="xref py py-meth docutils literal"><span class="pre">startmultipartbody()</span></code></a> before using <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><code class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></code></a>.</p>
+<dd><p>マルチパートメッセージの個々のパートを表す、 <a class="reference internal" href="#MimeWriter.MimeWriter" title="MimeWriter.MimeWriter"><code class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></code></a> の新しいインスタンスを返します。これは、そのパートを書くのにも、また複雑なマルチパートを再帰的に作成するのにも使えます。メッセージは、 <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><code class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></code></a> を使う前に最初に <a class="reference internal" href="#MimeWriter.MimeWriter.startmultipartbody" title="MimeWriter.MimeWriter.startmultipartbody"><code class="xref py py-meth docutils literal"><span class="pre">startmultipartbody()</span></code></a> で初期化しなければなりません。</p>
 </dd></dl>
 
 <dl class="method">

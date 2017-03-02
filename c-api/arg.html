@@ -87,46 +87,46 @@
 <p>書式化文字列は、ゼロ個またはそれ以上の &#8220;書式化単位 (format unit)&#8221; から成り立ちます。 1つの書式化単位は1つの Python オブジェクトを表します; 通常は単一の文字か、書式化単位からなる文字列を括弧で囲ったものになります。例外として、括弧で囲われていない書式化単位文字列が単一のアドレス引数に対応する場合がいくつかあります。以下の説明では、引用符のついた形式は書式化単位です; (丸)括弧で囲った部分は書式化単位に対応する Python のオブジェクト型です; [角] 括弧は値をアドレス渡しする際に使う C の変数型です。</p>
 <p>以下のフォーマットはオブジェクトに連続したメモリチャンクとしてアクセスするためのものです。返される unicode や bytes のために生のストレージを用意する必要はありません。また、<code class="docutils literal"><span class="pre">es</span></code>,  <code class="docutils literal"><span class="pre">es#</span></code>, <code class="docutils literal"><span class="pre">et</span></code>, <code class="docutils literal"><span class="pre">et#</span></code> フォーマットの場合を除いて自分でメモリを解放する必要もありません。</p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">s</span></code> (string or Unicode) [const char *]</dt>
+<dt><code class="docutils literal"><span class="pre">s</span></code> (文字列型または Unicode 型) [const char *]</dt>
 <dd><p class="first last">Python の文字列または Unicode オブジェクトを、キャラクタ文字列を指す C のポインタに変換します。変換先の文字列自体の記憶領域を提供する必要はありません; キャラクタ型ポインタ変数のアドレスを渡すと、すでに存在している文字列へのポインタをその変数に記録します。C 文字列は NUL で終端されています。Python の文字列型は、NUL バイトが途中に埋め込まれていてはなりません; もし埋め込まれていれば <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外を送出します。Unicode オブジェクトはデフォルトエンコーディングを使って C 文字列に変換されます。変換に失敗すると <a class="reference internal" href="../library/exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を送出します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">s#</span></code> (string, Unicode or any read buffer compatible object) [const char *, int (or <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code>, see below)]</dt>
+<dt><code class="docutils literal"><span class="pre">s#</span></code> (文字列型、Unicode 型または任意の読み出しバッファ互換型) [const char *, int (または <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code>, 下記参照)]</dt>
 <dd><p class="first">これは <code class="docutils literal"><span class="pre">s</span></code> の変化形で、値を二つの変数に記録します。一つ目の変数はキャラクタ文字列へのポインタで、二つ目はその長さです。この書式化単位の場合には、Python 文字列に null バイトが埋め込まれていてもかまいません。 Unicode オブジェクトの場合、デフォルトエンコーディングでの変換が可能ならば、変換したオブジェクトから文字列へのポインタを返します。その他の読み出しバッファ互換オブジェクトは生の内部データ表現への参照を返します。</p>
 <p class="last">Python 2.5 から、長さの引数の型を、 <code class="file docutils literal"><span class="pre">Python.h</span></code> を include する前に <code class="xref c c-macro docutils literal"><span class="pre">PY_SSIZE_T_CLEAN</span></code> マクロを定義することで制御できるようになりました。もしこのマクロが定義されていた場合、長さは int ではなく <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> になります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">s*</span></code> (string, Unicode, or any buffer compatible object) [Py_buffer]</dt>
+<dt><code class="docutils literal"><span class="pre">s*</span></code> (文字列型、Unicode 型、または任意のバッファ互換オブジェクト) [Py_buffer]</dt>
 <dd><p class="first"><code class="docutils literal"><span class="pre">s#</span></code> と似ていますが、呼び出し元から渡された Py_buffer 構造体に書き込みます。バッファーはロックされるので、呼び出し元はそのバッファーを <code class="docutils literal"><span class="pre">Py_BEGIN_ALLOW_THREADS</span></code> したブロック内でさえも利用することができます。その代わり、呼び出し元には、データを処理した後にその構造体に対して <code class="docutils literal"><span class="pre">PyBuffer_Release</span></code> する責任があります。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">z</span></code> (string, Unicode  or <code class="docutils literal"><span class="pre">None</span></code>) [const char *]</dt>
+<dt><code class="docutils literal"><span class="pre">z</span></code> (文字列型または Unicode 型または <code class="docutils literal"><span class="pre">None</span></code>) [const char *]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s</span></code> に似ていますが、Python オブジェクトは <code class="docutils literal"><span class="pre">None</span></code> でもよく、その場合には C のポインタは <em>NULL</em> にセットされます。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">z#</span></code> (string, Unicode, <code class="docutils literal"><span class="pre">None</span></code> or any read buffer compatible object) [const char *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">z#</span></code> (文字列型、 <code class="docutils literal"><span class="pre">None</span></code> 、または任意の読み出しバッファ互換型) [const char *, int]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s#</span></code> の <code class="docutils literal"><span class="pre">s</span></code> を <code class="docutils literal"><span class="pre">z</span></code> にしたような意味です。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">z*</span></code> (string, Unicode, <code class="docutils literal"><span class="pre">None</span></code> or any buffer compatible object) [Py_buffer]</dt>
+<dt><code class="docutils literal"><span class="pre">z*</span></code> (文字列型、Unicode型、 <code class="docutils literal"><span class="pre">None</span></code> または任意のバッファ互換型) [Py_buffer]</dt>
 <dd><p class="first"><code class="docutils literal"><span class="pre">s*</span></code> の <code class="docutils literal"><span class="pre">s</span></code> を <code class="docutils literal"><span class="pre">z</span></code> にしたような意味です。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">u</span></code> (Unicode) [Py_UNICODE *]</dt>
+<dt><code class="docutils literal"><span class="pre">u</span></code> (Unicode 型) [Py_UNICODE *]</dt>
 <dd><p class="first last">Python の Unicode オブジェクトを、NUL で終端された 16 ビットの Unicode (UTF-16) データに変換します。 <code class="docutils literal"><span class="pre">s</span></code> と同様に、 Unicode データバッファ用に記憶領域を提供する必要はありません; <a class="reference internal" href="unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> 型ポインタ変数のアドレスを渡すと、すでに存在している Unicode データへのポインタをその変数に記録します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">u#</span></code> (Unicode) [Py_UNICODE *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">u#</span></code> (Unicode 型) [Py_UNICODE *, int]</dt>
 <dd><p class="first last">これは <code class="docutils literal"><span class="pre">u</span></code> の変化形で、値を二つの変数に記録します。一つ目の変数は Unicode データバッファへのポインタで、二つ目はその長さです。非 Unicode のオブジェクトの場合、読み出しバッファのポインタを <a class="reference internal" href="unicode.html#c.Py_UNICODE" title="Py_UNICODE"><code class="xref c c-type docutils literal"><span class="pre">Py_UNICODE</span></code></a> 型シーケンスへのポインタと解釈して扱います。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">es</span></code> (string, Unicode or character buffer compatible object) [const char *encoding, char **buffer]</dt>
+<dt><code class="docutils literal"><span class="pre">es</span></code> (文字列型、Unicode 型またはキャラクタバッファ互換型) [const char *encoding, char **buffer]</dt>
 <dd><p class="first">これは <code class="docutils literal"><span class="pre">s</span></code> の変化形で、Unicode オブジェクトや Unicode に変換可能なオブジェクトをキャラクタ型バッファにエンコードするために用いられます。NUL バイトが埋め込まれていない文字列でのみ動作します。</p>
 <p>この書式化単位には二つの引数が必要です。一つ目は入力にのみ用いられ、 NUL で終端されたエンコード名文字列を指す <code class="xref c c-type docutils literal"><span class="pre">const</span> <span class="pre">char*</span></code> 型でなければなりません。指定したエンコード名を Python が理解できない場合には例外を送出します。第二の引数は <code class="xref c c-type docutils literal"><span class="pre">char**</span></code> でなければなりません; この引数が参照しているポインタの値は、引数に指定したテキストの内容が入ったバッファへのポインタになります。テキストは最初の引数に指定したエンコード方式でエンコードされます。</p>
 <p class="last"><a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> を使うと、必要なサイズのバッファを確保し、そのバッファにエンコード後のデータをコピーして、 <em>*buffer</em> がこの新たに確保された記憶領域を指すように変更します。呼び出し側には、確保されたバッファを使い終わった後に <a class="reference internal" href="memory.html#c.PyMem_Free" title="PyMem_Free"><code class="xref c c-func docutils literal"><span class="pre">PyMem_Free()</span></code></a> で解放する責任があります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">et</span></code> (string, Unicode or character buffer compatible object) [const char *encoding, char **buffer]</dt>
+<dt><code class="docutils literal"><span class="pre">et</span></code> (文字列型、Unicode 型またはキャラクタバッファ互換型) [const char *encoding, char **buffer]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">es</span></code> と同じです。ただし、8 ビット幅の文字列オブジェクトをエンコードし直さずに渡します。その代わり、実装では文字列オブジェクトがパラメタに渡したエンコードを使っているものと仮定します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">es#</span></code> (string, Unicode or character buffer compatible object) [const char *encoding, char **buffer, int *buffer_length]</dt>
+<dt><code class="docutils literal"><span class="pre">es#</span></code> (文字列型、Unicode 型またはキャラクタバッファ互換型) [const char *encoding, char **buffer, int *buffer_length]</dt>
 <dd><p class="first"><code class="docutils literal"><span class="pre">s#</span></code> の変化形で、Unicode オブジェクトや Unicode に変換可能なオブジェクトをキャラクタ型バッファにエンコードするために用いられます。 <code class="docutils literal"><span class="pre">es</span></code> 書式化単位と違って、この変化形はバイトが埋め込まれていてもかまいません。</p>
 <p>この書式化単位には三つの引数が必要です。一つ目は入力にのみ用いられ、 NUL で終端されたエンコード名文字列を指す <code class="xref c c-type docutils literal"><span class="pre">const</span> <span class="pre">char*</span></code> 型か <em>NULL</em> でなければなりません。 <em>NULL</em> の場合にはデフォルトエンコーディングを使います。指定したエンコード名を Python が理解できない場合には例外を送出します。第二の引数は <code class="xref c c-type docutils literal"><span class="pre">char**</span></code> でなければなりません; この引数が参照しているポインタの値は、引数に指定したテキストの内容が入ったバッファへのポインタになります。テキストは最初の引数に指定したエンコード方式でエンコードされます。第三の引数は整数へのポインタでなければなりません; ポインタが参照している整数の値は出力バッファ内のバイト数にセットされます。</p>
 <p>この書式化単位の処理には二つのモードがあります:</p>
@@ -134,70 +134,70 @@
 <p><em>*buffer</em> が非 <em>NULL</em> のポインタ (すでにメモリ確保済みのバッファ) を指している場合、 <a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> はこのメモリ位置をバッファとして用い、 <em>*buffer_length</em> の初期値をバッファサイズとして用います。 <a class="reference internal" href="#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal"><span class="pre">PyArg_ParseTuple()</span></code></a> は次にエンコード済みのデータをバッファにコピーして、NUL で終端します。バッファの大きさが足りなければ <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> がセットされます。注意: Python 3.6からは <a class="reference internal" href="../library/exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a>  がセットされます。</p>
 <p class="last">どちらの場合も、 <em>*buffer_length</em> は終端の NUL バイトを含まないエンコード済みデータの長さにセットされます。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">et#</span></code> (string, Unicode or character buffer compatible object) [const char *encoding, char **buffer, int *buffer_length]</dt>
+<dt><code class="docutils literal"><span class="pre">et#</span></code> (文字列型、Unicode 型またはキャラクタバッファ互換型) [const char *encoding, char **buffer, int *buffer_length]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">es#</span></code> と同じです。ただし、文字列オブジェクトをエンコードし直さずに渡します。その代わり、実装では文字列オブジェクトがパラメタに渡したエンコードを使っているものと仮定します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">b</span></code> (integer) [unsigned char]</dt>
+<dt><code class="docutils literal"><span class="pre">b</span></code> (整数型) [unsigned char]</dt>
 <dd><p class="first last">Python の非負の整数を、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></code> 型の小さな符号無し整数に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">B</span></code> (integer) [unsigned char]</dt>
+<dt><code class="docutils literal"><span class="pre">B</span></code> (整数型) [unsigned char]</dt>
 <dd><p class="first">Python の整数を、オーバフローチェックを行わずに、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></code> 型の小さな整数に変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">h</span></code> (integer) [short int]</dt>
+<dt><code class="docutils literal"><span class="pre">h</span></code> (整数型) [short int]</dt>
 <dd><p class="first last">Python の整数を、 C の <code class="xref c c-type docutils literal"><span class="pre">short</span> <span class="pre">int</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">H</span></code> (integer) [unsigned short int]</dt>
+<dt><code class="docutils literal"><span class="pre">H</span></code> (整数型) [unsigned short int]</dt>
 <dd><p class="first">Python の整数を、オーバフローチェックを行わずに、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">short</span> <span class="pre">int</span></code> 型に変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">i</span></code> (integer) [int]</dt>
+<dt><code class="docutils literal"><span class="pre">i</span></code> (整数型) [int]</dt>
 <dd><p class="first last">Python の整数を、 C の <code class="xref c c-type docutils literal"><span class="pre">int</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">I</span></code> (integer) [unsigned int]</dt>
+<dt><code class="docutils literal"><span class="pre">I</span></code> (整数型) [unsigned int]</dt>
 <dd><p class="first">Python の整数を、オーバフローチェックを行わずに、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">int</span></code> 型に変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">l</span></code> (integer) [long int]</dt>
+<dt><code class="docutils literal"><span class="pre">l</span></code> (整数型) [long int]</dt>
 <dd><p class="first last">Python の整数を、 C の <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">int</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">k</span></code> (integer) [unsigned long]</dt>
+<dt><code class="docutils literal"><span class="pre">k</span></code> (整数型) [unsigned long]</dt>
 <dd><p class="first">Python の整数もしくは長整数を、オーバフローチェックを行わずに、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">int</span></code> 型に変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">L</span></code> (integer) [PY_LONG_LONG]</dt>
+<dt><code class="docutils literal"><span class="pre">L</span></code> (整数型) [PY_LONG_LONG]</dt>
 <dd><p class="first last">Python の整数を、 C の <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> 型に変換します。この書式化単位は、 <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> 型 (または Windows の <code class="xref c c-type docutils literal"><span class="pre">_int64</span></code> 型) がサポートされているプラットフォームでのみ利用できます。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">K</span></code> (integer) [unsigned PY_LONG_LONG]</dt>
+<dt><code class="docutils literal"><span class="pre">K</span></code> (整数型) [unsigned PY_LONG_LONG]</dt>
 <dd><p class="first">Python の整数もしくは長整数を、オーバフローチェックを行わずに、 C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">long</span></code> 型に変換します。この書式化単位は、 <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">long</span></code> 型 (または Windows の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">_int64</span></code> 型) がサポートされているプラットフォームでのみ利用できます。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">n</span></code> (integer) [Py_ssize_t]</dt>
+<dt><code class="docutils literal"><span class="pre">n</span></code> (整数型) [Py_ssize_t]</dt>
 <dd><p class="first">Python の整数もしくは長整数を C の <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> 型に変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">c</span></code> (string of length 1) [char]</dt>
+<dt><code class="docutils literal"><span class="pre">c</span></code> (長さ 1 の文字列型) [char]</dt>
 <dd><p class="first last">長さ 1 の文字列として表現されている Python キャラクタを C の <code class="xref c c-type docutils literal"><span class="pre">char</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">f</span></code> (float) [float]</dt>
+<dt><code class="docutils literal"><span class="pre">f</span></code> (浮動小数点数型) [float]</dt>
 <dd><p class="first last">Python の浮動小数点型を、 C の <code class="xref c c-type docutils literal"><span class="pre">float</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">d</span></code> (float) [double]</dt>
+<dt><code class="docutils literal"><span class="pre">d</span></code> (浮動小数点数型) [double]</dt>
 <dd><p class="first last">Python の浮動小数点型を、 C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> 型に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">D</span></code> (complex) [Py_complex]</dt>
+<dt><code class="docutils literal"><span class="pre">D</span></code> (複素数型) [Py_complex]</dt>
 <dd><p class="first last">Python の複素数型を、 C の <a class="reference internal" href="complex.html#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal"><span class="pre">Py_complex</span></code></a> 構造体に変換します。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">O</span></code> (object) [PyObject *]</dt>
@@ -213,28 +213,28 @@
 </div>
 <p class="last">ここで <em>object</em> は変換対象の Python オブジェクトで、 <em>address</em> は <a class="reference internal" href="#c.PyArg_Parse" title="PyArg_Parse"><code class="xref c c-func docutils literal"><span class="pre">PyArg_Parse*()</span></code></a> に渡した <code class="xref c c-type docutils literal"><span class="pre">void*</span></code> 型の引数です。戻り値 <em>status</em> は変換に成功した際に <code class="docutils literal"><span class="pre">1</span></code>,失敗した場合には <code class="docutils literal"><span class="pre">0</span></code> になります。変換に失敗した場合、 <em>converter</em> 関数は <em>address</em> の内容を変更せずに例外を送出しなくてはなりません。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">S</span></code> (string) [PyStringObject *]</dt>
+<dt><code class="docutils literal"><span class="pre">S</span></code> (文字列型) [PyStringObject *]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">O</span></code> に似ていますが、Python オブジェクトは文字列オブジェクトでなければなりません。オブジェクトが文字列オブジェクトでない場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。 C 変数は <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject*</span></code></a> で宣言しておいてもかまいません。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">U</span></code> (Unicode string) [PyUnicodeObject *]</dt>
+<dt><code class="docutils literal"><span class="pre">U</span></code> (Unicode 型) [PyUnicodeObject *]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">O</span></code> に似ていますが、Python オブジェクトは Unicode オブジェクトでなければなりません。オブジェクトが Unicode オブジェクトでない場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。 C 変数は <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal"><span class="pre">PyObject*</span></code></a> で宣言しておいてもかまいません。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">t#</span></code> (read-only character buffer) [char *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">t#</span></code> (読み出し専用キャラクタバッファ) [char *, int]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s#</span></code> に似ていますが、読み出し専用バッファインタフェースを実装している任意のオブジェクトを受理します。 <code class="xref c c-type docutils literal"><span class="pre">char*</span></code> 変数はバッファの最初のバイトを指すようにセットされ、 <code class="xref c c-type docutils literal"><span class="pre">int</span></code> はバッファの長さにセットされます。単一セグメントからなるバッファオブジェクトだけを受理します; それ以外の場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">w</span></code> (read-write character buffer) [char *]</dt>
+<dt><code class="docutils literal"><span class="pre">w</span></code> (読み書き可能なキャラクタバッファ) [char *]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s</span></code> と同様ですが、読み書き可能なバッファインタフェースを実装している任意のオブジェクトを受理します。呼び出し側は何らかの別の手段でバッファの長さを決定するか、あるいは <code class="docutils literal"><span class="pre">w#</span></code> を使わねばなりません。単一セグメントからなるバッファオブジェクトだけを受理します; それ以外の場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">w#</span></code> (read-write character buffer) [char *, Py_ssize_t]</dt>
+<dt><code class="docutils literal"><span class="pre">w#</span></code> (読み書き可能なキャラクタバッファ) [char *, Py_ssize_t]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s#</span></code> に似ていますが、読み書き可能なバッファインタフェースを実装している任意のオブジェクトを受理します。 <code class="xref c c-type docutils literal"><span class="pre">char*</span></code> 変数はバッファの最初のバイトを指すようにセットされ、 <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> はバッファの長さにセットされます。単一セグメントからなるバッファオブジェクトだけを受理します; それ以外の場合には <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">w*</span></code> (read-write byte-oriented buffer) [Py_buffer]</dt>
+<dt><code class="docutils literal"><span class="pre">w*</span></code> (読み書き可能なバイト列バッファ) [Py_buffer]</dt>
 <dd><p class="first"><code class="docutils literal"><span class="pre">s</span></code> に対する <code class="docutils literal"><span class="pre">s*</span></code> と同じ、 <code class="docutils literal"><span class="pre">w</span></code> のバージョンです。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">(items)</span></code> (tuple) [<em>matching-items</em>]</dt>
+<dt><code class="docutils literal"><span class="pre">(items)</span></code> (タプル型) [<em>matching-items</em>]</dt>
 <dd><p class="first">オブジェクトは <em>items</em> に入っている書式化単位の数だけの長さを持つ Python のシーケンス型でなければなりません。各 C 引数は <em>items</em> 内の個々の書式化単位に対応づけできなければなりません。シーケンスの書式化単位は入れ子構造にできます。</p>
 <div class="last admonition note">
 <p class="first admonition-title">注釈</p>
@@ -323,80 +323,75 @@ int <code class="descname">PyArg_UnpackTuple</code><span class="sig-paren">(</sp
 <dt id="c.Py_BuildValue">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">Py_BuildValue</code><span class="sig-paren">(</span>const char<em>&nbsp;*format</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.Py_BuildValue" title="この定義へのパーマリンク">¶</a></dt>
 <dd><em class="refcount">Return value: New reference.</em><p><a class="reference internal" href="#c.PyArg_Parse" title="PyArg_Parse"><code class="xref c c-func docutils literal"><span class="pre">PyArg_Parse*()</span></code></a> ファミリの関数が受け取るのと似た形式の書式化文字列および値列に基づいて、新たな値を生成します。生成した値を返します。エラーの場合には <em>NULL</em> を返します; <em>NULL</em> を返す場合、例外を送出するでしょう。</p>
-<p><a class="reference internal" href="#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> does not always build a tuple.  It builds a tuple
-only if its format string contains two or more format units.  If the format
-string is empty, it returns <code class="docutils literal"><span class="pre">None</span></code>; if it contains exactly one format
-unit, it returns whatever object is described by that format unit.  To
-force it to return a tuple of size <code class="docutils literal"><span class="pre">0</span></code> or one, parenthesize the format
-string.</p>
+<p><a class="reference internal" href="#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> は常にタプルを生成するとは限りません。この関数がタプルを生成するのは、書式化文字列に二つ以上の書式化単位が入っているときだけです。書式化文字列が空の場合、 <code class="docutils literal"><span class="pre">None</span></code>  を返します; 書式化単位が厳密に一つだけ入っている場合、書式化単位で指定されている何らかのオブジェクト単体を返します。サイズが <code class="docutils literal"><span class="pre">0</span></code> や <code class="docutils literal"><span class="pre">1</span></code> のタプルを返すように強制するには、丸括弧で囲われた書式化文字列を使います。</p>
 <p>書式化単位 <code class="docutils literal"><span class="pre">s</span></code> や <code class="docutils literal"><span class="pre">s#</span></code> の場合のように、オブジェクトを構築する際にデータを供給するためにメモリバッファをパラメタとして渡す場合には、指定したデータはコピーされます。 <a class="reference internal" href="#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> が生成したオブジェクトは、呼び出し側が提供したバッファを決して参照しません。別の言い方をすれば、 <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> を呼び出してメモリを確保し、それを <a class="reference internal" href="#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> に渡した場合、コード内で <a class="reference internal" href="#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal"><span class="pre">Py_BuildValue()</span></code></a> が返った後で <code class="xref c c-func docutils literal"><span class="pre">free()</span></code> を呼び出す責任があるということです。</p>
 <p>以下の説明では、引用符のついた形式は書式化単位です; (丸)括弧で囲った部分は書式化単位が返す Python のオブジェクト型です; [角] 括弧は関数に渡す値の C 変数型です。</p>
 <p>書式化文字列内では、(<code class="docutils literal"><span class="pre">s#</span></code> のような書式化単位を除いて) スペース、タブ、コロンおよびコンマは無視されます。これらの文字を使うと、長い書式化文字列をちょっとだけ読みやすくできます。</p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">s</span></code> (string) [char *]</dt>
+<dt><code class="docutils literal"><span class="pre">s</span></code> (文字列型) [char *]</dt>
 <dd><p class="first last">null 終端された C 文字列から Python オブジェクトに変換します。 C 文字列ポインタが <em>NULL</em> の場合、 <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">s#</span></code> (string) [char *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">s#</span></code> (文字列型) [char *, int]</dt>
 <dd><p class="first last">C 文字列とその長さから Python オブジェクトに変換します。 C 文字列ポインタが <em>NULL</em> の場合、長さは無視され <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">z</span></code> (string or <code class="docutils literal"><span class="pre">None</span></code>) [char *]</dt>
+<dt><code class="docutils literal"><span class="pre">z</span></code> (文字列型または <code class="docutils literal"><span class="pre">None</span></code>) [char *]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s</span></code> と同じです。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">z#</span></code> (string or <code class="docutils literal"><span class="pre">None</span></code>) [char *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">z#</span></code> (文字列型または <code class="docutils literal"><span class="pre">None</span></code>) [char *, int]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">s#</span></code> と同じです。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">u</span></code> (Unicode string) [Py_UNICODE *]</dt>
+<dt><code class="docutils literal"><span class="pre">u</span></code> (Unicode 文字列型) [Py_UNICODE *]</dt>
 <dd><p class="first last">null 終端された Unicode (UCS-2 または UCS-4) データのバッファから Python Unicode オブジェクトに変換します。 Unicode バッファポインタが <em>NULL</em> の場合、 <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">u#</span></code> (Unicode string) [Py_UNICODE *, int]</dt>
+<dt><code class="docutils literal"><span class="pre">u#</span></code> (Unicode 文字列型) [Py_UNICODE *, int]</dt>
 <dd><p class="first last">Unicode (UCS-2 または UCS-4) データのバッファとその長さから Python Unicode オブジェクトに変換します。 Unicode バッファポインタが <em>NULL</em> の場合、長さは無視され <code class="docutils literal"><span class="pre">None</span></code> になります。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">i</span></code> (integer) [int]</dt>
+<dt><code class="docutils literal"><span class="pre">i</span></code> (整数型) [int]</dt>
 <dd><p class="first last">通常の C の <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">b</span></code> (integer) [char]</dt>
+<dt><code class="docutils literal"><span class="pre">b</span></code> (整数型) [char]</dt>
 <dd><p class="first last">通常のC の <code class="xref c c-type docutils literal"><span class="pre">char</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">h</span></code> (integer) [short int]</dt>
+<dt><code class="docutils literal"><span class="pre">h</span></code> (整数型) [short int]</dt>
 <dd><p class="first last">通常のC の <code class="xref c c-type docutils literal"><span class="pre">short</span> <span class="pre">int</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">l</span></code> (integer) [long int]</dt>
+<dt><code class="docutils literal"><span class="pre">l</span></code> (整数型) [long int]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">int</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">B</span></code> (integer) [unsigned char]</dt>
+<dt><code class="docutils literal"><span class="pre">B</span></code> (整数型) [unsigned char]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">H</span></code> (integer) [unsigned short int]</dt>
+<dt><code class="docutils literal"><span class="pre">H</span></code> (整数型) [unsigned short int]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">short</span> <span class="pre">int</span></code> を Python の整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">I</span></code> (integer/long) [unsigned int]</dt>
+<dt><code class="docutils literal"><span class="pre">I</span></code> (整数型/長整数型) [unsigned int]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">int</span></code> を Python の整数オブジェクト、あるいは、値が <code class="docutils literal"><span class="pre">sys.maxint</span></code> より大きければ長整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">k</span></code> (integer/long) [unsigned long]</dt>
+<dt><code class="docutils literal"><span class="pre">k</span></code> (整数型/長整数型) [unsigned long]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span></code> を Python の整数オブジェクト、あるいは、値が <code class="docutils literal"><span class="pre">sys.maxint</span></code> より大きければ長整数オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">L</span></code> (long) [PY_LONG_LONG]</dt>
+<dt><code class="docutils literal"><span class="pre">L</span></code> (長整数型) [PY_LONG_LONG]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> を Python の長整数オブジェクトに変換します。 <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> をサポートしているプラットフォームでのみ利用可能です。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">K</span></code> (long) [unsigned PY_LONG_LONG]</dt>
+<dt><code class="docutils literal"><span class="pre">K</span></code> (長整数型) [unsigned PY_LONG_LONG]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">long</span></code> を Python の長整数オブジェクトに変換します。 <code class="xref c c-type docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> をサポートしているプラットフォームでのみ利用可能です。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">n</span></code> (int) [Py_ssize_t]</dt>
+<dt><code class="docutils literal"><span class="pre">n</span></code> (整数型) [Py_ssize_t]</dt>
 <dd><p class="first">C の <code class="xref c c-type docutils literal"><span class="pre">Py_ssize_t</span></code> を Python の整数オブジェクト、あるいは長整数オブジェクトに変換します。</p>
 <div class="last versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
 </dd>
-<dt><code class="docutils literal"><span class="pre">c</span></code> (string of length 1) [char]</dt>
+<dt><code class="docutils literal"><span class="pre">c</span></code> (長さ 1 の文字列型) [char]</dt>
 <dd><p class="first last">文字を表す通常の C の <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を、長さ 1 の Python の文字列オブジェクトに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">d</span></code> (float) [double]</dt>
+<dt><code class="docutils literal"><span class="pre">d</span></code> (浮動小数点数型) [double]</dt>
 <dd><p class="first last">C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> を Python の浮動小数点数に変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">f</span></code> (float) [float]</dt>
+<dt><code class="docutils literal"><span class="pre">f</span></code> (浮動小数点数型) [float]</dt>
 <dd><p class="first last"><code class="docutils literal"><span class="pre">d</span></code> と同じです。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">D</span></code> (complex) [Py_complex *]</dt>
+<dt><code class="docutils literal"><span class="pre">D</span></code> (複素数型) [Py_complex *]</dt>
 <dd><p class="first last">C の <a class="reference internal" href="complex.html#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal"><span class="pre">Py_complex</span></code></a> 構造体を Python の複素数型に変換します。</p>
 </dd>
 <dt><code class="docutils literal"><span class="pre">O</span></code> (object) [PyObject *]</dt>
@@ -411,13 +406,13 @@ string.</p>
 <dt><code class="docutils literal"><span class="pre">O&amp;</span></code> (object) [<em>converter</em>, <em>anything</em>]</dt>
 <dd><p class="first last"><em>anything</em> を <em>converter</em> 関数を介して Python オブジェクトに変換します。この関数は <em>anything</em> (<code class="xref c c-type docutils literal"><span class="pre">void</span> <span class="pre">*</span></code> と互換の型でなければなりません) を引数にして呼び出され、&#8221;新たな&#8221; オブジェクトを返すか、失敗した場合には <em>NULL</em> を返すようにしなければなりません。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">(items)</span></code> (tuple) [<em>matching-items</em>]</dt>
+<dt><code class="docutils literal"><span class="pre">(items)</span></code> (タプル型) [<em>matching-items</em>]</dt>
 <dd><p class="first last">C の値からなる配列を、同じ要素数を持つ Python のタプルに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">[items]</span></code> (list) [<em>matching-items</em>]</dt>
+<dt><code class="docutils literal"><span class="pre">[items]</span></code> (リスト型) [<em>matching-items</em>]</dt>
 <dd><p class="first last">C の値からなる配列を、同じ要素数を持つ Python のリストに変換します。</p>
 </dd>
-<dt><code class="docutils literal"><span class="pre">{items}</span></code> (dictionary) [<em>matching-items</em>]</dt>
+<dt><code class="docutils literal"><span class="pre">{items}</span></code> (辞書型) [<em>matching-items</em>]</dt>
 <dd><p class="first last">C の値からなる配列を Python の辞書に変換します。一連のペアからなる C の値が、それぞれキーおよび値となって辞書に追加されます。</p>
 </dd>
 </dl>

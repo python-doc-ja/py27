@@ -82,38 +82,29 @@
             
   <div class="section" id="module-StringIO">
 <span id="stringio-read-and-write-strings-as-files"></span><h1>7.5. <a class="reference internal" href="#module-StringIO" title="StringIO: Read and write strings as if they were files."><code class="xref py py-mod docutils literal"><span class="pre">StringIO</span></code></a> &#8212; ファイルのように文字列を読み書きする<a class="headerlink" href="#module-StringIO" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>This module implements a file-like class, <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a>, that reads and
-writes a string buffer (also known as <em>memory files</em>).  See the description of
-file objects for operations (section <a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a>). (For
-standard strings, see <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> and <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>.)</p>
+<p>このモジュールは、(<em>メモリファイル</em> としても知られている) 文字列のバッファに対して読み書きを行うファイルのようなクラス、 <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> を実装しています。操作方法についてはファイルオブジェクトの説明を参照してください (<a class="reference internal" href="stdtypes.html#bltin-file-objects"><span class="std std-ref">ファイルオブジェクト</span></a> )。
+(通常の文字列については <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> と <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> を参照してください)</p>
 <dl class="class">
 <dt id="StringIO.StringIO">
 <em class="property">class </em><code class="descclassname">StringIO.</code><code class="descname">StringIO</code><span class="sig-paren">(</span><span class="optional">[</span><em>buffer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>When a <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object is created, it can be initialized to an existing
-string by passing the string to the constructor. If no string is given, the
-<a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> will start empty. In both cases, the initial file position
-starts at zero.</p>
-<p>The <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object can accept either Unicode or 8-bit strings, but
-mixing the two may take some care.  If both are used, 8-bit strings that cannot
-be interpreted as 7-bit ASCII (that use the 8th bit) will cause a
-<a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> to be raised when <a class="reference internal" href="#StringIO.StringIO.getvalue" title="StringIO.StringIO.getvalue"><code class="xref py py-meth docutils literal"><span class="pre">getvalue()</span></code></a> is called.</p>
+<dd><p><a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを作る際に、コンストラクタに文字列を渡してオブジェクトを初期化できます。文字列を渡さない場合、最初は <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> は空です。どちらの場合でも最初のファイル位置は 0 から始まります。</p>
+<p><a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトは Unicode も 8 ビットの文字列も受け付けますが、この 2 つを混ぜることには少し注意が必要です。この 2 つが一緒に使われると、 (8  ビット目を使っていて) 7-bit ASCII として解釈できない 8-bit の文字列は、 <a class="reference internal" href="#StringIO.StringIO.getvalue" title="StringIO.StringIO.getvalue"><code class="xref py py-meth docutils literal"><span class="pre">getvalue()</span></code></a> が呼ばれたときに <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を引き起こします。</p>
 </dd></dl>
 
-<p>The following methods of <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> objects require special mention:</p>
+<p>次にあげる <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトのメソッドには特別な説明が必要です:</p>
 <dl class="method">
 <dt id="StringIO.StringIO.getvalue">
 <code class="descclassname">StringIO.</code><code class="descname">getvalue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO.getvalue" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Retrieve the entire contents of the &#8220;file&#8221; at any time before the
-<a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object&#8217;s <a class="reference internal" href="#StringIO.StringIO.close" title="StringIO.StringIO.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> method is called.  See the note above
-for information about mixing Unicode and 8-bit strings; such mixing can cause
-this method to raise <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a>.</p>
+<dd><p><a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトの <a class="reference internal" href="#StringIO.StringIO.close" title="StringIO.StringIO.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> メソッドが呼ばれる前ならいつでも、 &#8220;file&#8221; の中身全体を返します。
+Unicode と 8 ビット文字列を混ぜることの説明は、上の注意を参照してください;
+この 2 つの文字コードを混ぜると、このメソッドは <a class="reference internal" href="exceptions.html#exceptions.UnicodeError" title="exceptions.UnicodeError"><code class="xref py py-exc docutils literal"><span class="pre">UnicodeError</span></code></a> を引き起こす可能性があります。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="StringIO.StringIO.close">
 <code class="descclassname">StringIO.</code><code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#StringIO.StringIO.close" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Free the memory buffer.  Attempting to do further operations with a closed
-<a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> object will raise a <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a>.</p>
+<dd><p>メモリバッファを解放します。
+close された後の <a class="reference internal" href="#StringIO.StringIO" title="StringIO.StringIO"><code class="xref py py-class docutils literal"><span class="pre">StringIO</span></code></a> オブジェクトを操作しようとすると <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</p>
 </dd></dl>
 
 <p>使い方の例:</p>

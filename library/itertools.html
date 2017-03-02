@@ -282,10 +282,7 @@
 <dl class="function">
 <dt id="itertools.chain">
 <code class="descclassname">itertools.</code><code class="descname">chain</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.chain" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that returns elements from the first iterable until it is
-exhausted, then proceeds to the next iterable, until all of the iterables are
-exhausted.  Used for treating consecutive sequences as a single sequence.
-Roughly equivalent to:</p>
+<dd><p>先頭の iterable の全要素を返し、次に2番目の iterable の全要素を返し、と全 iterable の要素を返すイテレータを作成します。連続したシーケンスを一つのシーケンスとして扱う場合に使用します。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># chain(&#39;ABC&#39;, &#39;DEF&#39;) --&gt; A B C D E F</span>
     <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">:</span>
@@ -433,9 +430,7 @@ Roughly equivalent to:</p>
 <dl class="function">
 <dt id="itertools.cycle">
 <code class="descclassname">itertools.</code><code class="descname">cycle</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.cycle" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator returning elements from the iterable and saving a copy of each.
-When the iterable is exhausted, return elements from the saved copy.  Repeats
-indefinitely.  Roughly equivalent to:</p>
+<dd><p>イテラブルから要素を取得し、そのコピーを保存するイテレータを作成します。イテラブルの全要素を返すと、セーブされたコピーから要素を返します。これを無限に繰り返します。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cycle</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># cycle(&#39;ABCD&#39;) --&gt; A B C D A B C D A B C D ...</span>
     <span class="n">saved</span> <span class="o">=</span> <span class="p">[]</span>
@@ -453,10 +448,7 @@ indefinitely.  Roughly equivalent to:</p>
 <dl class="function">
 <dt id="itertools.dropwhile">
 <code class="descclassname">itertools.</code><code class="descname">dropwhile</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.dropwhile" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that drops elements from the iterable as long as the predicate
-is true; afterwards, returns every element.  Note, the iterator does not produce
-<em>any</em> output until the predicate first becomes false, so it may have a lengthy
-start-up time.  Roughly equivalent to:</p>
+<dd><p>predicate (述語) が真である間は要素を飛ばし、その後は全ての要素を返すイテレータを作成します。このイテレータは、predicate が最初に偽になるまで <em>全く</em> 要素を返さないため、要素を返し始めるまでに長い時間がかかる場合があります。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dropwhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># dropwhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 6 4 1</span>
     <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -484,7 +476,7 @@ start-up time.  Roughly equivalent to:</p>
     <span class="n">uniquekeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal"><span class="pre">groupby()</span></code></a> is roughly equivalent to:</p>
+<p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal"><span class="pre">groupby()</span></code></a> はおよそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">groupby</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1"># [k for k, g in groupby(&#39;AAAABBBCCDAABBB&#39;)] --&gt; A B C D A B</span>
     <span class="c1"># [list(g) for k, g in groupby(&#39;AAAABBBCCD&#39;)] --&gt; AAAA BBB CC D</span>
@@ -534,9 +526,7 @@ that are true. Roughly equivalent to:</p>
 <dl class="function">
 <dt id="itertools.ifilterfalse">
 <code class="descclassname">itertools.</code><code class="descname">ifilterfalse</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.ifilterfalse" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that filters elements from iterable returning only those for
-which the predicate is <code class="docutils literal"><span class="pre">False</span></code>. If <em>predicate</em> is <code class="docutils literal"><span class="pre">None</span></code>, return the items
-that are false. Roughly equivalent to:</p>
+<dd><p>iteable から predicate が <code class="docutils literal"><span class="pre">False</span></code> となる要素だけを返すイテレータを作成します。<em>predicate</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、偽の要素だけを返します。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ifilterfalse</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># ifilterfalse(lambda x: x%2, range(10)) --&gt; 0 2 4 6 8</span>
     <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -576,15 +566,7 @@ useful way of supplying arguments to <a class="reference internal" href="#iterto
 <code class="descclassname">itertools.</code><code class="descname">islice</code><span class="sig-paren">(</span><em>iterable</em>, <em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.islice" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descclassname">itertools.</code><code class="descname">islice</code><span class="sig-paren">(</span><em>iterable</em>, <em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
-<dd><p>Make an iterator that returns selected elements from the iterable. If <em>start</em> is
-non-zero, then elements from the iterable are skipped until start is reached.
-Afterward, elements are returned consecutively unless <em>step</em> is set higher than
-one which results in items being skipped.  If <em>stop</em> is <code class="docutils literal"><span class="pre">None</span></code>, then iteration
-continues until the iterator is exhausted, if at all; otherwise, it stops at the
-specified position.  Unlike regular slicing, <a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal"><span class="pre">islice()</span></code></a> does not support
-negative values for <em>start</em>, <em>stop</em>, or <em>step</em>.  Can be used to extract related
-fields from data where the internal structure has been flattened (for example, a
-multi-line report may list a name field on every third line).  Roughly equivalent to:</p>
+<dd><p>iterable から要素を選択して返すイテレータを作成します。 <em>start</em> が0でない場合、iterable の要素は start に達するまでスキップされます。その後、要素が順に返されます。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="c1"># islice(&#39;ABCDEFG&#39;, 2) --&gt; A B</span>
     <span class="c1"># islice(&#39;ABCDEFG&#39;, 2, 4) --&gt; C D</span>
@@ -712,12 +694,10 @@ Iteration continues until the longest iterable is exhausted.  Roughly equivalent
 <dt id="itertools.product">
 <code class="descclassname">itertools.</code><code class="descname">product</code><span class="sig-paren">(</span><em>*iterables</em><span class="optional">[</span>, <em>repeat</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.product" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>入力イテラブルの直積(Cartesian product)です。</p>
-<p>Roughly equivalent to nested for-loops in a generator expression. For example,
-<code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">B)</span></code> returns the same as <code class="docutils literal"><span class="pre">((x,y)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">B)</span></code>.</p>
+<p>ジェネレータ式の入れ子になった for ループとおよそ等価です。たとえば <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">B)</span></code> は <code class="docutils literal"><span class="pre">((x,y)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">B)</span></code> と同じものを返します。</p>
 <p>入れ子ループは走行距離計と同じように右端の要素がイテレーションごとに更新されていきます。このパターンは辞書式順序を作り出し、入力のイテレート可能オブジェクトたちがソートされていれば、直積タプルもソートされた順に吐き出されます。</p>
 <p>イテラブル自身との直積を計算するためには、オプションの <em>repeat</em> キーワード引数に繰り返し回数を指定します。たとえば <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">repeat=4)</span></code> は  <code class="docutils literal"><span class="pre">product(A,</span> <span class="pre">A,</span> <span class="pre">A,</span> <span class="pre">A)</span></code> と同じ意味です。</p>
-<p>This function is roughly equivalent to the following code, except that the
-actual implementation does not build up intermediate results in memory:</p>
+<p>この関数は以下のコードとおよそ等価ですが、実際の実装ではメモリ中に中間結果を作りません:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
     <span class="c1"># product(&#39;ABCD&#39;, &#39;xy&#39;) --&gt; Ax Ay Bx By Cx Cy Dx Dy</span>
     <span class="c1"># product(range(2), repeat=3) --&gt; 000 001 010 011 100 101 110 111</span>
@@ -1079,7 +1059,7 @@ predicate is true.  Roughly equivalent to:</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-01.
+    Last updated on 2017-03-02.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

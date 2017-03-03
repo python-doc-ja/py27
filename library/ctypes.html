@@ -1262,12 +1262,7 @@ POSIX システムでは RTLD_NOW が常に追加され、設定変更はでき�
 <dt id="ctypes._FuncPtr.argtypes">
 <code class="descname">argtypes</code><a class="headerlink" href="#ctypes._FuncPtr.argtypes" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>関数が受け取る引数の型を指定するために ctypes 型のタプルを代入します。 <code class="docutils literal"><span class="pre">stdcall</span></code> 呼び出し規約をつかう関数はこのタプルの長さと同じ数の引数で呼び出されます。その上、 C 呼び出し規約をつかう関数は追加の不特定の引数も取ります。</p>
-<p>When a foreign function is called, each actual argument is passed to the
-<code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> class method of the items in the <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a>
-tuple, this method allows adapting the actual argument to an object that
-the foreign function accepts.  For example, a <a class="reference internal" href="#ctypes.c_char_p" title="ctypes.c_char_p"><code class="xref py py-class docutils literal"><span class="pre">c_char_p</span></code></a> item in
-the <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> tuple will convert a unicode string passed as
-argument into a byte string using ctypes conversion rules.</p>
+<p>外部関数が呼ばれたとき、それぞれの実引数は <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> タプルの要素の <code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> クラスメソッドへ渡されます。このメソッドは実引数を外部関数が受け取るオブジェクトに合わせて変えられるようにします。例えば、 <a class="reference internal" href="#ctypes._FuncPtr.argtypes" title="ctypes._FuncPtr.argtypes"><code class="xref py py-attr docutils literal"><span class="pre">argtypes</span></code></a> タプルの <a class="reference internal" href="#ctypes.c_char_p" title="ctypes.c_char_p"><code class="xref py py-class docutils literal"><span class="pre">c_char_p</span></code></a> 要素は、 ctypes 変換規則にしたがって引数として渡された Unicode 文字列をバイト文字列へ変換します。</p>
 <p>新: ctypes 型でない要素を argtypes に入れることができますが、個々の要素は引数として使える値 (整数、文字列、 ctypes インスタンス) を返す <code class="xref py py-meth docutils literal"><span class="pre">from_param()</span></code> メソッドを持っていなければなりません。これにより関数パラメータとしてカスタムオブジェクトを適合するように変更できるアダプタが定義可能となります。</p>
 </dd></dl>
 
@@ -1478,13 +1473,8 @@ argument into a byte string using ctypes conversion rules.</p>
 <code class="descclassname">ctypes.</code><code class="descname">create_unicode_buffer</code><span class="sig-paren">(</span><em>init_or_size</em><span class="optional">[</span>, <em>size</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ctypes.create_unicode_buffer" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この関数は変更可能な Unicode 文字バッファを作成します。返されるオブジェクトは <a class="reference internal" href="#ctypes.c_wchar" title="ctypes.c_wchar"><code class="xref py py-class docutils literal"><span class="pre">c_wchar</span></code></a> の ctypes 配列です。</p>
 <p><em>init_or_size</em> は配列のサイズを指定する整数もしくは配列要素を初期化するために使われる Unicode 文字列です。</p>
-<p>If a unicode string is specified as first argument, the buffer is made one item
-larger than the length of the string so that the last element in the array is a
-NUL termination character. An integer can be passed as second argument which
-allows specifying the size of the array if the length of the string should not
-be used.</p>
-<p>If the first parameter is an 8-bit string, it is converted into a unicode string
-according to ctypes conversion rules.</p>
+<p>第一引数として Unicode 文字列が指定された場合は、バッファが文字列の長さより一要素分大きく作られます。それは配列の最後の要素が NUL 終端文字であるためです。文字列の長さを使うべきでない場合は、配列のサイズを指定するために整数を第二引数として渡すことができます。</p>
+<p>第一引数が 8 ビット文字列ならば、 ctypes 変換規則にしたがい Unicode 文字列へ変換されます。</p>
 </dd></dl>
 
 <dl class="function">
@@ -1969,10 +1959,7 @@ according to ctypes conversion rules.</p>
 <dt id="ctypes.Structure._anonymous_">
 <code class="descname">_anonymous_</code><a class="headerlink" href="#ctypes.Structure._anonymous_" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>無名 (匿名) フィールドの名前が並べあげられたオプションのシーケンス。 <a class="reference internal" href="#ctypes.Structure._fields_" title="ctypes.Structure._fields_"><code class="xref py py-attr docutils literal"><span class="pre">_fields_</span></code></a> が代入されたとき、 <a class="reference internal" href="#ctypes.Structure._anonymous_" title="ctypes.Structure._anonymous_"><code class="xref py py-attr docutils literal"><span class="pre">_anonymous_</span></code></a> がすでに定義されていなければなりません。そうでなければ、何ら影響はありません。</p>
-<p>The fields listed in this variable must be structure or union type fields.
-<a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> will create descriptors in the structure type that allow
-accessing the nested fields directly, without the need to create the
-structure or union field.</p>
+<p>この変数に並べあげられたフィールドは構造体型もしくは共用体型フィールドでなければなりません。構造体フィールドまたは共用体フィールドを作る必要なく、入れ子になったフィールドに直接アクセスできるようにするために、 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は構造体型の中に記述子を作成します。</p>
 <p>型の例です (Windows):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">_U</span><span class="p">(</span><span class="n">Union</span><span class="p">):</span>
     <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;lptdesc&quot;</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">TYPEDESC</span><span class="p">)),</span>

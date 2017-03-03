@@ -431,8 +431,7 @@ Py_ssize_t <code class="descname">PyUnicode_GetSize</code><span class="sig-paren
 <dl class="function">
 <dt id="c.PyUnicode_FromEncodedObject">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyUnicode_FromEncodedObject</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em>, const char<em>&nbsp;*encoding</em>, const char<em>&nbsp;*errors</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_FromEncodedObject" title="この定義へのパーマリンク">¶</a></dt>
-<dd><em class="refcount">Return value: New reference.</em><p>Coerce an encoded object <em>obj</em> to a Unicode object and return a reference with
-incremented refcount.</p>
+<dd><em class="refcount">Return value: New reference.</em><p>あるエンコード方式でエンコードされたオブジェクト <em>obj</em> を Unicode オブジェクトに型変換して、参照カウントをインクリメントして返します。</p>
 <p>文字列やその他の char バッファ互換オブジェクトの場合、オブジェクトは <em>encoding</em> に従ってデコードされます。このとき <em>error</em> で定義されたエラー処理を用います。これら二つの引数は <em>NULL</em> にでき、その場合デフォルト値が使われます (詳細は次の節を参照してください)</p>
 <p>その他のUnicodeオブジェクトを含むオブジェクトは <a class="reference internal" href="../library/exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> 例外を引き起こします。</p>
 <p>この API は、エラーが生じたときには <em>NULL</em> を返します。呼び出し側は返されたオブジェクトに対し参照カウンタを 1 つ減らす (decref) する責任があります。</p>
@@ -461,15 +460,7 @@ incremented refcount.</p>
 <dl class="function">
 <dt id="c.PyUnicode_AsWideChar">
 Py_ssize_t <code class="descname">PyUnicode_AsWideChar</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyUnicodeObject" title="PyUnicodeObject">PyUnicodeObject</a><em>&nbsp;*unicode</em>, wchar_t<em>&nbsp;*w</em>, Py_ssize_t<em>&nbsp;size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_AsWideChar" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Copy the Unicode object contents into the <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> buffer <em>w</em>.  At most
-<em>size</em> <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> characters are copied (excluding a possibly trailing
-0-termination character).  Return the number of <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> characters
-copied or <code class="docutils literal"><span class="pre">-1</span></code> in case of an error.  Note that the resulting <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code>
-string may or may not be 0-terminated.  It is the responsibility of the caller
-to make sure that the <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> string is 0-terminated in case this is
-required by the application. Also, note that the <code class="xref c c-type docutils literal"><span class="pre">wchar_t*</span></code> string
-might contain null characters, which would cause the string to be truncated
-when used with most C functions.</p>
+<dd><p>Unicode オブジェクトの内容を <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> バッファ <em>w</em> にコピーします。最大で <em>size</em> 個の <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> 文字を (末尾の 0-終端文字を除いて) コピーします。コピーした <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> 文字の個数を返します。エラーの時には <code class="docutils literal"><span class="pre">-1</span></code> を返します。 <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> 文字列は 0-終端されている場合も、されていない場合もあります。関数の呼び出し側の責任で、アプリケーションの必要に応じて <code class="xref c c-type docutils literal"><span class="pre">wchar_t</span></code> 文字列を 0-終端してください。また、結果の <code class="xref c c-type docutils literal"><span class="pre">wchar_t*</span></code> 文字列には文字列の途中にも nul 文字が含まれうることにも注意してください。これはほとんどの C 関数で文字列を切り捨ててしまう結果になります。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span>この関数は以前は <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を返し、 <em>size</em> の型に <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を利用していました。この変更により、 64bit システムを正しくサポートするには修正が必要になります。</p>
 </div>
@@ -1107,7 +1098,7 @@ int <code class="descname">PyUnicode_Contains</code><span class="sig-paren">(</s
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-02.
+    Last updated on 2017-03-03.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

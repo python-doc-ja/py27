@@ -394,10 +394,7 @@
 <dl class="function">
 <dt id="itertools.compress">
 <code class="descclassname">itertools.</code><code class="descname">compress</code><span class="sig-paren">(</span><em>data</em>, <em>selectors</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.compress" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that filters elements from <em>data</em> returning only those that
-have a corresponding element in <em>selectors</em> that evaluates to <code class="docutils literal"><span class="pre">True</span></code>.
-Stops when either the <em>data</em> or <em>selectors</em> iterables has been exhausted.
-Roughly equivalent to:</p>
+<dd><p><em>data</em> の要素から <em>selectors</em> の対応する要素が <code class="docutils literal"><span class="pre">True</span></code> と評価されるものだけをフィルタしたイテレータを作ります。<em>data</em> と <em>selectors</em> のいずれかが尽きたときに止まります。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compress</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">):</span>
     <span class="c1"># compress(&#39;ABCDEF&#39;, [1,0,1,0,1,1]) --&gt; A C E F</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span><span class="p">)</span>
@@ -610,9 +607,7 @@ lock-step iteration over several iterables at a time.  Roughly equivalent to:</p
 <dl class="function">
 <dt id="itertools.izip_longest">
 <code class="descclassname">itertools.</code><code class="descname">izip_longest</code><span class="sig-paren">(</span><em>*iterables</em><span class="optional">[</span>, <em>fillvalue</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.izip_longest" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that aggregates elements from each of the iterables. If the
-iterables are of uneven length, missing values are filled-in with <em>fillvalue</em>.
-Iteration continues until the longest iterable is exhausted.  Roughly equivalent to:</p>
+<dd><p>各 iterable の要素をまとめるイテレータを作成します。iterable の長さが違う場合、足りない値は <em>fillvalue</em> で埋められます。最も長い itarable が尽きるまでイテレーションします。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ZipExhausted</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -760,8 +755,7 @@ between <code class="docutils literal"><span class="pre">function(a,b)</span></c
 <dl class="function">
 <dt id="itertools.takewhile">
 <code class="descclassname">itertools.</code><code class="descname">takewhile</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.takewhile" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that returns elements from the iterable as long as the
-predicate is true.  Roughly equivalent to:</p>
+<dd><p>predicate が真である限り iterable から要素を返すイテレータを作成します。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">takewhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># takewhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 1 4</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
@@ -1059,7 +1053,7 @@ predicate is true.  Roughly equivalent to:</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-03.
+    Last updated on 2017-03-04.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

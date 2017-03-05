@@ -587,8 +587,7 @@
 <span class="go">&#39;0x1L&#39;</span>
 </pre></div>
 </div>
-<p>If x is not a Python <a class="reference internal" href="#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> or <a class="reference internal" href="#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> object, it has to
-define a __hex__() method that returns a string.</p>
+<p>x が Python の <a class="reference internal" href="#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> オブジェクトでも <a class="reference internal" href="#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> オブジェクトでもない場合、文字列を返す <a class="reference internal" href="../reference/datamodel.html#object.__hex__" title="object.__hex__"><code class="xref py py-meth docutils literal"><span class="pre">__hex__()</span></code></a> メソッドを定義していなければなりません。</p>
 <p>16を底として16進数文字列を整数に変換するには <a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a> も参照してください。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -623,17 +622,7 @@ define a __hex__() method that returns a string.</p>
 <dt>
 <em class="property">class </em><code class="descname">int</code><span class="sig-paren">(</span><em>x</em>, <em>base=10</em><span class="sig-paren">)</span></dt>
 <dd><p>数値または文字列 <em>x</em> から生成された整数を返します。引数が与えられない場合には <code class="docutils literal"><span class="pre">0</span></code> を返します。  <em>x</em> が数値である場合は、通常整数、長整数、または浮動小数点数を返します。浮動小数点数については、これは 0 に向かう方向へ切り詰めます。引数が整数で通常整数の範囲外であれば、長整数を代わりに返します。</p>
-<p>If <em>x</em> is not a number or if <em>base</em> is given, then <em>x</em> must be a string or
-Unicode object representing an <a class="reference internal" href="../reference/lexical_analysis.html#integers"><span class="std std-ref">integer literal</span></a> in radix
-<em>base</em>.  Optionally, the literal can be
-preceded by <code class="docutils literal"><span class="pre">+</span></code> or <code class="docutils literal"><span class="pre">-</span></code> (with no space in between) and surrounded by
-whitespace.  A base-n literal consists of the digits 0 to n-1, with <code class="docutils literal"><span class="pre">a</span></code>
-to <code class="docutils literal"><span class="pre">z</span></code> (or <code class="docutils literal"><span class="pre">A</span></code> to <code class="docutils literal"><span class="pre">Z</span></code>) having
-values 10 to 35.  The default <em>base</em> is 10. The allowed values are 0 and 2&#8211;36.
-Base-2, -8, and -16 literals can be optionally prefixed with <code class="docutils literal"><span class="pre">0b</span></code>/<code class="docutils literal"><span class="pre">0B</span></code>,
-<code class="docutils literal"><span class="pre">0o</span></code>/<code class="docutils literal"><span class="pre">0O</span></code>/<code class="docutils literal"><span class="pre">0</span></code>, or <code class="docutils literal"><span class="pre">0x</span></code>/<code class="docutils literal"><span class="pre">0X</span></code>, as with integer literals in code.
-Base 0 means to interpret the string exactly as an integer literal, so that
-the actual base is 2, 8, 10, or 16.</p>
+<p><em>x</em> が数値でない場合、あるいは <em>base</em> が与えられた場合、 <em>x</em> は基数 <em>base</em> の <a class="reference internal" href="../reference/lexical_analysis.html#integers"><span class="std std-ref">integer literal</span></a> で表された、バイト文字列または Unicode 文字列、 のインスタンスでなければなりません。オプションで、リテラルの前に <code class="docutils literal"><span class="pre">+</span></code> あるいは <code class="docutils literal"><span class="pre">-</span></code> を (中間のスペースなしで) 付けることができます。また、リテラルは余白で囲むことができます。基数 n のリテラルの各桁は 0 から n-1 の数を、値 10-35 を持つ <code class="docutils literal"><span class="pre">a</span></code> から <code class="docutils literal"><span class="pre">z</span></code> (または <code class="docutils literal"><span class="pre">A</span></code> から <code class="docutils literal"><span class="pre">Z</span></code>) を含んで表現します。デフォルトの <em>base</em> は 10 です。許される値は 0 と 2-36 です。基数 2, 8, 16 のリテラルは、オプションでコード中の整数リテラルのように  <code class="docutils literal"><span class="pre">0b</span></code>/<code class="docutils literal"><span class="pre">0B</span></code>, <code class="docutils literal"><span class="pre">0o</span></code>/<code class="docutils literal"><span class="pre">0O</span></code>/<code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">0x</span></code>/<code class="docutils literal"><span class="pre">0X</span></code> を前に付けることができます。基数 0 を渡すと、文字列を、実際の基数 2, 8, 10, 16 のどれかで整数リテラルとして正確に解釈します。</p>
 <p>整数型については、 <a class="reference internal" href="stdtypes.html#typesnumeric"><span class="std std-ref">数値型 int, float, long, complex</span></a> も参照下さい。</p>
 </dd></dl>
 
@@ -1118,13 +1107,7 @@ iterable の最小の要素が返されます。
 <dt>
 <em class="property">class </em><code class="descname">type</code><span class="sig-paren">(</span><em>name</em>, <em>bases</em>, <em>dict</em><span class="sig-paren">)</span></dt>
 <dd><p id="index-7">一つの引数を取り、 <em>object</em> の型を返します。戻り値は型オブジェクトです。オブジェクトの型の検査には <a class="reference internal" href="#isinstance" title="isinstance"><code class="xref py py-func docutils literal"><span class="pre">isinstance()</span></code></a> 組み込み関数を使うことが推奨されます。</p>
-<p>With three arguments, return a new type object.  This is essentially a
-dynamic form of the <a class="reference internal" href="../reference/compound_stmts.html#class"><code class="xref std std-keyword docutils literal"><span class="pre">class</span></code></a> statement. The <em>name</em> string is the
-class name and becomes the <a class="reference internal" href="stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> attribute; the <em>bases</em> tuple
-itemizes the base classes and becomes the <a class="reference internal" href="stdtypes.html#class.__bases__" title="class.__bases__"><code class="xref py py-attr docutils literal"><span class="pre">__bases__</span></code></a> attribute;
-and the <em>dict</em> dictionary is the namespace containing definitions for class
-body and becomes the <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>  attribute.  For example, the
-following two statements create identical <a class="reference internal" href="#type" title="type"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a> objects:</p>
+<p>引数が 3 つの場合、新しい型オブジェクトを返します。本質的には <a class="reference internal" href="../reference/compound_stmts.html#class"><code class="xref std std-keyword docutils literal"><span class="pre">class</span></code></a> 文の動的な形式です。 <em>name</em> 文字列はクラス名で、 <a class="reference internal" href="stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> 属性になります。 <em>bases</em> タプルは基底クラスの羅列で、 <a class="reference internal" href="stdtypes.html#class.__bases__" title="class.__bases__"><code class="xref py py-attr docutils literal"><span class="pre">__bases__</span></code></a> 属性になります。 <em>dict</em> 辞書はクラス本体の定義を含む名前空間で、 <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性になります。たとえば、以下の二つの文は同じ <a class="reference internal" href="#type" title="type"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a> オブジェクトを作ります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">...</span>
@@ -1167,10 +1150,7 @@ following two statements create identical <a class="reference internal" href="#t
 <dt id="vars">
 <code class="descname">vars</code><span class="sig-paren">(</span><span class="optional">[</span><em>object</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#vars" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>モジュール、クラス、インスタンス、あるいはそれ以外の <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を持つオブジェクトの、 <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を返します。</p>
-<p>Objects such as modules and instances have an updateable <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a>
-attribute; however, other objects may have write restrictions on their
-<a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> attributes (for example, new-style classes use a
-dictproxy to prevent direct dictionary updates).</p>
+<p>モジュールやインスタンスのようなオブジェクトには、更新可能な <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性があります。しかし、それ以外のオブジェクトでは <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性への書き込みに制限があるかもしれません。(例えば新スタイルクラスは、辞書を直接更新されることを防ぐために dictproxy を使っています。)</p>
 <p>引数がなければ、<a class="reference internal" href="#vars" title="vars"><code class="xref py py-func docutils literal"><span class="pre">vars()</span></code></a> は <a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a> のように振る舞います。ただし、辞書 locals への更新は無視されるため、辞書 locals は読み出し時のみ有用であることに注意してください。</p>
 </dd></dl>
 

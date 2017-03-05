@@ -105,9 +105,8 @@
 <ul class="simple">
 <li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">geturl()</span></code> &#8212; 取得されたリソースの URL を返します。 主に、リダイレクトが発生したかどうかを確認するために利用します。</p>
 </li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> &#8212; return the meta-information of the page, such as headers,
-in the form of an <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> instance
-(see <a class="reference external" href="https://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a>)</li>
+<li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> &#8212; 取得されたページのヘッダーなどのメタ情報を、 <a class="reference internal" href="mimetools.html#mimetools.Message" title="mimetools.Message"><code class="xref py py-class docutils literal"><span class="pre">mimetools.Message</span></code></a> インスタンスとして返します。 (<a class="reference external" href="https://www.cs.tut.fi/~jkorpela/http.html">Quick Reference to HTTP Headers</a> を参照してください)</p>
+</li>
 <li><p class="first"><code class="xref py py-meth docutils literal"><span class="pre">getcode()</span></code> &#8212; レスポンスの HTTP ステータスコードを返します。</p>
 </li>
 </ul>
@@ -174,13 +173,7 @@ in the form of an <a class="reference internal" href="mimetools.html#mimetools.M
 <dd><p>このクラスは URL リクエストを抽象化したものです。</p>
 <p><em>url</em> は有効な URL を指す文字列でなくてはなりません。</p>
 <p><em>data</em> はサーバに送信する追加のデータを示す文字列か、そのようなデータが無ければ <em>None</em> を指定します。現時点でHTTP リクエストは <em>data</em> をサポートする唯一のリクエスト形式です; <em>data</em> パラメタが指定が指定された場合、HTTP リクエストは GET でなく POST になります。 <em>data</em> は標準的な <em class="mimetype">application/x-www-form-urlencoded</em> 形式のバッファでなくてはなりません。 <a class="reference internal" href="urllib.html#urllib.urlencode" title="urllib.urlencode"><code class="xref py py-func docutils literal"><span class="pre">urllib.urlencode()</span></code></a> 関数はマップ型か2タプルのシーケンスを取り、この形式の文字列を返します。</p>
-<p><em>headers</em> should be a dictionary, and will be treated as if <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a>
-was called with each key and value as arguments.  This is often used to &#8220;spoof&#8221;
-the <code class="docutils literal"><span class="pre">User-Agent</span></code> header value, which is used by a browser to identify itself &#8211;
-some HTTP servers only allow requests coming from common browsers as opposed
-to scripts.  For example, Mozilla Firefox may identify itself as <code class="docutils literal"><span class="pre">&quot;Mozilla/5.0</span>
-<span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code>, while <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a>&#8216;s
-default user agent string is <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (on Python 2.6).</p>
+<p><em>headers</em> は辞書である必要があり、辞書のそれぞれのキーと値を引数として <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a> を呼び出したのと同じように扱われます。この引数は、多くの場合ブラウザーが何であるかを特定する <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーの値を &#8220;偽装&#8221; するために用いられます。これは一部の HTTP サーバーが、スクリプトからのアクセスを禁止するために一般的なブラウザーの <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーしか許可しないためです。例えば、 Mozilla Firefox は <code class="docutils literal"><span class="pre">User-Agent</span></code> に <code class="docutils literal"><span class="pre">&quot;Mozilla/5.0</span> <span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code> のように設定し、 <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> はデフォルトで <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (Python 2.6の場合) と設定します。</p>
 <p>最後の二つの引数は、サードパーティの HTTP クッキーを正しく扱いたい場合にのみ関係してきます:</p>
 <p><em>origin_req_host</em> は、 <span class="target" id="index-18"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> で定義されている元のトランザクションにおけるリクエストホスト (request-host of the origin transaction) です。デフォルトの値は <code class="docutils literal"><span class="pre">cookielib.request_host(self)</span></code> です。 この値は、ユーザによって開始された元々のリクエストにおけるホスト名や IP アドレスです。例えば、もしリクエストがある HTML ドキュメント内の画像を指していれば、この値は画像を含んでいるページへのリクエストにおけるリクエストホストになるはずです。</p>
 <p><em>unverifiable</em> は、 <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> の定義において、該当するリクエストが証明不能 (unverifiable) であるかどうかを示します。デフォルトの値は <code class="docutils literal"><span class="pre">False</span></code> です。証明不能なリクエストとは、ユーザが受け入れの可否を選択できないような URL を持つリクエストのことです。例えば、リクエストが HTML ドキュメント中の画像であり、ユーザがこの画像を自動的に取得するか どうかを選択できない場合には、証明不能フラグは True になります。</p>
@@ -224,8 +217,7 @@ default user agent string is <code class="docutils literal"><span class="pre">&q
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last"><code class="docutils literal"><span class="pre">HTTP_PROXY</span></code> will be ignored if a variable <code class="docutils literal"><span class="pre">REQUEST_METHOD</span></code> is set;
-see the documentation on <a class="reference internal" href="urllib.html#urllib.getproxies" title="urllib.getproxies"><code class="xref py py-func docutils literal"><span class="pre">getproxies()</span></code></a>.</p>
+<p class="last">変数 <code class="docutils literal"><span class="pre">REQUEST_METHOD</span></code> が設定されている場合、 <code class="docutils literal"><span class="pre">HTTP_PROXY</span></code> は無視されます; <a class="reference internal" href="urllib.html#urllib.getproxies" title="urllib.getproxies"><code class="xref py py-func docutils literal"><span class="pre">getproxies()</span></code></a> のドキュメンテーションを参照してください。</p>
 </div>
 </div></blockquote>
 </dd></dl>

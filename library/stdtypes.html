@@ -234,16 +234,7 @@
 <div class="section" id="numeric-types-int-float-long-complex">
 <span id="typesnumeric"></span><h2>5.4. 数値型 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-class docutils literal"><span class="pre">complex</span></code></a><a class="headerlink" href="#numeric-types-int-float-long-complex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-13">4 つの異なる数値型があります: <em class="dfn">通常の整数型</em>, <em class="dfn">長整数型</em>, <em class="dfn">浮動小数点型</em>, <em class="dfn">複素数型</em> です。さらに、真偽値(Boolean)型も通常の整数型のサブタイプです。通常の整数 (単に <em class="dfn">整数型</em> とも呼ばれます) は C言語の <code class="xref c c-type docutils literal"><span class="pre">long</span></code> 型を使って実装されており、少なくとも 32 ビットの精度があります (<code class="docutils literal"><span class="pre">sys.maxint</span></code> は常に通常の整数の各プラットフォームにおける最大値にセットされており、最小値は <code class="docutils literal"><span class="pre">-sys.maxint</span> <span class="pre">-</span> <span class="pre">1</span></code> になります)。長整数型には精度の制限がありません。浮動小数点型はたいていは C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> を使って実装されています; あなたのプログラムが動作するマシンでの浮動小数点型の精度と内部表現は、 <a class="reference internal" href="sys.html#sys.float_info" title="sys.float_info"><code class="xref py py-data docutils literal"><span class="pre">sys.float_info</span></code></a> から利用できます。複素数型は実部と虚部を持ち、それぞれ浮動小数点数です。複素数 <em>z</em> から実部および虚部を取り出すには、 <code class="docutils literal"><span class="pre">z.real</span></code> および <code class="docutils literal"><span class="pre">z.imag</span></code> を使ってください。 (標準ライブラリには、追加の数値型、分数を保持する <a class="reference internal" href="fractions.html#module-fractions" title="fractions: Rational numbers."><code class="xref py py-mod docutils literal"><span class="pre">fractions</span></code></a> や、ユーザ定義の精度の浮動小数点数を保持する <a class="reference internal" href="decimal.html#module-decimal" title="decimal: Implementation of the General Decimal Arithmetic  Specification."><code class="xref py py-mod docutils literal"><span class="pre">decimal</span></code></a> があります。)</p>
-<p id="index-14">Numbers are created by numeric literals or as the result of built-in functions
-and operators.  Unadorned integer literals (including binary, hex, and octal
-numbers) yield plain integers unless the value they denote is too large to be
-represented as a plain integer, in which case they yield a long integer.
-Integer literals with an <code class="docutils literal"><span class="pre">'L'</span></code> or <code class="docutils literal"><span class="pre">'l'</span></code> suffix yield long integers (<code class="docutils literal"><span class="pre">'L'</span></code>
-is preferred because <code class="docutils literal"><span class="pre">1l</span></code> looks too much like eleven!).  Numeric literals
-containing a decimal point or an exponent sign yield floating point numbers.
-Appending <code class="docutils literal"><span class="pre">'j'</span></code> or <code class="docutils literal"><span class="pre">'J'</span></code> to a numeric literal yields an imaginary number
-(a complex number with a zero real part) which you can add to an integer or
-float to get a complex number with real and imaginary parts.</p>
+<p id="index-14">数値は、数値リテラルや組み込み関数や演算子の戻り値として生成されます。修飾のない整数リテラル ( 2 進表現や、 16 進表現や 8 進表現の値も含みます) は、通常の整数値を表します。値が通常の整数で表すには大きすぎる場合、 <code class="docutils literal"><span class="pre">'L'</span></code> または <code class="docutils literal"><span class="pre">'l'</span></code> が末尾につく整数リテラルは長整数型を表します (<code class="docutils literal"><span class="pre">'L'</span></code> が望ましいです。というのは <code class="docutils literal"><span class="pre">1l</span></code> は 11 と非常に紛らわしいからです!)。小数点または指数表記のある数値リテラルは浮動小数点数を表します。数値リテラルに <code class="docutils literal"><span class="pre">'j'</span></code> または <code class="docutils literal"><span class="pre">'J'</span></code> をつけると虚数 (実数部がゼロの複素数) を表し、それと整数や浮動小数点数を足すと実部と虚部を持つ複素数が得られます。</p>
 <p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より &#8220;制限された&#8221; 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
 <p>全ての組み込み数値型は以下の演算をサポートします。演算子の優先度については、 <a class="reference internal" href="../reference/expressions.html#power"><span class="std std-ref">べき乗演算 (power operator)</span></a>,および、あとのセクションを参照下さい。</p>
 <table border="1" class="docutils">
@@ -391,15 +382,16 @@ float to get a complex number with real and imaginary parts.</p>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="functions.html#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round(x[,</span>
 <span class="pre">n])</span></code></a></td>
-<td><em>x</em> rounded to <em>n</em> digits,
-rounding ties away from zero. If <em>n</em>
-is omitted, it defaults to 0.</td>
+<td><p class="first last"><em>x</em> を <em>n</em> 桁に丸めます。丸め方は四捨五入です。 <em>n</em> が省略されれば 0 がデフォルトとなります。(&#8211;訳注: Python 3 と仕様が違うので注意してください。1.5 と 2.5 の round は、Python 2 ではそれぞれ 2、3 となり、Python 3 では 2、2 となります。後者の丸めは .5 を丸める際に偶数になる方へ丸めるので、「偶数丸め」と言います。&#8211;)</p>
+</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="math.html#math.floor" title="math.floor"><code class="xref py py-func docutils literal"><span class="pre">math.floor(x)</span></code></a></td>
-<td>the greatest integer as a float &lt;= <em>x</em></td>
+<td><p class="first last"><em>x</em> 以下の最大の整数を浮動小数点数として返します</p>
+</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="math.html#math.ceil" title="math.ceil"><code class="xref py py-func docutils literal"><span class="pre">math.ceil(x)</span></code></a></td>
-<td>the least integer as a float &gt;= <em>x</em></td>
+<td><p class="first last"><em>x</em> 以上の最小の整数を浮動小数点数として返します</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -710,9 +702,7 @@ is omitted, it defaults to 0.</td>
 </div>
 <p>別の説明が FAQ エントリ <a class="reference internal" href="../faq/programming.html#faq-multidimensional-list"><span class="std std-ref">多次元のリストを作るにはどうしますか？</span></a> にあります。</p>
 </li>
-<li><p class="first">If <em>i</em> or <em>j</em> is negative, the index is relative to the end of sequence <em>s</em>:
-<code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">i</span></code> or <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">j</span></code> is substituted.  But note that <code class="docutils literal"><span class="pre">-0</span></code> is still
-<code class="docutils literal"><span class="pre">0</span></code>.</p>
+<li><p class="first"><em>i</em> または <em>j</em> が負の数の場合、インデクスはシーケンスの末端からの相対インデクスになります: <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">i</span></code> または <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">+</span> <span class="pre">j</span></code> が代わりに使われます。ただし <code class="docutils literal"><span class="pre">-0</span></code> はやはり <code class="docutils literal"><span class="pre">0</span></code> であることに注意してください。</p>
 </li>
 <li><p class="first"><em>s</em> の <em>i</em> から <em>j</em> へのスライスは <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となるようなインデクス <em>k</em> を持つ要素からなるシーケンスとして定義されます。 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> よりも大きい場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">0</span></code> を使います。 <em>j</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が <em>j</em> 以上の場合、スライスは空のシーケンスになります。</p>
 </li>
@@ -1014,8 +1004,7 @@ If <em>k</em> is <code class="docutils literal"><span class="pre">None</span></c
 <dt id="str.splitlines">
 <code class="descclassname">str.</code><code class="descname">splitlines</code><span class="sig-paren">(</span><span class="optional">[</span><em>keepends</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#str.splitlines" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>文字列を改行部分で分解し、各行からなるリストを返します。 このメソッドは、行の分割に <a class="reference internal" href="../glossary.html#term-universal-newlines"><span class="xref std std-term">universal newlines</span></a> アプローチを使います。<em>keepends</em> に真が与えらない限り、返されるリストに改行は含まれません。</p>
-<p>Python recognizes <code class="docutils literal"><span class="pre">&quot;\r&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code>, and <code class="docutils literal"><span class="pre">&quot;\r\n&quot;</span></code> as line boundaries for
-8-bit strings.</p>
+<p>Python は <code class="docutils literal"><span class="pre">&quot;\r&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;\r\n&quot;</span></code> を 8-bit 文字列の行の境界として認識します。</p>
 <p>例えば:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;ab c</span><span class="se">\n\n</span><span class="s1">de fg</span><span class="se">\r</span><span class="s1">kl</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
 <span class="go">[&#39;ab c&#39;, &#39;&#39;, &#39;de fg&#39;, &#39;kl&#39;]</span>
@@ -1457,8 +1446,8 @@ which are a superset of the <a class="reference internal" href="../glossary.html
 </tr>
 <tr class="row-even"><td><p class="first last"><code class="docutils literal"><span class="pre">s.extend(t)</span></code> または <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code></p>
 </td>
-<td>for the most part the same as
-<code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">t</span></code></td>
+<td><p class="first last"><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">t</span></code> とほとんど同じです</p>
+</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span> <span class="pre">*=</span> <span class="pre">n</span></code></td>
@@ -1472,7 +1461,7 @@ which are a superset of the <a class="reference internal" href="../glossary.html
 <td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.index(x[,</span> <span class="pre">i[,</span> <span class="pre">j]])</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[k]</span> <span class="pre">==</span> <span class="pre">x</span></code> かつ <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となる最小の <em>k</em> を返します。</p>
+<td><p class="first last"><code class="docutils literal"><span class="pre">s[k]</span> <span class="pre">==</span> <span class="pre">x</span></code> かつ <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となる最小の <em>k</em> を返します</p>
 </td>
 <td>(4)</td>
 </tr>
@@ -1510,7 +1499,7 @@ which are a superset of the <a class="reference internal" href="../glossary.html
 </li>
 <li><p class="first">かつての Python の C 実装では、複数パラメタを受理し、暗黙にそれらをタプルに結合していました。この間違った機能は Python 1.4 で撤廃され、 Python 2.0 の導入とともにエラーにするようになりました。</p>
 </li>
-<li><p class="first"><em>t</em> can be any iterable object.</p>
+<li><p class="first"><em>x</em> は任意のイテラブルオブジェクトにできます。</p>
 </li>
 <li><p class="first"><em>x</em> が <em>s</em> 中に見つからなかった場合 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。負のインデクスが二番目または三番目のパラメタとして <code class="xref py py-meth docutils literal"><span class="pre">index()</span></code> メソッドに渡されると、これらの値にはスライスのインデクスと同様にリストの長さが加算されます。加算後もまだ負の場合、その値はスライスのインデクスと同様にゼロに切り詰められます。</p>
 <div class="versionchanged">
@@ -2537,8 +2526,7 @@ which are a superset of the <a class="reference internal" href="../glossary.html
 <dl class="attribute">
 <dt id="definition.__name__">
 <code class="descclassname">definition.</code><code class="descname">__name__</code><a class="headerlink" href="#definition.__name__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>The name of the class, type, function, method, descriptor, or
-generator instance.</p>
+<dd><p>クラス、型、関数、メソッド、デスクリプタ、ジェネレータインスタンスの名前です。</p>
 </dd></dl>
 
 <p>以下の属性は、新スタイルクラス (<a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a>) でのみサポートされます。</p>
@@ -2726,7 +2714,7 @@ generator instance.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-06.
+    Last updated on 2017-03-08.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

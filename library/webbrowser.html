@@ -86,12 +86,7 @@
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><code class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></code></a> モジュールにはウェブベースのドキュメントを表示するための、とてもハイレベルなインターフェースが定義されています。たいていの環境では、このモジュールの <a class="reference internal" href="#webbrowser.open" title="webbrowser.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を呼び出すだけで正しく動作します。</p>
 <p>Unixでは、X11上でグラフィカルなブラウザが選択されますが、グラフィカルなブラウザが利用できなかったり、X11が利用できない場合はテキストモードのブラウザが使われます。もしテキストモードのブラウザが使われたら、ユーザがブラウザから抜け出すまでプロセスの呼び出しはブロックされます。</p>
-<p>If the environment variable <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal"><span class="pre">BROWSER</span></code> exists, it is interpreted to
-override the platform default list of browsers, as an <a class="reference internal" href="os.html#os.pathsep" title="os.pathsep"><code class="xref py py-data docutils literal"><span class="pre">os.pathsep</span></code></a>-separated
-list of browsers to try in order.  When the value of a list part contains the
-string <code class="docutils literal"><span class="pre">%s</span></code>, then it is  interpreted as a literal browser command line to be
-used with the argument URL substituted for <code class="docutils literal"><span class="pre">%s</span></code>; if the part does not contain
-<code class="docutils literal"><span class="pre">%s</span></code>, it is simply interpreted as the name of the browser to launch. <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<p>環境変数 <span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal"><span class="pre">BROWSER</span></code> が存在する場合、プラットフォームのデフォルトであるブラウザのリストをオーバーライドし、 <a class="reference internal" href="os.html#os.pathsep" title="os.pathsep"><code class="xref py py-data docutils literal"><span class="pre">os.pathsep</span></code></a> で区切られたリストの順にブラウザの起動を試みます。リストの中の値に <code class="docutils literal"><span class="pre">%s</span></code> が含まれていたら、テキストモードのブラウザのコマンドラインとして <code class="docutils literal"><span class="pre">%s</span></code> の代わりにURLが引数として解釈されます; もし <code class="docutils literal"><span class="pre">%s</span></code> が含まれなければ、起動するブラウザの名前として単純に解釈されます。 <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
 <p>非UnixプラットフォームあるいはUnix上でリモートブラウザが利用可能な場合、制御プロセスはユーザがブラウザを終了するのを待ちませんが、ディスプレイにブラウザのウィンドウを表示させたままにします。Unix上でリモートブラウザが利用可能でない場合、制御プロセスは新しいブラウザを立ち上げ、待ちます。</p>
 <p><strong class="program">webbrowser</strong> スクリプトをこのモジュールのコマンドライン・インタフェースとして使うことができます。スクリプトは引数に 1 つの URL を受け付けます。また次のオプション引数を受け付けます。 <code class="docutils literal"><span class="pre">-n</span></code> により可能ならば新しいブラウザウィンドウで指定された URL を開きます。一方、 <code class="docutils literal"><span class="pre">-t</span></code> では新しいブラウザのページ (「タブ」) で開きます。 当然ながらこれらのオプションは排他的です。使用例は次の通りです:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">webbrowser</span> <span class="o">-</span><span class="n">t</span> <span class="s2">&quot;http://www.python.org&quot;</span>
@@ -140,7 +135,7 @@ used with the argument URL substituted for <code class="docutils literal"><span 
 <dt id="webbrowser.register">
 <code class="descclassname">webbrowser.</code><code class="descname">register</code><span class="sig-paren">(</span><em>name</em>, <em>constructor</em><span class="optional">[</span>, <em>instance</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#webbrowser.register" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ブラウザの種類 <em>name</em> を登録します。ブラウザの種類が登録されたら、 <a class="reference internal" href="#webbrowser.get" title="webbrowser.get"><code class="xref py py-func docutils literal"><span class="pre">get()</span></code></a> でそのブラウザのコントローラーを呼び出すことができます。 <em>instance</em> が指定されなかったり、 <code class="docutils literal"><span class="pre">None</span></code> なら、インスタンスが必要な時には <em>constructor</em> がパラメータなしに呼び出されて作られます。 <em>instance</em> が指定されたら、 <em>constructor</em> は呼び出されないので、 <code class="docutils literal"><span class="pre">None</span></code> でかまいません。</p>
-<p>この登録は、変数 <span class="target" id="index-7"></span><code class="xref std std-envvar docutils literal"><span class="pre">BROWSER</span></code> を設定するか、 <a class="reference internal" href="#webbrowser.get" title="webbrowser.get"><code class="xref py py-func docutils literal"><span class="pre">get()</span></code></a> を空文字列でなく、宣言したハンドラの名前と一致する引数とともに呼び出すときだけ、役に立ちます。</p>
+<p>この登録は、変数 <span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal"><span class="pre">BROWSER</span></code> を設定するか、 <a class="reference internal" href="#webbrowser.get" title="webbrowser.get"><code class="xref py py-func docutils literal"><span class="pre">get()</span></code></a> を空文字列でなく、宣言したハンドラの名前と一致する引数とともに呼び出すときだけ、役に立ちます。</p>
 </dd></dl>
 
 <p>いくつかの種類のブラウザがあらかじめ定義されています。このモジュールで定義されている、関数 <a class="reference internal" href="#webbrowser.get" title="webbrowser.get"><code class="xref py py-func docutils literal"><span class="pre">get()</span></code></a> に与えるブラウザの名前と、それぞれのコントローラークラスのインスタンスを以下の表に示します。</p>
@@ -254,13 +249,14 @@ used with the argument URL substituted for <code class="docutils literal"><span 
 </table>
 <p>注釈:</p>
 <ol class="arabic simple">
-<li><p class="first">&#8220;Konqueror&#8221;はUnixのKDEデスクトップ環境のファイルマネージャで、KDEが動作している時にだけ意味を持ちます。何か信頼できる方法でKDEを検出するのがいいでしょう; 変数 <span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal"><span class="pre">KDEDIR</span></code> では十分ではありません。また、KDE 2で <strong class="program">konqueror</strong> コマンドを使うときにも、&#8221;kfm&#8221;が使われます  &#8212; Konquerorを動作させるのに最も良い方法が実装によって選択されます。</p>
+<li><p class="first">&#8220;Konqueror&#8221;はUnixのKDEデスクトップ環境のファイルマネージャで、KDEが動作している時にだけ意味を持ちます。何か信頼できる方法でKDEを検出するのがいいでしょう; 変数 <span class="target" id="index-10"></span><code class="xref std std-envvar docutils literal"><span class="pre">KDEDIR</span></code> では十分ではありません。また、KDE 2で <strong class="program">konqueror</strong> コマンドを使うときにも、&#8221;kfm&#8221;が使われます  &#8212; Konquerorを動作させるのに最も良い方法が実装によって選択されます。</p>
 </li>
 <li><p class="first">Windowsプラットフォームのみ。</p>
 </li>
 <li><p class="first">Mac OS X プラットフォームのみ。</p>
 </li>
-<li>Support for Chrome/Chromium has been added in version 2.7.5.</li>
+<li><p class="first">Chrome/Chromium のサポートがバージョン 2.7.5 で追加されました。</p>
+</li>
 </ol>
 <p>簡単な例を示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.python.org/&#39;</span>
@@ -300,7 +296,7 @@ used with the argument URL substituted for <code class="docutils literal"><span 
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">ここでブラウザの名前が絶対パスで書かれていない場合は <span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal"><span class="pre">PATH</span></code> 環境変数で与えられたディレクトリから探し出されます。</p>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">ここでブラウザの名前が絶対パスで書かれていない場合は <span class="target" id="index-11"></span><code class="xref std std-envvar docutils literal"><span class="pre">PATH</span></code> 環境変数で与えられたディレクトリから探し出されます。</p>
 </td></tr>
 </tbody>
 </table>
@@ -382,7 +378,7 @@ used with the argument URL substituted for <code class="docutils literal"><span 
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-09.
+    Last updated on 2017-03-10.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

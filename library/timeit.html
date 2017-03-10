@@ -243,13 +243,7 @@ $ python -m timeit <span class="s1">&#39;&quot;-&quot;.join(map(str, range(100))
 <p><a class="reference internal" href="#timeit.default_timer" title="timeit.default_timer"><code class="xref py py-func docutils literal"><span class="pre">default_timer()</span></code></a> の結果は同じコンピュータ上で動作している別のプロセスに影響を受けることがあります。そのため、正確な時間を計測する必要がある場合に最善の方法は、時間の取得を数回くり返してその中の最短の時間を採用することです。 <a class="reference internal" href="#cmdoption-timeit-r"><code class="xref std std-option docutils literal"><span class="pre">-r</span></code></a> オプションはこれをおこなうもので、デフォルトのくり返し回数は3回になっています。多くの場合はデフォルトのままで充分でしょう。 Unix の場合 <a class="reference internal" href="time.html#time.clock" title="time.clock"><code class="xref py py-func docutils literal"><span class="pre">time.clock()</span></code></a> を使って CPU 時間で測定することもできます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">There is a certain baseline overhead associated with executing a pass statement.
-The code here doesn&#8217;t try to hide it, but you should be aware of it.  The
-baseline overhead can be measured by invoking the program without arguments, and
-it might differ between Python versions.  Also, to fairly compare older Python
-versions to Python 2.3, you may want to use Python&#8217;s <code class="xref std std-option docutils literal"><span class="pre">-O</span></code>
-option (see <a class="reference internal" href="../using/cmdline.html#using-on-optimizations"><span class="std std-ref">Optimizations</span></a>) for
-the older versions to avoid timing <code class="docutils literal"><span class="pre">SET_LINENO</span></code> instructions.</p>
+<p class="last">pass 文の実行による基本的なオーバーヘッドが存在することに注意してください。ここにあるコードはこの事実を隠そうとはしていませんが、注意する必要があります。基本的なオーバーヘッドは引数なしでプログラムを起動することにより計測でき、それは Python のバージョンによって異なるでしょう。 Python 2.3 とそれ以前の Python の公平な比較をおこなう場合、古い Python では <code class="xref std std-option docutils literal"><span class="pre">-O</span></code> オプション (<a class="reference internal" href="../using/cmdline.html#using-on-optimizations"><span class="std std-ref">最適化</span></a> を参照) を付けて起動して <code class="docutils literal"><span class="pre">SET_LINENO</span></code> 命令の実行時間が含まれないようにする必要があります。</p>
 </div>
 </div>
 <div class="section" id="examples">

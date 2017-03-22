@@ -267,9 +267,7 @@
 <p>もちろん、現在の Noddy 型はまだおもしろみに欠けています。何もデータを持ってないし、何もしてはくれません。継承してサブクラスを作ることさえできないのです。</p>
 <div class="section" id="adding-data-and-methods-to-the-basic-example">
 <h3>2.1.1. 基本のサンプルにデータとメソッドを追加する<a class="headerlink" href="#adding-data-and-methods-to-the-basic-example" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Let&#8217;s extend the basic example to add some data and methods.  Let&#8217;s also make
-the type usable as a base class. We&#8217;ll create a new module, <code class="xref py py-mod docutils literal"><span class="pre">noddy2</span></code> that
-adds these capabilities:</p>
+<p>この基本のサンプルにデータとメソッドを追加してみましょう。ついでに、この型を基底クラスとしても利用できるようにします。ここでは新しいモジュール <code class="xref py py-mod docutils literal"><span class="pre">noddy2</span></code> をつくり、以下の機能を追加します:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;structmember.h&quot;</span><span class="cp"></span>
 
@@ -636,12 +634,7 @@ adds these capabilities:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The method is implemented as a C function that takes a <code class="xref py py-class docutils literal"><span class="pre">Noddy</span></code> (or
-<code class="xref py py-class docutils literal"><span class="pre">Noddy</span></code> subclass) instance as the first argument.  Methods always take an
-instance as the first argument. Methods often take positional and keyword
-arguments as well, but in this case we don&#8217;t take any and don&#8217;t need to accept
-a positional argument tuple or keyword argument dictionary. This method is
-equivalent to the Python method:</p>
+<p>このメソッドは C 関数として実装され、 <code class="xref py py-class docutils literal"><span class="pre">Noddy</span></code> (あるいは   <code class="xref py py-class docutils literal"><span class="pre">Noddy</span></code> のサブクラス) のインスタンスを第一引数として受けとります。メソッドはつねにそのインスタンスを最初の引数として受けとらなければなりません。しばしば固定引数とキーワード引数も受けとりますが、今回はなにも必要ないので、固定引数のタプルもキーワード引数の辞書も取らないことにします。このメソッドは Python の以下のメソッドと等価です:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">def</span> <span class="n">name</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
    <span class="k">return</span> <span class="s">&quot;%s %s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
 </pre></div>
@@ -1588,11 +1581,7 @@ equivalent to the Python method:</p>
 <div class="highlight-c" id="index-0"><div class="highlight"><pre><span></span><span class="n">destructor</span> <span class="n">tp_dealloc</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This function is called when the reference count of the instance of your type is
-reduced to zero and the Python interpreter wants to reclaim it.  If your type
-has memory to free or other clean-up to perform, you can put it here.  The
-object itself needs to be freed here as well.  Here is an example of this
-function:</p>
+<p>型のインスタンスの参照カウントがゼロになり、Python インタプリタがそれを潰して再利用したくなると、この関数が呼ばれます。解放すべきメモリをその型が保持していたり、それ以外にも実行すべき後処理がある場合は、それらをここに入れられます。オブジェクトそれ自体もここで解放される必要があります。この関数の例は、以下のようなものです:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span>
 <span class="nf">newdatatype_dealloc</span><span class="p">(</span><span class="n">newdatatypeobject</span> <span class="o">*</span> <span class="n">obj</span><span class="p">)</span>
 <span class="p">{</span>

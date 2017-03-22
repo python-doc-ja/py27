@@ -506,9 +506,7 @@
 <dl class="function">
 <dt id="itertools.ifilter">
 <code class="descclassname">itertools.</code><code class="descname">ifilter</code><span class="sig-paren">(</span><em>predicate</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.ifilter" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that filters elements from iterable returning only those for
-which the predicate is <code class="docutils literal"><span class="pre">True</span></code>. If <em>predicate</em> is <code class="docutils literal"><span class="pre">None</span></code>, return the items
-that are true. Roughly equivalent to:</p>
+<dd><p>iteable から predicate が <code class="docutils literal"><span class="pre">True</span></code> となる要素だけを返すイテレータを作成します。<em>predicate</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、真の要素だけを返します。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ifilter</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># ifilter(lambda x: x%2, range(10)) --&gt; 1 3 5 7 9</span>
     <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -538,13 +536,9 @@ that are true. Roughly equivalent to:</p>
 <dl class="function">
 <dt id="itertools.imap">
 <code class="descclassname">itertools.</code><code class="descname">imap</code><span class="sig-paren">(</span><em>function</em>, <em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.imap" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that computes the function using arguments from each of the
-iterables.  If <em>function</em> is set to <code class="docutils literal"><span class="pre">None</span></code>, then <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> returns the
-arguments as a tuple.  Like <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> but stops when the shortest iterable is
-exhausted instead of filling in <code class="docutils literal"><span class="pre">None</span></code> for shorter iterables.  The reason for
-the difference is that infinite iterator arguments are typically an error for
-<a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> (because the output is fully evaluated) but represent a common and
-useful way of supplying arguments to <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a>. Roughly equivalent to:</p>
+<dd><p>iterables の各要素を引数として funtion を呼び出すイテレータを作成します。
+<em>function</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> は引数のタプルを返します。
+<a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> に似ていますが、最短の iterable の末尾まで到達した後はそこで終了します。短い iterable のところを <code class="docutils literal"><span class="pre">None</span></code> で補ったりはしません。この違いは、 <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a> に無限長のイテレータを指定するのはたいていは誤り (全出力が評価されてしまうため) なのですが、 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の場合には一般的で役に立つ方法であるためです。この関数はおよそ以下のスクリプトと同等です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">imap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># imap(pow, (2,3,10), (5,2,3)) --&gt; 32 9 1000</span>
     <span class="n">iterables</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">iterables</span><span class="p">)</span>
@@ -587,9 +581,7 @@ useful way of supplying arguments to <a class="reference internal" href="#iterto
 <dl class="function">
 <dt id="itertools.izip">
 <code class="descclassname">itertools.</code><code class="descname">izip</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.izip" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that aggregates elements from each of the iterables. Like
-<a class="reference internal" href="functions.html#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> except that it returns an iterator instead of a list.  Used for
-lock-step iteration over several iterables at a time.  Roughly equivalent to:</p>
+<dd><p>各 iterable の要素をまとめるイテレータを作成します。 <a class="reference internal" href="functions.html#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a> に似ていますが、リストではなくイテレータを返します。複数のイテレート可能オブジェクトに対して、一度に lock-step (横並び) イテレーションを行う場合に使用します。この関数はおよそ以下のスクリプトと同等です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="c1"># izip(&#39;ABCD&#39;, &#39;xy&#39;) --&gt; Ax By</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">iterables</span><span class="p">)</span>
@@ -712,10 +704,7 @@ lock-step iteration over several iterables at a time.  Roughly equivalent to:</p
 <dl class="function">
 <dt id="itertools.repeat">
 <code class="descclassname">itertools.</code><code class="descname">repeat</code><span class="sig-paren">(</span><em>object</em><span class="optional">[</span>, <em>times</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.repeat" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that returns <em>object</em> over and over again. Runs indefinitely
-unless the <em>times</em> argument is specified. Used as argument to <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> for
-invariant function parameters.  Also used with <a class="reference internal" href="#itertools.izip" title="itertools.izip"><code class="xref py py-func docutils literal"><span class="pre">izip()</span></code></a> to create constant
-fields in a tuple record.  Roughly equivalent to:</p>
+<dd><p>繰り返し <em>object</em> を返すイテレータを作成します。 <em>times</em> を指定しない場合、無限に値を返し続けます。 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> で常に同じオブジェクトを関数の引数として指定する場合に使用します。また、 <a class="reference internal" href="#itertools.izip" title="itertools.izip"><code class="xref py py-func docutils literal"><span class="pre">izip()</span></code></a> で作成するタプルの定数部分を指定する場合にも使用することもできます。この関数はおよそ以下のスクリプトと同等です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># repeat(10, 3) --&gt; 10 10 10</span>
     <span class="k">if</span> <span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -736,11 +725,9 @@ fields in a tuple record.  Roughly equivalent to:</p>
 <dl class="function">
 <dt id="itertools.starmap">
 <code class="descclassname">itertools.</code><code class="descname">starmap</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.starmap" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make an iterator that computes the function using arguments obtained from
-the iterable.  Used instead of <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> when argument parameters are already
-grouped in tuples from a single iterable (the data has been &#8220;pre-zipped&#8221;).  The
-difference between <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> and <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> parallels the distinction
-between <code class="docutils literal"><span class="pre">function(a,b)</span></code> and <code class="docutils literal"><span class="pre">function(*c)</span></code>. Roughly equivalent to:</p>
+<dd><p>iterable の要素を引数として function を計算するイテレータを作成します。
+function の引数が一つの iterable からタプルに既にグループ化されている (データが &#8220;zip済み&#8221;) 場合、<a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の代わりに使用します。
+<a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> と <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> の違いは <code class="docutils literal"><span class="pre">function(a,b)</span></code> と <code class="docutils literal"><span class="pre">function(*c)</span></code> の差に似ています。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">starmap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000</span>
     <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
@@ -770,7 +757,7 @@ between <code class="docutils literal"><span class="pre">function(a,b)</span></c
 <dl class="function">
 <dt id="itertools.tee">
 <code class="descclassname">itertools.</code><code class="descname">tee</code><span class="sig-paren">(</span><em>iterable</em><span class="optional">[</span>, <em>n=2</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.tee" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return <em>n</em> independent iterators from a single iterable.  Roughly equivalent to:</p>
+<dd><p>一つの <em>iterable</em> から <em>n</em> 個の独立したイテレータを生成して返します。以下のコードとおよそ等価になります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="n">deques</span> <span class="o">=</span> <span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>

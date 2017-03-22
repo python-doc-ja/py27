@@ -136,13 +136,7 @@
 </pre></div>
 </div>
 <p>curses アプリケーションをデバッグするときの一般的な問題は、アプリケーションが端末を以前の状態に復旧することなく異常終了したときに端末がめちゃめちゃになることです。Python ではこの問題はコードにバグがあって、捕捉できない例外が発生したときによく起きます。タイプしたキーはもはやエコーされません、例えば、シェルを使うのが難しくなります。</p>
-<p>In Python you can avoid these complications and make debugging much easier by
-importing the <a class="reference internal" href="../library/curses.html#curses.wrapper" title="curses.wrapper"><code class="xref py py-func docutils literal"><span class="pre">curses.wrapper()</span></code></a> function.  It takes a callable and does
-the initializations described above, also initializing colors if color support
-is present.  It then runs your provided callable and finally deinitializes
-appropriately.  The callable is called inside a try-catch clause which catches
-exceptions, performs curses deinitialization, and then passes the exception
-upwards.  Thus, your terminal won&#8217;t be left in a funny state on exception.</p>
+<p>Python では、 <a class="reference internal" href="../library/curses.html#curses.wrapper" title="curses.wrapper"><code class="xref py py-func docutils literal"><span class="pre">curses.wrapper()</span></code></a> 関数をインポートするとこの複雑な問題が避けられ、デバッグが簡単になります。この関数は呼び出し可能オブジェクトを引数に取り、上で述べた初期化をし、カラーサポートがあればカラーの初期化をします。そして、与えられた呼び出し可能オブジェクトを実行し、最終的に適切に初期化の逆操作 (deinitialization) を行います。呼び出し可能オブジェクトは例外を捕捉する try-catch 節内部で呼び出され、 curses の初期化操作の逆操作を実行し、そして例外が上に渡されます。このおかげで例外が発生しても端末はおかしな状態にならずにすみます。</p>
 </div>
 <div class="section" id="windows-and-pads">
 <h2>ウィンドウとパッド<a class="headerlink" href="#windows-and-pads" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -408,7 +402,7 @@ upwards.  Thus, your terminal won&#8217;t be left in a funny state on exception.
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    Last updated on 2017-03-22.
+    Last updated on 2017-03-23.
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

@@ -255,14 +255,22 @@ see Internet <span class="target" id="index-1"></span><a class="rfc reference ex
 
 <dl class="method">
 <dt id="ftplib.FTP.set_pasv">
-<code class="descclassname">FTP.</code><code class="descname">set_pasv</code><span class="sig-paren">(</span><em>boolean</em><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.set_pasv" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>boolean</em> がtrueなら&#8221;パッシブモード&#8221;をオンにし、そうでないならパッシブモードをオフにします。（Python 2.0以前ではデフォルトでパッシブモードはオフにされていましたが、 Python 2.1以後ではデフォルトでオンになっています。）</p>
+<code class="descclassname">FTP.</code><code class="descname">set_pasv</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.set_pasv" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Enable &#8220;passive&#8221; mode if <em>val</em> is true, otherwise disable passive mode.  (In
+Python 2.0 and before, passive mode was off by default; in Python 2.1 and later,
+it is on by default.)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="ftplib.FTP.storbinary">
-<code class="descclassname">FTP.</code><code class="descname">storbinary</code><span class="sig-paren">(</span><em>command</em>, <em>file</em><span class="optional">[</span>, <em>blocksize</em>, <em>callback</em>, <em>rest</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.storbinary" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>バイナリ転送モードでファイルを転送します。 <em>command</em> は適切な <code class="docutils literal"><span class="pre">STOR</span></code> コマンド： <code class="docutils literal"><span class="pre">&quot;STOR</span> <span class="pre">filename&quot;</span></code> でなければなりません。 <em>file</em> は開かれたファイルオブジェクトで、 <code class="xref py py-meth docutils literal"><span class="pre">read()</span></code> メソッドで EOFまで読み込まれ、ブロックサイズ <em>blocksize</em> でデータが転送されます。引数 <em>blocksize</em> のデフォルト値は8192です。 <em>callback</em> はオプションの引数で、引数を1つとる呼び出し可能オブジェクトを渡します。各データブロックが送信された後に、そのブロックを引数にして呼び出されます。 <em>rest</em> は、 <a class="reference internal" href="#ftplib.FTP.transfercmd" title="ftplib.FTP.transfercmd"><code class="xref py py-meth docutils literal"><span class="pre">transfercmd()</span></code></a> メソッドにあるものと同じ意味です。</p>
+<code class="descclassname">FTP.</code><code class="descname">storbinary</code><span class="sig-paren">(</span><em>command</em>, <em>fp</em><span class="optional">[</span>, <em>blocksize</em>, <em>callback</em>, <em>rest</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.storbinary" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Store a file in binary transfer mode.  <em>command</em> should be an appropriate
+<code class="docutils literal"><span class="pre">STOR</span></code> command: <code class="docutils literal"><span class="pre">&quot;STOR</span> <span class="pre">filename&quot;</span></code>. <em>fp</em> is an open file object which is
+read until EOF using its <code class="xref py py-meth docutils literal"><span class="pre">read()</span></code> method in blocks of size <em>blocksize</em> to
+provide the data to be stored.  The <em>blocksize</em> argument defaults to 8192.
+<em>callback</em> is an optional single parameter callable that is called
+on each block of data after it is sent. <em>rest</em> means the same thing as in
+the <a class="reference internal" href="#ftplib.FTP.transfercmd" title="ftplib.FTP.transfercmd"><code class="xref py py-meth docutils literal"><span class="pre">transfercmd()</span></code></a> method.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.1 で変更: </span><em>blocksize</em> のデフォルト値が追加されました.</p>
 </div>
@@ -276,8 +284,12 @@ see Internet <span class="target" id="index-1"></span><a class="rfc reference ex
 
 <dl class="method">
 <dt id="ftplib.FTP.storlines">
-<code class="descclassname">FTP.</code><code class="descname">storlines</code><span class="sig-paren">(</span><em>command</em>, <em>file</em><span class="optional">[</span>, <em>callback</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.storlines" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ASCII転送モードでファイルを転送します。 <em>command</em> は適切な <code class="docutils literal"><span class="pre">STOR</span></code> コマンドでなければなりません (<a class="reference internal" href="#ftplib.FTP.storbinary" title="ftplib.FTP.storbinary"><code class="xref py py-meth docutils literal"><span class="pre">storbinary()</span></code></a> を参照)。 <em>file</em> は開かれたファイルオブジェクトで、 <a class="reference internal" href="stdtypes.html#file.readline" title="file.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> メソッドでEOFまで読み込まれ、各行がデータが転送されます。 <em>callback</em> はオプションの引数で、引数を1つとる呼び出し可能オブジェクトを渡します。各行が送信された後に、その行数を引数にして呼び出されます。</p>
+<code class="descclassname">FTP.</code><code class="descname">storlines</code><span class="sig-paren">(</span><em>command</em>, <em>fp</em><span class="optional">[</span>, <em>callback</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.storlines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Store a file in ASCII transfer mode.  <em>command</em> should be an appropriate
+<code class="docutils literal"><span class="pre">STOR</span></code> command (see <a class="reference internal" href="#ftplib.FTP.storbinary" title="ftplib.FTP.storbinary"><code class="xref py py-meth docutils literal"><span class="pre">storbinary()</span></code></a>).  Lines are read until EOF from the
+open file object <em>fp</em> using its <a class="reference internal" href="stdtypes.html#file.readline" title="file.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a> method to provide
+the data to be stored.  <em>callback</em> is an optional single parameter callable
+that is called on each line after it is sent.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.6 で変更: </span><em>callback</em> 引数が追加されました。</p>
 </div>

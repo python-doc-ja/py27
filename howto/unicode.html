@@ -102,23 +102,10 @@
 </pre></div>
 </div>
 <p>これらのメッセージはアクセントを含むべきで、フランス語を読める人から見ると単に間違いとみなされます。</p>
-<p>In the 1980s, almost all personal computers were 8-bit, meaning that bytes could
-hold values ranging from 0 to 255.  ASCII codes only went up to 127, so some
-machines assigned values between 128 and 255 to accented characters.  Different
-machines had different codes, however, which led to problems exchanging files.
-Eventually various commonly used sets of values for the 128&#8211;255 range emerged.
-Some were true standards, defined by the International Standards Organization,
-and some were <strong>de facto</strong> conventions that were invented by one company or
-another and managed to catch on.</p>
+<p>1980年代には、多くのパーソナルコンピューターは 8-bit で、つまり 8-bit で 0-255 までの値を確保することができました。 ASCII コードは 127 までだったので、いくつかのマシンは 128 から 255 の値をアクセント付きの文字に割り当てました。マシン毎に異なる文字コードがあり、そのためにファイル交換の問題が起きることとなりました。結局、128&#8211;255 の間の値は多くのよく使われる集合が現われることになりました。そのうちいくつかは International Standards Organzation の定める本当の標準になり、またいくつかは一社で開発され、別の会社へと流行することで <strong>事実上の</strong> 慣習となりました。</p>
 <p>255文字というのは十分多い数ではありません。例えば、西ヨーロッパで使われるアクセント付き文字とロシアで使われるキリルアルファベットの両方は 128文字以上あるので、128&#8211;255の間におさめることはできません。</p>
 <p>異なる文字コードを使ってファイルを作成することは可能です (持っているロシア語のファイル全てを KOI8 と呼ばれるコーディングシステムで、持っているフランス語のファイル全てを別の Latin1 と呼ばれるコーディングシステムにすることで)、しかし、ロシア語の文章を引用するフランス語の文章を書きたい場合にはどうでしょう? 1989年代にこの問題を解決したいという要望が上って、Unicode 標準化の努力が始まりました。</p>
-<p>Unicode started out using 16-bit characters instead of 8-bit characters.  16
-bits means you have 2^16 = 65,536 distinct values available, making it possible
-to represent many different characters from many different alphabets; an initial
-goal was to have Unicode contain the alphabets for every single human language.
-It turns out that even 16 bits isn&#8217;t enough to meet that goal, and the modern
-Unicode specification uses a wider range of codes, 0&#8211;1,114,111 (0x10ffff in
-base-16).</p>
+<p>Unicode は 8-bit の文字の代わりに 16-bit の文字を使うことにとりかかりました。 16bit 使うということは 2^16 = 65,536 の異なる値が利用可能だということを意味します、これによって多くの異なるアルファベット上の多くの異なる文字を表現することができます; 最初の目標は Unicode が人間が使う個々の言語のアルファベットを含むことでした。あとになってこの目標を達成するには 16bit でさえも不十分であることがわかりました、そして最新の Unicode 規格は 0&#8211;1,114,111 (16進表記で 0x10ffff) までのより広い文字コードの幅を使っています。</p>
 <p>関連する ISO 標準も ISO 10646 があります。Unicode と ISO 10646 は元々独立した成果でしたが、 Unicode の 1.1 リビジョンで仕様を併合しました。</p>
 <p>(この Unicode の歴史についての解説は非常に単純化しています。平均的な Python プログラマは歴史的な詳細を気にする必要は無いと考えています; より詳しい情報は参考文献に載せた Unicode コンソーシアムのサイトを参考にして下さい。)</p>
 </div>
@@ -138,11 +125,7 @@ base-16).</p>
 </div>
 <div class="section" id="encodings">
 <h3>エンコーディング<a class="headerlink" href="#encodings" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>To summarize the previous section: a Unicode string is a sequence of code
-points, which are numbers from 0 to 0x10ffff.  This sequence needs to be
-represented as a set of bytes (meaning, values from 0&#8211;255) in memory.  The rules
-for translating a Unicode string into a sequence of bytes are called an
-<strong>encoding</strong>.</p>
+<p>前の節をまとめると: Unicode 文字列は 0 から 0x10ffff までの数値であるコードポイントのシーケンスで、シーケンスはメモリ上でバイト (0 から 255 までの値) の組として表現される必要があります。バイト列を Unicode 文字列に変換する規則を <strong>エンコーディング (encoding)</strong> と呼びます。</p>
 <p>最初に考えるであろうエンコーディングは 32-bit 整数の配列でしょう。この表示では、&#8221;Python&#8221; という文字列はこうみえます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>   <span class="n">P</span>           <span class="n">y</span>           <span class="n">t</span>           <span class="n">h</span>           <span class="n">o</span>           <span class="n">n</span>
 <span class="mh">0x50</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">79</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">74</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">68</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">6</span><span class="n">f</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">6</span><span class="n">e</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>
@@ -196,9 +179,7 @@ for translating a Unicode string into a sequence of bytes are called an
 <div class="section" id="references">
 <h3>参考資料<a class="headerlink" href="#references" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Unicode コンソーシアムのサイト &lt;<a class="reference external" href="http://www.unicode.org">http://www.unicode.org</a>&gt; には文字の図表や用語辞典、そして Unicode 仕様の PDF があります。読むのは簡単ではないので覚悟して下さい。 &lt;<a class="reference external" href="http://www.unicode.org/history/">http://www.unicode.org/history/</a>&gt; は Unicode の起源と発展の年表です。</p>
-<p>To help understand the standard, Jukka Korpela has written an introductory guide
-to reading the Unicode character tables, available at
-&lt;<a class="reference external" href="https://www.cs.tut.fi/~jkorpela/unicode/guide.html">https://www.cs.tut.fi/~jkorpela/unicode/guide.html</a>&gt;.</p>
+<p>標準についての理解を助けるために Jukka Korpela が Unicode の文字表を読むための導入ガイドを書いています、 &lt;<a class="reference external" href="https://www.cs.tut.fi/~jkorpela/unicode/guide.html">https://www.cs.tut.fi/~jkorpela/unicode/guide.html</a>&gt; から入手可能です。</p>
 <p>もう一つのよい入門記事 &lt;<a class="reference external" href="http://www.joelonsoftware.com/articles/Unicode.html">http://www.joelonsoftware.com/articles/Unicode.html</a>&gt; を Joel Spolsky が書いています。もしこの HOWTO の入門が明解に感じなかった場合には、続きを読む前にこの記事を読んでみるべきです。</p>
 <p>Wikipedia の記事はしばしば役に立ちます; 試しに &#8220;character encoding&#8221; &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Character_encoding">http://en.wikipedia.org/wiki/Character_encoding</a>&gt; の記事と UTF-8 &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/UTF-8">http://en.wikipedia.org/wiki/UTF-8</a>&gt; の記事を読んでみて下さい。</p>
 </div>
@@ -423,7 +404,7 @@ SyntaxError: Non-ASCII character &#39;\xc3&#39; in file /tmp/p263.py
 <span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>will produce the following output:</p>
+<p>以下の出力結果が生成されます:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">amk:~$</span> python t.py
 <span class="go">[&#39;.svn&#39;, &#39;filename\xe4\x94\x80abc&#39;, ...]</span>
 <span class="go">[u&#39;.svn&#39;, u&#39;filename\u4500abc&#39;, ...]</span>

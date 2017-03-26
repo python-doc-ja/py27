@@ -100,10 +100,7 @@
 <span class="go">[1, 2, 3, 4, 5]</span>
 </pre></div>
 </div>
-<p>You can also use the <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> method of a list. It modifies the list
-in-place (and returns <code class="docutils literal"><span class="pre">None</span></code> to avoid confusion). Usually it&#8217;s less convenient
-than <a class="reference internal" href="../library/functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> - but if you don&#8217;t need the original list, it&#8217;s slightly
-more efficient.</p>
+<p>リストの <code class="xref py py-meth docutils literal"><span class="pre">list.sort()</span></code> メソッドを呼びだしても同じことができます。この方法はリストをインプレースに変更します (そして sorted との混乱を避けるため <code class="docutils literal"><span class="pre">None</span></code> を返します)。多くの場合、こちらの方法は <a class="reference internal" href="../library/functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a> と比べると不便です - ただし、元々のリストが不要な場合には、わずかですがより効率的です。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
@@ -157,10 +154,7 @@ more efficient.</p>
 </div>
 <div class="section" id="operator-module-functions">
 <h2>operator モジュール関数<a class="headerlink" href="#operator-module-functions" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>The key-function patterns shown above are very common, so Python provides
-convenience functions to make accessor functions easier and faster. The operator
-module has <a class="reference internal" href="../library/operator.html#operator.itemgetter" title="operator.itemgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.itemgetter()</span></code></a>, <a class="reference internal" href="../library/operator.html#operator.attrgetter" title="operator.attrgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.attrgetter()</span></code></a>, and
-starting in Python 2.5 an <a class="reference internal" href="../library/operator.html#operator.methodcaller" title="operator.methodcaller"><code class="xref py py-func docutils literal"><span class="pre">operator.methodcaller()</span></code></a> function.</p>
+<p>上述した key 関数のパターンはとても一般的です、そのため、Python は高速で扱いやすいアクセサ関数を提供しています。 operator モジュールには <a class="reference internal" href="../library/operator.html#operator.itemgetter" title="operator.itemgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.itemgetter()</span></code></a>, <a class="reference internal" href="../library/operator.html#operator.attrgetter" title="operator.attrgetter"><code class="xref py py-func docutils literal"><span class="pre">operator.attrgetter()</span></code></a>, そして Python 2.5 から利用できるようになった <a class="reference internal" href="../library/operator.html#operator.methodcaller" title="operator.methodcaller"><code class="xref py py-func docutils literal"><span class="pre">operator.methodcaller()</span></code></a> 関数があります。</p>
 <p>これらの関数を利用すると、上の例はもっと簡単で高速になります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span><span class="p">,</span> <span class="n">attrgetter</span>
 </pre></div>
@@ -204,8 +198,7 @@ starting in Python 2.5 an <a class="reference internal" href="../library/operato
 </div>
 <div class="section" id="sort-stability-and-complex-sorts">
 <h2>ソートの安定性と複合的なソート<a class="headerlink" href="#sort-stability-and-complex-sorts" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Starting with Python 2.2, sorts are guaranteed to be <a class="reference external" href="https://en.wikipedia.org/wiki/Sorting_algorithm#Stability">stable</a>. That means that
-when multiple records have the same key, their original order is preserved.</p>
+<p>Python 2.2 からソートは、 <a class="reference external" href="https://en.wikipedia.org/wiki/Sorting_algorithm#Stability">stable</a> であることが保証されるようになりました。これはレコードの中に同じキーがある場合、元々の順序が維持されるということを意味します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="go">[(&#39;blue&#39;, 1), (&#39;blue&#39;, 2), (&#39;red&#39;, 1), (&#39;red&#39;, 2)]</span>
@@ -416,7 +409,7 @@ when multiple records have the same key, their original order is preserved.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-03-25
+    最終更新日時: 2017-03-27
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

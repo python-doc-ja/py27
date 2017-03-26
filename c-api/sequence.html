@@ -170,11 +170,8 @@ int <code class="descname">PySequence_DelItem</code><span class="sig-paren">(</s
 <dl class="function">
 <dt id="c.PySequence_SetSlice">
 int <code class="descname">PySequence_SetSlice</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em>, Py_ssize_t<em>&nbsp;i1</em>, Py_ssize_t<em>&nbsp;i2</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PySequence_SetSlice" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Assign the sequence object <em>v</em> to the slice in sequence object <em>o</em> from <em>i1</em> to
-<em>i2</em>.  Raise an exception and return <code class="docutils literal"><span class="pre">-1</span></code> on failure; return <code class="docutils literal"><span class="pre">0</span></code> on success.
-This is the equivalent of the Python statement <code class="docutils literal"><span class="pre">o[i1:i2]</span> <span class="pre">=</span> <span class="pre">v</span></code>.</p>
-<p>If <em>v</em> is <em>NULL</em>, the slice is deleted, however this feature is
-deprecated in favour of using <a class="reference internal" href="#c.PySequence_DelSlice" title="PySequence_DelSlice"><code class="xref c c-func docutils literal"><span class="pre">PySequence_DelSlice()</span></code></a>.</p>
+<dd><p>シーケンスオブジェクト <em>o</em> の <em>i1</em> から <em>i2</em> までのスライスに、シーケンスオブジェクト <em>v</em> を代入します。失敗すると例外を送出し <code class="docutils literal"><span class="pre">-1</span></code> を返します; 成功すると <code class="docutils literal"><span class="pre">0</span></code> を返します。これは Python の文 <code class="docutils literal"><span class="pre">o[i1:i2]</span> <span class="pre">=</span> <span class="pre">v</span></code> と同じです。</p>
+<p><em>v</em> が <em>NULL</em> の場合はスライスは削除されますが、この機能は非推奨であり <a class="reference internal" href="#c.PySequence_DelSlice" title="PySequence_DelSlice"><code class="xref c c-func docutils literal"><span class="pre">PySequence_DelSlice()</span></code></a> を使うのが望ましいです。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span>この関数は以前は <em>i1</em>, <em>i2</em> の型に <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を利用していました。この変更により、 64bit システムを正しくサポートするには修正が必要になります。</p>
 </div>
@@ -337,7 +334,7 @@ Py_ssize_t <code class="descname">PySequence_Fast_GET_SIZE</code><span class="si
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-03-25
+    最終更新日時: 2017-03-27
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

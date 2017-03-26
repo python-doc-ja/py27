@@ -89,12 +89,7 @@
 <p>実数用としては、一様分布、正規分布 (ガウス分布)、対数正規分布、負の指数分布、ガンマおよびベータ分布を計算する関数があります。角度分布の生成用には、フォンミーゼス分布が利用できます。</p>
 <p>ほとんど全てのモジュール関数は、基礎となる関数 <a class="reference internal" href="#random.random" title="random.random"><code class="xref py py-func docutils literal"><span class="pre">random()</span></code></a> に依存します。この関数はランダムな浮動小数点数を半開区間 [0.0, 1.0) 内に一様に生成します。Python は中心となる乱数生成器としてメルセンヌツイスタを使います。これは 53 ビット精度の浮動小数点を生成し、周期は 2**19937-1 です、本体は C で実装されていて、高速でスレッドセーフです。メルセンヌツイスタは、現存する中で、最も広範囲にテストされた乱数生成器のひとつです。しかし、完全に決定論的であるため、この乱数生成器は全ての目的に合致しているわけではなく、暗号化の目的には全く向いていません。</p>
 <p>このモジュールで提供されている関数は、実際には <code class="xref py py-class docutils literal"><span class="pre">random.Random</span></code> クラスの隠蔽されたインスタンスのメソッドにバインドされています。内部状態を共有しない生成器を取得するため、自分で <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを生成することができます。異なる <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> のインスタンスを各スレッド毎に生成し、 <a class="reference internal" href="#random.jumpahead" title="random.jumpahead"><code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code></a> メソッドを使うことで各々のスレッドにおいて生成された乱数列ができるだけ重複しないようにすれば、マルチスレッドプログラムを作成する上で特に便利になります。</p>
-<p>Class <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> can also be subclassed if you want to use a different
-basic generator of your own devising: in that case, override the <code class="xref py py-meth docutils literal"><span class="pre">random()</span></code>,
-<code class="xref py py-meth docutils literal"><span class="pre">seed()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">getstate()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">setstate()</span></code> and
-<code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code> methods.  Optionally, a new generator can supply a
-<code class="xref py py-meth docutils literal"><span class="pre">getrandbits()</span></code> method &#8212; this
-allows <a class="reference internal" href="#random.randrange" title="random.randrange"><code class="xref py py-meth docutils literal"><span class="pre">randrange()</span></code></a> to produce selections over an arbitrarily large range.</p>
+<p>自分で考案した基本乱数生成器を使いたい場合、クラス <code class="xref py py-class docutils literal"><span class="pre">Random</span></code> をサブクラス化することもできます。この場合、メソッド <code class="xref py py-meth docutils literal"><span class="pre">random()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">seed()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">getstate()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">setstate()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">jumpahead()</span></code> をオーバライドしてください。オプションとして、新しいジェネレータは <code class="xref py py-meth docutils literal"><span class="pre">getrandbits()</span></code> メソッドを提供することができます。これにより <a class="reference internal" href="#random.randrange" title="random.randrange"><code class="xref py py-meth docutils literal"><span class="pre">randrange()</span></code></a> メソッドが任意に大きな範囲から選択を行えるようになります。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加: </span><a class="reference internal" href="#random.getrandbits" title="random.getrandbits"><code class="xref py py-meth docutils literal"><span class="pre">getrandbits()</span></code></a> メソッド.</p>
 </div>
@@ -111,13 +106,10 @@ allows <a class="reference internal" href="#random.randrange" title="random.rand
 <dl class="function">
 <dt id="random.seed">
 <code class="descclassname">random.</code><code class="descname">seed</code><span class="sig-paren">(</span><em>a=None</em><span class="sig-paren">)</span><a class="headerlink" href="#random.seed" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Initialize internal state of the random number generator.</p>
-<p><code class="docutils literal"><span class="pre">None</span></code> or no argument seeds from current time or from an operating
-system specific randomness source if available (see the <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a>
-function for details on availability).</p>
-<p>If <em>a</em> is not <code class="docutils literal"><span class="pre">None</span></code> or an <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> or a <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, then
-<code class="docutils literal"><span class="pre">hash(a)</span></code> is used instead.  Note that the hash values for some types
-are nondeterministic when <span class="target" id="index-0"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONHASHSEED"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHASHSEED</span></code></a> is enabled.</p>
+<dd><p>乱数生成器の内部状態を初期化します。</p>
+<p>引数が <code class="docutils literal"><span class="pre">None</span></code> または無い場合は、現在時刻もしくは利用可能ならオペレーティングシステム固有の乱数発生源をシードとします (利用可能かどうかについての詳細は <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> 関数を参照してください)。</p>
+<p><em>a</em> が <code class="docutils literal"><span class="pre">None</span></code> や <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> や <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a> でない場合は <code class="docutils literal"><span class="pre">hash(a)</span></code> を代わりに使います。
+<span class="target" id="index-2"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONHASHSEED"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHASHSEED</span></code></a> が有効なときは、ある型のハッシュ値は非決定的であることに注意してください。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.4 で変更: </span>以前は、オペレーティングシステムのリソースは使われませんでした。</p>
 </div>
@@ -413,7 +405,7 @@ pseudo-random number generator&#8221;, Applied Statistics 31 (1982) 188-190.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-03-25
+    最終更新日時: 2017-03-27
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

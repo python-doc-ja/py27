@@ -133,33 +133,22 @@
 <dt id="cookielib.DefaultCookiePolicy">
 <em class="property">class </em><code class="descclassname">cookielib.</code><code class="descname">DefaultCookiePolicy</code><span class="sig-paren">(</span><em>blocked_domains=None</em>, <em>allowed_domains=None</em>, <em>netscape=True</em>, <em>rfc2965=False</em>, <em>rfc2109_as_netscape=None</em>, <em>hide_cookie2=False</em>, <em>strict_domain=False</em>, <em>strict_rfc2965_unverifiable=True</em>, <em>strict_ns_unverifiable=False</em>, <em>strict_ns_domain=DefaultCookiePolicy.DomainLiberal</em>, <em>strict_ns_set_initial_dollar=False</em>, <em>strict_ns_set_path=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.DefaultCookiePolicy" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>コンストラクタはキーワード引数しか取りません。 <em>blocked_domains</em> はドメイン名からなるシーケンスで、ここからは決してクッキーを受けとらないし、このドメインにクッキーを返すこともありません。 <em>allowed_domains</em> が <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> でない場合、これはこのドメインのみからクッキーを受けとり、返すという指定になります。これ以外の引数については <a class="reference internal" href="#cookielib.CookiePolicy" title="cookielib.CookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">CookiePolicy</span></code></a> および <a class="reference internal" href="#cookielib.DefaultCookiePolicy" title="cookielib.DefaultCookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">DefaultCookiePolicy</span></code></a> オブジェクトの説明をごらんください。</p>
-<p><a class="reference internal" href="#cookielib.DefaultCookiePolicy" title="cookielib.DefaultCookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">DefaultCookiePolicy</span></code></a> implements the standard accept / reject rules for
-Netscape and RFC 2965 cookies.  By default, RFC 2109 cookies (ie. cookies
-received in a <em class="mailheader">Set-Cookie</em> header with a version cookie-attribute of
-1) are treated according to the RFC 2965 rules.  However, if RFC 2965 handling
-is turned off or <a class="reference internal" href="#cookielib.DefaultCookiePolicy.rfc2109_as_netscape" title="cookielib.DefaultCookiePolicy.rfc2109_as_netscape"><code class="xref py py-attr docutils literal"><span class="pre">rfc2109_as_netscape</span></code></a> is <code class="docutils literal"><span class="pre">True</span></code>, RFC 2109 cookies are
-&#8216;downgraded&#8217; by the <a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> instance to Netscape cookies, by
-setting the <code class="xref py py-attr docutils literal"><span class="pre">version</span></code> attribute of the <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> instance to 0.
-<a class="reference internal" href="#cookielib.DefaultCookiePolicy" title="cookielib.DefaultCookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">DefaultCookiePolicy</span></code></a> also provides some parameters to allow some
-fine-tuning of policy.</p>
+<p><a class="reference internal" href="#cookielib.DefaultCookiePolicy" title="cookielib.DefaultCookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">DefaultCookiePolicy</span></code></a> は Netscape および RFC 2965 クッキーの標準的な許可 / 拒絶のルールを実装しています。デフォルトでは、RFC 2109 のクッキー (<em class="mailheader">Set-Cookie</em> の version クッキー属性が 1 で受けとられるもの) は RFC 2965 のルールで扱われます。しかし、RFC 2965 処理が無効に設定されているか <a class="reference internal" href="#cookielib.DefaultCookiePolicy.rfc2109_as_netscape" title="cookielib.DefaultCookiePolicy.rfc2109_as_netscape"><code class="xref py py-attr docutils literal"><span class="pre">rfc2109_as_netscape</span></code></a> が <code class="docutils literal"><span class="pre">True</span></code> の場合、RFC 2109 クッキーは <a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> インスタンスによって <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> のインスタンスの <code class="xref py py-attr docutils literal"><span class="pre">version</span></code> 属性を 0 に設定する事で Netscapeクッキーに「ダウングレード」されます。また <a class="reference internal" href="#cookielib.DefaultCookiePolicy" title="cookielib.DefaultCookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">DefaultCookiePolicy</span></code></a> にはいくつかの細かいポリシー設定をおこなうパラメータが用意されています。</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="cookielib.Cookie">
 <em class="property">class </em><code class="descclassname">cookielib.</code><code class="descname">Cookie</code><a class="headerlink" href="#cookielib.Cookie" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>This class represents Netscape, RFC 2109 and RFC 2965 cookies.  It is not
-expected that users of <a class="reference internal" href="#module-cookielib" title="cookielib: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal"><span class="pre">cookielib</span></code></a> construct their own <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a>
-instances.  Instead, if necessary, call <code class="xref py py-meth docutils literal"><span class="pre">make_cookies()</span></code> on a
-<a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> instance.</p>
+<dd><p>このクラスは Netscape クッキー、RFC 2109 のクッキー、および RFC 2965 のクッキーを表現します。 <a class="reference internal" href="#module-cookielib" title="cookielib: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal"><span class="pre">cookielib</span></code></a> のユーザが自分で <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> インスタンスを作成することは想定されていません。かわりに、必要に応じて <a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> インスタンスの <code class="xref py py-meth docutils literal"><span class="pre">make_cookies()</span></code> を呼ぶことになっています。</p>
 </dd></dl>
 
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
-<dt>Module <a class="reference internal" href="urllib2.html#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a></dt>
+<dt><a class="reference internal" href="urllib2.html#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> モジュール</dt>
 <dd><p class="first last">クッキーの自動処理をおこない URL を開くモジュールです。</p>
 </dd>
-<dt>Module <a class="reference internal" href="cookie.html#module-Cookie" title="Cookie: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal"><span class="pre">Cookie</span></code></a></dt>
+<dt><a class="reference internal" href="cookie.html#module-Cookie" title="Cookie: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal"><span class="pre">Cookie</span></code></a> モジュール</dt>
 <dd><p class="first last">HTTP のクッキークラスで、基本的にはサーバサイドのコードで有用です。 <a class="reference internal" href="#module-cookielib" title="cookielib: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal"><span class="pre">cookielib</span></code></a> および <a class="reference internal" href="cookie.html#module-Cookie" title="Cookie: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal"><span class="pre">Cookie</span></code></a> モジュールは互いに依存してはいません。</p>
 </dd>
 <dt><a class="reference external" href="https://curl.haxx.se/rfc/cookie_spec.html">https://curl.haxx.se/rfc/cookie_spec.html</a></dt>
@@ -179,8 +168,7 @@ instances.  Instead, if necessary, call <code class="xref py py-meth docutils li
 </div>
 <div class="section" id="cookiejar-and-filecookiejar-objects">
 <span id="cookie-jar-objects"></span><h2>20.21.1. CookieJar および FileCookieJar オブジェクト<a class="headerlink" href="#cookiejar-and-filecookiejar-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> objects support the <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> protocol for iterating over
-contained <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> objects.</p>
+<p><a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> オブジェクトは保管されている <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> オブジェクトをひとつずつ取り出すための、イテレータ(<a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a>)・プロトコルをサポートしています。</p>
 <p><a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> は以下のようなメソッドを持っています:</p>
 <dl class="method">
 <dt id="cookielib.CookieJar.add_cookie_header">
@@ -208,21 +196,20 @@ contained <a class="reference internal" href="#cookielib.Cookie" title="cookieli
 <dl class="method">
 <dt id="cookielib.CookieJar.make_cookies">
 <code class="descclassname">CookieJar.</code><code class="descname">make_cookies</code><span class="sig-paren">(</span><em>response</em>, <em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.CookieJar.make_cookies" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Return sequence of <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> objects extracted from <em>response</em> object.</p>
+<dd><p><em>response</em> オブジェクトから得られた <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> オブジェクトからなるシーケンスを返します。</p>
 <p><em>response</em> および <em>request</em> 引数で要求されるインスタンスについては、 <a class="reference internal" href="#cookielib.CookieJar.extract_cookies" title="cookielib.CookieJar.extract_cookies"><code class="xref py py-meth docutils literal"><span class="pre">extract_cookies()</span></code></a> の説明を参照してください。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cookielib.CookieJar.set_cookie_if_ok">
 <code class="descclassname">CookieJar.</code><code class="descname">set_cookie_if_ok</code><span class="sig-paren">(</span><em>cookie</em>, <em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.CookieJar.set_cookie_if_ok" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Set a <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> if policy says it&#8217;s OK to do so.</p>
+<dd><p>ポリシーが許すのであれば、与えられた <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> を設定します。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cookielib.CookieJar.set_cookie">
 <code class="descclassname">CookieJar.</code><code class="descname">set_cookie</code><span class="sig-paren">(</span><em>cookie</em><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.CookieJar.set_cookie" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Set a <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a>, without checking with policy to see whether or not it
-should be set.</p>
+<dd><p>与えられた <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> を、それが設定されるべきかどうかのポリシーのチェックを行わずに設定します。</p>
 </dd></dl>
 
 <dl class="method">
@@ -337,12 +324,7 @@ should be set.</p>
 <code class="descclassname">CookiePolicy.</code><code class="descname">domain_return_ok</code><span class="sig-paren">(</span><em>domain</em>, <em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.CookiePolicy.domain_return_ok" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>与えられたクッキーのドメインに対して、そこにクッキーを返すべきでない場合には false を返します。</p>
 <p>このメソッドは高速化のためのものです。これにより、すべてのクッキーをある特定のドメインに対してチェックする (これには多数のファイル読みこみを伴なう場合があります) 必要がなくなります。 <a class="reference internal" href="#cookielib.CookiePolicy.domain_return_ok" title="cookielib.CookiePolicy.domain_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">domain_return_ok()</span></code></a> および <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> の両方から true が返された場合、すべての決定は <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> に委ねられます。</p>
-<p>If <a class="reference internal" href="#cookielib.CookiePolicy.domain_return_ok" title="cookielib.CookiePolicy.domain_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">domain_return_ok()</span></code></a> returns true for the cookie domain,
-<a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> is called for the cookie path.  Otherwise,
-<a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> and <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> are never called for that cookie
-domain.  If <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> returns true, <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> is called
-with the <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> object itself for a full check.  Otherwise,
-<a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> is never called for that cookie path.</p>
+<p>もし、このクッキードメインに対して <a class="reference internal" href="#cookielib.CookiePolicy.domain_return_ok" title="cookielib.CookiePolicy.domain_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">domain_return_ok()</span></code></a> が true を返すと、つぎにそのクッキーのパス名に対して <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> が呼ばれます。そうでない場合、そのクッキードメインに対する <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> および <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> は決して呼ばれることはありません。 <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> が true を返すと、 <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> がその <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> オブジェクト自身の全チェックのために呼ばれます。そうでない場合、そのクッキーパス名に対する <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> は決して呼ばれることはありません。</p>
 <p>注意: <a class="reference internal" href="#cookielib.CookiePolicy.domain_return_ok" title="cookielib.CookiePolicy.domain_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">domain_return_ok()</span></code></a> は <em>request</em> ドメインだけではなく、すべての <em>cookie</em> ドメインに対して呼ばれます。たとえば request ドメインが <code class="docutils literal"><span class="pre">&quot;www.example.com&quot;</span></code> だった場合、この関数は <code class="docutils literal"><span class="pre">&quot;.example.com&quot;</span></code> および <code class="docutils literal"><span class="pre">&quot;www.example.com&quot;</span></code> の両方に対して呼ばれることがあります。同じことは <a class="reference internal" href="#cookielib.CookiePolicy.path_return_ok" title="cookielib.CookiePolicy.path_return_ok"><code class="xref py py-meth docutils literal"><span class="pre">path_return_ok()</span></code></a> にもいえます。</p>
 <p><em>request</em> 引数は <a class="reference internal" href="#cookielib.CookiePolicy.return_ok" title="cookielib.CookiePolicy.return_ok"><code class="xref py py-meth docutils literal"><span class="pre">return_ok()</span></code></a> で説明されているとおりです。</p>
 </dd></dl>
@@ -434,12 +416,7 @@ with the <a class="reference internal" href="#cookielib.Cookie" title="cookielib
 <dl class="attribute">
 <dt id="cookielib.DefaultCookiePolicy.rfc2109_as_netscape">
 <code class="descclassname">DefaultCookiePolicy.</code><code class="descname">rfc2109_as_netscape</code><a class="headerlink" href="#cookielib.DefaultCookiePolicy.rfc2109_as_netscape" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>If true, request that the <a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> instance downgrade RFC 2109 cookies
-(ie. cookies received in a <em class="mailheader">Set-Cookie</em> header with a version
-cookie-attribute of 1) to Netscape cookies by setting the version attribute of
-the <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> instance to 0.  The default value is <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a>, in which
-case RFC 2109 cookies are downgraded if and only if RFC 2965 handling is turned
-off.  Therefore, RFC 2109 cookies are downgraded by default.</p>
+<dd><p>Trueの場合、 <a class="reference internal" href="#cookielib.CookieJar" title="cookielib.CookieJar"><code class="xref py py-class docutils literal"><span class="pre">CookieJar</span></code></a> のインスタンスに RFC 2109 クッキー (即ち <em class="mailheader">Set-Cookie</em> ヘッダのVersion cookie属性の値が1のクッキー)を Netscapeクッキーへ、 <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> インスタンスのversion属性を0に設定する事でダウングレードするように要求します。デフォルトの値は <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> であり、この場合 RFC 2109 クッキーは RFC 2965 処理が無効に設定されている場合に限りダウングレードされます。それ故に RFC 2109 クッキーはデフォルトではダウングレードされます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
@@ -519,13 +496,7 @@ off.  Therefore, RFC 2109 cookies are downgraded by default.</p>
 </div>
 <div class="section" id="cookie-objects">
 <span id="cookielib-cookie-objects"></span><h2>20.21.5. Cookieオブジェクト<a class="headerlink" href="#cookie-objects" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> instances have Python attributes roughly corresponding to the
-standard cookie-attributes specified in the various cookie standards.  The
-correspondence is not one-to-one, because there are complicated rules for
-assigning default values, because the <code class="docutils literal"><span class="pre">max-age</span></code> and <code class="docutils literal"><span class="pre">expires</span></code>
-cookie-attributes contain equivalent information, and because RFC 2109 cookies
-may be &#8216;downgraded&#8217; by <a class="reference internal" href="#module-cookielib" title="cookielib: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal"><span class="pre">cookielib</span></code></a> from version 1 to version 0 (Netscape)
-cookies.</p>
+<p><a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> インスタンスは、さまざまなクッキーの標準で規定されている標準的なクッキー属性とおおまかに対応する Python 属性をもっています。しかしデフォルト値を決める複雑なやり方が存在しており、また <code class="docutils literal"><span class="pre">max-age</span></code> および <code class="docutils literal"><span class="pre">expires</span></code> クッキー属性は同じ値をもつことになっているので、また RFC 2109 クッキーは <a class="reference internal" href="#module-cookielib" title="cookielib: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal"><span class="pre">cookielib</span></code></a> によって version 1 から version 0 (Netscape) クッキーへ &#8216;ダウングレード&#8217; される場合があるため、この対応は 1 対 1 ではありません。</p>
 <p><a class="reference internal" href="#cookielib.CookiePolicy" title="cookielib.CookiePolicy"><code class="xref py py-class docutils literal"><span class="pre">CookiePolicy</span></code></a> メソッド内でのごくわずかな例外を除けば、これらの属性に代入する必要はないはずです。このクラスは内部の一貫性を保つようにはしていないため、代入するのは自分のやっていることを理解している場合のみにしてください。</p>
 <dl class="attribute">
 <dt id="cookielib.Cookie.version">
@@ -633,7 +604,7 @@ cookies.</p>
 <dd><p>指定された名前のクッキー属性を設定します。</p>
 </dd></dl>
 
-<p>The <a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> class also defines the following method:</p>
+<p><a class="reference internal" href="#cookielib.Cookie" title="cookielib.Cookie"><code class="xref py py-class docutils literal"><span class="pre">Cookie</span></code></a> クラスは以下のメソッドも定義しています:</p>
 <dl class="method">
 <dt id="cookielib.Cookie.is_expired">
 <code class="descclassname">Cookie.</code><code class="descname">is_expired</code><span class="sig-paren">(</span><span class="optional">[</span><em>now=None</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookielib.Cookie.is_expired" title="この定義へのパーマリンク">¶</a></dt>

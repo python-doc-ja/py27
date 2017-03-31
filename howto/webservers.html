@@ -187,13 +187,12 @@
 <h4>FastCGI のセットアップ<a class="headerlink" href="#setting-up-fastcgi" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>web サーバに応じて特別なモジュールが必要となります。</p>
 <ul class="simple">
-<li>Apache has both <a class="reference external" href="http://www.fastcgi.com/drupal/">mod_fastcgi</a> and <a class="reference external" href="https://httpd.apache.org/mod_fcgid/">mod_fcgid</a>.  <code class="docutils literal"><span class="pre">mod_fastcgi</span></code> is the original one, but it
-has some licensing issues, which is why it is sometimes considered non-free.
-<code class="docutils literal"><span class="pre">mod_fcgid</span></code> is a smaller, compatible alternative.  One of these modules needs
-to be loaded by Apache.</li>
+<li><p class="first">Apache には <a class="reference external" href="http://www.fastcgi.com/drupal/">mod_fastcgi</a> と <a class="reference external" href="https://httpd.apache.org/mod_fcgid/">mod_fcgid</a> の両方があります。<code class="docutils literal"><span class="pre">mod_fastcgi</span></code> が最初に作られましたが、非フリーとして扱われるという、いくつかのライセンスの問題があります。<code class="docutils literal"><span class="pre">mod_fcgid</span></code> はより小さく、前者と互換性があります。このうちのどちらかを Apache から読み込む必要があります。</p>
+</li>
 <li><p class="first">lighttpd は自身に <a class="reference external" href="http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModFastCGI">FastCGI module</a> を含んでいて、<a class="reference external" href="http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModSCGI">SCGI module</a> も同様に含んでいます。</p>
 </li>
-<li><a class="reference external" href="http://nginx.org/">nginx</a> also supports <a class="reference external" href="https://www.nginx.com/resources/wiki/start/topics/examples/simplepythonfcgi/">FastCGI</a>.</li>
+<li><p class="first"><a class="reference external" href="http://nginx.org/">nginx</a> も <a class="reference external" href="https://www.nginx.com/resources/wiki/start/topics/examples/simplepythonfcgi/">FastCGI</a> をサポートしています。</p>
+</li>
 </ul>
 <p>一旦モジュールをインストールして設定したら、以下の WSGI アプリケーションを使ってテストできます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
@@ -218,10 +217,7 @@ to be loaded by Apache.</li>
 <p>これは単純な WSGI アプリケーションですが、まず <a class="reference external" href="https://pypi.python.org/pypi/flup/1.0">flup</a> をインストールする必要があります、flup は低レベルの FastCGI アクセスを取り扱います。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">There is some documentation on <a class="reference external" href="https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/">setting up Django with WSGI</a>, most of
-which can be reused for other WSGI-compliant frameworks and libraries.
-Only the <code class="docutils literal"><span class="pre">manage.py</span></code> part has to be changed, the example used here can be
-used instead.  Django does more or less the exact same thing.</p>
+<p class="last"><a class="reference external" href="https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/">setting up Django with WSGI</a> にドキュメントがあります、この内の多くは WSGI 互換フレームワークやライブラリで再利用できます。代わりに <code class="docutils literal"><span class="pre">manage.py</span></code> の部分を変更するだけで、ここで使った例を利用できます。Django もほとんど同様のことを行います。</p>
 </div>
 </div>
 </div>

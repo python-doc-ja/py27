@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python を Web 上で使うには HOWTO &#8212; Python 2.7.13 ドキュメント</title>
+    <title>Python を Web 上で使うには &#8212; Python 2.7.13 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -80,7 +80,7 @@
           <div class="body" role="main">
             
   <div class="section" id="howto-use-python-in-the-web">
-<h1>Python を Web 上で使うには HOWTO<a class="headerlink" href="#howto-use-python-in-the-web" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>Python を Web 上で使うには<a class="headerlink" href="#howto-use-python-in-the-web" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -91,24 +91,29 @@
 </table>
 <div class="topic">
 <p class="topic-title first">概要</p>
-<p>このドキュメントは Python を web 向けに組み込む方法を示します。Python を web サーバとともに利用するためのいくつかの方法や web サイトを開発する際の一般的なプラクティスを示します。</p>
+<p>このドキュメントは Python を web 向けに使う方法を示します。
+Python を web サーバとともに利用するためのいくつかの方法や web サイトを開発する際の一般的なプラクティスを示します。</p>
 </div>
-<p>web サイトのコンテンツをユーザが作るということに焦点を当てた &#8220;Web 2.0&#8221; の提起以来 Web プログラミングは人気の話題となっています。web サイトを作るのに Python を利用することは可能でしたが、それは退屈な作業でした。そのため、開発者がサイトを速く、頑強に作るのを助けるために多くの「フレームワーク」と補助ツールが作成されました。この HOWTO では動的なコンテンツを作成するために Python と web サーバを結合させるいくつかの方法について述べます。この話題に対する一般的な入門はこのドキュメントだけで扱いきれないほど広いわけではありませんが、ここでは最も人気のあるライブラリの簡単な概要のみを扱います。</p>
+<p>web サイトのコンテンツをユーザが作るということに焦点を当てた &#8220;Web 2.0&#8221; の提起以来 Web プログラミングは人気の話題となっています。
+Python を使って web サイトを作れましたが、それはやや退屈な作業でした。そのため、開発者がサイトを速く、頑強に作るのを助けるために多くのフレームワークと補助ツールが作成されました。この HOWTO では動的なコンテンツを作成するために Python と web サーバを結合させるいくつかの方法について述べます。この話題は非常に広過ぎてドキュメント 1 つだけでは網羅しきれないため、この HOWTO を完全な入門書とするつもりはありません。ここでは最も人気のあるライブラリの簡単な概要を述べます。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">この HOWTO は Python を web 上で使う方法の概要を扱おうとしていますが、HOWTO が常に望みどおりに最新の状況を伝えているとは限りません。Python での web 開発は急速に発展しています、そのため Wiki ページ <a class="reference external" href="https://wiki.python.org/moin/WebProgramming">Web Programming</a> に多くの最新の開発に関する内容があるでしょう。</p>
+<p class="last">この HOWTO は Python を web 上で使う方法の概要を扱おうとしていますが、HOWTO が常に望みどおりに最新の状況を伝えられるわけではありません。
+Python での web 開発は急速に発展しています、そのため Wiki ページ <a class="reference external" href="https://wiki.python.org/moin/WebProgramming">Web Programming</a> に多くの最新の開発に関する内容があるでしょう。</p>
 </div>
 <div class="section" id="the-low-level-view">
 <h2>低レベルから見て<a class="headerlink" href="#the-low-level-view" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ユーザが web サイトを訪れた時、ブラウザはサイトの web サーバとコネクションを形成します (これは <em>リクエスト</em> と呼ばれます)。サーバはファイルシステム上からファイルを探し出し、ユーザのブラウザにそれを送り返し、ブラウザが表示します (これが <em>レスポンス</em> です)。これが基礎となるプロトロル、HTTP のおおまかな動作です。</p>
-<p>さて、動的な web サイトはファイルシステム上のファイルではなく、リクエストが来たときに web サーバが実行するプログラムです。それらは掲示板の投稿を表示したり、メールを表示したり、ソフトウェアの設定や現在時刻の表示などの様々な便利なことができます。これらのプログラムはサーバがサポートするあらゆる言語で書くことができます、そのため動的な web サイトを作成するのに Python を利用することは簡単です。</p>
-<p>ほとんどの HTTP サーバは C や C++ で書かれていて、これらは Python コードを単純な方法で実行できません &#8211; サーバとプログラムの間にブリッジが必要です。これらのブリッジやインターフェースはプログラムがサーバとどうやりとりするかを定めます。これまでに最良のインターフェースを決めるために膨大な数の試みがなされてきましたが、言及すべきものはわずかです。</p>
-<p>全ての web サーバが全てのインターフェースをサポートしているわけではありません。多くの web サーバは古い、現在では撤廃されたインターフェースのみをサポートしています。しかし、多くの場合にはサードパーティーモジュールを利用して新しいインターフェースをサポートするように拡張できます。</p>
+<p>さて、動的な web サイトはファイルシステム上のファイルではなく、リクエストが来たときに web サーバが実行するプログラムの上に作られていて、このプログラムがユーザへ返すコンテンツを <em>生成</em> します。それらは掲示板の投稿を表示したり、メールを表示したり、ソフトウェアの設定や現在時刻の表示などの様々な便利なことができます。これらのプログラムはサーバがサポートするあらゆる言語で書くことができます。ほとんどのサーバが Python をサポートしているので、動的な web サイトを作成するのに Python を利用することは簡単です。</p>
+<p>ほとんどの HTTP サーバは C や C++ で書かれていて、これらは Python コードを直接は実行できず、サーバとプログラムの間にブリッジが必要です。これらのブリッジやインターフェースはプログラムがサーバとどうやりとりするかを定めます。これまでに最良のインターフェースを作成するために膨大な数の試みがなされてきましたが、触れる価値のあるものはわずかです。</p>
+<p>全ての web サーバが全てのインターフェースをサポートしているわけではありません。多くの web サーバは古い、現在では撤廃されたインターフェースのみをサポートしています; しかし、多くの場合にはサードパーティーモジュールを利用して新しいインターフェースをサポートするように拡張できます。</p>
 <div class="section" id="common-gateway-interface">
 <h3>Common Gateway Interface<a class="headerlink" href="#common-gateway-interface" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>このインターフェースは最も古く、ほとんどの web サーバでサポートされ、すぐに使うことができます。CGI を利用して web サーバと通信するプログラムはリクエスト毎に起動される必要があります。そのため毎回のリクエストは新しい Python インタプリタを起動します &#8211; このため起動にいくらか時間がかかります &#8211; そのためこのインターフェースは負荷が少ない状況にのみ向いています。</p>
+<p>一般に &#8220;CGI&#8221; と呼ばれるこのインターフェースは最も古く、ほとんどの web サーバでサポートされ、すぐに使うことができます。
+CGI を利用して web サーバと通信するプログラムはリクエスト毎に起動される必要があります。そのため毎回のリクエストは新しい Python インタプリタを起動します &#8211; このため起動にいくらか時間がかかります &#8211; そしてこのインターフェースは負荷が低い状況にのみ向いています。</p>
 <p>CGI の利点は単純だということです &#8211; CGI を利用するプログラムを書くのは3行のコードを書くだけです。しかし、この単純さは後で高くつきます; 開発者を少ししか助けてくれません。</p>
-<p>CGI プログラムを書くことは可能ではありますが、もはや推奨されません。 <a class="reference internal" href="#wsgi"><span class="std std-ref">WSGI</span></a> (詳しくは後で述べます) では CGI をエミュレートするプログラムを書くことができます、そのため、よりよい選択肢が選べない場合には CGI としてプログラムを実行できます。</p>
+<p>CGI プログラムを書くことは可能ではありますが、もはや推奨されません。
+<a class="reference internal" href="#wsgi"><span class="std std-ref">WSGI</span></a> (詳しくは後で述べます) では CGI をエミュレートするプログラムを書くことができるので、よりよい選択肢が選べない場合には CGI としてプログラムを実行できます。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <p>Python の標準ライブラリには簡素な CGI プログラムを作成するのを助けるいくつかのモジュールが含まれています:</p>
@@ -118,11 +123,11 @@
 <li><p class="first"><a class="reference internal" href="../library/cgitb.html#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">cgitb</span></code></a> &#8211; CGI アプリケーションの中でエラーが発生した場合に、 &#8220;500 Internal Server Error&#8221; メッセージの代わりに親切なトレースバックを表示します</p>
 </li>
 </ul>
-<p class="last">Python wiki では <a class="reference external" href="https://wiki.python.org/moin/CgiScripts">CGI scripts</a> ページに Python での CGI に関した追加情報を取り上げています。</p>
+<p class="last">Python wiki では <a class="reference external" href="https://wiki.python.org/moin/CgiScripts">CGI scripts</a> にあるページに Python での CGI に関して追加情報を取り上げています。</p>
 </div>
 <div class="section" id="simple-script-for-testing-cgi">
 <h4>CGI をテストするための単純なスクリプト<a class="headerlink" href="#simple-script-for-testing-cgi" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>CGI が web サーバで動くかどうかを調べるのに、この短かく単純な CGI プログラムが利用できます:</p>
+<p>CGI が web サーバで動くかどうかを調べるのに、この短く単純な CGI プログラムが利用できます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: UTF-8 -*-</span>
 
@@ -136,12 +141,12 @@
 <span class="nb">print</span> <span class="s2">&quot;Hello World!&quot;</span>
 </pre></div>
 </div>
-<p>このコードは <code class="docutils literal"><span class="pre">.py</span></code> または <code class="docutils literal"><span class="pre">.cgi</span></code> 拡張子をつけたファイルに書く必要があります、どちらを使うかは web サーバの設定に依存します。web サーバの設定によっては、ファイルは <code class="docutils literal"><span class="pre">cgi-bin</span></code> フォルダ内にある必要があるかもしれません、これはセキュリティ上の理由のためです。</p>
-<p><code class="docutils literal"><span class="pre">cgitb</span></code> 行が何なのか疑問に思うかもしれません。この行は、クラッシュしてブラウザで &#8220;Internal Server Error&#8221; と表示する代わりに、親切なトレースバックを表示できるようにします。これはデバッグの際に便利ですが、いくつかの重要なデータをユーザにさらけ出すリスクにもなりえます。スクリプトを完成品として利用する準備ができたら <code class="docutils literal"><span class="pre">cgitb</span></code> は使ってはいけません。さらに、<em>常に</em> 例外を捕捉し、適切なエラーページを表示するようにしなければいけません &#8211; エンドユーザは漠然とした &#8220;Internal Server Errors&#8221; をブラウザで見ることを好みません。</p>
+<p>web サーバの設定に依存して、このコードを <code class="docutils literal"><span class="pre">.py</span></code> もしくは <code class="docutils literal"><span class="pre">.cgi</span></code> 拡張子をつけたファイルに書く必要があります。それに加えて、セキュリティ上の理由のため、ファイルは <code class="docutils literal"><span class="pre">cgi-bin</span></code> フォルダ内に置く必要があるかもしれません。</p>
+<p><code class="docutils literal"><span class="pre">cgitb</span></code> 行が何なのか疑問に思うかもしれません。この行は、クラッシュしてブラウザで &#8220;Internal Server Error&#8221; と表示する代わりに、親切なトレースバックを表示できるようにします。これはデバッグの際に便利ですが、いくつかの機密データをユーザにさらけ出すリスクにもなりえます。そういった理由で、スクリプトを完成品として利用する準備ができたら <code class="docutils literal"><span class="pre">cgitb</span></code> は使ってはいけません。さらに、<em>常に</em> 例外を捕捉し、適切なエラーページを表示するようにしなければいけません &#8211; エンドユーザは得体の知れない &#8220;Internal Server Errors&#8221; をブラウザで見ることを好みません。</p>
 </div>
 <div class="section" id="setting-up-cgi-on-your-own-server">
 <h4>自身のサーバで CGI を立ち上げる<a class="headerlink" href="#setting-up-cgi-on-your-own-server" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>自身の web サーバを持っていない場合には、この内容は当てはまらないでしょ。そのままで動作するか調べることは可能です、もし動作しない場合、とにかく web サーバの管理者と話し合う必要があります。大きなホストである場合、チケットを埋めて Python サポートを得るということができるでしょう。</p>
+<p>自身の web サーバを持っていない場合には、この内容は当てはまりません。そのままで動作するか調べることは可能で、もし動作しない場合は、とにかく web サーバの管理者と話し合う必要があります。大きなホストである場合、チケットに記入して Python サポートを求められるでしょう。</p>
 <p>あなた自身が管理者であるか、自身のコンピュータで試すためにインストールしたい場合には自分自身で設定する必要があります。異なる設定オプションを持つ web サーバがたくさんあるため、CGI の設定法はひとつではありません、現在最も広く使われている web サーバは  <a class="reference external" href="http://httpd.apache.org/">Apache HTTPd</a> です、Apache を簡単に説明すると &#8211; 最も多くの人が利用しているもので、ほとんど全てのシステムでシステムのパッケージ管理ソフトを利用して簡単にインストールできます。ただし <a class="reference external" href="http://www.lighttpd.net">lighttpd</a> も注目を集め始めていて、さらにパフォーマンスの面でより優れているといわれています。多くのシステムでこのサーバはパッケージ管理ソフトを利用してインストールできるので、web サーバを手動でコンパイルする必要は全くありません。</p>
 <ul class="simple">
 <li><p class="first">Apache ではチュートリアル <a class="reference external" href="http://httpd.apache.org/docs/2.2/howto/cgi.html">Dynamic Content with CGI</a> を参照できます、これには全てが書かれています。多くの場合には <code class="docutils literal"><span class="pre">+ExecCGI</span></code> を設定すれば十分です。このチュートリアルはよくでくわす可能性のある落し穴についても書かれています。</p>
@@ -232,30 +237,15 @@
 <p>WSGI について何度も言及してきたため、なにか重要そうに感じたでしょう。実際に重要なので、ここで説明します。</p>
 <p><em>Web Server Gateway Interface</em>, <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> または略して WSGI は現在のところ Python で web プログラミングをする最良の方法です。 programmers writing framework として卓越している一方で、一般の人は直接接点を持つ必要はありません。しかし、web 開発フレームワークとして選択する場合に、 WSGI を選ぶことは素晴しい考えです。</p>
 <p>WSGI を使う上での大きな利益は、統一性です。 WSGI と互換性のあるプログラムであれば &#8211; これはフレームワークが WSGI をサポートしているということを意味し、プログラムは WSGI ラッパーを持つ全ての web サーバインターフェースで利用可能になります。つまりユーザが mod_python か FastCGI どちらを利用しているかを気にせずにすみます。&#8211; WSGI を使うことで任意ゲートウェイインターフェース上で動作するようになります。 Python 標準ライブラリには、テストのために利用できる小さな web サーバである、独自の WSGI サーバ <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> が含まれています。</p>
-<p>A really great WSGI feature is middleware.  Middleware is a layer around your
-program which can add various functionality to it.  There is quite a bit of
-<a class="reference external" href="https://wsgi.readthedocs.org/en/latest/libraries.html">middleware</a> already
-available.  For example, instead of writing your own session management (HTTP
-is a stateless protocol, so to associate multiple HTTP requests with a single
-user your application must create and manage such state via a session), you can
-just download middleware which does that, plug it in, and get on with coding
-the unique parts of your application.  The same thing with compression &#8211; there
-is existing middleware which handles compressing your HTML using gzip to save
-on your server&#8217;s bandwidth.  Authentication is another problem that is easily
-solved using existing middleware.</p>
+<p>WSGI の本当に卓越している機能はミドルウェアです。ミドルウェアとはプログラムに様々な機能性を加えるためのレイヤーのことを指します。<a class="reference external" href="https://wsgi.readthedocs.org/en/latest/libraries.html">無数のミドルウェア</a> が利用可能になっています。例えばセッション管理(連続したリクエストの中でユーザを同定を行います、HTTP は状態を維持しないので、リクエストが同じユーザのものであるということがわかります)を書く代わりに、ミドルウェアを取ってきて繋ぐだけで、既存の機能を当てにできます。圧縮についても同じです &#8211; HTML を gzip で圧縮してサーバの帯域を節約したい場合。ミドルウェアを組み込むだけで行うことができます。認証もミドルウェアで簡単に解決できる問題です。</p>
 <p>一般的には &#8211; WSGI は複雑に思えるかもしれませんが、WSGI は web サイトを書く際に起きうる多くの問題の解決法を持っているため、学習の初期段階を実りあるものにしてくれます。</p>
 <div class="section" id="wsgi-servers">
 <h3>WSGI サーバ<a class="headerlink" href="#wsgi-servers" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>The code that is used to connect to various low level gateways like CGI or
-mod_python is called a <em>WSGI server</em>.  One of these servers is <code class="docutils literal"><span class="pre">flup</span></code>, which
-supports FastCGI and SCGI, as well as <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_JServ_Protocol">AJP</a>.  Some of these servers
-are written in Python, as <code class="docutils literal"><span class="pre">flup</span></code> is, but there also exist others which are
-written in C and can be used as drop-in replacements.</p>
+<p>CGI や mod_python などに様々な低レベルゲートウェイに接続するためのコードを <em>WSGI サーバ</em> と呼びます。これらのサーバの一つに <code class="docutils literal"><span class="pre">flup</span></code> があります、これは前に述べましたが FastCGI、SCGI と <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_JServ_Protocol">AJP</a> をサポートしています。これらのサーバのいくつかは <code class="docutils literal"><span class="pre">flup</span></code> のように Python で書かれていますが、C で書かれたものもあります、それらは気軽に置き換えることができます。</p>
 <p>いくつものサーバが利用可能ですから、Python の web アプリケーションはほとんどどこでも利用できます。これは他の web テクニックと比べたときの Python の大きな利点です。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p>A good overview of WSGI-related code can be found in the <a class="reference external" href="https://wsgi.readthedocs.org/">WSGI homepage</a>, which contains an extensive list of <a class="reference external" href="https://wsgi.readthedocs.org/en/latest/servers.html">WSGI servers</a> which can be used by <em>any</em> application
-supporting WSGI.</p>
+<p><a class="reference external" href="https://wsgi.readthedocs.org/">WSGI homepage</a> は全ての WSGI に関連したコードに対して素晴しい概観を与えてくれます、ここには WSGI をサポートするアプリケーション <em>全て</em> が利用できるサーバの広大なリスト <a class="reference external" href="https://wsgi.readthedocs.org/en/latest/servers.html">WSGI servers</a> が含まれています。</p>
 <p>標準ライブラリに含まれる WSGI をサポートするモジュールに興味が湧いたかもしれません:</p>
 <ul class="last simple">
 <li><p class="first"><a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> &#8211; WSGI のためのいくつかの小さなユーティリティとサーバ</p>
@@ -266,9 +256,7 @@ supporting WSGI.</p>
 <div class="section" id="case-study-moinmoin">
 <h3>事例研究: MoinMoin<a class="headerlink" href="#case-study-moinmoin" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>WSGI は web アプリケーションプログラマに何をもたらしてくれるのでしょうか? 長く存在しているWSGI を使わない、Python で書かれた web アプリケーションをみてみましょう。</p>
-<p>One of the most widely used wiki software packages is <a class="reference external" href="https://moinmo.in/">MoinMoin</a>.  It was created in 2000, so it predates WSGI by about
-three years.  Older versions needed separate code to run on CGI, mod_python,
-FastCGI and standalone.</p>
+<p>最も広く使われている wiki ソフトウェアの一つに <a class="reference external" href="https://moinmo.in/">MoinMoin</a> があります。これは2000年に作られたため、WSGI より3年ほど先行していました。古いバージョンでは CGI、mod_python、FastCGI、スタンドアロンで動作するためには別々のコードが必要でした。</p>
 <p>現在では WSGI をサポートしていますが、いまやこれら全ては WSGI と既存のゲートウェイを使って可能になりました。FastCGI 上では <code class="docutils literal"><span class="pre">flup</span></code> を使って実行できますし、スタンドアロンサーバとして実行するには <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> を使うことになります。</p>
 </div>
 </div>
@@ -291,8 +279,7 @@ FastCGI and standalone.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">The English Wikipedia has an article about the <a class="reference external" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a>.  It includes a long
-list of web frameworks for various programming languages.</p>
+<p class="last">Wikipedia の英語版には <a class="reference external" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a> の記事があります、この記事には様々な言語での web フレームワークの長大なリストが含まれています。</p>
 </div>
 </div>
 <div class="section" id="ingredients-for-websites">
@@ -336,12 +323,9 @@ list of web frameworks for various programming languages.</p>
 <h3>データの永続性<a class="headerlink" href="#data-persistence" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><em>データの永続性 (data persistence)</em> は複雑に聞こえますが、単にデータを蓄積するだけです。このデータはブログのエントリであったり、掲示板の投稿であったり、wiki ページのテキストであったりします。例のごとく web サーバに情報をたくわえるには様々な方法があります。</p>
 <p>しばしば <a class="reference external" href="http://www.mysql.com/">MySQL</a> や <a class="reference external" href="http://www.postgresql.org/">PostgreSQL</a> のようなリレーショナルデータベースエンジンが利用されます、それは数百万エントリに及ぶ非常に大きなデータベースを優れたパフォーマンスで扱うことができるためです。<a class="reference external" href="http://www.sqlite.org/">SQLite</a> と呼ばれる小さなデータベースエンジンもあります、これは Python に <a class="reference internal" href="../library/sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></code></a> モジュールとしてバンドルされていて、ファイル一つだけを利用します。他の依存関係がありません。小さなサイトに対しては SQLite で十分です。</p>
-<p>Relational databases are <em>queried</em> using a language called <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a>.  Python programmers in general do not
-like SQL too much, as they prefer to work with objects.  It is possible to save
-Python objects into a database using a technology called <a class="reference external" href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> (Object Relational
-Mapping).  ORM translates all object-oriented access into SQL code under the
-hood, so the developer does not need to think about it.  Most <a class="reference internal" href="#frameworks">frameworks</a> use
-ORMs, and it works quite well.</p>
+<p>関係データベースには <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> と呼ばれる言語を利用して <em>問い合わせ (query)</em> ます。一般的に Python プログラマは SQL があまり好きではなく、オブジェクトで動作する方を好みます。
+<a class="reference external" href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> (Object Relational Mapping) と呼ばれる技術を使うことで、 Python オブジェクトをデータベースに保存できます。
+ORM は内部でオブジェクト指向的アクセスを SQL コードに変換するので、ユーザはそのことを意識せずに済みます。ほとんどの <a class="reference internal" href="#framework">framework</a> は ORMs を利用し、とてもうまくいっています.</p>
 <p>第2の可能性はハードディスクに保存されたファイルを利用することです (しばしば、フラットファイルと呼ばれます)。これはとても簡単ですが、高速ではありません。このデータベースは ORM 経由でオブジェクトを保存するのに利用できて、ただ、データをファイルシステムに保存する方法はこれだけではありません。普通の平文のテキストファイルで十分な場合もあります。</p>
 <p>第3の最も利用されない方法はオブジェクト指向データベースと呼ばれています。このデータベースは、OR マッピングによって行との間に作成されるリレーションの代わりに、<em>実際のオブジェクト</em> を保存します。この方法にはほとんど全てのオブジェクトを直接的な方法で保存できるという利点があります、これはリレーショナルデータベースでいくつかのオブジェクトが ORMs で表現するのが困難であるのと対照的です。</p>
 <p><a class="reference internal" href="#framework">framework</a> はしばしばユーザにどの方法を選べばいいか、ヒントを与えてくれます。たいていの場合、一つだけの方法を必要とする特別な条件がある場合がない限りは、それに従うことはいい考えです。</p>
@@ -352,13 +336,12 @@ ORMs, and it works quite well.</p>
 </li>
 <li><p class="first"><a class="reference external" href="https://wiki.python.org/moin/DatabaseProgramming">Database Programming</a> はデータ保存の方法を選ぶのを助けてくれます</p>
 </li>
-<li><a class="reference external" href="http://www.sqlalchemy.org/">SQLAlchemy</a>, the most powerful OR-Mapper
-for Python, and <a class="reference external" href="https://pypi.python.org/pypi/Elixir">Elixir</a>, which makes
-SQLAlchemy easier to use</li>
+<li><p class="first"><a class="reference external" href="http://www.sqlalchemy.org/">SQLAlchemy</a> は Python 用の最も強力な OR マッパーで、<a class="reference external" href="https://pypi.python.org/pypi/Elixir">Elixir</a> は SQLAlchemy を使いやすくします</p>
+</li>
 <li><p class="first"><a class="reference external" href="http://www.sqlobject.org/">SQLObject</a> は別の人気のある OR マッパーです</p>
 </li>
-<li><a class="reference external" href="https://launchpad.net/zodb">ZODB</a> and <a class="reference external" href="https://www.mems-exchange.org/software/">Durus</a>, two object oriented
-databases</li>
+<li><p class="first"><a class="reference external" href="https://launchpad.net/zodb">ZODB</a> と <a class="reference external" href="https://www.mems-exchange.org/software/">Durus</a> の二つはオブジェクト指向データベースです</p>
+</li>
 </ul>
 </div>
 </div>
@@ -384,10 +367,7 @@ databases</li>
 <div class="section" id="turbogears">
 <h4>TurboGears<a class="headerlink" href="#turbogears" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Python の他に人気あるフレームワークは <a class="reference external" href="http://www.turbogears.org/">TurboGears</a> です。これは既存の要素と継ぎ目ををなくすためグルーコードを使ってそれらを組み合わせるアプローチをとっています。TurboGears はユーザが自由に要素を選べるようにしていて、ORM は制限が多い代わり使いやすいもの、複雑だが強力なもの、に切り替えて使うことができます。テンプレートエンジンにも同様のことがいえます。TurboGears の強力な点は、構成要素が他のプロジェクトでも TurboGears への依存無しに簡単に利用できるということです、例えば TurboGears を支えている web サーバ CherryPy もそうです。</p>
-<p>The documentation can be found in the <a class="reference external" href="https://turbogears.readthedocs.org/">TurboGears documentation</a>, where links to screencasts can be found.
-TurboGears has also an active user community which can respond to most related
-questions.  There is also a <a class="reference external" href="http://turbogears.org/1.0/docs/TGBooks.html">TurboGears book</a>
-published, which is a good starting point.</p>
+<p>ドキュメントが <a class="reference external" href="https://turbogears.readthedocs.org/">TurboGears documentation</a> にあり、スクリーンキャストへのリンクもあります。TurboGears には関連した質問のほとんどに答えられる、活動的なユーザコミュニティがあります。入門に向いた <a class="reference external" href="http://turbogears.org/1.0/docs/TGBooks.html">TurboGears book</a> も出版されています。</p>
 <p>次の TurboGears のメジャーバージョン version 2.0 での計画では、<a class="reference external" href="http://www.pylonsproject.org/">Pylons</a> と呼ばれる別の柔軟なフレームワークによって提供される、より柔軟な基本要素に切り替えることになっています。</p>
 </div>
 <div class="section" id="zope">
@@ -418,7 +398,7 @@ published, which is a good starting point.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python を Web 上で使うには HOWTO</a><ul>
+<li><a class="reference internal" href="#">Python を Web 上で使うには</a><ul>
 <li><a class="reference internal" href="#the-low-level-view">低レベルから見て</a><ul>
 <li><a class="reference internal" href="#common-gateway-interface">Common Gateway Interface</a><ul>
 <li><a class="reference internal" href="#simple-script-for-testing-cgi">CGI をテストするための単純なスクリプト</a></li>

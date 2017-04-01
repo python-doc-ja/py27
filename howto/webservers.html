@@ -164,36 +164,50 @@ Apache はほぼ全てのシステムにパッケージ管理ツールを使っ�
 <ul class="simple">
 <li><p class="first">Python スクリプトが実行可能でない。
 CGI スクリプトが実行可能でないとき、多くの web サーバは実行しユーザに出力を送る代わりに、ユーザがダウンロードできるようにします。
-CGI スクリプトに対しては適切に実行するために <code class="docutils literal"><span class="pre">+x</span></code> ビットが設定される必要があります。
+CGI スクリプトが Unix 系 OS で適切に実行されるために <code class="docutils literal"><span class="pre">+x</span></code> ビットが設定される必要があります。
 <code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+x</span> <span class="pre">your_script.py</span></code> を使うことで問題は解決するでしょう。</p>
 </li>
-<li><p class="first">Unix システムでは、プログラムファイルの行末は Unix 形式でなければなりません。
+<li><p class="first">Unix 系システムでは、プログラムファイルの行末は Unix 形式でなければなりません。
 web サーバはスクリプト最初の行 (shebang と呼ばれます) を調べ、そこで指定されたプログラムを実行しようとするため、ここが重要なのです。これは Windows の行末 (Carriage Return &amp; Line Feed、または CRLF) によって簡単に混乱させられるので、ファイルの行末を Unix の行末 (Line Feed, LF のみ) に変換する必要があります。これは FTP 経由でバイナリモードではなくテキストモードでファイルをアップロードすると自動的に行なわれますが、単に Unix 行末で保存するようテキストエディタに指示する方が望ましいです。ほとんどのエディタはこの機能をサポートしています。</p>
 </li>
-<li><p class="first">web サーバはファイルを読めるようにしなければいけないので、パーミッションが適切になっているか確認してください。しばしば、サーバは <code class="docutils literal"><span class="pre">www-data</span></code> ユーザ、グループとして実行します、そのためファイルのオーナーシップを変更するか、<code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+r</span> <span class="pre">your_script.py</span></code> を使いファイルを全世界から読み込み可能にするといったことは試す価値があります。</p>
+<li><p class="first">web サーバはファイルが読めなければならないので、パーミッションが適切になっているか確認する必要があります。
+Unix 系システムでは、サーバはしばしば <code class="docutils literal"><span class="pre">www-data</span></code> ユーザ、 <code class="docutils literal"><span class="pre">www-data</span></code> グループのパーミッションで実行されているので、ファイルの所有権を変更したり、 <code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+r</span> <span class="pre">your_script.py</span></code> を使いファイルを誰からでも読み込み可能にしたりするのは試す価値があります。</p>
 </li>
-<li><p class="first">web サーバはアクセスを試みているファイルが CGI スクリプトであるということを知っていなければいけません。web サーバの設定を確認して下さい、おそらくそこに間違いがあります。</p>
+<li><p class="first">web サーバはアクセスを試みているファイルが CGI スクリプトであるということを知っていなければなりません。
+web サーバが CGI スクリプトに対し、ある特定のファイル拡張子を持つことを要求するよう設定されていないか設定を確認して下さい。</p>
 </li>
-<li><p class="first">shebang 内のインタプリタへのパス (<code class="docutils literal"><span class="pre">#!/usr/bin/env</span> <span class="pre">python</span></code>) は正確でないといけません。この行は Python を見つけるために <code class="docutils literal"><span class="pre">/usr/bin/env</span></code> を呼び出しますが、<code class="docutils literal"><span class="pre">/usr/bin/env</span></code> が無い場合失敗します。Python がどこにインストールされているか知っている場合、そのパスを使うこともできます。<code class="docutils literal"><span class="pre">whereis</span> <span class="pre">python</span></code> と <code class="docutils literal"><span class="pre">type</span> <span class="pre">-p</span> <span class="pre">python</span></code> なども python がどこにインストールされたかを探すのに役立つでしょう。一旦わかってしまえば、shebang 行をそれに応じて変更できます: <code class="docutils literal"><span class="pre">#!/usr/bin/python</span></code>。</p>
+<li><p class="first">Unix 系システムでは、 shebang にあるインタプリタへのパス (<code class="docutils literal"><span class="pre">#!/usr/bin/env</span> <span class="pre">python</span></code>) は正確でなければなりません。この行は Python を見つけるために <code class="docutils literal"><span class="pre">/usr/bin/env</span></code> を呼び出しますが、<code class="docutils literal"><span class="pre">/usr/bin/env</span></code> が無いか Python が web サーバのパスに無い場合は失敗します。
+Python がどこにインストールされているか分かっている場合、そのフルパスを使うこともできます。
+<code class="docutils literal"><span class="pre">whereis</span> <span class="pre">python</span></code> コマンドと <code class="docutils literal"><span class="pre">type</span> <span class="pre">-p</span> <span class="pre">python</span></code> コマンドも Python がどこにインストールされたかを探すのに役立つでしょう。一旦パスが分かれば、shebang 行をそれに応じて変更できます: <code class="docutils literal"><span class="pre">#!/usr/bin/python</span></code>。</p>
 </li>
-<li><p class="first">ファイルは BOM (Byte Order Mark) を含んでいてはいけません。BOM は UTF-16 エンコーディングのバイト順を決定するのに利用されます、しかしいくつかのエディタは UTF-8 ファイルに対してもそれを書き込むことがあります。BOM は shebang 行に影響するので、エディタが BOM を書かないようにしてください。</p>
+<li><p class="first">ファイルは BOM (Byte Order Mark) を含んでいてはいけません。
+BOM は UTF-16 と UTF-32 エンコーディングのバイト順を決定するのに利用されますが、あるエディタは UTF-8 ファイルにも BOM を書き込むことがあります。
+BOM は shebang 行に影響するので、エディタが BOM を書き込まないようにしてください。</p>
 </li>
-<li><p class="first"><a class="reference internal" href="#mod-python"><span class="std std-ref">mod_python</span></a> が問題となることがあります。<code class="docutils literal"><span class="pre">mod_python</span></code> はそれ自身で CGI スクリプトを扱うことができますが、そのことが問題の原因となることがあります。利用できないようにして下さい。</p>
+<li><p class="first">web サーバが <a class="reference internal" href="#mod-python"><span class="std std-ref">mod_python</span></a> を使っている場合、 <code class="docutils literal"><span class="pre">mod_python</span></code> が問題となることがあります。
+<code class="docutils literal"><span class="pre">mod_python</span></code> はそれ自身で CGI スクリプトを扱うことができますが、そのことが問題の原因となることがあります。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="section" id="mod-python">
 <span id="id1"></span><h3>mod_python<a class="headerlink" href="#mod-python" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>PHP から来た人達はしばしば、Python を web 上で利用する方法を把握するのに苦労します。彼らはたいてい最初に <a class="reference external" href="http://modpython.org/">mod_python</a> が <code class="docutils literal"><span class="pre">mod_php</span></code> と等価だと考えて、利用しようとします。しかし実際にはそうではありません。<code class="docutils literal"><span class="pre">mod_python</span></code> が行なうことは Apache プロセスへのインタプリタの埋め込みです、そのため、毎回のリクエストで Python インタプリタが起動しないのでリクエストに対する速度が向上します。一方で PHP でよくやるような「HTML への Python の埋め込み」とはかけ離れています。Python でそれと等価なことをするのはテンプレートエンジンです。<code class="docutils literal"><span class="pre">mod_python</span></code> 自身はより強力で Apache 内部に対してより多くのアクセスを提供します。CGI をエミュレートし、JSP に似た「HTML への Python 埋め込み」である &#8220;Python Server Pages&#8221; モードで動作でき、全てのリクエストを一つのファイルで受け付けて何を実行するを決める &#8220;Publisher&#8221; を持っています。</p>
-<p>しかし、<code class="docutils literal"><span class="pre">mod_python</span></code> はいくつかの問題も抱えています。PHP インタプリタと違い Python インタプリタはファイル実行時にキャッシュを利用するため、ファイルの変更時にはアップデートするには web サーバ全体を再起動する必要があります。もう一つの問題は基本的なコンセプトにあります &#8211; Apache はリクエストを扱うためにいくつかの子プロセスを開始し、不幸にも全ての子プロセスが Python インタプリタ全体を、利用しない場合であっても、読み込む必要があるのです。このため web サーバ全体が遅くなります。別の問題は <code class="docutils literal"><span class="pre">mod_python</span></code> は <code class="docutils literal"><span class="pre">libpython</span></code> が特定のバージョンに対してリンクされることです、<code class="docutils literal"><span class="pre">mod_python</span></code> を再コンパイルせずに古いバージョンから新しいバージョンに切り替える (例えば 2.4 から 2.5) ことはできません。さらに <code class="docutils literal"><span class="pre">mod_python</span></code> は Apache web サーバに制限されるため <code class="docutils literal"><span class="pre">mod_python</span></code> 用に書かれたプログラムは他の web サーバで簡単に動かすことはできません。</p>
+<p>PHP から来た人達はしばしば、Python を web 上で利用する方法を把握するのに苦労します。彼らが最初に考えるのはたいてい <a class="reference external" href="http://modpython.org/">mod_python</a> のことで、それは <code class="docutils literal"><span class="pre">mod_python</span></code> が <code class="docutils literal"><span class="pre">mod_php</span></code> と同等のものだと考えるからです。しかし実際にはたくさんの相違点があります。
+<code class="docutils literal"><span class="pre">mod_python</span></code> が行なうことは Apache プロセスへのインタプリタの埋め込みで、そのためリクエストごとに Python インタプリタを起動させる必要が無いので、リクエストに対する速度が向上します。一方で PHP でよくやるような「HTML への Python の埋め込み」とはかけ離れています。
+Python でそれと同等なことをするのはテンプレートエンジンです。
+<code class="docutils literal"><span class="pre">mod_python</span></code> 自身はより強力で Apache 内部に対してより多くのアクセスを提供します。
+CGI をエミュレートし、JSP に似た「HTML への Python 埋め込み」である &#8220;Python Server Pages&#8221; モードで動作でき、全てのリクエストを一つのファイルで受け付けて何を実行するを決める &#8220;Publisher&#8221; を持っています。</p>
+<p>しかし、<code class="docutils literal"><span class="pre">mod_python</span></code> はいくつかの問題も抱えています。
+PHP インタプリタと違い Python インタプリタはファイル実行時にキャッシュを利用するため、ファイルの変更時にはアップデートするには web サーバ全体を再起動する必要があります。もう一つの問題は基本的なコンセプトにあります &#8211; Apache はリクエストを扱うためにいくつかの子プロセスを起動し、不幸にも全ての子プロセスが Python インタプリタ全体を、利用しない場合であっても、読み込む必要があるのです。このせいで web サーバ全体が遅くなります。別の問題は <code class="docutils literal"><span class="pre">mod_python</span></code> は特定のバージョンの <code class="docutils literal"><span class="pre">libpython</span></code> に対してリンクされるため、<code class="docutils literal"><span class="pre">mod_python</span></code> を再コンパイルせずに古いバージョンから新しいバージョンに切り替える (例えば 2.4 から 2.5) ことはできません。さらに <code class="docutils literal"><span class="pre">mod_python</span></code> は Apache web サーバとも結び付いているため <code class="docutils literal"><span class="pre">mod_python</span></code> 用に書かれたプログラムは他の web サーバで簡単に動かすことはできません。</p>
 <p>これらが新しくプログラムを書く際に <code class="docutils literal"><span class="pre">mod_python</span></code> を避けるべき理由です。いくつかの状況では <code class="docutils literal"><span class="pre">mod_python</span></code> を利用するのはよいアイデアでしょうが、WSGI は <code class="docutils literal"><span class="pre">mod_python</span></code> 下でも WSGI プログラムを同様に動かせます。</p>
 </div>
 <div class="section" id="fastcgi-and-scgi">
 <h3>FastCGI と SCGI<a class="headerlink" href="#fastcgi-and-scgi" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>FastCGI と SCGI は CGI のパフォーマンス上の問題を別の方法で解決しようという試みです。web サーバにインタプリタを組み込む代わりに、それらはバックグラウンドで長時間実行されるプロセスを生成します。さらに web サーバ上にはいくつかのモジュールがあり、それらは web サーバとバックグラウンドプロセスが「話す」ことを可能にします。バックグラウンドプロセスはサーバと独立しているため、もちろん Python を含んだ、任意の言語で書くことができます。言語は web サーバとの通信を扱うライブラリを持っている必要があるだけです。</p>
-<p>FastCGI と SCGI の違いはささいなもので、SCGI は基本的に &#8220;simpler FastCGI&#8221; です。しかし、SCGI をサポートする web サーバは限定されているため、多くの人々は代わりに同様に動作する FastCGI を利用します。SCGI に適用されるほとんど全てのものは FastCGI にも適用できます、そのため後者のみを書くことになるでしょう。</p>
-<p>最近では FastCGI を直接呼ぶことはありません。<code class="docutils literal"><span class="pre">mod_python</span></code> のように WSGI アプリケーションのみが利用されてます。</p>
+<p>FastCGI と SCGI は CGI のパフォーマンス上の問題を別の方法で解決しようという試みです。
+web サーバにインタプリタを組み込む代わりに、バックグラウンドで長時間実行されるプロセスを生成します。さらに web サーバ上にはいくつかのモジュールがあり、それらは web サーバとバックグラウンドプロセスが「話す」ことを可能にします。バックグラウンドプロセスはサーバと独立しているため、 Python を含んだ、任意の言語で書くことができます。言語に必要なのは web サーバとの通信を扱うライブラリだけです。</p>
+<p>FastCGI と SCGI の違いはささいなもので、SCGI は基本的に &#8220;simpler FastCGI&#8221; です。しかし、SCGI をサポートする web サーバは限定されているため、多くの人々は代わりに同様に動作する FastCGI を利用します。SCGI に適用されるほとんど全てのものは FastCGI にも適用できるので、 FastCGI だけについて解説します。</p>
+<p>最近では FastCGI を直接使うことはありません。
+<code class="docutils literal"><span class="pre">mod_python</span></code> のように WSGI アプリケーションの配置のためだけに FastCGI が利用されています。</p>
 <div class="section" id="setting-up-fastcgi">
 <h4>FastCGI のセットアップ<a class="headerlink" href="#setting-up-fastcgi" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>web サーバに応じて特別なモジュールが必要となります。</p>
@@ -505,7 +519,7 @@ ORM は内部でオブジェクト指向的アクセスを SQL コードに変�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-01
+    最終更新日時: 2017-04-02
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

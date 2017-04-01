@@ -147,22 +147,28 @@ CGI を利用して web サーバと通信するプログラムはリクエス�
 <div class="section" id="setting-up-cgi-on-your-own-server">
 <h4>自身のサーバで CGI を立ち上げる<a class="headerlink" href="#setting-up-cgi-on-your-own-server" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>自身の web サーバを持っていない場合には、この内容は当てはまりません。そのままで動作するか調べることは可能で、もし動作しない場合は、とにかく web サーバの管理者と話し合う必要があります。大きなホストである場合、チケットに記入して Python サポートを求められるでしょう。</p>
-<p>あなた自身が管理者であるか、自身のコンピュータで試すためにインストールしたい場合には自分自身で設定する必要があります。異なる設定オプションを持つ web サーバがたくさんあるため、CGI の設定法はひとつではありません、現在最も広く使われている web サーバは  <a class="reference external" href="http://httpd.apache.org/">Apache HTTPd</a> です、Apache を簡単に説明すると &#8211; 最も多くの人が利用しているもので、ほとんど全てのシステムでシステムのパッケージ管理ソフトを利用して簡単にインストールできます。ただし <a class="reference external" href="http://www.lighttpd.net">lighttpd</a> も注目を集め始めていて、さらにパフォーマンスの面でより優れているといわれています。多くのシステムでこのサーバはパッケージ管理ソフトを利用してインストールできるので、web サーバを手動でコンパイルする必要は全くありません。</p>
+<p>あなた自身が管理者であるか、自身のコンピュータで試すためにインストールしたい場合には自分自身で設定する必要があります。異なる設定オプションを持つ web サーバがたくさんあるため、CGI の設定法はひとつではありません。現在最も広く使われている web サーバは  <a class="reference external" href="http://httpd.apache.org/">Apache HTTPd</a> 、略して Apache です。
+Apache はほぼ全てのシステムにパッケージ管理ツールを使って簡単にインストールできます。
+<a class="reference external" href="http://www.lighttpd.net">lighttpd</a> はもう一つの選択肢で、パフォーマンスがより優れているといわれています。多くのシステムでこのサーバはパッケージ管理ツールを利用してインストールできるので、web サーバを手動でコンパイルする必要はないでしょう。</p>
 <ul class="simple">
-<li><p class="first">Apache ではチュートリアル <a class="reference external" href="http://httpd.apache.org/docs/2.2/howto/cgi.html">Dynamic Content with CGI</a> を参照できます、これには全てが書かれています。多くの場合には <code class="docutils literal"><span class="pre">+ExecCGI</span></code> を設定すれば十分です。このチュートリアルはよくでくわす可能性のある落し穴についても書かれています。</p>
+<li><p class="first">Apache ではチュートリアル <a class="reference external" href="http://httpd.apache.org/docs/2.2/howto/cgi.html">Dynamic Content with CGI</a> を参照でき、これには全てが解説されています。ほとんど場合には <code class="docutils literal"><span class="pre">+ExecCGI</span></code> を設定すれば十分です。このチュートリアルはよくでくわす可能性のある落し穴についても書かれています。</p>
 </li>
-<li><p class="first">lighttpd では <a class="reference external" href="http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModCGI">CGI module</a> を使う必要があります、これは直接的な方法で設定できます。結局のところ、<code class="docutils literal"><span class="pre">cgi.assign</span></code> を適切に設定することになります。</p>
+<li><p class="first">lighttpd では <a class="reference external" href="http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModCGI">CGI module</a> を使う必要があり、この設定は分かりやすいです。結局のところ、<code class="docutils literal"><span class="pre">cgi.assign</span></code> を適切に設定することになります。</p>
 </li>
 </ul>
 </div>
 <div class="section" id="common-problems-with-cgi-scripts">
 <h4>CGI スクリプトでの一般的な問題<a class="headerlink" href="#common-problems-with-cgi-scripts" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>CGI を利用しようとすると、しばしば小さないらいらを生むことになります、その中でおそらく経験するものの一つは実行時するためにこれらのスクリプトの取得を試みるときに起きます。これによって一見正しいスクリプトが期待どおりに動かないことはよくあります、これにはいくつかの小さな隠れた理由があるので、突き止めるのが困難です。</p>
-<p>いくつかの理由:</p>
+<p>CGI を利用していると、スクリプトを走らせようとするときにちょっといらいらすることがときどきあります。あるときは一見正しいスクリプトが期待どおりに動かないことがあり、気付くのが難しい小さな隠れた問題が原因だったりします。</p>
+<p>いくつかの潜在的な問題は次の通りです:</p>
 <ul class="simple">
-<li><p class="first">Python スクリプトが実行可能であると示されていない。CGI スクリプトが実行不可能な場合、多くの web サーバは実行しユーザに出力を送る代わりに、ユーザがダウンロードできるようにします。CGI スクリプトに対しては適切に実行するために <code class="docutils literal"><span class="pre">+x</span></code> ビットが設定される必要があります。<code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+x</span> <span class="pre">your_script.py</span></code> を使うことで問題は解決します。</p>
+<li><p class="first">Python スクリプトが実行可能でない。
+CGI スクリプトが実行可能でないとき、多くの web サーバは実行しユーザに出力を送る代わりに、ユーザがダウンロードできるようにします。
+CGI スクリプトに対しては適切に実行するために <code class="docutils literal"><span class="pre">+x</span></code> ビットが設定される必要があります。
+<code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+x</span> <span class="pre">your_script.py</span></code> を使うことで問題は解決するでしょう。</p>
 </li>
-<li><p class="first">行末は Unix 形式である必要があります。これは、web サーバがスクリプト最初の行 (shebang と呼ばれます) を調べ、そこで指定されたプログラムの実行を試みるため重要となります。これは Windows の行末 (Carriage Return &amp; Line Feed、または CRLF) とよく混同されます、そのためファイルを Unix 行末 (Line Feed のみ LF) に変換する必要があります。これは FTP 経由でテキストモードではなくバイナリモードでファイルをアップロードすると自動的に行なわれますが、より望ましい方法は単にテキストエディタで Unix 行末で保存することです。多くの適切なエディタはこれをサポートしています。</p>
+<li><p class="first">Unix システムでは、プログラムファイルの行末は Unix 形式でなければなりません。
+web サーバはスクリプト最初の行 (shebang と呼ばれます) を調べ、そこで指定されたプログラムを実行しようとするため、ここが重要なのです。これは Windows の行末 (Carriage Return &amp; Line Feed、または CRLF) によって簡単に混乱させられるので、ファイルの行末を Unix の行末 (Line Feed, LF のみ) に変換する必要があります。これは FTP 経由でバイナリモードではなくテキストモードでファイルをアップロードすると自動的に行なわれますが、単に Unix 行末で保存するようテキストエディタに指示する方が望ましいです。ほとんどのエディタはこの機能をサポートしています。</p>
 </li>
 <li><p class="first">web サーバはファイルを読めるようにしなければいけないので、パーミッションが適切になっているか確認してください。しばしば、サーバは <code class="docutils literal"><span class="pre">www-data</span></code> ユーザ、グループとして実行します、そのためファイルのオーナーシップを変更するか、<code class="docutils literal"><span class="pre">chmod</span> <span class="pre">a+r</span> <span class="pre">your_script.py</span></code> を使いファイルを全世界から読み込み可能にするといったことは試す価値があります。</p>
 </li>

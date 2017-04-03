@@ -508,7 +508,9 @@
 </li>
 </ul>
 </li>
-<li><p class="first">マッピング (<a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> のインスタンス) の比較の結果が等価となるのは、同じ <cite>(key, value)</cite> を持っているときかつそのときに限ります。キーと値の等価性比較では反射性が強制されます。</p>
+<li><p class="first">Mappings (instances of <a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) compare equal if and only if they have
+equal <cite>(key, value)</cite> pairs. Equality comparison of the keys and elements
+enforces reflexivity.</p>
 <p>等価性評価以外の結果は一貫したやりかたで解決されるか、定義されないかのいずれかです。 <a class="footnote-reference" href="#id23" id="id14">[5]</a></p>
 </li>
 <li><p class="first">その他のほとんどの組み込み型のオブジェクト比較では、同じオブジェクトでないかぎり等価にはなりません; あるオブジェクトの他のオブジェクトに対する大小関係は任意に決定され、一つのプログラムの実行中は一貫したものとなります。</p>
@@ -551,15 +553,35 @@
 </div>
 <div class="section" id="membership-test-operations">
 <span id="membership-test-details"></span><span id="not-in"></span><span id="in"></span><h3>5.9.2. 帰属検査演算<a class="headerlink" href="#membership-test-operations" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>演算子 <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> および <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> は、コレクション型の要素であるかどうか (メンバシップ、membership) を調べます。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> は、 <em>x</em> がコレクション型 <em>s</em> のメンバである場合には真となり、それ以外の場合には偽となります。 <code class="docutils literal"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">s</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> の否定 (negation) を返します。コレクション型のメンバシップテストは、伝統的にはシーケンス型に限定されてきました; すなわち、あるオブジェクトがコレクション型のメンバとなるのは、そのコレクション型がシーケンスであり、シーケンスがオブジェクトと等価な要素を含む場合でした。しかし、他の多くのオブジェクトのためにシーケンスでなくてもメンバシップテストをサポートしています。特に、辞書型では、(キーのための)メンバシップテストをサポートしています。</p>
-<p>リストやタプル型について <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> が真になるのは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y[i]</span></code> または <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> となるようなインデクス <em>i</em> が存在するときかつそのときに限ります。</p>
-<p>Unicode 文字列または文字列型については、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <em>x</em> が <em>y</em> の部分文字列であるとき、かつそのときに限り真になります。この演算と等価なテストは <code class="docutils literal"><span class="pre">y.find(x)</span> <span class="pre">!=</span> <span class="pre">-1</span></code> です。 <em>x</em> および <em>y</em> は同じ型である必要はないので注意してください。すなわち <code class="docutils literal"><span class="pre">u'ab'</span> <span class="pre">in</span> <span class="pre">'abc'</span></code> は <code class="docutils literal"><span class="pre">True</span></code> を返すことになります。空文字列は、他のどんな文字列に対しても常に部分文字列とみなされます。従って <code class="docutils literal"><span class="pre">&quot;&quot;</span> <span class="pre">in</span> <span class="pre">&quot;abc&quot;</span></code> は <code class="docutils literal"><span class="pre">True</span></code> を返すことになります。</p>
+<p>The operators <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> and <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> test for collection
+membership.  <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code> evaluates to true if <em>x</em> is a member of the collection
+<em>s</em>, and false otherwise.  <code class="docutils literal"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">s</span></code> returns the negation of <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code>.
+The collection membership test has traditionally been bound to sequences; an
+object is a member of a collection if the collection is a sequence and contains
+an element equal to that object.  However, it make sense for many other object
+types to support membership tests without being a sequence.  In particular,
+dictionaries (for keys) and sets support membership testing.</p>
+<p>For the list and tuple types, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> is true if and only if there exists an
+index <em>i</em> such that either <code class="docutils literal"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">y[i]</span></code> or <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> is true.</p>
+<p>For the Unicode and string types, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> is true if and only if <em>x</em> is a
+substring of <em>y</em>.  An equivalent test is <code class="docutils literal"><span class="pre">y.find(x)</span> <span class="pre">!=</span> <span class="pre">-1</span></code>.  Note, <em>x</em> and <em>y</em>
+need not be the same type; consequently, <code class="docutils literal"><span class="pre">u'ab'</span> <span class="pre">in</span> <span class="pre">'abc'</span></code> will return
+<code class="docutils literal"><span class="pre">True</span></code>. Empty strings are always considered to be a substring of any other
+string, so <code class="docutils literal"><span class="pre">&quot;&quot;</span> <span class="pre">in</span> <span class="pre">&quot;abc&quot;</span></code> will return <code class="docutils literal"><span class="pre">True</span></code>.</p>
 <div class="versionchanged">
-<p><span class="versionmodified">バージョン 2.3 で変更: </span>以前は、 <em>x</em> は長さ <code class="docutils literal"><span class="pre">1</span></code> の文字列型でなければなりませんでした.</p>
+<p><span class="versionmodified">バージョン 2.3 で変更: </span>Previously, <em>x</em> was required to be a string of length <code class="docutils literal"><span class="pre">1</span></code>.</p>
 </div>
-<p><a class="reference internal" href="datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> メソッドの定義されたユーザ定義クラスでは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> が真となるのは <code class="docutils literal"><span class="pre">y.__contains__(x)</span></code> が真となるとき、かつそのときに限ります。</p>
-<p><a class="reference internal" href="datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> を定義していないが <a class="reference internal" href="datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal"><span class="pre">__iter__()</span></code></a> は定義しているユーザ定義クラスでは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">z</span></code> となるようなある値 <code class="docutils literal"><span class="pre">z</span></code> が <code class="docutils literal"><span class="pre">y</span></code> 内にわたる反復で生成された場合、 true となります。もし、反復の間に例外が発生すれば、 <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> が例外を発生させたようにみえます。</p>
-<p>最終的には、旧式の反復プロトコルの実行を試みます、もし <a class="reference internal" href="datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a> を定義しているようなユーザ定義クラスでは、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> は <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code> となるような非負の整数インデクス <em>i</em> が存在するとき、かつそのときにかぎり真となります。インデクス <em>i</em> が負である場合に <a class="reference internal" href="../library/exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a> 例外が送出されることはありません。 (別の何らかの例外が送出された場合、例外は <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> から送出されたかのようになります)。</p>
+<p>For user-defined classes which define the <a class="reference internal" href="datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> method, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span>
+<span class="pre">y</span></code> is true if and only if <code class="docutils literal"><span class="pre">y.__contains__(x)</span></code> is true.</p>
+<p>For user-defined classes which do not define <a class="reference internal" href="datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a> but do define
+<a class="reference internal" href="datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal"><span class="pre">__iter__()</span></code></a>, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> is true if some value <code class="docutils literal"><span class="pre">z</span></code> with <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">z</span></code> is
+produced while iterating over <code class="docutils literal"><span class="pre">y</span></code>.  If an exception is raised during the
+iteration, it is as if <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> raised that exception.</p>
+<p>Lastly, the old-style iteration protocol is tried: if a class defines
+<a class="reference internal" href="datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></code></a>, <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code> is true if and only if there is a non-negative
+integer index <em>i</em> such that <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y[i]</span></code>, and all lower integer indices do not
+raise <a class="reference internal" href="../library/exceptions.html#exceptions.IndexError" title="exceptions.IndexError"><code class="xref py py-exc docutils literal"><span class="pre">IndexError</span></code></a> exception. (If any other exception is raised, it is as
+if <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> raised that exception).</p>
 <p id="index-67">演算子 <a class="reference internal" href="#not-in"><code class="xref std std-keyword docutils literal"><span class="pre">not</span> <span class="pre">in</span></code></a> は <a class="reference internal" href="#in"><code class="xref std std-keyword docutils literal"><span class="pre">in</span></code></a> の真値を反転した値として定義されています。</p>
 </div>
 <div class="section" id="is-not">
@@ -892,7 +914,7 @@ Unicode のほとんどの抽象文字は 1 つのコードポイントだけを
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-02
+    最終更新日時: 2017-04-03
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

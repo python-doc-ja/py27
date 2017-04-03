@@ -296,7 +296,13 @@
 <dl class="method">
 <dt id="object.__getinitargs__">
 <code class="descclassname">object.</code><code class="descname">__getinitargs__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__getinitargs__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>pickle 化されたクラスインスタンスが unpickle 化されたとき、 <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> メソッドは通常呼び出され <em>ません</em> 。 unpickle 化の際に <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> が呼び出される方が望ましい場合、旧スタイルクラスではメソッド <a class="reference internal" href="#object.__getinitargs__" title="object.__getinitargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getinitargs__()</span></code></a> を定義することができます。このメソッドはクラスコンストラクタ (例えば <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a>) に渡されるべき <em>タプルを</em> 返さなければなりません。 <a class="reference internal" href="#object.__getinitargs__" title="object.__getinitargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getinitargs__()</span></code></a> メソッドは pickle 時に呼び出されます; この関数が返すタプルはインスタンスの pickle 化データに組み込まれます。</p>
+<dd><p>When a pickled class instance is unpickled, its <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> method is
+normally <em>not</em> invoked.  If it is desirable that the <a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> method
+be called on unpickling, an old-style class can define a method
+<a class="reference internal" href="#object.__getinitargs__" title="object.__getinitargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getinitargs__()</span></code></a>, which should return a <em>tuple</em> containing the
+arguments to be passed to the class constructor (<a class="reference internal" href="../reference/datamodel.html#object.__init__" title="object.__init__"><code class="xref py py-meth docutils literal"><span class="pre">__init__()</span></code></a> for
+example).  The <a class="reference internal" href="#object.__getinitargs__" title="object.__getinitargs__"><code class="xref py py-meth docutils literal"><span class="pre">__getinitargs__()</span></code></a> method is called at pickle time; the
+tuple it returns is incorporated in the pickle for the instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -706,7 +712,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-02
+    最終更新日時: 2017-04-03
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

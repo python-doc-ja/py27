@@ -263,9 +263,10 @@ FastCGI と違って、 mod_wsgi はそれ自身がワーカープロセスを�
 <span id="wsgi"></span><h2>後ろに下って: WSGI<a class="headerlink" href="#step-back-wsgi" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>WSGI について何度も言及してきたため、なにか重要そうに感じたでしょう。実際に重要なので、ここで説明します。</p>
 <p><em>Web Server Gateway Interface</em> 、略して WSGI は <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> で定義されていて、現在のところ Python で web プログラミングをする最良の方法です。
-WSGI はフレームワークを書くプログラマにとっては優れている一方、普通の web プログラマは直接触れる必要の無いものです。
+WSGI はフレームワークを書くプログラマにとっては優れている一方、普通の web プログラマが直接触れる必要の無いものです。
 web 開発のフレームワークを選ぶときに、 WSGI をサポートしているもの選ぶことは素晴しい考えです。</p>
-<p>WSGI を使う上での大きな利益は、統一性です。 WSGI と互換性のあるプログラムであれば &#8211; これはフレームワークが WSGI をサポートしているということを意味し、プログラムは WSGI ラッパーを持つ全ての web サーバインターフェースで利用可能になります。つまりユーザが mod_python か FastCGI どちらを利用しているかを気にせずにすみます。&#8211; WSGI を使うことで任意ゲートウェイインターフェース上で動作するようになります。 Python 標準ライブラリには、テストのために利用できる小さな web サーバである、独自の WSGI サーバ <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> が含まれています。</p>
+<p>WSGI の大きな利点は、アプリケーションプログラミングインターフェース (API) が統一されることです。プログラムが WSGI と互換性があれば &#8211; これは外部から見たときにフレームワークが WSGI をサポートしているということになります &#8211; そのプログラムは WSGI ラッパーのある全ての web サーバインターフェースを通して利用できます。ユーザが mod_python や FastCGI や mod_wsgi のうちどれを利用しているかを気にせずにすみます &#8211; WSGI を使うことで任意ゲートウェイインターフェース上で動作するようになります。
+Python 標準ライブラリには、テストのために利用できる小さな web サーバである、独自の WSGI サーバ <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> が含まれています。</p>
 <p>WSGI の本当に卓越している機能はミドルウェアです。ミドルウェアとはプログラムに様々な機能性を加えるためのレイヤーのことを指します。<a class="reference external" href="https://wsgi.readthedocs.org/en/latest/libraries.html">無数のミドルウェア</a> が利用可能になっています。例えばセッション管理(連続したリクエストの中でユーザを同定を行います、HTTP は状態を維持しないので、リクエストが同じユーザのものであるということがわかります)を書く代わりに、ミドルウェアを取ってきて繋ぐだけで、既存の機能を当てにできます。圧縮についても同じです &#8211; HTML を gzip で圧縮してサーバの帯域を節約したい場合。ミドルウェアを組み込むだけで行うことができます。認証もミドルウェアで簡単に解決できる問題です。</p>
 <p>一般的には &#8211; WSGI は複雑に思えるかもしれませんが、WSGI は web サイトを書く際に起きうる多くの問題の解決法を持っているため、学習の初期段階を実りあるものにしてくれます。</p>
 <div class="section" id="wsgi-servers">

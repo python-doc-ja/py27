@@ -267,12 +267,12 @@ WSGI はフレームワークを書くプログラマにとっては優れてい
 web 開発のフレームワークを選ぶときに、 WSGI をサポートしているもの選ぶことは素晴しい考えです。</p>
 <p>WSGI の大きな利点は、アプリケーションプログラミングインターフェース (API) が統一されることです。プログラムが WSGI と互換性があれば &#8211; これは外部から見たときにフレームワークが WSGI をサポートしているということになります &#8211; そのプログラムは WSGI ラッパーのある全ての web サーバインターフェースを通して利用できます。ユーザが mod_python や FastCGI や mod_wsgi のうちどれを利用しているかを気にせずにすみます &#8211; WSGI を使うことで任意ゲートウェイインターフェース上で動作するようになります。
 Python 標準ライブラリには、テストのために利用できる小さな web サーバである、独自の WSGI サーバ <a class="reference internal" href="../library/wsgiref.html#module-wsgiref" title="wsgiref: WSGI Utilities and Reference Implementation."><code class="xref py py-mod docutils literal"><span class="pre">wsgiref</span></code></a> が含まれています。</p>
-<p>WSGI の本当に卓越している機能はミドルウェアです。ミドルウェアとはプログラムに様々な機能性を加えるためのレイヤーのことを指します。<a class="reference external" href="https://wsgi.readthedocs.org/en/latest/libraries.html">無数のミドルウェア</a> が利用可能になっています。例えばセッション管理(連続したリクエストの中でユーザを同定を行います、HTTP は状態を維持しないので、リクエストが同じユーザのものであるということがわかります)を書く代わりに、ミドルウェアを取ってきて繋ぐだけで、既存の機能を当てにできます。圧縮についても同じです &#8211; HTML を gzip で圧縮してサーバの帯域を節約したい場合。ミドルウェアを組み込むだけで行うことができます。認証もミドルウェアで簡単に解決できる問題です。</p>
-<p>一般的には &#8211; WSGI は複雑に思えるかもしれませんが、WSGI は web サイトを書く際に起きうる多くの問題の解決法を持っているため、学習の初期段階を実りあるものにしてくれます。</p>
+<p>WSGI の本当に卓越している機能はミドルウェアです。ミドルウェアとはプログラムに様々な機能性を加えられるレイヤーのことを指します。無数の <a class="reference external" href="https://wsgi.readthedocs.org/en/latest/libraries.html">ミドルウェア</a> が利用可能になっています。例えば自前でセッション管理を書く (HTTP はステートレスなプロトコルなので、複数の HTTP リクエストを単一のユーザに関連付けるために、アプリケーションがセッションによって状態を作成し管理しなければなりません) 代わりに、セッション管理をしてくれるミドルウェアをダウンロードし、動作させ、アプリケーション独自の部分をコーディングするだけです。圧縮についても同じです &#8211; HTML の gzip 圧縮をする既存のミドルウェアがあって、これでサーバの帯域を節約できます。認証も既存のミドルウェアで簡単に解決できる問題です。</p>
+<p>WSGI は複雑に思えるかもしれませんが、学習の始めの段階は非常に価値ものになります。というのも WSGI とそれに関連したミドルウェアには、 web サイトを開発している中で起きる多くの問題の解決策が備わっています。</p>
 <div class="section" id="wsgi-servers">
 <h3>WSGI サーバ<a class="headerlink" href="#wsgi-servers" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>CGI や mod_python などに様々な低レベルゲートウェイに接続するためのコードを <em>WSGI サーバ</em> と呼びます。これらのサーバの一つに <code class="docutils literal"><span class="pre">flup</span></code> があります、これは前に述べましたが FastCGI、SCGI と <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_JServ_Protocol">AJP</a> をサポートしています。これらのサーバのいくつかは <code class="docutils literal"><span class="pre">flup</span></code> のように Python で書かれていますが、C で書かれたものもあります、それらは気軽に置き換えることができます。</p>
-<p>いくつものサーバが利用可能ですから、Python の web アプリケーションはほとんどどこでも利用できます。これは他の web テクニックと比べたときの Python の大きな利点です。</p>
+<p>CGI や mod_python などの様々な低レベルゲートウェイに接続するためのコードを <em>WSGI サーバ</em> と呼びます。こういったサーバの一つに <code class="docutils literal"><span class="pre">flup</span></code> があり、これは FastCGI、SCGI に加えて <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_JServ_Protocol">AJP</a> もサポートしています。これらのサーバのいくつかは <code class="docutils literal"><span class="pre">flup</span></code> のように Python で書かれていますが、C で書かれたものもあり、それらは気軽に置き換えることができます。</p>
+<p>多くのサーバが既に利用可能なので、 Python の web アプリケーションはほとんどどこにでも配置できます。これは他の web テクノロジーと比べたときの Python の大きな利点の 1 つです。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <p><a class="reference external" href="https://wsgi.readthedocs.org/">WSGI homepage</a> は全ての WSGI に関連したコードに対して素晴しい概観を与えてくれます、ここには WSGI をサポートするアプリケーション <em>全て</em> が利用できるサーバの広大なリスト <a class="reference external" href="https://wsgi.readthedocs.org/en/latest/servers.html">WSGI servers</a> が含まれています。</p>
@@ -529,7 +529,7 @@ ORM は内部でオブジェクト指向的アクセスを SQL コードに変�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-04
+    最終更新日時: 2017-04-05
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

@@ -364,13 +364,15 @@ wiki の <a class="reference external" href="https://wiki.python.org/moin/Templa
 <p>関係データベースには <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> と呼ばれる言語を利用して <em>問い合わせ (query)</em> ます。一般的に Python プログラマは SQL があまり好きではなく、オブジェクトで動作する方を好みます。
 <a class="reference external" href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> (Object Relational Mapping) と呼ばれる技術を使うことで、 Python オブジェクトをデータベースに保存できます。
 ORM は内部でオブジェクト指向的アクセスを SQL コードに変換するので、ユーザはそのことを意識せずに済みます。ほとんどの <a class="reference internal" href="#framework">framework</a> は ORMs を利用し、とてもうまくいっています.</p>
-<p>第2の可能性はハードディスクに保存されたファイルを利用することです (しばしば、フラットファイルと呼ばれます)。これはとても簡単ですが、高速ではありません。このデータベースは ORM 経由でオブジェクトを保存するのに利用できて、ただ、データをファイルシステムに保存する方法はこれだけではありません。普通の平文のテキストファイルで十分な場合もあります。</p>
-<p>第3の最も利用されない方法はオブジェクト指向データベースと呼ばれています。このデータベースは、OR マッピングによって行との間に作成されるリレーションの代わりに、<em>実際のオブジェクト</em> を保存します。この方法にはほとんど全てのオブジェクトを直接的な方法で保存できるという利点があります、これはリレーショナルデータベースでいくつかのオブジェクトが ORMs で表現するのが困難であるのと対照的です。</p>
-<p><a class="reference internal" href="#framework">framework</a> はしばしばユーザにどの方法を選べばいいか、ヒントを与えてくれます。たいていの場合、一つだけの方法を必要とする特別な条件がある場合がない限りは、それに従うことはいい考えです。</p>
+<p>第2の可能性は通常のプレーンテキストのファイル (しばしば &#8220;フラットファイル&#8221; と呼ばれます) で保存することです。この方法は単純なサイトでは非常に簡単ですが、 web サイトが保存されたデータへの更新がたくさん行われる場合、ちゃんと動くようにするのは難しくなってきます。</p>
+<p>第3の可能性はオブジェクト指向データベースです (&#8220;オブジェクトデータベース&#8221; とも呼ばれます)。このデータベースは、プログラムの実行中のメモリ上での構成とほぼ同じ形式でオブジェクトのデータを保存します。
+(対照的に、 ORM はオブジェクトデータをテーブルの行と行どうしの関係として保存します。)
+オブジェクトを直接保存することには、ほぼ全てのオブジェクトを単純な方法で保存できるという優位点があり、これは表現するのが非常に難しいオブジェクトがある関係データベースには無い特徴です。</p>
+<p><a class="reference internal" href="#framework">framework</a> はしばしばどのデータストレージ方法を選べばよいかのヒントを与えてくれます。代わりとなるストレージ機構を使った方がアプリケーションの特別な要件によりよく合うのでない限り、普通はフレームワークが推奨しているデータストアを使い続けるのがよい考えです。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <ul class="last simple">
-<li><p class="first"><a class="reference external" href="https://wiki.python.org/moin/PersistenceTools">Persistence Tools</a> はファイルシステムにデータを保存する方法が列挙されています、これらのモジュールの内のいくつかは標準ライブラリの一部です</p>
+<li><p class="first"><a class="reference external" href="https://wiki.python.org/moin/PersistenceTools">Persistence Tools</a> にはファイルシステムにデータを保存する方法が列挙されています、これらのモジュールの内のいくつかは標準ライブラリの一部です</p>
 </li>
 <li><p class="first"><a class="reference external" href="https://wiki.python.org/moin/DatabaseProgramming">Database Programming</a> はデータ保存の方法を選ぶのを助けてくれます</p>
 </li>
@@ -537,7 +539,7 @@ ORM は内部でオブジェクト指向的アクセスを SQL コードに変�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-05
+    最終更新日時: 2017-04-06
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

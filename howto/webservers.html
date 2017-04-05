@@ -295,36 +295,39 @@ WSGI 対応前のバージョンとは違って、 MoinMoin の開発者が全�
 </div>
 <div class="section" id="model-view-controller">
 <h2>モデル・ビュー・コントローラ (Model-View-Controller)<a class="headerlink" href="#model-view-controller" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><em>MVC</em> という用語は「フレームワーク <em>foo</em> は MVC をサポートしています」というような文句でよく聞きます。MVC は技術的なものというよりかは、構造的なものです、多くの web フレームワークはこのモデルを使って開発者がプログラムに構造を持ちこむことを助けています。大きな web アプリケーションはたくさんのコードを持っているので、最初からプログラムに構造を持たせることはよい考えです。そうすることで、他のフレームワーク(他の言語でもかまいません、MVC は Python 特有のものではないので)のユーザであっても、構造に既に馴染んでいるため、存在しているコードを簡単に理解できるようになります。</p>
-<p>MVC は三要素からできています:</p>
+<p><em>MVC</em> という用語は「フレームワーク <em>foo</em> は MVC をサポートしています」というような文句でよく聞きます。
+MVC は特定の API というよりは、コードの総合的な構造についての話です。多くの web フレームワークはこのモデルを使い、開発者がプログラムに構造を与えることを助けています。大きな web アプリケーションはコード量が増えるので、最初からプログラムによい構造を持たせることはよい考えです。そうすることで、他のフレームワークのユーザであっても (MVC は Python 特有のものではないので、他の言語であっても)、既に MVC 構造に馴染んでいるため、コードを簡単に理解できます。</p>
+<p>MVC は 3 つの構成要素からできています:</p>
 <ul class="simple">
-<li><p class="first"><em>model</em> これは変更されるデータのことです。たいていの Python のフレームワークでこの要素は object-relational マッパーを利用したクラスで表現されます。つまり宣言部分はここに集約されます。</p>
+<li><p class="first"><em>モデル</em> (model) 。これは表示したり変更されたりするデータのことです。
+Python のフレームワークでは、この要素は object-relational マッパーが利用するクラスで表現されます。</p>
 </li>
-<li><p class="first"><em>view</em> この要素はモデルのデータをユーザに表示する仕事を行います。典型的にはこの要素はテンプレートで表現されます。</p>
+<li><p class="first"><em>ビュー</em> (view) 。この構成要素の仕事は、モデルのデータをユーザに表示することです。典型的にはこの要素はテンプレートで実装されます。</p>
 </li>
-<li><p class="first"><em>controller</em> これはユーザとモデルの間のレイヤーです。controller はユーザの動作(特定の URL を開く等)に反応して、必要に応じてモデルにデータを変更するよう伝えます。</p>
+<li><p class="first"><em>コントローラ</em> (controller) 。これはユーザとモデルの間にあるレイヤーです。コントローラは (ある特定の URL を開くというような) ユーザの動作に反応し、必要に応じてモデルにデータを変更するよう伝え、ビューのコードに何を表示するかを伝えます。</p>
 </li>
 </ul>
 <p>MVC を複雑なデザインパターンだと考える人もいるかもしれませんが、実際はそうではありません。Python で使われているのは、それがきれいで保守可能な web サイトを作成するのに便利だということがわかっているからです。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">全ての Python フレームワークが明示的に MVC をサポートしているわけではありませんが、MVC パターンを使った、データロジック (model) とインタラクションロジック (controller) とテンプレート (view) を分離した web サイトを作成することはありふれています。その理由はテンプレートに不必要な Python コードを書かないことが重要なことだからです &#8211;  MVC に反すると大混乱を生むことになります。</p>
+<p class="last">全ての Python フレームワークが明示的に MVC をサポートしているわけではありませんが、データロジック (モデル) とユーザとのインタラクションロジック (コントローラ) とテンプレート (ビュー) を分離して、 MVC パターンを使っている web サイトを作成することは普通のことです。その理由はテンプレートに不必要な Python コードを書かないことが重要なことだからです &#8211;  そのようなコードは MVC に反する動作をして大混乱を生み、それを理解して修正することがいっそう難しくなります。</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">Wikipedia の英語版には <a class="reference external" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a> の記事があります、この記事には様々な言語での web フレームワークの長大なリストが含まれています。</p>
+<p class="last">Wikipedia の英語版には <a class="reference external" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a> についての記事があります。この記事には様々なプログラミング言語での web フレームワークの長大なリストが載っています。</p>
 </div>
 </div>
 <div class="section" id="ingredients-for-websites">
-<h2>web サイトの構成要素<a class="headerlink" href="#ingredients-for-websites" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>web サイトは複雑な構造物です、そのため web サイト開発者の保守作業を助けるためにツールが作られました。それらのツールは Python 固有のものではないので、他のプログラミング言語に対しても存在します。もちろん、開発者はそれらのツールを使うことを強制されることはありませんし、たいていの場合において「最良」のツールも存在しません、しかし、開発者が利用できる道具は膨大にあるので、どれかを選ぶ前に情報を得ておくことは価値のあることです。</p>
+<h2>web サイトの要素<a class="headerlink" href="#ingredients-for-websites" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>web サイトは複雑な構造物なので、 web 開発者がコードを書きやすく、保守しやすくする助けとなるツールが作られてきました。このようなツールは、全ての言語の全ての web フレームワークについて存在します。開発者はこれらのツールを強制的に使わされるわけではないし、「最良の」ツールはたいていは存在しません。しかし、これらの利用可能なツールは web サイトの開発プロセスを非常に単純にしてくれるので、学ぶ価値はあります。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last">ここで述べたものよりも多くの組み合わせ可能な要素が書かれています。Python wiki にはこれらの要素についてのページ <a class="reference external" href="https://wiki.python.org/moin/WebComponents">Web Components</a> があります。</p>
+<p class="last">このドキュメントで述べられるよりも多くの要素があります。
+Python wiki には <a class="reference external" href="https://wiki.python.org/moin/WebComponents">Web Components</a> と呼ばれる、これらの要素についてのページがあります。</p>
 </div>
 <div class="section" id="templates">
 <h3>テンプレート<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>HTML と Python コードを混在させることは、いくつかのライブラリを利用することで可能になります。最初は便利ですが、そうすることでコードが保守不可能となる恐れがあります。これがテンプレートが存在する理由です。テンプレートは、最も単純な場合には、単にプレースホルダーを持つ HTML ファイルとなります。プレースホルダーを埋めた後に HTML はユーザのブラウザに送信されます。</p>
+<p>HTML と Python コードを混在させることは、いくつかのライブラリを利用することで可能になります。最初は便利なのですが、こうしてしまうとコードが恐ろしく保守不可能となります。これがテンプレートが存在する理由です。テンプレートは、最も単純な場合には、単にプレースホルダーを持つ HTML ファイルとなります。プレースホルダーを埋めた後に HTML はユーザのブラウザに送信されます。</p>
 <p>Python には既に単純なテンプレートを作る 2つの手段があります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello </span><span class="si">%s</span><span class="s2">!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">template</span> <span class="o">%</span> <span class="s2">&quot;Reader&quot;</span>
@@ -336,10 +339,11 @@ WSGI 対応前のバージョンとは違って、 MoinMoin の開発者が全�
 <span class="go">&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello Dinsdale!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span>
 </pre></div>
 </div>
-<p>Python の標準ライブラリには、<a class="reference internal" href="../library/string.html#string.Template" title="string.Template"><code class="xref py py-class docutils literal"><span class="pre">string.Template</span></code></a> を通して利用できるより高度なテンプレートも含まれています、しかし、HTML テンプレートには Python の <em>for</em> や <em>if</em> のような条件やループなどが使えることが必要です。そのため、<em>テンプレートエンジン</em> が必要になります。</p>
-<p>いまや、Python には多くのテンプレートエンジンがあり、<a class="reference internal" href="#framework">framework</a> とともに、または独立に利用できます。いくつかのテンプレートエンジンは平文のプログラミング言語を利用します、この言語はとても限定的なので簡単に学ぶことができます、一方で他のものには XML を利用し、テンプレートの出力が正当な XML であることが保証されているものがあります。いくつかの <a class="reference internal" href="#framework">framework</a> は独自のテンプレートエンジンを含んでいたり、特定のエンジンを使うことを推奨しています。もしどれがいいかわからない場合には、使ってみるといいでしょう。</p>
-<p>Python はほんとうに様々なテンプレートエンジンを持っていますが、たいていの場合に手製のテンプレートシステムを使うことは理にかないません。全てのテンプレートシステムを評価するのは不毛ですから、最も人気のあるものを探すのに時間を割いた方がよいでしょう。いくつかのフレームワークは独自のテンプレートエンジンを持っていたり、推奨しているものがあります。これらを選ぶのが賢いでしょう。</p>
-<p>人気のあるテンプレートエンジンに含まれるものは:</p>
+<p>単純でないモデルのデータに基づいて複雑な HTML を生成するために、たいてい Python の <em>for</em> や <em>if</em> のような条件分岐や反復といった構造が必要とされます。
+<em>テンプレートエンジン</em> はこのような複雑さを持つテンプレートをサポートします。</p>
+<p>Python には多くのテンプレートエンジンがあり、<a class="reference internal" href="#framework">framework</a> とともに、または独立に利用できます。いくつかのテンプレートエンジンでは、利用用途を狭めて学びやすくしてあるプレーンテキストのプログラミング言語を定義しています。他のテンプレートエンジンでは XML を利用しているものもあり、テンプレートの出力が常に有効な XML になるよう保証されています。これ以外にも非常に多くの種類があります。</p>
+<p>独自のテンプレートエンジンを提供する <a class="reference internal" href="#frameworks">frameworks</a> もあれば、ある特定のテンプレートエンジンを推奨するものもあります。別のテンプレートエンジンを使う理由が無ければ、フレームワークが提供もしくは推奨するものを使うのがよい考えです。</p>
+<p>人気のあるテンプレートエンジンには次のようなものがあります:</p>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference external" href="http://www.makotemplates.org/">Mako</a></li>
@@ -453,7 +457,7 @@ ORM は内部でオブジェクト指向的アクセスを SQL コードに変�
 </ul>
 </li>
 <li><a class="reference internal" href="#model-view-controller">モデル・ビュー・コントローラ (Model-View-Controller)</a></li>
-<li><a class="reference internal" href="#ingredients-for-websites">web サイトの構成要素</a><ul>
+<li><a class="reference internal" href="#ingredients-for-websites">web サイトの要素</a><ul>
 <li><a class="reference internal" href="#templates">テンプレート</a></li>
 <li><a class="reference internal" href="#data-persistence">データの永続性</a></li>
 </ul>

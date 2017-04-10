@@ -349,16 +349,7 @@
 <dl class="method">
 <dt id="io.RawIOBase.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#io.RawIOBase.write" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Write <em>b</em> to the underlying raw stream, and return the
-number of bytes written.  The object <em>b</em> should be an array
-of bytes, either <code class="xref py py-class docutils literal"><span class="pre">bytes</span></code>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>, or
-<a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a>.  The return value can be less than
-<code class="docutils literal"><span class="pre">len(b)</span></code>, depending on specifics of the underlying raw stream, and
-especially if it is in non-blocking mode.  <code class="docutils literal"><span class="pre">None</span></code> is returned if the
-raw stream is set not to block and no single byte could be readily
-written to it.  The caller may release or mutate <em>b</em> after
-this method returns, so the implementation should only access <em>b</em>
-during the method call.</p>
+<dd><p><em>b</em> を生ストリームに書き込み、書き込んだバイト数を返します。このオブジェクト <em>b</em> はバイト配列、<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> 、 <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> 、 <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a> のいずれかである必要があります。返り値は、根底の生ストリームの性質によって、特にノンブロッキングモードである場合に、 <code class="docutils literal"><span class="pre">len(b)</span></code> より小さくなることがあります。生ストリームがブロックされないように設定されていて、かつ1バイトも即座に書き込むことができない場合は、 <code class="docutils literal"><span class="pre">None</span></code> が返されます。このメソッドから返った後で呼び出し元は <em>b</em> を解放したり変更したりするかもしれないので、実装はメソッド呼び出しの間だけ <em>b</em> にアクセスすべきです。</p>
 </dd></dl>
 
 </dd></dl>
@@ -414,13 +405,7 @@ during the method call.</p>
 <dl class="method">
 <dt id="io.BufferedIOBase.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#io.BufferedIOBase.write" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Write <em>b</em>, and return the number of bytes written
-(always equal to <code class="docutils literal"><span class="pre">len(b)</span></code>, since if the write fails
-an <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> will be raised).  The object <em>b</em> should be
-an array of bytes, either <code class="xref py py-class docutils literal"><span class="pre">bytes</span></code>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>,
-or <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a>.  Depending on the actual
-implementation, these bytes may be readily written to the underlying
-stream, or held in a buffer for performance and latency reasons.</p>
+<dd><p><em>b</em> を書き込み、書き込んだバイト数を返します (これは常に <code class="docutils literal"><span class="pre">len(b)</span></code> と等しいです。なぜなら、もし書き込みに失敗した場合は <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> が発生するからです)。このオブジェクト <em>b</em> はバイト配列、<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> 、 <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> 、 <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a> のいずれかである必要があります。実際の実装に依って、これらのバイトは根底のストリームに読めるように書きこまれたり、パフォーマンスとレイテンシの理由でバッファに保持されたりします。</p>
 <p>ノンブロッキングモードであるとき、バッファが満杯で根底の生ストリームが書き込み時点でさらなるデータを受け付けられない場合 <a class="reference internal" href="#io.BlockingIOError" title="io.BlockingIOError"><code class="xref py py-exc docutils literal"><span class="pre">BlockingIOError</span></code></a> が送出されます。</p>
 <p>このメソッドが戻った後で、呼び出し元は <em>b</em> を解放、または変更するかもしれないので、実装はメソッド呼び出しの間だけ <em>b</em> にアクセスすべきです。</p>
 </dd></dl>
@@ -534,11 +519,7 @@ stream, or held in a buffer for performance and latency reasons.</p>
 <dl class="method">
 <dt id="io.BufferedWriter.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#io.BufferedWriter.write" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Write <em>b</em>, and return the number of bytes written.
-The object <em>b</em> should be an array of bytes, either
-<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>, or <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a>.
-When in non-blocking mode, a <a class="reference internal" href="#io.BlockingIOError" title="io.BlockingIOError"><code class="xref py py-exc docutils literal"><span class="pre">BlockingIOError</span></code></a> is raised
-if the buffer needs to be written out but the raw stream blocks.</p>
+<dd><p><em>b</em> を書き込み、書き込んだバイト数を返します。このオブジェクト <em>b</em> はバイト配列、<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> 、 <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> 、 <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a> のいずれかである必要があります。ノンブロッキングモードのときは、バッファが書き込まれる必要があるところで生ストリームがブロックした場合 <a class="reference internal" href="#io.BlockingIOError" title="io.BlockingIOError"><code class="xref py py-exc docutils literal"><span class="pre">BlockingIOError</span></code></a> が送出されます。</p>
 </dd></dl>
 
 </dd></dl>
@@ -832,7 +813,7 @@ if the buffer needs to be written out but the raw stream blocks.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-10
+    最終更新日時: 2017-04-11
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

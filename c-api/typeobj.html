@@ -975,10 +975,30 @@ ssizeargfunc <code class="descname">PySequenceMethods.sq_inplace_repeat</code><a
 <dt id="c.PyBufferProcs">
 <code class="descname">PyBufferProcs</code><a class="headerlink" href="#c.PyBufferProcs" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>バッファプロトコルの実装を定義している関数群へのポインタを保持するのに使われる構造体です。</p>
-<p>最初のスロットは <code class="xref py py-attr docutils literal"><span class="pre">bf_getreadbuffer</span></code> で、 <code class="xref c c-type docutils literal"><span class="pre">getreadbufferproc</span></code> 型です。このスロットが <em>NULL</em> の場合、オブジェクトは内部データの読み出しをサポートしません。そのような仕様には意味がないので、実装を行う側はこのスロットに値を埋めるはずですが、呼び出し側では非 <em>NULL</em> の値かどうかきちんと調べておくべきです。</p>
-<p>次のスロットは <code class="xref py py-attr docutils literal"><span class="pre">bf_getwritebuffer</span></code> で、 <code class="xref c c-type docutils literal"><span class="pre">getwritebufferproc</span></code> 型です。オブジェクトが返すバッファに対して書き込みを許可しない場合はこのスロットを <em>NULL</em> にできます。</p>
-<p>第三のスロットは <code class="xref py py-attr docutils literal"><span class="pre">bf_getsegcount</span></code> で、 <code class="xref c c-type docutils literal"><span class="pre">getsegcountproc</span></code> 型です。このスロットは <em>NULL</em> であってはならず、オブジェクトにいくつセグメントが入っているかを呼び出し側に教えるために使われます。 <a class="reference internal" href="string.html#c.PyString_Type" title="PyString_Type"><code class="xref c c-type docutils literal"><span class="pre">PyString_Type</span></code></a> や <a class="reference internal" href="buffer.html#c.PyBuffer_Type" title="PyBuffer_Type"><code class="xref c c-type docutils literal"><span class="pre">PyBuffer_Type</span></code></a> オブジェクトのような単純なオブジェクトには単一のセグメントしか入っていません。</p>
-<p id="index-3">最後のスロットは <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> で、 <code class="xref c c-type docutils literal"><span class="pre">getcharbufferproc</span></code> です。オブジェクトの <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a> 構造体における <a class="reference internal" href="#c.PyTypeObject.tp_flags" title="PyTypeObject.tp_flags"><code class="xref c c-member docutils literal"><span class="pre">tp_flags</span></code></a> フィールドに、 <a class="reference internal" href="#Py_TPFLAGS_HAVE_GETCHARBUFFER" title="Py_TPFLAGS_HAVE_GETCHARBUFFER"><code class="xref py py-const docutils literal"><span class="pre">Py_TPFLAGS_HAVE_GETCHARBUFFER</span></code></a> ビットフラグがセットされている場合にのみ、このスロットが存在することになります。このスロットの使用に先立って、呼び出し側は <a class="reference internal" href="type.html#c.PyType_HasFeature" title="PyType_HasFeature"><code class="xref c c-func docutils literal"><span class="pre">PyType_HasFeature()</span></code></a> を使ってスロットが存在するか調べねばなりません。フラグが立っていても、 <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> は <em>NULL</em> のときもあり、 <em>NULL</em> はオブジェクトの内容を <em>8 ビット文字列</em> として利用できないことを示します。このスロットに入る関数も、オブジェクトの内容を 8 ビット文字列に変換できない場合に例外を送出することがあります。例えば、オブジェクトが浮動小数点数を保持するように設定されたアレイの場合、呼び出し側が <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> を使って 8 ビット文字列としてデータを取り出そうとすると例外を送出するようにできます。この、内部バッファを &#8220;テキスト&#8221; として取り出すという概念は、本質的にはバイナリで、文字ベースの内容を持ったオブジェクト間の区別に使われます。</p>
+<p>The first slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getreadbuffer</span></code>, of type <a class="reference internal" href="#c.readbufferproc" title="readbufferproc"><code class="xref c c-type docutils literal"><span class="pre">readbufferproc</span></code></a>.
+If this slot is <em>NULL</em>, then the object does not support reading from the
+internal data.  This is non-sensical, so implementors should fill this in, but
+callers should test that the slot contains a non-<em>NULL</em> value.</p>
+<p>The next slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getwritebuffer</span></code> having type
+<a class="reference internal" href="#c.writebufferproc" title="writebufferproc"><code class="xref c c-type docutils literal"><span class="pre">writebufferproc</span></code></a>.  This slot may be <em>NULL</em> if the object does not
+allow writing into its returned buffers.</p>
+<p>The third slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getsegcount</span></code>, with type <a class="reference internal" href="#c.segcountproc" title="segcountproc"><code class="xref c c-type docutils literal"><span class="pre">segcountproc</span></code></a>.
+This slot must not be <em>NULL</em> and is used to inform the caller how many segments
+the object contains.  Simple objects such as <a class="reference internal" href="string.html#c.PyString_Type" title="PyString_Type"><code class="xref c c-type docutils literal"><span class="pre">PyString_Type</span></code></a> and
+<a class="reference internal" href="buffer.html#c.PyBuffer_Type" title="PyBuffer_Type"><code class="xref c c-type docutils literal"><span class="pre">PyBuffer_Type</span></code></a> objects contain a single segment.</p>
+<p id="index-3">The last slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code>, of type <a class="reference internal" href="#c.charbufferproc" title="charbufferproc"><code class="xref c c-type docutils literal"><span class="pre">charbufferproc</span></code></a>.
+This slot will only be present if the <a class="reference internal" href="#Py_TPFLAGS_HAVE_GETCHARBUFFER" title="Py_TPFLAGS_HAVE_GETCHARBUFFER"><code class="xref py py-const docutils literal"><span class="pre">Py_TPFLAGS_HAVE_GETCHARBUFFER</span></code></a>
+flag is present in the <a class="reference internal" href="#c.PyTypeObject.tp_flags" title="PyTypeObject.tp_flags"><code class="xref c c-member docutils literal"><span class="pre">tp_flags</span></code></a> field of the object&#8217;s
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a>. Before using this slot, the caller should test whether it
+is present by using the <a class="reference internal" href="type.html#c.PyType_HasFeature" title="PyType_HasFeature"><code class="xref c c-func docutils literal"><span class="pre">PyType_HasFeature()</span></code></a> function.  If the flag is
+present, <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> may be <em>NULL</em>, indicating that the object&#8217;s
+contents cannot be used as <em>8-bit characters</em>. The slot function may also raise
+an error if the object&#8217;s contents cannot be interpreted as 8-bit characters.
+For example, if the object is an array which is configured to hold floating
+point values, an exception may be raised if a caller attempts to use
+<code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> to fetch a sequence of 8-bit characters. This notion of
+exporting the internal buffers as &#8220;text&#8221; is used to distinguish between objects
+that are binary in nature, and those which have character-based content.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">現在のポリシでは、文字 (character) はマルチバイト文字でもかまわないと決めているように思われます。従って、サイズ <em>N</em> のバッファが <em>N</em> 個のキャラクタからなるとはかぎらないことになります。</p>
@@ -1093,7 +1113,7 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-04-22
+    最終更新日時: 2017-04-25
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

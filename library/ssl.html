@@ -303,8 +303,8 @@
 <p><span class="versionmodified">バージョン 2.7.10 で変更: </span>デフォルトの暗号設定から RC4 が除かれました。</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">バージョン 2.7.13 で変更: </span>ChaCha20/Poly1305 was added to the default cipher string.</p>
-<p>3DES was dropped from the default cipher string.</p>
+<p><span class="versionmodified">バージョン 2.7.13 で変更: </span>デフォルトの暗号化文字列に ChaCha20/Poly1305 が追加されました。</p>
+<p>デフォルトの暗号化文字列から 3DES が除かれました。</p>
 </div>
 </dd></dl>
 
@@ -352,8 +352,7 @@ client modules.</p>
 <h3>17.3.1.3. 乱数生成<a class="headerlink" href="#random-generation" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <blockquote>
 <div><div class="deprecated">
-<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL has deprecated <code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_pseudo_bytes()</span></code>, use
-<code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_bytes()</span></code> instead.</p>
+<p><span class="versionmodified">バージョン 2.7.13 で撤廃: </span>OpenSSL は <code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_pseudo_bytes()</span></code> を廃止しました。代わりに <code class="xref py py-func docutils literal"><span class="pre">ssl.RAND_bytes()</span></code> を使用してください。</p>
 </div>
 </div></blockquote>
 <dl class="function">
@@ -367,7 +366,7 @@ client modules.</p>
 <code class="descclassname">ssl.</code><code class="descname">RAND_egd</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.RAND_egd" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>もしエントロピー収集デーモン(EGD=entropy-gathering daemon)が動いていて、 <em>path</em> がEGDへのソケットのパスだった場合、この関数はそのソケットから 256バイトのランダム性を読み込み、SSL擬似乱数生成器にそれを渡すことで、生成される暗号鍵のセキュリティを向上させることができます。これは、より良いランダム性のソースが無いシステムでのみ必要です。</p>
 <p>エントロピー収集デーモンについては、 <a class="reference external" href="http://egd.sourceforge.net/">http://egd.sourceforge.net/</a> や <a class="reference external" href="http://prngd.sourceforge.net/">http://prngd.sourceforge.net/</a> を参照してください。</p>
-<p>Availability: not available with LibreSSL and OpenSSL &gt; 1.1.0</p>
+<p>利用出来る環境: LibreSSL および 1.1.0 を超えるバージョンの OpenSSL では利用できません。</p>
 </dd></dl>
 
 <dl class="function">
@@ -444,8 +443,10 @@ client modules.</p>
 <code class="descclassname">ssl.</code><code class="descname">get_default_verify_paths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ssl.get_default_verify_paths" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>OpenSSL デフォルトの cafile, capath を指すパスを名前付きタプルで返します。パスは <a class="reference internal" href="#ssl.SSLContext.set_default_verify_paths" title="ssl.SSLContext.set_default_verify_paths"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_default_verify_paths()</span></code></a> で使われるものと同じです。戻り値は <a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a> <code class="docutils literal"><span class="pre">DefaultVerifyPaths</span></code> です:</p>
 <ul class="simple">
-<li><code class="xref py py-attr docutils literal"><span class="pre">cafile</span></code> - resolved path to cafile or <code class="docutils literal"><span class="pre">None</span></code> if the file doesn&#8217;t exist,</li>
-<li><code class="xref py py-attr docutils literal"><span class="pre">capath</span></code> - resolved path to capath or <code class="docutils literal"><span class="pre">None</span></code> if the directory doesn&#8217;t exist,</li>
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">cafile</span></code> - cafile の解決済みパス、またはファイルが存在しない場合は <code class="docutils literal"><span class="pre">None</span></code></p>
+</li>
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">capath</span></code> - capath の解決済みパス、またはディレクトリが存在しない場合は <code class="docutils literal"><span class="pre">None</span></code></p>
+</li>
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile_env</span></code> - cafile を指す OpenSSL の環境変数</p>
 </li>
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile</span></code> - OpenSSL にハードコードされた cafile のパス</p>
@@ -455,8 +456,7 @@ client modules.</p>
 <li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">openssl_capath</span></code> - OpenSSL にハードコードされた capath のパス</p>
 </li>
 </ul>
-<p>Availability: LibreSSL ignores the environment vars
-<code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile_env</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">openssl_capath_env</span></code></p>
+<p>利用出来る環境: LibreSSL では環境変数 <code class="xref py py-attr docutils literal"><span class="pre">openssl_cafile_env</span></code> と <code class="xref py py-attr docutils literal"><span class="pre">openssl_capath_env</span></code> が無視されます</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
@@ -1627,7 +1627,7 @@ If you want to check which ciphers are enabled by a given cipher list, use the
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-06-19
+    最終更新日時: 2017-06-20
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。

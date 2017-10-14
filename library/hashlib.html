@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>14.1. hashlib — セキュアハッシュおよびメッセージダイジェスト &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="14. 暗号関連のサービス" href="crypto.html" />
     <link rel="next" title="14.2. hmac — メッセージ認証のための鍵付きハッシュ化" href="hmac.html" />
     <link rel="prev" title="14. 暗号関連のサービス" href="crypto.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-hashlib">
-<span id="hashlib-secure-hashes-and-message-digests"></span><h1>14.1. <a class="reference internal" href="#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal"><span class="pre">hashlib</span></code></a> &#8212; セキュアハッシュおよびメッセージダイジェスト<a class="headerlink" href="#module-hashlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="hashlib-secure-hashes-and-message-digests"></span><h1>14.1. <a class="reference internal" href="#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal"><span class="pre">hashlib</span></code></a> — セキュアハッシュおよびメッセージダイジェスト<a class="headerlink" href="#module-hashlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
@@ -94,10 +90,10 @@
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">幾つかのアルゴリズムはハッシュの衝突に弱いことが知られています。最後の &#8220;参考&#8221; セクションを見てください。</p>
+<p class="last">幾つかのアルゴリズムはハッシュの衝突に弱いことが知られています。最後の 「参考」 セクションを見てください。</p>
 </div>
 <p>各 <em class="dfn">hash</em> の名前が付いたコンストラクタがあります。いずれも同一で簡単なインターフェイスのあるハッシュオブジェクトを返します。例えば、SHA1 ハッシュオブジェクトを作るには <code class="xref py py-func docutils literal"><span class="pre">sha1()</span></code> を使います。このオブジェクトには <code class="xref py py-meth docutils literal"><span class="pre">update()</span></code> を用いて任意の文字列を渡すことが出来ます。<code class="xref py py-meth docutils literal"><span class="pre">digest()</span></code> や <code class="xref py py-meth docutils literal"><span class="pre">hexdigest()</span></code> メソッドを用いて、それまでに渡したデータを連結したものの <em class="dfn">digest</em> をいつでも要求することが出来ます。</p>
-<p id="index-2">このモジュールで常に使用できるハッシュアルゴリズムのコンストラクタは <a class="reference internal" href="md5.html#module-md5" title="md5: RSA's MD5 message digest algorithm. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">md5()</span></code></a> 、 <code class="xref py py-func docutils literal"><span class="pre">sha1()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha224()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha256()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha384()</span></code> および <code class="xref py py-func docutils literal"><span class="pre">sha512()</span></code> です。それ以外のアルゴリズムが使用できるかどうかは、Python が使用している OpenSSL ライブラリに依存します。</p>
+<p id="index-2">このモジュールで常に使用できるハッシュアルゴリズムのコンストラクタは <a class="reference internal" href="md5.html#module-md5" title="md5: RSA's MD5 message digest algorithm. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">md5()</span></code></a> 、 <code class="xref py py-func docutils literal"><span class="pre">sha1()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha224()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha256()</span></code> 、 <code class="xref py py-func docutils literal"><span class="pre">sha384()</span></code> および <code class="xref py py-func docutils literal"><span class="pre">sha512()</span></code> です。それ以外のアルゴリズムが使用できるかどうかは、Python が使用している OpenSSL ライブラリに依存します。</p>
 <p>たとえば、<code class="docutils literal"><span class="pre">'Nobody</span> <span class="pre">inspects</span> <span class="pre">the</span> <span class="pre">spammish</span> <span class="pre">repetition'</span></code> というバイト文字列のダイジェストを取得するには次のようにします:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
@@ -116,8 +112,8 @@
 <span class="go">&#39;a4337bc45a8fc544c03f52dc550cd6e1e87021bc896588bd79e901e2&#39;</span>
 </pre></div>
 </div>
-<p>一般的な <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> コンストラクタで、第一引数にアルゴリズム名を文字列で受け取ります。他にも、上記ハッシュだけでなく OpenSSL ライブラリーが提供するような他のアルゴリズムにアクセスすることが出来ます。名前のあるコンストラクタの方が <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> よりもずっと速いので望ましいです。</p>
-<p><a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> にOpenSSLのアルゴリズムを指定する例です:</p>
+<p>一般的な <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> コンストラクタで、第一引数にアルゴリズム名を文字列で受け取ります。他にも、上記ハッシュだけでなく OpenSSL ライブラリーが提供するような他のアルゴリズムにアクセスすることが出来ます。名前のあるコンストラクタの方が <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> よりもずっと速いので望ましいです。</p>
+<p><a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> にOpenSSLのアルゴリズムを指定する例です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;ripemd160&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Nobody inspects the spammish repetition&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -146,7 +142,7 @@
 <dl class="data">
 <dt id="hashlib.algorithms_available">
 <code class="descclassname">hashlib.</code><code class="descname">algorithms_available</code><a class="headerlink" href="#hashlib.algorithms_available" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>実行中の Python インタープリタで利用可能なハッシュアルゴリズム名の set です。これらの名前は <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> に渡すことが出来ます。<a class="reference internal" href="#hashlib.algorithms_guaranteed" title="hashlib.algorithms_guaranteed"><code class="xref py py-attr docutils literal"><span class="pre">algorithms_guaranteed</span></code></a> は常にサブセットです。この set の中に同じアルゴリズムが違う名前で複数回現れることがあります (OpenSSL 由来)。</p>
+<dd><p>実行中の Python インタープリタで利用可能なハッシュアルゴリズム名の set です。これらの名前は <a class="reference internal" href="new.html#module-new" title="new: Interface to the creation of runtime implementation objects. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">new()</span></code></a> に渡すことが出来ます。<a class="reference internal" href="#hashlib.algorithms_guaranteed" title="hashlib.algorithms_guaranteed"><code class="xref py py-attr docutils literal"><span class="pre">algorithms_guaranteed</span></code></a> は常にサブセットです。この set の中に同じアルゴリズムが違う名前で複数回現れることがあります (OpenSSL 由来)。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
 </div>
@@ -190,7 +186,7 @@
 <dl class="method">
 <dt id="hashlib.hash.copy">
 <code class="descclassname">hash.</code><code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hashlib.hash.copy" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ハッシュオブジェクトのコピー (&#8220;クローン&#8221;) を返します。これは、共通部分を持つ複数の文字列のダイジェストを効率的に計算するために使用します。</p>
+<dd><p>ハッシュオブジェクトのコピー (「クローン」) を返します。これは、共通部分を持つ複数の文字列のダイジェストを効率的に計算するために使用します。</p>
 </dd></dl>
 
 <div class="section" id="key-derivation">
@@ -200,7 +196,7 @@
 <dt id="hashlib.pbkdf2_hmac">
 <code class="descclassname">hashlib.</code><code class="descname">pbkdf2_hmac</code><span class="sig-paren">(</span><em>name</em>, <em>password</em>, <em>salt</em>, <em>rounds</em>, <em>dklen=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hashlib.pbkdf2_hmac" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>この関数は PKCS#5 のパスワードに基づいた鍵導出関数 2 を提供しています。疑似乱数関数として HMAC を使用しています。</p>
-<p>文字列 <em>name</em> は、HMAC のハッシュダイジェストに使いたいアルゴリズムの名前で、例えば &#8216;sha1&#8217; や &#8216;sha256&#8217; です。 <em>password</em> と <em>salt</em> はバイト列のバッファとして解釈されます。アプリケーションとライブラリは <em>password</em> に相応しい値 (例えば 1024) に制限すべきです。 <em>salt</em> は <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> のような適切な所源から得た、およそ 16 かそれよりも多いバイト列でなければなりません。</p>
+<p>文字列 <em>name</em> は、HMAC のハッシュダイジェストに使いたいアルゴリズムの名前で、例えば 『sha1』 や 『sha256』 です。 <em>password</em> と <em>salt</em> はバイト列のバッファとして解釈されます。アプリケーションとライブラリは <em>password</em> に相応しい値 (例えば 1024) に制限すべきです。 <em>salt</em> は <a class="reference internal" href="os.html#os.urandom" title="os.urandom"><code class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></code></a> のような適切な所源から得た、およそ 16 かそれよりも多いバイト列でなければなりません。</p>
 <p><em>rounds</em> 数はハッシュアルゴリズムと計算機の能力に基いて決められるべきです。2013 年現在の場合、 SHA-256 に対して最低でも 100,000 ラウンドをお奨めします。</p>
 <p><em>dklen</em> が <code class="docutils literal"><span class="pre">None</span></code> の場合、ハッシュアルゴリズム <em>name</em> のダイジェストサイズが使われます。例えば SHA-512 では 64 です。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hashlib</span><span class="o">,</span> <span class="nn">binascii</span>
@@ -222,17 +218,13 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="hmac.html#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal"><span class="pre">hmac</span></code></a> モジュール</dt>
-<dd><p class="first last">ハッシュを用いてメッセージ認証コードを生成するモジュールです。</p>
-</dd>
+<dd>ハッシュを用いてメッセージ認証コードを生成するモジュールです。</dd>
 <dt><a class="reference internal" href="base64.html#module-base64" title="base64: RFC 3548: Base16, Base32, Base64 Data Encodings"><code class="xref py py-mod docutils literal"><span class="pre">base64</span></code></a> モジュール</dt>
-<dd><p class="first last">バイナリハッシュを非バイナリ環境用にエンコードするもうひとつの方法です。</p>
-</dd>
+<dd>バイナリハッシュを非バイナリ環境用にエンコードするもうひとつの方法です。</dd>
 <dt><a class="reference external" href="http://csrc.nist.gov/publications/fips/fips180-2/fips180-2.pdf">http://csrc.nist.gov/publications/fips/fips180-2/fips180-2.pdf</a></dt>
-<dd><p class="first last">FIPS 180-2 のセキュアハッシュアルゴリズムについての説明。</p>
-</dd>
+<dd>FIPS 180-2 のセキュアハッシュアルゴリズムについての説明。</dd>
 <dt><a class="reference external" href="https://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%AD%A6%E7%9A%84%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0">https://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%AD%A6%E7%9A%84%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0</a></dt>
-<dd><p class="first last">どのアルゴリズムにどんな既知の問題があって、それが実際に利用する際にどう影響するかについての Wikipedia の記事。</p>
-</dd>
+<dd>どのアルゴリズムにどんな既知の問題があって、それが実際に利用する際にどう影響するかについての Wikipedia の記事。</dd>
 </dl>
 </div>
 </div>
@@ -246,7 +238,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">14.1. <code class="docutils literal"><span class="pre">hashlib</span></code> &#8212; セキュアハッシュおよびメッセージダイジェスト</a><ul>
+<li><a class="reference internal" href="#">14.1. <code class="docutils literal"><span class="pre">hashlib</span></code> — セキュアハッシュおよびメッセージダイジェスト</a><ul>
 <li><a class="reference internal" href="#key-derivation">14.1.1. 鍵導出</a></li>
 </ul>
 </li>
@@ -257,11 +249,11 @@
                         title="前の章へ">14. 暗号関連のサービス</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="hmac.html"
-                        title="次の章へ">14.2. <code class="docutils literal"><span class="pre">hmac</span></code> &#8212; メッセージ認証のための鍵付きハッシュ化</a></p>
+                        title="次の章へ">14.2. <code class="docutils literal"><span class="pre">hmac</span></code> — メッセージ認証のための鍵付きハッシュ化</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/hashlib.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/hashlib.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -313,10 +305,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

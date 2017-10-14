@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>17.7. asynchat — 非同期ソケットコマンド/レスポンスハンドラ &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="17. プロセス間通信とネットワーク" href="ipc.html" />
     <link rel="next" title="18. インターネット上のデータの操作" href="netdata.html" />
     <link rel="prev" title="17.6. asyncore — 非同期ソケットハンドラ" href="asyncore.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-asynchat">
-<span id="asynchat-asynchronous-socket-command-response-handler"></span><h1>17.7. <a class="reference internal" href="#module-asynchat" title="asynchat: Support for asynchronous command/response protocols."><code class="xref py py-mod docutils literal"><span class="pre">asynchat</span></code></a> &#8212; 非同期ソケットコマンド/レスポンスハンドラ<a class="headerlink" href="#module-asynchat" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="asynchat-asynchronous-socket-command-response-handler"></span><h1>17.7. <a class="reference internal" href="#module-asynchat" title="asynchat: Support for asynchronous command/response protocols."><code class="xref py py-mod docutils literal"><span class="pre">asynchat</span></code></a> — 非同期ソケットコマンド/レスポンスハンドラ<a class="headerlink" href="#module-asynchat" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/asynchat.py">Lib/asynchat.py</a></p>
 <hr class="docutils" />
 <p><a class="reference internal" href="#module-asynchat" title="asynchat: Support for asynchronous command/response protocols."><code class="xref py py-mod docutils literal"><span class="pre">asynchat</span></code></a> を使うと、 <a class="reference internal" href="asyncore.html#module-asyncore" title="asyncore: A base class for developing asynchronous socket handling services."><code class="xref py py-mod docutils literal"><span class="pre">asyncore</span></code></a> を基盤とした非同期なサーバ・クライアントをより簡単に開発する事ができます。 <a class="reference internal" href="#module-asynchat" title="asynchat: Support for asynchronous command/response protocols."><code class="xref py py-mod docutils literal"><span class="pre">asynchat</span></code></a> では、プロトコルの要素が任意の文字列で終了するか、または可変長の文字列であるようなプロトコルを容易に制御できるようになっています。 <a class="reference internal" href="#module-asynchat" title="asynchat: Support for asynchronous command/response protocols."><code class="xref py py-mod docutils literal"><span class="pre">asynchat</span></code></a> は、抽象クラス <a class="reference internal" href="#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">async_chat</span></code></a> を定義しており、 <a class="reference internal" href="#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">async_chat</span></code></a> を継承して <code class="xref py py-meth docutils literal"><span class="pre">collect_incoming_data()</span></code> メソッドと <code class="xref py py-meth docutils literal"><span class="pre">found_terminator()</span></code> メソッドを実装すれば使うことができます。 <a class="reference internal" href="#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">async_chat</span></code></a> と <a class="reference internal" href="asyncore.html#module-asyncore" title="asyncore: A base class for developing asynchronous socket handling services."><code class="xref py py-mod docutils literal"><span class="pre">asyncore</span></code></a> は同じ非同期ループを使用しており、 <a class="reference internal" href="asyncore.html#asyncore.dispatcher" title="asyncore.dispatcher"><code class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></code></a> も <a class="reference internal" href="#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">asynchat.async_chat</span></code></a> も同じチャネルマップに登録する事ができます。通常、 <a class="reference internal" href="asyncore.html#asyncore.dispatcher" title="asyncore.dispatcher"><code class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></code></a> はサーバチャネルとして使用し、リクエストの受け付け時に <a class="reference internal" href="#asynchat.async_chat" title="asynchat.async_chat"><code class="xref py py-class docutils literal"><span class="pre">asynchat.async_chat</span></code></a> オブジェクトを生成します。</p>
@@ -160,22 +156,18 @@
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">term</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><em>string</em></td>
-<td><p class="first last">入力ストリーム中でstringが検出された時、 <a class="reference internal" href="#asynchat.async_chat.found_terminator" title="asynchat.async_chat.found_terminator"><code class="xref py py-meth docutils literal"><span class="pre">found_terminator()</span></code></a> を呼び出します</p>
-</td>
+<td>入力ストリーム中でstringが検出された時、 <a class="reference internal" href="#asynchat.async_chat.found_terminator" title="asynchat.async_chat.found_terminator"><code class="xref py py-meth docutils literal"><span class="pre">found_terminator()</span></code></a> を呼び出します</td>
 </tr>
 <tr class="row-odd"><td><em>integer</em></td>
-<td><p class="first last">指定された文字数が読み込まれた時、 <a class="reference internal" href="#asynchat.async_chat.found_terminator" title="asynchat.async_chat.found_terminator"><code class="xref py py-meth docutils literal"><span class="pre">found_terminator()</span></code></a> を呼び出します</p>
-</td>
+<td>指定された文字数が読み込まれた時、 <a class="reference internal" href="#asynchat.async_chat.found_terminator" title="asynchat.async_chat.found_terminator"><code class="xref py py-meth docutils literal"><span class="pre">found_terminator()</span></code></a> を呼び出します</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">None</span></code></td>
-<td><p class="first last">永久にデータを読み込みます</p>
-</td>
+<td>永久にデータを読み込みます</td>
 </tr>
 </tbody>
 </table>
@@ -269,7 +261,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> &#8212; 非同期ソケットコマンド/レスポンスハンドラ</a><ul>
+<li><a class="reference internal" href="#">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> — 非同期ソケットコマンド/レスポンスハンドラ</a><ul>
 <li><a class="reference internal" href="#asynchat-auxiliary-classes">17.7.1. asynchat - 補助クラス</a></li>
 <li><a class="reference internal" href="#asynchat-example">17.7.2. asynchat 使用例</a></li>
 </ul>
@@ -278,14 +270,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="asyncore.html"
-                        title="前の章へ">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> &#8212; 非同期ソケットハンドラ</a></p>
+                        title="前の章へ">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> — 非同期ソケットハンドラ</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="netdata.html"
                         title="次の章へ">18. インターネット上のデータの操作</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/asynchat.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/asynchat.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -337,10 +329,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

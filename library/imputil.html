@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>31.3. imputil — Import ユーティリティ &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="31. モジュールのインポート" href="modules.html" />
     <link rel="next" title="31.4. zipimport — Zip アーカイブからモジュールを import する" href="zipimport.html" />
     <link rel="prev" title="31.2. importlib — __import__() の便利なラッパー" href="importlib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,11 +77,11 @@
           <div class="body" role="main">
             
   <div class="section" id="module-imputil">
-<span id="imputil-import-utilities"></span><h1>31.3. <a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> &#8212; Import ユーティリティ<a class="headerlink" href="#module-imputil" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="imputil-import-utilities"></span><h1>31.3. <a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> — Import ユーティリティ<a class="headerlink" href="#module-imputil" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
-<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> モジュールは Python 3 で削除されました。</p>
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> モジュールは Python 3 で削除されました。</p>
 </div>
-<p id="index-0">このモジュールは手軽で役に立つ <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> フックを改造する機構を提供します。古い <code class="xref py py-mod docutils literal"><span class="pre">ihooks</span></code> と比較すると、 <a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> は <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 関数を改造するのに劇的に単純で直截なアプローチをとります。</p>
+<p id="index-0">このモジュールは手軽で役に立つ <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> フックを改造する機構を提供します。古い <code class="xref py py-mod docutils literal"><span class="pre">ihooks</span></code> と比較すると、 <a class="reference internal" href="#module-imputil" title="imputil: Manage and augment the import process. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">imputil</span></code></a> は <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 関数を改造するのに劇的に単純で直截なアプローチをとります。</p>
 <dl class="class">
 <dt id="imputil.ImportManager">
 <em class="property">class </em><code class="descclassname">imputil.</code><code class="descname">ImportManager</code><span class="sig-paren">(</span><span class="optional">[</span><em>fs_imp</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#imputil.ImportManager" title="この定義へのパーマリンク">¶</a></dt>
@@ -126,19 +122,15 @@
 <dd><p>与えられたモジュールに対するコードを見つけて取ってきます。</p>
 <p><em>parent</em> は import するコンテキストを定義する親モジュールを指定します。 <code class="docutils literal"><span class="pre">None</span></code> でも構いません。その場合探すべきコンテキストは特にないことを意味します。</p>
 <p><em>modname</em> は親の内部の (ドットの付かない) 単独のモジュールを指定します。</p>
-<p><em>fqname</em> には完全修飾 (fully-qualified) モジュール名を指定します。これは (潜在的に) ドット付けられた名前で、モジュール名前空間の &#8220;root&#8221; から modname までの名前です。</p>
+<p><em>fqname</em> には完全修飾 (fully-qualified) モジュール名を指定します。これは (潜在的に) ドット付けられた名前で、モジュール名前空間の 「root」 から modname までの名前です。</p>
 <p>parent が無ければ、modname==fqname です。</p>
 <p>このメソッドは <code class="docutils literal"><span class="pre">None</span></code> または 3 要素タプルを返します。</p>
 <blockquote>
 <div><ul class="simple">
-<li><p class="first">モジュールが見つからなければ <code class="docutils literal"><span class="pre">None</span></code> が返されます。</p>
-</li>
-<li><p class="first">2 または 3 要素のタプルの最初の要素は整数の 0 か 1 で、見つかったモジュールがパッケージかそうでないかを指定します。</p>
-</li>
-<li><p class="first">2 番目の要素はモジュールのコードオブジェクトです (このコードは新しいモジュールの名前空間の中で実行されます)。この要素はまた完全に読み込まれたモジュールオブジェクト (たとえば共有ライブラリから読み込まれたものなど) でもありえます。</p>
-</li>
-<li><p class="first">3 番目の要素はコードオブジェクトが実行される前に新しいモジュールに挿入する名前/値ペアの辞書です。この要素はモジュールのコードが特定の値 (たとえばどこでモジュールが見つかったかといった) を予期している場合に供給されます。 2番目の要素がモジュールオブジェクトであるときは、これらの名前/値はモジュールが読み込まれ/初期化された <em>後で</em> 挿入されます。</p>
-</li>
+<li>モジュールが見つからなければ <code class="docutils literal"><span class="pre">None</span></code> が返されます。</li>
+<li>2 または 3 要素のタプルの最初の要素は整数の 0 か 1 で、見つかったモジュールがパッケージかそうでないかを指定します。</li>
+<li>2 番目の要素はモジュールのコードオブジェクトです (このコードは新しいモジュールの名前空間の中で実行されます)。この要素はまた完全に読み込まれたモジュールオブジェクト (たとえば共有ライブラリから読み込まれたものなど) でもありえます。</li>
+<li>3 番目の要素はコードオブジェクトが実行される前に新しいモジュールに挿入する名前/値ペアの辞書です。この要素はモジュールのコードが特定の値 (たとえばどこでモジュールが見つかったかといった) を予期している場合に供給されます。 2番目の要素がモジュールオブジェクトであるときは、これらの名前/値はモジュールが読み込まれ/初期化された <em>後で</em> 挿入されます。</li>
 </ul>
 </div></blockquote>
 </dd></dl>
@@ -178,8 +170,8 @@
 <div class="section" id="examples">
 <span id="examples-imputil"></span><h2>31.3.1. 例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>これは階層的モジュール import の再実装です。</p>
-<p>このコードは読むためのもので、実行するためのものではありません。しかしながら、まあ動きます &#8211; これを有効にするのに必要なのは &#8220;import knee&#8221; することだけです。</p>
-<p>(名前はこのモジュールの不格好な前身 &#8220;ni&#8221; との語呂合わせです)</p>
+<p>このコードは読むためのもので、実行するためのものではありません。しかしながら、まあ動きます – これを有効にするのに必要なのは 「import knee」 することだけです。</p>
+<p>(名前はこのモジュールの不格好な前身 「ni」 との語呂合わせです)</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">imp</span><span class="o">,</span> <span class="nn">__builtin__</span>
 
 <span class="c1"># Replacement for __import__()</span>
@@ -310,7 +302,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">31.3. <code class="docutils literal"><span class="pre">imputil</span></code> &#8212; Import ユーティリティ</a><ul>
+<li><a class="reference internal" href="#">31.3. <code class="docutils literal"><span class="pre">imputil</span></code> — Import ユーティリティ</a><ul>
 <li><a class="reference internal" href="#examples">31.3.1. 例</a></li>
 </ul>
 </li>
@@ -318,14 +310,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="importlib.html"
-                        title="前の章へ">31.2. <code class="docutils literal"><span class="pre">importlib</span></code> &#8212; <code class="docutils literal"><span class="pre">__import__()</span></code> の便利なラッパー</a></p>
+                        title="前の章へ">31.2. <code class="docutils literal"><span class="pre">importlib</span></code> — <code class="docutils literal"><span class="pre">__import__()</span></code> の便利なラッパー</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="zipimport.html"
-                        title="次の章へ">31.4. <code class="docutils literal"><span class="pre">zipimport</span></code> &#8212; Zip アーカイブからモジュールを import する</a></p>
+                        title="次の章へ">31.4. <code class="docutils literal"><span class="pre">zipimport</span></code> — Zip アーカイブからモジュールを import する</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/imputil.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/imputil.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -377,10 +369,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

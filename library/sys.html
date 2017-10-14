@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>28.1. sys — システムパラメータと関数 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.2. sysconfig — Python の構成情報にアクセスする" href="sysconfig.html" />
     <link rel="prev" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-sys">
-<span id="sys-system-specific-parameters-and-functions"></span><h1>28.1. <a class="reference internal" href="#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal"><span class="pre">sys</span></code></a> &#8212; システムパラメータと関数<a class="headerlink" href="#module-sys" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="sys-system-specific-parameters-and-functions"></span><h1>28.1. <a class="reference internal" href="#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal"><span class="pre">sys</span></code></a> — システムパラメータと関数<a class="headerlink" href="#module-sys" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このモジュールでは、インタプリタで使用・管理している変数や、インタプリタの動作に深く関連する関数を定義しています。このモジュールは常に利用可能です。</p>
 <dl class="data">
 <dt id="sys.argv">
@@ -154,7 +150,7 @@
 <dl class="data">
 <dt id="sys.dont_write_bytecode">
 <code class="descclassname">sys.</code><code class="descname">dont_write_bytecode</code><a class="headerlink" href="#sys.dont_write_bytecode" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この値が真の時、Python はソースモジュールをインポートする時に <code class="docutils literal"><span class="pre">.pyc</span></code> や <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。この値は <a class="reference internal" href="../using/cmdline.html#cmdoption-B"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> コマンドラインオプションと <span class="target" id="index-21"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONDONTWRITEBYTECODE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDONTWRITEBYTECODE</span></code></a> 環境変数の値によって起動時に <code class="docutils literal"><span class="pre">True</span></code> か <code class="docutils literal"><span class="pre">False</span></code> に設定されます。しかし、実行時にこの変数を変更して、バイトコード生成を制御することもできます。</p>
+<dd><p>この値が真の時、Python はソースモジュールをインポートする時に <code class="docutils literal"><span class="pre">.pyc</span></code> や <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。この値は <a class="reference internal" href="../using/cmdline.html#cmdoption-b"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> コマンドラインオプションと <span class="target" id="index-21"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONDONTWRITEBYTECODE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDONTWRITEBYTECODE</span></code></a> 環境変数の値によって起動時に <code class="docutils literal"><span class="pre">True</span></code> か <code class="docutils literal"><span class="pre">False</span></code> に設定されます。しかし、実行時にこの変数を変更して、バイトコード生成を制御することもできます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
@@ -178,12 +174,12 @@
 <dl class="function">
 <dt id="sys.exc_info">
 <code class="descclassname">sys.</code><code class="descname">exc_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sys.exc_info" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この関数は、現在処理中の例外を示す三つの値のタプルを返します。この値は、現在のスレッド・現在のスタックフレームのものです。現在のスタックフレームが例外処理中でない場合、例外処理中のスタックフレームが見つかるまで次々とその呼び出し元スタックフレームを調べます。ここで、&#8221;例外処理中&#8221; とは &#8220;except 節を実行中、または実行した&#8221; フレームを指します。どのスタックフレームでも、最後に処理した例外の情報のみを参照することができます。</p>
+<dd><p>この関数は、現在処理中の例外を示す三つの値のタプルを返します。この値は、現在のスレッド・現在のスタックフレームのものです。現在のスタックフレームが例外処理中でない場合、例外処理中のスタックフレームが見つかるまで次々とその呼び出し元スタックフレームを調べます。ここで、」例外処理中」 とは 「except 節を実行中、または実行した」 フレームを指します。どのスタックフレームでも、最後に処理した例外の情報のみを参照することができます。</p>
 <p id="index-1">スタック上で例外が発生していない場合、三つの <code class="docutils literal"><span class="pre">None</span></code> のタプルを返します。例外が発生している場合、 <code class="docutils literal"><span class="pre">(type,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></code> を返します。 <em>type</em> は、処理中の例外の型を示します (クラスオブジェクト)。 <em>value</em> は、例外パラメータ (例外に <em class="dfn">関連する値</em> または <a class="reference internal" href="../reference/simple_stmts.html#raise"><code class="xref std std-keyword docutils literal"><span class="pre">raise</span></code></a> の第二引数。 <em>type</em> がクラスオブジェクトの場合は常にクラスインスタンス) です。 <em>traceback</em> は、トレースバックオブジェクトで、例外が発生した時点でのコールスタックをカプセル化したオブジェクトです(リファレンスマニュアル参照)。</p>
 <p><a class="reference internal" href="#sys.exc_clear" title="sys.exc_clear"><code class="xref py py-func docutils literal"><span class="pre">exc_clear()</span></code></a> が呼び出されると、現在のスレッドで他の例外が発生するか、又は別の例外を処理中のフレームに実行スタックが復帰するまで、 <a class="reference internal" href="#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">exc_info()</span></code></a> は三つの <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">例外処理中に戻り値の <em>traceback</em> をローカル変数に代入すると循環参照が発生し、関数内のローカル変数やトレースバックが参照している全てのオブジェクトは解放されなくなります。特にトレースバック情報が必要ではなければ <code class="docutils literal"><span class="pre">exctype,</span> <span class="pre">value</span> <span class="pre">=</span> <span class="pre">sys.exc_info()[:2]</span></code> のように例外型と例外オブジェクトのみを取得するようにして下さい。もしトレースバックが必要な場合には、処理終了後にdeleteして下さい。このdeleteは、 <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> ... <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> ...で行うと良いでしょう。</p>
+<p class="last">例外処理中に戻り値の <em>traceback</em> をローカル変数に代入すると循環参照が発生し、関数内のローカル変数やトレースバックが参照している全てのオブジェクトは解放されなくなります。特にトレースバック情報が必要ではなければ <code class="docutils literal"><span class="pre">exctype,</span> <span class="pre">value</span> <span class="pre">=</span> <span class="pre">sys.exc_info()[:2]</span></code> のように例外型と例外オブジェクトのみを取得するようにして下さい。もしトレースバックが必要な場合には、処理終了後にdeleteして下さい。このdeleteは、 <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> … <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> …で行うと良いでしょう。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -230,8 +226,8 @@
 <dt id="sys.exit">
 <code class="descclassname">sys.</code><code class="descname">exit</code><span class="sig-paren">(</span><span class="optional">[</span><em>arg</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#sys.exit" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Python を終了します。 <a class="reference internal" href="constants.html#exit" title="exit"><code class="xref py py-func docutils literal"><span class="pre">exit()</span></code></a> は <a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> を送出するので、 <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> ステートメントの <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節に終了処理を記述したり、上位レベルで例外を捕捉して exit 処理を中断したりすることができます。</p>
-<p>オプション引数 <em>arg</em> には、終了ステータスとして整数 (デフォルトは0) や他の型のオブジェクトを指定することができます。整数を指定した場合、シェル等は 0 は &#8220;正常終了&#8221;、0 以外の整数を &#8220;異常終了&#8221; として扱います。多くのシステムでは、有効な終了ステータスは 0&#8211;127 で、これ以外の値を返した場合の動作は未定義です。システムによっては特定の終了コードに個別の意味を持たせている場合がありますが、このような定義は僅かしかありません。Unix プログラムでは構文エラーの場合には 2 を、それ以外のエラーならば 1 を返します。<em>arg</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定した場合は、数値の 0 を指定した場合と同じです。それ以外の型のオブジェクトを指定すると、そのオブェクトが <a class="reference internal" href="#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal"><span class="pre">stderr</span></code></a> に出力され、終了コードとして 1 を返します。エラー発生時には <code class="docutils literal"><span class="pre">sys.exit(&quot;エラーメッセージ&quot;)</span></code> と書くと、簡単にプログラムを終了することができます。</p>
-<p>究極には、 <a class="reference internal" href="constants.html#exit" title="exit"><code class="xref py py-func docutils literal"><span class="pre">exit()</span></code></a> は例外を送出する &#8220;だけ&#8221; なので、これがメインスレッドから呼び出されたときは、プロセスを終了するだけで、例外は遮断されません。</p>
+<p>オプション引数 <em>arg</em> には、終了ステータスとして整数 (デフォルトは0) や他の型のオブジェクトを指定することができます。整数を指定した場合、シェル等は 0 は 「正常終了」、0 以外の整数を 「異常終了」 として扱います。多くのシステムでは、有効な終了ステータスは 0–127 で、これ以外の値を返した場合の動作は未定義です。システムによっては特定の終了コードに個別の意味を持たせている場合がありますが、このような定義は僅かしかありません。Unix プログラムでは構文エラーの場合には 2 を、それ以外のエラーならば 1 を返します。<em>arg</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定した場合は、数値の 0 を指定した場合と同じです。それ以外の型のオブジェクトを指定すると、そのオブェクトが <a class="reference internal" href="#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal"><span class="pre">stderr</span></code></a> に出力され、終了コードとして 1 を返します。エラー発生時には <code class="docutils literal"><span class="pre">sys.exit(&quot;エラーメッセージ&quot;)</span></code> と書くと、簡単にプログラムを終了することができます。</p>
+<p>究極には、 <a class="reference internal" href="constants.html#exit" title="exit"><code class="xref py py-func docutils literal"><span class="pre">exit()</span></code></a> は例外を送出する 「だけ」 なので、これがメインスレッドから呼び出されたときは、プロセスを終了するだけで、例外は遮断されません。</p>
 </dd></dl>
 
 <dl class="data">
@@ -257,10 +253,8 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">フラグ</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">フラグ</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -271,10 +265,10 @@
 <td><a class="reference internal" href="../using/cmdline.html#cmdoption-3"><code class="xref std std-option docutils literal"><span class="pre">-3</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">division_warning</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-Q"><code class="xref std std-option docutils literal"><span class="pre">-Q</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-q"><code class="xref std std-option docutils literal"><span class="pre">-Q</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">division_new</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-Q"><code class="xref std std-option docutils literal"><span class="pre">-Qnew</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-q"><code class="xref std std-option docutils literal"><span class="pre">-Qnew</span></code></a></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="inspect.html#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-const docutils literal"><span class="pre">inspect</span></code></a></td>
 <td><a class="reference internal" href="../using/cmdline.html#cmdoption-i"><code class="xref std std-option docutils literal"><span class="pre">-i</span></code></a></td>
@@ -283,36 +277,34 @@
 <td><a class="reference internal" href="../using/cmdline.html#cmdoption-i"><code class="xref std std-option docutils literal"><span class="pre">-i</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">optimize</span></code></td>
-<td><p class="first last"><a class="reference internal" href="../using/cmdline.html#cmdoption-O"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> または <a class="reference internal" href="../using/cmdline.html#cmdoption-OO"><code class="xref std std-option docutils literal"><span class="pre">-OO</span></code></a></p>
-</td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-o"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> または <a class="reference internal" href="../using/cmdline.html#cmdoption-oo"><code class="xref std std-option docutils literal"><span class="pre">-OO</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#sys.dont_write_bytecode" title="sys.dont_write_bytecode"><code class="xref py py-const docutils literal"><span class="pre">dont_write_bytecode</span></code></a></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-B"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-b"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">no_user_site</span></code></td>
 <td><a class="reference internal" href="../using/cmdline.html#cmdoption-s"><code class="xref std std-option docutils literal"><span class="pre">-s</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">no_site</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-S"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#id1"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">ignore_environment</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-E"><code class="xref std std-option docutils literal"><span class="pre">-E</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-e"><code class="xref std std-option docutils literal"><span class="pre">-E</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">tabcheck</span></code></td>
-<td><p class="first last"><a class="reference internal" href="../using/cmdline.html#cmdoption-t"><code class="xref std std-option docutils literal"><span class="pre">-t</span></code></a> または <a class="reference internal" href="../using/cmdline.html#cmdoption-t"><code class="xref std std-option docutils literal"><span class="pre">-tt</span></code></a></p>
-</td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-t"><code class="xref std std-option docutils literal"><span class="pre">-t</span></code></a> または <a class="reference internal" href="../using/cmdline.html#cmdoption-t"><code class="xref std std-option docutils literal"><span class="pre">-tt</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">verbose</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-v"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#id2"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-const docutils literal"><span class="pre">unicode</span></code></a></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-U"><code class="xref std std-option docutils literal"><span class="pre">-U</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#id3"><code class="xref std std-option docutils literal"><span class="pre">-U</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">bytes_warning</span></code></td>
 <td><code class="xref std std-option docutils literal"><span class="pre">-b</span></code></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">hash_randomization</span></code></td>
-<td><a class="reference internal" href="../using/cmdline.html#cmdoption-R"><code class="xref std std-option docutils literal"><span class="pre">-R</span></code></a></td>
+<td><a class="reference internal" href="../using/cmdline.html#cmdoption-r"><code class="xref std std-option docutils literal"><span class="pre">-R</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -327,7 +319,7 @@
 <dl class="data">
 <dt id="sys.float_info">
 <code class="descclassname">sys.</code><code class="descname">float_info</code><a class="headerlink" href="#sys.float_info" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>属性とシーケンスを利用して、 float 型に関する情報を提供します。精度と内部表現に関する情報を含みます。プログラミング言語 &#8216;C&#8217; の標準ヘッダファイル <code class="file docutils literal"><span class="pre">float.h</span></code> に定義された様々な浮動小数点定数に対応する値の詳細については、1999 ISO/IEC C standard <a class="reference internal" href="#c99" id="id1">[C99]</a> の 4.2.4.2.2 章を参照して下さい。</p>
+<dd><p>属性とシーケンスを利用して、 float 型に関する情報を提供します。精度と内部表現に関する情報を含みます。プログラミング言語 『C』 の標準ヘッダファイル <code class="file docutils literal"><span class="pre">float.h</span></code> に定義された様々な浮動小数点定数に対応する値の詳細については、1999 ISO/IEC C standard <a class="reference internal" href="#c99" id="id1">[C99]</a> の 4.2.4.2.2 章を参照して下さい。</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="24%" />
@@ -335,69 +327,55 @@
 <col width="57%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">float.h のマクロ</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">float.h のマクロ</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">epsilon</span></code></td>
 <td>DBL_EPSILON</td>
-<td><p class="first last">1と、その次の表現可能なfloat値の差</p>
-</td>
+<td>1と、その次の表現可能なfloat値の差</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">dig</span></code></td>
 <td>DBL_DIG</td>
-<td><p class="first last">浮動小数点数で正確に表示できる最大の10進数桁; 以下参照</p>
-</td>
+<td>浮動小数点数で正確に表示できる最大の10進数桁; 以下参照</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">mant_dig</span></code></td>
 <td>DBL_MANT_DIG</td>
-<td><p class="first last">浮動小数点精度: 浮動小数点数の主要部の桁 base-<code class="docutils literal"><span class="pre">radix</span></code></p>
-</td>
+<td>浮動小数点精度: 浮動小数点数の主要部の桁 base-<code class="docutils literal"><span class="pre">radix</span></code></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-const docutils literal"><span class="pre">max</span></code></a></td>
 <td>DBL_MAX</td>
-<td><p class="first last">floatが表せる最大の(infiniteではない)値</p>
-</td>
+<td>floatが表せる最大の(infiniteではない)値</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">max_exp</span></code></td>
 <td>DBL_MAX_EXP</td>
-<td><p class="first last">floatが <code class="docutils literal"><span class="pre">radix**(e-1)</span></code> で表現可能な、最大の整数 e</p>
-</td>
+<td>floatが <code class="docutils literal"><span class="pre">radix**(e-1)</span></code> で表現可能な、最大の整数 e</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">max_10_exp</span></code></td>
 <td>DBL_MAX_10_EXP</td>
-<td><p class="first last">float が <code class="docutils literal"><span class="pre">10**e</span></code> で表現可能な、最大の整数 e</p>
-</td>
+<td>float が <code class="docutils literal"><span class="pre">10**e</span></code> で表現可能な、最大の整数 e</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-const docutils literal"><span class="pre">min</span></code></a></td>
 <td>DBL_MIN</td>
-<td><p class="first last">float が表現可能な最小の正の値</p>
-</td>
+<td>float が表現可能な最小の正の値</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">min_exp</span></code></td>
 <td>DBL_MIN_EXP</td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">radix**(e-1)</span></code> が正規化floatであるような最小の整数 e</p>
-</td>
+<td><code class="docutils literal"><span class="pre">radix**(e-1)</span></code> が正規化floatであるような最小の整数 e</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">min_10_exp</span></code></td>
 <td>DBL_MIN_10_EXP</td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">10**e</span></code> が正規化floatであるような最小の整数 e</p>
-</td>
+<td><code class="docutils literal"><span class="pre">10**e</span></code> が正規化floatであるような最小の整数 e</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">radix</span></code></td>
 <td>FLT_RADIX</td>
-<td><p class="first last">指数部の基数</p>
-</td>
+<td>指数部の基数</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">rounds</span></code></td>
 <td>FLT_ROUNDS</td>
-<td><p class="first last">算術演算で利用される丸めモードを表す整数定数。これはインタプリタ起動時のシステムの FLT_ROUNDS マクロの値を示します。取りうる値とその意味については、C99 標準の 5.2.4.2.2 節を参照してください。</p>
-</td>
+<td>算術演算で利用される丸めモードを表す整数定数。これはインタプリタ起動時のシステムの FLT_ROUNDS マクロの値を示します。取りうる値とその意味については、C99 標準の 5.2.4.2.2 節を参照してください。</td>
 </tr>
 </tbody>
 </table>
@@ -433,7 +411,7 @@
 <dl class="function">
 <dt id="sys.getcheckinterval">
 <code class="descclassname">sys.</code><code class="descname">getcheckinterval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sys.getcheckinterval" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>インタプリタの &#8220;チェックインターバル (check interval)&#8221; を返します; <a class="reference internal" href="#sys.setcheckinterval" title="sys.setcheckinterval"><code class="xref py py-func docutils literal"><span class="pre">setcheckinterval()</span></code></a> を参照してください。</p>
+<dd><p>インタプリタの 「チェックインターバル (check interval)」 を返します; <a class="reference internal" href="#sys.setcheckinterval" title="sys.setcheckinterval"><code class="xref py py-func docutils literal"><span class="pre">setcheckinterval()</span></code></a> を参照してください。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
@@ -451,7 +429,7 @@
 <dl class="function">
 <dt id="sys.getdlopenflags">
 <code class="descclassname">sys.</code><code class="descname">getdlopenflags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sys.getdlopenflags" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><code class="xref c c-func docutils literal"><span class="pre">dlopen()</span></code> で指定されるフラグを返します。このフラグは <a class="reference internal" href="dl.html#module-dl" title="dl: Call C functions in shared objects. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dl</span></code></a> と <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> で定義されています。</p>
+<dd><p><code class="xref c c-func docutils literal"><span class="pre">dlopen()</span></code> で指定されるフラグを返します。このフラグは <a class="reference internal" href="dl.html#module-dl" title="dl: Call C functions in shared objects. (非推奨) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dl</span></code></a> と <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> で定義されています。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
@@ -462,14 +440,10 @@
 <code class="descclassname">sys.</code><code class="descname">getfilesystemencoding</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sys.getfilesystemencoding" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Unicode ファイル名をシステムのファイル名に変換する際に使用するエンコード名を返します。システムのデフォルトエンコーディングを使用する場合には <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
 <ul class="simple">
-<li><p class="first">Mac OS X では、エンコーディングは <code class="docutils literal"><span class="pre">'utf-8'</span></code> となります。</p>
-</li>
-<li><p class="first">Unix では、エンコーディングは <code class="docutils literal"><span class="pre">nl_langinfo(CODESET)</span></code> が返すユーザの設定となります。 <code class="docutils literal"><span class="pre">nl_langinfo(CODESET)</span></code> が失敗すると <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> を返します。</p>
-</li>
-<li><p class="first">Windows NT+ では、Unicode をファイル名として使用できるので変換の必要はありません。<a class="reference internal" href="#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><code class="xref py py-func docutils literal"><span class="pre">getfilesystemencoding()</span></code></a> は <code class="docutils literal"><span class="pre">'mbcs'</span></code> を返しますが、これはある Unicode 文字列をバイト文字列に明示的に変換して、ファイル名として使うと同じファイルを指すようにしたい場合に、アプリケーションが使わなければならないエンコーディングです。</p>
-</li>
-<li><p class="first">Windows 9x では、エンコーディングは <code class="docutils literal"><span class="pre">'mbcs'</span></code> となります。</p>
-</li>
+<li>Mac OS X では、エンコーディングは <code class="docutils literal"><span class="pre">'utf-8'</span></code> となります。</li>
+<li>Unix では、エンコーディングは <code class="docutils literal"><span class="pre">nl_langinfo(CODESET)</span></code> が返すユーザの設定となります。 <code class="docutils literal"><span class="pre">nl_langinfo(CODESET)</span></code> が失敗すると <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a> を返します。</li>
+<li>Windows NT+ では、Unicode をファイル名として使用できるので変換の必要はありません。<a class="reference internal" href="#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><code class="xref py py-func docutils literal"><span class="pre">getfilesystemencoding()</span></code></a> は <code class="docutils literal"><span class="pre">'mbcs'</span></code> を返しますが、これはある Unicode 文字列をバイト文字列に明示的に変換して、ファイル名として使うと同じファイルを指すようにしたい場合に、アプリケーションが使わなければならないエンコーディングです。</li>
+<li>Windows 9x では、エンコーディングは <code class="docutils literal"><span class="pre">'mbcs'</span></code> となります。</li>
 </ul>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
@@ -540,10 +514,8 @@
 <col width="38%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">定数</p>
-</th>
-<th class="head"><p class="first last">プラットフォーム</p>
-</th>
+<tr class="row-odd"><th class="head">定数</th>
+<th class="head">プラットフォーム</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -568,24 +540,19 @@
 <col width="46%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">定数</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head">定数</th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">1</span> <span class="pre">(VER_NT_WORKSTATION)</span></code></td>
-<td><p class="first last">システムはワークステーションです。</p>
-</td>
+<td>システムはワークステーションです。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">2</span> <span class="pre">(VER_NT_DOMAIN_CONTROLLER)</span></code></td>
-<td><p class="first last">システムはドメインコントローラです。</p>
-</td>
+<td>システムはドメインコントローラです。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">3</span> <span class="pre">(VER_NT_SERVER)</span></code></td>
-<td><p class="first last">システムはサーバですが、ドメインコントローラではありません。</p>
-</td>
+<td>システムはサーバですが、ドメインコントローラではありません。</td>
 </tr>
 </tbody>
 </table>
@@ -619,32 +586,25 @@
 <col width="66%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">ビット (ビッグエンディアンオーダ)</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head">ビット (ビッグエンディアンオーダ)</th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">1-8</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">PY_MAJOR_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">2</span></code>)</p>
-</td>
+<td><code class="docutils literal"><span class="pre">PY_MAJOR_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">2</span></code>)</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">9-16</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">PY_MINOR_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">1</span></code>)</p>
-</td>
+<td><code class="docutils literal"><span class="pre">PY_MINOR_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">1</span></code>)</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">17-24</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">PY_MICRO_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">0</span></code>)</p>
-</td>
+<td><code class="docutils literal"><span class="pre">PY_MICRO_VERSION</span></code> (<code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">0</span></code>)</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">25-28</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">PY_RELEASE_LEVEL</span></code> (アルファでは <code class="docutils literal"><span class="pre">0xA</span></code> 、ベータでは <code class="docutils literal"><span class="pre">0xB</span></code> 、リリース候補では <code class="docutils literal"><span class="pre">0xC</span></code> 、そして最終版は <code class="docutils literal"><span class="pre">0xF</span></code>)</p>
-</td>
+<td><code class="docutils literal"><span class="pre">PY_RELEASE_LEVEL</span></code> (アルファでは <code class="docutils literal"><span class="pre">0xA</span></code> 、ベータでは <code class="docutils literal"><span class="pre">0xB</span></code> 、リリース候補では <code class="docutils literal"><span class="pre">0xC</span></code> 、そして最終版は <code class="docutils literal"><span class="pre">0xF</span></code>)</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">29-32</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">PY_RELEASE_SERIAL</span></code> (the <code class="docutils literal"><span class="pre">3</span></code> in <code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">0</span></code> 、最終リリースでは 0)</p>
-</td>
+<td><code class="docutils literal"><span class="pre">PY_RELEASE_SERIAL</span></code> (the <code class="docutils literal"><span class="pre">3</span></code> in <code class="docutils literal"><span class="pre">2.1.0a3</span></code> の <code class="docutils literal"><span class="pre">0</span></code> 、最終リリースでは 0)</td>
 </tr>
 </tbody>
 </table>
@@ -664,20 +624,16 @@
 <col width="65%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">bits_per_digit</span></code></td>
-<td><p class="first last">各桁に保持されるビットの数です。Python の整数は、内部的に <code class="docutils literal"><span class="pre">2**long_info.bits_per_digit</span></code> を基数として保存されます。</p>
-</td>
+<td>各桁に保持されるビットの数です。Python の整数は、内部的に <code class="docutils literal"><span class="pre">2**long_info.bits_per_digit</span></code> を基数として保存されます。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">sizeof_digit</span></code></td>
-<td><p class="first last">桁を表すために使われる、C 型の大きさ (バイト) です</p>
-</td>
+<td>桁を表すために使われる、C 型の大きさ (バイト) です</td>
 </tr>
 </tbody>
 </table>
@@ -693,7 +649,7 @@
 <code class="descclassname">sys.</code><code class="descname">last_value</code><a class="headerlink" href="#sys.last_value" title="この定義へのパーマリンク">¶</a></dt>
 <dt id="sys.last_traceback">
 <code class="descclassname">sys.</code><code class="descname">last_traceback</code><a class="headerlink" href="#sys.last_traceback" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>通常は定義されておらず、捕捉されない例外が発生してインタプリタがエラーメッセージとトレースバックを出力した場合にのみ設定されます。この値は、対話セッション中にエラーが発生したとき、デバッグモジュールをロード (例:<code class="docutils literal"><span class="pre">import</span> <span class="pre">pdb;</span> <span class="pre">pdb.pm()</span></code> など。詳細は <a class="reference internal" href="pdb.html#debugger"><span class="std std-ref">pdb &#8212; Python デバッガ</span></a> を参照)して発生したエラーを調査する場合に利用します。デバッガをロードすると、プログラムを再実行せずに情報を取得することができます。</p>
+<dd><p>通常は定義されておらず、捕捉されない例外が発生してインタプリタがエラーメッセージとトレースバックを出力した場合にのみ設定されます。この値は、対話セッション中にエラーが発生したとき、デバッグモジュールをロード (例:<code class="docutils literal"><span class="pre">import</span> <span class="pre">pdb;</span> <span class="pre">pdb.pm()</span></code> など。詳細は <a class="reference internal" href="pdb.html#debugger"><span class="std std-ref">pdb — Python デバッガ</span></a> を参照)して発生したエラーを調査する場合に利用します。デバッガをロードすると、プログラムを再実行せずに情報を取得することができます。</p>
 <p>変数の意味は、上の <a class="reference internal" href="#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">exc_info()</span></code></a> の戻り値と同じです。対話セッションを実行するスレッドは常に1つだけなので、 <code class="docutils literal"><span class="pre">exc_type</span></code> のようにスレッドに関する問題は発生しません。</p>
 </dd></dl>
 
@@ -779,15 +735,12 @@
 <col width="56%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">システム</p>
-</th>
-<th class="head"><p class="first last"><a class="reference internal" href="platform.html#module-platform" title="platform: Retrieves as much platform identifying data as possible."><code class="xref py py-data docutils literal"><span class="pre">platform</span></code></a> の値</p>
-</th>
+<tr class="row-odd"><th class="head">システム</th>
+<th class="head"><a class="reference internal" href="platform.html#module-platform" title="platform: Retrieves as much platform identifying data as possible."><code class="xref py py-data docutils literal"><span class="pre">platform</span></code></a> の値</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><p class="first last">Linux (2.x <em>と</em> 3.x)</p>
-</td>
+<tr class="row-even"><td>Linux (2.x <em>と</em> 3.x)</td>
 <td><code class="docutils literal"><span class="pre">'linux2'</span></code></td>
 </tr>
 <tr class="row-odd"><td>Windows</td>
@@ -846,7 +799,7 @@
 <dl class="function">
 <dt id="sys.setcheckinterval">
 <code class="descclassname">sys.</code><code class="descname">setcheckinterval</code><span class="sig-paren">(</span><em>interval</em><span class="sig-paren">)</span><a class="headerlink" href="#sys.setcheckinterval" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>インタプリタの &#8220;チェック間隔&#8221; を示す整数値を指定します。この値はスレッドスイッチやシグナルハンドラのチェックを行う周期を決定します。デフォルト値は <code class="docutils literal"><span class="pre">100</span></code> で、この場合 100 の Python 仮想命令を実行するとチェックを行います。この値を大きくすればスレッドを利用するプログラムのパフォーマンスが向上します。この値が 0 <code class="docutils literal"><span class="pre">以下</span></code> の場合、各仮想命令を実行するたびにチェックを行い、レスポンス速度が最大になりますがオーバヘッドもまた最大となります。</p>
+<dd><p>インタプリタの 「チェック間隔」 を示す整数値を指定します。この値はスレッドスイッチやシグナルハンドラのチェックを行う周期を決定します。デフォルト値は <code class="docutils literal"><span class="pre">100</span></code> で、この場合 100 の Python 仮想命令を実行するとチェックを行います。この値を大きくすればスレッドを利用するプログラムのパフォーマンスが向上します。この値が 0 <code class="docutils literal"><span class="pre">以下</span></code> の場合、各仮想命令を実行するたびにチェックを行い、レスポンス速度が最大になりますがオーバヘッドもまた最大となります。</p>
 </dd></dl>
 
 <dl class="function">
@@ -861,7 +814,7 @@
 <dl class="function">
 <dt id="sys.setdlopenflags">
 <code class="descclassname">sys.</code><code class="descname">setdlopenflags</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#sys.setdlopenflags" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>インタプリタが拡張モジュールをロードする時、 <code class="xref c c-func docutils literal"><span class="pre">dlopen()</span></code> で使用するフラグを設定します。 <code class="docutils literal"><span class="pre">sys.setdlopenflags(0)</span></code> とすれば、モジュールインポート時にシンボルの遅延解決を行う事ができます。シンボルを拡張モジュール間で共有する場合には、 <code class="docutils literal"><span class="pre">sys.setdlopenflags(dl.RTLD_NOW</span> <span class="pre">|</span> <span class="pre">dl.RTLD_GLOBAL)</span></code> と指定します。フラグの定義名は <a class="reference internal" href="dl.html#module-dl" title="dl: Call C functions in shared objects. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dl</span></code></a> か <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> で定義されています。 <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> が存在しない場合、 <strong class="program">h2py</strong> スクリプトを使って <code class="file docutils literal"><span class="pre">/usr/include/dlfcn.h</span></code> から生成することができます。</p>
+<dd><p>インタプリタが拡張モジュールをロードする時、 <code class="xref c c-func docutils literal"><span class="pre">dlopen()</span></code> で使用するフラグを設定します。 <code class="docutils literal"><span class="pre">sys.setdlopenflags(0)</span></code> とすれば、モジュールインポート時にシンボルの遅延解決を行う事ができます。シンボルを拡張モジュール間で共有する場合には、 <code class="docutils literal"><span class="pre">sys.setdlopenflags(dl.RTLD_NOW</span> <span class="pre">|</span> <span class="pre">dl.RTLD_GLOBAL)</span></code> と指定します。フラグの定義名は <a class="reference internal" href="dl.html#module-dl" title="dl: Call C functions in shared objects. (非推奨) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dl</span></code></a> か <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> で定義されています。 <code class="xref py py-mod docutils literal"><span class="pre">DLFCN</span></code> が存在しない場合、 <strong class="program">h2py</strong> スクリプトを使って <code class="file docutils literal"><span class="pre">/usr/include/dlfcn.h</span></code> から生成することができます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
@@ -890,26 +843,19 @@
 <p><em>event</em> には以下の意味があります。</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">'call'</span></code></dt>
-<dd><p class="first last">関数が呼び出された(もしくは、何かのコードブロックに入った)。グローバルの trace 関数が呼ばれる。 <em>arg</em> は <code class="docutils literal"><span class="pre">None</span></code> が渡される。戻り値はローカルの trace 関数。</p>
-</dd>
+<dd>関数が呼び出された(もしくは、何かのコードブロックに入った)。グローバルの trace 関数が呼ばれる。 <em>arg</em> は <code class="docutils literal"><span class="pre">None</span></code> が渡される。戻り値はローカルの trace 関数。</dd>
 <dt><code class="docutils literal"><span class="pre">'line'</span></code></dt>
-<dd><p class="first last">インタプリタがコードの新しい行を実行しようとしている、または、ループの条件で再実行しようとしている。ローカルの trace 関数が呼ばれる。<em>arg</em> は <code class="docutils literal"><span class="pre">None</span></code> 。返り値は新しいローカルの trace 関数。これがどのように動作するかの詳細な説明は、 <code class="file docutils literal"><span class="pre">Objects/lnotab_notes.txt</span></code> を参照のこと。</p>
-</dd>
+<dd>インタプリタがコードの新しい行を実行しようとしている、または、ループの条件で再実行しようとしている。ローカルの trace 関数が呼ばれる。<em>arg</em> は <code class="docutils literal"><span class="pre">None</span></code> 。返り値は新しいローカルの trace 関数。これがどのように動作するかの詳細な説明は、 <code class="file docutils literal"><span class="pre">Objects/lnotab_notes.txt</span></code> を参照のこと。</dd>
 <dt><code class="docutils literal"><span class="pre">'return'</span></code></dt>
-<dd><p class="first last">関数(あるいは別のコードブロック)から戻ろうとしている。ローカルの trace 関数が呼ばれる。 <em>arg</em> は返されようとしている値、または、このイベントが例外が送出されることによって起こったなら <code class="docutils literal"><span class="pre">None</span></code> 。 trace 関数の戻り値は無視される。</p>
-</dd>
+<dd>関数(あるいは別のコードブロック)から戻ろうとしている。ローカルの trace 関数が呼ばれる。 <em>arg</em> は返されようとしている値、または、このイベントが例外が送出されることによって起こったなら <code class="docutils literal"><span class="pre">None</span></code> 。 trace 関数の戻り値は無視される。</dd>
 <dt><code class="docutils literal"><span class="pre">'exception'</span></code></dt>
-<dd><p class="first last">例外が発生した。ローカルの trace 関数が呼ばれる。 <em>arg</em> は <code class="docutils literal"><span class="pre">(exception,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></code> のタプル。戻り値は新しいローカルの trace 関数。</p>
-</dd>
+<dd>例外が発生した。ローカルの trace 関数が呼ばれる。 <em>arg</em> は <code class="docutils literal"><span class="pre">(exception,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></code> のタプル。戻り値は新しいローカルの trace 関数。</dd>
 <dt><code class="docutils literal"><span class="pre">'c_call'</span></code></dt>
-<dd><p class="first last">C 関数(拡張関数かビルトイン関数)が呼ばれようとしている。 <em>arg</em> は C 関数オブジェクト。</p>
-</dd>
+<dd>C 関数(拡張関数かビルトイン関数)が呼ばれようとしている。 <em>arg</em> は C 関数オブジェクト。</dd>
 <dt><code class="docutils literal"><span class="pre">'c_return'</span></code></dt>
-<dd><p class="first last">C 関数から戻った。 <em>arg</em> は C の関数オブジェクト。</p>
-</dd>
+<dd>C 関数から戻った。 <em>arg</em> は C の関数オブジェクト。</dd>
 <dt><code class="docutils literal"><span class="pre">'c_exception'</span></code></dt>
-<dd><p class="first last">C 関数が例外を発生させた。 <em>arg</em> は C の関数オブジェクト。</p>
-</dd>
+<dd>C 関数が例外を発生させた。 <em>arg</em> は C の関数オブジェクト。</dd>
 </dl>
 <p>例外が呼び出しチェインを辿って伝播していくことに注意してください。 <code class="docutils literal"><span class="pre">'exception'</span></code> イベントは各レベルで発生します。</p>
 <p>code と frame オブジェクトについては、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照してください。</p>
@@ -954,7 +900,7 @@
 <dl class="data">
 <dt id="sys.subversion">
 <code class="descclassname">sys.</code><code class="descname">subversion</code><a class="headerlink" href="#sys.subversion" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>3つ組 (repo, branch, version) で Python インタプリタの Subversion 情報を表します。 <em>repo</em> はリポジトリの名前で、 <code class="docutils literal"><span class="pre">'CPython'</span></code> 。 <em>branch</em> は <code class="docutils literal"><span class="pre">'trunk'</span></code>, <code class="docutils literal"><span class="pre">'branches/name'</span></code> または <code class="docutils literal"><span class="pre">'tags/name'</span></code> のいずれかの形式の文字列です。 <em>version</em> はもしインタプリタが Subversion のチェックアウトからビルドされたものならば <code class="docutils literal"><span class="pre">svnversion</span></code> の出力であり、リビジョン番号 (範囲) とローカルでの変更がある場合には最後に &#8216;M&#8217; が付きます。ツリーがエクスポートされたもの (または svnversion が取得できない) で、 branch がタグならば <code class="docutils literal"><span class="pre">Include/patchlevel.h</span></code> のリビジョンになります。それ以外の場合には <code class="docutils literal"><span class="pre">None</span></code> です。</p>
+<dd><p>3つ組 (repo, branch, version) で Python インタプリタの Subversion 情報を表します。 <em>repo</em> はリポジトリの名前で、 <code class="docutils literal"><span class="pre">'CPython'</span></code> 。 <em>branch</em> は <code class="docutils literal"><span class="pre">'trunk'</span></code>, <code class="docutils literal"><span class="pre">'branches/name'</span></code> または <code class="docutils literal"><span class="pre">'tags/name'</span></code> のいずれかの形式の文字列です。 <em>version</em> はもしインタプリタが Subversion のチェックアウトからビルドされたものならば <code class="docutils literal"><span class="pre">svnversion</span></code> の出力であり、リビジョン番号 (範囲) とローカルでの変更がある場合には最後に 『M』 が付きます。ツリーがエクスポートされたもの (または svnversion が取得できない) で、 branch がタグならば <code class="docutils literal"><span class="pre">Include/patchlevel.h</span></code> のリビジョンになります。それ以外の場合には <code class="docutils literal"><span class="pre">None</span></code> です。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
@@ -1013,8 +959,7 @@
 <table class="docutils citation" frame="void" id="c99" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[C99]</a></td><td><p class="first last">ISO/IEC 9899:1999.  &#8220;Programming languages &#8211; C.&#8221;  この標準のパブリックドラフトが参照できます: <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a>。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[C99]</a></td><td>ISO/IEC 9899:1999.  「Programming languages – C.」  この標準のパブリックドラフトが参照できます: <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a>。</td></tr>
 </tbody>
 </table>
 </div>
@@ -1030,11 +975,11 @@
                         title="前の章へ">28. Python ランタイムサービス</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="sysconfig.html"
-                        title="次の章へ">28.2. <code class="docutils literal"><span class="pre">sysconfig</span></code> &#8212; Python の構成情報にアクセスする</a></p>
+                        title="次の章へ">28.2. <code class="docutils literal"><span class="pre">sysconfig</span></code> — Python の構成情報にアクセスする</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/sys.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/sys.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -1086,10 +1031,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

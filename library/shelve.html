@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>11.4. shelve — Python オブジェクトの永続化 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="11. データの永続化" href="persistence.html" />
     <link rel="next" title="11.5. marshal — 内部使用向けの Python オブジェクト整列化" href="marshal.html" />
     <link rel="prev" title="11.3. copy_reg — pickle サポート関数を登録する" href="copy_reg.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,10 +77,10 @@
           <div class="body" role="main">
             
   <div class="section" id="module-shelve">
-<span id="shelve-python-object-persistence"></span><h1>11.4. <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> &#8212; Python オブジェクトの永続化<a class="headerlink" href="#module-shelve" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="shelve-python-object-persistence"></span><h1>11.4. <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> — Python オブジェクトの永続化<a class="headerlink" href="#module-shelve" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p id="index-0"><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/shelve.py">Lib/shelve.py</a></p>
 <hr class="docutils" />
-<p>&#8220;シェルフ (shelf, 棚)&#8221; は辞書に似た永続性を持つオブジェクトです。 &#8220;dbm&#8221; データベースとの違いは、シェルフの値 (キーではありません！) は実質上どんな Python オブジェクトにも &#8212; <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールが扱えるなら何でも &#8212; できるということです。これにはほとんどのクラスインスタンス、再帰的なデータ型、沢山の共有されたサブオブジェクトを含むオブジェクトが含まれます。キーは通常の文字列です。</p>
+<p>「シェルフ (shelf, 棚)」 は辞書に似た永続性を持つオブジェクトです。 「dbm」 データベースとの違いは、シェルフの値 (キーではありません！) は実質上どんな Python オブジェクトにも — <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールが扱えるなら何でも — できるということです。これにはほとんどのクラスインスタンス、再帰的なデータ型、沢山の共有されたサブオブジェクトを含むオブジェクトが含まれます。キーは通常の文字列です。</p>
 <dl class="function">
 <dt id="shelve.open">
 <code class="descclassname">shelve.</code><code class="descname">open</code><span class="sig-paren">(</span><em>filename</em>, <em>flag='c'</em>, <em>protocol=None</em>, <em>writeback=False</em><span class="sig-paren">)</span><a class="headerlink" href="#shelve.open" title="この定義へのパーマリンク">¶</a></dt>
@@ -126,10 +122,8 @@
 <blockquote>
 <div></div></blockquote>
 <ul class="simple" id="index-1">
-<li><p class="first">どのデータベースパッケージが使われるか (例えば <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> 、 <a class="reference internal" href="gdbm.html#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> 、<a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a>) は、どのインタフェースが利用可能かに依存します。従って、データベースを <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a>  を使って直接開く方法は安全ではありません。データベースはまた、 <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> が使われた場合 (不幸なことに) その制約に縛られます &#8212; これはデータベースに記録されたオブジェクト (の pickle 化された表現) はかなり小さくなければならず、キー衝突が生じた場合に、稀にデータベースを更新することができなくなることを意味します。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> モジュールは、シェルフに置かれたオブジェクトの <em>並列した</em> 読み出し/書き込みアクセスをサポートしません (複数の同時読み出しアクセスは安全です)。あるプログラムが書き込みのために開かれたシェルフを持っているとき、他のプログラムはそのシェルフを読み書きのために開いてはいけません。この問題を解決するために Unix のファイルロック機構を使うことができますが、この機構は Unix のバージョン間で異なり、使われているデータベースの実装について知識が必要となります。</p>
-</li>
+<li>どのデータベースパッケージが使われるか (例えば <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> 、 <a class="reference internal" href="gdbm.html#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> 、<a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a>) は、どのインタフェースが利用可能かに依存します。従って、データベースを <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a>  を使って直接開く方法は安全ではありません。データベースはまた、 <a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> が使われた場合 (不幸なことに) その制約に縛られます — これはデータベースに記録されたオブジェクト (の pickle 化された表現) はかなり小さくなければならず、キー衝突が生じた場合に、稀にデータベースを更新することができなくなることを意味します。</li>
+<li><a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> モジュールは、シェルフに置かれたオブジェクトの <em>並列した</em> 読み出し/書き込みアクセスをサポートしません (複数の同時読み出しアクセスは安全です)。あるプログラムが書き込みのために開かれたシェルフを持っているとき、他のプログラムはそのシェルフを読み書きのために開いてはいけません。この問題を解決するために Unix のファイルロック機構を使うことができますが、この機構は Unix のバージョン間で異なり、使われているデータベースの実装について知識が必要となります。</li>
 </ul>
 <dl class="class">
 <dt id="shelve.Shelf">
@@ -192,29 +186,21 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="anydbm.html#module-anydbm" title="anydbm: Generic interface to DBM-style database modules."><code class="xref py py-mod docutils literal"><span class="pre">anydbm</span></code></a> モジュール</dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</p>
-</dd>
+<dd><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</dd>
 <dt><a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュール</dt>
-<dd><p class="first last">BSD <code class="docutils literal"><span class="pre">db</span></code> データベースインタフェース。</p>
-</dd>
+<dd>BSD <code class="docutils literal"><span class="pre">db</span></code> データベースインタフェース。</dd>
 <dt><a class="reference internal" href="dbhash.html#module-dbhash" title="dbhash: DBM-style interface to the BSD database library."><code class="xref py py-mod docutils literal"><span class="pre">dbhash</span></code></a> モジュール</dt>
-<dd><p class="first last"><a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> をラップする薄いレイヤで、他のデータベースモジュールのように関数 <a class="reference internal" href="dbhash.html#dbhash.open" title="dbhash.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を提供しています。</p>
-</dd>
+<dd><a class="reference internal" href="bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> をラップする薄いレイヤで、他のデータベースモジュールのように関数 <a class="reference internal" href="dbhash.html#dbhash.open" title="dbhash.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> を提供しています。</dd>
 <dt><a class="reference internal" href="dbm.html#module-dbm" title="dbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">dbm</span></code></a> モジュール</dt>
-<dd><p class="first last">標準の Unix データベースインタフェース。</p>
-</dd>
+<dd>標準の Unix データベースインタフェース。</dd>
 <dt><a class="reference internal" href="dumbdbm.html#module-dumbdbm" title="dumbdbm: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal"><span class="pre">dumbdbm</span></code></a> モジュール</dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> インタフェースの移植性のある実装。</p>
-</dd>
+<dd><code class="docutils literal"><span class="pre">dbm</span></code> インタフェースの移植性のある実装。</dd>
 <dt><a class="reference internal" href="gdbm.html#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> モジュール</dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> インタフェースに基づいた GNU データベースインタフェース。</p>
-</dd>
+<dd><code class="docutils literal"><span class="pre">dbm</span></code> インタフェースに基づいた GNU データベースインタフェース。</dd>
 <dt><a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュール</dt>
-<dd><p class="first last"><a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> によって使われるオブジェクト整列化機構。</p>
-</dd>
+<dd><a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> によって使われるオブジェクト整列化機構。</dd>
 <dt><a class="reference internal" href="pickle.html#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュール</dt>
-<dd><p class="first last"><a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> の高速版。</p>
-</dd>
+<dd><a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> の高速版。</dd>
 </dl>
 </div>
 </div>
@@ -228,7 +214,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">11.4. <code class="docutils literal"><span class="pre">shelve</span></code> &#8212; Python オブジェクトの永続化</a><ul>
+<li><a class="reference internal" href="#">11.4. <code class="docutils literal"><span class="pre">shelve</span></code> — Python オブジェクトの永続化</a><ul>
 <li><a class="reference internal" href="#restrictions">11.4.1. 制限事項</a></li>
 <li><a class="reference internal" href="#example">11.4.2. 例</a></li>
 </ul>
@@ -237,14 +223,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="copy_reg.html"
-                        title="前の章へ">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> &#8212; <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a></p>
+                        title="前の章へ">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> — <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="marshal.html"
-                        title="次の章へ">11.5. <code class="docutils literal"><span class="pre">marshal</span></code> &#8212; 内部使用向けの Python オブジェクト整列化</a></p>
+                        title="次の章へ">11.5. <code class="docutils literal"><span class="pre">marshal</span></code> — 内部使用向けの Python オブジェクト整列化</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/shelve.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/shelve.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -296,10 +282,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

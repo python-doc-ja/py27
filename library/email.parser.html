@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>18.1.2. email.parser: 電子メールメッセージを解析(パース)する &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
     <link rel="next" title="18.1.3. email.generator: MIME 文書を生成する" href="email.generator.html" />
     <link rel="prev" title="18.1.1. email.message: 電子メールメッセージの表現" href="email.message.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -72,7 +68,7 @@
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
       </ul>
     </div>    
 
@@ -184,21 +180,16 @@
 <h2>18.1.2.3. 追記事項<a class="headerlink" href="#additional-notes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下はテキスト解析の際に適用されるいくつかの規約です:</p>
 <ul class="simple">
-<li><p class="first">ほとんどの非 <em class="mimetype">multipart</em> 形式のメッセージは単一の文字列ペイロードをもつ単一のメッセージオブジェクトとして解析されます。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">False</span></code> を返します。このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは文字列オブジェクトを返します。</p>
-</li>
-<li><p class="first"><em class="mimetype">multipart</em> 形式のメッセージはすべてメッセージ内コンポーネント (sub-message object) のリストとして解析されます。外側のコンテナメッセージオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">True</span></code> を返し、このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> subpart のリストを返します。</p>
-</li>
-<li><p class="first"><em class="mimetype">message/*</em> の Content-Type をもつほとんどのメッセージ (例: <em class="mimetype">message/delivery-status</em> や <em class="mimetype">message/rfc822</em> など) もコンテナメッセージオブジェクトとして解析されますが、ペイロードのリストの長さは 1 になります。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドに対して <code class="docutils literal"><span class="pre">True</span></code> を返し、リスト内にあるひとつだけの要素がメッセージ内のコンポーネントオブジェクトになります。</p>
-</li>
-<li><p class="first">いくつかの標準的でないメッセージは、 <em class="mimetype">multipart</em> の使い方に統一がとれていない場合があります。このようなメッセージは <em class="mailheader">Content-Type</em> ヘッダに <em class="mimetype">multipart</em> を指定しているものの、その <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドは <code class="docutils literal"><span class="pre">False</span></code> を返すことがあります。もしこのようなメッセージが <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって解析されると、その <em>defects</em> 属性のリスト中には <code class="xref py py-class docutils literal"><span class="pre">MultipartInvariantViolationDefect</span></code> クラスのインスタンスが現れます。詳しい情報については <a class="reference internal" href="email.errors.html#module-email.errors" title="email.errors: The exception classes used by the email package."><code class="xref py py-mod docutils literal"><span class="pre">email.errors</span></code></a> を参照してください。</p>
-</li>
+<li>ほとんどの非 <em class="mimetype">multipart</em> 形式のメッセージは単一の文字列ペイロードをもつ単一のメッセージオブジェクトとして解析されます。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">False</span></code> を返します。このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは文字列オブジェクトを返します。</li>
+<li><em class="mimetype">multipart</em> 形式のメッセージはすべてメッセージ内コンポーネント (sub-message object) のリストとして解析されます。外側のコンテナメッセージオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> に対して <code class="docutils literal"><span class="pre">True</span></code> を返し、このオブジェクトに対する <a class="reference internal" href="email.message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal"><span class="pre">get_payload()</span></code></a> メソッドは <a class="reference internal" href="email.message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> subpart のリストを返します。</li>
+<li><em class="mimetype">message/*</em> の Content-Type をもつほとんどのメッセージ (例: <em class="mimetype">message/delivery-status</em> や <em class="mimetype">message/rfc822</em> など) もコンテナメッセージオブジェクトとして解析されますが、ペイロードのリストの長さは 1 になります。このオブジェクトは <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドに対して <code class="docutils literal"><span class="pre">True</span></code> を返し、リスト内にあるひとつだけの要素がメッセージ内のコンポーネントオブジェクトになります。</li>
+<li>いくつかの標準的でないメッセージは、 <em class="mimetype">multipart</em> の使い方に統一がとれていない場合があります。このようなメッセージは <em class="mailheader">Content-Type</em> ヘッダに <em class="mimetype">multipart</em> を指定しているものの、その <a class="reference internal" href="email.message.html#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code class="xref py py-meth docutils literal"><span class="pre">is_multipart()</span></code></a> メソッドは <code class="docutils literal"><span class="pre">False</span></code> を返すことがあります。もしこのようなメッセージが <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって解析されると、その <em>defects</em> 属性のリスト中には <code class="xref py py-class docutils literal"><span class="pre">MultipartInvariantViolationDefect</span></code> クラスのインスタンスが現れます。詳しい情報については <a class="reference internal" href="email.errors.html#module-email.errors" title="email.errors: The exception classes used by the email package."><code class="xref py py-mod docutils literal"><span class="pre">email.errors</span></code></a> を参照してください。</li>
 </ul>
 <p class="rubric">脚注</p>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">Python 2.4 から導入された email パッケージバージョン 3.0 では、旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> は <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって書き直されました。そのためパーザの意味論と得られる結果は 2 つのパーザで同一のものになります。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Python 2.4 から導入された email パッケージバージョン 3.0 では、旧式の <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal"><span class="pre">Parser</span></code></a> は <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal"><span class="pre">FeedParser</span></code></a> によって書き直されました。そのためパーザの意味論と得られる結果は 2 つのパーザで同一のものになります。</td></tr>
 </tbody>
 </table>
 </div>
@@ -229,7 +220,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.parser.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.parser.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -273,7 +264,7 @@
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
@@ -282,10 +273,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

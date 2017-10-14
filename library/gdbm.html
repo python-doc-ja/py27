@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>11.9. gdbm — GNU による dbm の再実装 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="11. データの永続化" href="persistence.html" />
     <link rel="next" title="11.10. dbhash — BSD データベースライブラリへの DBM 形式のインタフェース" href="dbhash.html" />
     <link rel="prev" title="11.8. dbm — UNIX dbmのシンプルなインタフェース" href="dbm.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-gdbm">
-<span id="gdbm-gnu-s-reinterpretation-of-dbm"></span><h1>11.9. <a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> &#8212; GNU による dbm の再実装<a class="headerlink" href="#module-gdbm" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="gdbm-gnu-s-reinterpretation-of-dbm"></span><h1>11.9. <a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> — GNU による dbm の再実装<a class="headerlink" href="#module-gdbm" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last"><a class="reference internal" href="#module-gdbm" title="gdbm: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">gdbm</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">dbm.gnu</span></code> にリネームされました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードの import を修正します。</p>
@@ -106,28 +102,22 @@
 <col width="83%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head"><code class="docutils literal"><span class="pre">値</span></code></th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'r'</span></code></td>
-<td><p class="first last">既存のデータベースを読み込み専用で開く (デフォルト)</p>
-</td>
+<td>既存のデータベースを読み込み専用で開く (デフォルト)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'w'</span></code></td>
-<td><p class="first last">既存のデータベースを読み書き用に開く</p>
-</td>
+<td>既存のデータベースを読み書き用に開く</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'c'</span></code></td>
-<td><p class="first last">データベースを読み書き用に開く。ただし存在しない場合には新たに作成する</p>
-</td>
+<td>データベースを読み書き用に開く。ただし存在しない場合には新たに作成する</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'n'</span></code></td>
-<td><p class="first last">常に新たに読み書き用の新規のデータベースを作成する</p>
-</td>
+<td>常に新たに読み書き用の新規のデータベースを作成する</td>
 </tr>
 </tbody>
 </table>
@@ -138,24 +128,19 @@
 <col width="83%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head"><code class="docutils literal"><span class="pre">値</span></code></th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'f'</span></code></td>
-<td><p class="first last">データベースを高速モードで開きます。書き込みが同期されません。</p>
-</td>
+<td>データベースを高速モードで開きます。書き込みが同期されません。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'s'</span></code></td>
-<td><p class="first last">同期モード。データベースへの変更がすぐにファイルに書き込まれます。</p>
-</td>
+<td>同期モード。データベースへの変更がすぐにファイルに書き込まれます。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'u'</span></code></td>
-<td><p class="first last">データベースをロックしません。</p>
-</td>
+<td>データベースをロックしません。</td>
 </tr>
 </tbody>
 </table>
@@ -204,11 +189,9 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="anydbm.html#module-anydbm" title="anydbm: Generic interface to DBM-style database modules."><code class="xref py py-mod docutils literal"><span class="pre">anydbm</span></code></a> モジュール</dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</p>
-</dd>
+<dd><code class="docutils literal"><span class="pre">dbm</span></code> スタイルの汎用的なインタフェース</dd>
 <dt><a class="reference internal" href="whichdb.html#module-whichdb" title="whichdb: Guess which DBM-style module created a given database."><code class="xref py py-mod docutils literal"><span class="pre">whichdb</span></code></a> モジュール</dt>
-<dd><p class="first last">既存のデータベースがどの形式のデータベースか判定するユーティリティモジュール。</p>
-</dd>
+<dd>既存のデータベースがどの形式のデータベースか判定するユーティリティモジュール。</dd>
 </dl>
 </div>
 </div>
@@ -221,14 +204,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="dbm.html"
-                        title="前の章へ">11.8. <code class="docutils literal"><span class="pre">dbm</span></code> &#8212; UNIX dbmのシンプルなインタフェース</a></p>
+                        title="前の章へ">11.8. <code class="docutils literal"><span class="pre">dbm</span></code> — UNIX dbmのシンプルなインタフェース</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="dbhash.html"
-                        title="次の章へ">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース</a></p>
+                        title="次の章へ">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> — BSD データベースライブラリへの DBM 形式のインタフェース</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/gdbm.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/gdbm.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -280,10 +263,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

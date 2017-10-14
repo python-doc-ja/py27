@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>11.1. pickle — Python オブジェクトの直列化 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="11. データの永続化" href="persistence.html" />
     <link rel="next" title="11.3. copy_reg — pickle サポート関数を登録する" href="copy_reg.html" />
     <link rel="prev" title="11. データの永続化" href="persistence.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,8 +77,8 @@
           <div class="body" role="main">
             
   <div class="section" id="pickle-python-object-serialization">
-<h1>11.1. <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> &#8212; Python オブジェクトの直列化<a class="headerlink" href="#pickle-python-object-serialization" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<span class="target" id="module-pickle"><span id="index-0"></span></span><p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールでは、Python オブジェクトデータ構造を直列化 (serialize) したり非直列化 (de-serialize)するための基礎的ですが強力なアルゴリズムを実装しています。 &#8220;Pickle 化 (Pickling)&#8221; は Python のオブジェクト階層をバイトストリームに変換する過程を指します。&#8221;非 Pickle 化 (unpickling)&#8221; はその逆の操作で、バイトストリームをオブジェクト階層に戻すように変換します。Pickle 化 (及び非 Pickle 化) は、別名 &#8220;直列化 (serialization)&#8221; や &#8220;整列化 (marshalling)&#8221; <a class="footnote-reference" href="#id11" id="id1">[1]</a> 、 &#8220;平坦化 (flattening)&#8221; として知られていますが、ここでは混乱を避けるため、用語として &#8220;Pickle 化&#8221; および &#8220;非Pickle 化&#8221; を使います。</p>
+<h1>11.1. <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> — Python オブジェクトの直列化<a class="headerlink" href="#pickle-python-object-serialization" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span class="target" id="module-pickle"><span id="index-0"></span></span><p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールでは、Python オブジェクトデータ構造を直列化 (serialize) したり非直列化 (de-serialize)するための基礎的ですが強力なアルゴリズムを実装しています。 「Pickle 化 (Pickling)」 は Python のオブジェクト階層をバイトストリームに変換する過程を指します。」非 Pickle 化 (unpickling)」 はその逆の操作で、バイトストリームをオブジェクト階層に戻すように変換します。Pickle 化 (及び非 Pickle 化) は、別名 「直列化 (serialization)」 や 「整列化 (marshalling)」 <a class="footnote-reference" href="#id11" id="id1">[1]</a> 、 「平坦化 (flattening)」 として知られていますが、ここでは混乱を避けるため、用語として 「Pickle 化」 および 「非Pickle 化」 を使います。</p>
 <p>このドキュメントでは <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールおよび <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールの両方について記述します。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
@@ -90,7 +86,7 @@
 </div>
 <div class="section" id="relationship-to-other-python-modules">
 <h2>11.1.1. 他の Python モジュールとの関係<a class="headerlink" href="#relationship-to-other-python-modules" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールには <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> と呼ばれる最適化のなされた親類モジュールがあります。名前が示すように、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> は C で書かれており、このため <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> より 1000 倍くらいまで高速になる可能性があります。しかしながら <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-func docutils literal"><span class="pre">Pickler()</span></code></a> および <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-func docutils literal"><span class="pre">Unpickler()</span></code></a> クラスのサブクラス化をサポートしていません。これは <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では、これらは関数であってクラスではないからです。ほとんどのアプリケーションではこの機能は不要であり、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の持つ高いパフォーマンスの恩恵を受けることができます。その他の点では、二つのモジュールにおけるインタフェースはほとんど同じです; このマニュアルでは共通のインタフェースを記述しており、必要に応じてモジュール間の相違について指摘します。以下の議論では、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> と <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の総称として &#8220;pickle&#8221; という用語を使うことにします。</p>
+<p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールには <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> と呼ばれる最適化のなされた親類モジュールがあります。名前が示すように、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> は C で書かれており、このため <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> より 1000 倍くらいまで高速になる可能性があります。しかしながら <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-func docutils literal"><span class="pre">Pickler()</span></code></a> および <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-func docutils literal"><span class="pre">Unpickler()</span></code></a> クラスのサブクラス化をサポートしていません。これは <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では、これらは関数であってクラスではないからです。ほとんどのアプリケーションではこの機能は不要であり、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の持つ高いパフォーマンスの恩恵を受けることができます。その他の点では、二つのモジュールにおけるインタフェースはほとんど同じです; このマニュアルでは共通のインタフェースを記述しており、必要に応じてモジュール間の相違について指摘します。以下の議論では、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> と <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の総称として 「pickle」 という用語を使うことにします。</p>
 <p>これら二つのモジュールが生成するデータストリームは相互交換できることが保証されています。</p>
 <p>Python には <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> と呼ばれるより原始的な直列化モジュールがありますが、一般的に Python オブジェクトを直列化する方法としては <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> を選ぶべきです。 <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> は基本的に <code class="file docutils literal"><span class="pre">.pyc</span></code> ファイルをサポートするために存在しています。</p>
 <p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールはいくつかの点で <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> と明確に異なります:</p>
@@ -111,12 +107,9 @@
 <p>標準では、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> データ形式では印字可能な ASCII 表現を使います。これはバイナリ表現よりも少しかさばるデータになります。印字可能な ASCII の利用 (とその他の <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> 表現形式が持つ特徴) の大きな利点は、デバッグやリカバリを目的とした場合に、 pickle 化されたファイルを標準的なテキストエディタで読めるということです。</p>
 <p>現在、pickle化に使われるプロトコルは、以下の 3 種類です。</p>
 <ul class="simple">
-<li><p class="first">バージョン 0 のプロトコルは、最初の ASCII プロトコルで、以前のバージョンのPython と後方互換です。</p>
-</li>
-<li><p class="first">バージョン 1 のプロトコルは、古いバイナリ形式で、以前のバージョンの Python と後方互換です。</p>
-</li>
-<li><p class="first">バージョン 2 のプロトコルは、Python 2.3 で導入されました。 <a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a> を、より効率よく piclke 化します。</p>
-</li>
+<li>バージョン 0 のプロトコルは、最初の ASCII プロトコルで、以前のバージョンのPython と後方互換です。</li>
+<li>バージョン 1 のプロトコルは、古いバイナリ形式で、以前のバージョンの Python と後方互換です。</li>
+<li>バージョン 2 のプロトコルは、Python 2.3 で導入されました。 <a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a> を、より効率よく piclke 化します。</li>
 </ul>
 <p>詳細は <span class="target" id="index-7"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0307"><strong>PEP 307</strong></a> を参照してください。</p>
 <p><em>protocol</em> を指定しない場合、プロトコル 0 が使われます。 <em>protocol</em> に負値か <a class="reference internal" href="#pickle.HIGHEST_PROTOCOL" title="pickle.HIGHEST_PROTOCOL"><code class="xref py py-const docutils literal"><span class="pre">HIGHEST_PROTOCOL</span></code></a> を指定すると、有効なプロトコルの内、もっとも高いバージョンのものが使われます。</p>
@@ -217,7 +210,7 @@
 <dl class="method">
 <dt id="pickle.Pickler.clear_memo">
 <code class="descname">clear_memo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Pickler.clear_memo" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>picller の &#8220;メモ&#8221; を消去します。メモとは、共有オブジェクトまたは再帰的なオブジェクトが値ではなく参照で記憶されるようにするために、 pickler がこれまでどのオブジェクトに遭遇してきたかを記憶するデータ構造です。このメソッドは pickler を再利用する際に便利です。</p>
+<dd><p>picller の 「メモ」 を消去します。メモとは、共有オブジェクトまたは再帰的なオブジェクトが値ではなく参照で記憶されるようにするために、 pickler がこれまでどのオブジェクトに遭遇してきたかを記憶するデータ構造です。このメソッドは pickler を再利用する際に便利です。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>Python 2.3 以前では、 <a class="reference internal" href="#pickle.Pickler.clear_memo" title="pickle.Pickler.clear_memo"><code class="xref py py-meth docutils literal"><span class="pre">clear_memo()</span></code></a> は <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> で生成された pickler でのみ利用可能でした。 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールでは、pickler は <code class="xref py py-attr docutils literal"><span class="pre">memo</span></code> と呼ばれる Python 辞書型のインスタンス変数を持ちます。従って、 <code class="xref py py-mod docutils literal"><span class="pre">pickler</span></code> モジュールにおける pickler のメモを消去は、以下のようにしてできます:</p>
@@ -248,7 +241,7 @@
 <dl class="method">
 <dt id="pickle.Unpickler.noload">
 <code class="descname">noload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Unpickler.noload" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#pickle.load" title="pickle.load"><code class="xref py py-meth docutils literal"><span class="pre">load()</span></code></a> に似ていますが、実際には何もオブジェクトを生成しないという点が違います。この関数は第一に pickle 化データ列中で参照されている、&#8221;永続化 id&#8221; と呼ばれている値を検索する上で便利です。詳細は以下の <a class="reference internal" href="#pickle-protocol"><span class="std std-ref">pickle 化プロトコル</span></a> を参照してください。</p>
+<dd><p><a class="reference internal" href="#pickle.load" title="pickle.load"><code class="xref py py-meth docutils literal"><span class="pre">load()</span></code></a> に似ていますが、実際には何もオブジェクトを生成しないという点が違います。この関数は第一に pickle 化データ列中で参照されている、」永続化 id」 と呼ばれている値を検索する上で便利です。詳細は以下の <a class="reference internal" href="#pickle-protocol"><span class="std std-ref">pickle 化プロトコル</span></a> を参照してください。</p>
 <p><strong>注意:</strong> <a class="reference internal" href="#pickle.Unpickler.noload" title="pickle.Unpickler.noload"><code class="xref py py-meth docutils literal"><span class="pre">noload()</span></code></a> メソッドは現在 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールで生成された <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal"><span class="pre">Unpickler</span></code></a> オブジェクトのみで利用可能です。 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールの <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal"><span class="pre">Unpickler</span></code></a> には、 <a class="reference internal" href="#pickle.Unpickler.noload" title="pickle.Unpickler.noload"><code class="xref py py-meth docutils literal"><span class="pre">noload()</span></code></a> メソッドがありません。</p>
 </dd></dl>
 
@@ -259,25 +252,17 @@
 <h2>11.1.4. 何を pickle 化したり unpickle 化できるのか?<a class="headerlink" href="#what-can-be-pickled-and-unpickled" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下の型は pickle 化できます:</p>
 <ul class="simple">
-<li><p class="first"><code class="docutils literal"><span class="pre">None</span></code> 、 <code class="docutils literal"><span class="pre">True</span></code> 、および <code class="docutils literal"><span class="pre">False</span></code></p>
-</li>
-<li><p class="first">整数、長整数、浮動小数点数、複素数</p>
-</li>
-<li><p class="first">通常文字列および Unicode 文字列</p>
-</li>
-<li><p class="first">pickle 化可能なオブジェクトからなるタプル、リスト、集合および辞書</p>
-</li>
-<li><p class="first">モジュールのトップレベルで定義されている関数</p>
-</li>
-<li><p class="first">モジュールのトップレベルで定義されている組込み関数</p>
-</li>
-<li><p class="first">モジュールのトップレベルで定義されているクラス</p>
-</li>
-<li><p class="first"><a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を持つクラス、あるいは <a class="reference internal" href="#object.__getstate__" title="object.__getstate__"><code class="xref py py-meth docutils literal"><span class="pre">__getstate__()</span></code></a> メソッドの返り値が pickle 化可能なクラス (詳細は <a class="reference internal" href="#pickle-protocol"><span class="std std-ref">pickle 化プロトコル</span></a> を参照)。</p>
-</li>
+<li><code class="docutils literal"><span class="pre">None</span></code> 、 <code class="docutils literal"><span class="pre">True</span></code> 、および <code class="docutils literal"><span class="pre">False</span></code></li>
+<li>整数、長整数、浮動小数点数、複素数</li>
+<li>通常文字列および Unicode 文字列</li>
+<li>pickle 化可能なオブジェクトからなるタプル、リスト、集合および辞書</li>
+<li>モジュールのトップレベルで定義されている関数</li>
+<li>モジュールのトップレベルで定義されている組込み関数</li>
+<li>モジュールのトップレベルで定義されているクラス</li>
+<li><a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal"><span class="pre">__dict__</span></code></a> 属性を持つクラス、あるいは <a class="reference internal" href="#object.__getstate__" title="object.__getstate__"><code class="xref py py-meth docutils literal"><span class="pre">__getstate__()</span></code></a> メソッドの返り値が pickle 化可能なクラス (詳細は <a class="reference internal" href="#pickle-protocol"><span class="std std-ref">pickle 化プロトコル</span></a> を参照)。</li>
 </ul>
 <p>pickle 化できないオブジェクトを pickle 化しようとすると、 <a class="reference internal" href="#pickle.PicklingError" title="pickle.PicklingError"><code class="xref py py-exc docutils literal"><span class="pre">PicklingError</span></code></a> 例外が送出されます; この例外が起きた場合、背後のファイルには未知の長さのバイト列が書き込まれてしまいます。極端に再帰的なデータ構造を pickle 化しようとした場合には再帰の深さ制限を越えてしまうかもしれず、この場合には <a class="reference internal" href="exceptions.html#exceptions.RuntimeError" title="exceptions.RuntimeError"><code class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></code></a> が送出されます。この制限は、 <a class="reference internal" href="sys.html#sys.setrecursionlimit" title="sys.setrecursionlimit"><code class="xref py py-func docutils literal"><span class="pre">sys.setrecursionlimit()</span></code></a> で慎重に上げていくことは可能です。</p>
-<p>(組み込みおよびユーザ定義の) 関数は、値ではなく &#8220;完全記述された&#8221; 参照名として pickle 化されるので注意してください。これは、関数の定義されているモジュールの名前と一緒と併せ、関数名だけが pickle 化されることを意味します。関数のコードや関数の属性は何も pickle化されません。従って、定義しているモジュールは unpickle 化環境で import 可能でなければならず、そのモジュールには指定されたオブジェクトが含まれていなければなりません。そうでない場合、例外が送出されます <a class="footnote-reference" href="#id14" id="id4">[4]</a> 。</p>
+<p>(組み込みおよびユーザ定義の) 関数は、値ではなく 「完全記述された」 参照名として pickle 化されるので注意してください。これは、関数の定義されているモジュールの名前と一緒と併せ、関数名だけが pickle 化されることを意味します。関数のコードや関数の属性は何も pickle化されません。従って、定義しているモジュールは unpickle 化環境で import 可能でなければならず、そのモジュールには指定されたオブジェクトが含まれていなければなりません。そうでない場合、例外が送出されます <a class="footnote-reference" href="#id14" id="id4">[4]</a> 。</p>
 <p>クラスも同様に名前参照で pickle 化されるので、unpickle 化環境には同じ制限が課せられます。クラス中のコードやデータは何も pickle 化されないので、以下の例ではクラス属性 <code class="docutils literal"><span class="pre">attr</span></code> が unpickle 化環境で復元されないことに注意してください</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
     <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;a class attr&#39;</span>
@@ -290,7 +275,7 @@
 </div>
 <div class="section" id="the-pickle-protocol">
 <span id="pickle-protocol"></span><h2>11.1.5. pickle 化プロトコル<a class="headerlink" href="#the-pickle-protocol" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>この節では pickler/unpickler と直列化対象のオブジェクトとの間のインタフェースを定義する &#8220;pickle 化プロトコル&#8221;について記述します。このプロトコルは自分のオブジェクトがどのように直列化されたり非直列化されたりするかを定義し、カスタマイズし、制御するための標準的な方法を提供します。この節での記述は、unpickle 化環境を不信な pickle 化データに対して安全にするために使う特殊なカスタマイズ化についてはカバーしていません; 詳細は <a class="reference internal" href="#pickle-sub"><span class="std std-ref">Unpickler をサブクラス化する</span></a> を参照してください。</p>
+<p>この節では pickler/unpickler と直列化対象のオブジェクトとの間のインタフェースを定義する 「pickle 化プロトコル」について記述します。このプロトコルは自分のオブジェクトがどのように直列化されたり非直列化されたりするかを定義し、カスタマイズし、制御するための標準的な方法を提供します。この節での記述は、unpickle 化環境を不信な pickle 化データに対して安全にするために使う特殊なカスタマイズ化についてはカバーしていません; 詳細は <a class="reference internal" href="#pickle-sub"><span class="std std-ref">Unpickler をサブクラス化する</span></a> を参照してください。</p>
 <div class="section" id="pickling-and-unpickling-normal-class-instances">
 <span id="pickle-inst"></span><h3>11.1.5.1. 通常のクラスインスタンスの pickle 化および unpickle 化<a class="headerlink" href="#pickling-and-unpickling-normal-class-instances" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="method">
@@ -337,12 +322,12 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <dl class="method">
 <dt id="object.__reduce__">
 <code class="descclassname">object.</code><code class="descname">__reduce__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__reduce__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal"><span class="pre">Pickler</span></code> が全く未知の型の &#8212; 拡張型のような &#8212; オブジェクトに遭遇した場合、pickle 化方法のヒントとして 2 個所を探します。第一は <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドを実装しているかどうかです。もし実装されていれば、pickle 化時に <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドが引数なしで呼び出されます。メソッドはこの呼び出しに対して文字列またはタプルのどちらかを返さねばなりません。</p>
+<dd><p><code class="xref py py-class docutils literal"><span class="pre">Pickler</span></code> が全く未知の型の — 拡張型のような — オブジェクトに遭遇した場合、pickle 化方法のヒントとして 2 個所を探します。第一は <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドを実装しているかどうかです。もし実装されていれば、pickle 化時に <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドが引数なしで呼び出されます。メソッドはこの呼び出しに対して文字列またはタプルのどちらかを返さねばなりません。</p>
 <p>文字列を返す場合、その文字列は通常通りに pickle 化されるグローバル変数の名前を指しています。 <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> の返す文字列は、モジュールにからみてオブジェクトのローカルな名前でなければなりません; pickle モジュールはモジュールの名前空間を検索して、オブジェクトの属するモジュールを決定します。</p>
 <p>タプルを返す場合、タプルの要素数は 2 から 5 でなければなりません。オプションの要素は省略したり <code class="docutils literal"><span class="pre">None</span></code> を指定したりできます。各要素の意味づけは以下の通りです:</p>
 <ul>
 <li><p class="first">オブジェクトの初期バージョンを生成するために呼び出される呼び出し可能オブジェクトです。この呼び出し可能オブジェクトへの引数はタプルの次の要素で与えられます。それ以降の要素では pickle 化されたデータを完全に再構築するために使われる付加的な状態情報が与えられます。</p>
-<p>逆 pickle 化の環境下では、このオブジェクトはクラスか、 &#8220;安全なコンストラクタ (safe constructor, 下記参照)&#8221; として登録されていたり属性 <code class="xref py py-attr docutils literal"><span class="pre">__safe_for_unpickling__</span></code> の値が真であるような呼び出し可能オブジェクトでなければなりません。そうでない場合、逆 pickle 化を行う環境で <code class="xref py py-exc docutils literal"><span class="pre">UnpicklingError</span></code> が送出されます。通常通り、 callable は名前だけで pickle 化されるので注意してください。</p>
+<p>逆 pickle 化の環境下では、このオブジェクトはクラスか、 「安全なコンストラクタ (safe constructor, 下記参照)」 として登録されていたり属性 <code class="xref py py-attr docutils literal"><span class="pre">__safe_for_unpickling__</span></code> の値が真であるような呼び出し可能オブジェクトでなければなりません。そうでない場合、逆 pickle 化を行う環境で <code class="xref py py-exc docutils literal"><span class="pre">UnpicklingError</span></code> が送出されます。通常通り、 callable は名前だけで pickle 化されるので注意してください。</p>
 </li>
 <li><p class="first">呼び出し可能なオブジェクトのための引数からなるタプル</p>
 <div class="versionchanged">
@@ -365,12 +350,12 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <p><a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> クラスでは <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> と <a class="reference internal" href="#object.__reduce_ex__" title="object.__reduce_ex__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce_ex__()</span></code></a> の両方を定義しています。とはいえ、サブクラスで <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> をオーバライドしており、 <a class="reference internal" href="#object.__reduce_ex__" title="object.__reduce_ex__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce_ex__()</span></code></a> をオーバライドしていない場合には、 <a class="reference internal" href="#object.__reduce_ex__" title="object.__reduce_ex__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce_ex__()</span></code></a> の実装がそれを検出して <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> を呼び出すようになっています。</p>
 </dd></dl>
 
-<p>pickle 化するオブジェクト上で <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドを実装する代わりに、 <a class="reference internal" href="copy_reg.html#module-copy_reg" title="copy_reg: Register pickle support functions."><code class="xref py py-mod docutils literal"><span class="pre">copy_reg</span></code></a> モジュールを使って呼び出し可能オブジェクトを登録する方法もあります。このモジュールはプログラムに &#8220;縮小化関数 (reduction function)&#8221; とユーザ定義型のためのコンストラクタを登録する方法を提供します。縮小化関数は、単一の引数として pickle 化するオブジェクトをとることを除き、上で述べた <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドと同じ意味とインタフェースを持ちます。</p>
-<p>登録されたコンストラクタは上で述べたような unpickle 化については &#8220;安全なコンストラクタ&#8221; であると考えられます。</p>
+<p>pickle 化するオブジェクト上で <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドを実装する代わりに、 <a class="reference internal" href="copy_reg.html#module-copy_reg" title="copy_reg: Register pickle support functions."><code class="xref py py-mod docutils literal"><span class="pre">copy_reg</span></code></a> モジュールを使って呼び出し可能オブジェクトを登録する方法もあります。このモジュールはプログラムに 「縮小化関数 (reduction function)」 とユーザ定義型のためのコンストラクタを登録する方法を提供します。縮小化関数は、単一の引数として pickle 化するオブジェクトをとることを除き、上で述べた <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></code></a> メソッドと同じ意味とインタフェースを持ちます。</p>
+<p>登録されたコンストラクタは上で述べたような unpickle 化については 「安全なコンストラクタ」 であると考えられます。</p>
 </div>
 <div class="section" id="pickling-and-unpickling-external-objects">
 <h3>11.1.5.3. 外部オブジェクトの pickle 化および unpickle 化<a class="headerlink" href="#pickling-and-unpickling-external-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p id="index-3">オブジェクトの永続化を便利にするために、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> は pickle 化されたデータ列上にないオブジェクトに対して参照を行うという概念をサポートしています。これらのオブジェクトは &#8220;永続化 id (persistent id)&#8221; で参照されており、この id は単に印字可能なASCII 文字からなる任意の文字列です。これらの名前の解決方法は <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールでは定義されていません; オブジェクトはこの名前解決を pickler および unpickler 上のユーザ定義関数にゆだねます <a class="footnote-reference" href="#id17" id="id7">[7]</a> 。</p>
+<p id="index-3">オブジェクトの永続化を便利にするために、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> は pickle 化されたデータ列上にないオブジェクトに対して参照を行うという概念をサポートしています。これらのオブジェクトは 「永続化 id (persistent id)」 で参照されており、この id は単に印字可能なASCII 文字からなる任意の文字列です。これらの名前の解決方法は <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールでは定義されていません; オブジェクトはこの名前解決を pickler および unpickler 上のユーザ定義関数にゆだねます <a class="footnote-reference" href="#id17" id="id7">[7]</a> 。</p>
 <p>外部永続化 id の解決を定義するには、pickler オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">persistent_id</span></code> 属性と、 unpickler オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">persistent_load</span></code> 属性を設定する必要があります。</p>
 <p>外部永続化 id を持つオブジェクトを pickle 化するには、pickler は自作の <code class="xref py py-func docutils literal"><span class="pre">persistent_id()</span></code> メソッドを持たなければなりません。このメソッドは一つの引数をとり、 <code class="docutils literal"><span class="pre">None</span></code> とオブジェクトの永続化 id のうちどちらかを返さなければなりません。 <code class="docutils literal"><span class="pre">None</span></code> が返された場合、 pickler は単にオブジェクトを通常のように pickle 化するだけです。永続化 id 文字列が返された場合、 piclkler はその文字列に対して、unpickler がこの文字列を永続化 id として認識できるように、マーカと共に pickle 化します。</p>
 <p>外部オブジェクトを unpickle 化するには、unpickler は自作の <code class="xref py py-func docutils literal"><span class="pre">persistent_load()</span></code> 関数を持たなければなりません。この関数は永続化 id 文字列を引数にとり、参照されているオブジェクトを返します。</p>
@@ -422,7 +407,7 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <span class="nb">print</span> <span class="n">j</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュール内では、 unpickler の <code class="xref py py-attr docutils literal"><span class="pre">persistent_load</span></code> 属性は Pythonリスト型として設定することができます。この場合、 unpickler が永続化 id に遭遇しても、永続化 id 文字列は単にリストに追加されるだけです。この仕様は、pickle データ中の全てのオブジェクトを実際にインスタンス化しなくても、 pickle データ列中でオブジェクトに対する参照を &#8220;嗅ぎ回る&#8221; ことができるようにするために存在しています <a class="footnote-reference" href="#id18" id="id8">[8]</a> 。リストに <code class="xref py py-attr docutils literal"><span class="pre">persistent_load</span></code> を設定するやり方は、よく Unpickler クラスの <code class="xref py py-meth docutils literal"><span class="pre">noload()</span></code> メソッドと共に使われます。</p>
+<p><a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュール内では、 unpickler の <code class="xref py py-attr docutils literal"><span class="pre">persistent_load</span></code> 属性は Pythonリスト型として設定することができます。この場合、 unpickler が永続化 id に遭遇しても、永続化 id 文字列は単にリストに追加されるだけです。この仕様は、pickle データ中の全てのオブジェクトを実際にインスタンス化しなくても、 pickle データ列中でオブジェクトに対する参照を 「嗅ぎ回る」 ことができるようにするために存在しています <a class="footnote-reference" href="#id18" id="id8">[8]</a> 。リストに <code class="xref py py-attr docutils literal"><span class="pre">persistent_load</span></code> を設定するやり方は、よく Unpickler クラスの <code class="xref py py-meth docutils literal"><span class="pre">noload()</span></code> メソッドと共に使われます。</p>
 </div>
 </div>
 <div class="section" id="subclassing-unpicklers">
@@ -527,23 +512,19 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="copy_reg.html#module-copy_reg" title="copy_reg: Register pickle support functions."><code class="xref py py-mod docutils literal"><span class="pre">copy_reg</span></code></a> モジュール</dt>
-<dd><p class="first last">拡張型を登録するための Pickle インタフェース構成機構。</p>
-</dd>
+<dd>拡張型を登録するための Pickle インタフェース構成機構。</dd>
 <dt><a class="reference internal" href="shelve.html#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code></a> モジュール</dt>
-<dd><p class="first last">オブジェクトのインデクス付きデータベース; <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> を使います。</p>
-</dd>
+<dd>オブジェクトのインデクス付きデータベース; <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> を使います。</dd>
 <dt><a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-mod docutils literal"><span class="pre">copy</span></code></a> モジュール</dt>
-<dd><p class="first last">オブジェクトの浅いコピーおよび深いコピー。</p>
-</dd>
+<dd>オブジェクトの浅いコピーおよび深いコピー。</dd>
 <dt><a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> モジュール</dt>
-<dd><p class="first last">組み込み型の高性能な直列化。</p>
-</dd>
+<dd>組み込み型の高性能な直列化。</dd>
 </dl>
 </div>
 </div>
 </div>
 <div class="section" id="module-cPickle">
-<span id="cpickle-a-faster-pickle"></span><h1>11.2. <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> &#8212; より高速な <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a><a class="headerlink" href="#module-cPickle" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="cpickle-a-faster-pickle"></span><h1>11.2. <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> — より高速な <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a><a class="headerlink" href="#module-cPickle" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p id="index-5"><a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールは Python オブジェクトの直列化および非直列化をサポートし、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> モジュールとほとんど同じインタフェースと機能を提供します。いくつか相違点がありますが、最も重要な違いはパフォーマンスとサブクラス化が可能かどうかです。</p>
 <p>第一に、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> は C で実装されているため、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> よりも最大で 1000 倍高速です。第二に、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュール内では、呼び出し可能オブジェクト <code class="xref py py-func docutils literal"><span class="pre">Pickler()</span></code> および <code class="xref py py-func docutils literal"><span class="pre">Unpickler()</span></code> は関数で、クラスではありません。つまり、pickle 化や unpickle 化を行うカスタムのサブクラスを派生することができないということです。多くのアプリケーションではこの機能は不要なので、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールによる大きなパフォーマンス向上の恩恵を受けられるはずです。</p>
 <p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> と <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> で作られた pickle データ列は同じなので、既存の pickle データに対して <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> と <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> を互換に使用することができます。 <a class="footnote-reference" href="#id20" id="id10">[10]</a></p>
@@ -552,71 +533,61 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last"><a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> モジュールと間違えないように注意してください。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal"><span class="pre">marshal</span></code></a> モジュールと間違えないように注意してください。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last"><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> では、これらの呼び出し可能オブジェクトはクラスであり、サブクラス化してその動作をカスタマイズすることができます。しかし、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールでは、これらの呼び出し可能オブジェクトはファクトリ関数であり、サブクラス化することができません。サブクラスを作成する共通の理由の一つは、どのオブジェクトを実際に unpickle するかを制御することです。詳細については <a class="reference internal" href="#pickle-sub"><span class="std std-ref">Unpickler をサブクラス化する</span></a> を参照してください。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> では、これらの呼び出し可能オブジェクトはクラスであり、サブクラス化してその動作をカスタマイズすることができます。しかし、 <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> モジュールでは、これらの呼び出し可能オブジェクトはファクトリ関数であり、サブクラス化することができません。サブクラスを作成する共通の理由の一つは、どのオブジェクトを実際に unpickle するかを制御することです。詳細については <a class="reference internal" href="#pickle-sub"><span class="std std-ref">Unpickler をサブクラス化する</span></a> を参照してください。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><p class="first last"><em>警告</em>: これは、複数のオブジェクトを pickle 化する際に、オブジェクトやそれらの一部に対する変更を妨げないようにするための仕様です。あるオブジェクトに変更を加えて、その後同じ <code class="xref py py-class docutils literal"><span class="pre">Pickler</span></code> を使って再度 pickle 化しようとしても、そのオブジェクトは pickle 化しなおされません &#8212; そのオブジェクトに対する参照が pickle 化され、 <code class="xref py py-class docutils literal"><span class="pre">Unpickler</span></code> は変更された値ではなく、元の値を返します。これには 2 つの問題点 : (1) 変更の検出、そして (2) 最小限の変更を整列化すること、があります。ガーベジコレクションもまた問題になります。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><em>警告</em>: これは、複数のオブジェクトを pickle 化する際に、オブジェクトやそれらの一部に対する変更を妨げないようにするための仕様です。あるオブジェクトに変更を加えて、その後同じ <code class="xref py py-class docutils literal"><span class="pre">Pickler</span></code> を使って再度 pickle 化しようとしても、そのオブジェクトは pickle 化しなおされません — そのオブジェクトに対する参照が pickle 化され、 <code class="xref py py-class docutils literal"><span class="pre">Unpickler</span></code> は変更された値ではなく、元の値を返します。これには 2 つの問題点 : (1) 変更の検出、そして (2) 最小限の変更を整列化すること、があります。ガーベジコレクションもまた問題になります。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><p class="first last">送出される例外は <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> や <a class="reference internal" href="exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> になるはずですが、他の例外も起こりえます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>送出される例外は <a class="reference internal" href="exceptions.html#exceptions.ImportError" title="exceptions.ImportError"><code class="xref py py-exc docutils literal"><span class="pre">ImportError</span></code></a> や <a class="reference internal" href="exceptions.html#exceptions.AttributeError" title="exceptions.AttributeError"><code class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></code></a> になるはずですが、他の例外も起こりえます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><p class="first last">これらのメソッドはクラスインスタンスのコピーを実装する際にも用いられます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>これらのメソッドはクラスインスタンスのコピーを実装する際にも用いられます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id16" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><p class="first last">このプロトコルはまた、 <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-mod docutils literal"><span class="pre">copy</span></code></a> で定義されている浅いコピーや深いコピー操作でも用いられます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>このプロトコルはまた、 <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-mod docutils literal"><span class="pre">copy</span></code></a> で定義されている浅いコピーや深いコピー操作でも用いられます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id17" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><p class="first last">ユーザ定義関数に関連付けを行うための実際のメカニズムは、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> および <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では少し異なります。 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> のユーザは、サブクラス化を行い、 <code class="xref py py-meth docutils literal"><span class="pre">persistend_id()</span></code> および <code class="xref py py-meth docutils literal"><span class="pre">persistent_load()</span></code> メソッドを上書きすることで同じ効果を得ることができます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>ユーザ定義関数に関連付けを行うための実際のメカニズムは、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> および <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> では少し異なります。 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> のユーザは、サブクラス化を行い、 <code class="xref py py-meth docutils literal"><span class="pre">persistend_id()</span></code> および <code class="xref py py-meth docutils literal"><span class="pre">persistent_load()</span></code> メソッドを上書きすることで同じ効果を得ることができます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id18" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><p class="first last">Guide と Jim が居間に座り込んでピクルス (pickles) を嗅いでいる光景を想像してください。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td>Guide と Jim が居間に座り込んでピクルス (pickles) を嗅いでいる光景を想像してください。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id19" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><p class="first last">注意してください: ここで記述されている機構は内部の属性とメソッドを使っており、これらはPython の将来のバージョンで変更される対象になっています。われわれは将来、この挙動を制御するための、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> および <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の両方で動作する、共通のインタフェースを提供するつもりです。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td>注意してください: ここで記述されている機構は内部の属性とメソッドを使っており、これらはPython の将来のバージョンで変更される対象になっています。われわれは将来、この挙動を制御するための、 <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal"><span class="pre">pickle</span></code></a> および <a class="reference internal" href="#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><code class="xref py py-mod docutils literal"><span class="pre">cPickle</span></code></a> の両方で動作する、共通のインタフェースを提供するつもりです。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id20" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td><p class="first last">pickle データ形式は実際には小規模なスタック指向のプログラム言語であり、またあるオブジェクトをエンコードする際に多少の自由度があるため、二つのモジュールが同じ入力オブジェクトに対して異なるデータ列を生成することもあります。しかし、常に互いに他のデータ列を読み出せることが保証されています。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td>pickle データ形式は実際には小規模なスタック指向のプログラム言語であり、またあるオブジェクトをエンコードする際に多少の自由度があるため、二つのモジュールが同じ入力オブジェクトに対して異なるデータ列を生成することもあります。しかし、常に互いに他のデータ列を読み出せることが保証されています。</td></tr>
 </tbody>
 </table>
 </div>
@@ -629,7 +600,7 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> &#8212; Python オブジェクトの直列化</a><ul>
+<li><a class="reference internal" href="#">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> — Python オブジェクトの直列化</a><ul>
 <li><a class="reference internal" href="#relationship-to-other-python-modules">11.1.1. 他の Python モジュールとの関係</a></li>
 <li><a class="reference internal" href="#data-stream-format">11.1.2. データストリームの形式</a></li>
 <li><a class="reference internal" href="#usage">11.1.3. 使用法</a></li>
@@ -644,7 +615,7 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
 <li><a class="reference internal" href="#example">11.1.7. 例</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-cPickle">11.2. <code class="docutils literal"><span class="pre">cPickle</span></code> &#8212; より高速な <code class="docutils literal"><span class="pre">pickle</span></code></a></li>
+<li><a class="reference internal" href="#module-cPickle">11.2. <code class="docutils literal"><span class="pre">cPickle</span></code> — より高速な <code class="docutils literal"><span class="pre">pickle</span></code></a></li>
 </ul>
 
   <h4>前のトピックへ</h4>
@@ -652,11 +623,11 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
                         title="前の章へ">11. データの永続化</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="copy_reg.html"
-                        title="次の章へ">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> &#8212; <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a></p>
+                        title="次の章へ">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> — <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/pickle.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/pickle.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -708,10 +679,10 @@ unpickle 化の際に <a class="reference internal" href="../reference/datamodel
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

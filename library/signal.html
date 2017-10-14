@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>17.4. signal — 非同期イベントにハンドラを設定する &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="17. プロセス間通信とネットワーク" href="ipc.html" />
     <link rel="next" title="17.5. popen2 — アクセス可能な I/O ストリームを持つサブプロセス生成" href="popen2.html" />
     <link rel="prev" title="17.3. ssl — ソケットオブジェクトに対する TLS/SSL ラッパー" href="ssl.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,23 +77,16 @@
           <div class="body" role="main">
             
   <div class="section" id="module-signal">
-<span id="signal-set-handlers-for-asynchronous-events"></span><h1>17.4. <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> &#8212; 非同期イベントにハンドラを設定する<a class="headerlink" href="#module-signal" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="signal-set-handlers-for-asynchronous-events"></span><h1>17.4. <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> — 非同期イベントにハンドラを設定する<a class="headerlink" href="#module-signal" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このモジュールでは Python でシグナルハンドラを使うための機構を提供します。シグナルとハンドラを扱う上で一般的なルールがいくつかあります:</p>
 <ul class="simple">
-<li><p class="first">特定のシグナルに対するハンドラが一度設定されると、明示的にリセットしないかぎり設定されたままになります (Python は背後の実装系に関係なく BSD 形式のインタフェースをエミュレートします)。例外は <code class="xref py py-const docutils literal"><span class="pre">SIGCHLD</span></code> のハンドラで、この場合は背後の実装系の仕様に従います。</p>
-</li>
-<li><p class="first">クリティカルセクションから一時的にシグナルを &#8220;ブロック&#8221; することはできません (この機能をサポートしない Unix 系システムも存在するためです)。</p>
-</li>
-<li><p class="first">Python のシグナルハンドラは Python のユーザが望む限り非同期で呼び出されますが、呼び出されるのは Python インタプリタの &#8220;原子的な (atomic)&#8221; 命令実行単位の間です。したがって、 (巨大なサイズのテキストに対する正規表現の一致検索のような) 純粋に C 言語のレベルで実現されている時間のかかる処理中に到着したシグナルは、不定期間遅延する可能性があります。</p>
-</li>
-<li><p class="first">シグナルが I/O 操作中に到着すると、シグナルハンドラが処理を返した後に I/O 操作が例外を送出する可能性があります。これは背後にある Unix システムが割り込みシステムコールにどういう意味付けをしているかに依存します。</p>
-</li>
-<li><p class="first">C 言語のシグナルハンドラは常に処理を返すので、 <code class="xref py py-const docutils literal"><span class="pre">SIGFPE</span></code> や <code class="xref py py-const docutils literal"><span class="pre">SIGSEGV</span></code> のような同期エラーの捕捉はほとんど意味がありません。</p>
-</li>
-<li><p class="first">Python は標準でごく少数のシグナルハンドラをインストールしています: <code class="xref py py-const docutils literal"><span class="pre">SIGPIPE</span></code> は無視されます (したがって、パイプやソケットに対する書き込みで生じたエラーは通常の Python 例外として報告されます) <code class="xref py py-const docutils literal"><span class="pre">SIGINT</span></code> は <a class="reference internal" href="exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a> 例外に変換されます。これらはどれも上書きすることができます。</p>
-</li>
-<li><p class="first">シグナルとスレッドの両方を同じプログラムで使用する場合にはいくつか注意が必要です。シグナルとスレッドを同時に利用する上で基本的に注意すべきことは、 <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-func docutils literal"><span class="pre">signal()</span></code></a> 命令は常に主スレッド (main thread) の処理中で実行するということです。どのスレッドも <a class="reference internal" href="#signal.alarm" title="signal.alarm"><code class="xref py py-func docutils literal"><span class="pre">alarm()</span></code></a> 、 <a class="reference internal" href="#signal.getsignal" title="signal.getsignal"><code class="xref py py-func docutils literal"><span class="pre">getsignal()</span></code></a> 、 <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal"><span class="pre">pause()</span></code></a> 、 <a class="reference internal" href="#signal.setitimer" title="signal.setitimer"><code class="xref py py-func docutils literal"><span class="pre">setitimer()</span></code></a> 、 <a class="reference internal" href="#signal.getitimer" title="signal.getitimer"><code class="xref py py-func docutils literal"><span class="pre">getitimer()</span></code></a> を実行することができます。しかし、主スレッドだけが新たなシグナルハンドラを設定することができ、したがってシグナルを受け取ることができるのは主スレッドだけです (これは、背後のスレッド実装が個々のスレッドに対するシグナル送信をサポートしているかに関わらず、 Python <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> モジュールが強制している仕様です)。したがって、シグナルをスレッド間通信の手段として使うことはできません。代わりにロック機構を使ってください。</p>
-</li>
+<li>特定のシグナルに対するハンドラが一度設定されると、明示的にリセットしないかぎり設定されたままになります (Python は背後の実装系に関係なく BSD 形式のインタフェースをエミュレートします)。例外は <code class="xref py py-const docutils literal"><span class="pre">SIGCHLD</span></code> のハンドラで、この場合は背後の実装系の仕様に従います。</li>
+<li>クリティカルセクションから一時的にシグナルを 「ブロック」 することはできません (この機能をサポートしない Unix 系システムも存在するためです)。</li>
+<li>Python のシグナルハンドラは Python のユーザが望む限り非同期で呼び出されますが、呼び出されるのは Python インタプリタの 「原子的な (atomic)」 命令実行単位の間です。したがって、 (巨大なサイズのテキストに対する正規表現の一致検索のような) 純粋に C 言語のレベルで実現されている時間のかかる処理中に到着したシグナルは、不定期間遅延する可能性があります。</li>
+<li>シグナルが I/O 操作中に到着すると、シグナルハンドラが処理を返した後に I/O 操作が例外を送出する可能性があります。これは背後にある Unix システムが割り込みシステムコールにどういう意味付けをしているかに依存します。</li>
+<li>C 言語のシグナルハンドラは常に処理を返すので、 <code class="xref py py-const docutils literal"><span class="pre">SIGFPE</span></code> や <code class="xref py py-const docutils literal"><span class="pre">SIGSEGV</span></code> のような同期エラーの捕捉はほとんど意味がありません。</li>
+<li>Python は標準でごく少数のシグナルハンドラをインストールしています: <code class="xref py py-const docutils literal"><span class="pre">SIGPIPE</span></code> は無視されます (したがって、パイプやソケットに対する書き込みで生じたエラーは通常の Python 例外として報告されます) <code class="xref py py-const docutils literal"><span class="pre">SIGINT</span></code> は <a class="reference internal" href="exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a> 例外に変換されます。これらはどれも上書きすることができます。</li>
+<li>シグナルとスレッドの両方を同じプログラムで使用する場合にはいくつか注意が必要です。シグナルとスレッドを同時に利用する上で基本的に注意すべきことは、 <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-func docutils literal"><span class="pre">signal()</span></code></a> 命令は常に主スレッド (main thread) の処理中で実行するということです。どのスレッドも <a class="reference internal" href="#signal.alarm" title="signal.alarm"><code class="xref py py-func docutils literal"><span class="pre">alarm()</span></code></a> 、 <a class="reference internal" href="#signal.getsignal" title="signal.getsignal"><code class="xref py py-func docutils literal"><span class="pre">getsignal()</span></code></a> 、 <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal"><span class="pre">pause()</span></code></a> 、 <a class="reference internal" href="#signal.setitimer" title="signal.setitimer"><code class="xref py py-func docutils literal"><span class="pre">setitimer()</span></code></a> 、 <a class="reference internal" href="#signal.getitimer" title="signal.getitimer"><code class="xref py py-func docutils literal"><span class="pre">getitimer()</span></code></a> を実行することができます。しかし、主スレッドだけが新たなシグナルハンドラを設定することができ、したがってシグナルを受け取ることができるのは主スレッドだけです (これは、背後のスレッド実装が個々のスレッドに対するシグナル送信をサポートしているかに関わらず、 Python <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> モジュールが強制している仕様です)。したがって、シグナルをスレッド間通信の手段として使うことはできません。代わりにロック機構を使ってください。</li>
 </ul>
 <p>以下に <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal"><span class="pre">signal</span></code></a> モジュールで定義されている変数を示します:</p>
 <dl class="data">
@@ -115,7 +104,7 @@
 <dl class="data">
 <dt>
 <code class="descname">SIG*</code></dt>
-<dd><p>全てのシグナル番号はシンボル定義されています。例えば、ハングアップシグナルは <code class="xref py py-const docutils literal"><span class="pre">signal.SIGHUP</span></code> で定義されています; 変数名は C 言語のプログラムで使われているのと同じ名前で、 <code class="docutils literal"><span class="pre">&lt;signal.h&gt;</span></code> にあります。 &#8216;<code class="xref c c-func docutils literal"><span class="pre">signal()</span></code>&#8216; に関する Unix マニュアルページでは、システムで定義されているシグナルを列挙しています (あるシステムではリストは <em class="manpage">signal(2)</em> に、別のシステムでは <em class="manpage">signal(7)</em> に列挙されています)。全てのシステムで同じシグナル名のセットを定義しているわけではないので注意してください; このモジュールでは、システムで定義されているシグナル名だけを定義しています。</p>
+<dd><p>全てのシグナル番号はシンボル定義されています。例えば、ハングアップシグナルは <code class="xref py py-const docutils literal"><span class="pre">signal.SIGHUP</span></code> で定義されています; 変数名は C 言語のプログラムで使われているのと同じ名前で、 <code class="docutils literal"><span class="pre">&lt;signal.h&gt;</span></code> にあります。 『<code class="xref c c-func docutils literal"><span class="pre">signal()</span></code>』 に関する Unix マニュアルページでは、システムで定義されているシグナルを列挙しています (あるシステムではリストは <em class="manpage">signal(2)</em> に、別のシステムでは <em class="manpage">signal(7)</em> に列挙されています)。全てのシステムで同じシグナル名のセットを定義しているわけではないので注意してください; このモジュールでは、システムで定義されているシグナル名だけを定義しています。</p>
 </dd></dl>
 
 <dl class="data">
@@ -269,7 +258,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">17.4. <code class="docutils literal"><span class="pre">signal</span></code> &#8212; 非同期イベントにハンドラを設定する</a><ul>
+<li><a class="reference internal" href="#">17.4. <code class="docutils literal"><span class="pre">signal</span></code> — 非同期イベントにハンドラを設定する</a><ul>
 <li><a class="reference internal" href="#example">17.4.1. 例</a></li>
 </ul>
 </li>
@@ -277,14 +266,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="ssl.html"
-                        title="前の章へ">17.3. <code class="docutils literal"><span class="pre">ssl</span></code> &#8212; ソケットオブジェクトに対する TLS/SSL ラッパー</a></p>
+                        title="前の章へ">17.3. <code class="docutils literal"><span class="pre">ssl</span></code> — ソケットオブジェクトに対する TLS/SSL ラッパー</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="popen2.html"
-                        title="次の章へ">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> &#8212; アクセス可能な I/O ストリームを持つサブプロセス生成</a></p>
+                        title="次の章へ">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> — アクセス可能な I/O ストリームを持つサブプロセス生成</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/signal.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/signal.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -336,10 +325,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

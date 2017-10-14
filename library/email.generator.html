@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>18.1.3. email.generator: MIME 文書を生成する &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
     <link rel="next" title="18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成" href="email.mime.html" />
     <link rel="prev" title="18.1.2. email.parser: 電子メールメッセージを解析(パース)する" href="email.parser.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -72,7 +68,7 @@
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U">18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
       </ul>
     </div>    
 
@@ -129,18 +125,12 @@
 <dd><p>このクラスは <a class="reference internal" href="#email.generator.Generator" title="email.generator.Generator"><code class="xref py py-class docutils literal"><span class="pre">Generator</span></code></a> から派生したもので、メッセージの subpart をすべて渡り歩きます。subpart の主形式が <em class="mimetype">text</em> だった場合、これはその subpart のペイロードをデコードして出力します。オプション引数 <em>_mangle_from_</em> および <em>maxheaderlen</em> の意味は基底クラス <a class="reference internal" href="#email.generator.Generator" title="email.generator.Generator"><code class="xref py py-class docutils literal"><span class="pre">Generator</span></code></a> のそれと同じです。</p>
 <p>Subpart の主形式が <em class="mimetype">text</em> ではない場合、オプション引数 <em>fmt</em> がそのメッセージペイロードのかわりのフォーマット文字列として使われます。 <em>fmt</em> は <code class="docutils literal"><span class="pre">%(keyword)s</span></code> のような形式を展開し、以下のキーワードを認識します:</p>
 <ul class="simple">
-<li><p class="first"><code class="docutils literal"><span class="pre">type</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart の MIME 形式</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maintype</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart の MIME 主形式 (maintype)</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">subtype</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart の MIME 副形式 (subtype)</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">filename</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart のファイル名</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">description</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart につけられた説明文字列</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">encoding</span></code> &#8211; 非 <em class="mimetype">text</em> 型 subpart の Content-transfer-encoding</p>
-</li>
+<li><code class="docutils literal"><span class="pre">type</span></code> – 非 <em class="mimetype">text</em> 型 subpart の MIME 形式</li>
+<li><code class="docutils literal"><span class="pre">maintype</span></code> – 非 <em class="mimetype">text</em> 型 subpart の MIME 主形式 (maintype)</li>
+<li><code class="docutils literal"><span class="pre">subtype</span></code> – 非 <em class="mimetype">text</em> 型 subpart の MIME 副形式 (subtype)</li>
+<li><code class="docutils literal"><span class="pre">filename</span></code> – 非 <em class="mimetype">text</em> 型 subpart のファイル名</li>
+<li><code class="docutils literal"><span class="pre">description</span></code> – 非 <em class="mimetype">text</em> 型 subpart につけられた説明文字列</li>
+<li><code class="docutils literal"><span class="pre">encoding</span></code> – 非 <em class="mimetype">text</em> 型 subpart の Content-transfer-encoding</li>
 </ul>
 <p><em>fmt</em> のデフォルト値は <code class="docutils literal"><span class="pre">None</span></code> です。こうすると以下の形式で出力します</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Non</span><span class="o">-</span><span class="n">text</span> <span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span><span class="n">s</span><span class="p">)</span> <span class="n">part</span> <span class="n">of</span> <span class="n">message</span> <span class="n">omitted</span><span class="p">,</span> <span class="n">filename</span> <span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="n">s</span><span class="p">]</span>
@@ -158,8 +148,7 @@
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">ここではあなたが <code class="docutils literal"><span class="pre">unixfrom</span></code> 引数に適切な設定を使い、 maxheaderlen=0 (入力行がどんな長さでも元のものを維持します) をセットしていることを前提にしています。これでもなお厳密には正しくありません。多くの場合ヘッダの連続する空白が単一の空白に置き換えられるからです。これはいずれは修正されるべきバグです。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>ここではあなたが <code class="docutils literal"><span class="pre">unixfrom</span></code> 引数に適切な設定を使い、 maxheaderlen=0 (入力行がどんな長さでも元のものを維持します) をセットしていることを前提にしています。これでもなお厳密には正しくありません。多くの場合ヘッダの連続する空白が単一の空白に置き換えられるからです。これはいずれは修正されるべきバグです。</td></tr>
 </tbody>
 </table>
 </div>
@@ -179,7 +168,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.generator.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.generator.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -223,7 +212,7 @@
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python 標準ライブラリ</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="netdata.html" >18. インターネット上のデータの操作</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="email.html" >18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a> &#187;</li> 
       </ul>
     </div>  
     <div class="footer">
@@ -232,10 +221,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

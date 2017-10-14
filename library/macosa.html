@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>38. MacPython OSA モジュール &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="38.1. gensuitemodule — OSA スタブ作成パッケージ" href="gensuitemodule.html" />
     <link rel="prev" title="37.9. ColorPicker — 色選択ダイアログ" href="colorpicker.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -82,7 +78,7 @@
   <div class="section" id="macpython-osa-modules">
 <span id="mac-scripting"></span><h1>38. MacPython OSA モジュール<a class="headerlink" href="#macpython-osa-modules" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、オープンスクリプティングアーキテクチャ (Open Scripting Architecture、OSA、一般的には AppleScript として知られている) の現在の Python 用実装について説明します。これを使うとスクリプト可能なアプリケーションを Python プログラムから実に python らしいインタフェースとともに制御することができます。このモジュール群の開発は停止しました。</p>
-<p>AppleScript や OSA の様々なコンポーネントの説明、およびそのアーキテクチャや用語の理解のために、 Apple のドキュメントを読んでおく方がよいでしょう。 &#8220;Applescript Language Guide&#8221; は概念モデルと用語を説明し、標準スイートについて文書にまとめてあります。 &#8220;Open Scripting Architecture&#8221; はアプリケーションプログラマの視点から、 OSA を使用する方法について説明しています。 Apple ヘルプビューワにおいてこれらは Developer Documentation, Core Technologies セクションで見つかります。</p>
+<p>AppleScript や OSA の様々なコンポーネントの説明、およびそのアーキテクチャや用語の理解のために、 Apple のドキュメントを読んでおく方がよいでしょう。 「Applescript Language Guide」 は概念モデルと用語を説明し、標準スイートについて文書にまとめてあります。 「Open Scripting Architecture」 はアプリケーションプログラマの視点から、 OSA を使用する方法について説明しています。 Apple ヘルプビューワにおいてこれらは Developer Documentation, Core Technologies セクションで見つかります。</p>
 <p>アプリケーションでスクリプト制御する例として、以下の AppleScript コードは、最前面にある <strong class="program">Finder</strong> のウィンドウの名前を取得して表示させます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tell</span> <span class="n">application</span> <span class="s2">&quot;Finder&quot;</span>
     <span class="n">get</span> <span class="n">name</span> <span class="n">of</span> <span class="n">window</span> <span class="mi">1</span>
@@ -100,24 +96,21 @@
 <p>AppleEvent をアプリケーションに送るためには、最初にアプリケーションの用語 (<strong class="program">Script Editor</strong> が「辞書」と呼んでいるもの) を話せる Python パッケージを作らなければなりません。この作業は <strong class="program">PythonIDE</strong> の中から行うこともできますし、コマンドラインから <code class="file docutils literal"><span class="pre">gensuitemodule.py</span></code> モジュールをスタンドアロンのプログラムとして実行することでもできます。</p>
 <p>作成されるのはいくつものモジュールからなるパッケージで、それぞれのモジュールはプログラムで使われるスイートであり <code class="xref py py-mod docutils literal"><span class="pre">__init__</span></code> モジュールがそれらを取りまとめています。 Python の継承グラフは AppleScript の継承グラフに従っていますので、プログラムの辞書が標準スイートのサポートを含みつつ、一つ二つ動詞を追加の引数で拡張するように指定しているならば、出力されるスイートは <code class="xref py py-mod docutils literal"><span class="pre">Standard_Suite</span></code> という <code class="xref py py-mod docutils literal"><span class="pre">StdSuites.Standard_Suite</span></code> からすべてをインポートしてエクスポートし直しつつ追加された機能を持つようにメソッドをオーバーライドしたモジュールを含みます。 <a class="reference internal" href="gensuitemodule.html#module-gensuitemodule" title="gensuitemodule: Create a stub package from an OSA dictionary (Mac)"><code class="xref py py-mod docutils literal"><span class="pre">gensuitemodule</span></code></a> の出力は非常に読み易く、また元々の AppleScript 辞書にあったドキュメントを Python 文書化文字列 (docstring) 中に含みますので、それを読むことは有用な情報源となります。</p>
 <p>出力されたパッケージはパッケージと同じ名前のメインクラスを実装しており、これは全ての AppleScript 動詞を直接のオブジェクトは第 1 引数で、オプションのパラメータはキーワード引数で受けるメソッドとして含みます。 AppleScript クラスも Python クラスとして実装されたり、その他諸々も同様です。</p>
-<p>動詞を実装しているメインの Python クラスはまた AppleScript の &#8220;application&#8221; クラスで宣言されたプロパティおよび要素へのアクセスも許します。現在のリリースではこれはオブジェクト指向的というには程遠く、上の例で見たように <code class="docutils literal"><span class="pre">f.get(f.window(1).name)</span></code> と書かねばならず、より Python らしい <code class="docutils literal"><span class="pre">f.window(1).name.get()</span></code> という書き方はできません。</p>
+<p>動詞を実装しているメインの Python クラスはまた AppleScript の 「application」 クラスで宣言されたプロパティおよび要素へのアクセスも許します。現在のリリースではこれはオブジェクト指向的というには程遠く、上の例で見たように <code class="docutils literal"><span class="pre">f.get(f.window(1).name)</span></code> と書かねばならず、より Python らしい <code class="docutils literal"><span class="pre">f.window(1).name.get()</span></code> という書き方はできません。</p>
 <p>AppleScript の識別子が Python の識別子として扱えない場合以下の少数のルールで変換します:</p>
 <ul class="simple">
-<li><p class="first">空白はアンダースコアに置き換えられます</p>
-</li>
-<li><p class="first">その他の英数字以外の文字は <code class="docutils literal"><span class="pre">_xx_</span></code> に置き換えられます。ここで <code class="docutils literal"><span class="pre">xx</span></code> はその文字の 16 進値です。</p>
-</li>
-<li><p class="first">Python の予約語にはアンダースコアが後ろに付けられます</p>
-</li>
+<li>空白はアンダースコアに置き換えられます</li>
+<li>その他の英数字以外の文字は <code class="docutils literal"><span class="pre">_xx_</span></code> に置き換えられます。ここで <code class="docutils literal"><span class="pre">xx</span></code> はその文字の 16 進値です。</li>
+<li>Python の予約語にはアンダースコアが後ろに付けられます</li>
 </ul>
 <p>Python はスクリプト可能なアプリケーションを Python で作成することもサポートしていますが、以下のモジュールは MacPython の AppleScript サポートに関係するモジュールのみです:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gensuitemodule.html">38.1. <code class="docutils literal"><span class="pre">gensuitemodule</span></code> &#8212; OSA スタブ作成パッケージ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aetools.html">38.2. <code class="docutils literal"><span class="pre">aetools</span></code> &#8212; OSA クライアントのサポート</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aepack.html">38.3. <code class="docutils literal"><span class="pre">aepack</span></code> &#8212; Python 変数と AppleEvent データコンテナ間の変換</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aetypes.html">38.4. <code class="docutils literal"><span class="pre">aetypes</span></code> &#8212; AppleEvent オブジェクト</a></li>
-<li class="toctree-l1"><a class="reference internal" href="miniaeframe.html">38.5. <code class="docutils literal"><span class="pre">MiniAEFrame</span></code> &#8212; オープンスクリプティングアーキテクチャサーバのサポート</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="gensuitemodule.html">38.1. <code class="docutils literal"><span class="pre">gensuitemodule</span></code> — OSA スタブ作成パッケージ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aetools.html">38.2. <code class="docutils literal"><span class="pre">aetools</span></code> — OSA クライアントのサポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aepack.html">38.3. <code class="docutils literal"><span class="pre">aepack</span></code> — Python 変数と AppleEvent データコンテナ間の変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aetypes.html">38.4. <code class="docutils literal"><span class="pre">aetypes</span></code> — AppleEvent オブジェクト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="miniaeframe.html">38.5. <code class="docutils literal"><span class="pre">MiniAEFrame</span></code> — オープンスクリプティングアーキテクチャサーバのサポート</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="miniaeframe.html#aeserver-objects">38.5.1. AEServer オブジェクト</a></li>
 </ul>
 </li>
@@ -134,14 +127,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="colorpicker.html"
-                        title="前の章へ">37.9. <code class="docutils literal"><span class="pre">ColorPicker</span></code> &#8212; 色選択ダイアログ</a></p>
+                        title="前の章へ">37.9. <code class="docutils literal"><span class="pre">ColorPicker</span></code> — 色選択ダイアログ</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="gensuitemodule.html"
-                        title="次の章へ">38.1. <code class="docutils literal"><span class="pre">gensuitemodule</span></code> &#8212; OSA スタブ作成パッケージ</a></p>
+                        title="次の章へ">38.1. <code class="docutils literal"><span class="pre">gensuitemodule</span></code> — OSA スタブ作成パッケージ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/macosa.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/macosa.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -192,10 +185,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>18.11. rfc822 — RFC 2822 準拠のメールヘッダ読み出し &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="18. インターネット上のデータの操作" href="netdata.html" />
     <link rel="next" title="18.12. base64 — RFC 3548: Base16, Base32, Base64 データの符号化" href="base64.html" />
     <link rel="prev" title="18.10. multifile — 個別の部分を含んだファイル群のサポート" href="multifile.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,11 +77,11 @@
           <div class="body" role="main">
             
   <div class="section" id="module-rfc822">
-<span id="rfc822-parse-rfc-2822-mail-headers"></span><h1>18.11. <a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> &#8212; RFC 2822 準拠のメールヘッダ読み出し<a class="headerlink" href="#module-rfc822" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="rfc822-parse-rfc-2822-mail-headers"></span><h1>18.11. <a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> — RFC 2822 準拠のメールヘッダ読み出し<a class="headerlink" href="#module-rfc822" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
-<p><span class="versionmodified">バージョン 2.3 で撤廃: </span><a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> モジュールを使うよりも <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージを使うべきです。このモジュールは以前のバージョンとの互換性のために保守されているにすぎません。 Python 3 ではこのモジュールは削除されました。</p>
+<p><span class="versionmodified">バージョン 2.3 で撤廃: </span><a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> モジュールを使うよりも <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> パッケージを使うべきです。このモジュールは以前のバージョンとの互換性のために保守されているにすぎません。 Python 3 ではこのモジュールは削除されました。</p>
 </div>
-<p>このモジュールでは、インターネット標準 <span class="target" id="index-28"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> <a class="footnote-reference" href="#id4" id="id1">[1]</a> で定義されている &#8220;電子メールメッセージ&#8221; を表現するクラス、 <a class="reference internal" href="#rfc822.Message" title="rfc822.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> を定義しています。このメッセージはメッセージヘッダ群とメッセージボディの集まりからなります。このモジュールではまた、ヘルパークラス <span class="target" id="index-29"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> アドレス群を解釈するための <a class="reference internal" href="#rfc822.AddressList" title="rfc822.AddressList"><code class="xref py py-class docutils literal"><span class="pre">AddressList</span></code></a> クラスを定義しています。 <span class="target" id="index-30"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> メッセージ固有の構文に関する情報は RFC を参照してください。</p>
+<p>このモジュールでは、インターネット標準 <span class="target" id="index-28"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> <a class="footnote-reference" href="#id4" id="id1">[1]</a> で定義されている 「電子メールメッセージ」 を表現するクラス、 <a class="reference internal" href="#rfc822.Message" title="rfc822.Message"><code class="xref py py-class docutils literal"><span class="pre">Message</span></code></a> を定義しています。このメッセージはメッセージヘッダ群とメッセージボディの集まりからなります。このモジュールではまた、ヘルパークラス <span class="target" id="index-29"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> アドレス群を解釈するための <a class="reference internal" href="#rfc822.AddressList" title="rfc822.AddressList"><code class="xref py py-class docutils literal"><span class="pre">AddressList</span></code></a> クラスを定義しています。 <span class="target" id="index-30"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> メッセージ固有の構文に関する情報は RFC を参照してください。</p>
 <p id="index-3"><a class="reference internal" href="mailbox.html#module-mailbox" title="mailbox: Manipulate mailboxes in various formats"><code class="xref py py-mod docutils literal"><span class="pre">mailbox</span></code></a> モジュールでは、多くのエンドユーザメールプログラムによって生成されるメールボックスを読み出すためのクラスを提供しています。</p>
 <dl class="class">
 <dt id="rfc822.Message">
@@ -118,7 +114,7 @@
 <dl class="function">
 <dt id="rfc822.parseaddr">
 <code class="descclassname">rfc822.</code><code class="descname">parseaddr</code><span class="sig-paren">(</span><em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#rfc822.parseaddr" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em class="mailheader">To</em> や <em class="mailheader">Cc</em> といった、アドレスが入っているフィールドの値 <em>address</em> を解析し、含まれている &#8220;実名 (realname)&#8221; 部分および &#8220;電子メールアドレス&#8221; 部分に分けます。それらの情報からなるタプルを返します。解析が失敗した場合には 2 要素のタプル <code class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></code> を返します。</p>
+<dd><p><em class="mailheader">To</em> や <em class="mailheader">Cc</em> といった、アドレスが入っているフィールドの値 <em>address</em> を解析し、含まれている 「実名 (realname)」 部分および 「電子メールアドレス」 部分に分けます。それらの情報からなるタプルを返します。解析が失敗した場合には 2 要素のタプル <code class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></code> を返します。</p>
 </dd></dl>
 
 <dl class="function">
@@ -149,14 +145,11 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code class="xref py py-mod docutils literal"><span class="pre">email</span></code></a> モジュール</dt>
-<dd><p class="first last">包括的な e-mail 処理パッケージです。 <a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> に取って代わります。</p>
-</dd>
+<dd>包括的な e-mail 処理パッケージです。 <a class="reference internal" href="#module-rfc822" title="rfc822: Parse 2822 style mail messages. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rfc822</span></code></a> に取って代わります。</dd>
 <dt><a class="reference internal" href="mailbox.html#module-mailbox" title="mailbox: Manipulate mailboxes in various formats"><code class="xref py py-mod docutils literal"><span class="pre">mailbox</span></code></a> モジュール</dt>
-<dd><p class="first last">エンドユーザのメールプログラムによって生成される、様々な mailbox 形式を読み出すためのクラス群。</p>
-</dd>
-<dt><a class="reference internal" href="mimetools.html#module-mimetools" title="mimetools: Tools for parsing MIME-style message bodies. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">mimetools</span></code></a> モジュール</dt>
-<dd><p class="first last">MIME エンコードされたメッセージを処理する <a class="reference internal" href="#rfc822.Message" title="rfc822.Message"><code class="xref py py-class docutils literal"><span class="pre">rfc822.Message</span></code></a> のサブクラス。</p>
-</dd>
+<dd>エンドユーザのメールプログラムによって生成される、様々な mailbox 形式を読み出すためのクラス群。</dd>
+<dt><a class="reference internal" href="mimetools.html#module-mimetools" title="mimetools: Tools for parsing MIME-style message bodies. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">mimetools</span></code></a> モジュール</dt>
+<dd>MIME エンコードされたメッセージを処理する <a class="reference internal" href="#rfc822.Message" title="rfc822.Message"><code class="xref py py-class docutils literal"><span class="pre">rfc822.Message</span></code></a> のサブクラス。</dd>
 </dl>
 </div>
 <div class="section" id="message-objects">
@@ -276,7 +269,7 @@
 <dl class="method">
 <dt id="rfc822.AddressList.__str__">
 <code class="descclassname">AddressList.</code><code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfc822.AddressList.__str__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>アドレスリストの正規化 (canonicalize) された文字列表現を返します。アドレスはカンマで分割された &#8220;name&#8221; &lt;<a class="reference external" href="mailto:host&#37;&#52;&#48;domain">host<span>&#64;</span>domain</a>&gt; 形式になります。</p>
+<dd><p>アドレスリストの正規化 (canonicalize) された文字列表現を返します。アドレスはカンマで分割された 「name」 &lt;<a class="reference external" href="mailto:host&#37;&#52;&#48;domain">host<span>&#64;</span>domain</a>&gt; 形式になります。</p>
 </dd></dl>
 
 <dl class="method">
@@ -314,8 +307,7 @@
 <table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">このモジュールはもともと <span class="target" id="index-37"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> に適合していたので、そういう名前になっています。その後、 <span class="target" id="index-38"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> が <span class="target" id="index-39"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> に対する更新としてリリースされました。このモジュールは <span class="target" id="index-40"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 適合であり、特に <span class="target" id="index-41"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> からの構文や意味付けに対する変更がなされています。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>このモジュールはもともと <span class="target" id="index-37"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> に適合していたので、そういう名前になっています。その後、 <span class="target" id="index-38"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> が <span class="target" id="index-39"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> に対する更新としてリリースされました。このモジュールは <span class="target" id="index-40"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> 適合であり、特に <span class="target" id="index-41"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> からの構文や意味付けに対する変更がなされています。</td></tr>
 </tbody>
 </table>
 </div>
@@ -329,7 +321,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">18.11. <code class="docutils literal"><span class="pre">rfc822</span></code> &#8212; RFC 2822 準拠のメールヘッダ読み出し</a><ul>
+<li><a class="reference internal" href="#">18.11. <code class="docutils literal"><span class="pre">rfc822</span></code> — RFC 2822 準拠のメールヘッダ読み出し</a><ul>
 <li><a class="reference internal" href="#message-objects">18.11.1. Message オブジェクト</a></li>
 <li><a class="reference internal" href="#addresslist-objects">18.11.2. AddressList オブジェクト</a></li>
 </ul>
@@ -338,14 +330,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="multifile.html"
-                        title="前の章へ">18.10. <code class="docutils literal"><span class="pre">multifile</span></code> &#8212; 個別の部分を含んだファイル群のサポート</a></p>
+                        title="前の章へ">18.10. <code class="docutils literal"><span class="pre">multifile</span></code> — 個別の部分を含んだファイル群のサポート</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="base64.html"
-                        title="次の章へ">18.12. <code class="docutils literal"><span class="pre">base64</span></code> &#8212; RFC 3548: Base16, Base32, Base64 データの符号化</a></p>
+                        title="次の章へ">18.12. <code class="docutils literal"><span class="pre">base64</span></code> — RFC 3548: Base16, Base32, Base64 データの符号化</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/rfc822.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/rfc822.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -397,10 +389,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

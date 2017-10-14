@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>20.16. urlparse — URL を解析して構成要素にする &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
     <link rel="next" title="20.17. SocketServer — ネットワークサーバ構築のためのフレームワーク" href="socketserver.html" />
     <link rel="prev" title="20.15. uuid — RFC 4122 に準拠した UUID オブジェクト" href="uuid.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,14 +77,14 @@
           <div class="body" role="main">
             
   <div class="section" id="module-urlparse">
-<span id="urlparse-parse-urls-into-components"></span><h1>20.16. <a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-mod docutils literal"><span class="pre">urlparse</span></code></a> &#8212; URL を解析して構成要素にする<a class="headerlink" href="#module-urlparse" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="urlparse-parse-urls-into-components"></span><h1>20.16. <a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-mod docutils literal"><span class="pre">urlparse</span></code></a> — URL を解析して構成要素にする<a class="headerlink" href="#module-urlparse" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="admonition note" id="index-0">
 <p class="first admonition-title">注釈</p>
 <p class="last"><a class="reference internal" href="#module-urlparse" title="urlparse: Parse URLs into or assemble them from components."><code class="xref py py-mod docutils literal"><span class="pre">urlparse</span></code></a> モジュールは、Python 3 では <code class="xref py py-mod docutils literal"><span class="pre">urllib.parse</span></code> にリネームされました。 <a class="reference internal" href="../glossary.html#term-2to3"><span class="xref std std-term">2to3</span></a> ツールが自動的にソースコードの import を修正します。</p>
 </div>
 <p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/urlparse.py">Lib/urlparse.py</a></p>
 <hr class="docutils" />
-<p>このモジュールでは URL (Uniform Resource Locator) 文字列をその構成要素 (アドレススキーム、ネットワーク上の位置、パスその他) に分解したり、構成要素を URL に組みなおしたり、&#8221;相対 URL (relative URL)&#8221; を指定した &#8220;基底 URL (base URL)&#8221; に基づいて絶対 URL に変換するための標準的なインタフェースを定義しています。</p>
+<p>このモジュールでは URL (Uniform Resource Locator) 文字列をその構成要素 (アドレススキーム、ネットワーク上の位置、パスその他) に分解したり、構成要素を URL に組みなおしたり、」相対 URL (relative URL)」 を指定した 「基底 URL (base URL)」 に基づいて絶対 URL に変換するための標準的なインタフェースを定義しています。</p>
 <p>このモジュールは Relative Uniform Resource Locators (相対 URL) に関する RFC に適合するよう設計されていおり、次のスキームをサポートしています: <code class="docutils literal"><span class="pre">file</span></code>, <code class="docutils literal"><span class="pre">ftp</span></code>, <code class="docutils literal"><span class="pre">gopher</span></code>, <code class="docutils literal"><span class="pre">hdl</span></code>, <code class="docutils literal"><span class="pre">http</span></code>, <code class="docutils literal"><span class="pre">https</span></code>, <code class="docutils literal"><span class="pre">imap</span></code>, <code class="docutils literal"><span class="pre">mailto</span></code>, <code class="docutils literal"><span class="pre">mms</span></code>, <code class="docutils literal"><span class="pre">news</span></code>, <code class="docutils literal"><span class="pre">nntp</span></code>, <code class="docutils literal"><span class="pre">prospero</span></code>, <code class="docutils literal"><span class="pre">rsync</span></code>, <code class="docutils literal"><span class="pre">rtsp</span></code>, <code class="docutils literal"><span class="pre">rtspu</span></code>, <code class="docutils literal"><span class="pre">sftp</span></code>, <code class="docutils literal"><span class="pre">shttp</span></code>, <code class="docutils literal"><span class="pre">sip</span></code>, <code class="docutils literal"><span class="pre">sips</span></code>, <code class="docutils literal"><span class="pre">snews</span></code>, <code class="docutils literal"><span class="pre">svn</span></code>, <code class="docutils literal"><span class="pre">svn+ssh</span></code>, <code class="docutils literal"><span class="pre">telnet</span></code>, <code class="docutils literal"><span class="pre">wais</span></code>.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加: </span><code class="docutils literal"><span class="pre">sftp</span></code> および <code class="docutils literal"><span class="pre">sips</span></code> スキームのサポートが追加されました。</p>
@@ -111,7 +107,7 @@
 <span class="go">&#39;http://www.cwi.nl:80/%7Eguido/Python.html&#39;</span>
 </pre></div>
 </div>
-<p><span class="target" id="index-11"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> にある文法仕様に基づき、urlparse は &#8216;//&#8217; で始まる場合にのみ netloc を認識します。それ以外の場合は、入力は相対URLであると推定され、path 部分で始まることになります。</p>
+<p><span class="target" id="index-11"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> にある文法仕様に基づき、urlparse は 『//』 で始まる場合にのみ netloc を認識します。それ以外の場合は、入力は相対URLであると推定され、path 部分で始まることになります。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">urlparse</span><span class="p">(</span><span class="s1">&#39;//www.cwi.nl:80/</span><span class="si">%7E</span><span class="s1">guido/Python.html&#39;</span><span class="p">)</span>
 <span class="go">ParseResult(scheme=&#39;&#39;, netloc=&#39;www.cwi.nl:80&#39;, path=&#39;/%7Eguido/Python.html&#39;,</span>
@@ -135,81 +131,61 @@
 <col width="30%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">インデックス</p>
-</th>
-<th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
-</th>
-<th class="head"><p class="first last">指定されなかった場合の値</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">インデックス</th>
+<th class="head"><code class="docutils literal"><span class="pre">値</span></code></th>
+<th class="head">指定されなかった場合の値</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">scheme</span></code></td>
 <td>0</td>
-<td><p class="first last">URL スキーム</p>
-</td>
-<td><p class="first last"><em>scheme</em> パラメータ</p>
-</td>
+<td>URL スキーム</td>
+<td><em>scheme</em> パラメータ</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">netloc</span></code></td>
 <td>1</td>
-<td><p class="first last">ネットワーク上の位置</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>ネットワーク上の位置</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">path</span></code></td>
 <td>2</td>
-<td><p class="first last">階層的パス</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>階層的パス</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">params</span></code></td>
 <td>3</td>
-<td><p class="first last">最後のパス要素に対するパラメータ</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>最後のパス要素に対するパラメータ</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">query</span></code></td>
 <td>4</td>
-<td><p class="first last">クエリ要素</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>クエリ要素</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">fragment</span></code></td>
 <td>5</td>
-<td><p class="first last">フラグメント識別子</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>フラグメント識別子</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">username</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ユーザ名</p>
-</td>
+<td>&#160;</td>
+<td>ユーザ名</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">password</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">パスワード</p>
-</td>
+<td>&#160;</td>
+<td>パスワード</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">hostname</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ホスト名 (小文字)</p>
-</td>
+<td>&#160;</td>
+<td>ホスト名 (小文字)</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">port</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ポート番号を表わす整数 (もしあれば)</p>
-</td>
+<td>&#160;</td>
+<td>ポート番号を表わす整数 (もしあれば)</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 </tbody>
@@ -266,74 +242,56 @@
 <col width="31%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">インデックス</p>
-</th>
-<th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
-</th>
-<th class="head"><p class="first last">指定されなかった場合の値</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">インデックス</th>
+<th class="head"><code class="docutils literal"><span class="pre">値</span></code></th>
+<th class="head">指定されなかった場合の値</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">scheme</span></code></td>
 <td>0</td>
-<td><p class="first last">URL スキーム</p>
-</td>
-<td><p class="first last"><em>scheme</em> パラメータ</p>
-</td>
+<td>URL スキーム</td>
+<td><em>scheme</em> パラメータ</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">netloc</span></code></td>
 <td>1</td>
-<td><p class="first last">ネットワーク上の位置</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>ネットワーク上の位置</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">path</span></code></td>
 <td>2</td>
-<td><p class="first last">階層的パス</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>階層的パス</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">query</span></code></td>
 <td>3</td>
-<td><p class="first last">クエリ要素</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>クエリ要素</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">fragment</span></code></td>
 <td>4</td>
-<td><p class="first last">フラグメント識別子</p>
-</td>
-<td><p class="first last">空文字列</p>
-</td>
+<td>フラグメント識別子</td>
+<td>空文字列</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">username</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ユーザ名</p>
-</td>
+<td>&#160;</td>
+<td>ユーザ名</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">password</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">パスワード</p>
-</td>
+<td>&#160;</td>
+<td>パスワード</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">hostname</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ホスト名 (小文字)</p>
-</td>
+<td>&#160;</td>
+<td>ホスト名 (小文字)</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">port</span></code></td>
-<td>&nbsp;</td>
-<td><p class="first last">ポート番号を表わす整数 (もしあれば)</p>
-</td>
+<td>&#160;</td>
+<td>ポート番号を表わす整数 (もしあれば)</td>
 <td><a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal"><span class="pre">None</span></code></a></td>
 </tr>
 </tbody>
@@ -359,7 +317,7 @@
 <dl class="function">
 <dt id="urlparse.urljoin">
 <code class="descclassname">urlparse.</code><code class="descname">urljoin</code><span class="sig-paren">(</span><em>base</em>, <em>url</em><span class="optional">[</span>, <em>allow_fragments</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#urlparse.urljoin" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>&#8220;基底 URL&#8221;(<em>base</em>)と別のURL(<em>url</em>)を組み合わせて、完全な URL (&#8220;絶対 URL&#8221;) を構成します。ぶっちゃけ、この関数は基底 URL の要素、特にアドレススキーム、ネットワーク上の位置、およびパス (の一部) を使って、相対 URL にない要素を提供します。以下の例のようになります:</p>
+<dd><p>「基底 URL」(<em>base</em>)と別のURL(<em>url</em>)を組み合わせて、完全な URL (「絶対 URL」) を構成します。ぶっちゃけ、この関数は基底 URL の要素、特にアドレススキーム、ネットワーク上の位置、およびパス (の一部) を使って、相対 URL にない要素を提供します。以下の例のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urljoin</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;http://www.cwi.nl/</span><span class="si">%7E</span><span class="s1">guido/Python.html&#39;</span><span class="p">,</span> <span class="s1">&#39;FAQ.html&#39;</span><span class="p">)</span>
 <span class="go">&#39;http://www.cwi.nl/%7Eguido/FAQ.html&#39;</span>
@@ -388,23 +346,17 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><span class="target" id="index-3"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3986.html"><strong>RFC 3986</strong></a> - Uniform Resource Identifiers</dt>
-<dd><p class="first last">これが現在の標準規格 (STD66) です。urlparse モジュールに対するすべての変更はこの規格に準拠していなければなりませんが、若干の逸脱はありえます。これは主には後方互換性のため、また主要なブラウザで一般的に見られる、URL を解析する上でのいくつかの事実上の要件を満たすためです。</p>
-</dd>
-<dt><span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2732.html"><strong>RFC 2732</strong></a> - Format for Literal IPv6 Addresses in URL&#8217;s.</dt>
-<dd><p class="first last">この規格は IPv6 の URL を解析するときの要求事項を記述しています。</p>
-</dd>
+<dd>これが現在の標準規格 (STD66) です。urlparse モジュールに対するすべての変更はこの規格に準拠していなければなりませんが、若干の逸脱はありえます。これは主には後方互換性のため、また主要なブラウザで一般的に見られる、URL を解析する上でのいくつかの事実上の要件を満たすためです。</dd>
+<dt><span class="target" id="index-4"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2732.html"><strong>RFC 2732</strong></a> - Format for Literal IPv6 Addresses in URL’s.</dt>
+<dd>この規格は IPv6 の URL を解析するときの要求事項を記述しています。</dd>
 <dt><span class="target" id="index-5"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2396.html"><strong>RFC 2396</strong></a> - Uniform Resource Identifiers (URI): Generic Syntax</dt>
-<dd><p class="first last">この RFC では Uniform Resource Name (URN) と Uniform Resource Locator (URL) の両方に対する一般的な文法的要求事項を記述しています。</p>
-</dd>
+<dd>この RFC では Uniform Resource Name (URN) と Uniform Resource Locator (URL) の両方に対する一般的な文法的要求事項を記述しています。</dd>
 <dt><span class="target" id="index-6"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2368.html"><strong>RFC 2368</strong></a> - The mailto URL scheme.</dt>
-<dd><p class="first last">mailto URL スキームに対する文法的要求事項です。</p>
-</dd>
+<dd>mailto URL スキームに対する文法的要求事項です。</dd>
 <dt><span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> - Relative Uniform Resource Locators</dt>
-<dd><p class="first last">この RFC には絶対 URL と相対 URL を結合するための規則がボーダケースの取扱い方を決定する &#8220;異常な例&#8221; つきで収められています。</p>
-</dd>
+<dd>この RFC には絶対 URL と相対 URL を結合するための規則がボーダケースの取扱い方を決定する 「異常な例」 つきで収められています。</dd>
 <dt><span class="target" id="index-8"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1738.html"><strong>RFC 1738</strong></a> - Uniform Resource Locators (URL)</dt>
-<dd><p class="first last">この RFC では絶対 URL の形式的な文法と意味付けを仕様化しています。</p>
-</dd>
+<dd>この RFC では絶対 URL の形式的な文法と意味付けを仕様化しています。</dd>
 </dl>
 </div>
 <div class="section" id="results-of-urlparse-and-urlsplit">
@@ -458,7 +410,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">20.16. <code class="docutils literal"><span class="pre">urlparse</span></code> &#8212; URL を解析して構成要素にする</a><ul>
+<li><a class="reference internal" href="#">20.16. <code class="docutils literal"><span class="pre">urlparse</span></code> — URL を解析して構成要素にする</a><ul>
 <li><a class="reference internal" href="#results-of-urlparse-and-urlsplit">20.16.1. <code class="docutils literal"><span class="pre">urlparse()</span></code> および <code class="docutils literal"><span class="pre">urlsplit()</span></code> の結果</a></li>
 </ul>
 </li>
@@ -466,14 +418,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="uuid.html"
-                        title="前の章へ">20.15. <code class="docutils literal"><span class="pre">uuid</span></code> &#8212; RFC 4122 に準拠した UUID オブジェクト</a></p>
+                        title="前の章へ">20.15. <code class="docutils literal"><span class="pre">uuid</span></code> — RFC 4122 に準拠した UUID オブジェクト</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="socketserver.html"
-                        title="次の章へ">20.17. <code class="docutils literal"><span class="pre">SocketServer</span></code> &#8212; ネットワークサーバ構築のためのフレームワーク</a></p>
+                        title="次の章へ">20.17. <code class="docutils literal"><span class="pre">SocketServer</span></code> — ネットワークサーバ構築のためのフレームワーク</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/urlparse.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/urlparse.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -525,10 +477,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>39.3. cd — SGI システムの CD-ROM へのアクセス &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="39. SGI IRIX 固有のサービス" href="sgi.html" />
     <link rel="next" title="39.4. fl — グラフィカルユーザーインターフェースのための FORMS ライブラリ" href="fl.html" />
     <link rel="prev" title="39.1. al — SGIのオーディオ機能" href="al.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,15 +77,15 @@
           <div class="body" role="main">
             
   <div class="section" id="module-cd">
-<span id="cd-cd-rom-access-on-sgi-systems"></span><h1>39.3. <a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> &#8212; SGI システムの CD-ROM へのアクセス<a class="headerlink" href="#module-cd" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="cd-cd-rom-access-on-sgi-systems"></span><h1>39.3. <a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (非推奨) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> — SGI システムの CD-ROM へのアクセス<a class="headerlink" href="#module-cd" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
-<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールは Python 3 で削除されました。</p>
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (非推奨) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールは Python 3 で削除されました。</p>
 </div>
 <p>このモジュールは Silicon Graphics CD ライブラリへのインターフェースを提供します。 Silicon Graphics システムだけで利用可能です。</p>
 <p>ライブラリは次のように使われます。CD-ROM デバイスを <a class="reference internal" href="#cd.open" title="cd.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> で開き、 <a class="reference internal" href="#cd.createparser" title="cd.createparser"><code class="xref py py-func docutils literal"><span class="pre">createparser()</span></code></a> で CD からデータをパースするためのパーザを作ります。 <a class="reference internal" href="#cd.open" title="cd.open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> で返されるオブジェクトは CD からデータを読み込むのに使われますが、 CD-ROM デバイスのステータス情報や、CD の情報、たとえば目次などを得るのにも使われます。 CD から得たデータはパーザに渡され、パーザはフレームをパースし、あらかじめ加えられたコールバック関数を呼び出します。</p>
 <p>オーディオ CD はトラック <em class="dfn">tracks</em> あるいはプログラム <em class="dfn">programs</em> (同じ意味で、どちらかの用語が使われます) に分けられます。トラックはさらにインデックス <em class="dfn">indices</em> に分けられます。オーディオ CD は、CD 上の各トラックのスタート位置を示す目次 <em class="dfn">table of contents</em> を持っています。インデックス 0 は普通、トラックの始まりの前のポーズです。目次から得られるトラックのスタート位置は通常、インデックス 1 のスタート位置です。</p>
 <p>CD 上の位置は 2 通りの方法で得ることができます。それはフレームナンバーと、分、秒、フレームの 3 つの値からなるタプルの 2 つです。ほとんどの関数は後者を使います。位置は CD の開始位置とトラックの開始位置の両方に相対的になります。</p>
-<p><a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールは次の関数と定数を定義します:</p>
+<p><a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (非推奨) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールは次の関数と定数を定義します:</p>
 <dl class="function">
 <dt id="cd.createparser">
 <code class="descclassname">cd.</code><code class="descname">createparser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cd.createparser" title="この定義へのパーマリンク">¶</a></dt>
@@ -308,51 +304,41 @@
 <dl class="method">
 <dt>
 <code class="descname">CD parser.addcallback(type, func, arg)</code></dt>
-<dd><p>パーザにコールバックを加えます。デジタルオーディオストリームの 8 つの異なるデータタイプのためのコールバックをパーザは持っています。これらのタイプのための定数は <a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (撤廃) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールのレベルで定義されています (上記参照)。コールバックは以下のように呼び出されます： <code class="docutils literal"><span class="pre">func(arg,</span> <span class="pre">type,</span> <span class="pre">data)</span></code> 、ここで <em>arg</em> はユーザが与えた引数、 <em>type</em> はコールバックの特定のタイプ、 <em>data</em> はこの <em>type</em> のコールバックに渡されるデータです。データのタイプは以下のようにコールバックのタイプによって決まります:</p>
+<dd><p>パーザにコールバックを加えます。デジタルオーディオストリームの 8 つの異なるデータタイプのためのコールバックをパーザは持っています。これらのタイプのための定数は <a class="reference internal" href="#module-cd" title="cd: Interface to the CD-ROM on Silicon Graphics systems. (非推奨) (IRIX)"><code class="xref py py-mod docutils literal"><span class="pre">cd</span></code></a> モジュールのレベルで定義されています (上記参照)。コールバックは以下のように呼び出されます： <code class="docutils literal"><span class="pre">func(arg,</span> <span class="pre">type,</span> <span class="pre">data)</span></code> 、ここで <em>arg</em> はユーザが与えた引数、 <em>type</em> はコールバックの特定のタイプ、 <em>data</em> はこの <em>type</em> のコールバックに渡されるデータです。データのタイプは以下のようにコールバックのタイプによって決まります:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="22%" />
 <col width="78%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">型</p>
-</th>
-<th class="head"><p class="first last"><code class="docutils literal"><span class="pre">値</span></code></p>
-</th>
+<tr class="row-odd"><th class="head">型</th>
+<th class="head"><code class="docutils literal"><span class="pre">値</span></code></th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">audio</span></code></td>
-<td><p class="first last"><code class="xref py py-func docutils literal"><span class="pre">al.writesamps()</span></code> へそのまま渡すことのできる文字列。</p>
-</td>
+<td><code class="xref py py-func docutils literal"><span class="pre">al.writesamps()</span></code> へそのまま渡すことのできる文字列。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">pnum</span></code></td>
-<td><p class="first last">プログラム (トラック) ナンバーを示す整数。</p>
-</td>
+<td>プログラム (トラック) ナンバーを示す整数。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">index</span></code></td>
-<td><p class="first last">インデックスナンバーを示す整数。</p>
-</td>
+<td>インデックスナンバーを示す整数。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">ptime</span></code></td>
-<td><p class="first last">プログラムの時間を示す分、秒、フレームからなるタプル。</p>
-</td>
+<td>プログラムの時間を示す分、秒、フレームからなるタプル。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">atime</span></code></td>
-<td><p class="first last">絶対的な時刻を示す分、秒、フレームからなるタプル。</p>
-</td>
+<td>絶対的な時刻を示す分、秒、フレームからなるタプル。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">catalog</span></code></td>
-<td><p class="first last">CD のカタログナンバーを示す 13 文字の文字列。</p>
-</td>
+<td>CD のカタログナンバーを示す 13 文字の文字列。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ident</span></code></td>
-<td><p class="first last">録音の ISRC 識別番号を示す 12 文字の文字列。文字列は 2 文字の国別コード、3 文字の所有者コード、2 文字の年、5 文字のシリアルナンバーからなります。</p>
-</td>
+<td>録音の ISRC 識別番号を示す 12 文字の文字列。文字列は 2 文字の国別コード、3 文字の所有者コード、2 文字の年、5 文字のシリアルナンバーからなります。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">control</span></code></td>
-<td><p class="first last">CD のサブコードデータのコントロールビットを示す整数。</p>
-</td>
+<td>CD のサブコードデータのコントロールビットを示す整数。</td>
 </tr>
 </tbody>
 </table>
@@ -393,7 +379,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">39.3. <code class="docutils literal"><span class="pre">cd</span></code> &#8212; SGI システムの CD-ROM へのアクセス</a><ul>
+<li><a class="reference internal" href="#">39.3. <code class="docutils literal"><span class="pre">cd</span></code> — SGI システムの CD-ROM へのアクセス</a><ul>
 <li><a class="reference internal" href="#player-objects">39.3.1. Player オブジェクト</a></li>
 <li><a class="reference internal" href="#parser-objects">39.3.2. Parser オブジェクト</a></li>
 </ul>
@@ -402,14 +388,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="al.html"
-                        title="前の章へ">39.1. <code class="docutils literal"><span class="pre">al</span></code> &#8212; SGIのオーディオ機能</a></p>
+                        title="前の章へ">39.1. <code class="docutils literal"><span class="pre">al</span></code> — SGIのオーディオ機能</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="fl.html"
-                        title="次の章へ">39.4. <code class="docutils literal"><span class="pre">fl</span></code> &#8212; グラフィカルユーザーインターフェースのための FORMS ライブラリ</a></p>
+                        title="次の章へ">39.4. <code class="docutils literal"><span class="pre">fl</span></code> — グラフィカルユーザーインターフェースのための FORMS ライブラリ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/cd.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/cd.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -461,10 +447,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

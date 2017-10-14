@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>30.1. rexec — 制限実行のフレームワーク &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="30. 制限実行 (restricted execution)" href="restricted.html" />
     <link rel="next" title="30.2. Bastion — オブジェクトに対するアクセスの制限" href="bastion.html" />
     <link rel="prev" title="30. 制限実行 (restricted execution)" href="restricted.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,21 +77,21 @@
           <div class="body" role="main">
             
   <div class="section" id="module-rexec">
-<span id="rexec-restricted-execution-framework"></span><h1>30.1. <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> &#8212; 制限実行のフレームワーク<a class="headerlink" href="#module-rexec" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="rexec-restricted-execution-framework"></span><h1>30.1. <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> — 制限実行のフレームワーク<a class="headerlink" href="#module-rexec" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
-<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールは Python 3 で削除されました。</p>
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールは Python 3 で削除されました。</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.3 で変更: </span>モジュールは無効化され、使えなくなりました。</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">このドキュメントは、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールを使用している古いコードを読む際の参照用として残されています。</p>
+<p class="last">このドキュメントは、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールを使用している古いコードを読む際の参照用として残されています。</p>
 </div>
 <p>このモジュールには <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> クラスが含まれています。このクラスは、 <code class="xref py py-meth docutils literal"><span class="pre">r_eval()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">r_execfile()</span></code> 、 <code class="xref py py-meth docutils literal"><span class="pre">r_exec()</span></code> および <code class="xref py py-meth docutils literal"><span class="pre">r_import()</span></code> メソッドをサポートし、これらは標準の Python 関数 <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-meth docutils literal"><span class="pre">eval()</span></code></a> 、 <a class="reference internal" href="functions.html#execfile" title="execfile"><code class="xref py py-meth docutils literal"><span class="pre">execfile()</span></code></a> および <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> と <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 文の制限されたバージョンです。この制限された環境で実行されるコードは、安全であると見なされたモジュールや関数だけにアクセスします; <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> をサブクラス化すれば、望むように能力を追加および削除できます。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last"><a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールは、下記のように動作するべく設計されてはいますが、注意深く書かれたコードなら利用できてしまうかもしれない、既知の脆弱性がいくつかあります。従って、&#8221;製品レベル&#8221; のセキュリティを要する状況では、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> の動作をあてにするべきではありません。製品レベルのセキュリティを求めるなら、サブプロセスを介した実行や、あるいは処理するコードとデータの両方に対する非常に注意深い &#8220;浄化&#8221; が必要でしょう。上記の代わりに、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> の既知の脆弱性に対するパッチ当ての手伝いも歓迎します。</p>
+<p class="last"><a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールは、下記のように動作するべく設計されてはいますが、注意深く書かれたコードなら利用できてしまうかもしれない、既知の脆弱性がいくつかあります。従って、」製品レベル」 のセキュリティを要する状況では、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> の動作をあてにするべきではありません。製品レベルのセキュリティを求めるなら、サブプロセスを介した実行や、あるいは処理するコードとデータの両方に対する非常に注意深い 「浄化」 が必要でしょう。上記の代わりに、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> の既知の脆弱性に対するパッチ当ての手伝いも歓迎します。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -105,18 +101,17 @@
 <dt id="rexec.RExec">
 <em class="property">class </em><code class="descclassname">rexec.</code><code class="descname">RExec</code><span class="sig-paren">(</span><span class="optional">[</span><em>hooks</em><span class="optional">[</span>, <em>verbose</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#rexec.RExec" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> クラスのインスタンスを返します。</p>
-<p><em>hooks</em> は、 <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスあるいはそのサブクラスのインスタンスです。 <em>hooks</em> が省略されているか <code class="docutils literal"><span class="pre">None</span></code> であれば、デフォルトの <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスがインスタンス化されます。 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールが (組み込みモジュールを含む) あるモジュールを探したり、あるモジュールのコードを読んだりする時は常に、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> がじかにファイルシステムに出て行くことはありません。その代わり、あらかじめ <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスに渡しておいたり、コンストラクタで生成された <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> インスタンスのメソッドを呼び出します。 (実際には、 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> オブジェクトはこれらを呼び出しません &#8212; 呼び出しは、 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> オブジェクトの一部であるモジュールローダオブジェクトによって行われます。これによって別のレベルの柔軟性が実現されます。この柔軟性は、制限された環境内で <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 機構を変更する時に役に立ちます。 )</p>
+<p><em>hooks</em> は、 <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスあるいはそのサブクラスのインスタンスです。 <em>hooks</em> が省略されているか <code class="docutils literal"><span class="pre">None</span></code> であれば、デフォルトの <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスがインスタンス化されます。 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールが (組み込みモジュールを含む) あるモジュールを探したり、あるモジュールのコードを読んだりする時は常に、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> がじかにファイルシステムに出て行くことはありません。その代わり、あらかじめ <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> クラスに渡しておいたり、コンストラクタで生成された <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> インスタンスのメソッドを呼び出します。 (実際には、 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> オブジェクトはこれらを呼び出しません — 呼び出しは、 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> オブジェクトの一部であるモジュールローダオブジェクトによって行われます。これによって別のレベルの柔軟性が実現されます。この柔軟性は、制限された環境内で <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal"><span class="pre">import</span></code></a> 機構を変更する時に役に立ちます。 )</p>
 <p>代替の <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> オブジェクトを提供することで、モジュールをインポートする際に行われるファイルシステムへのアクセスを制御することができます。このとき、各々のアクセスが行われる順番を制御する実際のアルゴリズムは変更されません。例えば、 <code class="xref py py-class docutils literal"><span class="pre">RHooks</span></code> オブジェクトを置き換えて、ILU のようなある種の RPC メカニズムを介することで、全てのファイルシステムの要求をどこかにあるファイルサーバに渡すことができます。 Grail のアプレットローダは、アプレットを URL からディレクトリ上に import する際にこの機構を使っています。</p>
 <p>もし <em>verbose</em> が true であれば、追加のデバッグ出力が標準出力に送られます。</p>
 </dd></dl>
 
-<p>制限された環境で実行するコードも、やはり <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> 関数を呼ぶことができることを知っておくことは大事なことです。制限されたコードがインタプリタから抜けだすことを許さないためには、いつでも、制限されたコードが、 <a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> 例外をキャッチする <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> / <a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 文とともに実行するように、呼び出しを防御します。制限された環境から <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> 関数を除去するだけでは不十分です &#8211; 制限されたコードは、やはり <code class="docutils literal"><span class="pre">raise</span> <span class="pre">SystemExit</span></code> を使うことができてしまいます。 <a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> を取り除くことも、合理的なオプションではありません; いくつかのライブラリコードはこれを使っていますし、これが利用できなくなると中断してしまうでしょう。</p>
+<p>制限された環境で実行するコードも、やはり <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> 関数を呼ぶことができることを知っておくことは大事なことです。制限されたコードがインタプリタから抜けだすことを許さないためには、いつでも、制限されたコードが、 <a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> 例外をキャッチする <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> / <a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 文とともに実行するように、呼び出しを防御します。制限された環境から <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> 関数を除去するだけでは不十分です – 制限されたコードは、やはり <code class="docutils literal"><span class="pre">raise</span> <span class="pre">SystemExit</span></code> を使うことができてしまいます。 <a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> を取り除くことも、合理的なオプションではありません; いくつかのライブラリコードはこれを使っていますし、これが利用できなくなると中断してしまうでしょう。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference external" href="http://grail.sourceforge.net/">Grail Home Page</a></dt>
-<dd><p class="first last">Grail はすべて Python で書かれた Web ブラウザです。これは、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールを、Python アプレットをサポートするのに使っていて、このモジュールの使用例として使うことができます。</p>
-</dd>
+<dd>Grail はすべて Python で書かれた Web ブラウザです。これは、 <a class="reference internal" href="#module-rexec" title="rexec: Basic restricted execution framework. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">rexec</span></code></a> モジュールを、Python アプレットをサポートするのに使っていて、このモジュールの使用例として使うことができます。</dd>
 </dl>
 </div>
 <div class="section" id="rexec-objects">
@@ -210,13 +205,13 @@
 <dl class="attribute">
 <dt id="rexec.RExec.nok_builtin_names">
 <code class="descclassname">RExec.</code><code class="descname">nok_builtin_names</code><a class="headerlink" href="#rexec.RExec.nok_builtin_names" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>制限された環境で実行するプログラムでは利用 <em>できない</em> であろう、組み込み関数の名前を格納しています。 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> に対する値は、 <code class="docutils literal"><span class="pre">('open',</span> <span class="pre">'reload',</span> <span class="pre">'__import__')</span></code> です。 (これは例外です。というのは、組み込み関数のほとんど大多数は無害だからです。この変数をオーバライドしたいサブクラスは、基本クラスからの値から始めて、追加した許されない関数を連結していかなければなりません &#8211; 危険な関数が新しく Python に追加された時は、それらも、このモジュールに追加します。)</p>
+<dd><p>制限された環境で実行するプログラムでは利用 <em>できない</em> であろう、組み込み関数の名前を格納しています。 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> に対する値は、 <code class="docutils literal"><span class="pre">('open',</span> <span class="pre">'reload',</span> <span class="pre">'__import__')</span></code> です。 (これは例外です。というのは、組み込み関数のほとんど大多数は無害だからです。この変数をオーバライドしたいサブクラスは、基本クラスからの値から始めて、追加した許されない関数を連結していかなければなりません – 危険な関数が新しく Python に追加された時は、それらも、このモジュールに追加します。)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="rexec.RExec.ok_builtin_modules">
 <code class="descclassname">RExec.</code><code class="descname">ok_builtin_modules</code><a class="headerlink" href="#rexec.RExec.ok_builtin_modules" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>安全にインポートできる組み込みモジュールの名前を格納しています。 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> に対する値は、 <code class="docutils literal"><span class="pre">('audioop',</span> <span class="pre">'array',</span> <span class="pre">'binascii',</span> <span class="pre">'cmath',</span> <span class="pre">'errno',</span> <span class="pre">'imageop',</span> <span class="pre">'marshal',</span> <span class="pre">'math',</span> <span class="pre">'md5',</span> <span class="pre">'operator',</span> <span class="pre">'parser',</span> <span class="pre">'regex',</span> <span class="pre">'select',</span> <span class="pre">'sha',</span> <span class="pre">'_sre',</span> <span class="pre">'strop',</span> <span class="pre">'struct',</span> <span class="pre">'time')</span></code> です。この変数をオーバーライドする場合も、同様な注意が適用されます &#8211; 基本クラスからの値を使って始めます。</p>
+<dd><p>安全にインポートできる組み込みモジュールの名前を格納しています。 <a class="reference internal" href="#rexec.RExec" title="rexec.RExec"><code class="xref py py-class docutils literal"><span class="pre">RExec</span></code></a> に対する値は、 <code class="docutils literal"><span class="pre">('audioop',</span> <span class="pre">'array',</span> <span class="pre">'binascii',</span> <span class="pre">'cmath',</span> <span class="pre">'errno',</span> <span class="pre">'imageop',</span> <span class="pre">'marshal',</span> <span class="pre">'math',</span> <span class="pre">'md5',</span> <span class="pre">'operator',</span> <span class="pre">'parser',</span> <span class="pre">'regex',</span> <span class="pre">'select',</span> <span class="pre">'sha',</span> <span class="pre">'_sre',</span> <span class="pre">'strop',</span> <span class="pre">'struct',</span> <span class="pre">'time')</span></code> です。この変数をオーバーライドする場合も、同様な注意が適用されます – 基本クラスからの値を使って始めます。</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -274,7 +269,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">30.1. <code class="docutils literal"><span class="pre">rexec</span></code> &#8212; 制限実行のフレームワーク</a><ul>
+<li><a class="reference internal" href="#">30.1. <code class="docutils literal"><span class="pre">rexec</span></code> — 制限実行のフレームワーク</a><ul>
 <li><a class="reference internal" href="#rexec-objects">30.1.1. RExec オブジェクト</a></li>
 <li><a class="reference internal" href="#defining-restricted-environments">30.1.2. 制限された環境を定義する</a></li>
 <li><a class="reference internal" href="#an-example">30.1.3. 例</a></li>
@@ -287,11 +282,11 @@
                         title="前の章へ">30. 制限実行 (restricted execution)</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="bastion.html"
-                        title="次の章へ">30.2. <code class="docutils literal"><span class="pre">Bastion</span></code> &#8212; オブジェクトに対するアクセスの制限</a></p>
+                        title="次の章へ">30.2. <code class="docutils literal"><span class="pre">Bastion</span></code> — オブジェクトに対するアクセスの制限</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/rexec.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/rexec.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -343,10 +338,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

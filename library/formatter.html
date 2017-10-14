@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>34.1. formatter — 汎用の出力書式化機構 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="34. 各種サービス" href="misc.html" />
     <link rel="next" title="35. MS Windows 固有のサービス" href="windows.html" />
     <link rel="prev" title="34. 各種サービス" href="misc.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,9 +77,9 @@
           <div class="body" role="main">
             
   <div class="section" id="module-formatter">
-<span id="formatter-generic-output-formatting"></span><h1>34.1. <a class="reference internal" href="#module-formatter" title="formatter: Generic output formatter and device interface."><code class="xref py py-mod docutils literal"><span class="pre">formatter</span></code></a> &#8212; 汎用の出力書式化機構<a class="headerlink" href="#module-formatter" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p id="index-0">このモジュールでは、二つのインタフェース定義を提供しており、それらの各インタフェースについて複数の実装を提供しています。 <em>formatter</em> インタフェースは <a class="reference internal" href="htmllib.html#module-htmllib" title="htmllib: A parser for HTML documents. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> モジュールの <a class="reference internal" href="htmlparser.html#HTMLParser.HTMLParser" title="HTMLParser.HTMLParser"><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスで使われており、 <em>writer</em>  インタフェースは formatter インタフェースを使う上で必要です。</p>
-<p>formatter オブジェクトはある抽象化された書式イベントの流れを writer オブジェクト上の特定の出力イベントに変換します。formatter はいくつかのスタック構造を管理することで、writer  オブジェクトの様々な属性を変更したり復元したりできるようにしています; このため、writer は相対的な変更や &#8220;元に戻す&#8221; 操作を処理できなくてもかまいません。writer の特定のプロパティのうち、formatter オブジェクトを介して制御できるのは、水平方向の字揃え、フォント、そして左マージンの字下げです。任意の、非排他的なスタイル設定を writer に提供するためのメカニズムも提供されています。さらに、段落分割のように、可逆でない書式化イベントの機能を提供するインタフェースもあります。</p>
+<span id="formatter-generic-output-formatting"></span><h1>34.1. <a class="reference internal" href="#module-formatter" title="formatter: Generic output formatter and device interface."><code class="xref py py-mod docutils literal"><span class="pre">formatter</span></code></a> — 汎用の出力書式化機構<a class="headerlink" href="#module-formatter" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p id="index-0">このモジュールでは、二つのインタフェース定義を提供しており、それらの各インタフェースについて複数の実装を提供しています。 <em>formatter</em> インタフェースは <a class="reference internal" href="htmllib.html#module-htmllib" title="htmllib: A parser for HTML documents. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">htmllib</span></code></a> モジュールの <a class="reference internal" href="htmlparser.html#HTMLParser.HTMLParser" title="HTMLParser.HTMLParser"><code class="xref py py-class docutils literal"><span class="pre">HTMLParser</span></code></a> クラスで使われており、 <em>writer</em>  インタフェースは formatter インタフェースを使う上で必要です。</p>
+<p>formatter オブジェクトはある抽象化された書式イベントの流れを writer オブジェクト上の特定の出力イベントに変換します。formatter はいくつかのスタック構造を管理することで、writer  オブジェクトの様々な属性を変更したり復元したりできるようにしています; このため、writer は相対的な変更や 「元に戻す」 操作を処理できなくてもかまいません。writer の特定のプロパティのうち、formatter オブジェクトを介して制御できるのは、水平方向の字揃え、フォント、そして左マージンの字下げです。任意の、非排他的なスタイル設定を writer に提供するためのメカニズムも提供されています。さらに、段落分割のように、可逆でない書式化イベントの機能を提供するインタフェースもあります。</p>
 <p>writer オブジェクトはデバイスインタフェースをカプセル化します。ファイル形式のような抽象デバイスも物理デバイス同様にサポートされています。ここで提供されている実装内容はすべて抽象デバイス上で動作します。デバイスインタフェースは formatter オブジェクトが管理しているプロパティを設定し、データを出力端に書き込めるようにします。</p>
 <div class="section" id="the-formatter-interface">
 <span id="formatter-interface"></span><h2>34.1.1. formatter インタフェース<a class="headerlink" href="#the-formatter-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -234,7 +230,7 @@
 <dl class="method">
 <dt id="formatter.writer.new_alignment">
 <code class="descclassname">writer.</code><code class="descname">new_alignment</code><span class="sig-paren">(</span><em>align</em><span class="sig-paren">)</span><a class="headerlink" href="#formatter.writer.new_alignment" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>字揃えのスタイルを設定します。<em>align</em> の値は任意のオブジェクトを取りえますが、慣習的な値は文字列または <code class="docutils literal"><span class="pre">None</span></code> で、<code class="docutils literal"><span class="pre">None</span></code> は writer の &#8220;好む&#8221; 字揃えを使うことを表します。慣習的な <em>align</em> の値は <code class="docutils literal"><span class="pre">'left'</span></code>、<code class="docutils literal"><span class="pre">'center'</span></code>、<code class="docutils literal"><span class="pre">'right'</span></code>、および <code class="docutils literal"><span class="pre">'justify'</span></code> です。</p>
+<dd><p>字揃えのスタイルを設定します。<em>align</em> の値は任意のオブジェクトを取りえますが、慣習的な値は文字列または <code class="docutils literal"><span class="pre">None</span></code> で、<code class="docutils literal"><span class="pre">None</span></code> は writer の 「好む」 字揃えを使うことを表します。慣習的な <em>align</em> の値は <code class="docutils literal"><span class="pre">'left'</span></code>、<code class="docutils literal"><span class="pre">'center'</span></code>、<code class="docutils literal"><span class="pre">'right'</span></code>、および <code class="docutils literal"><span class="pre">'justify'</span></code> です。</p>
 </dd></dl>
 
 <dl class="method">
@@ -330,7 +326,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">34.1. <code class="docutils literal"><span class="pre">formatter</span></code> &#8212; 汎用の出力書式化機構</a><ul>
+<li><a class="reference internal" href="#">34.1. <code class="docutils literal"><span class="pre">formatter</span></code> — 汎用の出力書式化機構</a><ul>
 <li><a class="reference internal" href="#the-formatter-interface">34.1.1. formatter インタフェース</a></li>
 <li><a class="reference internal" href="#formatter-implementations">34.1.2. formatter 実装</a></li>
 <li><a class="reference internal" href="#the-writer-interface">34.1.3. writer インタフェース</a></li>
@@ -348,7 +344,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/formatter.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/formatter.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -400,10 +396,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

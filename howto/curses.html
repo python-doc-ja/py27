@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Python で Curses プログラミング &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python HOWTO" href="index.html" />
     <link rel="next" title="ディスクリプタ HowTo ガイド" href="descriptor.html" />
     <link rel="prev" title="Python 3 への拡張モジュール移植" href="cporting.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -92,14 +88,14 @@
 </tbody>
 </table>
 <div class="topic">
-<p class="topic-title first">概要</p>
+<p class="topic-title first">Abstract</p>
 <p>このドキュメントでは Python 2.x でテキストモードプログラムを表示をコントロールする <a class="reference internal" href="../library/curses.html#module-curses" title="curses: An interface to the curses library, providing portable terminal handling. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">curses</span></code></a> 拡張モジュールを利用して書く方法について記述します。</p>
 </div>
 <div class="section" id="what-is-curses">
 <h2>curses ってなに?<a class="headerlink" href="#what-is-curses" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>curses ライブラリは、テキストベースの端末、VT100s や Linux コンソールや xterm や rxvt などの X11 プログラムから提供される端末エミュレータなどの端末に依存せずに、スクリーンに描画やキーボード処理する機能を供給します。表示端末は様々な制御コードをサポートしていて、カーソル移動、画面のスクロール、領域の消去などの一般的な操作を実行できます。端末によって大きく異なるコードを使うことがあるので、しばしば独自の癖があります。</p>
 <p>X ディスプレイが当たり前の今となっては、「なんでわざわざ？」と疑問に思うかもしれません。確かに文字表示端末は時代遅れな技術ではありますが、ニッチな領域が存在していて、意匠を凝らすことができるため、未だ価値あるものとなっています。その領域は例えば X サーバを持たない、小さな机上用コンピュータや組み込みの Unix です。他のものとしては OS インストーラーやカーネル設定ツールなどで、これらは X が利用できるようになる前に動作する必要があります。</p>
-<p>curses ライブラリは異なる端末の詳細を全て隠蔽し、プログラマに対して、重なり合わない複数のウィンドウを持つ抽象化されたディスプレイを提供します。ウィンドウの内容は様々な方法で変更されます &#8212; テキストの追加、消去、外観の変更 &#8212; そして curses ライブラリは送るべき制御コードを自動的に理解し、正しい出力を生成してくれます。</p>
+<p>curses ライブラリは異なる端末の詳細を全て隠蔽し、プログラマに対して、重なり合わない複数のウィンドウを持つ抽象化されたディスプレイを提供します。ウィンドウの内容は様々な方法で変更されます — テキストの追加、消去、外観の変更 — そして curses ライブラリは送るべき制御コードを自動的に理解し、正しい出力を生成してくれます。</p>
 <p>curses ライブラリは元々 BSD UNIX 向けに書かれました; 後の AT&amp;T から出た Unix System V バージョンで多くの機能と新機能が追加されました。BSD curses はいまやメンテナンスされておらず、これは AT&amp;T インターフェースのオープンソース実装である ncurses にとって置き換えられました。Linux や FreeBSD のようなオープンソース Unix を利用している場合は、おそらくシステムは ncurses を利用しています。現在のほとんどの商用 Unix は System V のコードを基にしているため、ここで述べる全ての関数が利用できるはずです。しかし、古いバージョンの curses を持ついくつかのプロプライエタリ Unix は全てには対応していないでしょう。</p>
 <p>curses モジュールの Windows 移植は作られていません。 Windows プラットフォーム上では、Fredrik Lundh が書いた Console モジュールを試してみてください。 Console モジュールはカーソル位置を指定してテキスト出力することができ、マウス、キーボード入力の両方を完全にサポートしていて、 <a class="reference external" href="http://effbot.org/zone/console-index.htm">http://effbot.org/zone/console-index.htm</a> から入手できます。</p>
 <div class="section" id="the-python-curses-module">
@@ -178,32 +174,22 @@
 <col width="59%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">形式</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">形式</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><p class="first last"><em>str</em> または <em>ch</em></p>
-</td>
-<td><p class="first last">文字列 <em>str</em> または文字 <em>ch</em> を現在位置に表示します</p>
-</td>
+<tr class="row-even"><td><em>str</em> または <em>ch</em></td>
+<td>文字列 <em>str</em> または文字 <em>ch</em> を現在位置に表示します</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><em>str</em> または <em>ch</em>, <em>attr</em></p>
-</td>
-<td><p class="first last">文字列 <em>str</em> または文字 <em>ch</em> を属性 <em>attr</em> を利用して現在位置に表示します</p>
-</td>
+<tr class="row-odd"><td><em>str</em> または <em>ch</em>, <em>attr</em></td>
+<td>文字列 <em>str</em> または文字 <em>ch</em> を属性 <em>attr</em> を利用して現在位置に表示します</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><em>y</em>, <em>x</em>, <em>str</em> または <em>ch</em></p>
-</td>
-<td><p class="first last">ウィンドウ内の位置 <em>y,x</em> に移動し <em>str</em> または <em>ch</em> を表示します</p>
-</td>
+<tr class="row-even"><td><em>y</em>, <em>x</em>, <em>str</em> または <em>ch</em></td>
+<td>ウィンドウ内の位置 <em>y,x</em> に移動し <em>str</em> または <em>ch</em> を表示します</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><em>y</em>, <em>x</em>, <em>str</em> または <em>ch</em>, <em>attr</em></p>
-</td>
-<td><p class="first last">ウィンドウ内の位置 <em>y,x</em> に移動し属性 <em>attr</em> を利用して <em>str</em> または <em>ch</em> を表示します</p>
-</td>
+<tr class="row-odd"><td><em>y</em>, <em>x</em>, <em>str</em> または <em>ch</em>, <em>attr</em></td>
+<td>ウィンドウ内の位置 <em>y,x</em> に移動し属性 <em>attr</em> を利用して <em>str</em> または <em>ch</em> を表示します</td>
 </tr>
 </tbody>
 </table>
@@ -221,36 +207,28 @@
 <col width="63%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">A_BLINK</span></code></td>
-<td><p class="first last">テキストを点滅</p>
-</td>
+<td>テキストを点滅</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">A_BOLD</span></code></td>
-<td><p class="first last">高輝度またはボールドテキスト</p>
-</td>
+<td>高輝度またはボールドテキスト</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">A_DIM</span></code></td>
-<td><p class="first last">低輝度テキスト</p>
-</td>
+<td>低輝度テキスト</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">A_REVERSE</span></code></td>
-<td><p class="first last">反転テキスト</p>
-</td>
+<td>反転テキスト</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-const docutils literal"><span class="pre">A_STANDOUT</span></code></td>
-<td><p class="first last">利用できる最良のハイライトモード</p>
-</td>
+<td>利用できる最良のハイライトモード</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-const docutils literal"><span class="pre">A_UNDERLINE</span></code></td>
-<td><p class="first last">下線付きテキスト</p>
-</td>
+<td>下線付きテキスト</td>
 </tr>
 </tbody>
 </table>
@@ -261,7 +239,7 @@
 </pre></div>
 </div>
 <p>curses ライブラリはカラー機能を提供している端末でのカラーもサポートしています。そんな端末の中で最も一般的なものは Linux コンソールで、color xterm もそれに続きます。</p>
-<p>カラーを利用するには、 <code class="xref py py-func docutils literal"><span class="pre">initscr()</span></code> を呼び出したすぐ後に <code class="xref py py-func docutils literal"><span class="pre">start_color()</span></code> 関数を呼びし、デフォルトカラーセットを初期化しなければいけません (<code class="xref py py-func docutils literal"><span class="pre">curses.wrapper.wrapper()</span></code> 関数はこれを自動的に行ないます)。一旦それを行えば、 <code class="xref py py-func docutils literal"><span class="pre">has_colors()</span></code> 関数は、端末が実際にカラーを表示できる場合に TRUE を返します。 (ノート: curses はカナダ/イギリスつづりに &#8216;colour&#8217; ではなくアメリカつづりの &#8216;color&#8217; を使います。イギリスつづりを使っている場合には、これらの関数のミススペルを修正する必要があります。)</p>
+<p>カラーを利用するには、 <code class="xref py py-func docutils literal"><span class="pre">initscr()</span></code> を呼び出したすぐ後に <code class="xref py py-func docutils literal"><span class="pre">start_color()</span></code> 関数を呼びし、デフォルトカラーセットを初期化しなければいけません (<code class="xref py py-func docutils literal"><span class="pre">curses.wrapper.wrapper()</span></code> 関数はこれを自動的に行ないます)。一旦それを行えば、 <code class="xref py py-func docutils literal"><span class="pre">has_colors()</span></code> 関数は、端末が実際にカラーを表示できる場合に TRUE を返します。 (ノート: curses はカナダ/イギリスつづりに 『colour』 ではなくアメリカつづりの 『color』 を使います。イギリスつづりを使っている場合には、これらの関数のミススペルを修正する必要があります。)</p>
 <p>curses ライブラリはたかだか有限個のフォラグラウンド(またはテキスト)カラーとバックグラウンドカラーペアを保持します。カラーペアに対応する属性値は <code class="xref py py-func docutils literal"><span class="pre">color_pair()</span></code> 関数で取得できます; これは <code class="xref py py-const docutils literal"><span class="pre">A_REVERSE</span></code> のような他の属性と OR 論理演算組み合わせることができます、ただし、繰り返しになりますが、組み合わせは全ての端末で保証されていません。</p>
 <p>例として、テキスト行をカラーペア 1 を使って表示します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">stdscr</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot;Pretty text&quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
@@ -351,7 +329,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/curses.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/curses.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -402,10 +380,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

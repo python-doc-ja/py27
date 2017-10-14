@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>11. データの永続化 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="11.1. pickle — Python オブジェクトの直列化" href="pickle.html" />
     <link rel="prev" title="10.12. macpath — Mac OS 9 のパス操作関数" href="macpath.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -85,7 +81,7 @@
 <p>この章で解説されるモジュールのリスト:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pickle.html">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> &#8212; Python オブジェクトの直列化</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="pickle.html">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> — Python オブジェクトの直列化</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pickle.html#relationship-to-other-python-modules">11.1.1. 他の Python モジュールとの関係</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pickle.html#data-stream-format">11.1.2. データストリームの形式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pickle.html#usage">11.1.3. 使用法</a></li>
@@ -100,34 +96,34 @@
 <li class="toctree-l2"><a class="reference internal" href="pickle.html#example">11.1.7. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pickle.html#module-cPickle">11.2. <code class="docutils literal"><span class="pre">cPickle</span></code> &#8212; より高速な <code class="docutils literal"><span class="pre">pickle</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="copy_reg.html">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> &#8212; <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="pickle.html#module-cPickle">11.2. <code class="docutils literal"><span class="pre">cPickle</span></code> — より高速な <code class="docutils literal"><span class="pre">pickle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="copy_reg.html">11.3. <code class="docutils literal"><span class="pre">copy_reg</span></code> — <code class="docutils literal"><span class="pre">pickle</span></code> サポート関数を登録する</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="copy_reg.html#example">11.3.1. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="shelve.html">11.4. <code class="docutils literal"><span class="pre">shelve</span></code> &#8212; Python オブジェクトの永続化</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="shelve.html">11.4. <code class="docutils literal"><span class="pre">shelve</span></code> — Python オブジェクトの永続化</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="shelve.html#restrictions">11.4.1. 制限事項</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shelve.html#example">11.4.2. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="marshal.html">11.5. <code class="docutils literal"><span class="pre">marshal</span></code> &#8212; 内部使用向けの Python オブジェクト整列化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="anydbm.html">11.6. <code class="docutils literal"><span class="pre">anydbm</span></code> &#8212; DBM 形式のデータベースへの汎用アクセスインタフェース</a></li>
-<li class="toctree-l1"><a class="reference internal" href="whichdb.html">11.7. <code class="docutils literal"><span class="pre">whichdb</span></code> &#8212; どの DBM モジュールがデータベースを作ったかを推測する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dbm.html">11.8. <code class="docutils literal"><span class="pre">dbm</span></code> &#8212; UNIX dbmのシンプルなインタフェース</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gdbm.html">11.9. <code class="docutils literal"><span class="pre">gdbm</span></code> &#8212; GNU による dbm の再実装</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dbhash.html">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> &#8212; BSD データベースライブラリへの DBM 形式のインタフェース</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="marshal.html">11.5. <code class="docutils literal"><span class="pre">marshal</span></code> — 内部使用向けの Python オブジェクト整列化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anydbm.html">11.6. <code class="docutils literal"><span class="pre">anydbm</span></code> — DBM 形式のデータベースへの汎用アクセスインタフェース</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whichdb.html">11.7. <code class="docutils literal"><span class="pre">whichdb</span></code> — どの DBM モジュールがデータベースを作ったかを推測する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbm.html">11.8. <code class="docutils literal"><span class="pre">dbm</span></code> — UNIX dbmのシンプルなインタフェース</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdbm.html">11.9. <code class="docutils literal"><span class="pre">gdbm</span></code> — GNU による dbm の再実装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbhash.html">11.10. <code class="docutils literal"><span class="pre">dbhash</span></code> — BSD データベースライブラリへの DBM 形式のインタフェース</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dbhash.html#database-objects">11.10.1. データベースオブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="bsddb.html">11.11. <code class="docutils literal"><span class="pre">bsddb</span></code> &#8212; Berkeley DB ライブラリへのインタフェース</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="bsddb.html">11.11. <code class="docutils literal"><span class="pre">bsddb</span></code> — Berkeley DB ライブラリへのインタフェース</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="bsddb.html#hash-btree-and-record-objects">11.11.1. ハッシュ、BTree、およびレコードオブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dumbdbm.html">11.12. <code class="docutils literal"><span class="pre">dumbdbm</span></code> &#8212; 可搬性のある DBM 実装</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="dumbdbm.html">11.12. <code class="docutils literal"><span class="pre">dumbdbm</span></code> — 可搬性のある DBM 実装</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dumbdbm.html#dumbdbm-objects">11.12.1. Dumbdbm オブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sqlite3.html">11.13. <code class="docutils literal"><span class="pre">sqlite3</span></code> &#8212; SQLite データベースに対する DB-API 2.0 インタフェース</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="sqlite3.html">11.13. <code class="docutils literal"><span class="pre">sqlite3</span></code> — SQLite データベースに対する DB-API 2.0 インタフェース</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sqlite3.html#module-functions-and-constants">11.13.1. モジュールの関数と定数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sqlite3.html#connection-objects">11.13.2. Connection オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sqlite3.html#cursor-objects">11.13.3. カーソルオブジェクト</a></li>
@@ -168,14 +164,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="macpath.html"
-                        title="前の章へ">10.12. <code class="docutils literal"><span class="pre">macpath</span></code> &#8212; Mac OS 9 のパス操作関数</a></p>
+                        title="前の章へ">10.12. <code class="docutils literal"><span class="pre">macpath</span></code> — Mac OS 9 のパス操作関数</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="pickle.html"
-                        title="次の章へ">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> &#8212; Python オブジェクトの直列化</a></p>
+                        title="次の章へ">11.1. <code class="docutils literal"><span class="pre">pickle</span></code> — Python オブジェクトの直列化</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/persistence.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/persistence.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -226,10 +222,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

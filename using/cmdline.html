@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>1. コマンドラインと環境 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python のセットアップと利用" href="index.html" />
     <link rel="next" title="2. Unix プラットフォームで Python を使う" href="unix.html" />
     <link rel="prev" title="Python のセットアップと利用" href="index.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -99,19 +95,14 @@
 <span id="using-on-interface-options"></span><h3>1.1.1. インターフェイスオプション<a class="headerlink" href="#interface-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>インタプリタのインターフェイスは UNIX シェルのものに似ていますが、より多くの起動方法を提供しています:</p>
 <ul class="simple">
-<li><p class="first">tty デバイスに接続された標準入力とともに起動された場合、 EOF (end-of-file 文字。 UNIX では <code class="kbd docutils literal"><span class="pre">Ctrl-D</span></code> で、Windows では <code class="kbd docutils literal"><span class="pre">Ctrl-Z,</span> <span class="pre">Enter</span></code> で入力可能) を受け取るまで、コマンドを受け取り、それを実行します。</p>
-</li>
-<li><p class="first">ファイル名引数か、標準入力としてファイルを渡された場合、そのファイルからスクリプトを読み込んで実行します。</p>
-</li>
-<li><p class="first">ディレクトリ名を引数に受け取った場合、そのディレクトリから適切な名前のスクリプトファイルを読み込んで実行します。</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">-c</span> <span class="pre">コマンド</span></code> オプションを利用して起動された場合、 <em>コマンド</em> として渡された Python の文を実行します。 <em>コマンド</em> の部分には改行で区切られた複数行を指定することもできます。行の先頭の空白文字は Python 文の重要要素です！</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">-m</span> <span class="pre">モジュール名</span></code> として Python モジュールパスにあるモジュールを指定された場合、そのモジュールをスクリプトとして実行します。</p>
-</li>
+<li>tty デバイスに接続された標準入力とともに起動された場合、 EOF (end-of-file 文字。 UNIX では <code class="kbd docutils literal"><span class="pre">Ctrl-D</span></code> で、Windows では <code class="kbd docutils literal"><span class="pre">Ctrl-Z,</span> <span class="pre">Enter</span></code> で入力可能) を受け取るまで、コマンドを受け取り、それを実行します。</li>
+<li>ファイル名引数か、標準入力としてファイルを渡された場合、そのファイルからスクリプトを読み込んで実行します。</li>
+<li>ディレクトリ名を引数に受け取った場合、そのディレクトリから適切な名前のスクリプトファイルを読み込んで実行します。</li>
+<li><code class="docutils literal"><span class="pre">-c</span> <span class="pre">コマンド</span></code> オプションを利用して起動された場合、 <em>コマンド</em> として渡された Python の文を実行します。 <em>コマンド</em> の部分には改行で区切られた複数行を指定することもできます。行の先頭の空白文字は Python 文の重要要素です！</li>
+<li><code class="docutils literal"><span class="pre">-m</span> <span class="pre">モジュール名</span></code> として Python モジュールパスにあるモジュールを指定された場合、そのモジュールをスクリプトとして実行します。</li>
 </ul>
 <p>非インタラクティブモードでは、入力の全体が実行前にパースされます。</p>
-<p>インタプリタによって消費されるオプションリストが終了したあと、継続する全ての引数は <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal"><span class="pre">sys.argv</span></code></a> に渡ります。 &#8211; ただし、添字 0 の先頭要素(<code class="docutils literal"><span class="pre">sys.argv[0]</span></code>) はプログラムのソース自体を示す文字列です。</p>
+<p>インタプリタによって消費されるオプションリストが終了したあと、継続する全ての引数は <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal"><span class="pre">sys.argv</span></code></a> に渡ります。 – ただし、添字 0 の先頭要素(<code class="docutils literal"><span class="pre">sys.argv[0]</span></code>) はプログラムのソース自体を示す文字列です。</p>
 <dl class="cmdoption">
 <dt id="cmdoption-c">
 <code class="descname">-c</code><code class="descclassname"> &lt;command&gt;</code><a class="headerlink" href="#cmdoption-c" title="この定義へのパーマリンク">¶</a></dt>
@@ -139,8 +130,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
 <dt><a class="reference internal" href="../library/runpy.html#runpy.run_module" title="runpy.run_module"><code class="xref py py-func docutils literal"><span class="pre">runpy.run_module()</span></code></a></dt>
-<dd><p class="first last">Python コードで直接使える等価な機能</p>
-</dd>
+<dd>Python コードで直接使える等価な機能</dd>
 </dl>
 <p class="last"><span class="target" id="index-46"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0338"><strong>PEP 338</strong></a> - モジュールをスクリプトとして実行する</p>
 </div>
@@ -164,8 +154,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="../library/runpy.html#runpy.run_path" title="runpy.run_path"><code class="xref py py-func docutils literal"><span class="pre">runpy.run_path()</span></code></a></dt>
-<dd><p class="first last">Python コードで直接使える等価な機能</p>
-</dd>
+<dd>Python コードで直接使える等価な機能</dd>
 </dl>
 </div>
 </dd></dl>
@@ -191,12 +180,12 @@ python -mtimeit -h <span class="c1"># for details</span>
 <div class="section" id="generic-options">
 <h3>1.1.2. 一般オプション<a class="headerlink" href="#generic-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="cmdoption">
-<dt id="cmdoption-?">
-<code class="descname">-?</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-?" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption">
+<code class="descname">-?</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption" title="この定義へのパーマリンク">¶</a></dt>
 <dt id="cmdoption-h">
 <code class="descname">-h</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-h" title="この定義へのパーマリンク">¶</a></dt>
-<dt id="cmdoption--help">
-<code class="descname">--help</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption--help" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-help">
+<code class="descname">--help</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-help" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>全コマンドラインオプションの短い説明を出力します。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span><code class="docutils literal"><span class="pre">--help</span></code> 形式</p>
@@ -204,10 +193,10 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-V">
-<code class="descname">-V</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-V" title="この定義へのパーマリンク">¶</a></dt>
-<dt id="cmdoption--version">
-<code class="descname">--version</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption--version" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-v">
+<code class="descname">-V</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-v" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-version">
+<code class="descname">--version</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-version" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Python のバージョン番号を表示して終了します。出力の例:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>Python <span class="m">2</span>.5.1
 </pre></div>
@@ -221,8 +210,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 <div class="section" id="miscellaneous-options">
 <h3>1.1.3. その他のオプション<a class="headerlink" href="#miscellaneous-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="cmdoption">
-<dt id="cmdoption-B">
-<code class="descname">-B</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-B" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-b">
+<code class="descname">-B</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-b" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Python は import したソースモジュールの <code class="docutils literal"><span class="pre">.pyc</span></code> や <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルの作成を試みません。 <span class="target" id="index-47"></span><a class="reference internal" href="#envvar-PYTHONDONTWRITEBYTECODE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDONTWRITEBYTECODE</span></code></a> 環境変数も参照してください。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
@@ -236,8 +225,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-E">
-<code class="descname">-E</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-E" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-e">
+<code class="descname">-E</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-e" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>全ての <span class="target" id="index-49"></span><code class="xref std std-envvar docutils literal"><span class="pre">PYTHON*</span></code> 環境変数を無視します。例えば、 <span class="target" id="index-50"></span><a class="reference internal" href="#envvar-PYTHONPATH"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONPATH</span></code></a> や <span class="target" id="index-51"></span><a class="reference internal" href="#envvar-PYTHONHOME"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHOME</span></code></a> などです。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
@@ -252,50 +241,45 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <span class="target" id="using-on-optimizations"></span><dl class="cmdoption">
-<dt id="cmdoption-O">
-<code class="descname">-O</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-O" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-o">
+<code class="descname">-O</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-o" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>基本的な最適化を有効にします。コンパイル済み (<a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a>) ファイルの拡張子を <code class="docutils literal"><span class="pre">.pyc</span></code> から <code class="docutils literal"><span class="pre">.pyo</span></code> に変更します。 <span class="target" id="index-54"></span><a class="reference internal" href="#envvar-PYTHONOPTIMIZE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONOPTIMIZE</span></code></a> も参照してください。</p>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-OO">
-<code class="descname">-OO</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-OO" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#cmdoption-O"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> の最適化に加えて、ドキュメンテーション文字列の除去も行ないます。</p>
+<dt id="cmdoption-oo">
+<code class="descname">-OO</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-oo" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="#cmdoption-o"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> の最適化に加えて、ドキュメンテーション文字列の除去も行ないます。</p>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-Q">
-<code class="descname">-Q</code><code class="descclassname"> &lt;arg&gt;</code><a class="headerlink" href="#cmdoption-Q" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-q">
+<code class="descname">-Q</code><code class="descclassname"> &lt;arg&gt;</code><a class="headerlink" href="#cmdoption-q" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>除算制御。引数は以下のうち1つでなければなりません:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">old</span></code></dt>
-<dd><p class="first last">int/int と long/long の除算は、 int か long を返します。 (<em>デフォルト</em>)</p>
-</dd>
+<dd>int/int と long/long の除算は、 int か long を返します。 (<em>デフォルト</em>)</dd>
 <dt><code class="docutils literal"><span class="pre">new</span></code></dt>
-<dd><p class="first last">新しい除算方式。 int/int や long/long の除算が float を返します。</p>
-</dd>
+<dd>新しい除算方式。 int/int や long/long の除算が float を返します。</dd>
 <dt><code class="docutils literal"><span class="pre">warn</span></code></dt>
-<dd><p class="first last">古い除算方式で、 int/int や long/long 除算に警告を表示します。</p>
-</dd>
+<dd>古い除算方式で、 int/int や long/long 除算に警告を表示します。</dd>
 <dt><code class="docutils literal"><span class="pre">warnall</span></code></dt>
-<dd><p class="first last">古い除算方式で、全ての除算演算子に対して警告を表示します。</p>
-</dd>
+<dd>古い除算方式で、全ての除算演算子に対して警告を表示します。</dd>
 </dl>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
 <dt><code class="file docutils literal"><span class="pre">Tools/scripts/fixdiv.py</span></code></dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">warnall</span></code> を使っています.</p>
-</dd>
+<dd><code class="docutils literal"><span class="pre">warnall</span></code> を使っています.</dd>
 </dl>
-<p class="last"><span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0238"><strong>PEP 238</strong></a> &#8211; Changing the division operator</p>
+<p class="last"><span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0238"><strong>PEP 238</strong></a> – Changing the division operator</p>
 </div>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-R">
-<code class="descname">-R</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-R" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ハッシュのランダム化をします。文字列、バイト列、datetime オブジェクトの <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> 値は予測不可能なランダム値で &#8220;ソルト化&#8221; されます。 ハッシュ値は単独の Python プロセス内では定数であり続けますが、Python を繰り返し起動する毎に、予測できなくなります。</p>
+<dt id="cmdoption-r">
+<code class="descname">-R</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-r" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ハッシュのランダム化をします。文字列、バイト列、datetime オブジェクトの <a class="reference internal" href="../reference/datamodel.html#object.__hash__" title="object.__hash__"><code class="xref py py-meth docutils literal"><span class="pre">__hash__()</span></code></a> 値は予測不可能なランダム値で 「ソルト化」 されます。 ハッシュ値は単独の Python プロセス内では定数であり続けますが、Python を繰り返し起動する毎に、予測できなくなります。</p>
 <p>これは、慎重に選ばれた入力で辞書挿入の最悪性能 O(n^2) 複雑性を悪用することで引き起こされるサービス妨害 (denial-of-service) に対する保護を目的とするものです。詳細は <a class="reference external" href="http://www.ocert.org/advisories/ocert-2011-003.html">http://www.ocert.org/advisories/ocert-2011-003.html</a> を参照してください。</p>
 <p>ハッシュ値の変更は辞書からキーを取り出す順序に影響します。  Python はこの順序付けを保証していませんが (そして通常 32-bit と 64-bit の間でも異なります)、たくさんの実世界でのコードが、ランダム化がデフォルトで無効というこの保障されない振る舞いに、暗黙で依存しています。</p>
 <p><span class="target" id="index-55"></span><a class="reference internal" href="#envvar-PYTHONHASHSEED"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHASHSEED</span></code></a> も参照してください。</p>
@@ -313,13 +297,13 @@ python -mtimeit -h <span class="c1"># for details</span>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><span class="target" id="index-11"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> &#8211; Per user site-packages directory</p>
+<p class="last"><span class="target" id="index-11"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> – Per user site-packages directory</p>
 </div>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-S">
-<code class="descname">-S</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-S" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id1">
+<code class="descname">-S</code><code class="descclassname"></code><a class="headerlink" href="#id1" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> モジュールのインポートを無効にし、そのモジュールで行われている場所独自の <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> 操作を無効にします。</p>
 </dd></dl>
 
@@ -338,42 +322,36 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-v">
-<code class="descname">-v</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-v" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id2">
+<code class="descname">-v</code><code class="descclassname"></code><a class="headerlink" href="#id2" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>モジュールが初期化されるたびに、それがどこ(ファイル名やビルトインモジュール) からロードされたのかを示すメッセージを出力します。 二重に指定された場合(<code class="xref std std-option docutils literal"><span class="pre">-vv</span></code>)は、モジュールを検索するときにチェックされた各ファイルに対してメッセージを出力します。また、終了時のモジュールクリーンアップに関する情報も提供します。 <span class="target" id="index-57"></span><a class="reference internal" href="#envvar-PYTHONVERBOSE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONVERBOSE</span></code></a> も参照してください。</p>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-W">
-<code class="descname">-W</code><code class="descclassname"> arg</code><a class="headerlink" href="#cmdoption-W" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-w">
+<code class="descname">-W</code><code class="descclassname"> arg</code><a class="headerlink" href="#cmdoption-w" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>警告制御。 Python の警告機構はデフォルトでは警告メッセージを <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal"><span class="pre">sys.stderr</span></code></a> に出力します。典型的な警告メッセージは次のような形式です:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>file:line: category: message
 </pre></div>
 </div>
 <p>デフォルトでは、各警告は発生したソース行ごとに一度だけ表示されます。このオプションは、警告をどれくらいの頻度で表示するかを制御します。</p>
-<p>複数の <a class="reference internal" href="#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションを指定することができます。警告が1つ以上のオプションとマッチしたときは、最後にマッチしたオプションのアクションが有効になります。不正な <a class="reference internal" href="#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションは無視されます (最初の警告が発生したときに、不正なオプションに対する警告メッセージが表示されます)。</p>
+<p>複数の <a class="reference internal" href="#cmdoption-w"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションを指定することができます。警告が1つ以上のオプションとマッチしたときは、最後にマッチしたオプションのアクションが有効になります。不正な <a class="reference internal" href="#cmdoption-w"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションは無視されます (最初の警告が発生したときに、不正なオプションに対する警告メッセージが表示されます)。</p>
 <p>Python 2.7 から、 <a class="reference internal" href="../library/exceptions.html#exceptions.DeprecationWarning" title="exceptions.DeprecationWarning"><code class="xref py py-exc docutils literal"><span class="pre">DeprecationWarning</span></code></a> とその子クラスはデフォルトで無視されます。 <code class="xref std std-option docutils literal"><span class="pre">-Wd</span></code> オプションを指定して有効にすることができます。</p>
 <p>警告は Python プログラムの中から <a class="reference internal" href="../library/warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal"><span class="pre">warnings</span></code></a> モジュールを利用して制御することができます。</p>
 <p>引数の一番シンプルな形は、以下のアクション文字列(かそのユニークな短縮形) を単体で利用するものです。</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">ignore</span></code></dt>
-<dd><p class="first last">全ての警告を無視する。</p>
-</dd>
+<dd>全ての警告を無視する。</dd>
 <dt><code class="docutils literal"><span class="pre">default</span></code></dt>
-<dd><p class="first last">明示的にデフォルトの動作(ソース行ごとに1度警告を表示する)を要求する。</p>
-</dd>
+<dd>明示的にデフォルトの動作(ソース行ごとに1度警告を表示する)を要求する。</dd>
 <dt><code class="docutils literal"><span class="pre">all</span></code></dt>
-<dd><p class="first last">警告が発生するたびに表示する (これは、ループの中などで同じソース行により繰り返し警告が発生された場合に、大量のメッセージを表示します)。</p>
-</dd>
+<dd>警告が発生するたびに表示する (これは、ループの中などで同じソース行により繰り返し警告が発生された場合に、大量のメッセージを表示します)。</dd>
 <dt><code class="docutils literal"><span class="pre">module</span></code></dt>
-<dd><p class="first last">各モジュールで最初に発生した警告を表示する。</p>
-</dd>
+<dd>各モジュールで最初に発生した警告を表示する。</dd>
 <dt><code class="docutils literal"><span class="pre">once</span></code></dt>
-<dd><p class="first last">プログラムで最初に発生した警告だけを表示する。</p>
-</dd>
+<dd>プログラムで最初に発生した警告だけを表示する。</dd>
 <dt><code class="docutils literal"><span class="pre">error</span></code></dt>
-<dd><p class="first last">警告メッセージを表示する代わりに例外を発生させる。</p>
-</dd>
+<dd>警告メッセージを表示する代わりに例外を発生させる。</dd>
 </dl>
 <p>引数の完全形は次のようになります:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>action:message:category:module:line
@@ -382,8 +360,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 <p>ここで、 <em>action</em> は上で説明されたものですが、残りのフィールドにマッチしたメッセージにだけ適用されます。空のフィールドは全ての値にマッチします。空のフィールドの後ろは除外されます。 <em>message</em> フィールドは表示される警告メッセージの先頭に、大文字小文字を無視してマッチします。 <em>category</em> フィールドは警告カテゴリにマッチします。これはクラス名でなければなりません。 <em>category</em> のマッチは、メッセージの実際の警告カテゴリーが指定された警告カテゴリーのサブクラスかどうかをチェックします。完全なクラス名を指定しなければなりません。 <em>module</em> フィールドは、(完全正規形(fully-qualified)の) モジュール名に対してマッチします。このマッチは大文字小文字を区別します。 <em>line</em> フィールドは行番号にマッチします。 0 は全ての行番号にマッチし、省略した時と同じです。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p><a class="reference internal" href="../library/warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal"><span class="pre">warnings</span></code></a> &#8211; 警告モジュール</p>
-<p><span class="target" id="index-14"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0230"><strong>PEP 230</strong></a> &#8211; Warning framework</p>
+<p><a class="reference internal" href="../library/warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal"><span class="pre">warnings</span></code></a> – 警告モジュール</p>
+<p><span class="target" id="index-14"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0230"><strong>PEP 230</strong></a> – Warning framework</p>
 <p class="last"><span class="target" id="index-15"></span><a class="reference internal" href="#envvar-PYTHONWARNINGS"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONWARNINGS</span></code></a></p>
 </div>
 </dd></dl>
@@ -411,14 +389,14 @@ python -mtimeit -h <span class="c1"># for details</span>
 <div class="section" id="options-you-shouldn-t-use">
 <h3>1.1.4. 使うべきでないオプション<a class="headerlink" href="#options-you-shouldn-t-use" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="cmdoption">
-<dt id="cmdoption-J">
-<code class="descname">-J</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-J" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-j">
+<code class="descname">-J</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-j" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference external" href="http://www.jython.org/">Jython</a> のために予約されています。</p>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-U">
-<code class="descname">-U</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-U" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id3">
+<code class="descname">-U</code><code class="descclassname"></code><a class="headerlink" href="#id3" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>全ての文字列リテラルを、全部 unicode にします。このオプションはあなたの世界を破壊してしまうかもしれないので、このオプションを使おうとしないでください。これは、通常とは違うマジックナンバーを使って <code class="docutils literal"><span class="pre">.pyc</span></code> ファイルを生成します。ファイルの先頭に次のように書いて、このオプションの代わりにモジュール単位で unicode リテラルを有効にできます。</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>from __future__ import unicode_literals
 </pre></div>
@@ -427,8 +405,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-X">
-<code class="descname">-X</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-X" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id4">
+<code class="descname">-X</code><code class="descclassname"></code><a class="headerlink" href="#id4" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>別の Python の実装が独自の目的で利用するために予約されています。</p>
 </dd></dl>
 
@@ -468,7 +446,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONOPTIMIZE">
 <code class="descname">PYTHONOPTIMIZE</code><a class="headerlink" href="#envvar-PYTHONOPTIMIZE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#cmdoption-O"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#cmdoption-O"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> を複数回指定したのと同じになります。</p>
+<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#cmdoption-o"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#cmdoption-o"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> を複数回指定したのと同じになります。</p>
 </dd></dl>
 
 <dl class="envvar">
@@ -493,7 +471,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONVERBOSE">
 <code class="descname">PYTHONVERBOSE</code><a class="headerlink" href="#envvar-PYTHONVERBOSE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#cmdoption-v"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#cmdoption-v"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> を複数回指定したのと同じになります。</p>
+<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#id2"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#id2"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> を複数回指定したのと同じになります。</p>
 </dd></dl>
 
 <dl class="envvar">
@@ -505,7 +483,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONDONTWRITEBYTECODE">
 <code class="descname">PYTHONDONTWRITEBYTECODE</code><a class="headerlink" href="#envvar-PYTHONDONTWRITEBYTECODE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この環境変数が設定されていると、 Python はソースモジュールの import 時に <code class="docutils literal"><span class="pre">.pyc</span></code>, <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。これは <a class="reference internal" href="#cmdoption-B"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> オプションを指定したのと等価です。</p>
+<dd><p>この環境変数が設定されていると、 Python はソースモジュールの import 時に <code class="docutils literal"><span class="pre">.pyc</span></code>, <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。これは <a class="reference internal" href="#cmdoption-b"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> オプションを指定したのと等価です。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
@@ -514,7 +492,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONHASHSEED">
 <code class="descname">PYTHONHASHSEED</code><a class="headerlink" href="#envvar-PYTHONHASHSEED" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この変数が <code class="docutils literal"><span class="pre">random</span></code> に設定された場合  <a class="reference internal" href="#cmdoption-R"><code class="xref std std-option docutils literal"><span class="pre">-R</span></code></a> を指定するのと同じ効果が得られます: 乱数値が str、bytes ならびに datetime オブジェクトのハッシュのシードに使われます。</p>
+<dd><p>この変数が <code class="docutils literal"><span class="pre">random</span></code> に設定された場合  <a class="reference internal" href="#cmdoption-r"><code class="xref std std-option docutils literal"><span class="pre">-R</span></code></a> を指定するのと同じ効果が得られます: 乱数値が str、bytes ならびに datetime オブジェクトのハッシュのシードに使われます。</p>
 <p><span class="target" id="index-65"></span><a class="reference internal" href="#envvar-PYTHONHASHSEED"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONHASHSEED</span></code></a> が整数値に設定された場合、その値はハッシュランダム化が扱う型の hash() 生成の固定シードに使われます。</p>
 <p>その目的は再現性のあるハッシュを可能にすることです。例えばインタープリタ自身の自己テストや Python プロセスのクラスタでハッシュ値を共有するのに用います。</p>
 <p>整数は [0,4294967295] の十進数でなければなりません。0 を指定するとハッシュはハッシュランダム化を無効にしたのと同じ値になります。</p>
@@ -541,7 +519,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><span class="target" id="index-24"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> &#8211; Per user site-packages directory</p>
+<p class="last"><span class="target" id="index-24"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> – Per user site-packages directory</p>
 </div>
 </dd></dl>
 
@@ -554,7 +532,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><span class="target" id="index-25"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> &#8211; Per user site-packages directory</p>
+<p class="last"><span class="target" id="index-25"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> – Per user site-packages directory</p>
 </div>
 </dd></dl>
 
@@ -567,7 +545,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONWARNINGS">
 <code class="descname">PYTHONWARNINGS</code><a class="headerlink" href="#envvar-PYTHONWARNINGS" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>これは <a class="reference internal" href="#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションと等価です。カンマ区切りの文字列を設定するのは <a class="reference internal" href="#cmdoption-W"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> を複数回指定するのと等価です。</p>
+<dd><p>これは <a class="reference internal" href="#cmdoption-w"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> オプションと等価です。カンマ区切りの文字列を設定するのは <a class="reference internal" href="#cmdoption-w"><code class="xref std std-option docutils literal"><span class="pre">-W</span></code></a> を複数回指定するのと等価です。</p>
 </dd></dl>
 
 <dl class="envvar">
@@ -641,7 +619,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/using/cmdline.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/using/cmdline.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -692,10 +670,10 @@ python -mtimeit -h <span class="c1"># for details</span>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>8.18. pprint — データ出力の整然化 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="8. データ型" href="datatypes.html" />
     <link rel="next" title="8.19. repr — もう一つの repr() の実装" href="repr.html" />
     <link rel="prev" title="8.17. copy — 浅いコピーおよび深いコピー操作" href="copy.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,10 +77,10 @@
           <div class="body" role="main">
             
   <div class="section" id="module-pprint">
-<span id="pprint-data-pretty-printer"></span><h1>8.18. <a class="reference internal" href="#module-pprint" title="pprint: Data pretty printer."><code class="xref py py-mod docutils literal"><span class="pre">pprint</span></code></a> &#8212; データ出力の整然化<a class="headerlink" href="#module-pprint" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="pprint-data-pretty-printer"></span><h1>8.18. <a class="reference internal" href="#module-pprint" title="pprint: Data pretty printer."><code class="xref py py-mod docutils literal"><span class="pre">pprint</span></code></a> — データ出力の整然化<a class="headerlink" href="#module-pprint" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/pprint.py">Lib/pprint.py</a></p>
 <hr class="docutils" />
-<p><a class="reference internal" href="#module-pprint" title="pprint: Data pretty printer."><code class="xref py py-mod docutils literal"><span class="pre">pprint</span></code></a> モジュールを使うと、Pythonの任意のデータ構造をインタープリタへの入力で使われる形式にして&#8221;pretty-print&#8221;できます。フォーマット化された構造の中にPythonの基本的なタイプではないオブジェクトがあるなら、表示できないかもしれません。 Pythonの定数として表現できない多くの組み込みオブジェクトと同様、ファイル、ソケット、クラスあるいはインスタンスのようなオブジェクトが含まれていた場合は出力できません。</p>
+<p><a class="reference internal" href="#module-pprint" title="pprint: Data pretty printer."><code class="xref py py-mod docutils literal"><span class="pre">pprint</span></code></a> モジュールを使うと、Pythonの任意のデータ構造をインタープリタへの入力で使われる形式にして」pretty-print」できます。フォーマット化された構造の中にPythonの基本的なタイプではないオブジェクトがあるなら、表示できないかもしれません。 Pythonの定数として表現できない多くの組み込みオブジェクトと同様、ファイル、ソケット、クラスあるいはインスタンスのようなオブジェクトが含まれていた場合は出力できません。</p>
 <p>可能であればオブジェクトをフォーマット化して1行に出力しますが、与えられた幅に合わないなら複数行に分けて出力します。無理に幅を設定したいなら、 <a class="reference internal" href="#pprint.PrettyPrinter" title="pprint.PrettyPrinter"><code class="xref py py-class docutils literal"><span class="pre">PrettyPrinter</span></code></a> オブジェクトを作成して明示してください。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span>辞書は出力を計算する前にキーでソートされます。 2.5 以前では、辞書は 1 行以上の出力が必要な場合にのみソートされていましたがドキュメントには書かれていませんでした。</p>
@@ -151,7 +147,7 @@
 <dl class="function">
 <dt id="pprint.isreadable">
 <code class="descclassname">pprint.</code><code class="descname">isreadable</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pprint.isreadable" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-0"><em>object</em> をフォーマット化して出力できる（&#8221;readable&#8221;）か、あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> を使って値を再構成できるかを返します。再帰的なオブジェクトに対しては常に <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
+<dd><p id="index-0"><em>object</em> をフォーマット化して出力できる（」readable」）か、あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> を使って値を再構成できるかを返します。再帰的なオブジェクトに対しては常に <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="o">.</span><span class="n">isreadable</span><span class="p">(</span><span class="n">stuff</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
@@ -194,7 +190,7 @@
 <dl class="method">
 <dt id="pprint.PrettyPrinter.isreadable">
 <code class="descclassname">PrettyPrinter.</code><code class="descname">isreadable</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pprint.PrettyPrinter.isreadable" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-1"><em>object</em> をフォーマット化して出力できる（&#8221;readable&#8221;）か、あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> を使って値を再構成できるかを返します。これは再帰的なオブジェクトに対して <code class="docutils literal"><span class="pre">False</span></code> を返すことに注意して下さい。もし <a class="reference internal" href="#pprint.PrettyPrinter" title="pprint.PrettyPrinter"><code class="xref py py-class docutils literal"><span class="pre">PrettyPrinter</span></code></a> の <em>depth</em> パラメータが設定されていて、オブジェクトのレベルが設定よりも深かったら、 <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
+<dd><p id="index-1"><em>object</em> をフォーマット化して出力できる（」readable」）か、あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> を使って値を再構成できるかを返します。これは再帰的なオブジェクトに対して <code class="docutils literal"><span class="pre">False</span></code> を返すことに注意して下さい。もし <a class="reference internal" href="#pprint.PrettyPrinter" title="pprint.PrettyPrinter"><code class="xref py py-class docutils literal"><span class="pre">PrettyPrinter</span></code></a> の <em>depth</em> パラメータが設定されていて、オブジェクトのレベルが設定よりも深かったら、 <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
 </dd></dl>
 
 <dl class="method">
@@ -257,7 +253,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">8.18. <code class="docutils literal"><span class="pre">pprint</span></code> &#8212; データ出力の整然化</a><ul>
+<li><a class="reference internal" href="#">8.18. <code class="docutils literal"><span class="pre">pprint</span></code> — データ出力の整然化</a><ul>
 <li><a class="reference internal" href="#prettyprinter-objects">8.18.1. PrettyPrinter オブジェクト</a></li>
 <li><a class="reference internal" href="#pprint-example">8.18.2. pprint の例</a></li>
 </ul>
@@ -266,14 +262,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="copy.html"
-                        title="前の章へ">8.17. <code class="docutils literal"><span class="pre">copy</span></code> &#8212; 浅いコピーおよび深いコピー操作</a></p>
+                        title="前の章へ">8.17. <code class="docutils literal"><span class="pre">copy</span></code> — 浅いコピーおよび深いコピー操作</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="repr.html"
-                        title="次の章へ">8.19. <code class="docutils literal"><span class="pre">repr</span></code> &#8212; もう一つの <code class="docutils literal"><span class="pre">repr()</span></code> の実装</a></p>
+                        title="次の章へ">8.19. <code class="docutils literal"><span class="pre">repr</span></code> — もう一つの <code class="docutils literal"><span class="pre">repr()</span></code> の実装</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/pprint.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/pprint.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -325,10 +321,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

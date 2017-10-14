@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>28.15. user — ユーザー設定のフック &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.16. fpectl — 浮動小数点例外の制御" href="fpectl.html" />
     <link rel="prev" title="28.14. site — サイト固有の設定フック" href="site.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,16 +77,16 @@
           <div class="body" role="main">
             
   <div class="section" id="module-user">
-<span id="user-user-specific-configuration-hook"></span><h1>28.15. <a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> &#8212; ユーザー設定のフック<a class="headerlink" href="#module-user" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="user-user-specific-configuration-hook"></span><h1>28.15. <a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> — ユーザー設定のフック<a class="headerlink" href="#module-user" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
-<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールは Python 3 で削除されました。</p>
+<p><span class="versionmodified">バージョン 2.6 で撤廃: </span><a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールは Python 3 で削除されました。</p>
 </div>
 <p id="index-0">ポリシーとして、Python は起動時にユーザー毎の設定を行うコードを実行することはしません (ただし対話型セッションで環境変数 <span class="target" id="index-6"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSTARTUP"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONSTARTUP</span></code></a> が設定されていた場合にはそのスクリプトを実行します)。</p>
 <p>しかしながら、プログラムやサイトによっては、プログラムが要求した時にユーザーごとの標準設定ファイルを実行できると便利なこともあります。このモジュールはそのような機構を実装しています。この機構を利用したいプログラムでは、以下の文を実行してください:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">user</span>
 </pre></div>
 </div>
-<p id="index-2"><a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールはユーザーのホームディレクトリの <code class="file docutils literal"><span class="pre">.pythonrc.py</span></code> ファイルを探し、オープンできるなら (<a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールの) グローバル名前空間で実行します(<a class="reference internal" href="functions.html#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> を利用します)。この段階で発生したエラーは catch されません。 <a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールを import したプログラムに伝播します。ホームディレクトリは環境変数 <span class="target" id="index-7"></span><code class="xref std std-envvar docutils literal"><span class="pre">HOME</span></code> が仮定されていますが、もし設定されていなければカレントディレクトリが使われます。</p>
+<p id="index-2"><a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールはユーザーのホームディレクトリの <code class="file docutils literal"><span class="pre">.pythonrc.py</span></code> ファイルを探し、オープンできるなら (<a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールの) グローバル名前空間で実行します(<a class="reference internal" href="functions.html#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> を利用します)。この段階で発生したエラーは catch されません。 <a class="reference internal" href="#module-user" title="user: A standard way to reference user-specific modules. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">user</span></code></a> モジュールを import したプログラムに伝播します。ホームディレクトリは環境変数 <span class="target" id="index-7"></span><code class="xref std std-envvar docutils literal"><span class="pre">HOME</span></code> が仮定されていますが、もし設定されていなければカレントディレクトリが使われます。</p>
 <p>ユーザーの <code class="file docutils literal"><span class="pre">.pythonrc.py</span></code> では Python のバージョンに従って異なる動作を行うために <code class="docutils literal"><span class="pre">sys.version</span></code> のテストを行うことが考えられます。</p>
 <p>ユーザーへの警告: <code class="file docutils literal"><span class="pre">.pythonrc.py</span></code> ファイルに書く内容には慎重になってください。どのプログラムが利用しているかわからない状況で、標準のモジュールや関数の振る舞いを変えることはおすすめできません。</p>
 <p>この機構を使おうとするプログラマへの提案: あなたのパッケージ向けのオプションをユーザーが設定できるようにするシンプルな方法は、 <code class="file docutils literal"><span class="pre">.pythonrc.py</span></code> ファイルで変数を定義して、あなたのプログラムでテストする方法です。たとえば、 <code class="xref py py-mod docutils literal"><span class="pre">spam</span></code> モジュールでメッセージ出力のレベルを変える <code class="docutils literal"><span class="pre">user.spam_verbose</span></code> 変数を参照するには以下のようにします:</p>
@@ -107,8 +103,7 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> モジュール</dt>
-<dd><p class="first last">サイト毎のカスタマイズを行う機構</p>
-</dd>
+<dd>サイト毎のカスタマイズを行う機構</dd>
 </dl>
 </div>
 </div>
@@ -121,14 +116,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="site.html"
-                        title="前の章へ">28.14. <code class="docutils literal"><span class="pre">site</span></code> &#8212; サイト固有の設定フック</a></p>
+                        title="前の章へ">28.14. <code class="docutils literal"><span class="pre">site</span></code> — サイト固有の設定フック</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="fpectl.html"
-                        title="次の章へ">28.16. <code class="docutils literal"><span class="pre">fpectl</span></code> &#8212; 浮動小数点例外の制御</a></p>
+                        title="次の章へ">28.16. <code class="docutils literal"><span class="pre">fpectl</span></code> — 浮動小数点例外の制御</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/user.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/user.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -180,10 +175,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

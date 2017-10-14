@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>17. プロセス間通信とネットワーク &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="17.1. subprocess — サブプロセス管理" href="subprocess.html" />
     <link rel="prev" title="16.9. rlcompleter — GNU readline向け補完関数" href="rlcompleter.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -86,7 +82,7 @@
 <p>この章で解説されるモジュールのリスト:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="subprocess.html">17.1. <code class="docutils literal"><span class="pre">subprocess</span></code> &#8212; サブプロセス管理</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="subprocess.html">17.1. <code class="docutils literal"><span class="pre">subprocess</span></code> — サブプロセス管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="subprocess.html#using-the-subprocess-module">17.1.1. <code class="docutils literal"><span class="pre">subprocess</span></code> モジュールを使う</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="subprocess.html#frequently-used-arguments">17.1.1.1. よく使われる引数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="subprocess.html#popen-constructor">17.1.1.2. Popen コンストラクタ</a></li>
@@ -114,12 +110,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="socket.html">17.2. <code class="docutils literal"><span class="pre">socket</span></code> &#8212; 低レベルネットワークインターフェース</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="socket.html">17.2. <code class="docutils literal"><span class="pre">socket</span></code> — 低レベルネットワークインターフェース</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="socket.html#socket-objects">17.2.1. socket オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="socket.html#example">17.2.2. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ssl.html">17.3. <code class="docutils literal"><span class="pre">ssl</span></code> &#8212; ソケットオブジェクトに対する TLS/SSL ラッパー</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="ssl.html">17.3. <code class="docutils literal"><span class="pre">ssl</span></code> — ソケットオブジェクトに対する TLS/SSL ラッパー</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ssl.html#functions-constants-and-exceptions">17.3.1. 関数、定数、例外</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ssl.html#socket-creation">17.3.1.1. ソケットの作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ssl.html#context-creation">17.3.1.2. コンテキストの作成</a></li>
@@ -157,21 +153,21 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="signal.html">17.4. <code class="docutils literal"><span class="pre">signal</span></code> &#8212; 非同期イベントにハンドラを設定する</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="signal.html">17.4. <code class="docutils literal"><span class="pre">signal</span></code> — 非同期イベントにハンドラを設定する</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="signal.html#example">17.4.1. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="popen2.html">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> &#8212; アクセス可能な I/O ストリームを持つサブプロセス生成</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="popen2.html">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> — アクセス可能な I/O ストリームを持つサブプロセス生成</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="popen2.html#popen3-and-popen4-objects">17.5.1. Popen3 および Popen4 オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="popen2.html#flow-control-issues">17.5.2. フロー制御の問題</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="asyncore.html">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> &#8212; 非同期ソケットハンドラ</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="asyncore.html">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> — 非同期ソケットハンドラ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="asyncore.html#asyncore-example-basic-http-client">17.6.1. asyncoreの例: 簡単なHTTPクライアント</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncore.html#asyncore-example-basic-echo-server">17.6.2. 基本的な echo サーバーの例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="asynchat.html">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> &#8212; 非同期ソケットコマンド/レスポンスハンドラ</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="asynchat.html">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> — 非同期ソケットコマンド/レスポンスハンドラ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="asynchat.html#asynchat-auxiliary-classes">17.7.1. asynchat - 補助クラス</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asynchat.html#asynchat-example">17.7.2. asynchat 使用例</a></li>
 </ul>
@@ -188,14 +184,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="rlcompleter.html"
-                        title="前の章へ">16.9. <code class="docutils literal"><span class="pre">rlcompleter</span></code> &#8212; GNU readline向け補完関数</a></p>
+                        title="前の章へ">16.9. <code class="docutils literal"><span class="pre">rlcompleter</span></code> — GNU readline向け補完関数</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="subprocess.html"
-                        title="次の章へ">17.1. <code class="docutils literal"><span class="pre">subprocess</span></code> &#8212; サブプロセス管理</a></p>
+                        title="次の章へ">17.1. <code class="docutils literal"><span class="pre">subprocess</span></code> — サブプロセス管理</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ipc.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ipc.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -246,10 +242,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

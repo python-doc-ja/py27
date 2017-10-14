@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>28.13. inspect — 活動中のオブジェクトの情報を取得する &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.14. site — サイト固有の設定フック" href="site.html" />
     <link rel="prev" title="28.12. gc — ガベージコレクタインターフェース" href="gc.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-inspect">
-<span id="inspect-inspect-live-objects"></span><h1>28.13. <a class="reference internal" href="#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-mod docutils literal"><span class="pre">inspect</span></code></a> &#8212; 活動中のオブジェクトの情報を取得する<a class="headerlink" href="#module-inspect" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="inspect-inspect-live-objects"></span><h1>28.13. <a class="reference internal" href="#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-mod docutils literal"><span class="pre">inspect</span></code></a> — 活動中のオブジェクトの情報を取得する<a class="headerlink" href="#module-inspect" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
 </div>
@@ -91,7 +87,7 @@
 <p>このモジュールの機能は4種類に分類することができます。型チェック、ソースコードの情報取得、クラスや関数からの情報取得、インタープリタのスタック情報の調査です。</p>
 <div class="section" id="types-and-members">
 <span id="inspect-types"></span><h2>28.13.1. 型とメンバー<a class="headerlink" href="#types-and-members" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> は、クラスやモジュールなどのオブジェクトからメンバーを取得します。名前が&#8221;is&#8221;で始まる16個の関数は、主に <a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> の第2引数として利用するために提供されています。以下のような特殊属性を参照できるかどうか調べる時にも使えるでしょう:</p>
+<p><a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> は、クラスやモジュールなどのオブジェクトからメンバーを取得します。名前が」is」で始まる16個の関数は、主に <a class="reference internal" href="#inspect.getmembers" title="inspect.getmembers"><code class="xref py py-func docutils literal"><span class="pre">getmembers()</span></code></a> の第2引数として利用するために提供されています。以下のような特殊属性を参照できるかどうか調べる時にも使えるでしょう:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="18%" />
@@ -100,353 +96,287 @@
 <col width="11%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">型</p>
-</th>
-<th class="head"><p class="first last">属性</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">型</th>
+<th class="head">属性</th>
+<th class="head">説明</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><p class="first last">モジュール</p>
-</td>
+<tr class="row-even"><td>モジュール</td>
 <td>__doc__</td>
-<td><p class="first last">ドキュメント文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>ドキュメント文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>__file__</td>
-<td><p class="first last">ファイル名 (組み込みモジュールには存在しません)</p>
-</td>
-<td>&nbsp;</td>
+<td>ファイル名 (組み込みモジュールには存在しません)</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td><p class="first last">クラス</p>
-</td>
+<tr class="row-even"><td>クラス</td>
 <td>__doc__</td>
-<td><p class="first last">ドキュメント文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>ドキュメント文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>__module__</td>
-<td><p class="first last">クラスを定義しているモジュールの名前</p>
-</td>
-<td>&nbsp;</td>
+<td>クラスを定義しているモジュールの名前</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td><p class="first last">メソッド</p>
-</td>
+<tr class="row-even"><td>メソッド</td>
 <td>__doc__</td>
-<td><p class="first last">ドキュメント文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>ドキュメント文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>__name__</td>
-<td><p class="first last">メソッドが定義された時の名前</p>
-</td>
-<td>&nbsp;</td>
+<td>メソッドが定義された時の名前</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>im_class</td>
-<td><p class="first last">このメソッドを要求したクラスオブジェクト</p>
-</td>
+<td>このメソッドを要求したクラスオブジェクト</td>
 <td>(1)</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td><p class="first last">im_func または __func__</p>
-</td>
-<td><p class="first last">メソッドを実装している関数オブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
+<td>im_func または __func__</td>
+<td>メソッドを実装している関数オブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td><p class="first last">im_self または __self__</p>
-</td>
-<td><p class="first last">メソッドに結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
+<td>im_self または __self__</td>
+<td>メソッドに結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>function</td>
 <td>__doc__</td>
-<td><p class="first last">ドキュメント文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>ドキュメント文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>__name__</td>
-<td><p class="first last">関数が定義された時の名前</p>
-</td>
-<td>&nbsp;</td>
+<td>関数が定義された時の名前</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>func_code</td>
-<td><p class="first last">関数をコンパイルしたバイトコード (<a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a>) を格納するコードオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>関数をコンパイルしたバイトコード (<a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a>) を格納するコードオブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>func_defaults</td>
-<td><p class="first last">引数のデフォルト値のタプル</p>
-</td>
-<td>&nbsp;</td>
+<td>引数のデフォルト値のタプル</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>func_doc</td>
-<td><p class="first last">(__doc__ と同じ)</p>
-</td>
-<td>&nbsp;</td>
+<td>(__doc__ と同じ)</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>func_globals</td>
-<td><p class="first last">関数を定義した時のグローバル名前空間</p>
-</td>
-<td>&nbsp;</td>
+<td>関数を定義した時のグローバル名前空間</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>func_name</td>
-<td><p class="first last">(__name__ と同じ)</p>
-</td>
-<td>&nbsp;</td>
+<td>(__name__ と同じ)</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>generator</td>
 <td>__iter__</td>
-<td><p class="first last">コンテナを通したイテレーションのために定義されます</p>
-</td>
-<td>&nbsp;</td>
+<td>コンテナを通したイテレーションのために定義されます</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>close</td>
-<td><p class="first last">イテレーションを停止するために、ジェネレータの内部で GeneratorExitexception を発生させます</p>
-</td>
-<td>&nbsp;</td>
+<td>イテレーションを停止するために、ジェネレータの内部で GeneratorExitexception を発生させます</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>gi_code</td>
-<td><p class="first last">コードオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>コードオブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>gi_frame</td>
-<td><p class="first last">フレームオブジェクト。ジェネレータが終了したあとは <code class="docutils literal"><span class="pre">None</span></code> になることもあります</p>
-</td>
-<td>&nbsp;</td>
+<td>フレームオブジェクト。ジェネレータが終了したあとは <code class="docutils literal"><span class="pre">None</span></code> になることもあります</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>gi_running</td>
-<td><p class="first last">ジェネレータが実行中の時は 1 それ以外の場合は 0</p>
-</td>
-<td>&nbsp;</td>
+<td>ジェネレータが実行中の時は 1 それ以外の場合は 0</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>next</td>
-<td><p class="first last">コンテナから次の要素を返します</p>
-</td>
-<td>&nbsp;</td>
+<td>コンテナから次の要素を返します</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>send</td>
-<td><p class="first last">ジェネレータを再開して、現在の yield 式の結果となる値を &#8220;送り&#8221; ます</p>
-</td>
-<td>&nbsp;</td>
+<td>ジェネレータを再開して、現在の yield 式の結果となる値を 「送り」 ます</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>throw</td>
-<td><p class="first last">ジェネレータ内部で例外を発生させるために用います</p>
-</td>
-<td>&nbsp;</td>
+<td>ジェネレータ内部で例外を発生させるために用います</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td><p class="first last">トレースバック</p>
-</td>
+<tr class="row-even"><td>トレースバック</td>
 <td>tb_frame</td>
-<td><p class="first last">このレベルのフレームオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>このレベルのフレームオブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>tb_lasti</td>
-<td><p class="first last">最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</p>
-</td>
-<td>&nbsp;</td>
+<td>最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>tb_lineno</td>
-<td><p class="first last">現在の Python ソースコードの行番号</p>
-</td>
-<td>&nbsp;</td>
+<td>現在の Python ソースコードの行番号</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>tb_next</td>
-<td><p class="first last">このオブジェクトの内側 (このレベルから呼び出された) のトレースバックオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>このオブジェクトの内側 (このレベルから呼び出された) のトレースバックオブジェクト</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>frame</td>
 <td>f_back</td>
-<td><p class="first last">外側 (このフレームを呼び出した) のフレームオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>外側 (このフレームを呼び出した) のフレームオブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_builtins</td>
-<td><p class="first last">このフレームで参照している組み込み名前空間</p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで参照している組み込み名前空間</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>f_code</td>
-<td><p class="first last">このフレームで実行しているコードオブジェクト</p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで実行しているコードオブジェクト</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_exc_traceback</td>
-<td><p class="first last">このフレームで例外が発生した場合にはトレースバックオブジェクト、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで例外が発生した場合にはトレースバックオブジェクト、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>f_exc_type</td>
-<td><p class="first last">このフレームで例外が発生した場合には例外型、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで例外が発生した場合には例外型、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_exc_value</td>
-<td><p class="first last">このフレームで例外が発生した場合には例外の値、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで例外が発生した場合には例外の値、それ以外なら <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>f_globals</td>
-<td><p class="first last">このフレームで参照しているグローバル名前空間</p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで参照しているグローバル名前空間</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_lasti</td>
-<td><p class="first last">最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</p>
-</td>
-<td>&nbsp;</td>
+<td>最後に実行しようとしたバイトコード中のインストラクションを示すインデックス</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>f_lineno</td>
-<td><p class="first last">現在の Python ソースコードの行番号</p>
-</td>
-<td>&nbsp;</td>
+<td>現在の Python ソースコードの行番号</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_locals</td>
-<td><p class="first last">このフレームで参照しているローカル名前空間</p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームで参照しているローカル名前空間</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>f_restricted</td>
-<td><p class="first last">制限実行モードなら1、それ以外なら0</p>
-</td>
-<td>&nbsp;</td>
+<td>制限実行モードなら1、それ以外なら0</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>f_trace</td>
-<td><p class="first last">このフレームのトレース関数、または <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<td>このフレームのトレース関数、または <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td><p class="first last">コード</p>
-</td>
+<tr class="row-even"><td>コード</td>
 <td>co_argcount</td>
-<td><p class="first last">引数の数 (* や ** 引数は含まない)</p>
-</td>
-<td>&nbsp;</td>
+<td>引数の数 (* や ** 引数は含まない)</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_code</td>
-<td><p class="first last">コンパイルされたバイトコードそのままの文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>コンパイルされたバイトコードそのままの文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>co_consts</td>
-<td><p class="first last">バイトコード中で使用している定数のタプル</p>
-</td>
-<td>&nbsp;</td>
+<td>バイトコード中で使用している定数のタプル</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_filename</td>
-<td><p class="first last">コードオブジェクトを生成したファイルのファイル名</p>
-</td>
-<td>&nbsp;</td>
+<td>コードオブジェクトを生成したファイルのファイル名</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>co_firstlineno</td>
-<td><p class="first last">Python ソースコードの先頭行</p>
-</td>
-<td>&nbsp;</td>
+<td>Python ソースコードの先頭行</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_flags</td>
-<td><p class="first last">以下の値の組み合わせ: 1=optimized <code class="docutils literal"><span class="pre">|</span></code> 2=newlocals <code class="docutils literal"><span class="pre">|</span></code> 4=*arg <code class="docutils literal"><span class="pre">|</span></code> 8=**arg</p>
-</td>
-<td>&nbsp;</td>
+<td>以下の値の組み合わせ: 1=optimized <code class="docutils literal"><span class="pre">|</span></code> 2=newlocals <code class="docutils literal"><span class="pre">|</span></code> 4=*arg <code class="docutils literal"><span class="pre">|</span></code> 8=**arg</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>co_lnotab</td>
-<td><p class="first last">行番号からバイトコードインデックスへの変換表を文字列にエンコードしたもの</p>
-</td>
-<td>&nbsp;</td>
+<td>行番号からバイトコードインデックスへの変換表を文字列にエンコードしたもの</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_name</td>
-<td><p class="first last">コードオブジェクトが定義されたときの名前</p>
-</td>
-<td>&nbsp;</td>
+<td>コードオブジェクトが定義されたときの名前</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>co_names</td>
-<td><p class="first last">ローカル変数名のタプル</p>
-</td>
-<td>&nbsp;</td>
+<td>ローカル変数名のタプル</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_nlocals</td>
-<td><p class="first last">ローカル変数の数</p>
-</td>
-<td>&nbsp;</td>
+<td>ローカル変数の数</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>co_stacksize</td>
-<td><p class="first last">必要とされる仮想マシンのスタックスペース</p>
-</td>
-<td>&nbsp;</td>
+<td>必要とされる仮想マシンのスタックスペース</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>co_varnames</td>
-<td><p class="first last">引数名とローカル変数名のタプル</p>
-</td>
-<td>&nbsp;</td>
+<td>引数名とローカル変数名のタプル</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>builtin</td>
 <td>__doc__</td>
-<td><p class="first last">ドキュメント文字列</p>
-</td>
-<td>&nbsp;</td>
+<td>ドキュメント文字列</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>__name__</td>
-<td><p class="first last">関数、メソッドの元々の名前</p>
-</td>
-<td>&nbsp;</td>
+<td>関数、メソッドの元々の名前</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>__self__</td>
-<td><p class="first last">メソッドが結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
-<td>&nbsp;</td>
+<td>メソッドが結合しているインスタンス、または <code class="docutils literal"><span class="pre">None</span></code></td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -568,7 +498,7 @@
 <code class="descclassname">inspect.</code><code class="descname">ismethoddescriptor</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#inspect.ismethoddescriptor" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>オブジェクトがメソッドデスクリプタであり、 <a class="reference internal" href="#inspect.ismethod" title="inspect.ismethod"><code class="xref py py-func docutils literal"><span class="pre">ismethod()</span></code></a>, <a class="reference internal" href="#inspect.isclass" title="inspect.isclass"><code class="xref py py-func docutils literal"><span class="pre">isclass()</span></code></a>, <a class="reference internal" href="#inspect.isfunction" title="inspect.isfunction"><code class="xref py py-func docutils literal"><span class="pre">isfunction()</span></code></a>, <a class="reference internal" href="#inspect.isbuiltin" title="inspect.isbuiltin"><code class="xref py py-func docutils literal"><span class="pre">isbuiltin()</span></code></a> でない場合に真を返します。</p>
 <p>この機能は Python 2.2 から新たに追加されたもので、例えば <code class="docutils literal"><span class="pre">int.__add__</span></code> は真になります。このテストをパスするオブジェクトは <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> メソッドを持ちますが <a class="reference internal" href="../reference/datamodel.html#object.__set__" title="object.__set__"><code class="xref py py-meth docutils literal"><span class="pre">__set__()</span></code></a>  メソッドを持ちません。それ以外の属性を持っているかもしれません。通常 <a class="reference internal" href="stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal"><span class="pre">__name__</span></code></a> 属性を持っていますし、たいていは <code class="xref py py-attr docutils literal"><span class="pre">__doc__</span></code> も持っています。</p>
-<p>デスクリプタを使って実装されたメソッドで、上記のいずれかのテストもパスしているものは、 <a class="reference internal" href="#inspect.ismethoddescriptor" title="inspect.ismethoddescriptor"><code class="xref py py-func docutils literal"><span class="pre">ismethoddescriptor()</span></code></a> では偽を返します。これは単に他のテストの方がもっと確実だからです &#8211; 例えば、 <a class="reference internal" href="#inspect.ismethod" title="inspect.ismethod"><code class="xref py py-func docutils literal"><span class="pre">ismethod()</span></code></a> をパスしたオブジェクトは <code class="xref py py-attr docutils literal"><span class="pre">im_func</span></code> 属性などを持っていると期待できます。</p>
+<p>デスクリプタを使って実装されたメソッドで、上記のいずれかのテストもパスしているものは、 <a class="reference internal" href="#inspect.ismethoddescriptor" title="inspect.ismethoddescriptor"><code class="xref py py-func docutils literal"><span class="pre">ismethoddescriptor()</span></code></a> では偽を返します。これは単に他のテストの方がもっと確実だからです – 例えば、 <a class="reference internal" href="#inspect.ismethod" title="inspect.ismethod"><code class="xref py py-func docutils literal"><span class="pre">ismethod()</span></code></a> をパスしたオブジェクトは <code class="xref py py-attr docutils literal"><span class="pre">im_func</span></code> 属性などを持っていると期待できます。</p>
 </dd></dl>
 
 <dl class="function">
@@ -731,7 +661,7 @@
 </div>
 <div class="section" id="the-interpreter-stack">
 <span id="inspect-stack"></span><h2>28.13.4. インタープリタスタック<a class="headerlink" href="#the-interpreter-stack" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>以下の関数には、戻り値として&#8221;フレームレコード&#8221;を返す関数があります。&#8221;フレームレコード&#8221;は長さ6のタプルで、以下の値を格納しています: フレームオブジェクト、ファイル名、実行中の行番号、関数名、コンテキストのソース行のリスト、ソース行のリストにおける実行中の行のインデックス。</p>
+<p>以下の関数には、戻り値として」フレームレコード」を返す関数があります。」フレームレコード」は長さ6のタプルで、以下の値を格納しています: フレームオブジェクト、ファイル名、実行中の行番号、関数名、コンテキストのソース行のリスト、ソース行のリストにおける実行中の行のインデックス。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>フレームレコードの最初の要素などのフレームオブジェクトへの参照を保存すると、循環参照になってしまう場合があります。循環参照ができると、Python の循環参照検出機能を有効にしていたとしても関連するオブジェクトが参照しているすべてのオブジェクトが解放されにくくなり、明示的に参照を削除しないとメモリ消費量が増大する恐れがあります。</p>
@@ -799,7 +729,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> &#8212; 活動中のオブジェクトの情報を取得する</a><ul>
+<li><a class="reference internal" href="#">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> — 活動中のオブジェクトの情報を取得する</a><ul>
 <li><a class="reference internal" href="#types-and-members">28.13.1. 型とメンバー</a></li>
 <li><a class="reference internal" href="#retrieving-source-code">28.13.2. ソースコードの情報取得</a></li>
 <li><a class="reference internal" href="#classes-and-functions">28.13.3. クラスと関数</a></li>
@@ -810,14 +740,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="gc.html"
-                        title="前の章へ">28.12. <code class="docutils literal"><span class="pre">gc</span></code> &#8212; ガベージコレクタインターフェース</a></p>
+                        title="前の章へ">28.12. <code class="docutils literal"><span class="pre">gc</span></code> — ガベージコレクタインターフェース</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="site.html"
-                        title="次の章へ">28.14. <code class="docutils literal"><span class="pre">site</span></code> &#8212; サイト固有の設定フック</a></p>
+                        title="次の章へ">28.14. <code class="docutils literal"><span class="pre">site</span></code> — サイト固有の設定フック</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/inspect.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/inspect.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -869,10 +799,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>7. 複合文 (compound statement) &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 言語リファレンス" href="index.html" />
     <link rel="next" title="8. トップレベル要素" href="toplevel_components.html" />
     <link rel="prev" title="6. 単純文 (simple statement)" href="simple_stmts.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -83,7 +79,7 @@
 <span id="compound"></span><h1>7. 複合文 (compound statement)<a class="headerlink" href="#compound-statements" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p id="index-0">複合文には、他の文 (のグループ) が入ります; 複合文は、中に入っている他の文の実行の制御に何らかのやり方で影響を及ぼします。一般的には、複合文は複数行にまたがって書かれますが、全部の文を一行に連ねた単純な書き方もあります。</p>
 <p><a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 、 <a class="reference internal" href="#while"><code class="xref std std-keyword docutils literal"><span class="pre">while</span></code></a> 、および <a class="reference internal" href="#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 文は、伝統的な制御フロー構成を実現します。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> は例外処理および / または一連の文に対するクリーンアップコードを指定します。関数とクラス定義もまた、構文法的には複合文です。</p>
-<p id="index-1">複合文は、一つまたはそれ以上の &#8216; 節 (clause)&#8217; からなります。一つの節は、ヘッダと &#8216; スイート (suite)&#8217; からなります。特定の複合文を構成する節のヘッダ部分は、全て同じインデントレベルになります。各々の節ヘッダ行は一意に識別されるキーワードから始まり、コロンで終わります。スイートは、ヘッダのコロンの後ろにセミコロンで区切られた一つまたはそれ以上の単純文を並べるか、ヘッダ行後のインデントされた文の集まりです。後者の形式のスイートに限り、ネストされた複合文を入れることができます ; 以下の文は、 <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節がどの <a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節に属するかがはっきりしないという理由から不正になります :</p>
+<p id="index-1">複合文は、一つまたはそれ以上の 『 節 (clause)』 からなります。一つの節は、ヘッダと 『 スイート (suite)』 からなります。特定の複合文を構成する節のヘッダ部分は、全て同じインデントレベルになります。各々の節ヘッダ行は一意に識別されるキーワードから始まり、コロンで終わります。スイートは、ヘッダのコロンの後ろにセミコロンで区切られた一つまたはそれ以上の単純文を並べるか、ヘッダ行後のインデントされた文の集まりです。後者の形式のスイートに限り、ネストされた複合文を入れることができます ; 以下の文は、 <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節がどの <a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 節に属するかがはっきりしないという理由から不正になります :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">test1</span><span class="p">:</span> <span class="k">if</span> <span class="n">test2</span><span class="p">:</span> <span class="nb">print</span> <span class="n">x</span>
 </pre></div>
 </div>
@@ -105,7 +101,7 @@
 <strong id="grammar-token-statement">statement    </strong> ::=  <a class="reference internal" href="#grammar-token-stmt_list"><code class="xref docutils literal"><span class="pre">stmt_list</span></code></a> NEWLINE | <a class="reference internal" href="#grammar-token-compound_stmt"><code class="xref docutils literal"><span class="pre">compound_stmt</span></code></a>
 <strong id="grammar-token-stmt_list">stmt_list    </strong> ::=  <a class="reference internal" href="simple_stmts.html#grammar-token-simple_stmt"><code class="xref docutils literal"><span class="pre">simple_stmt</span></code></a> (&quot;;&quot; <a class="reference internal" href="simple_stmts.html#grammar-token-simple_stmt"><code class="xref docutils literal"><span class="pre">simple_stmt</span></code></a>)* [&quot;;&quot;]
 </pre>
-<p id="index-2">文は常に <code class="docutils literal"><span class="pre">NEWLINE</span></code> か、その後に <code class="docutils literal"><span class="pre">DEDENT</span></code> が続いたもので終了することに注意してください。また、オプションの継続節は常にあるキーワードから始まり、このキーワードから複合文を開始することはできないため、曖昧さは存在しないことにも注意してください (Python では、 &#8216; ぶら下がり (dangling) <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a>&#8216; 問題を、ネストされた <a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 文はインデントさせること解決しています ) 。</p>
+<p id="index-2">文は常に <code class="docutils literal"><span class="pre">NEWLINE</span></code> か、その後に <code class="docutils literal"><span class="pre">DEDENT</span></code> が続いたもので終了することに注意してください。また、オプションの継続節は常にあるキーワードから始まり、このキーワードから複合文を開始することはできないため、曖昧さは存在しないことにも注意してください (Python では、 『 ぶら下がり (dangling) <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a>』 問題を、ネストされた <a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 文はインデントさせること解決しています ) 。</p>
 <p>以下の節における文法規則の記述方式は、明確さのために、各節を別々の行に書くようにしています。</p>
 <div class="section" id="the-if-statement">
 <span id="else"></span><span id="elif"></span><span id="if"></span><h2>7.1. <a class="reference internal" href="#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 文<a class="headerlink" href="#the-if-statement" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -160,15 +156,15 @@
                &quot;finally&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-suite"><code class="xref docutils literal"><span class="pre">suite</span></code></a>
 </pre>
 <div class="versionchanged">
-<p><span class="versionmodified">バージョン 2.5 で変更: </span>以前のバージョンの Python では、 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>... <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>... <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> は機能しませんでした。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>... <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> は <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>... <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 中でネストさせる必要がありました。</p>
+<p><span class="versionmodified">バージョン 2.5 で変更: </span>以前のバージョンの Python では、 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>… <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>… <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> は機能しませんでした。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>… <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> は <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>… <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 中でネストさせる必要がありました。</p>
 </div>
-<p><a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節は一つ以上の例外ハンドラを指定します。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節内で例外が起きなければ、どの例外ハンドラも実行されません。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> スイート内で例外が発生すると、例外ハンドラの検索が開始されます。この検索では、 <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>  節を逐次、発生した例外に対応するまで調べます。式を伴わない <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節を使うなら、最後に書かなければならず、これは全ての例外に対応します。式を伴う <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節に対しては、その式が評価され、結果のオブジェクトが例外と &#8220;互換である (compatible)&#8221; 場合にその節が対応します。ある例外に対してオブジェクトが互換であるのは、それが例外オブジェクトのクラスかベースクラスの場合、または例外と互換である要素が入ったタプルである場合です。</p>
+<p><a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節は一つ以上の例外ハンドラを指定します。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節内で例外が起きなければ、どの例外ハンドラも実行されません。 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> スイート内で例外が発生すると、例外ハンドラの検索が開始されます。この検索では、 <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>  節を逐次、発生した例外に対応するまで調べます。式を伴わない <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節を使うなら、最後に書かなければならず、これは全ての例外に対応します。式を伴う <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節に対しては、その式が評価され、結果のオブジェクトが例外と 「互換である (compatible)」 場合にその節が対応します。ある例外に対してオブジェクトが互換であるのは、それが例外オブジェクトのクラスかベースクラスの場合、または例外と互換である要素が入ったタプルである場合です。</p>
 <p>例外がどの <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節にも合致しなかった場合、現在のコードを囲うさらに外側、そして呼び出しスタックへと検索を続けます。 <a class="footnote-reference" href="#id5" id="id1">[1]</a></p>
 <p><a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節のヘッダにある式を値評価するときに例外が発生すると、元々のハンドラ検索はキャンセルされ、新たな例外に対する例外ハンドラの検索を現在の <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節の外側のコードや呼び出しスタックに対して行います (<a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 文全体が例外を発行したかのように扱われます)。</p>
 <p>合致する except 節が見つかると、その <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節はその except 節で指定されているターゲットに代入されて、もし存在する場合、加えて except 節スイートが実行されます。全ての except 節は実行可能なブロックを持っていなければなりません。このブロックの末尾に到達すると、通常は <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 文全体の直後に実行を継続します。 ( このことは、同じ例外に対してネストした二つの例外ハンドラが存在し、内側のハンドラ内の <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節で例外が発生した場合、外側のハンドラは例外を処理しないことを意味します。 )</p>
 <p id="index-11"><a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節のスイートが実行される前に、例外に関する詳細が <a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal"><span class="pre">sys</span></code></a> モジュール内の三つの変数に代入されます : <code class="docutils literal"><span class="pre">sys.exc_type</span></code> は、例外を示すオブジェクトを受け取ります ; <code class="docutils literal"><span class="pre">sys.exc_value</span></code> は例外のパラメタを受け取ります ; <code class="docutils literal"><span class="pre">sys.exc_traceback</span></code> は、プログラム上の例外が発生した位置を識別するトレースバックオブジェクト (<a class="reference internal" href="datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> 参照 ) を受け取ります。これらの詳細はまた、関数 <a class="reference internal" href="../library/sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a> を介して入手することもできます。この関数はタプル <code class="docutils literal"><span class="pre">(exc_type,</span> <span class="pre">exc_value,</span> <span class="pre">exc_traceback)</span></code> を返します。ただしこの関数に対応する変数の使用は、スレッドを使ったプログラムで安全に使えないため撤廃されています。 Python 1.5 からは、例外を処理した関数から戻るときに、以前の値 ( 関数呼び出し前の値 ) に戻されます。</p>
 <p id="index-12">オプションの <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節は、実行の制御が <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節の末尾に到達した場合に実行されます。 <a class="footnote-reference" href="#id6" id="id2">[2]</a> <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節内で起きた例外は、 <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節に先行する <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節で処理されることはありません。</p>
-<p id="index-13"><a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節がある場合は、 &#8216;後始末 (cleanup)&#8217; の対処を指定します。まず <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節や <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節を含め、 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節が実行されます。それらの節の中で例外が起き、誰も対処していない場合は、例外は一時的に保存されます。次に <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節が実行されます。保存された例外があった場合は、 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節の末尾で再送出されます。  <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節で別の例外が送出される場合、あるいは <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a>, <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 文を実行した場合は、保存された例外は破棄されます:</p>
+<p id="index-13"><a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節がある場合は、 『後始末 (cleanup)』 の対処を指定します。まず <a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a> 節や <a class="reference internal" href="#else"><code class="xref std std-keyword docutils literal"><span class="pre">else</span></code></a> 節を含め、 <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> 節が実行されます。それらの節の中で例外が起き、誰も対処していない場合は、例外は一時的に保存されます。次に <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節が実行されます。保存された例外があった場合は、 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節の末尾で再送出されます。  <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節で別の例外が送出される場合、あるいは <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a>, <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 文を実行した場合は、保存された例外は破棄されます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
@@ -180,7 +176,7 @@
 </pre></div>
 </div>
 <p><a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節を実行している間は、プログラムからは例外情報は利用できません。</p>
-<p id="index-14"><a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>...<a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 文の <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> スイート内で <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a> 、 <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 、または <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a> 文が実行された場合、 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節も &#8216;抜け出る途中に (on the way out)&#8217; 実行されます。 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節での <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a> 文の使用は不正です。 (理由は現在の実装上の問題です &#8211; この制限は将来解消されるかもしれません)。</p>
+<p id="index-14"><a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>…<a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 文の <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a> スイート内で <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a> 、 <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 、または <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a> 文が実行された場合、 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節も 『抜け出る途中に (on the way out)』 実行されます。 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節での <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a> 文の使用は不正です。 (理由は現在の実装上の問題です – この制限は将来解消されるかもしれません)。</p>
 <p>関数の返り値は最後に実行された <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a> 文によって決まります。
 <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節は必ず実行されるため、<a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節で実行された <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a> 文は常に最後に実行されます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
@@ -200,12 +196,12 @@
 <div class="versionadded" id="index-15">
 <p><span class="versionmodified">バージョン 2.5 で追加.</span></p>
 </div>
-<p><a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文は、ブロックの実行を、コンテキストマネージャによって定義されたメソッドでラップするために使われます（ <a class="reference internal" href="datamodel.html#context-managers"><span class="std std-ref">with文とコンテキストマネージャ</span></a> セクションを参照してください）。これにより、よくある <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>...<a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>...<a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 利用パターンをカプセル化して便利に再利用することができます。</p>
+<p><a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文は、ブロックの実行を、コンテキストマネージャによって定義されたメソッドでラップするために使われます（ <a class="reference internal" href="datamodel.html#context-managers"><span class="std std-ref">with文とコンテキストマネージャ</span></a> セクションを参照してください）。これにより、よくある <a class="reference internal" href="#try"><code class="xref std std-keyword docutils literal"><span class="pre">try</span></code></a>…<a class="reference internal" href="#except"><code class="xref std std-keyword docutils literal"><span class="pre">except</span></code></a>…<a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 利用パターンをカプセル化して便利に再利用することができます。</p>
 <pre>
 <strong id="grammar-token-with_stmt">with_stmt</strong> ::=  &quot;with&quot; with_item (&quot;,&quot; with_item)* &quot;:&quot; <a class="reference internal" href="#grammar-token-suite"><code class="xref docutils literal"><span class="pre">suite</span></code></a>
 <strong id="grammar-token-with_item">with_item</strong> ::=  <a class="reference internal" href="expressions.html#grammar-token-expression"><code class="xref docutils literal"><span class="pre">expression</span></code></a> [&quot;as&quot; <a class="reference internal" href="simple_stmts.html#grammar-token-target"><code class="xref docutils literal"><span class="pre">target</span></code></a>]
 </pre>
-<p>一つの &#8220;要素&#8221; を持つ <a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の実行は以下のように進行します:</p>
+<p>一つの 「要素」 を持つ <a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の実行は以下のように進行します:</p>
 <ol class="arabic">
 <li><p class="first">コンテキスト式 (<a class="reference internal" href="#grammar-token-with_item"><code class="xref std std-token docutils literal"><span class="pre">with_item</span></code></a> で与えられた式) を評価することで、コンテキストマネージャを取得します。</p>
 </li>
@@ -247,9 +243,8 @@
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
-<dt><span class="target" id="index-25"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a> - &#8220;with&#8221; ステートメント</dt>
-<dd><p class="first last">Python の <a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の仕様、背景、そして実例</p>
-</dd>
+<dt><span class="target" id="index-25"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a> - 「with」 ステートメント</dt>
+<dd>Python の <a class="reference internal" href="#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文の仕様、背景、そして実例</dd>
 </dl>
 </div>
 </div>
@@ -284,8 +279,8 @@
 <span class="n">func</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">arg</span><span class="p">)(</span><span class="n">f2</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
 </pre></div>
 </div>
-<p id="index-20">一つ以上のトップレベルの <a class="reference internal" href="../glossary.html#term-parameter"><span class="xref std std-term">parameters</span></a> に <em>parameter</em> <code class="docutils literal"><span class="pre">=</span></code> <em>expression</em> の形式がある場合、関数は &#8221; デフォルトのパラメタ値 (default parameter values)&#8221; を持つといいます。デフォルト値を伴うパラメタに対しては、関数呼び出しの際に対応する引数(<a class="reference internal" href="../glossary.html#term-argument"><span class="xref std std-term">argument</span></a>)が省略されると、パラメタの値はデフォルト値で置き換えられます。あるパラメタがデフォルト値を持つ場合、それ以後のパラメタは全てデフォルト値を持たなければなりません &#8212; これは文法的には表現されていない構文上の制限です。</p>
-<p>** デフォルトパラメタ値は関数定義を実行する際に値評価されます。 ** これは、デフォルトパラメタの式は関数を定義するときにただ一度だけ評価され、同じ &#8221; 計算済みの &#8221; 値が全ての呼び出しで使われることを意味します。デフォルトパラメタ値がリストや辞書のような変更可能なオブジェクトである場合、この使用を理解しておくことは特に重要です : 関数でこのオブジェクトを ( 例えばリストに要素を追加して ) 変更すると、実際のデフォルト値が変更されてしまいます。一般には、これは意図しない動作です。このような動作を避けるには、デフォルト値に <code class="docutils literal"><span class="pre">None</span></code> を使い、この値を関数本体の中で明示的にテストします。例えば以下のようにします</p>
+<p id="index-20">一つ以上のトップレベルの <a class="reference internal" href="../glossary.html#term-parameter"><span class="xref std std-term">parameters</span></a> に <em>parameter</em> <code class="docutils literal"><span class="pre">=</span></code> <em>expression</em> の形式がある場合、関数は 」 デフォルトのパラメタ値 (default parameter values)」 を持つといいます。デフォルト値を伴うパラメタに対しては、関数呼び出しの際に対応する引数(<a class="reference internal" href="../glossary.html#term-argument"><span class="xref std std-term">argument</span></a>)が省略されると、パラメタの値はデフォルト値で置き換えられます。あるパラメタがデフォルト値を持つ場合、それ以後のパラメタは全てデフォルト値を持たなければなりません — これは文法的には表現されていない構文上の制限です。</p>
+<p>** デフォルトパラメタ値は関数定義を実行する際に値評価されます。 ** これは、デフォルトパラメタの式は関数を定義するときにただ一度だけ評価され、同じ 」 計算済みの 」 値が全ての呼び出しで使われることを意味します。デフォルトパラメタ値がリストや辞書のような変更可能なオブジェクトである場合、この使用を理解しておくことは特に重要です : 関数でこのオブジェクトを ( 例えばリストに要素を追加して ) 変更すると、実際のデフォルト値が変更されてしまいます。一般には、これは意図しない動作です。このような動作を避けるには、デフォルト値に <code class="docutils literal"><span class="pre">None</span></code> を使い、この値を関数本体の中で明示的にテストします。例えば以下のようにします</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">whats_on_the_telly</span><span class="p">(</span><span class="n">penguin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">penguin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">penguin</span> <span class="o">=</span> <span class="p">[]</span>
@@ -293,9 +288,9 @@
     <span class="k">return</span> <span class="n">penguin</span>
 </pre></div>
 </div>
-<p id="index-21">関数呼び出しの意味付けに関する詳細は、 <a class="reference internal" href="expressions.html#calls"><span class="std std-ref">呼び出し (call)</span></a> 節で述べられています。関数呼び出しを行うと、パラメタリストに記述された全てのパラメタに対して、固定引数、キーワード引数、デフォルト引数のいずれかから値を代入します。 &#8220;<code class="docutils literal"><span class="pre">*identifier</span></code>&#8221; 形式が存在する場合、余った固定引数を受け取るタプルに初期化されます。この変数のデフォルト値は空のタプルです。 &#8220;<code class="docutils literal"><span class="pre">**identifier</span></code>&#8221; 形式が存在する場合、余ったキーワード引数を受け取るタプルに初期化されます。デフォルト値は空の辞書です。</p>
-<p id="index-22">式で直接使うために、無名関数 ( 名前に束縛されていない関数 ) を作成することも可能です。無名関数の作成には、 <a class="reference internal" href="expressions.html#lambda"><span class="std std-ref">ラムダ (lambda)</span></a> 節で記述されているラムダ式 (lambda expression) を使います。ラムダ式は、単純化された関数定義を行うための略記法にすぎません ; &#8220;<a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a>&#8221; 文で定義された関数は、ラムダ式で定義された関数と全く同様に引渡したり、他の名前に代入したりできます。実際には、 &#8220;<a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a>&#8221; 形式は複数の式を実行できるという点でより強力です。</p>
-<p>** プログラマのための注釈 :** 関数は一級の (first-class) オブジェクトです。関数定義内で &#8220;<code class="docutils literal"><span class="pre">def</span></code>&#8221; 形式を実行すると、戻り値として返したり引き渡したりできるローカルな関数を定義します。ネストされた関数内で自由変数を使うと、 <a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a> 文の入っている関数のローカル変数にアクセスすることができます。詳細は <a class="reference internal" href="executionmodel.html#naming"><span class="std std-ref">名前づけと束縛 (naming and binding)</span></a> 節を参照してください。</p>
+<p id="index-21">関数呼び出しの意味付けに関する詳細は、 <a class="reference internal" href="expressions.html#calls"><span class="std std-ref">呼び出し (call)</span></a> 節で述べられています。関数呼び出しを行うと、パラメタリストに記述された全てのパラメタに対して、固定引数、キーワード引数、デフォルト引数のいずれかから値を代入します。 「<code class="docutils literal"><span class="pre">*identifier</span></code>」 形式が存在する場合、余った固定引数を受け取るタプルに初期化されます。この変数のデフォルト値は空のタプルです。 「<code class="docutils literal"><span class="pre">**identifier</span></code>」 形式が存在する場合、余ったキーワード引数を受け取るタプルに初期化されます。デフォルト値は空の辞書です。</p>
+<p id="index-22">式で直接使うために、無名関数 ( 名前に束縛されていない関数 ) を作成することも可能です。無名関数の作成には、 <a class="reference internal" href="expressions.html#lambda"><span class="std std-ref">ラムダ (lambda)</span></a> 節で記述されているラムダ式 (lambda expression) を使います。ラムダ式は、単純化された関数定義を行うための略記法にすぎません ; 「<a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a>」 文で定義された関数は、ラムダ式で定義された関数と全く同様に引渡したり、他の名前に代入したりできます。実際には、 「<a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a>」 形式は複数の式を実行できるという点でより強力です。</p>
+<p>** プログラマのための注釈 :** 関数は一級の (first-class) オブジェクトです。関数定義内で 「<code class="docutils literal"><span class="pre">def</span></code>」 形式を実行すると、戻り値として返したり引き渡したりできるローカルな関数を定義します。ネストされた関数内で自由変数を使うと、 <a class="reference internal" href="#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a> 文の入っている関数のローカル変数にアクセスすることができます。詳細は <a class="reference internal" href="executionmodel.html#naming"><span class="std std-ref">名前づけと束縛 (naming and binding)</span></a> 節を参照してください。</p>
 </div>
 <div class="section" id="class-definitions">
 <span id="class"></span><h2>7.7. クラス定義<a class="headerlink" href="#class-definitions" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -306,35 +301,31 @@
 <strong id="grammar-token-classname">classname  </strong> ::=  <a class="reference internal" href="lexical_analysis.html#grammar-token-identifier"><code class="xref docutils literal"><span class="pre">identifier</span></code></a>
 </pre>
 <p>クラス定義は実行可能な文です。クラス定義では、まず継承リストがあればそれを評価します。継承リストの各要素の値評価結果はクラスオブジェクトか、サブクラス可能なクラス型でなければなりません。次にクラスのスイートが新たな実行フレーム内で、新たなローカル名前空間と元々のグローバル名前空間を使って実行されます (<a class="reference internal" href="executionmodel.html#naming"><span class="std std-ref">名前づけと束縛 (naming and binding)</span></a> 節を参照してください ) 。 ( 通常、スイートには関数定義のみが含まれます ) クラスのスイートを実行し終えると、実行フレームは無視されますが、ローカルな名前空間は保存されます。次に、基底クラスの継承リストを使ってクラスオブジェクトが生成され、ローカルな名前空間を属性値辞書として保存します。最後に、もとのローカルな名前空間において、クラス名がこのクラスオブジェクトに束縛されます。</p>
-<p>** プログラマのための注釈 :** クラス定義内で定義された変数はクラス変数です ; クラス変数は全てのインスタンス間で共有されます。インスタンス変数を作成するには、メソッドの中で <code class="docutils literal"><span class="pre">self.name</span> <span class="pre">=</span> <span class="pre">value</span></code> でセットできます。クラス変数もインスタンス変数も &#8220;<code class="docutils literal"><span class="pre">self.name</span></code>&#8221; 表記でアクセスすることができます。この表記でアクセスする場合、インスタンス変数は同名のクラス変数を隠蔽します。クラス変数は、インスタンス変数のデフォルト値として使えますが、変更可能な値をそこに使うと予期せぬ結果につながります。新スタイルクラス (<a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a>) では、デスクリプタを使ってインスタンス変数の振舞いを変更できます。</p>
+<p>** プログラマのための注釈 :** クラス定義内で定義された変数はクラス変数です ; クラス変数は全てのインスタンス間で共有されます。インスタンス変数を作成するには、メソッドの中で <code class="docutils literal"><span class="pre">self.name</span> <span class="pre">=</span> <span class="pre">value</span></code> でセットできます。クラス変数もインスタンス変数も 「<code class="docutils literal"><span class="pre">self.name</span></code>」 表記でアクセスすることができます。この表記でアクセスする場合、インスタンス変数は同名のクラス変数を隠蔽します。クラス変数は、インスタンス変数のデフォルト値として使えますが、変更可能な値をそこに使うと予期せぬ結果につながります。新スタイルクラス (<a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style class</span></a>) では、デスクリプタを使ってインスタンス変数の振舞いを変更できます。</p>
 <p>クラス定義は、関数定義と同じように、 1 つ以上のデコレータ (<a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a>) 式でラップすることができます。デコレータ式の評価規則は関数と同じです。結果はクラスオブジェクトでなければならず、それがクラス名に束縛されます。</p>
 <p class="rubric">注記</p>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">例外は、別の例外を送出するような <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節が無い場合にのみ呼び出しスタックへ伝わります。新しい例外によって、古い例外は失われます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>例外は、別の例外を送出するような <a class="reference internal" href="#finally"><code class="xref std std-keyword docutils literal"><span class="pre">finally</span></code></a> 節が無い場合にのみ呼び出しスタックへ伝わります。新しい例外によって、古い例外は失われます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">現在、制御が &#8220;末尾に到達する&#8221; のは、例外が発生したり、 <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a>, <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a>, または <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 文が実行される場合を除きます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>現在、制御が 「末尾に到達する」 のは、例外が発生したり、 <a class="reference internal" href="simple_stmts.html#return"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a>, <a class="reference internal" href="simple_stmts.html#continue"><code class="xref std std-keyword docutils literal"><span class="pre">continue</span></code></a>, または <a class="reference internal" href="simple_stmts.html#break"><code class="xref std std-keyword docutils literal"><span class="pre">break</span></code></a> 文が実行される場合を除きます。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><p class="first last">関数の本体の最初の文として現われる文字列リテラルは、その関数の <code class="docutils literal"><span class="pre">__doc__</span></code> 属性に変換され、その関数のドキュメンテーション文字列(<a class="reference internal" href="../glossary.html#term-docstring"><span class="xref std std-term">docstring</span></a>) になります。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>関数の本体の最初の文として現われる文字列リテラルは、その関数の <code class="docutils literal"><span class="pre">__doc__</span></code> 属性に変換され、その関数のドキュメンテーション文字列(<a class="reference internal" href="../glossary.html#term-docstring"><span class="xref std std-term">docstring</span></a>) になります。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><p class="first last">クラスの本体の最初の文として現われる文字列リテラルは、その名前空間の <code class="docutils literal"><span class="pre">__doc__</span></code> 要素となり、そのクラスのドキュメンテーション文字列(<a class="reference internal" href="../glossary.html#term-docstring"><span class="xref std std-term">docstring</span></a>)になります。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>クラスの本体の最初の文として現われる文字列リテラルは、その名前空間の <code class="docutils literal"><span class="pre">__doc__</span></code> 要素となり、そのクラスのドキュメンテーション文字列(<a class="reference internal" href="../glossary.html#term-docstring"><span class="xref std std-term">docstring</span></a>)になります。</td></tr>
 </tbody>
 </table>
 </div>
@@ -369,7 +360,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/reference/compound_stmts.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/reference/compound_stmts.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -420,10 +411,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

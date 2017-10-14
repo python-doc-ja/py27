@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>29.1. code — インタプリタ基底クラス &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="29. カスタム Python インタプリタ" href="custominterp.html" />
     <link rel="next" title="29.2. codeop — Pythonコードをコンパイルする" href="codeop.html" />
     <link rel="prev" title="29. カスタム Python インタプリタ" href="custominterp.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-code">
-<span id="code-interpreter-base-classes"></span><h1>29.1. <a class="reference internal" href="#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> &#8212; インタプリタ基底クラス<a class="headerlink" href="#module-code" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="code-interpreter-base-classes"></span><h1>29.1. <a class="reference internal" href="#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> — インタプリタ基底クラス<a class="headerlink" href="#module-code" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><code class="docutils literal"><span class="pre">code</span></code> モジュールはread-eval-print (読み込み-評価-表示)ループをPythonで実装するための機能を提供します。対話的なインタプリタプロンプトを提供するアプリケーションを作るために使える二つのクラスと便利な関数が含まれています。</p>
 <dl class="class">
 <dt id="code.InteractiveInterpreter">
@@ -116,12 +112,9 @@
 <code class="descclassname">InteractiveInterpreter.</code><code class="descname">runsource</code><span class="sig-paren">(</span><em>source</em><span class="optional">[</span>, <em>filename</em><span class="optional">[</span>, <em>symbol</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#code.InteractiveInterpreter.runsource" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>インタプリタ内のあるソースをコンパイルし実行します。引数は <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> のものと同じです。 <em>filename</em> のデフォルトは <code class="docutils literal"><span class="pre">'&lt;input&gt;'</span></code> で、 <em>symbol</em> は <code class="docutils literal"><span class="pre">'single'</span></code> です。あるいくつかのことが起きる可能性があります:</p>
 <ul class="simple">
-<li><p class="first">入力はが正しくない。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> が例外(<a class="reference internal" href="exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> か <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a>)を起こした場合。 <a class="reference internal" href="#code.InteractiveInterpreter.showsyntaxerror" title="code.InteractiveInterpreter.showsyntaxerror"><code class="xref py py-meth docutils literal"><span class="pre">showsyntaxerror()</span></code></a> メソッドの呼び出によって、構文トレースバックが表示されるでしょう。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
-</li>
-<li><p class="first">入力が完全でなく、さらに入力が必要。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> が <code class="docutils literal"><span class="pre">None</span></code> を返した場合。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">True</span></code> を返します。</p>
-</li>
-<li><p class="first">入力が完全。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> がコードオブジェクトを返した場合。 (<a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> を除く実行時例外も処理する) <a class="reference internal" href="#code.InteractiveInterpreter.runcode" title="code.InteractiveInterpreter.runcode"><code class="xref py py-meth docutils literal"><span class="pre">runcode()</span></code></a> を呼び出すことによって、コードは実行されます。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">False</span></code> を返します。</p>
-</li>
+<li>入力はが正しくない。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> が例外(<a class="reference internal" href="exceptions.html#exceptions.SyntaxError" title="exceptions.SyntaxError"><code class="xref py py-exc docutils literal"><span class="pre">SyntaxError</span></code></a> か <a class="reference internal" href="exceptions.html#exceptions.OverflowError" title="exceptions.OverflowError"><code class="xref py py-exc docutils literal"><span class="pre">OverflowError</span></code></a>)を起こした場合。 <a class="reference internal" href="#code.InteractiveInterpreter.showsyntaxerror" title="code.InteractiveInterpreter.showsyntaxerror"><code class="xref py py-meth docutils literal"><span class="pre">showsyntaxerror()</span></code></a> メソッドの呼び出によって、構文トレースバックが表示されるでしょう。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">False</span></code> を返します。</li>
+<li>入力が完全でなく、さらに入力が必要。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> が <code class="docutils literal"><span class="pre">None</span></code> を返した場合。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">True</span></code> を返します。</li>
+<li>入力が完全。 <a class="reference internal" href="#code.compile_command" title="code.compile_command"><code class="xref py py-func docutils literal"><span class="pre">compile_command()</span></code></a> がコードオブジェクトを返した場合。 (<a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> を除く実行時例外も処理する) <a class="reference internal" href="#code.InteractiveInterpreter.runcode" title="code.InteractiveInterpreter.runcode"><code class="xref py py-meth docutils literal"><span class="pre">runcode()</span></code></a> を呼び出すことによって、コードは実行されます。 <a class="reference internal" href="#code.InteractiveInterpreter.runsource" title="code.InteractiveInterpreter.runsource"><code class="xref py py-meth docutils literal"><span class="pre">runsource()</span></code></a> は <code class="docutils literal"><span class="pre">False</span></code> を返します。</li>
 </ul>
 <p>次の行を要求するために <code class="docutils literal"><span class="pre">sys.ps1</span></code> か <code class="docutils literal"><span class="pre">sys.ps2</span></code> のどちらを使うかを決定するために、戻り値を利用できます。</p>
 </dd></dl>
@@ -190,7 +183,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">29.1. <code class="docutils literal"><span class="pre">code</span></code> &#8212; インタプリタ基底クラス</a><ul>
+<li><a class="reference internal" href="#">29.1. <code class="docutils literal"><span class="pre">code</span></code> — インタプリタ基底クラス</a><ul>
 <li><a class="reference internal" href="#interactive-interpreter-objects">29.1.1. 対話的なインタプリタオブジェクト</a></li>
 <li><a class="reference internal" href="#interactive-console-objects">29.1.2. 対話的なコンソールオブジェクト</a></li>
 </ul>
@@ -202,11 +195,11 @@
                         title="前の章へ">29. カスタム Python インタプリタ</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="codeop.html"
-                        title="次の章へ">29.2. <code class="docutils literal"><span class="pre">codeop</span></code> &#8212; Pythonコードをコンパイルする</a></p>
+                        title="次の章へ">29.2. <code class="docutils literal"><span class="pre">codeop</span></code> — Pythonコードをコンパイルする</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/code.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/code.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -258,10 +251,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

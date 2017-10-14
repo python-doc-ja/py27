@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>13.6. plistlib — Mac OS X .plist ファイルの生成と解析 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="13. ファイルフォーマット" href="fileformats.html" />
     <link rel="next" title="14. 暗号関連のサービス" href="crypto.html" />
     <link rel="prev" title="13.5. xdrlib — XDR データのエンコードおよびデコード" href="xdrlib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-plistlib">
-<span id="plistlib-generate-and-parse-mac-os-x-plist-files"></span><h1>13.6. <a class="reference internal" href="#module-plistlib" title="plistlib: Generate and parse Mac OS X plist files."><code class="xref py py-mod docutils literal"><span class="pre">plistlib</span></code></a> &#8212; Mac OS X <code class="docutils literal"><span class="pre">.plist</span></code> ファイルの生成と解析<a class="headerlink" href="#module-plistlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="plistlib-generate-and-parse-mac-os-x-plist-files"></span><h1>13.6. <a class="reference internal" href="#module-plistlib" title="plistlib: Generate and parse Mac OS X plist files."><code class="xref py py-mod docutils literal"><span class="pre">plistlib</span></code></a> — Mac OS X <code class="docutils literal"><span class="pre">.plist</span></code> ファイルの生成と解析<a class="headerlink" href="#module-plistlib" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.6 で変更: </span>このモジュールは以前は Mac 専用ライブラリだけにありましたが、全てのプラットフォームで使えるようにしました。</p>
 </div>
@@ -89,14 +85,13 @@
 <hr class="docutils" />
 <p>このモジュールは主に Mac OS X で使われる「プロパティーリスト」 XML ファイルを読み書きするインターフェイスを提供します。</p>
 <p>プロパティーリスト (<code class="docutils literal"><span class="pre">.plist</span></code>) ファイル形式は基本的型のオブジェクト、たとえば辞書やリスト、数、文字列など、に対する単純な XML による保存形式です。たいてい、トップレベルのオブジェクトは辞書です。</p>
-<p>値は文字列、整数、浮動小数点数、ブール型、タプル、リスト、辞書 (ただし文字列だけがキーになれます)、 <a class="reference internal" href="#plistlib.Data" title="plistlib.Data"><code class="xref py py-class docutils literal"><span class="pre">Data</span></code></a> または <a class="reference internal" href="datetime.html#datetime.datetime" title="datetime.datetime"><code class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></code></a> のオブジェクトです。文字列の値は(辞書のキーも含めて) Unicode 文字列であって構いません &#8211; それらは UTF-8 で書き出されます。</p>
+<p>値は文字列、整数、浮動小数点数、ブール型、タプル、リスト、辞書 (ただし文字列だけがキーになれます)、 <a class="reference internal" href="#plistlib.Data" title="plistlib.Data"><code class="xref py py-class docutils literal"><span class="pre">Data</span></code></a> または <a class="reference internal" href="datetime.html#datetime.datetime" title="datetime.datetime"><code class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></code></a> のオブジェクトです。文字列の値は(辞書のキーも含めて) Unicode 文字列であって構いません – それらは UTF-8 で書き出されます。</p>
 <p><code class="docutils literal"><span class="pre">&lt;data&gt;</span></code> plist 型は <a class="reference internal" href="#plistlib.Data" title="plistlib.Data"><code class="xref py py-class docutils literal"><span class="pre">Data</span></code></a> クラスを通じてサポートされます。これは Python の文字列に対する薄いラッパです。文字列に制御文字を含めなければならない場合は <a class="reference internal" href="#plistlib.Data" title="plistlib.Data"><code class="xref py py-class docutils literal"><span class="pre">Data</span></code></a> を使って下さい。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference external" href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man5/plist.5.html">PList マニュアルページ</a></dt>
-<dd><p class="first last">このファイル形式の Apple の文書。</p>
-</dd>
+<dd>このファイル形式の Apple の文書。</dd>
 </dl>
 </div>
 <p>このモジュールは以下の関数を定義しています:</p>
@@ -104,7 +99,7 @@
 <dt id="plistlib.readPlist">
 <code class="descclassname">plistlib.</code><code class="descname">readPlist</code><span class="sig-paren">(</span><em>pathOrFile</em><span class="sig-paren">)</span><a class="headerlink" href="#plistlib.readPlist" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>plist ファイルを読み込みます。 <em>pathOrFile</em> はファイル名でも (読み込み可能な) ファイルオブジェクトでも構いません。展開されたルートオブジェクト (たいていは辞書です) を返します。</p>
-<p>XML データは <a class="reference internal" href="pyexpat.html#module-xml.parsers.expat" title="xml.parsers.expat: An interface to the Expat non-validating XML parser."><code class="xref py py-mod docutils literal"><span class="pre">xml.parsers.expat</span></code></a> にある Expat パーサを使って解析されます &#8211; 間違いのある XML に対して送られる可能性のある例外についてはそちらの文書を参照して下さい。未知の要素は plist 解析器から単純に無視されます。</p>
+<p>XML データは <a class="reference internal" href="pyexpat.html#module-xml.parsers.expat" title="xml.parsers.expat: An interface to the Expat non-validating XML parser."><code class="xref py py-mod docutils literal"><span class="pre">xml.parsers.expat</span></code></a> にある Expat パーサを使って解析されます – 間違いのある XML に対して送られる可能性のある例外についてはそちらの文書を参照して下さい。未知の要素は plist 解析器から単純に無視されます。</p>
 </dd></dl>
 
 <dl class="function">
@@ -193,7 +188,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">13.6. <code class="docutils literal"><span class="pre">plistlib</span></code> &#8212; Mac OS X <code class="docutils literal"><span class="pre">.plist</span></code> ファイルの生成と解析</a><ul>
+<li><a class="reference internal" href="#">13.6. <code class="docutils literal"><span class="pre">plistlib</span></code> — Mac OS X <code class="docutils literal"><span class="pre">.plist</span></code> ファイルの生成と解析</a><ul>
 <li><a class="reference internal" href="#examples">13.6.1. 例</a></li>
 </ul>
 </li>
@@ -201,14 +196,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="xdrlib.html"
-                        title="前の章へ">13.5. <code class="docutils literal"><span class="pre">xdrlib</span></code> &#8212; XDR データのエンコードおよびデコード</a></p>
+                        title="前の章へ">13.5. <code class="docutils literal"><span class="pre">xdrlib</span></code> — XDR データのエンコードおよびデコード</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="crypto.html"
                         title="次の章へ">14. 暗号関連のサービス</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/plistlib.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/plistlib.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -260,10 +255,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

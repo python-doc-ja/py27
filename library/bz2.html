@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>12.3. bz2 — bzip2 互換の圧縮ライブラリ &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="12. データ圧縮とアーカイブ" href="archiving.html" />
     <link rel="next" title="12.4. zipfile — ZIP アーカイブの処理" href="zipfile.html" />
     <link rel="prev" title="12.2. gzip — gzip ファイルのサポート" href="gzip.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,27 +77,20 @@
           <div class="body" role="main">
             
   <div class="section" id="module-bz2">
-<span id="bz2-compression-compatible-with-bzip2"></span><h1>12.3. <a class="reference internal" href="#module-bz2" title="bz2: Interface to compression and decompression routines compatible with bzip2."><code class="xref py py-mod docutils literal"><span class="pre">bz2</span></code></a> &#8212; <strong class="program">bzip2</strong> 互換の圧縮ライブラリ<a class="headerlink" href="#module-bz2" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="bz2-compression-compatible-with-bzip2"></span><h1>12.3. <a class="reference internal" href="#module-bz2" title="bz2: Interface to compression and decompression routines compatible with bzip2."><code class="xref py py-mod docutils literal"><span class="pre">bz2</span></code></a> — <strong class="program">bzip2</strong> 互換の圧縮ライブラリ<a class="headerlink" href="#module-bz2" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 <p>このモジュールでは bz2 圧縮ライブラリのためのわかりやすいインタフェースを提供します。モジュールでは完全なファイルインタフェース、データを一括して圧縮/解凍する関数、データを逐次的に圧縮/解凍するための型を実装しています。</p>
 <p>bz2 モジュールが提供している機能を以下にまとめます。</p>
 <ul class="simple">
-<li><p class="first"><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは、 <a class="reference internal" href="#bz2.BZ2File.readline" title="bz2.BZ2File.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.readlines" title="bz2.BZ2File.readlines"><code class="xref py py-meth docutils literal"><span class="pre">readlines()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.writelines" title="bz2.BZ2File.writelines"><code class="xref py py-meth docutils literal"><span class="pre">writelines()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.seek" title="bz2.BZ2File.seek"><code class="xref py py-meth docutils literal"><span class="pre">seek()</span></code></a> 等を含む、完全なファイルインタフェースを実装します。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは <a class="reference internal" href="#bz2.BZ2File.seek" title="bz2.BZ2File.seek"><code class="xref py py-meth docutils literal"><span class="pre">seek()</span></code></a> をエミュレーションでサポートします。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは広範囲の改行文字バリエーション(universal newline) をサポートします。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは、ファイルオブジェクトの先読みアルゴリズムを元にして実装されている、最適化された行単位のイテレーション機能を提供します。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#bz2.BZ2Compressor" title="bz2.BZ2Compressor"><code class="xref py py-class docutils literal"><span class="pre">BZ2Compressor</span></code></a> および <a class="reference internal" href="#bz2.BZ2Decompressor" title="bz2.BZ2Decompressor"><code class="xref py py-class docutils literal"><span class="pre">BZ2Decompressor</span></code></a> クラスでは逐次的圧縮（解凍）をサポートしています。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="#bz2.compress" title="bz2.compress"><code class="xref py py-func docutils literal"><span class="pre">compress()</span></code></a> および <a class="reference internal" href="#bz2.decompress" title="bz2.decompress"><code class="xref py py-func docutils literal"><span class="pre">decompress()</span></code></a> 関数は、一括圧縮/解凍機能を提供しています。</p>
-</li>
-<li><p class="first">個別のロックメカニズムによってスレッド安全性を持っています。</p>
-</li>
+<li><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは、 <a class="reference internal" href="#bz2.BZ2File.readline" title="bz2.BZ2File.readline"><code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.readlines" title="bz2.BZ2File.readlines"><code class="xref py py-meth docutils literal"><span class="pre">readlines()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.writelines" title="bz2.BZ2File.writelines"><code class="xref py py-meth docutils literal"><span class="pre">writelines()</span></code></a>, <a class="reference internal" href="#bz2.BZ2File.seek" title="bz2.BZ2File.seek"><code class="xref py py-meth docutils literal"><span class="pre">seek()</span></code></a> 等を含む、完全なファイルインタフェースを実装します。</li>
+<li><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは <a class="reference internal" href="#bz2.BZ2File.seek" title="bz2.BZ2File.seek"><code class="xref py py-meth docutils literal"><span class="pre">seek()</span></code></a> をエミュレーションでサポートします。</li>
+<li><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは広範囲の改行文字バリエーション(universal newline) をサポートします。</li>
+<li><a class="reference internal" href="#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal"><span class="pre">BZ2File</span></code></a> クラスは、ファイルオブジェクトの先読みアルゴリズムを元にして実装されている、最適化された行単位のイテレーション機能を提供します。</li>
+<li><a class="reference internal" href="#bz2.BZ2Compressor" title="bz2.BZ2Compressor"><code class="xref py py-class docutils literal"><span class="pre">BZ2Compressor</span></code></a> および <a class="reference internal" href="#bz2.BZ2Decompressor" title="bz2.BZ2Decompressor"><code class="xref py py-class docutils literal"><span class="pre">BZ2Decompressor</span></code></a> クラスでは逐次的圧縮（解凍）をサポートしています。</li>
+<li><a class="reference internal" href="#bz2.compress" title="bz2.compress"><code class="xref py py-func docutils literal"><span class="pre">compress()</span></code></a> および <a class="reference internal" href="#bz2.decompress" title="bz2.decompress"><code class="xref py py-func docutils literal"><span class="pre">decompress()</span></code></a> 関数は、一括圧縮/解凍機能を提供しています。</li>
+<li>個別のロックメカニズムによってスレッド安全性を持っています。</li>
 </ul>
 <div class="section" id="de-compression-of-files">
 <h2>12.3.1. ファイルの圧縮/解凍<a class="headerlink" href="#de-compression-of-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -239,7 +228,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">12.3. <code class="docutils literal"><span class="pre">bz2</span></code> &#8212; <strong class="program">bzip2</strong> 互換の圧縮ライブラリ</a><ul>
+<li><a class="reference internal" href="#">12.3. <code class="docutils literal"><span class="pre">bz2</span></code> — <strong class="program">bzip2</strong> 互換の圧縮ライブラリ</a><ul>
 <li><a class="reference internal" href="#de-compression-of-files">12.3.1. ファイルの圧縮/解凍</a></li>
 <li><a class="reference internal" href="#sequential-de-compression">12.3.2. 逐次的な圧縮/解凍</a></li>
 <li><a class="reference internal" href="#one-shot-de-compression">12.3.3. 一括圧縮/解凍</a></li>
@@ -249,14 +238,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="gzip.html"
-                        title="前の章へ">12.2. <code class="docutils literal"><span class="pre">gzip</span></code> &#8212; <strong class="program">gzip</strong> ファイルのサポート</a></p>
+                        title="前の章へ">12.2. <code class="docutils literal"><span class="pre">gzip</span></code> — <strong class="program">gzip</strong> ファイルのサポート</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="zipfile.html"
-                        title="次の章へ">12.4. <code class="docutils literal"><span class="pre">zipfile</span></code> &#8212; ZIP アーカイブの処理</a></p>
+                        title="次の章へ">12.4. <code class="docutils literal"><span class="pre">zipfile</span></code> — ZIP アーカイブの処理</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/bz2.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/bz2.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -308,10 +297,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

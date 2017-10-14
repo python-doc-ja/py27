@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>28.10. traceback — スタックトレースの表示または取得 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.11. __future__ — future 文の定義" href="__future__.html" />
     <link rel="prev" title="28.9. atexit — 終了ハンドラ" href="atexit.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,9 +77,9 @@
           <div class="body" role="main">
             
   <div class="section" id="module-traceback">
-<span id="traceback-print-or-retrieve-a-stack-traceback"></span><h1>28.10. <a class="reference internal" href="#module-traceback" title="traceback: Print or retrieve a stack traceback."><code class="xref py py-mod docutils literal"><span class="pre">traceback</span></code></a> &#8212; スタックトレースの表示または取得<a class="headerlink" href="#module-traceback" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>このモジュールは Python プログラムのスタックトレースを抽出し、書式を整え、表示するための標準インターフェースを提供します。モジュールがスタックトレースを表示するとき、Python インタープリタの動作を正確に模倣します。インタープリタの&#8221;ラッパー&#8221;の場合のように、プログラムの制御の元でスタックトレースを表示したいと思ったときに役に立ちます。</p>
-<p id="index-0">モジュールは traceback オブジェクトを使います &#8212; これは変数 <a class="reference internal" href="sys.html#sys.exc_traceback" title="sys.exc_traceback"><code class="xref py py-data docutils literal"><span class="pre">sys.exc_traceback</span></code></a> (非推奨)と <a class="reference internal" href="sys.html#sys.last_traceback" title="sys.last_traceback"><code class="xref py py-data docutils literal"><span class="pre">sys.last_traceback</span></code></a> に保存され、 <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a> から三番目の項目として返されるオブジェクト型です。</p>
+<span id="traceback-print-or-retrieve-a-stack-traceback"></span><h1>28.10. <a class="reference internal" href="#module-traceback" title="traceback: Print or retrieve a stack traceback."><code class="xref py py-mod docutils literal"><span class="pre">traceback</span></code></a> — スタックトレースの表示または取得<a class="headerlink" href="#module-traceback" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このモジュールは Python プログラムのスタックトレースを抽出し、書式を整え、表示するための標準インターフェースを提供します。モジュールがスタックトレースを表示するとき、Python インタープリタの動作を正確に模倣します。インタープリタの」ラッパー」の場合のように、プログラムの制御の元でスタックトレースを表示したいと思ったときに役に立ちます。</p>
+<p id="index-0">モジュールは traceback オブジェクトを使います — これは変数 <a class="reference internal" href="sys.html#sys.exc_traceback" title="sys.exc_traceback"><code class="xref py py-data docutils literal"><span class="pre">sys.exc_traceback</span></code></a> (非推奨)と <a class="reference internal" href="sys.html#sys.last_traceback" title="sys.last_traceback"><code class="xref py py-data docutils literal"><span class="pre">sys.last_traceback</span></code></a> に保存され、 <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a> から三番目の項目として返されるオブジェクト型です。</p>
 <p>このモジュールでは以下の関数を定義しています:</p>
 <dl class="function">
 <dt id="traceback.print_tb">
@@ -127,7 +123,7 @@
 <dl class="function">
 <dt id="traceback.extract_tb">
 <code class="descclassname">traceback.</code><code class="descname">extract_tb</code><span class="sig-paren">(</span><em>tb</em><span class="optional">[</span>, <em>limit</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#traceback.extract_tb" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>トレースバックオブジェクト <em>tb</em> から <em>limit</em> まで取り出された&#8221;前処理済み&#8221;スタックトレース項目のリストを返します。スタックトレースの代わりの書式設定を行うために役に立ちます。<em>limit</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> の場合は、すべての項目が取り出されます。&#8221;前処理済み&#8221;スタックトレース項目とは4要素のタプル (<em>filename</em>, <em>line number</em>, <em>function name</em>, <em>text</em>) で、スタックトレースに対して通常出力される情報を表しています。<em>text</em> は前後の空白を取り除いた文字列です。ソースが利用できない場合は <code class="docutils literal"><span class="pre">None</span></code> です。</p>
+<dd><p>トレースバックオブジェクト <em>tb</em> から <em>limit</em> まで取り出された」前処理済み」スタックトレース項目のリストを返します。スタックトレースの代わりの書式設定を行うために役に立ちます。<em>limit</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> の場合は、すべての項目が取り出されます。」前処理済み」スタックトレース項目とは4要素のタプル (<em>filename</em>, <em>line number</em>, <em>function name</em>, <em>text</em>) で、スタックトレースに対して通常出力される情報を表しています。<em>text</em> は前後の空白を取り除いた文字列です。ソースが利用できない場合は <code class="docutils literal"><span class="pre">None</span></code> です。</p>
 </dd></dl>
 
 <dl class="function">
@@ -169,7 +165,7 @@
 <dl class="function">
 <dt id="traceback.tb_lineno">
 <code class="descclassname">traceback.</code><code class="descname">tb_lineno</code><span class="sig-paren">(</span><em>tb</em><span class="sig-paren">)</span><a class="headerlink" href="#traceback.tb_lineno" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>トレースバックオブジェクトに設定された現在の行番号を返します。 Python 2.3より前のバージョンでは、 <a class="reference internal" href="../using/cmdline.html#cmdoption-O"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> フラグが渡されたときに <code class="docutils literal"><span class="pre">tb.tb_lineno</span></code> が正しく更新されなかったため、この関数は必要でした。 2.3以降のバージョンでは不要です。</p>
+<dd><p>トレースバックオブジェクトに設定された現在の行番号を返します。 Python 2.3より前のバージョンでは、 <a class="reference internal" href="../using/cmdline.html#cmdoption-o"><code class="xref std std-option docutils literal"><span class="pre">-O</span></code></a> フラグが渡されたときに <code class="docutils literal"><span class="pre">tb.tb_lineno</span></code> が正しく更新されなかったため、この関数は必要でした。 2.3以降のバージョンでは不要です。</p>
 </dd></dl>
 
 <div class="section" id="traceback-examples">
@@ -311,7 +307,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">28.10. <code class="docutils literal"><span class="pre">traceback</span></code> &#8212; スタックトレースの表示または取得</a><ul>
+<li><a class="reference internal" href="#">28.10. <code class="docutils literal"><span class="pre">traceback</span></code> — スタックトレースの表示または取得</a><ul>
 <li><a class="reference internal" href="#traceback-examples">28.10.1. トレースバックの例</a></li>
 </ul>
 </li>
@@ -319,14 +315,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="atexit.html"
-                        title="前の章へ">28.9. <code class="docutils literal"><span class="pre">atexit</span></code> &#8212; 終了ハンドラ</a></p>
+                        title="前の章へ">28.9. <code class="docutils literal"><span class="pre">atexit</span></code> — 終了ハンドラ</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="__future__.html"
-                        title="次の章へ">28.11. <code class="docutils literal"><span class="pre">__future__</span></code> &#8212; future 文の定義</a></p>
+                        title="次の章へ">28.11. <code class="docutils literal"><span class="pre">__future__</span></code> — future 文の定義</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/traceback.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/traceback.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -378,10 +374,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

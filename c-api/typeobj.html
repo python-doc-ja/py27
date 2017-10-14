@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>型オブジェクト &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="オブジェクト実装サポート (object implementation support)" href="objimpl.html" />
     <link rel="next" title="循環参照ガベージコレクションをサポートする" href="gcsupport.html" />
     <link rel="prev" title="共通のオブジェクト構造体 (common object structure)" href="structures.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -222,7 +218,7 @@ Py_ssize_t <code class="descname">PyTypeObject.tp_basicsize</code><a class="head
 Py_ssize_t <code class="descname">PyTypeObject.tp_itemsize</code><a class="headerlink" href="#c.PyTypeObject.tp_itemsize" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>これらのフィールドは、型インスタンスのバイトサイズを計算できるようにします。</p>
 <p>型には二つの種類があります: 固定長インスタンスの型は、 <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> フィールドがゼロで、可変長インスタンスの方は <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> フィールドが非ゼロの値になります。固定長インスタンスの型の場合、全てのインスタンスは等しく <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> で与えられたサイズになります。</p>
-<p>可変長インスタンスの型の場合、インスタンスには <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがなくてはならず、インスタンスのサイズは N をオブジェクトの &#8220;長さ&#8221; として、 <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> と N かける <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> の加算になります。N の値は通常、インスタンスの <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドに記憶されます。ただし例外がいくつかあります: 例えば、長整数では負の値を <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> に使って、インスタンスの表す値が負であることを示し、 N 自体は <code class="docutils literal"><span class="pre">abs(ob_size)</span></code> になります。また、 <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがあるからといって、必ずしもインスタンスが可変長であることを意味しません (例えば、リスト型の構造体は固定長のインスタンスになるにもかかわらず、インスタンスにはちゃんと意味を持った <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがあります)。</p>
+<p>可変長インスタンスの型の場合、インスタンスには <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがなくてはならず、インスタンスのサイズは N をオブジェクトの 「長さ」 として、 <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> と N かける <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> の加算になります。N の値は通常、インスタンスの <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドに記憶されます。ただし例外がいくつかあります: 例えば、長整数では負の値を <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> に使って、インスタンスの表す値が負であることを示し、 N 自体は <code class="docutils literal"><span class="pre">abs(ob_size)</span></code> になります。また、 <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがあるからといって、必ずしもインスタンスが可変長であることを意味しません (例えば、リスト型の構造体は固定長のインスタンスになるにもかかわらず、インスタンスにはちゃんと意味を持った <code class="xref py py-attr docutils literal"><span class="pre">ob_size</span></code> フィールドがあります)。</p>
 <p>基本サイズには、 <a class="reference internal" href="structures.html#c.PyObject_HEAD" title="PyObject_HEAD"><code class="xref c c-macro docutils literal"><span class="pre">PyObject_HEAD</span></code></a> マクロまたは <a class="reference internal" href="structures.html#c.PyObject_VAR_HEAD" title="PyObject_VAR_HEAD"><code class="xref c c-macro docutils literal"><span class="pre">PyObject_VAR_HEAD</span></code></a> マクロ (インスタンス構造体を宣言するのに使ったどちらかのマクロ) で宣言されているフィールドが入っています。さらに、 <code class="xref py py-attr docutils literal"><span class="pre">_ob_prev</span></code> および <code class="xref py py-attr docutils literal"><span class="pre">_ob_next</span></code> フィールドがある場合、これらのフィールドもサイズに加算されます。従って、 <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> の正しい初期化パラメタを得るには、インスタンスデータのレイアウトを宣言するのに使う構造体に対して <code class="docutils literal"><span class="pre">sizeof</span></code> 演算子を使うしかありません。基本サイズには、GC ヘッダサイズは入っていません (これは Python 2.2 からの新しい仕様です; 2.1 や 2.0 では、GC ヘッダサイズは <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> に入っていました)。</p>
 <p>これらのフィールドはサブタイプに別々に継承されます。基底タイプが 0 でない <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> を持っていた場合、基底タイプの実装に依存しますが、一般的にはサブタイプで別の 0 で無い値を <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> に設定するのは安全ではありません。</p>
 <p>アラインメントに関する注釈: 変数の各要素を配置する際に特定のアラインメントが必要となる場合、 <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> の値に気をつけなければなりません。例: ある型が <code class="docutils literal"><span class="pre">double</span></code> の配列を実装しているとします。 <a class="reference internal" href="#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal"><span class="pre">tp_itemsize</span></code></a> は <code class="docutils literal"><span class="pre">sizeof(double)</span></code> です。 <a class="reference internal" href="#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal"><span class="pre">tp_basicsize</span></code></a> が <code class="docutils literal"><span class="pre">sizeof(double)</span></code> (ここではこれを <code class="docutils literal"><span class="pre">double</span></code> のアラインメントが要求するサイズと仮定する) の個数分のサイズになるようにするのはプログラマの責任です。</p>
@@ -327,7 +323,7 @@ ternaryfunc <code class="descname">PyTypeObject.tp_call</code><a class="headerli
 <dt id="c.PyTypeObject.tp_str">
 reprfunc <code class="descname">PyTypeObject.tp_str</code><a class="headerlink" href="#c.PyTypeObject.tp_str" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>オプションのフィールドです。ポインタで、組み込みの演算 <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> を実装している関数を指します。(<a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> が型の一つになったため、 <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> は <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> のコンストラクタを呼び出すことに注意してください。このコンストラクタは実際の処理を行う上で <a class="reference internal" href="object.html#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> を呼び出し、さらに <a class="reference internal" href="object.html#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> がこのハンドラを呼び出すことになります。)</p>
-<p>シグネチャは <a class="reference internal" href="object.html#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> と同じです; この関数は文字列オブジェクトか Unicode オブジェクトを返さねばなりません。また、この関数はオブジェクトを &#8220;分かりやすく (friendly)&#8221; 表現した文字列を返さねばなりません。というのは、この文字列は <a class="reference internal" href="../reference/simple_stmts.html#print"><code class="xref std std-keyword docutils literal"><span class="pre">print</span></code></a> 文で使われることになる表記だからです。</p>
+<p>シグネチャは <a class="reference internal" href="object.html#c.PyObject_Str" title="PyObject_Str"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Str()</span></code></a> と同じです; この関数は文字列オブジェクトか Unicode オブジェクトを返さねばなりません。また、この関数はオブジェクトを 「分かりやすく (friendly)」 表現した文字列を返さねばなりません。というのは、この文字列は <a class="reference internal" href="../reference/simple_stmts.html#print"><code class="xref std std-keyword docutils literal"><span class="pre">print</span></code></a> 文で使われることになる表記だからです。</p>
 <p>このフィールドが設定されていない場合、文字列表現を返すためには <a class="reference internal" href="object.html#c.PyObject_Repr" title="PyObject_Repr"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Repr()</span></code></a> が呼び出されます。</p>
 <p>サブタイプはこのフィールドを継承します。</p>
 </dd></dl>
@@ -424,7 +420,7 @@ long <code class="descname">PyTypeObject.tp_flags</code><a class="headerlink" hr
 <dl class="data">
 <dt id="Py_TPFLAGS_BASETYPE">
 <code class="descname">Py_TPFLAGS_BASETYPE</code><a class="headerlink" href="#Py_TPFLAGS_BASETYPE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>型を別の型の基底タイプとして使える場合にセットされるビットです。このビットがクリアならば、この型のサブタイプは生成できません (Java における &#8220;final&#8221; クラスに似たクラスになります)。</p>
+<dd><p>型を別の型の基底タイプとして使える場合にセットされるビットです。このビットがクリアならば、この型のサブタイプは生成できません (Java における 「final」 クラスに似たクラスになります)。</p>
 </dd></dl>
 
 <dl class="data">
@@ -522,10 +518,8 @@ richcmpfunc <code class="descname">PyTypeObject.tp_richcompare</code><a class="h
 <col width="43%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">定数</p>
-</th>
-<th class="head"><p class="first last">比較</p>
-</th>
+<tr class="row-odd"><th class="head">定数</th>
+<th class="head">比較</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -637,7 +631,7 @@ struct PyGetSetDef* <code class="descname">PyTypeObject.tp_getset</code><a class
 <dl class="member">
 <dt id="c.PyTypeObject.tp_descr_get">
 descrgetfunc <code class="descname">PyTypeObject.tp_descr_get</code><a class="headerlink" href="#c.PyTypeObject.tp_descr_get" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>オプションのフィールドです。ポインタで、 &#8220;デスクリプタ get&#8221; 関数を指します。</p>
+<dd><p>オプションのフィールドです。ポインタで、 「デスクリプタ get」 関数を指します。</p>
 <p>関数のシグネチャは次のとおりです</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">PyObject</span> <span class="o">*</span> <span class="nf">tp_descr_get</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">type</span><span class="p">);</span>
 </pre></div>
@@ -868,7 +862,7 @@ Py_ssize_t <code class="descname">PyTypeObject.tp_maxalloc</code><a class="heade
 <dl class="member">
 <dt id="c.PyNumberMethods.nb_coerce">
 coercion <code class="descname">PyNumberMethods.nb_coerce</code><a class="headerlink" href="#c.PyNumberMethods.nb_coerce" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この関数は <a class="reference internal" href="number.html#c.PyNumber_CoerceEx" title="PyNumber_CoerceEx"><code class="xref c c-func docutils literal"><span class="pre">PyNumber_CoerceEx()</span></code></a> から利用され、同じシグネチャを持ちます。最初の引数は定義された型のオブジェクトを指すポインタでなければなりません。共通の &#8220;大きな&#8221; 型への変換が可能であれば、この関数はポインタを変換後のオブジェクトへの新しい参照へ置き換えて、 <code class="docutils literal"><span class="pre">0</span></code> を返します。変換ができないなら、この関数は <code class="docutils literal"><span class="pre">1</span></code> を返します。エラーが設定荒れた場合は、 <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+<dd><p>この関数は <a class="reference internal" href="number.html#c.PyNumber_CoerceEx" title="PyNumber_CoerceEx"><code class="xref c c-func docutils literal"><span class="pre">PyNumber_CoerceEx()</span></code></a> から利用され、同じシグネチャを持ちます。最初の引数は定義された型のオブジェクトを指すポインタでなければなりません。共通の 「大きな」 型への変換が可能であれば、この関数はポインタを変換後のオブジェクトへの新しい参照へ置き換えて、 <code class="docutils literal"><span class="pre">0</span></code> を返します。変換ができないなら、この関数は <code class="docutils literal"><span class="pre">1</span></code> を返します。エラーが設定荒れた場合は、 <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
 </dd></dl>
 
 </li>
@@ -988,16 +982,16 @@ the object contains.  Simple objects such as <a class="reference internal" href=
 <a class="reference internal" href="buffer.html#c.PyBuffer_Type" title="PyBuffer_Type"><code class="xref c c-type docutils literal"><span class="pre">PyBuffer_Type</span></code></a> objects contain a single segment.</p>
 <p id="index-3">The last slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code>, of type <a class="reference internal" href="#c.charbufferproc" title="charbufferproc"><code class="xref c c-type docutils literal"><span class="pre">charbufferproc</span></code></a>.
 This slot will only be present if the <a class="reference internal" href="#Py_TPFLAGS_HAVE_GETCHARBUFFER" title="Py_TPFLAGS_HAVE_GETCHARBUFFER"><code class="xref py py-const docutils literal"><span class="pre">Py_TPFLAGS_HAVE_GETCHARBUFFER</span></code></a>
-flag is present in the <a class="reference internal" href="#c.PyTypeObject.tp_flags" title="PyTypeObject.tp_flags"><code class="xref c c-member docutils literal"><span class="pre">tp_flags</span></code></a> field of the object&#8217;s
+flag is present in the <a class="reference internal" href="#c.PyTypeObject.tp_flags" title="PyTypeObject.tp_flags"><code class="xref c c-member docutils literal"><span class="pre">tp_flags</span></code></a> field of the object’s
 <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a>. Before using this slot, the caller should test whether it
 is present by using the <a class="reference internal" href="type.html#c.PyType_HasFeature" title="PyType_HasFeature"><code class="xref c c-func docutils literal"><span class="pre">PyType_HasFeature()</span></code></a> function.  If the flag is
-present, <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> may be <em>NULL</em>, indicating that the object&#8217;s
+present, <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> may be <em>NULL</em>, indicating that the object’s
 contents cannot be used as <em>8-bit characters</em>. The slot function may also raise
-an error if the object&#8217;s contents cannot be interpreted as 8-bit characters.
+an error if the object’s contents cannot be interpreted as 8-bit characters.
 For example, if the object is an array which is configured to hold floating
 point values, an exception may be raised if a caller attempts to use
 <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code> to fetch a sequence of 8-bit characters. This notion of
-exporting the internal buffers as &#8220;text&#8221; is used to distinguish between objects
+exporting the internal buffers as 「text」 is used to distinguish between objects
 that are binary in nature, and those which have character-based content.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -1061,7 +1055,7 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/typeobj.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/typeobj.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -1113,10 +1107,10 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

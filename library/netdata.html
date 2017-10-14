@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>18. インターネット上のデータの操作 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="18.1. email — 電子メールと MIME 処理のためのパッケージ" href="email.html" />
     <link rel="prev" title="17.7. asynchat — 非同期ソケットコマンド/レスポンスハンドラ" href="asynchat.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -84,7 +80,7 @@
 <p>この章ではインターネット上で一般的に利用されているデータ形式の操作をサポートするモジュール群について記述します。</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="email.html">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="email.html">18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="email.message.html">18.1.1. <code class="docutils literal"><span class="pre">email.message</span></code>: 電子メールメッセージの表現</a></li>
 <li class="toctree-l2"><a class="reference internal" href="email.parser.html">18.1.2. <code class="docutils literal"><span class="pre">email.parser</span></code>: 電子メールメッセージを解析(パース)する</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="email.parser.html#feedparser-api">18.1.2.1. FeedParser API</a></li>
@@ -105,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="email.html#differences-from-mimelib">18.1.13. <code class="docutils literal"><span class="pre">mimelib</span></code> との違い</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="json.html">18.2. <code class="docutils literal"><span class="pre">json</span></code> &#8212; JSON エンコーダおよびデコーダ</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="json.html">18.2. <code class="docutils literal"><span class="pre">json</span></code> — JSON エンコーダおよびデコーダ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="json.html#basic-usage">18.2.1. 基本的な使い方</a></li>
 <li class="toctree-l2"><a class="reference internal" href="json.html#encoders-and-decoders">18.2.2. エンコーダとデコーダ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="json.html#standard-compliance-and-interoperability">18.2.3. 標準への準拠と互換性</a><ul>
@@ -118,8 +114,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mailcap.html">18.3. <code class="docutils literal"><span class="pre">mailcap</span></code> &#8212; mailcap ファイルの操作</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mailbox.html">18.4. <code class="docutils literal"><span class="pre">mailbox</span></code> &#8212; 様々な形式のメールボックス操作</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mailcap.html">18.3. <code class="docutils literal"><span class="pre">mailcap</span></code> — mailcap ファイルの操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mailbox.html">18.4. <code class="docutils literal"><span class="pre">mailbox</span></code> — 様々な形式のメールボックス操作</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mailbox.html#mailbox-objects">18.4.1. <code class="docutils literal"><span class="pre">Mailbox</span></code> オブジェクト</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mailbox.html#maildir">18.4.1.1. <code class="docutils literal"><span class="pre">Maildir</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="mailbox.html#mbox">18.4.1.2. <code class="docutils literal"><span class="pre">mbox</span></code></a></li>
@@ -141,43 +137,43 @@
 <li class="toctree-l2"><a class="reference internal" href="mailbox.html#examples">18.4.5. 例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mhlib.html">18.5. <code class="docutils literal"><span class="pre">mhlib</span></code> &#8212; MH のメールボックスへのアクセス機構</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mhlib.html">18.5. <code class="docutils literal"><span class="pre">mhlib</span></code> — MH のメールボックスへのアクセス機構</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mhlib.html#mh-objects">18.5.1. MH オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mhlib.html#folder-objects">18.5.2. Folder オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mhlib.html#message-objects">18.5.3. Message オブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mimetools.html">18.6. <code class="docutils literal"><span class="pre">mimetools</span></code> &#8212; MIME メッセージを解析するためのツール</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mimetools.html">18.6. <code class="docutils literal"><span class="pre">mimetools</span></code> — MIME メッセージを解析するためのツール</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mimetools.html#additional-methods-of-message-objects">18.6.1. Message オブジェクトの追加メソッド</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mimetypes.html">18.7. <code class="docutils literal"><span class="pre">mimetypes</span></code> &#8212; ファイル名を MIME 型へマップする</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mimetypes.html">18.7. <code class="docutils literal"><span class="pre">mimetypes</span></code> — ファイル名を MIME 型へマップする</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mimetypes.html#mimetypes-objects">18.7.1. Mime 型オブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mimewriter.html">18.8. <code class="docutils literal"><span class="pre">MimeWriter</span></code> &#8212; 汎用 MIME ファイルライター</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mimewriter.html">18.8. <code class="docutils literal"><span class="pre">MimeWriter</span></code> — 汎用 MIME ファイルライター</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mimewriter.html#mimewriter-objects">18.8.1. MimeWriter オブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mimify.html">18.9. <code class="docutils literal"><span class="pre">mimify</span></code> &#8212; 電子メールメッセージの MIME 処理</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multifile.html">18.10. <code class="docutils literal"><span class="pre">multifile</span></code> &#8212; 個別の部分を含んだファイル群のサポート</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="mimify.html">18.9. <code class="docutils literal"><span class="pre">mimify</span></code> — 電子メールメッセージの MIME 処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multifile.html">18.10. <code class="docutils literal"><span class="pre">multifile</span></code> — 個別の部分を含んだファイル群のサポート</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="multifile.html#multifile-objects">18.10.1. MultiFile オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="multifile.html#multifile-example">18.10.2. <code class="docutils literal"><span class="pre">MultiFile</span></code> の例</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="rfc822.html">18.11. <code class="docutils literal"><span class="pre">rfc822</span></code> &#8212; RFC 2822 準拠のメールヘッダ読み出し</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="rfc822.html">18.11. <code class="docutils literal"><span class="pre">rfc822</span></code> — RFC 2822 準拠のメールヘッダ読み出し</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="rfc822.html#message-objects">18.11.1. Message オブジェクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rfc822.html#addresslist-objects">18.11.2. AddressList オブジェクト</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="base64.html">18.12. <code class="docutils literal"><span class="pre">base64</span></code> &#8212; RFC 3548: Base16, Base32, Base64 データの符号化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="binhex.html">18.13. <code class="docutils literal"><span class="pre">binhex</span></code> &#8212; binhex4 形式ファイルのエンコードおよびデコード</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="base64.html">18.12. <code class="docutils literal"><span class="pre">base64</span></code> — RFC 3548: Base16, Base32, Base64 データの符号化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binhex.html">18.13. <code class="docutils literal"><span class="pre">binhex</span></code> — binhex4 形式ファイルのエンコードおよびデコード</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="binhex.html#notes">18.13.1. 注釈</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="binascii.html">18.14. <code class="docutils literal"><span class="pre">binascii</span></code> &#8212; バイナリデータと ASCII データとの間での変換</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quopri.html">18.15. <code class="docutils literal"><span class="pre">quopri</span></code> &#8212; MIME quoted-printable 形式データのエンコードおよびデコード</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uu.html">18.16. <code class="docutils literal"><span class="pre">uu</span></code> &#8212; uuencode形式のエンコードとデコード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binascii.html">18.14. <code class="docutils literal"><span class="pre">binascii</span></code> — バイナリデータと ASCII データとの間での変換</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quopri.html">18.15. <code class="docutils literal"><span class="pre">quopri</span></code> — MIME quoted-printable 形式データのエンコードおよびデコード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uu.html">18.16. <code class="docutils literal"><span class="pre">uu</span></code> — uuencode形式のエンコードとデコード</a></li>
 </ul>
 </div>
 </div>
@@ -190,14 +186,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="asynchat.html"
-                        title="前の章へ">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> &#8212; 非同期ソケットコマンド/レスポンスハンドラ</a></p>
+                        title="前の章へ">17.7. <code class="docutils literal"><span class="pre">asynchat</span></code> — 非同期ソケットコマンド/レスポンスハンドラ</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="email.html"
-                        title="次の章へ">18.1. <code class="docutils literal"><span class="pre">email</span></code> &#8212; 電子メールと MIME 処理のためのパッケージ</a></p>
+                        title="次の章へ">18.1. <code class="docutils literal"><span class="pre">email</span></code> — 電子メールと MIME 処理のためのパッケージ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/netdata.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/netdata.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -248,10 +244,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

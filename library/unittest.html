@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>25.3. unittest — ユニットテストフレームワーク &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="25. 開発ツール" href="development.html" />
     <link rel="next" title="25.4. 2to3 - Python 2 から 3 への自動コード変換" href="2to3.html" />
     <link rel="prev" title="25.2. doctest — 対話的な実行例をテストする" href="doctest.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,27 +77,23 @@
           <div class="body" role="main">
             
   <div class="section" id="module-unittest">
-<span id="unittest-unit-testing-framework"></span><h1>25.3. <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> &#8212; ユニットテストフレームワーク<a class="headerlink" href="#module-unittest" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="unittest-unit-testing-framework"></span><h1>25.3. <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> — ユニットテストフレームワーク<a class="headerlink" href="#module-unittest" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.1 で追加.</span></p>
 </div>
 <p>(読者の方がすでにテストの基本概念についてなじみがあるようでしたら、この部分をとばして <a class="reference internal" href="#assert-methods"><span class="std std-ref">the list of assert methods</span></a> に進むと良いでしょう。)</p>
-<p>この Python ユニットテストフレームワークは時に &#8220;PyUnit&#8221; とも呼ばれ、 Kent Beck と Erich Gamma による JUnit の Python 版です。 JUnit はまた Kent の Smalltalk 用テストフレームワークの Java 版で、どちらもそれぞれの言語で業界標準のユニットテストフレームワークとなっています。</p>
+<p>この Python ユニットテストフレームワークは時に 「PyUnit」 とも呼ばれ、 Kent Beck と Erich Gamma による JUnit の Python 版です。 JUnit はまた Kent の Smalltalk 用テストフレームワークの Java 版で、どちらもそれぞれの言語で業界標準のユニットテストフレームワークとなっています。</p>
 <p><a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> では、テストの自動化・初期設定と終了処理の共有・テストの分類・テスト実行と結果レポートの分離などの機能を提供しており、 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> のクラスを使って簡単にたくさんのテストを開発できるようになっています。</p>
 <p>これを実現するために、 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> はいくつかの重要な概念をサポートしています:</p>
 <dl class="docutils">
 <dt>テストフィクスチャ (test fixture)</dt>
-<dd><p class="first last"><em class="dfn">test fixture</em> とは、テスト実行のために必要な準備や終了処理を指します。例: テスト用データベースの作成・ディレクトリ・サーバプロセスの起動など。</p>
-</dd>
+<dd><em class="dfn">test fixture</em> とは、テスト実行のために必要な準備や終了処理を指します。例: テスト用データベースの作成・ディレクトリ・サーバプロセスの起動など。</dd>
 <dt>テストケース (test case)</dt>
-<dd><p class="first last"><em class="dfn">test case</em> はテストの最小単位で、各入力に対する結果をチェックします。テストケースを作成する場合は、 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> が提供する <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスを基底クラスとして利用することができます。</p>
-</dd>
+<dd><em class="dfn">test case</em> はテストの最小単位で、各入力に対する結果をチェックします。テストケースを作成する場合は、 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> が提供する <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスを基底クラスとして利用することができます。</dd>
 <dt>テストスイート (test suite)</dt>
-<dd><p class="first last"><em class="dfn">test suite</em> はテストケースとテストスイートの集まりで、同時に実行しなければならないテストをまとめる場合に使用します。</p>
-</dd>
+<dd><em class="dfn">test suite</em> はテストケースとテストスイートの集まりで、同時に実行しなければならないテストをまとめる場合に使用します。</dd>
 <dt>テストランナー (test runner)</dt>
-<dd><p class="first last"><em class="dfn">test runner</em> はテストの実行と結果表示を管理するコンポーネントです。ランナーはグラフィカルインターフェースでもテキストインターフェースでも良いですし、何も表示せずにテスト結果を示す値を返すだけの場合もあります。</p>
-</dd>
+<dd><em class="dfn">test runner</em> はテストの実行と結果表示を管理するコンポーネントです。ランナーはグラフィカルインターフェースでもテキストインターフェースでも良いですし、何も表示せずにテスト結果を示す値を返すだけの場合もあります。</dd>
 </dl>
 <p><a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> では、テストケースとテストフィクスチャーを、 <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスと <a class="reference internal" href="#unittest.FunctionTestCase" title="unittest.FunctionTestCase"><code class="xref py py-class docutils literal"><span class="pre">FunctionTestCase</span></code></a> クラスで提供しています。 <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスは新規にテストを作成する場合に使用し、 <a class="reference internal" href="#unittest.FunctionTestCase" title="unittest.FunctionTestCase"><code class="xref py py-class docutils literal"><span class="pre">FunctionTestCase</span></code></a> は既存のテストを <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> に組み込む場合に使用します。テストフィクスチャーの初期化処理と終了処理は、 <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> では <a class="reference internal" href="#unittest.TestCase.setUp" title="unittest.TestCase.setUp"><code class="xref py py-meth docutils literal"><span class="pre">setUp()</span></code></a> メソッドと <a class="reference internal" href="#unittest.TestCase.tearDown" title="unittest.TestCase.tearDown"><code class="xref py py-meth docutils literal"><span class="pre">tearDown()</span></code></a> をオーバーライドして記述し、 <a class="reference internal" href="#unittest.FunctionTestCase" title="unittest.FunctionTestCase"><code class="xref py py-class docutils literal"><span class="pre">FunctionTestCase</span></code></a> では初期化・終了処理を行う既存の関数をコンストラクタで指定します。テスト実行時、まずテストフィクスチャーの初期設定が最初に実行されます。初期化処理が正常終了した場合、テスト実行後にはテスト結果に関わらず終了処理が実行されます。 <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> の各インスタンスが実行するテストは一つだけで、テストフィクスチャーは各テストごとに新しく作成されます。</p>
 <p>テストスイートは <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> クラスで実装されており、複数のテストとテストスイートをまとめる事ができます。テストスイートを実行すると、スイートと <em>子</em> スイートに追加されている全てのテストが実行されます。</p>
@@ -110,23 +102,17 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="doctest.html#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> モジュール</dt>
-<dd><p class="first last">もうひとつのテストをサポートするモジュールで、本モジュールと趣きが異なっています。</p>
-</dd>
+<dd>もうひとつのテストをサポートするモジュールで、本モジュールと趣きが異なっています。</dd>
 <dt><a class="reference external" href="https://pypi.python.org/pypi/unittest2">unittest2: ユニットテストの新機能の Python 2.4-2.6 向けバックポート</a></dt>
-<dd><p class="first last">Python 2.7 になり多くの機能が unittest に追加されました。特に、テストディスカバリが追加されました。 unittest2 を導入する事で以前のバージョンの Python でもこれらの機能を使えます。</p>
-</dd>
+<dd>Python 2.7 になり多くの機能が unittest に追加されました。特に、テストディスカバリが追加されました。 unittest2 を導入する事で以前のバージョンの Python でもこれらの機能を使えます。</dd>
 <dt><a class="reference external" href="https://web.archive.org/web/20150315073817/http://www.xprogramming.com/testfram.htm">Simple Smalltalk Testing: With Patterns</a></dt>
-<dd><p class="first last">Kent Beck のテスティングフレームワークに関する原論文で、ここに記載されたパターンを <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> が使用しています。</p>
-</dd>
+<dd>Kent Beck のテスティングフレームワークに関する原論文で、ここに記載されたパターンを <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> が使用しています。</dd>
 <dt><a class="reference external" href="https://nose.readthedocs.org/en/latest/">Nose</a> と <a class="reference external" href="http://pytest.org">py.test</a></dt>
-<dd><p class="first last">サードパーティのユニットテストフレームワークで軽量な文法でテストを書くことができます。例えば、<code class="docutils literal"><span class="pre">assert</span> <span class="pre">func(10)</span> <span class="pre">==</span> <span class="pre">42</span></code>  のように書きます。</p>
-</dd>
+<dd>サードパーティのユニットテストフレームワークで軽量な文法でテストを書くことができます。例えば、<code class="docutils literal"><span class="pre">assert</span> <span class="pre">func(10)</span> <span class="pre">==</span> <span class="pre">42</span></code>  のように書きます。</dd>
 <dt><a class="reference external" href="https://wiki.python.org/moin/PythonTestingToolsTaxonomy">The Python Testing Tools Taxonomy</a></dt>
-<dd><p class="first last">多くの Python のテストツールが一覧で紹介されています。ファンクショナルテストのフレームワークやモックライブラリも掲載されています。</p>
-</dd>
+<dd>多くの Python のテストツールが一覧で紹介されています。ファンクショナルテストのフレームワークやモックライブラリも掲載されています。</dd>
 <dt><a class="reference external" href="http://lists.idyll.org/listinfo/testing-in-python">Testing in Python メーリングリスト</a></dt>
-<dd><p class="first last">Python でテストやテストツールについての議論に特化したグループです。</p>
-</dd>
+<dd>Python でテストやテストツールについての議論に特化したグループです。</dd>
 </dl>
 </div>
 <div class="section" id="basic-example">
@@ -209,20 +195,20 @@
 <p><strong class="program">unittest</strong> には以下のコマンドラインオプションがあります:</p>
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-b">
-<span id="cmdoption-unittest--buffer"></span><code class="descname">-b</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--buffer</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-b" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-b</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--buffer</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-b" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>標準出力と標準エラーのストリームをテスト実行の間バッファリングします。テストが成功している間は結果の出力は破棄されます。テストが失敗、もしくはエラーが発生した場合には、結果にエラーメッセージが追加されたうえで通常通り出力されます。</p>
 </dd></dl>
 
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-c">
-<span id="cmdoption-unittest--catch"></span><code class="descname">-c</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--catch</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-c" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-c</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--catch</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-c" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><code class="kbd docutils literal"><span class="pre">Control-C</span></code> を実行中のテストが終了するまで遅延させ、そこまでの結果を出力します。二回目の <code class="kbd docutils literal"><span class="pre">Control-C</span></code> は、通常通り <a class="reference internal" href="exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a> の例外を発生させます。</p>
 <p>この機能の仕組みについては、<a class="reference internal" href="#signal-handling">シグナルハンドリング</a> を参照してください。</p>
 </dd></dl>
 
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-f">
-<span id="cmdoption-unittest--failfast"></span><code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--failfast</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-f" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--failfast</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-f" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>初回のエラーもしくは失敗の時にテストを停止します。</p>
 </dd></dl>
 
@@ -246,25 +232,25 @@
 <p><code class="docutils literal"><span class="pre">discover</span></code> サブコマンドには以下のオプションがあります:</p>
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-discover-v">
-<span id="cmdoption-unittest-discover--verbose"></span><code class="descname">-v</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--verbose</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-discover-v" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-v</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--verbose</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-unittest-discover-v" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>詳細な出力</p>
 </dd></dl>
 
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-discover-s">
-<span id="cmdoption-unittest-discover--start-directory"></span><code class="descname">-s</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--start-directory</code><code class="descclassname"> directory</code><a class="headerlink" href="#cmdoption-unittest-discover-s" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-s</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--start-directory</code><code class="descclassname"> directory</code><a class="headerlink" href="#cmdoption-unittest-discover-s" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ディスカバリを開始するディレクトリ (デフォルトは <code class="docutils literal"><span class="pre">.</span></code>)</p>
 </dd></dl>
 
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-discover-p">
-<span id="cmdoption-unittest-discover--pattern"></span><code class="descname">-p</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--pattern</code><code class="descclassname"> pattern</code><a class="headerlink" href="#cmdoption-unittest-discover-p" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-p</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--pattern</code><code class="descclassname"> pattern</code><a class="headerlink" href="#cmdoption-unittest-discover-p" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>テストファイル名を識別するパターン (デフォルトは <code class="docutils literal"><span class="pre">test*.py</span></code>)</p>
 </dd></dl>
 
 <dl class="cmdoption">
 <dt id="cmdoption-unittest-discover-t">
-<span id="cmdoption-unittest-discover--top-level-directory"></span><code class="descname">-t</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--top-level-directory</code><code class="descclassname"> directory</code><a class="headerlink" href="#cmdoption-unittest-discover-t" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-t</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--top-level-directory</code><code class="descclassname"> directory</code><a class="headerlink" href="#cmdoption-unittest-discover-t" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>プロジェクトの最上位のディスカバリのディレクトリ (デフォルトは開始のディレクトリ)</p>
 </dd></dl>
 
@@ -284,7 +270,7 @@
 </div>
 <div class="section" id="organizing-test-code">
 <span id="organizing-tests"></span><h2>25.3.4. テストの構成<a class="headerlink" href="#organizing-test-code" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ユニットテストの基礎となる構築要素は、 <em class="dfn">test case</em> &#8212; セットアップを行い、正しさのチェックを行う、独立したシナリオ &#8212; です。 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> では、テストケースは <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> モジュールの <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスのインスタンスで表現します。テストケースを作成するには <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> のサブクラスを記述するか、または <a class="reference internal" href="#unittest.FunctionTestCase" title="unittest.FunctionTestCase"><code class="xref py py-class docutils literal"><span class="pre">FunctionTestCase</span></code></a> を使用します。</p>
+<p>ユニットテストの基礎となる構築要素は、 <em class="dfn">test case</em> — セットアップを行い、正しさのチェックを行う、独立したシナリオ — です。 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> では、テストケースは <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> モジュールの <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> クラスのインスタンスで表現します。テストケースを作成するには <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> のサブクラスを記述するか、または <a class="reference internal" href="#unittest.FunctionTestCase" title="unittest.FunctionTestCase"><code class="xref py py-class docutils literal"><span class="pre">FunctionTestCase</span></code></a> を使用します。</p>
 <p><a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> から派生したクラスのインスタンスは、このオブジェクトだけで単独のテストメソッドをお膳立て (set-up) と後片付け (tidy-up / clean-up) を伴って実行します。</p>
 <p><a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> インスタンスは外部から完全に独立し、単独で実行する事も、他の任意のテストと一緒に実行する事もできなければなりません。</p>
 <p>以下のように、 <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> のサブクラスは <code class="xref py py-meth docutils literal"><span class="pre">runTest()</span></code> をオーバライドし、必要なテスト処理を記述するだけで簡単に書くことができます:</p>
@@ -397,20 +383,13 @@
 </div>
 <p>テストケースやテストスイートは (<code class="file docutils literal"><span class="pre">widget.py</span></code> のような) テスト対象のモジュール内にも記述できますが、テストは (<code class="file docutils literal"><span class="pre">test_widget.py</span></code> のような) 独立したモジュールに置いた方が以下のような点で有利です:</p>
 <ul class="simple">
-<li><p class="first">テストモジュールだけをコマンドラインから実行することができる。</p>
-</li>
-<li><p class="first">テストコードと出荷するコードを分離する事ができる。</p>
-</li>
-<li><p class="first">テストコードを、テスト対象のコードに合わせて修正する誘惑に駆られにくい。</p>
-</li>
-<li><p class="first">テストコードは、テスト対象コードほど頻繁に更新されない。</p>
-</li>
-<li><p class="first">テストコードをより簡単にリファクタリングすることができる。</p>
-</li>
-<li><p class="first">Cで書いたモジュールのテストはどっちにしろ独立したモジュールとなるのだから、同様にしない理由もない</p>
-</li>
-<li><p class="first">テスト戦略を変更した場合でも、ソースコードを変更する必要がない。</p>
-</li>
+<li>テストモジュールだけをコマンドラインから実行することができる。</li>
+<li>テストコードと出荷するコードを分離する事ができる。</li>
+<li>テストコードを、テスト対象のコードに合わせて修正する誘惑に駆られにくい。</li>
+<li>テストコードは、テスト対象コードほど頻繁に更新されない。</li>
+<li>テストコードをより簡単にリファクタリングすることができる。</li>
+<li>Cで書いたモジュールのテストはどっちにしろ独立したモジュールとなるのだから、同様にしない理由もない</li>
+<li>テスト戦略を変更した場合でも、ソースコードを変更する必要がない。</li>
 </ul>
 </div>
 <div class="section" id="re-using-old-test-code">
@@ -628,28 +607,26 @@
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Method</th>
-<th class="head"><p class="first last">確認事項</p>
-</th>
-<th class="head"><p class="first last">初出</p>
-</th>
+<th class="head">確認事項</th>
+<th class="head">初出</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertEqual" title="unittest.TestCase.assertEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertEqual(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertNotEqual" title="unittest.TestCase.assertNotEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertNotEqual(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">a</span> <span class="pre">!=</span> <span class="pre">b</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertTrue" title="unittest.TestCase.assertTrue"><code class="xref py py-meth docutils literal"><span class="pre">assertTrue(x)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">bool(x)</span> <span class="pre">is</span> <span class="pre">True</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertFalse" title="unittest.TestCase.assertFalse"><code class="xref py py-meth docutils literal"><span class="pre">assertFalse(x)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">bool(x)</span> <span class="pre">is</span> <span class="pre">False</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertIs" title="unittest.TestCase.assertIs"><code class="xref py py-meth docutils literal"><span class="pre">assertIs(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">a</span> <span class="pre">is</span> <span class="pre">b</span></code></td>
@@ -764,20 +741,17 @@
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Method</th>
-<th class="head"><p class="first last">確認事項</p>
-</th>
-<th class="head"><p class="first last">初出</p>
-</th>
+<th class="head">確認事項</th>
+<th class="head">初出</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertRaises" title="unittest.TestCase.assertRaises"><code class="xref py py-meth docutils literal"><span class="pre">assertRaises(exc,</span> <span class="pre">fun,</span> <span class="pre">*args,</span> <span class="pre">**kwds)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">fun(*args,</span> <span class="pre">**kwds)</span></code> raises <em>exc</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertRaisesRegexp" title="unittest.TestCase.assertRaisesRegexp"><code class="xref py py-meth docutils literal"><span class="pre">assertRaisesRegexp(exc,</span> <span class="pre">r,</span> <span class="pre">fun,</span> <span class="pre">*args,</span> <span class="pre">**kwds)</span></code></a></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">fun(*args,</span> <span class="pre">**kwds)</span></code> が <em>exc</em> を raise してメッセージが正規表現 <em>r</em> とマッチすること</p>
-</td>
+<td><code class="docutils literal"><span class="pre">fun(*args,</span> <span class="pre">**kwds)</span></code> が <em>exc</em> を raise してメッセージが正規表現 <em>r</em> とマッチすること</td>
 <td>2.7</td>
 </tr>
 </tbody>
@@ -835,20 +809,18 @@
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Method</th>
-<th class="head"><p class="first last">確認事項</p>
-</th>
-<th class="head"><p class="first last">初出</p>
-</th>
+<th class="head">確認事項</th>
+<th class="head">初出</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertAlmostEqual" title="unittest.TestCase.assertAlmostEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertAlmostEqual(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">round(a-b,</span> <span class="pre">7)</span> <span class="pre">==</span> <span class="pre">0</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertNotAlmostEqual" title="unittest.TestCase.assertNotAlmostEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertNotAlmostEqual(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">round(a-b,</span> <span class="pre">7)</span> <span class="pre">!=</span> <span class="pre">0</span></code></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertGreater" title="unittest.TestCase.assertGreater"><code class="xref py py-meth docutils literal"><span class="pre">assertGreater(a,</span> <span class="pre">b)</span></code></a></td>
 <td><code class="docutils literal"><span class="pre">a</span> <span class="pre">&gt;</span> <span class="pre">b</span></code></td>
@@ -875,13 +847,11 @@
 <td>2.7</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertItemsEqual" title="unittest.TestCase.assertItemsEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertItemsEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">意味的に <code class="docutils literal"><span class="pre">sorted(a)</span> <span class="pre">==</span> <span class="pre">sorted(b)</span></code> ですが、ハッシュ不能オブジェクトでも動作</p>
-</td>
+<td>意味的に <code class="docutils literal"><span class="pre">sorted(a)</span> <span class="pre">==</span> <span class="pre">sorted(b)</span></code> ですが、ハッシュ不能オブジェクトでも動作</td>
 <td>2.7</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertDictContainsSubset" title="unittest.TestCase.assertDictContainsSubset"><code class="xref py py-meth docutils literal"><span class="pre">assertDictContainsSubset(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last"><em>a</em> の全てのキー/値ペアが <em>b</em> に存在すること</p>
-</td>
+<td><em>a</em> の全てのキー/値ペアが <em>b</em> に存在すること</td>
 <td>2.7</td>
 </tr>
 </tbody>
@@ -978,41 +948,33 @@
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Method</th>
-<th class="head"><p class="first last">比較の対象</p>
-</th>
-<th class="head"><p class="first last">初出</p>
-</th>
+<th class="head">比較の対象</th>
+<th class="head">初出</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertMultiLineEqual" title="unittest.TestCase.assertMultiLineEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertMultiLineEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">文字列</p>
-</td>
+<td>文字列</td>
 <td>2.7</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertSequenceEqual" title="unittest.TestCase.assertSequenceEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertSequenceEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">シーケンス</p>
-</td>
+<td>シーケンス</td>
 <td>2.7</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertListEqual" title="unittest.TestCase.assertListEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertListEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">リスト</p>
-</td>
+<td>リスト</td>
 <td>2.7</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertTupleEqual" title="unittest.TestCase.assertTupleEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertTupleEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">タプル</p>
-</td>
+<td>タプル</td>
 <td>2.7</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#unittest.TestCase.assertSetEqual" title="unittest.TestCase.assertSetEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertSetEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">set または frozenset</p>
-</td>
+<td>set または frozenset</td>
 <td>2.7</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#unittest.TestCase.assertDictEqual" title="unittest.TestCase.assertDictEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertDictEqual(a,</span> <span class="pre">b)</span></code></a></td>
-<td><p class="first last">辞書</p>
-</td>
+<td>辞書</td>
 <td>2.7</td>
 </tr>
 </tbody>
@@ -1051,7 +1013,7 @@
 <dt id="unittest.TestCase.assertSetEqual">
 <code class="descname">assertSetEqual</code><span class="sig-paren">(</span><em>set1</em>, <em>set2</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.assertSetEqual" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>2つのセットが等しいかどうかをテストします。等しくない場合には、両者の差分を表示します。このメソッドは、デフォルトで、 <a class="reference internal" href="#unittest.TestCase.assertEqual" title="unittest.TestCase.assertEqual"><code class="xref py py-meth docutils literal"><span class="pre">assertEqual()</span></code></a> が set もしくは frozenset を比較するときに自動的に使用します。</p>
-<p><em>set1</em> or <em>set2</em> のいずれかに <a class="reference internal" href="stdtypes.html#set.difference" title="set.difference"><code class="xref py py-meth docutils literal"><span class="pre">set.difference()</span></code></a> メソッドが無い場合にはテストは失敗します。</p>
+<p><em>set1</em> or <em>set2</em> のいずれかに <code class="xref py py-meth docutils literal"><span class="pre">set.difference()</span></code> メソッドが無い場合にはテストは失敗します。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
 </div>
@@ -1165,10 +1127,8 @@
 <col width="51%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">メソッド名</p>
-</th>
-<th class="head"><p class="first last">廃止予定のエリアス</p>
-</th>
+<tr class="row-odd"><th class="head">メソッド名</th>
+<th class="head">廃止予定のエリアス</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -1285,7 +1245,7 @@
 <dt id="unittest.TestLoader.loadTestsFromName">
 <code class="descname">loadTestsFromName</code><span class="sig-paren">(</span><em>name</em>, <em>module=None</em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestLoader.loadTestsFromName" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>文字列で指定される全テストケースを含むスイートを返します。</p>
-<p><em>name</em> には &#8220;ドット修飾名&#8221; でモジュールかテストケースクラス、テストケースクラス内のメソッド、 <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> インスタンスまたは <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> か <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> のインスタンスを返す呼び出し可能オブジェクトを指定します。このチェックはここで挙げた順番に行なわれます。すなわち、候補テストケースクラス内のメソッドは「呼び出し可能オブジェクト」としてではなく「テストケースクラス内のメソッド」として拾い出されます。</p>
+<p><em>name</em> には 「ドット修飾名」 でモジュールかテストケースクラス、テストケースクラス内のメソッド、 <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> インスタンスまたは <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> か <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> のインスタンスを返す呼び出し可能オブジェクトを指定します。このチェックはここで挙げた順番に行なわれます。すなわち、候補テストケースクラス内のメソッドは「呼び出し可能オブジェクト」としてではなく「テストケースクラス内のメソッド」として拾い出されます。</p>
 <p>例えば <code class="xref py py-mod docutils literal"><span class="pre">SampleTests</span></code> モジュールに <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal"><span class="pre">TestCase</span></code></a> から派生した <code class="xref py py-class docutils literal"><span class="pre">SampleTestCase</span></code> クラスがあり、 <code class="xref py py-class docutils literal"><span class="pre">SampleTestCase</span></code> にはテストメソッド <code class="xref py py-meth docutils literal"><span class="pre">test_one()</span></code> ・ <code class="xref py py-meth docutils literal"><span class="pre">test_two()</span></code> ・ <code class="xref py py-meth docutils literal"><span class="pre">test_three()</span></code> があるとします。この場合、 <em>name</em> に <code class="docutils literal"><span class="pre">'SampleTests.SampleTestCase'</span></code> と指定すると、 <code class="xref py py-class docutils literal"><span class="pre">SampleTestCase</span></code> の三つのテストメソッドを実行するテストスイートが作成されます。 <code class="docutils literal"><span class="pre">'SampleTests.SampleTestCase.test_two'</span></code> と指定すれば、 <code class="xref py py-meth docutils literal"><span class="pre">test_two()</span></code> だけを実行するテストスイートが作成されます。インポートされていないモジュールやパッケージ名を含んだ名前を指定した場合は自動的にインポートされます。</p>
 <p>また、<em>module</em> を指定した場合、<em>module</em> 内の <em>name</em> を取得します。</p>
 </dd></dl>
@@ -1598,7 +1558,7 @@
 </pre></div>
 </div>
 <p>これはパッケージ内のすべてのテストを表す <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal"><span class="pre">TestSuite</span></code></a> を返すべきです。 (<code class="docutils literal"><span class="pre">standard_tests</span></code> には、 <code class="file docutils literal"><span class="pre">__init__.py</span></code> から収集されたテストのみが含まれます。)</p>
-<p>パターンは <code class="docutils literal"><span class="pre">load_tests</span></code> に渡されるので、パッケージは自由にテストディスカバリを継続 (必要なら変更) できます。テストパッケージに &#8216;何もしない&#8217; <code class="docutils literal"><span class="pre">load_tests</span></code> 関数は次のようになります:</p>
+<p>パターンは <code class="docutils literal"><span class="pre">load_tests</span></code> に渡されるので、パッケージは自由にテストディスカバリを継続 (必要なら変更) できます。テストパッケージに 『何もしない』 <code class="docutils literal"><span class="pre">load_tests</span></code> 関数は次のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_tests</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">standard_tests</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="c1"># top level directory cached on loader instance</span>
     <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
@@ -1708,7 +1668,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">25.3. <code class="docutils literal"><span class="pre">unittest</span></code> &#8212; ユニットテストフレームワーク</a><ul>
+<li><a class="reference internal" href="#">25.3. <code class="docutils literal"><span class="pre">unittest</span></code> — ユニットテストフレームワーク</a><ul>
 <li><a class="reference internal" href="#basic-example">25.3.1. 基礎的な例</a></li>
 <li><a class="reference internal" href="#command-line-interface">25.3.2. コマンドラインインターフェイス</a><ul>
 <li><a class="reference internal" href="#command-line-options">25.3.2.1. コマンドラインオプション</a></li>
@@ -1742,14 +1702,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="doctest.html"
-                        title="前の章へ">25.2. <code class="docutils literal"><span class="pre">doctest</span></code> &#8212; 対話的な実行例をテストする</a></p>
+                        title="前の章へ">25.2. <code class="docutils literal"><span class="pre">doctest</span></code> — 対話的な実行例をテストする</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="2to3.html"
                         title="次の章へ">25.4. 2to3 - Python 2 から 3 への自動コード変換</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/unittest.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/unittest.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -1801,10 +1761,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

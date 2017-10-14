@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Python 良い慣用句、悪い慣用句 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python HOWTO" href="index.html" />
     <link rel="next" title="関数型プログラミング HOWTO" href="functional.html" />
     <link rel="prev" title="ディスクリプタ HowTo ガイド" href="descriptor.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -91,7 +87,7 @@
 </table>
 <p>This document is placed in the public domain. (この文書はパブリックドメインです。)</p>
 <div class="topic">
-<p class="topic-title first">概要</p>
+<p class="topic-title first">Abstract</p>
 <p>この文書はチュートリアルのおまけと考えてもらって結構です。 Python をどう使うべきか、そして更に重要なこととして、どう使うべきで <em>ない</em> かを例示しています。</p>
 </div>
 <div class="section" id="language-constructs-you-should-not-use">
@@ -111,25 +107,22 @@
 <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>が動かないのか、というものがあります。もちろんこれで動きますよ (ただし &#8220;www&#8221; というファイルがあれば)。でもモジュールのどこかに <code class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></code> があればダメです。 <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールは、整数を返す <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 関数を持っているのです。これはとても便利ではありますが、ビルトインを隠してしまうのは、非常に不便な特徴のひとつと言えます。</p>
+<p>が動かないのか、というものがあります。もちろんこれで動きますよ (ただし 「www」 というファイルがあれば)。でもモジュールのどこかに <code class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></code> があればダメです。 <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールは、整数を返す <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> 関数を持っているのです。これはとても便利ではありますが、ビルトインを隠してしまうのは、非常に不便な特徴のひとつと言えます。</p>
 <p>モジュールがエクスポートする名前は確実にはわからないのですから、必要なものだけ <code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">名前1,</span> <span class="pre">名前2</span></code> で取るか、モジュールから出さずに <code class="docutils literal"><span class="pre">import</span> <span class="pre">モジュール;print</span> <span class="pre">モジュール.name</span></code> としておいて必要に応じてアクセスするようにしましょう。</p>
 </div>
 <div class="section" id="when-it-is-just-fine">
 <h4>問題ない状況<a class="headerlink" href="#when-it-is-just-fine" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">from</span> <span class="pre">モジュール</span> <span class="pre">import</span> <span class="pre">*</span></code> が問題とならない状況もあります:</p>
 <ul class="simple">
-<li><p class="first">対話的プロンプト。たとえば <code class="docutils literal"><span class="pre">from</span> <span class="pre">math</span> <span class="pre">import</span> <span class="pre">*</span></code> すれば Python がスーパー関数電卓に変身します。</p>
-</li>
-<li><p class="first">C のモジュールを Python のモジュールで拡張するとき。</p>
-</li>
-<li><p class="first">そのモジュールは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> 可だ、と作者が言っているとき。</p>
-</li>
+<li>対話的プロンプト。たとえば <code class="docutils literal"><span class="pre">from</span> <span class="pre">math</span> <span class="pre">import</span> <span class="pre">*</span></code> すれば Python がスーパー関数電卓に変身します。</li>
+<li>C のモジュールを Python のモジュールで拡張するとき。</li>
+<li>そのモジュールは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> 可だ、と作者が言っているとき。</li>
 </ul>
 </div>
 </div>
 <div class="section" id="unadorned-exec-execfile-and-friends">
 <h3>そのまんまな <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a>, <a class="reference internal" href="../library/functions.html#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a> と仲間たち<a class="headerlink" href="#unadorned-exec-execfile-and-friends" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>「そのまんま」という言葉は辞書を明示せずに使うという意味で、そういう構文ではコードが <em>その時点の</em> 環境に対して評価されます。これは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> と同じ理由で危険です &#8212; 使っている最中の変数を土足で踏んで行って、コード全体をメチャクチャにしてしまう可能性があるからです。これは、とにかくやめてください。</p>
+<p>「そのまんま」という言葉は辞書を明示せずに使うという意味で、そういう構文ではコードが <em>その時点の</em> 環境に対して評価されます。これは <code class="docutils literal"><span class="pre">from</span> <span class="pre">import</span> <span class="pre">*</span></code> と同じ理由で危険です — 使っている最中の変数を土足で踏んで行って、コード全体をメチャクチャにしてしまう可能性があるからです。これは、とにかくやめてください。</p>
 <p>悪い見本:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">exec</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">=1&quot;</span> <span class="o">%</span> <span class="n">name</span>
@@ -197,7 +190,7 @@
 </pre></div>
 </div>
 <p>このプログラムを実行した場合は、 Python は <a class="reference internal" href="../library/exceptions.html#exceptions.NameError" title="exceptions.NameError"><code class="xref py py-exc docutils literal"><span class="pre">NameError</span></code></a> のトレースバックを表示し、修正すべき問題を即座に明らかにしてくれます。</p>
-<p id="index-0"><code class="docutils literal"><span class="pre">except:</span></code> は <em>全て</em> の例外を補足します。これには <a class="reference internal" href="../library/exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> (これはエラーではなく、通常はユーザーコードでキャッチするべきではない例外です) も含まれるので、ほとんど全ての場合に <code class="docutils literal"><span class="pre">except:</span></code> を利用してはいけません。 &#8220;通常の&#8221; すべてのエラーをキャッチする必要がある場合、たとえばコールバックを実行するようなフレームワークの場合は、全ての通常の例外の基底クラスである <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> をキャッチすることができます。不幸なことに、 Python 2.x ではサードパーティのコードが <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> を継承していない例外を発生させる可能性があるので、 <code class="docutils literal"><span class="pre">except:</span></code> を使ってキャッチしたくない例外を手動で再度 raise する必要がある場合があるかもしれません。</p>
+<p id="index-0"><code class="docutils literal"><span class="pre">except:</span></code> は <em>全て</em> の例外を補足します。これには <a class="reference internal" href="../library/exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.KeyboardInterrupt" title="exceptions.KeyboardInterrupt"><code class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></code></a>, <a class="reference internal" href="../library/exceptions.html#exceptions.GeneratorExit" title="exceptions.GeneratorExit"><code class="xref py py-exc docutils literal"><span class="pre">GeneratorExit</span></code></a> (これはエラーではなく、通常はユーザーコードでキャッチするべきではない例外です) も含まれるので、ほとんど全ての場合に <code class="docutils literal"><span class="pre">except:</span></code> を利用してはいけません。 「通常の」 すべてのエラーをキャッチする必要がある場合、たとえばコールバックを実行するようなフレームワークの場合は、全ての通常の例外の基底クラスである <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> をキャッチすることができます。不幸なことに、 Python 2.x ではサードパーティのコードが <a class="reference internal" href="../library/exceptions.html#exceptions.Exception" title="exceptions.Exception"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> を継承していない例外を発生させる可能性があるので、 <code class="docutils literal"><span class="pre">except:</span></code> を使ってキャッチしたくない例外を手動で再度 raise する必要がある場合があるかもしれません。</p>
 </div>
 </div>
 <div class="section" id="exceptions">
@@ -222,21 +215,21 @@
 </pre></div>
 </div>
 <p>このバージョンでは、ファイルが開かれて一行目も読まれる (だから、あてにならない NFS や SMB 接続でも動く) か、あるいはファイルを開くのに失敗した理由についての全ての情報を含むエラーメッセージを表示してアプリケーションを強制終了するかの <em>いずれか</em> 一方しか起こりません。</p>
-<p>とはいえ、このバージョンの <code class="xref py py-func docutils literal"><span class="pre">get_status()</span></code> でさえ、前提としている条件が多過ぎます &#8212; すぐ終わるスクリプトでだけ使って、長く動作させる、いわゆるサーバでは使わない前提なのです。もちろん呼び出し側はこうすることもできます:</p>
+<p>とはいえ、このバージョンの <code class="xref py py-func docutils literal"><span class="pre">get_status()</span></code> でさえ、前提としている条件が多過ぎます — すぐ終わるスクリプトでだけ使って、長く動作させる、いわゆるサーバでは使わない前提なのです。もちろん呼び出し側はこうすることもできます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">get_status</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
-<p>でも、もっと良い方法があります。コードで使う <code class="docutils literal"><span class="pre">except</span></code> 節を、できるだけ少なくするのです &#8212; 使うとすれば、必ず成功するはずの呼び出し内か、main 関数での全捕捉ですね。</p>
+<p>でも、もっと良い方法があります。コードで使う <code class="docutils literal"><span class="pre">except</span></code> 節を、できるだけ少なくするのです — 使うとすれば、必ず成功するはずの呼び出し内か、main 関数での全捕捉ですね。</p>
 <p>というわけで、たぶんもっと良い <code class="xref py py-func docutils literal"><span class="pre">get_status()</span></code> はこちら:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>呼び出した側は、望むなら例外を処理することもできますし (たとえばループで複数ファイルに試行するときとか)、そのまま <em>自分の</em> 呼び出し親まで上げることもできます。</p>
-<p>しかし、この最終バージョンにも深刻な問題があります &#8212; CPython 実装の細部に原因があるのですが、例外が起きたときにはその例外ハンドラが終了するまでファイルが閉じられないのです; しかも、なお悪いことに、他の実装 (たとえば Jython) では例外の有無に関わらず閉じられません。</p>
+<p>しかし、この最終バージョンにも深刻な問題があります — CPython 実装の細部に原因があるのですが、例外が起きたときにはその例外ハンドラが終了するまでファイルが閉じられないのです; しかも、なお悪いことに、他の実装 (たとえば Jython) では例外の有無に関わらず閉じられません。</p>
 <p>この関数の一番良いバージョンでは <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a> をコンテクストマネジャとして使って、関数が返るとすぐにファイルが閉じられるようにしています:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
@@ -325,7 +318,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/doanddont.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/howto/doanddont.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -376,10 +369,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

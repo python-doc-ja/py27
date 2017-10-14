@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>文字列とバイト列オブジェクト &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="具象オブジェクト (concrete object) レイヤ" href="concrete.html" />
     <link rel="next" title="Unicode オブジェクトと codec" href="unicode.html" />
     <link rel="prev" title="bytearray オブジェクト" href="bytearray.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -143,95 +139,78 @@ int <code class="descname">PyString_CheckExact</code><span class="sig-paren">(</
 <col width="48%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">書式指定文字</p>
-</th>
-<th class="head"><p class="first last">型</p>
-</th>
-<th class="head"><p class="first last">コメント</p>
-</th>
+<tr class="row-odd"><th class="head">書式指定文字</th>
+<th class="head">型</th>
+<th class="head">コメント</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%%</span></code></td>
 <td><em>n/a</em></td>
-<td><p class="first last">文字 % のリテラル。</p>
-</td>
+<td>文字 % のリテラル。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%c</span></code></td>
 <td>int</td>
-<td><p class="first last">C の整数型で表現される単一の文字。</p>
-</td>
+<td>C の整数型で表現される単一の文字。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%d</span></code></td>
 <td>int</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%d&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%d&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%u</span></code></td>
 <td>unsigned int</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%u&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%u&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%ld</span></code></td>
 <td>long</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%ld&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%ld&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%lu</span></code></td>
 <td>unsigned long</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%lu&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%lu&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%lld</span></code></td>
 <td>long long</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%lld&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%lld&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%llu</span></code></td>
 <td>unsigned
 long long</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%llu&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%llu&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%zd</span></code></td>
 <td>Py_ssize_t</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%zd&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%zd&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%zu</span></code></td>
 <td>size_t</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%zu&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%zu&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%i</span></code></td>
 <td>int</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%i&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%i&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%x</span></code></td>
 <td>int</td>
-<td><p class="first last">C の <code class="docutils literal"><span class="pre">printf(&quot;%x&quot;)</span></code> と全く同じ。</p>
-</td>
+<td>C の <code class="docutils literal"><span class="pre">printf(&quot;%x&quot;)</span></code> と全く同じ。</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-attr docutils literal"><span class="pre">%s</span></code></td>
 <td>char*</td>
-<td><p class="first last">null で終端された C の文字列。</p>
-</td>
+<td>null で終端された C の文字列。</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-attr docutils literal"><span class="pre">%p</span></code></td>
 <td>void*</td>
-<td><p class="first last">C ポインタの 16 進表記。 <code class="docutils literal"><span class="pre">printf(&quot;%p&quot;)</span></code> とほとんど同じだが、プラットフォームにおける <code class="docutils literal"><span class="pre">printf</span></code> の定義に関わりなく先頭にリテラル <code class="docutils literal"><span class="pre">0x</span></code> が付きます。</p>
-</td>
+<td>C ポインタの 16 進表記。 <code class="docutils literal"><span class="pre">printf(&quot;%p&quot;)</span></code> とほとんど同じだが、プラットフォームにおける <code class="docutils literal"><span class="pre">printf</span></code> の定義に関わりなく先頭にリテラル <code class="docutils literal"><span class="pre">0x</span></code> が付きます。</td>
 </tr>
 </tbody>
 </table>
 <p>識別できない書式指定文字があった場合、残りの書式文字列はそのまま出力文字列にコピーされ、残りの引数は無視されます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last"><cite>&#8220;%lld&#8221;</cite> と <cite>&#8220;%llu&#8221;</cite> 書式指定文字は <code class="xref py py-const docutils literal"><span class="pre">HAVE_LONG_LONG</span></code> が定義されている時だけ利用できます。</p>
+<p class="last"><cite>「%lld」</cite> と <cite>「%llu」</cite> 書式指定文字は <code class="xref py py-const docutils literal"><span class="pre">HAVE_LONG_LONG</span></code> が定義されている時だけ利用できます。</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">バージョン 2.7 で変更: </span><cite>&#8220;%lld&#8221;</cite> と <cite>&#8220;%llu&#8221;</cite> のサポートが追加されました。</p>
+<p><span class="versionmodified">バージョン 2.7 で変更: </span><cite>「%lld」</cite> と <cite>「%llu」</cite> のサポートが追加されました。</p>
 </div>
 </dd></dl>
 
@@ -297,7 +276,7 @@ void <code class="descname">PyString_ConcatAndDel</code><span class="sig-paren">
 <dl class="function">
 <dt id="c._PyString_Resize">
 int <code class="descname">_PyString_Resize</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em>&nbsp;**string</em>, Py_ssize_t<em>&nbsp;newsize</em><span class="sig-paren">)</span><a class="headerlink" href="#c._PyString_Resize" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>&#8220;変更不能&#8221; である文字列オブジェクトをサイズ変更する手段です。新たな文字列オブジェクトを作成するときにのみ使用してください; 文字列がすでにコードの他の部分で使われているかもしれない場合には、この関数を使ってはなりません。入力する文字列オブジェクトの参照カウントが 1 でない場合、この関数を呼び出すとエラーになります。左側値には、既存の文字列オブジェクトのアドレスを渡し (このアドレスには書き込み操作が起きるかもしれません)、新たなサイズを指定します。成功した場合、 <em>*string</em> はサイズ変更された文字列オブジェクトを保持し、 <code class="docutils literal"><span class="pre">0</span></code> が返されます; <em>*string</em> の値は、入力したときの値と異なっているかもしれません。文字列の再アロケーションに失敗した場合、 <em>*string</em> に入っていた元の文字列オブジェクトを解放し、 <em>*string</em> を <em>NULL</em> にセットし、メモリ例外をセットし、 <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
+<dd><p>「変更不能」 である文字列オブジェクトをサイズ変更する手段です。新たな文字列オブジェクトを作成するときにのみ使用してください; 文字列がすでにコードの他の部分で使われているかもしれない場合には、この関数を使ってはなりません。入力する文字列オブジェクトの参照カウントが 1 でない場合、この関数を呼び出すとエラーになります。左側値には、既存の文字列オブジェクトのアドレスを渡し (このアドレスには書き込み操作が起きるかもしれません)、新たなサイズを指定します。成功した場合、 <em>*string</em> はサイズ変更された文字列オブジェクトを保持し、 <code class="docutils literal"><span class="pre">0</span></code> が返されます; <em>*string</em> の値は、入力したときの値と異なっているかもしれません。文字列の再アロケーションに失敗した場合、 <em>*string</em> に入っていた元の文字列オブジェクトを解放し、 <em>*string</em> を <em>NULL</em> にセットし、メモリ例外をセットし、 <code class="docutils literal"><span class="pre">-1</span></code> を返します。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span>この関数は以前は <em>newsize</em> の型に <code class="xref c c-type docutils literal"><span class="pre">int</span></code> を利用していました。この変更により、 64 bit システムを正しくサポートするには修正が必要になります。</p>
 </div>
@@ -322,7 +301,7 @@ void <code class="descname">PyString_InternInPlace</code><span class="sig-paren"
 <dl class="function">
 <dt id="c.PyString_InternFromString">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyString_InternFromString</code><span class="sig-paren">(</span>const char<em>&nbsp;*v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyString_InternFromString" title="この定義へのパーマリンク">¶</a></dt>
-<dd><em class="refcount">Return value: New reference.</em><p><a class="reference internal" href="#c.PyString_FromString" title="PyString_FromString"><code class="xref c c-func docutils literal"><span class="pre">PyString_FromString()</span></code></a> と <a class="reference internal" href="#c.PyString_InternInPlace" title="PyString_InternInPlace"><code class="xref c c-func docutils literal"><span class="pre">PyString_InternInPlace()</span></code></a> を組み合わせたもので、隔離済みの新たな文字列オブジェクトを返すか、同じ値を持つすでに隔離済みの文字列オブジェクトに対する新たな (&#8220;所有権を得た&#8221;) 参照を返します。</p>
+<dd><em class="refcount">Return value: New reference.</em><p><a class="reference internal" href="#c.PyString_FromString" title="PyString_FromString"><code class="xref c c-func docutils literal"><span class="pre">PyString_FromString()</span></code></a> と <a class="reference internal" href="#c.PyString_InternInPlace" title="PyString_InternInPlace"><code class="xref c c-func docutils literal"><span class="pre">PyString_InternInPlace()</span></code></a> を組み合わせたもので、隔離済みの新たな文字列オブジェクトを返すか、同じ値を持つすでに隔離済みの文字列オブジェクトに対する新たな (「所有権を得た」) 参照を返します。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">この関数は 3.x では利用できず、 PyBytes エイリアスもありません。</p>
@@ -392,7 +371,7 @@ void <code class="descname">PyString_InternInPlace</code><span class="sig-paren"
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/string.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/c-api/string.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -444,10 +423,10 @@ void <code class="descname">PyString_InternInPlace</code><span class="sig-paren"
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

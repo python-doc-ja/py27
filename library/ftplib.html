@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>20.8. ftplib — FTPプロトコルクライアント &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="20. インターネットプロトコルとサポート" href="internet.html" />
     <link rel="next" title="20.9. poplib — POP3 プロトコルクライアント" href="poplib.html" />
     <link rel="prev" title="20.7. httplib — HTTP プロトコルクライアント" href="httplib.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,7 +77,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-ftplib">
-<span id="ftplib-ftp-protocol-client"></span><h1>20.8. <a class="reference internal" href="#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> &#8212; FTPプロトコルクライアント<a class="headerlink" href="#module-ftplib" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="ftplib-ftp-protocol-client"></span><h1>20.8. <a class="reference internal" href="#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> — FTPプロトコルクライアント<a class="headerlink" href="#module-ftplib" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p id="index-0"><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/ftplib.py">Lib/ftplib.py</a></p>
 <hr class="docutils" />
 <p>このモジュールでは <a class="reference internal" href="#ftplib.FTP" title="ftplib.FTP"><code class="xref py py-class docutils literal"><span class="pre">FTP</span></code></a> クラスと、それに関連するいくつかの項目を定義しています。 <a class="reference internal" href="#ftplib.FTP" title="ftplib.FTP"><code class="xref py py-class docutils literal"><span class="pre">FTP</span></code></a> クラスは、FTPプロトコルのクライアント側の機能を備えています。このクラスを使うとFTPのいろいろな機能の自動化、例えば他のFTPサーバのミラーリングといったことを実行するPythonプログラムを書くことができます。また、 <a class="reference internal" href="urllib.html#module-urllib" title="urllib: Open an arbitrary network resource by URL (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">urllib</span></code></a> モジュールもFTPを使うURLを操作するのにこのクラスを使っています。 FTP (File Transfer Protocol)についての詳しい情報はInternet <span class="target" id="index-6"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc959.html"><strong>RFC 959</strong></a> を参照して下さい。</p>
@@ -117,7 +113,7 @@
 <dt id="ftplib.FTP_TLS">
 <em class="property">class </em><code class="descclassname">ftplib.</code><code class="descname">FTP_TLS</code><span class="sig-paren">(</span><span class="optional">[</span><em>host</em><span class="optional">[</span>, <em>user</em><span class="optional">[</span>, <em>passwd</em><span class="optional">[</span>, <em>acct</em><span class="optional">[</span>, <em>keyfile</em><span class="optional">[</span>, <em>certfile</em><span class="optional">[</span>, <em>context</em><span class="optional">[</span>, <em>timeout</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP_TLS" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc4217.html"><strong>RFC 4217</strong></a> に記述されている TLS サポートを FTP に加えた <a class="reference internal" href="#ftplib.FTP" title="ftplib.FTP"><code class="xref py py-class docutils literal"><span class="pre">FTP</span></code></a> のサブクラスです。認証の前に FTP コントロール接続を暗黙にセキュアにし、通常通りに port 21 に接続します。データ接続をセキュアにするには、ユーザが <a class="reference internal" href="#ftplib.FTP_TLS.prot_p" title="ftplib.FTP_TLS.prot_p"><code class="xref py py-meth docutils literal"><span class="pre">prot_p()</span></code></a> メソッドを呼び出してそれを明示的に要求しなければなりません。 <em>context</em> は SSL 設定オプション、証明書、秘密鍵を一つの(潜在的に長生きの)構造にまとめた <a class="reference internal" href="ssl.html#ssl.SSLContext" title="ssl.SSLContext"><code class="xref py py-class docutils literal"><span class="pre">ssl.SSLContext</span></code></a> オブジェクトです。ベストプラクティスについての <a class="reference internal" href="ssl.html#ssl-security"><span class="std std-ref">セキュリティで考慮すべき点</span></a> をお読みください。</p>
-<p><em>keyfile</em> と <em>certfile</em> は <em>context</em> のレガシー版です &#8211; これらは、SSL 接続のための、 PEM フォーマットの秘密鍵と証明書チェーンファイル名(前者が <em>keyfile</em> 、後者が <em>certfile</em> )を含むことができます。</p>
+<p><em>keyfile</em> と <em>certfile</em> は <em>context</em> のレガシー版です – これらは、SSL 接続のための、 PEM フォーマットの秘密鍵と証明書チェーンファイル名(前者が <em>keyfile</em> 、後者が <em>certfile</em> )を含むことができます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7 で追加.</span></p>
 </div>
@@ -156,19 +152,19 @@
 <dl class="exception">
 <dt id="ftplib.error_temp">
 <em class="property">exception </em><code class="descclassname">ftplib.</code><code class="descname">error_temp</code><a class="headerlink" href="#ftplib.error_temp" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>一時的エラーを表すエラーコード(400&#8211;499の範囲の応答コード)を受け取った時に発生する例外。</p>
+<dd><p>一時的エラーを表すエラーコード(400–499の範囲の応答コード)を受け取った時に発生する例外。</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="ftplib.error_perm">
 <em class="property">exception </em><code class="descclassname">ftplib.</code><code class="descname">error_perm</code><a class="headerlink" href="#ftplib.error_perm" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>永久エラーを表すエラーコード(500&#8211;599の範囲の応答コード)を受け取った時に発生する例外。</p>
+<dd><p>永久エラーを表すエラーコード(500–599の範囲の応答コード)を受け取った時に発生する例外。</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="ftplib.error_proto">
 <em class="property">exception </em><code class="descclassname">ftplib.</code><code class="descname">error_proto</code><a class="headerlink" href="#ftplib.error_proto" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>File Transfer Protocol の応答仕様に適合しない、すなわち1&#8211;5の数字で始まらない応答コードをサーバから受け取った時に発生する例外。</p>
+<dd><p>File Transfer Protocol の応答仕様に適合しない、すなわち1–5の数字で始まらない応答コードをサーバから受け取った時に発生する例外。</p>
 </dd></dl>
 
 <dl class="data">
@@ -181,8 +177,7 @@
 <p class="first admonition-title">参考</p>
 <dl class="docutils">
 <dt><a class="reference internal" href="netrc.html#module-netrc" title="netrc: Loading of .netrc files."><code class="xref py py-mod docutils literal"><span class="pre">netrc</span></code></a> モジュール</dt>
-<dd><p class="first last"><code class="file docutils literal"><span class="pre">.netrc</span></code> ファイルフォーマットのパーザ。 <code class="file docutils literal"><span class="pre">.netrc</span></code> ファイルは、 FTPクライアントがユーザにプロンプトを出す前に、ユーザ認証情報をロードするのによく使われます。</p>
-</dd>
+<dd><code class="file docutils literal"><span class="pre">.netrc</span></code> ファイルフォーマットのパーザ。 <code class="file docutils literal"><span class="pre">.netrc</span></code> ファイルは、 FTPクライアントがユーザにプロンプトを出す前に、ユーザ認証情報をロードするのによく使われます。</dd>
 </dl>
 <p class="last" id="index-3">Pythonのソースディストリビューションの <code class="file docutils literal"><span class="pre">Tools/scripts/ftpmirror.py</span></code> ファイルは、FTPサイトあるいはその一部をミラーリングするスクリプトで、 <a class="reference internal" href="#module-ftplib" title="ftplib: FTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal"><span class="pre">ftplib</span></code></a> モジュールを使っています。このモジュールを適用した応用例として使うことができます。</p>
 </div>
@@ -215,7 +210,7 @@
 <dl class="method">
 <dt id="ftplib.FTP.login">
 <code class="descclassname">FTP.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="optional">[</span><em>user</em><span class="optional">[</span>, <em>passwd</em><span class="optional">[</span>, <em>acct</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.login" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>与えられた <em>user</em> でログインします。 <em>passwd</em> と <em>acct</em> のパラメータは省略可能で、デフォルトでは空文字列です。もし <em>user</em> が指定されないなら、デフォルトで <code class="docutils literal"><span class="pre">'anonymous'</span></code> になります。もし <em>user</em> が <code class="docutils literal"><span class="pre">'anonymous'</span></code> なら、デフォルトの <em>passwd</em> は <code class="docutils literal"><span class="pre">'anonymous&#64;'</span></code> になります。この関数は各インスタンスについて一度だけ、接続が確立した後に呼び出さなければなりません。インスタンスが作られた時にホスト名とユーザ名が与えられていたら、このメソッドを実行すべきではありません。ほとんどのFTPコマンドはクライアントがログインした後に実行可能になります。 <em>acct</em> 引数は &#8220;accounting information&#8221; を提供します。ほとんどのシステムはこれを実装していません。</p>
+<dd><p>与えられた <em>user</em> でログインします。 <em>passwd</em> と <em>acct</em> のパラメータは省略可能で、デフォルトでは空文字列です。もし <em>user</em> が指定されないなら、デフォルトで <code class="docutils literal"><span class="pre">'anonymous'</span></code> になります。もし <em>user</em> が <code class="docutils literal"><span class="pre">'anonymous'</span></code> なら、デフォルトの <em>passwd</em> は <code class="docutils literal"><span class="pre">'anonymous&#64;'</span></code> になります。この関数は各インスタンスについて一度だけ、接続が確立した後に呼び出さなければなりません。インスタンスが作られた時にホスト名とユーザ名が与えられていたら、このメソッドを実行すべきではありません。ほとんどのFTPコマンドはクライアントがログインした後に実行可能になります。 <em>acct</em> 引数は 「accounting information」 を提供します。ほとんどのシステムはこれを実装していません。</p>
 </dd></dl>
 
 <dl class="method">
@@ -233,7 +228,7 @@
 <dl class="method">
 <dt id="ftplib.FTP.voidcmd">
 <code class="descclassname">FTP.</code><code class="descname">voidcmd</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.voidcmd" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>シンプルなコマンド文字列をサーバに送信して、その応答を扱います。応答コードが成功に関係するもの(200&#8211;299の範囲にあるコード)なら何も返しません。それ以外は <a class="reference internal" href="#ftplib.error_reply" title="ftplib.error_reply"><code class="xref py py-exc docutils literal"><span class="pre">error_reply</span></code></a> を発生します。</p>
+<dd><p>シンプルなコマンド文字列をサーバに送信して、その応答を扱います。応答コードが成功に関係するもの(200–299の範囲にあるコード)なら何も返しません。それ以外は <a class="reference internal" href="#ftplib.error_reply" title="ftplib.error_reply"><code class="xref py py-exc docutils literal"><span class="pre">error_reply</span></code></a> を発生します。</p>
 </dd></dl>
 
 <dl class="method">
@@ -251,7 +246,7 @@
 <dl class="method">
 <dt id="ftplib.FTP.set_pasv">
 <code class="descclassname">FTP.</code><code class="descname">set_pasv</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.set_pasv" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>val</em> が真なら&#8221;パッシブモード&#8221;をオンにし、そうでないならパッシブモードをオフにします。(Python 2.0以前ではデフォルトでパッシブモードはオフにされていましたが、 Python 2.1以後ではデフォルトでオンになっています。)</p>
+<dd><p><em>val</em> が真なら」パッシブモード」をオンにし、そうでないならパッシブモードをオフにします。(Python 2.0以前ではデフォルトでパッシブモードはオフにされていましたが、 Python 2.1以後ではデフォルトでオンになっています。)</p>
 </dd></dl>
 
 <dl class="method">
@@ -348,7 +343,7 @@
 <dl class="method">
 <dt id="ftplib.FTP.quit">
 <code class="descclassname">FTP.</code><code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ftplib.FTP.quit" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>サーバに <code class="docutils literal"><span class="pre">QUIT</span></code> コマンドを送信し、接続を閉じます。これは接続を閉じるのに&#8221;礼儀正しい&#8221;方法ですが、 <code class="docutils literal"><span class="pre">QUIT</span></code> コマンドに反応してサーバの例外が発生するかもしれません。この例外は、 <a class="reference internal" href="#ftplib.FTP.close" title="ftplib.FTP.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> メソッドによって <a class="reference internal" href="#ftplib.FTP" title="ftplib.FTP"><code class="xref py py-class docutils literal"><span class="pre">FTP</span></code></a> インスタンスに対するその後のコマンド使用が不可になっていることを示しています（下記参照）。</p>
+<dd><p>サーバに <code class="docutils literal"><span class="pre">QUIT</span></code> コマンドを送信し、接続を閉じます。これは接続を閉じるのに」礼儀正しい」方法ですが、 <code class="docutils literal"><span class="pre">QUIT</span></code> コマンドに反応してサーバの例外が発生するかもしれません。この例外は、 <a class="reference internal" href="#ftplib.FTP.close" title="ftplib.FTP.close"><code class="xref py py-meth docutils literal"><span class="pre">close()</span></code></a> メソッドによって <a class="reference internal" href="#ftplib.FTP" title="ftplib.FTP"><code class="xref py py-class docutils literal"><span class="pre">FTP</span></code></a> インスタンスに対するその後のコマンド使用が不可になっていることを示しています（下記参照）。</p>
 </dd></dl>
 
 <dl class="method">
@@ -396,7 +391,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">20.8. <code class="docutils literal"><span class="pre">ftplib</span></code> &#8212; FTPプロトコルクライアント</a><ul>
+<li><a class="reference internal" href="#">20.8. <code class="docutils literal"><span class="pre">ftplib</span></code> — FTPプロトコルクライアント</a><ul>
 <li><a class="reference internal" href="#ftp-objects">20.8.1. FTP オブジェクト</a></li>
 <li><a class="reference internal" href="#ftp-tls-objects">20.8.2. FTP_TLS オブジェクト</a></li>
 </ul>
@@ -405,14 +400,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="httplib.html"
-                        title="前の章へ">20.7. <code class="docutils literal"><span class="pre">httplib</span></code> &#8212; HTTP プロトコルクライアント</a></p>
+                        title="前の章へ">20.7. <code class="docutils literal"><span class="pre">httplib</span></code> — HTTP プロトコルクライアント</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="poplib.html"
-                        title="次の章へ">20.9. <code class="docutils literal"><span class="pre">poplib</span></code> &#8212; POP3 プロトコルクライアント</a></p>
+                        title="次の章へ">20.9. <code class="docutils literal"><span class="pre">poplib</span></code> — POP3 プロトコルクライアント</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ftplib.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ftplib.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -464,10 +459,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

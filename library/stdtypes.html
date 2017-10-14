@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>5. 組み込み型 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="Python 標準ライブラリ" href="index.html" />
     <link rel="next" title="6. 組み込み例外" href="exceptions.html" />
     <link rel="prev" title="4. 組み込み定数" href="constants.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -107,11 +103,11 @@
 <li><p class="first">ユーザ定義クラスのインスタンスで、そのクラスが <a class="reference internal" href="../reference/datamodel.html#object.__nonzero__" title="object.__nonzero__"><code class="xref py py-meth docutils literal"><span class="pre">__nonzero__()</span></code></a> または <a class="reference internal" href="../reference/datamodel.html#object.__len__" title="object.__len__"><code class="xref py py-meth docutils literal"><span class="pre">__len__()</span></code></a> メソッドを定義していれば、それらのメソッドが整数 0 または <a class="reference internal" href="functions.html#bool" title="bool"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a> 値 <code class="docutils literal"><span class="pre">False</span></code> を返すとき。 <a class="footnote-reference" href="#id12" id="id1">[1]</a></p>
 </li>
 </ul>
-<p id="index-5">それ以外の全ての値は真と見なされます &#8212; 従って、多くの型のオブジェクトは常に真です。</p>
+<p id="index-5">それ以外の全ての値は真と見なされます — 従って、多くの型のオブジェクトは常に真です。</p>
 <p id="index-6">ブール値の結果を返す演算および組み込み関数は、特に注釈のない限り常に偽値として <code class="docutils literal"><span class="pre">0</span></code> または <code class="docutils literal"><span class="pre">False</span></code> を返し、真値として <code class="docutils literal"><span class="pre">1</span></code> または <code class="docutils literal"><span class="pre">True</span></code> を返します。 (重要な例外: ブール演算 <code class="docutils literal"><span class="pre">or</span></code> および <code class="docutils literal"><span class="pre">and</span></code> は常に被演算子のうちの一つを返します。)</p>
 </div>
 <div class="section" id="boolean-operations-and-or-not">
-<span id="boolean"></span><h2>5.2. ブール演算 &#8212; <a class="reference internal" href="../reference/expressions.html#and"><code class="xref std std-keyword docutils literal"><span class="pre">and</span></code></a>, <a class="reference internal" href="../reference/expressions.html#or"><code class="xref std std-keyword docutils literal"><span class="pre">or</span></code></a>, <a class="reference internal" href="../reference/expressions.html#not"><code class="xref std std-keyword docutils literal"><span class="pre">not</span></code></a><a class="headerlink" href="#boolean-operations-and-or-not" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="boolean"></span><h2>5.2. ブール演算 — <a class="reference internal" href="../reference/expressions.html#and"><code class="xref std std-keyword docutils literal"><span class="pre">and</span></code></a>, <a class="reference internal" href="../reference/expressions.html#or"><code class="xref std std-keyword docutils literal"><span class="pre">or</span></code></a>, <a class="reference internal" href="../reference/expressions.html#not"><code class="xref std std-keyword docutils literal"><span class="pre">not</span></code></a><a class="headerlink" href="#boolean-operations-and-or-not" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-7">以下にブール演算を、優先順位が低い順に示します:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -120,40 +116,31 @@
 <col width="13%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">or</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> が偽なら <em>y</em>, そうでなければ <em>x</em></p>
-</td>
+<td><em>x</em> が偽なら <em>y</em>, そうでなければ <em>x</em></td>
 <td>(1)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">and</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> が偽なら <em>x</em>, そうでなければ <em>y</em></p>
-</td>
+<td><em>x</em> が偽なら <em>x</em>, そうでなければ <em>y</em></td>
 <td>(2)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">not</span> <span class="pre">x</span></code></td>
-<td><p class="first last"><em>x</em> が偽なら <code class="docutils literal"><span class="pre">True</span></code>, そうでなければ <code class="docutils literal"><span class="pre">False</span></code></p>
-</td>
+<td><em>x</em> が偽なら <code class="docutils literal"><span class="pre">True</span></code>, そうでなければ <code class="docutils literal"><span class="pre">False</span></code></td>
 <td>(3)</td>
 </tr>
 </tbody>
 </table>
 <p id="index-8">注釈:</p>
 <ol class="arabic simple">
-<li><p class="first">この演算子は短絡評価されます。つまり第一引数が偽のときにのみ、第二引数が評価されます。</p>
-</li>
-<li><p class="first">この演算子は短絡評価されます。つまり第一引数が真のときにのみ、第二引数が評価されます。</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">not</span></code> は非ブール演算子よりも優先度が低いので、 <code class="docutils literal"><span class="pre">not</span> <span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></code> は <code class="docutils literal"><span class="pre">not</span> <span class="pre">(a</span> <span class="pre">==</span> <span class="pre">b)</span></code> と解釈され、 <code class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">not</span> <span class="pre">b</span></code> は構文エラーです。</p>
-</li>
+<li>この演算子は短絡評価されます。つまり第一引数が偽のときにのみ、第二引数が評価されます。</li>
+<li>この演算子は短絡評価されます。つまり第一引数が真のときにのみ、第二引数が評価されます。</li>
+<li><code class="docutils literal"><span class="pre">not</span></code> は非ブール演算子よりも優先度が低いので、 <code class="docutils literal"><span class="pre">not</span> <span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></code> は <code class="docutils literal"><span class="pre">not</span> <span class="pre">(a</span> <span class="pre">==</span> <span class="pre">b)</span></code> と解釈され、 <code class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">not</span> <span class="pre">b</span></code> は構文エラーです。</li>
 </ol>
 </div>
 <div class="section" id="comparisons">
@@ -167,61 +154,49 @@
 <col width="16%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">意味</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">&lt;</span></code></td>
-<td><p class="first last">より小さい</p>
-</td>
-<td>&nbsp;</td>
+<td>より小さい</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">&lt;=</span></code></td>
-<td><p class="first last">以下</p>
-</td>
-<td>&nbsp;</td>
+<td>以下</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">&gt;</span></code></td>
-<td><p class="first last">より大きい</p>
-</td>
-<td>&nbsp;</td>
+<td>より大きい</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">&gt;=</span></code></td>
-<td><p class="first last">以上</p>
-</td>
-<td>&nbsp;</td>
+<td>以上</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">==</span></code></td>
-<td><p class="first last">等しい</p>
-</td>
-<td>&nbsp;</td>
+<td>等しい</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">!=</span></code></td>
-<td><p class="first last">等しくない</p>
-</td>
+<td>等しくない</td>
 <td>(1)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">is</span></code></td>
-<td><p class="first last">同一のオブジェクトである</p>
-</td>
-<td>&nbsp;</td>
+<td>同一のオブジェクトである</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">is</span> <span class="pre">not</span></code></td>
-<td><p class="first last">同一のオブジェクトでない</p>
-</td>
-<td>&nbsp;</td>
+<td>同一のオブジェクトでない</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
 <p>注釈:</p>
 <ol class="arabic simple">
-<li><p class="first"><code class="docutils literal"><span class="pre">!=</span></code> は <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> とも書けますがこれは時代遅れの書き方で、後方互換性維持のためだけに残されています。新しいコードでは常に <code class="docutils literal"><span class="pre">!=</span></code> を使うべきです。</p>
-</li>
+<li><code class="docutils literal"><span class="pre">!=</span></code> は <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> とも書けますがこれは時代遅れの書き方で、後方互換性維持のためだけに残されています。新しいコードでは常に <code class="docutils literal"><span class="pre">!=</span></code> を使うべきです。</li>
 </ol>
 <p id="index-10">数値型間の比較か文字列間の比較でないかぎり、異なる型のオブジェクトを比較しても等価になることはありません; これらのオブジェクトの順番付けは一貫してはいますが任意のものです (従って要素の型が一様でないシーケンスをソートした結果は一貫したものになります)。さらに、 (例えばファイルオブジェクトのように) 型によっては、その型の 2 つのオブジェクトの不等性だけの、縮退した比較の概念しかサポートしないものもあります。繰り返しますが、そのようなオブジェクトも任意の順番付けをされていますが、それは一貫したものです。被演算子が複素数の場合、演算子 <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code> および <code class="docutils literal"><span class="pre">&gt;=</span></code> は例外 <a class="reference internal" href="exceptions.html#exceptions.TypeError" title="exceptions.TypeError"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code></a> を送出します。</p>
 <p id="index-11">あるクラスの同一でないインスタンスは、通常等価でないとされますが、そのクラスが <a class="reference internal" href="../reference/datamodel.html#object.__eq__" title="object.__eq__"><code class="xref py py-meth docutils literal"><span class="pre">__eq__()</span></code></a> メソッドか <a class="reference internal" href="../reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> メソッドを定義している場合は除きます。</p>
@@ -235,7 +210,7 @@
 <span id="typesnumeric"></span><h2>5.4. 数値型 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-class docutils literal"><span class="pre">complex</span></code></a><a class="headerlink" href="#numeric-types-int-float-long-complex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-13">4 つの異なる数値型があります: <em class="dfn">通常の整数型</em>, <em class="dfn">長整数型</em>, <em class="dfn">浮動小数点型</em>, <em class="dfn">複素数型</em> です。さらに、真偽値(Boolean)型も通常の整数型のサブタイプです。通常の整数 (単に <em class="dfn">整数型</em> とも呼ばれます) は C言語の <code class="xref c c-type docutils literal"><span class="pre">long</span></code> 型を使って実装されており、少なくとも 32 ビットの精度があります (<code class="docutils literal"><span class="pre">sys.maxint</span></code> は常に通常の整数の各プラットフォームにおける最大値にセットされており、最小値は <code class="docutils literal"><span class="pre">-sys.maxint</span> <span class="pre">-</span> <span class="pre">1</span></code> になります)。長整数型には精度の制限がありません。浮動小数点型はたいていは C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> を使って実装されています; あなたのプログラムが動作するマシンでの浮動小数点型の精度と内部表現は、 <a class="reference internal" href="sys.html#sys.float_info" title="sys.float_info"><code class="xref py py-data docutils literal"><span class="pre">sys.float_info</span></code></a> から利用できます。複素数型は実部と虚部を持ち、それぞれ浮動小数点数です。複素数 <em>z</em> から実部および虚部を取り出すには、 <code class="docutils literal"><span class="pre">z.real</span></code> および <code class="docutils literal"><span class="pre">z.imag</span></code> を使ってください。 (標準ライブラリには、追加の数値型、分数を保持する <a class="reference internal" href="fractions.html#module-fractions" title="fractions: Rational numbers."><code class="xref py py-mod docutils literal"><span class="pre">fractions</span></code></a> や、ユーザ定義の精度の浮動小数点数を保持する <a class="reference internal" href="decimal.html#module-decimal" title="decimal: Implementation of the General Decimal Arithmetic  Specification."><code class="xref py py-mod docutils literal"><span class="pre">decimal</span></code></a> があります。)</p>
 <p id="index-14">数値は、数値リテラルや組み込み関数や演算子の戻り値として生成されます。修飾のない整数リテラル ( 2 進表現や、 16 進表現や 8 進表現の値も含みます) は、通常の整数値を表します。値が通常の整数で表すには大きすぎる場合、 <code class="docutils literal"><span class="pre">'L'</span></code> または <code class="docutils literal"><span class="pre">'l'</span></code> が末尾につく整数リテラルは長整数型を表します (<code class="docutils literal"><span class="pre">'L'</span></code> が望ましいです。というのは <code class="docutils literal"><span class="pre">1l</span></code> は 11 と非常に紛らわしいからです!)。小数点または指数表記のある数値リテラルは浮動小数点数を表します。数値リテラルに <code class="docutils literal"><span class="pre">'j'</span></code> または <code class="docutils literal"><span class="pre">'J'</span></code> をつけると虚数 (実数部がゼロの複素数) を表し、それと整数や浮動小数点数を足すと実部と虚部を持つ複素数が得られます。</p>
-<p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より &#8220;制限された&#8221; 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
+<p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より 「制限された」 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
 <p>全ての組み込み数値型は以下の演算をサポートします。演算子の優先度については、 <a class="reference internal" href="../reference/expressions.html#power"><span class="std std-ref">べき乗演算 (power operator)</span></a>,および、あとのセクションを参照下さい。</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -244,98 +219,78 @@
 <col width="13%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> の和</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> の和</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> の差</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> の差</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> の積</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> の積</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> の商</p>
-</td>
+<td><em>x</em> と <em>y</em> の商</td>
 <td>(1)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">//</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> の商 (を切り下げたもの)</p>
-</td>
+<td><em>x</em> と <em>y</em> の商 (を切り下げたもの)</td>
 <td>(4)(5)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></code> の剰余</p>
-</td>
+<td><code class="docutils literal"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></code> の剰余</td>
 <td>(4)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">-x</span></code></td>
-<td><p class="first last"><em>x</em> の符号反転</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> の符号反転</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">+x</span></code></td>
-<td><p class="first last"><em>x</em> そのまま</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> そのまま</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">abs(x)</span></code></td>
-<td><p class="first last"><em>x</em> の絶対値または大きさ</p>
-</td>
+<td><em>x</em> の絶対値または大きさ</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">int(x)</span></code></td>
-<td><p class="first last"><em>x</em> の整数への変換</p>
-</td>
+<td><em>x</em> の整数への変換</td>
 <td>(2)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">long(x)</span></code></td>
-<td><p class="first last"><em>x</em> の長整数への変換</p>
-</td>
+<td><em>x</em> の長整数への変換</td>
 <td>(2)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">float(x)</span></code></td>
-<td><p class="first last"><em>x</em> の浮動小数点数への変換</p>
-</td>
+<td><em>x</em> の浮動小数点数への変換</td>
 <td>(6)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">complex(re,im)</span></code></td>
-<td><p class="first last">実部 <em>re</em>, 虚部 <em>im</em> の複素数。 <em>im</em> の既定値はゼロ。</p>
-</td>
-<td>&nbsp;</td>
+<td>実部 <em>re</em>, 虚部 <em>im</em> の複素数。 <em>im</em> の既定値はゼロ。</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">c.conjugate()</span></code></td>
-<td><p class="first last">複素数 <em>c</em> の共役複素数 (実数に対しては同じ値を返す)</p>
-</td>
-<td>&nbsp;</td>
+<td>複素数 <em>c</em> の共役複素数 (実数に対しては同じ値を返す)</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">divmod(x,</span> <span class="pre">y)</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">(x</span> <span class="pre">//</span> <span class="pre">y,</span> <span class="pre">x</span> <span class="pre">%</span> <span class="pre">y)</span></code> からなるペア</p>
-</td>
+<td><code class="docutils literal"><span class="pre">(x</span> <span class="pre">//</span> <span class="pre">y,</span> <span class="pre">x</span> <span class="pre">%</span> <span class="pre">y)</span></code> からなるペア</td>
 <td>(3)(4)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">pow(x,</span> <span class="pre">y)</span></code></td>
-<td><p class="first last"><em>x</em> の <em>y</em> 乗</p>
-</td>
+<td><em>x</em> の <em>y</em> 乗</td>
 <td>(3)(7)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">**</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> の <em>y</em> 乗</p>
-</td>
+<td><em>x</em> の <em>y</em> 乗</td>
 <td>(7)</td>
 </tr>
 </tbody>
@@ -354,7 +309,7 @@
 </li>
 <li><p class="first">整数の除算とも呼ばれます。結果の型は整数型とは限りませんが、結果の値は整数です。</p>
 </li>
-<li><p class="first">浮動小数点数は、文字列 &#8220;nan&#8221; と &#8220;inf&#8221; を、必要なら接頭辞 &#8220;+&#8221; または &#8220;-&#8221; と共に、非数 (Not a Number (NaN)) や正、負の無限大として受け付けます。</p>
+<li><p class="first">浮動小数点数は、文字列 「nan」 と 「inf」 を、必要なら接頭辞 「+」 または 「-」 と共に、非数 (Not a Number (NaN)) や正、負の無限大として受け付けます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
@@ -369,29 +324,23 @@
 <col width="69%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="math.html#math.trunc" title="math.trunc"><code class="xref py py-func docutils literal"><span class="pre">math.trunc(x)</span></code></a></td>
-<td><p class="first last"><em>x</em> を <a class="reference internal" href="numbers.html#numbers.Integral" title="numbers.Integral"><code class="xref py py-class docutils literal"><span class="pre">Integral</span></code></a> (整数) に切り捨てます</p>
-</td>
+<td><em>x</em> を <a class="reference internal" href="numbers.html#numbers.Integral" title="numbers.Integral"><code class="xref py py-class docutils literal"><span class="pre">Integral</span></code></a> (整数) に切り捨てます</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="functions.html#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round(x[,</span>
 <span class="pre">n])</span></code></a></td>
-<td><p class="first last"><em>x</em> を <em>n</em> 桁に丸めます。丸め方は四捨五入です。 <em>n</em> が省略されれば 0 がデフォルトとなります。(&#8211;訳注: Python 3 と仕様が違うので注意してください。1.5 と 2.5 の round は、Python 2 ではそれぞれ 2、3 となり、Python 3 では 2、2 となります。後者の丸めは .5 を丸める際に偶数になる方へ丸めるので、「偶数丸め」と言います。&#8211;)</p>
-</td>
+<td><em>x</em> を <em>n</em> 桁に丸めます。丸め方は四捨五入です。 <em>n</em> が省略されれば 0 がデフォルトとなります。(–訳注: Python 3 と仕様が違うので注意してください。1.5 と 2.5 の round は、Python 2 ではそれぞれ 2、3 となり、Python 3 では 2、2 となります。後者の丸めは .5 を丸める際に偶数になる方へ丸めるので、「偶数丸め」と言います。–)</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="math.html#math.floor" title="math.floor"><code class="xref py py-func docutils literal"><span class="pre">math.floor(x)</span></code></a></td>
-<td><p class="first last"><em>x</em> 以下の最大の整数を浮動小数点数として返します</p>
-</td>
+<td><em>x</em> 以下の最大の整数を浮動小数点数として返します</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="math.html#math.ceil" title="math.ceil"><code class="xref py py-func docutils literal"><span class="pre">math.ceil(x)</span></code></a></td>
-<td><p class="first last"><em>x</em> 以上の最小の整数を浮動小数点数として返します</p>
-</td>
+<td><em>x</em> 以上の最小の整数を浮動小数点数として返します</td>
 </tr>
 </tbody>
 </table>
@@ -407,55 +356,43 @@
 <col width="19%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">|</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> のビット単位 <em class="dfn">論理和</em></p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> のビット単位 <em class="dfn">論理和</em></td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">^</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> のビット単位 <em class="dfn">排他的論理和</em></p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> のビット単位 <em class="dfn">排他的論理和</em></td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">&amp;</span> <span class="pre">y</span></code></td>
-<td><p class="first last"><em>x</em> と <em>y</em> のビット単位 <em class="dfn">論理積</em></p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> と <em>y</em> のビット単位 <em class="dfn">論理積</em></td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;&lt;</span> <span class="pre">n</span></code></td>
-<td><p class="first last"><em>x</em> の <em>n</em> ビット左シフト</p>
-</td>
+<td><em>x</em> の <em>n</em> ビット左シフト</td>
 <td>(1)(2)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;&gt;</span> <span class="pre">n</span></code></td>
-<td><p class="first last"><em>x</em> の <em>n</em> ビット右シフト</p>
-</td>
+<td><em>x</em> の <em>n</em> ビット右シフト</td>
 <td>(1)(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">~x</span></code></td>
-<td><p class="first last"><em>x</em> のビット反転</p>
-</td>
-<td>&nbsp;</td>
+<td><em>x</em> のビット反転</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
 <p>注釈:</p>
 <ol class="arabic simple">
-<li><p class="first">負値のシフト数は不正であり、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</p>
-</li>
-<li><p class="first"><em>n</em> ビットの左シフトは、 <code class="docutils literal"><span class="pre">pow(2,</span> <span class="pre">n)</span></code> による乗算と等価です。通常整数の範囲を超える結果になる場合は長整数で返されます。</p>
-</li>
-<li><p class="first"><em>n</em> ビットの右シフトは、 <code class="docutils literal"><span class="pre">pow(2,</span> <span class="pre">n)</span></code> による除算と等価です。</p>
-</li>
+<li>負値のシフト数は不正であり、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> が送出されます。</li>
+<li><em>n</em> ビットの左シフトは、 <code class="docutils literal"><span class="pre">pow(2,</span> <span class="pre">n)</span></code> による乗算と等価です。通常整数の範囲を超える結果になる場合は長整数で返されます。</li>
+<li><em>n</em> ビットの右シフトは、 <code class="docutils literal"><span class="pre">pow(2,</span> <span class="pre">n)</span></code> による除算と等価です。</li>
 </ol>
 </div>
 <div class="section" id="additional-methods-on-integer-types">
@@ -589,7 +526,7 @@
 </div>
 </div>
 <div class="section" id="sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange">
-<span id="typesseq"></span><h2>5.6. シーケンス型 &#8212; <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>, <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>, <a class="reference internal" href="functions.html#buffer" title="buffer"><code class="xref py py-class docutils literal"><span class="pre">buffer</span></code></a>, <a class="reference internal" href="functions.html#xrange" title="xrange"><code class="xref py py-class docutils literal"><span class="pre">xrange</span></code></a><a class="headerlink" href="#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="typesseq"></span><h2>5.6. シーケンス型 — <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>, <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>, <a class="reference internal" href="functions.html#buffer" title="buffer"><code class="xref py py-class docutils literal"><span class="pre">buffer</span></code></a>, <a class="reference internal" href="functions.html#xrange" title="xrange"><code class="xref py py-class docutils literal"><span class="pre">xrange</span></code></a><a class="headerlink" href="#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>シーケンス型には 7 つあります: 文字列、Unicode 文字列、リスト、タプル、、バイト配列 (bytearray)、バッファ、そして xrange オブジェクトです。</p>
 <p>他のコンテナ型については、組み込みクラスの <a class="reference internal" href="#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> および <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> を参照下さい。</p>
 <p id="index-21">文字列リテラルは <code class="docutils literal"><span class="pre">'xyzzy'</span></code> , <code class="docutils literal"><span class="pre">&quot;frobozz&quot;</span></code> といったように、単引用符または二重引用符の中に書かれます。文字列リテラルについての詳細は、 <a class="reference internal" href="../reference/lexical_analysis.html#strings"><span class="std std-ref">文字列リテラル</span></a> を参照下さい。 Unicode 文字列はほとんど文字列と同じですが、 <code class="docutils literal"><span class="pre">u'abc'</span></code> , <code class="docutils literal"><span class="pre">u&quot;def&quot;</span></code> といったように先頭に文字 <code class="docutils literal"><span class="pre">'u'</span></code> を付けて指定します。リストは <code class="docutils literal"><span class="pre">[a,</span> <span class="pre">b,</span> <span class="pre">c]</span></code> のように要素をコンマで区切り角括弧で囲って生成します。タプルは <code class="docutils literal"><span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">c</span></code> のようにコンマ演算子で区切って生成します (角括弧の中には入れません)。丸括弧で囲っても囲わなくてもかまいませんが、空のタプルは <code class="docutils literal"><span class="pre">()</span></code> のように丸括弧で囲わなければなりません。要素が一つのタプルでは、例えば <code class="docutils literal"><span class="pre">(d,)</span></code> のように、要素の後ろにコンマをつけなければなりません。</p>
@@ -605,75 +542,59 @@
 <col width="17%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">s</span></code></td>
-<td><p class="first last"><em>s</em> のある要素が <em>x</em> と等しければ <code class="docutils literal"><span class="pre">True</span></code> , そうでなければ <code class="docutils literal"><span class="pre">False</span></code></p>
-</td>
+<td><em>s</em> のある要素が <em>x</em> と等しければ <code class="docutils literal"><span class="pre">True</span></code> , そうでなければ <code class="docutils literal"><span class="pre">False</span></code></td>
 <td>(1)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">s</span></code></td>
-<td><p class="first last"><em>s</em> のある要素が <em>x</em> と等しければ <code class="docutils literal"><span class="pre">False</span></code>, そうでなければ <code class="docutils literal"><span class="pre">True</span></code></p>
-</td>
+<td><em>s</em> のある要素が <em>x</em> と等しければ <code class="docutils literal"><span class="pre">False</span></code>, そうでなければ <code class="docutils literal"><span class="pre">True</span></code></td>
 <td>(1)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s</span> <span class="pre">+</span> <span class="pre">t</span></code></td>
-<td><p class="first last"><em>s</em> と <em>t</em> の結合</p>
-</td>
+<td><em>s</em> と <em>t</em> の結合</td>
 <td>(6)</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><code class="docutils literal"><span class="pre">s</span> <span class="pre">*</span> <span class="pre">n</span></code> または <code class="docutils literal"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">s</span></code></p>
-</td>
-<td><p class="first last"><em>s</em> 自身を <em>n</em> 回足すのと同じ</p>
-</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span> <span class="pre">*</span> <span class="pre">n</span></code> または <code class="docutils literal"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">s</span></code></td>
+<td><em>s</em> 自身を <em>n</em> 回足すのと同じ</td>
 <td>(2)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s[i]</span></code></td>
-<td><p class="first last"><em>s</em> の 0 から数えて <em>i</em> 番目の要素</p>
-</td>
+<td><em>s</em> の 0 から数えて <em>i</em> 番目の要素</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s[i:j]</span></code></td>
-<td><p class="first last"><em>s</em> の <em>i</em> から <em>j</em> までのスライス</p>
-</td>
+<td><em>s</em> の <em>i</em> から <em>j</em> までのスライス</td>
 <td>(3)(4)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s[i:j:k]</span></code></td>
-<td><p class="first last"><em>s</em> の <em>i</em> から <em>j</em> まで、 <em>k</em> 毎のスライス</p>
-</td>
+<td><em>s</em> の <em>i</em> から <em>j</em> まで、 <em>k</em> 毎のスライス</td>
 <td>(3)(5)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">len(s)</span></code></td>
-<td><p class="first last"><em>s</em> の長さ</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> の長さ</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">min(s)</span></code></td>
-<td><p class="first last"><em>s</em> の最小の要素</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> の最小の要素</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">max(s)</span></code></td>
-<td><p class="first last"><em>s</em> の最大の要素</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> の最大の要素</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s.index(x)</span></code></td>
-<td><p class="first last"><em>s</em> 中で <em>x</em> が最初に出現するインデックス</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> 中で <em>x</em> が最初に出現するインデックス</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.count(x)</span></code></td>
-<td><p class="first last"><em>s</em> 中に <em>x</em> が出現する回数</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> 中に <em>x</em> が出現する回数</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -706,7 +627,7 @@
 </li>
 <li><p class="first"><em>s</em> の <em>i</em> から <em>j</em> へのスライスは <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となるようなインデクス <em>k</em> を持つ要素からなるシーケンスとして定義されます。 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> よりも大きい場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">0</span></code> を使います。 <em>j</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が <em>j</em> 以上の場合、スライスは空のシーケンスになります。</p>
 </li>
-<li><p class="first"><em>s</em> の「 <em>i</em> から <em>j</em> まででステップが <em>k</em> のスライス」は、インデックス <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> （ただし n は <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code> を満たす任意の整数）を持つ要素からなるシーケンスとして定義されます。言い換えるとインデックスは <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> と続き、 <em>j</em> に達したところでストップします (ただし <em>j</em> は含みません)。 <em>k</em> が正の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span></code> を代わりに使用します。 <em>k</em> が負の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> を代わりに使用します。 <em>i</em> または <em>j</em> を省略または <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 &#8220;端&#8221; (どちらの端かは <em>k</em> の符号に依存) の値を代わりに使用します。なお <em>k</em> はゼロにできないので注意してください。また <em>k</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 <code class="docutils literal"><span class="pre">1</span></code> が指定されたものとして扱われます。</p>
+<li><p class="first"><em>s</em> の「 <em>i</em> から <em>j</em> まででステップが <em>k</em> のスライス」は、インデックス <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> （ただし n は <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code> を満たす任意の整数）を持つ要素からなるシーケンスとして定義されます。言い換えるとインデックスは <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> と続き、 <em>j</em> に達したところでストップします (ただし <em>j</em> は含みません)。 <em>k</em> が正の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span></code> を代わりに使用します。 <em>k</em> が負の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> を代わりに使用します。 <em>i</em> または <em>j</em> を省略または <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 「端」 (どちらの端かは <em>k</em> の符号に依存) の値を代わりに使用します。なお <em>k</em> はゼロにできないので注意してください。また <em>k</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 <code class="docutils literal"><span class="pre">1</span></code> が指定されたものとして扱われます。</p>
 </li>
 <li><div class="impl-detail first compound">
 <p><strong>CPython 実装の詳細:</strong> <em>s</em> と <em>t</em> の両者が文字列であるとき、 CPython のようないくつかの Python 実装では、 <code class="docutils literal"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">s</span> <span class="pre">+</span> <span class="pre">t</span></code> や <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code> という書式で代入をするのに in-place optimization が働きます。このような時、最適化は二乗の実行時間の低減をもたらします。この最適化はバージョンや実装に依存します。実行効率が必要なコードでは、バージョンと実装が変わっても、連結の線形的実行効率を保証する <a class="reference internal" href="#str.join" title="str.join"><code class="xref py py-meth docutils literal"><span class="pre">str.join()</span></code></a> を使うのがより望ましいでしょう。</p>
@@ -719,7 +640,7 @@
 <div class="section" id="string-methods">
 <span id="id5"></span><h3>5.6.1. 文字列メソッド<a class="headerlink" href="#string-methods" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p id="index-23">8-bit 文字列と Unicode オブジェクトは、どちらも以下に挙げるメソッドに対応しています。この中には、 <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> オブジェクトで使えるものもあります。</p>
-<p>さらに、 Python の文字列は <a class="reference internal" href="#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> に記載されるシーケンス型のメソッドもサポートします。書式指定して文字列を出力するためには、テンプレート文字列を使うか、 <a class="reference internal" href="#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> に記載される <code class="docutils literal"><span class="pre">%</span></code> 演算子を使います。正規表現に基づく文字列操作関数については、 <a class="reference internal" href="re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールを参照下さい。</p>
+<p>さらに、 Python の文字列は <a class="reference internal" href="#typesseq"><span class="std std-ref">シーケンス型 — str, unicode, list, tuple, bytearray, buffer, xrange</span></a> に記載されるシーケンス型のメソッドもサポートします。書式指定して文字列を出力するためには、テンプレート文字列を使うか、 <a class="reference internal" href="#string-formatting"><span class="std std-ref">文字列フォーマット操作</span></a> に記載される <code class="docutils literal"><span class="pre">%</span></code> 演算子を使います。正規表現に基づく文字列操作関数については、 <a class="reference internal" href="re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> モジュールを参照下さい。</p>
 <dl class="method">
 <dt id="str.capitalize">
 <code class="descclassname">str.</code><code class="descname">capitalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#str.capitalize" title="この定義へのパーマリンク">¶</a></dt>
@@ -1030,56 +951,43 @@
 <col width="56%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">表現</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">表現</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\n</span></code></td>
-<td><p class="first last">改行</p>
-</td>
+<td>改行</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">\r</span></code></td>
-<td><p class="first last">復帰</p>
-</td>
+<td>復帰</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\r\n</span></code></td>
-<td><p class="first last">改行 + 復帰</p>
-</td>
+<td>改行 + 復帰</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">\v</span></code> or <code class="docutils literal"><span class="pre">\x0b</span></code></td>
-<td><p class="first last">垂直タブ</p>
-</td>
+<td>垂直タブ</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\f</span></code> or <code class="docutils literal"><span class="pre">\x0c</span></code></td>
-<td><p class="first last">改ページ</p>
-</td>
+<td>改ページ</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">\x1c</span></code></td>
-<td><p class="first last">ファイル区切り</p>
-</td>
+<td>ファイル区切り</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\x1d</span></code></td>
-<td><p class="first last">グループ区切り</p>
-</td>
+<td>グループ区切り</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">\x1e</span></code></td>
-<td><p class="first last">レコード区切り</p>
-</td>
+<td>レコード区切り</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\x85</span></code></td>
-<td><p class="first last">改行 (C1 制御コード)</p>
-</td>
+<td>改行 (C1 制御コード)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">\u2028</span></code></td>
-<td><p class="first last">行区切り</p>
-</td>
+<td>行区切り</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">\u2029</span></code></td>
-<td><p class="first last">段落区切り</p>
-</td>
+<td>段落区切り</td>
 </tr>
 </tbody>
 </table>
@@ -1161,7 +1069,7 @@
 <dl class="method">
 <dt id="str.upper">
 <code class="descclassname">str.</code><code class="descname">upper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#str.upper" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>全ての大小文字の区別のある文字 <a class="footnote-reference" href="#id15" id="id9">[4]</a> が大文字に変換された、文字列のコピーを返します。なお <code class="docutils literal"><span class="pre">str.upper().isupper()</span></code> は、 <code class="docutils literal"><span class="pre">s</span></code> が大小文字の区別のある文字を含まなかったり、結果の文字の Unicode カテゴリが &#8220;Lu&#8221; ではなく例えば &#8220;Lt&#8221; (Letter, titlecase) などであったら、 <code class="docutils literal"><span class="pre">False</span></code> になりえます。</p>
+<dd><p>全ての大小文字の区別のある文字 <a class="footnote-reference" href="#id15" id="id9">[4]</a> が大文字に変換された、文字列のコピーを返します。なお <code class="docutils literal"><span class="pre">str.upper().isupper()</span></code> は、 <code class="docutils literal"><span class="pre">s</span></code> が大小文字の区別のある文字を含まなかったり、結果の文字の Unicode カテゴリが 「Lu」 ではなく例えば 「Lt」 (Letter, titlecase) などであったら、 <code class="docutils literal"><span class="pre">False</span></code> になりえます。</p>
 <p>8ビット文字列では、メソッドはロケール依存になります。</p>
 </dd></dl>
 
@@ -1194,20 +1102,13 @@
 <p><em>format</em> が単一の引数しか要求しない場合、 <em>values</em> はタプルでない単一のオブジェクトでもかまいません。 <a class="footnote-reference" href="#id16" id="id10">[5]</a> それ以外の場合、 <em>values</em> はフォーマット文字列中で指定された項目と正確に同じ数の要素からなるタプルか、単一のマップオブジェクトでなければなりません。</p>
 <p>一つの変換指定子は 2 またはそれ以上の文字を含み、その構成要素は以下からなりますが、示した順に出現しなければなりません:</p>
 <ol class="arabic simple">
-<li><p class="first">指定子の開始を示す文字 <code class="docutils literal"><span class="pre">'%'</span></code> 。</p>
-</li>
-<li><p class="first">マップキー (オプション)。丸括弧で囲った文字列からなります (例えば <code class="docutils literal"><span class="pre">(somename)</span></code>) 。</p>
-</li>
-<li><p class="first">変換フラグ (オプション)。一部の変換型の結果に影響します。</p>
-</li>
-<li><p class="first">最小のフィールド幅 (オプション)。 <code class="docutils literal"><span class="pre">'*'</span></code> (アスタリスク) を指定した場合、実際の文字列幅が <em>values</em> タプルの次の要素から読み出されます。タプルには最小フィールド幅やオプションの精度指定の後に変換したいオブジェクトがくるようにします。</p>
-</li>
-<li><p class="first">精度 (オプション)。 <code class="docutils literal"><span class="pre">'.'</span></code> (ドット) とその後に続く精度で与えられます。 <code class="docutils literal"><span class="pre">'*'</span></code> (アスタリスク) を指定した場合、精度の桁数は <em>values</em> タプルの次の要素から読み出されます。タプルには精度指定の後に変換したい値がくるようにします。</p>
-</li>
-<li><p class="first">精度長変換子 (オプション)。</p>
-</li>
-<li><p class="first">変換型。</p>
-</li>
+<li>指定子の開始を示す文字 <code class="docutils literal"><span class="pre">'%'</span></code> 。</li>
+<li>マップキー (オプション)。丸括弧で囲った文字列からなります (例えば <code class="docutils literal"><span class="pre">(somename)</span></code>) 。</li>
+<li>変換フラグ (オプション)。一部の変換型の結果に影響します。</li>
+<li>最小のフィールド幅 (オプション)。 <code class="docutils literal"><span class="pre">'*'</span></code> (アスタリスク) を指定した場合、実際の文字列幅が <em>values</em> タプルの次の要素から読み出されます。タプルには最小フィールド幅やオプションの精度指定の後に変換したいオブジェクトがくるようにします。</li>
+<li>精度 (オプション)。 <code class="docutils literal"><span class="pre">'.'</span></code> (ドット) とその後に続く精度で与えられます。 <code class="docutils literal"><span class="pre">'*'</span></code> (アスタリスク) を指定した場合、精度の桁数は <em>values</em> タプルの次の要素から読み出されます。タプルには精度指定の後に変換したい値がくるようにします。</li>
+<li>精度長変換子 (オプション)。</li>
+<li>変換型。</li>
 </ol>
 <p><code class="docutils literal"><span class="pre">%</span></code> 演算子の右側の引数が辞書の場合 (またはその他のマップ型の場合), 文字列中のフォーマットには、辞書に挿入されているキーを丸括弧で囲い、文字 <code class="docutils literal"><span class="pre">'%'</span></code> の直後にくるようにしたものが含まれていなければ <em>なりません</em> 。マップキーはフォーマット化したい値をマップから選び出します。例えば:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%(language)s</span><span class="s1"> has </span><span class="si">%(number)03d</span><span class="s1"> quote types.&#39;</span> <span class="o">%</span> \
@@ -1223,36 +1124,29 @@
 <col width="88%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">フラグ</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head">フラグ</th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'#'</span></code></td>
-<td><p class="first last">値の変換に (下で定義されている) &#8220;別の形式&#8221; を使います。</p>
-</td>
+<td>値の変換に (下で定義されている) 「別の形式」 を使います。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'0'</span></code></td>
-<td><p class="first last">数値型に対してゼロによるパディングを行います。</p>
-</td>
+<td>数値型に対してゼロによるパディングを行います。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'-'</span></code></td>
-<td><p class="first last">変換された値を左寄せにします (<code class="docutils literal"><span class="pre">'0'</span></code> と同時に与えた場合、 <code class="docutils literal"><span class="pre">'0'</span></code> を上書きします) 。</p>
-</td>
+<td>変換された値を左寄せにします (<code class="docutils literal"><span class="pre">'0'</span></code> と同時に与えた場合、 <code class="docutils literal"><span class="pre">'0'</span></code> を上書きします) 。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'</span> <span class="pre">'</span></code></td>
-<td><p class="first last">(スペース) 符号付きの変換で正の数の場合、前に一つスペースを空けます (そうでない場合は空文字になります) 。</p>
-</td>
+<td>(スペース) 符号付きの変換で正の数の場合、前に一つスペースを空けます (そうでない場合は空文字になります) 。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'+'</span></code></td>
-<td><p class="first last">変換の先頭に符号文字 (<code class="docutils literal"><span class="pre">'+'</span></code> または <code class="docutils literal"><span class="pre">'-'</span></code>) を付けます(&#8220;スペース&#8221; フラグを上書きします) 。</p>
-</td>
+<td>変換の先頭に符号文字 (<code class="docutils literal"><span class="pre">'+'</span></code> または <code class="docutils literal"><span class="pre">'-'</span></code>) を付けます(「スペース」 フラグを上書きします) 。</td>
 </tr>
 </tbody>
 </table>
-<p>精度長変換子(<code class="docutils literal"><span class="pre">h</span></code>, <code class="docutils literal"><span class="pre">l</span></code>,または <code class="docutils literal"><span class="pre">L</span></code>) を使うことができますが、 Python では必要ないため無視されます。 &#8211; つまり、例えば <code class="docutils literal"><span class="pre">%ld</span></code> は <code class="docutils literal"><span class="pre">%d</span></code> と等価です。</p>
+<p>精度長変換子(<code class="docutils literal"><span class="pre">h</span></code>, <code class="docutils literal"><span class="pre">l</span></code>,または <code class="docutils literal"><span class="pre">L</span></code>) を使うことができますが、 Python では必要ないため無視されます。 – つまり、例えば <code class="docutils literal"><span class="pre">%ld</span></code> は <code class="docutils literal"><span class="pre">%d</span></code> と等価です。</p>
 <p>変換型を以下に示します:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1261,94 +1155,75 @@
 <col width="10%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">変換</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">変換</th>
+<th class="head">意味</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'d'</span></code></td>
-<td><p class="first last">符号付き 10 進整数。</p>
-</td>
-<td>&nbsp;</td>
+<td>符号付き 10 進整数。</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'i'</span></code></td>
-<td><p class="first last">符号付き 10 進整数。</p>
-</td>
-<td>&nbsp;</td>
+<td>符号付き 10 進整数。</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'o'</span></code></td>
-<td><p class="first last">符号付き 8 進数。</p>
-</td>
+<td>符号付き 8 進数。</td>
 <td>(1)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'u'</span></code></td>
-<td><p class="first last">旧式の型 &#8211; <code class="docutils literal"><span class="pre">'d'</span></code> と同じです。</p>
-</td>
+<td>旧式の型 – <code class="docutils literal"><span class="pre">'d'</span></code> と同じです。</td>
 <td>(7)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'x'</span></code></td>
-<td><p class="first last">符号付き 16 進数 (小文字)。</p>
-</td>
+<td>符号付き 16 進数 (小文字)。</td>
 <td>(2)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'X'</span></code></td>
-<td><p class="first last">符号付き 16 進数 (大文字)。</p>
-</td>
+<td>符号付き 16 進数 (大文字)。</td>
 <td>(2)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'e'</span></code></td>
-<td><p class="first last">指数表記の浮動小数点数 (小文字)。</p>
-</td>
+<td>指数表記の浮動小数点数 (小文字)。</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'E'</span></code></td>
-<td><p class="first last">指数表記の浮動小数点数 (大文字)。</p>
-</td>
+<td>指数表記の浮動小数点数 (大文字)。</td>
 <td>(3)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'f'</span></code></td>
-<td><p class="first last">10 進浮動小数点数。</p>
-</td>
+<td>10 進浮動小数点数。</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'F'</span></code></td>
-<td><p class="first last">10 進浮動小数点数。</p>
-</td>
+<td>10 進浮動小数点数。</td>
 <td>(3)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'g'</span></code></td>
-<td><p class="first last">浮動小数点数。指数部が -4 以上または精度以下の場合には小文字指数表記、それ以外の場合には10進表記。</p>
-</td>
+<td>浮動小数点数。指数部が -4 以上または精度以下の場合には小文字指数表記、それ以外の場合には10進表記。</td>
 <td>(4)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'G'</span></code></td>
-<td><p class="first last">浮動小数点数。指数部が -4 以上または精度以下の場合には大文字指数表記、それ以外の場合には10進表記。</p>
-</td>
+<td>浮動小数点数。指数部が -4 以上または精度以下の場合には大文字指数表記、それ以外の場合には10進表記。</td>
 <td>(4)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'c'</span></code></td>
-<td><p class="first last">文字一文字 (整数または一文字からなる文字列を受理します)。</p>
-</td>
-<td>&nbsp;</td>
+<td>文字一文字 (整数または一文字からなる文字列を受理します)。</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'r'</span></code></td>
-<td><p class="first last">文字列 (Python オブジェクトを <a class="reference internal" href="functions.html#func-repr"><span class="std std-ref">repr()</span></a> で変換します)。</p>
-</td>
+<td>文字列 (Python オブジェクトを <a class="reference internal" href="functions.html#func-repr"><span class="std std-ref">repr()</span></a> で変換します)。</td>
 <td>(5)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'s'</span></code></td>
-<td><p class="first last">文字列 (Python オブジェクトを <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> で変換します)。</p>
-</td>
+<td>文字列 (Python オブジェクトを <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a> で変換します)。</td>
 <td>(6)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'%'</span></code></td>
-<td><p class="first last">引数を変換せず、返される文字列中では文字 <code class="docutils literal"><span class="pre">'%'</span></code> になります。</p>
-</td>
-<td>&nbsp;</td>
+<td>引数を変換せず、返される文字列中では文字 <code class="docutils literal"><span class="pre">'%'</span></code> になります。</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -1394,90 +1269,71 @@
 <col width="25%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">演算</p>
-</th>
-<th class="head"><p class="first last">結果</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">演算</th>
+<th class="head">結果</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s[i]</span> <span class="pre">=</span> <span class="pre">x</span></code></td>
-<td><p class="first last"><em>s</em> の要素 <em>i</em> を <em>x</em> と入れ替えます</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> の要素 <em>i</em> を <em>x</em> と入れ替えます</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s[i:j]</span> <span class="pre">=</span> <span class="pre">t</span></code></td>
-<td><p class="first last"><em>s</em> の <em>i</em> から <em>j</em> 番目までのスライスをイテラブル <em>t</em> の内容に入れ替えます</p>
-</td>
-<td>&nbsp;</td>
+<td><em>s</em> の <em>i</em> から <em>j</em> 番目までのスライスをイテラブル <em>t</em> の内容に入れ替えます</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">del</span> <span class="pre">s[i:j]</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[i:j]</span> <span class="pre">=</span> <span class="pre">[]</span></code> と同じです</p>
-</td>
-<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">s[i:j]</span> <span class="pre">=</span> <span class="pre">[]</span></code> と同じです</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s[i:j:k]</span> <span class="pre">=</span> <span class="pre">t</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[i:j:k]</span></code> の要素を <em>t</em> の要素と入れ替えます</p>
-</td>
+<td><code class="docutils literal"><span class="pre">s[i:j:k]</span></code> の要素を <em>t</em> の要素と入れ替えます</td>
 <td>(1)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">del</span> <span class="pre">s[i:j:k]</span></code></td>
-<td><p class="first last">リストから <code class="docutils literal"><span class="pre">s[i:j:k]</span></code> の要素を削除します</p>
-</td>
-<td>&nbsp;</td>
+<td>リストから <code class="docutils literal"><span class="pre">s[i:j:k]</span></code> の要素を削除します</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.append(x)</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">[x]</span></code> と同じです</p>
-</td>
+<td><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">[x]</span></code> と同じです</td>
 <td>(2)</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><code class="docutils literal"><span class="pre">s.extend(t)</span></code> または <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code></p>
-</td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">t</span></code> とほとんど同じです</p>
-</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">s.extend(t)</span></code> または <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code></td>
+<td><code class="docutils literal"><span class="pre">s[len(s):len(s)]</span> <span class="pre">=</span> <span class="pre">t</span></code> とほとんど同じです</td>
 <td>(3)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span> <span class="pre">*=</span> <span class="pre">n</span></code></td>
-<td><p class="first last"><em>s</em> をその内容を <em>n</em>  回繰り返したもので更新</p>
-</td>
+<td><em>s</em> をその内容を <em>n</em>  回繰り返したもので更新</td>
 <td>(11)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s.count(x)</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[i]</span> <span class="pre">==</span> <span class="pre">x</span></code> となる <em>i</em> の個数を返します</p>
-</td>
-<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">s[i]</span> <span class="pre">==</span> <span class="pre">x</span></code> となる <em>i</em> の個数を返します</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.index(x[,</span> <span class="pre">i[,</span> <span class="pre">j]])</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[k]</span> <span class="pre">==</span> <span class="pre">x</span></code> かつ <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となる最小の <em>k</em> を返します</p>
-</td>
+<td><code class="docutils literal"><span class="pre">s[k]</span> <span class="pre">==</span> <span class="pre">x</span></code> かつ <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となる最小の <em>k</em> を返します</td>
 <td>(4)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s.insert(i,</span> <span class="pre">x)</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">s[i:i]</span> <span class="pre">=</span> <span class="pre">[x]</span></code> と同じです</p>
-</td>
+<td><code class="docutils literal"><span class="pre">s[i:i]</span> <span class="pre">=</span> <span class="pre">[x]</span></code> と同じです</td>
 <td>(5)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.pop([i])</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">s[i];</span> <span class="pre">del</span> <span class="pre">s[i];</span> <span class="pre">return</span> <span class="pre">x</span></code> と同じです</p>
-</td>
+<td><code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">s[i];</span> <span class="pre">del</span> <span class="pre">s[i];</span> <span class="pre">return</span> <span class="pre">x</span></code> と同じです</td>
 <td>(6)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s.remove(x)</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">del</span> <span class="pre">s[s.index(x)]</span></code> と同じです</p>
-</td>
+<td><code class="docutils literal"><span class="pre">del</span> <span class="pre">s[s.index(x)]</span></code> と同じです</td>
 <td>(4)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s.reverse()</span></code></td>
-<td><p class="first last"><em>s</em> をインプレースに逆転させます</p>
-</td>
+<td><em>s</em> をインプレースに逆転させます</td>
 <td>(7)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">s.sort([cmp[,</span> <span class="pre">key[,</span>
 <span class="pre">reverse]]])</span></code></td>
-<td><p class="first last"><em>s</em> の要素をインプレースに並べ替えます</p>
-</td>
+<td><em>s</em> の要素をインプレースに並べ替えます</td>
 <td>(7)(8)(9)(10)</td>
 </tr>
 </tbody>
@@ -1516,25 +1372,25 @@
 <p><span class="versionmodified">バージョン 2.4 で変更: </span><em>key</em> および <em>reverse</em> のサポートを追加.</p>
 </div>
 </li>
-<li><p class="first">Python 2.3 より、 <code class="xref py py-meth docutils literal"><span class="pre">sort()</span></code> メソッドは安定していることが保証されています。ソートは、等しい要素の相対順序が変更されないことが保証されていれば、安定しています &#8212; これは複合的なパスでソートを行なう（例えば部署でソートして、それから給与の等級でソートする）のに役立ちます。</p>
+<li><p class="first">Python 2.3 より、 <code class="xref py py-meth docutils literal"><span class="pre">sort()</span></code> メソッドは安定していることが保証されています。ソートは、等しい要素の相対順序が変更されないことが保証されていれば、安定しています — これは複合的なパスでソートを行なう（例えば部署でソートして、それから給与の等級でソートする）のに役立ちます。</p>
 </li>
 <li><div class="impl-detail first compound">
 <p><strong>CPython 実装の詳細:</strong> リストがソートされている間、または変更しようとする試みの影響中、あるいは検査中でさえ、リストは未定義です。Python 2.3 とそれ以降の C 実装では、それらが続いている間、リストは空として出力され、リストがソート中に変更されていることを検知できたら <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。</p>
 </div>
 </li>
-<li><p class="first">値 <em>n</em> は整数または <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> を実装したオブジェクトです。 <em>n</em> にゼロや負数を与えると、シーケンスをクリアします。シーケンス内の要素はコピーされません; コピーではなく要素に対する参照カウントが増えます。 <code class="docutils literal"><span class="pre">s</span> <span class="pre">*</span> <span class="pre">n</span></code> について <a class="reference internal" href="#typesseq"><span class="std std-ref">シーケンス型 &#8212; str, unicode, list, tuple, bytearray, buffer, xrange</span></a> で説明したとおりです。</p>
+<li><p class="first">値 <em>n</em> は整数または <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal"><span class="pre">__index__()</span></code></a> を実装したオブジェクトです。 <em>n</em> にゼロや負数を与えると、シーケンスをクリアします。シーケンス内の要素はコピーされません; コピーではなく要素に対する参照カウントが増えます。 <code class="docutils literal"><span class="pre">s</span> <span class="pre">*</span> <span class="pre">n</span></code> について <a class="reference internal" href="#typesseq"><span class="std std-ref">シーケンス型 — str, unicode, list, tuple, bytearray, buffer, xrange</span></a> で説明したとおりです。</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="section" id="set-types-set-frozenset">
-<span id="types-set"></span><h2>5.7. set（集合）型 &#8212; <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a><a class="headerlink" href="#set-types-set-frozenset" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="types-set"></span><h2>5.7. set（集合）型 — <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a><a class="headerlink" href="#set-types-set-frozenset" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-31"><em class="dfn">set</em> オブジェクトは順序付けされていない <a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a> (ハッシュ可能な) オブジェクトのコレクションです。よくある使い方には、メンバーシップのテスト、数列から重複を削除する、そして論理積、論理和、差集合、対称差など数学的演算の計算が含まれます。 (他のコンテナ型については、組み込みクラスの <a class="reference internal" href="#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>, <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a>,および、モジュール <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> を参照下さい)</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
 </div>
 <p>集合は、他のコレクションと同様、 <code class="docutils literal"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">set</span></code>, <code class="docutils literal"><span class="pre">len(set)</span></code>, <code class="docutils literal"><span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">set</span></code> をサポートします。コレクションには順序がないので、集合は挿入の順序や要素の位置を記録しません。従って、集合はインデクシング、スライシング、その他のシーケンス的な振舞いをサポートしません。</p>
-<p><a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> および <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> という、2つの組み込みの集合型があります。 <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> はミュータブルで、<a class="reference internal" href="#set.add" title="set.add"><code class="xref py py-meth docutils literal"><span class="pre">add()</span></code></a> や <a class="reference internal" href="#set.remove" title="set.remove"><code class="xref py py-meth docutils literal"><span class="pre">remove()</span></code></a> のようなメソッドを使って内容を変更できます。ミュータブルなため、ハッシュ値を持たず、また辞書のキーや他の集合の要素として用いることができません。一方、<a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> 型はイミュータブルで、<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">ハッシュ可能</span></a> です。作成後に内容を改変できないため、辞書のキーや他の集合の要素として用いることができます。</p>
+<p><a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> および <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> という、2つの組み込みの集合型があります。 <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> はミュータブルで、<code class="xref py py-meth docutils literal"><span class="pre">add()</span></code> や <code class="xref py py-meth docutils literal"><span class="pre">remove()</span></code> のようなメソッドを使って内容を変更できます。ミュータブルなため、ハッシュ値を持たず、また辞書のキーや他の集合の要素として用いることができません。一方、<a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> 型はイミュータブルで、<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">ハッシュ可能</span></a> です。作成後に内容を改変できないため、辞書のキーや他の集合の要素として用いることができます。</p>
 <p>Python 2.7 では、空でない set (frozenset ではない) は、 <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> コンストラクタに加え、要素を波カッコ中にカンマで区切って列挙することでも生成できます。例: <code class="docutils literal"><span class="pre">{'jack',</span> <span class="pre">'sjoerd'}</span></code>.</p>
 <p>どちらのクラスのコンストラクタも同様に働きます:</p>
 <dl class="class">
@@ -1563,8 +1419,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.isdisjoint">
-<code class="descname">isdisjoint</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#set.isdisjoint" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.isdisjoint">
+<code class="descname">isdisjoint</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.isdisjoint" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>集合が <em>other</em> と共通の要素を持たないとき、<code class="docutils literal"><span class="pre">True</span></code> を返します。集合はそれらの積集合が空集合となるときのみ、互いに素 (disjoint) となります。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
@@ -1572,8 +1428,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.issubset">
-<code class="descname">issubset</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#set.issubset" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.issubset">
+<code class="descname">issubset</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.issubset" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &lt;= other</code></dt>
 <dd><p>set の全ての要素が <em>other</em> に含まれるか判定します。</p>
@@ -1586,8 +1442,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.issuperset">
-<code class="descname">issuperset</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#set.issuperset" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.issuperset">
+<code class="descname">issuperset</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.issuperset" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &gt;= other</code></dt>
 <dd><p><em>other</em> の全ての要素が set に含まれるか判定します。</p>
@@ -1600,8 +1456,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.union">
-<code class="descname">union</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.union" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.union">
+<code class="descname">union</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.union" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set | other | ...</code></dt>
 <dd><p>set と全ての other の要素からなる新しい集合を返します。</p>
@@ -1611,8 +1467,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.intersection">
-<code class="descname">intersection</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.intersection">
+<code class="descname">intersection</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.intersection" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &amp; other &amp; ...</code></dt>
 <dd><p>set と全ての other に共通する要素を持つ、新しい集合を返します。</p>
@@ -1622,8 +1478,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.difference">
-<code class="descname">difference</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.difference">
+<code class="descname">difference</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.difference" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set - other - ...</code></dt>
 <dd><p>set に含まれて、かつ、全ての other に含まれない要素を持つ、新しい集合を返します。</p>
@@ -1633,20 +1489,20 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.symmetric_difference">
-<code class="descname">symmetric_difference</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#set.symmetric_difference" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.symmetric_difference">
+<code class="descname">symmetric_difference</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.symmetric_difference" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set ^ other</code></dt>
 <dd><p>set と <em>other</em> のいずれか一方だけに含まれる要素を持つ新しい集合を返します。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#set.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.copy" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>s</em> の浅いコピーを新しい集合として返します。</p>
 </dd></dl>
 
-<p>なお、演算子でない版の <a class="reference internal" href="#set.union" title="set.union"><code class="xref py py-meth docutils literal"><span class="pre">union()</span></code></a>, <a class="reference internal" href="#set.intersection" title="set.intersection"><code class="xref py py-meth docutils literal"><span class="pre">intersection()</span></code></a>, <a class="reference internal" href="#set.difference" title="set.difference"><code class="xref py py-meth docutils literal"><span class="pre">difference()</span></code></a>, <a class="reference internal" href="#set.symmetric_difference" title="set.symmetric_difference"><code class="xref py py-meth docutils literal"><span class="pre">symmetric_difference()</span></code></a>, <a class="reference internal" href="#set.issubset" title="set.issubset"><code class="xref py py-meth docutils literal"><span class="pre">issubset()</span></code></a>, <a class="reference internal" href="#set.issuperset" title="set.issuperset"><code class="xref py py-meth docutils literal"><span class="pre">issuperset()</span></code></a> メソッドは、任意のイテラブルを引数として受け付けます。対して、演算子を使う版では、引数は集合でなくてはなりません。これは、<code class="docutils literal"><span class="pre">set('abc')</span> <span class="pre">&amp;</span> <span class="pre">'cbs'</span></code> のような誤りがちな構文を予防し、より読みやすい <code class="docutils literal"><span class="pre">set('abc').intersection('cbs')</span></code> を支持します。</p>
+<p>なお、演算子でない版の <a class="reference internal" href="#frozenset.union" title="frozenset.union"><code class="xref py py-meth docutils literal"><span class="pre">union()</span></code></a>, <a class="reference internal" href="#frozenset.intersection" title="frozenset.intersection"><code class="xref py py-meth docutils literal"><span class="pre">intersection()</span></code></a>, <a class="reference internal" href="#frozenset.difference" title="frozenset.difference"><code class="xref py py-meth docutils literal"><span class="pre">difference()</span></code></a>, <a class="reference internal" href="#frozenset.symmetric_difference" title="frozenset.symmetric_difference"><code class="xref py py-meth docutils literal"><span class="pre">symmetric_difference()</span></code></a>, <a class="reference internal" href="#frozenset.issubset" title="frozenset.issubset"><code class="xref py py-meth docutils literal"><span class="pre">issubset()</span></code></a>, <a class="reference internal" href="#frozenset.issuperset" title="frozenset.issuperset"><code class="xref py py-meth docutils literal"><span class="pre">issuperset()</span></code></a> メソッドは、任意のイテラブルを引数として受け付けます。対して、演算子を使う版では、引数は集合でなくてはなりません。これは、<code class="docutils literal"><span class="pre">set('abc')</span> <span class="pre">&amp;</span> <span class="pre">'cbs'</span></code> のような誤りがちな構文を予防し、より読みやすい <code class="docutils literal"><span class="pre">set('abc').intersection('cbs')</span></code> を支持します。</p>
 <p><a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> と <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> のどちらも、集合同士の比較をサポートします。二つの集合は、それぞれの集合の要素全てが他方にも含まれている (互いに他方の部分集合である) とき、かつそのときに限り等しいです。一方の集合が他方の集合の真部分集合である (部分集合であるが等しくない) とき、かつそのときに限り一方の集合は他方の集合より小さいです。一方の集合が他方の集合の真上位集合である (上位集合であるが等しくない) とき、かつそのときに限り一方の集合は他方の集合より大きいです。</p>
 <p><a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> のインスタンスは、 <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> のインスタンスと、要素に基づいて比較されます。例えば、 <code class="docutils literal"><span class="pre">set('abc')</span> <span class="pre">==</span> <span class="pre">frozenset('abc')</span></code> や <code class="docutils literal"><span class="pre">set('abc')</span> <span class="pre">in</span> <span class="pre">set([frozenset('abc')])</span></code> は <code class="docutils literal"><span class="pre">True</span></code> を返します。</p>
 <p>部分集合と等価性の比較は全順序付けを行う関数へと一般化することはできません。例えば、互いに素である二つの非空集合は、等しくなく、他方の部分集合でもありませんから、以下の <em>すべて</em> に <code class="docutils literal"><span class="pre">False</span></code> を返します: <code class="docutils literal"><span class="pre">a&lt;b</span></code>, <code class="docutils literal"><span class="pre">a==b</span></code>, そして <code class="docutils literal"><span class="pre">a&gt;b</span></code> 。そのため、 set は <a class="reference internal" href="../reference/datamodel.html#object.__cmp__" title="object.__cmp__"><code class="xref py py-meth docutils literal"><span class="pre">__cmp__()</span></code></a> メソッドを実装しません。</p>
@@ -1655,8 +1511,8 @@
 <p><a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> インスタンスと <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> インスタンスを取り混ぜての二項演算は、第一被演算子の型を返します。例えば: <code class="docutils literal"><span class="pre">frozenset('ab')</span> <span class="pre">|</span> <span class="pre">set('bc')</span></code> は <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> インスタンスを返します。</p>
 <p>以下の表に挙げる演算は <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a> に適用されますが、<a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> のイミュータブルなインスタンスには適用されません:</p>
 <dl class="method">
-<dt id="set.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.update" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set |= other | ...</code></dt>
 <dd><p>全ての other の要素を追加し、 set を更新します。</p>
@@ -1666,8 +1522,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.intersection_update">
-<code class="descname">intersection_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.intersection_update" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.intersection_update">
+<code class="descname">intersection_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.intersection_update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set &amp;= other &amp; ...</code></dt>
 <dd><p>元の set と全ての other に共通する要素だけを残して set を更新します。</p>
@@ -1677,8 +1533,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.difference_update">
-<code class="descname">difference_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#set.difference_update" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.difference_update">
+<code class="descname">difference_update</code><span class="sig-paren">(</span><em>*others</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.difference_update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set -= other | ...</code></dt>
 <dd><p><em>other</em> に含まれる要素を取り除き、 set を更新します。</p>
@@ -1688,58 +1544,57 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="set.symmetric_difference_update">
-<code class="descname">symmetric_difference_update</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#set.symmetric_difference_update" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.symmetric_difference_update">
+<code class="descname">symmetric_difference_update</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.symmetric_difference_update" title="この定義へのパーマリンク">¶</a></dt>
 <dt>
 <code class="descname">set ^= other</code></dt>
 <dd><p>どちらかにのみ含まれて、共通には持たない要素のみで set を更新します。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#set.add" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.add" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>要素 <em>elem</em> を set に追加します。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#set.remove" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.remove" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>要素 <em>elem</em> を set から取り除きます。<em>elem</em> が set に含まれていなければ <a class="reference internal" href="exceptions.html#exceptions.KeyError" title="exceptions.KeyError"><code class="xref py py-exc docutils literal"><span class="pre">KeyError</span></code></a> を送出します。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.discard">
-<code class="descname">discard</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#set.discard" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.discard">
+<code class="descname">discard</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.discard" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>要素 <em>elem</em> が set に含まれていれば、取り除きます。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.pop">
-<code class="descname">pop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#set.pop" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.pop" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>任意に要素をから返し、それを set から取り除きます。set が空であれば、 <a class="reference internal" href="exceptions.html#exceptions.KeyError" title="exceptions.KeyError"><code class="xref py py-exc docutils literal"><span class="pre">KeyError</span></code></a> を送出します。</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="set.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#set.clear" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="frozenset.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frozenset.clear" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>set の全ての要素を取り除きます。</p>
 </dd></dl>
 
-<p>なお、演算子でない版の <a class="reference internal" href="#set.update" title="set.update"><code class="xref py py-meth docutils literal"><span class="pre">update()</span></code></a>, <a class="reference internal" href="#set.intersection_update" title="set.intersection_update"><code class="xref py py-meth docutils literal"><span class="pre">intersection_update()</span></code></a>, <a class="reference internal" href="#set.difference_update" title="set.difference_update"><code class="xref py py-meth docutils literal"><span class="pre">difference_update()</span></code></a>, および <a class="reference internal" href="#set.symmetric_difference_update" title="set.symmetric_difference_update"><code class="xref py py-meth docutils literal"><span class="pre">symmetric_difference_update()</span></code></a> メソッドは、任意のイテラブルを引数として受け付けます。</p>
-<p>また、<a class="reference internal" href="../reference/datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a>, <a class="reference internal" href="#set.remove" title="set.remove"><code class="xref py py-meth docutils literal"><span class="pre">remove()</span></code></a>, および <a class="reference internal" href="#set.discard" title="set.discard"><code class="xref py py-meth docutils literal"><span class="pre">discard()</span></code></a> メソッドの引数 <em>elem</em> は集合にできます。等価な <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> の検索をサポートするために、 <em>elem</em> 集合は一時的に検索の間は変化させられ、その後、復元されます。検索の間、 <em>elem</em> 集合は意味のある値を持たなくなるため、読み出したり、変更してはいけません。</p>
+<p>なお、演算子でない版の <a class="reference internal" href="#frozenset.update" title="frozenset.update"><code class="xref py py-meth docutils literal"><span class="pre">update()</span></code></a>, <a class="reference internal" href="#frozenset.intersection_update" title="frozenset.intersection_update"><code class="xref py py-meth docutils literal"><span class="pre">intersection_update()</span></code></a>, <a class="reference internal" href="#frozenset.difference_update" title="frozenset.difference_update"><code class="xref py py-meth docutils literal"><span class="pre">difference_update()</span></code></a>, および <a class="reference internal" href="#frozenset.symmetric_difference_update" title="frozenset.symmetric_difference_update"><code class="xref py py-meth docutils literal"><span class="pre">symmetric_difference_update()</span></code></a> メソッドは、任意のイテラブルを引数として受け付けます。</p>
+<p>また、<a class="reference internal" href="../reference/datamodel.html#object.__contains__" title="object.__contains__"><code class="xref py py-meth docutils literal"><span class="pre">__contains__()</span></code></a>, <a class="reference internal" href="#frozenset.remove" title="frozenset.remove"><code class="xref py py-meth docutils literal"><span class="pre">remove()</span></code></a>, および <a class="reference internal" href="#frozenset.discard" title="frozenset.discard"><code class="xref py py-meth docutils literal"><span class="pre">discard()</span></code></a> メソッドの引数 <em>elem</em> は集合にできます。等価な <a class="reference internal" href="#frozenset" title="frozenset"><code class="xref py py-class docutils literal"><span class="pre">frozenset</span></code></a> の検索をサポートするために、 <em>elem</em> 集合は一時的に検索の間は変化させられ、その後、復元されます。検索の間、 <em>elem</em> 集合は意味のある値を持たなくなるため、読み出したり、変更してはいけません。</p>
 </dd></dl>
 
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="sets.html#comparison-to-builtin-set"><span class="std std-ref">組み込み set 型との比較</span></a></dt>
-<dd><p class="first last"><a class="reference internal" href="sets.html#module-sets" title="sets: Implementation of sets of unique elements. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">sets</span></code></a> モジュールと組み込み set 型の違い</p>
-</dd>
+<dd><a class="reference internal" href="sets.html#module-sets" title="sets: Implementation of sets of unique elements. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">sets</span></code></a> モジュールと組み込み set 型の違い</dd>
 </dl>
 </div>
 </div>
 <div class="section" id="mapping-types-dict">
-<span id="typesmapping"></span><h2>5.8. マッピング型 &#8212; <a class="reference internal" href="#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a><a class="headerlink" href="#mapping-types-dict" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="typesmapping"></span><h2>5.8. マッピング型 — <a class="reference internal" href="#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a><a class="headerlink" href="#mapping-types-dict" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-32">マッピング (<a class="reference internal" href="../glossary.html#term-mapping"><span class="xref std std-term">mapping</span></a>) オブジェクトは、ハッシュ可能 (<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a>) な値を任意のオブジェクトに対応付けます。マッピングはミュータブルなオブジェクトです。現在、標準マッピング型は辞書 (<em class="dfn">dictionary</em>) だけです。 (他のコンテナについては組み込みの <a class="reference internal" href="functions.html#list" title="list"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference internal" href="#set" title="set"><code class="xref py py-class docutils literal"><span class="pre">set</span></code></a>, および <a class="reference internal" href="functions.html#tuple" title="tuple"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> クラスと、 <a class="reference internal" href="collections.html#module-collections" title="collections: High-performance datatypes"><code class="xref py py-mod docutils literal"><span class="pre">collections</span></code></a> モジュールを参照下さい。)</p>
 <p>辞書のキーは <em>ほぼ</em> 任意の値です。ハッシュ可能 (<a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a>) でない値、つまり、リストや辞書その他のミュータブルな型 (オブジェクトの同一性ではなく値で比較されるもの) はキーとして使用できません。キーとして使われる数値型は通常の数値比較のルールに従います: もしふたつの数値が (例えば <code class="docutils literal"><span class="pre">1</span></code> と <code class="docutils literal"><span class="pre">1.0</span></code> のように) 等しければ、同じ辞書の項目として互換的に使用できます。 (ただし、コンピュータは浮動小数点数を近似値として保管するので、辞書型のキーとして使用するのはたいてい賢くありません。)</p>
 <p>辞書は <code class="docutils literal"><span class="pre">key:</span> <span class="pre">value</span></code> 対のカンマ区切りのリストを波括弧でくくることで作成できます。例えば: <code class="docutils literal"><span class="pre">{'jack':</span> <span class="pre">4098,</span> <span class="pre">'sjoerd':</span> <span class="pre">4127}</span></code> あるいは <code class="docutils literal"><span class="pre">{4098:</span> <span class="pre">'jack',</span> <span class="pre">4127:</span> <span class="pre">'sjoerd'}</span></code> 。あるいは、 <a class="reference internal" href="#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> コンストラクタでも作成できます。</p>
@@ -2007,7 +1862,7 @@
 <dd><p><em>x</em> が下にある辞書のキー、値、または項目 (項目の場合、 <em>x</em> は <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> タプルであるべきです) にあるとき <code class="docutils literal"><span class="pre">True</span></code> を返します。</p>
 </dd></dl>
 
-<p>キーのビューは、項目が一意的でハッシュ可能であるという点で、集合に似ています。すべての値がハッシュ可能なら、 <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> 対も一意的でハッシュ可能なので、要素のビューも集合に似ています。(値のビューは、要素が一般に一意的でないことから、集合に似ているとは考えられません。) これによりこれらへの集合演算が利用出来ます (&#8220;other&#8221; はもう一つのビューか集合です):</p>
+<p>キーのビューは、項目が一意的でハッシュ可能であるという点で、集合に似ています。すべての値がハッシュ可能なら、 <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> 対も一意的でハッシュ可能なので、要素のビューも集合に似ています。(値のビューは、要素が一般に一意的でないことから、集合に似ているとは考えられません。) これによりこれらへの集合演算が利用出来ます (「other」 はもう一つのビューか集合です):</p>
 <dl class="describe">
 <dt>
 <code class="descname">dictview &amp; other</code></dt>
@@ -2091,7 +1946,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">全ての Python の &#8220;ファイル的&#8221; 型が <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文用のコンテキストマネージャとして使えるわけではありません。もし、全てのファイル的オブジェクトで動くようにコードを書きたいのならば、オブジェクトを直接使うのではなく <a class="reference internal" href="contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> にある <a class="reference internal" href="contextlib.html#contextlib.closing" title="contextlib.closing"><code class="xref py py-func docutils literal"><span class="pre">contextlib.closing()</span></code></a> 関数を使うと良いでしょう。</p>
+<p class="last">全ての Python の 「ファイル的」 型が <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文用のコンテキストマネージャとして使えるわけではありません。もし、全てのファイル的オブジェクトで動くようにコードを書きたいのならば、オブジェクトを直接使うのではなく <a class="reference internal" href="contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> にある <a class="reference internal" href="contextlib.html#contextlib.closing" title="contextlib.closing"><code class="xref py py-func docutils literal"><span class="pre">contextlib.closing()</span></code></a> 関数を使うと良いでしょう。</p>
 </div>
 </dd></dl>
 
@@ -2108,7 +1963,7 @@
 <dl class="method">
 <dt id="file.fileno">
 <code class="descclassname">file.</code><code class="descname">fileno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.fileno" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-35">背後にある実装系がオペレーティングシステムに I/O 操作を要求するために用いる、整数の &#8220;ファイル記述子&#8221; (ファイルデスクリプタ) を返します。この値は他の用途として、 <a class="reference internal" href="fcntl.html#module-fcntl" title="fcntl: The fcntl() and ioctl() system calls. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">fcntl</span></code></a> モジュールや <a class="reference internal" href="os.html#os.read" title="os.read"><code class="xref py py-func docutils literal"><span class="pre">os.read()</span></code></a> やその仲間のような、ファイル記述子を必要とする低レベルのインタフェースで役に立ちます。</p>
+<dd><p id="index-35">背後にある実装系がオペレーティングシステムに I/O 操作を要求するために用いる、整数の 「ファイル記述子」 (ファイルデスクリプタ) を返します。この値は他の用途として、 <a class="reference internal" href="fcntl.html#module-fcntl" title="fcntl: The fcntl() and ioctl() system calls. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">fcntl</span></code></a> モジュールや <a class="reference internal" href="os.html#os.read" title="os.read"><code class="xref py py-func docutils literal"><span class="pre">os.read()</span></code></a> やその仲間のような、ファイル記述子を必要とする低レベルのインタフェースで役に立ちます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">本物のファイルデスクリプタを持たないファイル類似のオブジェクトは、このメソッドを提供すべきでは <em>ありません</em> 。</p>
@@ -2441,7 +2296,7 @@
 </div>
 <div class="section" id="code-objects">
 <span id="bltin-code-objects"></span><span id="index-39"></span><h3>5.12.5. コードオブジェクト<a class="headerlink" href="#code-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p id="index-40">コードオブジェクトは、関数本体のような &#8220;擬似コンパイルされた&#8221; Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
+<p id="index-40">コードオブジェクトは、関数本体のような 「擬似コンパイルされた」 Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
 <p id="index-41">コードオブジェクトは、 <code class="xref py py-func docutils literal"><span class="pre">exec()</span></code> 文や組み込み関数 <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> に (ソース文字列の代わりに) 渡すことで、実行や評価できます。</p>
 <p>詳細は、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照下さい。</p>
 </div>
@@ -2545,43 +2400,37 @@
 <table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first last">これらの特殊なメソッドのさらなる情報は、 Python リファレンスマニュアル (<a class="reference internal" href="../reference/datamodel.html#customization"><span class="std std-ref">基本的なカスタマイズ</span></a>) を参照下さい。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>これらの特殊なメソッドのさらなる情報は、 Python リファレンスマニュアル (<a class="reference internal" href="../reference/datamodel.html#customization"><span class="std std-ref">基本的なカスタマイズ</span></a>) を参照下さい。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">この結果として、リスト <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2]</span></code> は <code class="docutils literal"><span class="pre">[1.0,</span> <span class="pre">2.0]</span></code> と等しいと見なされます。タプルの場合も同様です。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>この結果として、リスト <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2]</span></code> は <code class="docutils literal"><span class="pre">[1.0,</span> <span class="pre">2.0]</span></code> と等しいと見なされます。タプルの場合も同様です。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><p class="first last">パーザが演算対象の型を識別できるようにするために、このような優先順位でなければならないのです。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>パーザが演算対象の型を識別できるようにするために、このような優先順位でなければならないのです。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[4]</td><td><em>(<a class="fn-backref" href="#id6">1</a>, <a class="fn-backref" href="#id7">2</a>, <a class="fn-backref" href="#id8">3</a>, <a class="fn-backref" href="#id9">4</a>)</em> <p class="last">大小文字の区別のある文字とは、一般カテゴリプロパティが &#8220;Lu&#8221; (Letter, uppercase (大文字))、 &#8220;Ll&#8221; (Letter, lowercase (小文字))、 &#8220;Lt&#8221; (Letter、titlecase (先頭が大文字)) のいずれかであるものです。</p>
-</td></tr>
+<tr><td class="label">[4]</td><td><em>(<a class="fn-backref" href="#id6">1</a>, <a class="fn-backref" href="#id7">2</a>, <a class="fn-backref" href="#id8">3</a>, <a class="fn-backref" href="#id9">4</a>)</em> 大小文字の区別のある文字とは、一般カテゴリプロパティが 「Lu」 (Letter, uppercase (大文字))、 「Ll」 (Letter, lowercase (小文字))、 「Lt」 (Letter、titlecase (先頭が大文字)) のいずれかであるものです。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id16" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id10">[5]</a></td><td><p class="first last">従って、一個のタプルだけをフォーマット出力したい場合には出力したいタプルを唯一の要素とする単一のタプルを <em>values</em> に与えなくてはなりません。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[5]</a></td><td>従って、一個のタプルだけをフォーマット出力したい場合には出力したいタプルを唯一の要素とする単一のタプルを <em>values</em> に与えなくてはなりません。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id17" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[6]</a></td><td><p class="first last">改行を残す利点は、空の文字列が返ると EOF を示し、紛らわしくなくなるからです。また、ファイルの最後の行が改行で終わっているかそうでない (ありえることです!) か (例えば、ファイルを行単位で読みながらその完全なコピーを作成した場合には問題になります) を調べることができます。</p>
-</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id11">[6]</a></td><td>改行を残す利点は、空の文字列が返ると EOF を示し、紛らわしくなくなるからです。また、ファイルの最後の行が改行で終わっているかそうでない (ありえることです!) か (例えば、ファイルを行単位で読みながらその完全なコピーを作成した場合には問題になります) を調べることができます。</td></tr>
 </tbody>
 </table>
 </div>
@@ -2597,7 +2446,7 @@
   <ul>
 <li><a class="reference internal" href="#">5. 組み込み型</a><ul>
 <li><a class="reference internal" href="#truth-value-testing">5.1. 真理値判定</a></li>
-<li><a class="reference internal" href="#boolean-operations-and-or-not">5.2. ブール演算 &#8212; <code class="docutils literal"><span class="pre">and</span></code>, <code class="docutils literal"><span class="pre">or</span></code>, <code class="docutils literal"><span class="pre">not</span></code></a></li>
+<li><a class="reference internal" href="#boolean-operations-and-or-not">5.2. ブール演算 — <code class="docutils literal"><span class="pre">and</span></code>, <code class="docutils literal"><span class="pre">or</span></code>, <code class="docutils literal"><span class="pre">not</span></code></a></li>
 <li><a class="reference internal" href="#comparisons">5.3. 比較</a></li>
 <li><a class="reference internal" href="#numeric-types-int-float-long-complex">5.4. 数値型 <code class="docutils literal"><span class="pre">int</span></code>, <code class="docutils literal"><span class="pre">float</span></code>, <code class="docutils literal"><span class="pre">long</span></code>, <code class="docutils literal"><span class="pre">complex</span></code></a><ul>
 <li><a class="reference internal" href="#bitwise-operations-on-integer-types">5.4.1. 整数型におけるビット単位演算</a></li>
@@ -2609,15 +2458,15 @@
 <li><a class="reference internal" href="#generator-types">5.5.1. ジェネレータ型</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange">5.6. シーケンス型 &#8212; <code class="docutils literal"><span class="pre">str</span></code>, <code class="docutils literal"><span class="pre">unicode</span></code>, <code class="docutils literal"><span class="pre">list</span></code>, <code class="docutils literal"><span class="pre">tuple</span></code>, <code class="docutils literal"><span class="pre">bytearray</span></code>, <code class="docutils literal"><span class="pre">buffer</span></code>, <code class="docutils literal"><span class="pre">xrange</span></code></a><ul>
+<li><a class="reference internal" href="#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange">5.6. シーケンス型 — <code class="docutils literal"><span class="pre">str</span></code>, <code class="docutils literal"><span class="pre">unicode</span></code>, <code class="docutils literal"><span class="pre">list</span></code>, <code class="docutils literal"><span class="pre">tuple</span></code>, <code class="docutils literal"><span class="pre">bytearray</span></code>, <code class="docutils literal"><span class="pre">buffer</span></code>, <code class="docutils literal"><span class="pre">xrange</span></code></a><ul>
 <li><a class="reference internal" href="#string-methods">5.6.1. 文字列メソッド</a></li>
 <li><a class="reference internal" href="#string-formatting-operations">5.6.2. 文字列フォーマット操作</a></li>
 <li><a class="reference internal" href="#xrange-type">5.6.3. XRange 型</a></li>
 <li><a class="reference internal" href="#mutable-sequence-types">5.6.4. ミュータブルなシーケンス型</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#set-types-set-frozenset">5.7. set（集合）型 &#8212; <code class="docutils literal"><span class="pre">set</span></code>, <code class="docutils literal"><span class="pre">frozenset</span></code></a></li>
-<li><a class="reference internal" href="#mapping-types-dict">5.8. マッピング型 &#8212; <code class="docutils literal"><span class="pre">dict</span></code></a><ul>
+<li><a class="reference internal" href="#set-types-set-frozenset">5.7. set（集合）型 — <code class="docutils literal"><span class="pre">set</span></code>, <code class="docutils literal"><span class="pre">frozenset</span></code></a></li>
+<li><a class="reference internal" href="#mapping-types-dict">5.8. マッピング型 — <code class="docutils literal"><span class="pre">dict</span></code></a><ul>
 <li><a class="reference internal" href="#dictionary-view-objects">5.8.1. 辞書ビューオブジェクト</a></li>
 </ul>
 </li>
@@ -2652,7 +2501,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/stdtypes.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/stdtypes.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -2703,10 +2552,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

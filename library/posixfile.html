@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>36.12. posixfile — ロック機構をサポートするファイル類似オブジェクト &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="36. Unix 固有のサービス" href="unix.html" />
     <link rel="next" title="36.13. resource — リソース使用状態の情報" href="resource.html" />
     <link rel="prev" title="36.11. pipes — シェルパイプラインへのインタフェース" href="pipes.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,13 +77,13 @@
           <div class="body" role="main">
             
   <div class="section" id="module-posixfile">
-<span id="posixfile-file-like-objects-with-locking-support"></span><h1>36.12. <a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> &#8212; ロック機構をサポートするファイル類似オブジェクト<a class="headerlink" href="#module-posixfile" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="posixfile-file-like-objects-with-locking-support"></span><h1>36.12. <a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (非推奨) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> — ロック機構をサポートするファイル類似オブジェクト<a class="headerlink" href="#module-posixfile" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated" id="index-0">
 <p><span class="versionmodified">バージョン 1.5 で撤廃: </span>このモジュールが提供しているよりもうまく処理ができ、可搬性も高いロック操作が <a class="reference internal" href="fcntl.html#fcntl.lockf" title="fcntl.lockf"><code class="xref py py-func docutils literal"><span class="pre">fcntl.lockf()</span></code></a> で提供されています。</p>
 </div>
 <p id="index-1">このモジュールでは、組み込みのファイルオブジェクトの上にいくつかの追加機能を実装しています。特に、このオブジェクトはファイルのロック機構、ファイルフラグへの操作、およびファイルオブジェクトを複製するための簡単なインタフェースを実装しています。このモジュールは新たなファイルオブジェクト posixfile を定義しています。このオブジェクトは全ての標準ファイルオブジェクトのメソッドに加え、下記に述べるメソッドを持っています。このモジュールはファイルのロック機構に <a class="reference internal" href="fcntl.html#fcntl.fcntl" title="fcntl.fcntl"><code class="xref py py-func docutils literal"><span class="pre">fcntl.fcntl()</span></code></a> を用いるため、ある種の Unix でしか動作しません。</p>
 <p>posixfile オブジェクトをインスタンス化するには、 <a class="reference internal" href="#posixfile.open" title="posixfile.open"><code class="xref py py-func docutils literal"><span class="pre">posixfile.open()</span></code></a> 関数を使います。生成されるオブジェクトは標準ファイルオブジェクトとだいたい同じルック&amp;フィールです。</p>
-<p><a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> モジュールでは、以下の定数を定義しています:</p>
+<p><a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (非推奨) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> モジュールでは、以下の定数を定義しています:</p>
 <dl class="data">
 <dt id="posixfile.SEEK_SET">
 <code class="descclassname">posixfile.</code><code class="descname">SEEK_SET</code><a class="headerlink" href="#posixfile.SEEK_SET" title="この定義へのパーマリンク">¶</a></dt>
@@ -106,7 +102,7 @@
 <dd><p>オフセットをファイルの末尾から計算します。</p>
 </dd></dl>
 
-<p><a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (撤廃) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> モジュールでは以下の関数を定義しています:</p>
+<p><a class="reference internal" href="#module-posixfile" title="posixfile: A file-like object with support for locking. (非推奨) (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">posixfile</span></code></a> モジュールでは以下の関数を定義しています:</p>
 <dl class="function">
 <dt id="posixfile.open">
 <code class="descclassname">posixfile.</code><code class="descname">open</code><span class="sig-paren">(</span><em>filename</em><span class="optional">[</span>, <em>mode</em><span class="optional">[</span>, <em>bufsize</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#posixfile.open" title="この定義へのパーマリンク">¶</a></dt>
@@ -158,24 +154,19 @@
 <col width="85%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">フォーマット</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head">フォーマット</th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">u</span></code></td>
-<td><p class="first last">指定領域のロックを解除します</p>
-</td>
+<td>指定領域のロックを解除します</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">r</span></code></td>
-<td><p class="first last">指定領域の読み出しロックを要求します</p>
-</td>
+<td>指定領域の読み出しロックを要求します</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">w</span></code></td>
-<td><p class="first last">指定領域の書き込みロックを要求します</p>
-</td>
+<td>指定領域の書き込みロックを要求します</td>
 </tr>
 </tbody>
 </table>
@@ -187,31 +178,25 @@
 <col width="14%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">修飾子</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">修飾子</th>
+<th class="head">意味</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">|</span></code></td>
-<td><p class="first last">ロック操作が許可されるまで待ちます</p>
-</td>
-<td>&nbsp;</td>
+<td>ロック操作が許可されるまで待ちます</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">?</span></code></td>
-<td><p class="first last">要求されたロックと衝突している第一のロックを返すか、衝突がない場合には <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
-</td>
+<td>要求されたロックと衝突している第一のロックを返すか、衝突がない場合には <code class="docutils literal"><span class="pre">None</span></code> を返します。</td>
 <td>(1)</td>
 </tr>
 </tbody>
 </table>
 <p>注釈:</p>
 <ol class="arabic simple">
-<li><p class="first">返されるロックは <code class="docutils literal"><span class="pre">(mode,</span> <span class="pre">len,</span> <span class="pre">start,</span> <span class="pre">whence,</span> <span class="pre">pid)</span></code> の形式で、 <em>mode</em> はロックのタイプを表す文字 (&#8216;r&#8217; または &#8216;w&#8217;) です。この修飾子はロック要求の許可を行わせません; すなわち、問い合わせの目的にしか使えません。</p>
-</li>
+<li>返されるロックは <code class="docutils literal"><span class="pre">(mode,</span> <span class="pre">len,</span> <span class="pre">start,</span> <span class="pre">whence,</span> <span class="pre">pid)</span></code> の形式で、 <em>mode</em> はロックのタイプを表す文字 (『r』 または 『w』) です。この修飾子はロック要求の許可を行わせません; すなわち、問い合わせの目的にしか使えません。</li>
 </ol>
 <p><code class="xref py py-meth docutils literal"><span class="pre">flags()</span></code> の書式指定文字には以下のような意味があります:</p>
 <table border="1" class="docutils">
@@ -220,28 +205,22 @@
 <col width="85%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">フォーマット</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
+<tr class="row-odd"><th class="head">フォーマット</th>
+<th class="head">意味</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">a</span></code></td>
-<td><p class="first last">追記のみ (append only) フラグ</p>
-</td>
+<td>追記のみ (append only) フラグ</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">c</span></code></td>
-<td><p class="first last">実行時クローズ (close on exec) フラグ</p>
-</td>
+<td>実行時クローズ (close on exec) フラグ</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">n</span></code></td>
-<td><p class="first last">無遅延 (no delay) フラグ (非ブロック (non-blocking) フラグとも呼ばれます)</p>
-</td>
+<td>無遅延 (no delay) フラグ (非ブロック (non-blocking) フラグとも呼ばれます)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span></code></td>
-<td><p class="first last">同期 (synchronization) フラグ</p>
-</td>
+<td>同期 (synchronization) フラグ</td>
 </tr>
 </tbody>
 </table>
@@ -253,38 +232,30 @@
 <col width="14%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">修飾子</p>
-</th>
-<th class="head"><p class="first last">意味</p>
-</th>
-<th class="head"><p class="first last">注釈</p>
-</th>
+<tr class="row-odd"><th class="head">修飾子</th>
+<th class="head">意味</th>
+<th class="head">注釈</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">!</span></code></td>
-<td><p class="first last">指定したフラグを通常の ‘オン’ にせず ‘オフ’ にします</p>
-</td>
+<td>指定したフラグを通常の ‘オン’ にせず ‘オフ’ にします</td>
 <td>(1)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">=</span></code></td>
-<td><p class="first last">フラグを標準の ‘OR’ 操作ではなく置換します。</p>
-</td>
+<td>フラグを標準の ‘OR’ 操作ではなく置換します。</td>
 <td>(1)</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">?</span></code></td>
-<td><p class="first last">設定されているフラグを表現する文字からなる文字列を返します。</p>
-</td>
+<td>設定されているフラグを表現する文字からなる文字列を返します。</td>
 <td>(2)</td>
 </tr>
 </tbody>
 </table>
 <p>注釈:</p>
 <ol class="arabic simple">
-<li><p class="first"><code class="docutils literal"><span class="pre">!</span></code> および <code class="docutils literal"><span class="pre">=</span></code> 修飾子は互いに排他の関係にあります。</p>
-</li>
-<li><p class="first">この文字列が表すフラグは同じ呼び出しによってフラグが置き換えられた後のものです。</p>
-</li>
+<li><code class="docutils literal"><span class="pre">!</span></code> および <code class="docutils literal"><span class="pre">=</span></code> 修飾子は互いに排他の関係にあります。</li>
+<li>この文字列が表すフラグは同じ呼び出しによってフラグが置き換えられた後のものです。</li>
 </ol>
 <p>例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">posixfile</span>
@@ -306,14 +277,14 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="pipes.html"
-                        title="前の章へ">36.11. <code class="docutils literal"><span class="pre">pipes</span></code> &#8212; シェルパイプラインへのインタフェース</a></p>
+                        title="前の章へ">36.11. <code class="docutils literal"><span class="pre">pipes</span></code> — シェルパイプラインへのインタフェース</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="resource.html"
-                        title="次の章へ">36.13. <code class="docutils literal"><span class="pre">resource</span></code> &#8212; リソース使用状態の情報</a></p>
+                        title="次の章へ">36.13. <code class="docutils literal"><span class="pre">resource</span></code> — リソース使用状態の情報</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/posixfile.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/posixfile.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -365,10 +336,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>28.14. site — サイト固有の設定フック &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="28. Python ランタイムサービス" href="python.html" />
     <link rel="next" title="28.15. user — ユーザー設定のフック" href="user.html" />
     <link rel="prev" title="28.13. inspect — 活動中のオブジェクトの情報を取得する" href="inspect.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,10 +77,10 @@
           <div class="body" role="main">
             
   <div class="section" id="module-site">
-<span id="site-site-specific-configuration-hook"></span><h1>28.14. <a class="reference internal" href="#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> &#8212; サイト固有の設定フック<a class="headerlink" href="#module-site" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="site-site-specific-configuration-hook"></span><h1>28.14. <a class="reference internal" href="#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> — サイト固有の設定フック<a class="headerlink" href="#module-site" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/site.py">Lib/site.py</a></p>
 <hr class="docutils" />
-<p><strong>このモジュールは初期化中に自動的にインポートされます。</strong> 自動インポートはインタプリタの <a class="reference internal" href="../using/cmdline.html#cmdoption-S"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a> オプションで禁止できます。</p>
+<p><strong>このモジュールは初期化中に自動的にインポートされます。</strong> 自動インポートはインタプリタの <a class="reference internal" href="../using/cmdline.html#id1"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a> オプションで禁止できます。</p>
 <p id="index-0">このモジュールをインポートすることで、サイト固有のパスをモジュール検索パスへ付け加え、また、いくつかのビルトインを追加します。</p>
 <p id="index-1">サイト固有のパスは、前部と後部から構築される最大で四つまでのディレクトリから始めます。 前部には、 <code class="docutils literal"><span class="pre">sys.prefix</span></code> と <code class="docutils literal"><span class="pre">sys.exec_prefix</span></code> を使用します。空の前部は省略されます。 後部には、まず空文字列を使い、次に <code class="file docutils literal"><span class="pre">lib/site-packages</span></code> (Windows) または <code class="file docutils literal"><span class="pre">lib/python</span><em><span class="pre">X.Y</span></em><span class="pre">/site-packages</span></code>, そして <code class="file docutils literal"><span class="pre">lib/site-python</span></code> (Unix と Macintosh)を使います。 前部-後部の組み合わせのそれぞれに対して、それが存在するディレクトリを参照しているかどうかを調べ、もしそうならば <code class="docutils literal"><span class="pre">sys.path</span></code> へ追加します。そして、 パス設定ファイルを新しく追加されたパスからも検索します。</p>
 <p>パス設定ファイルは <code class="file docutils literal"><em><span class="pre">name</span></em><span class="pre">.pth</span></code> という形式の名前をもつファイルで、上の4つのディレクトリのひとつにあります。その内容は <code class="docutils literal"><span class="pre">sys.path</span></code> に追加される追加項目(一行に一つ)です。存在しない項目は <code class="docutils literal"><span class="pre">sys.path</span></code> へは決して追加されませんが、項目がファイルではなくディレクトリを参照しているかどうかはチェックされません。項目が <code class="docutils literal"><span class="pre">sys.path</span></code> へ二回以上追加されることはありません。空行と <code class="docutils literal"><span class="pre">#</span></code> で始まる行は読み飛ばされます。 <code class="docutils literal"><span class="pre">import</span></code> で始まる(そしてその後ろにスペースかタブが続く)行は実行されます。</p>
@@ -190,14 +186,14 @@ bar
 </div>
 <p>引数なしで呼び出された場合、<a class="reference internal" href="sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> の中身を表示し、続けて <a class="reference internal" href="#site.USER_BASE" title="site.USER_BASE"><code class="xref py py-data docutils literal"><span class="pre">USER_BASE</span></code></a> とそのディレクトリが存在するかどうか、 <a class="reference internal" href="#site.USER_SITE" title="site.USER_SITE"><code class="xref py py-data docutils literal"><span class="pre">USER_SITE</span></code></a> とそのディレクトリが存在するかどうか、最後に <a class="reference internal" href="#site.ENABLE_USER_SITE" title="site.ENABLE_USER_SITE"><code class="xref py py-data docutils literal"><span class="pre">ENABLE_USER_SITE</span></code></a> の値を、標準出力に出力します。</p>
 <dl class="cmdoption">
-<dt id="cmdoption-site--user-base">
-<code class="descname">--user-base</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-site--user-base" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-site-user-base">
+<code class="descname">--user-base</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-site-user-base" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ユーザのベースディレクトリを表示します。</p>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="cmdoption-site--user-site">
-<code class="descname">--user-site</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-site--user-site" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="cmdoption-site-user-site">
+<code class="descname">--user-site</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-site-user-site" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ユーザの site-packages ディレクトリを表示します。</p>
 </dd></dl>
 
@@ -205,7 +201,7 @@ bar
 <p>いずれかのオプションが与えられた場合に、このスクリプトは次のいずれかの終了コードで終了します: ユーザの site-packages が有効ならば <code class="docutils literal"><span class="pre">O</span></code> 、ユーザにより無効にされていれば <code class="docutils literal"><span class="pre">1</span></code> 、セキュリティ的な理由あるいは管理者によって無効にされている場合 <code class="docutils literal"><span class="pre">2</span></code> 、そして何かエラーがあった場合は 2 より大きな値。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> &#8211; Per user site-packages directory</p>
+<p class="last"><span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0370"><strong>PEP 370</strong></a> – Per user site-packages directory</p>
 </div>
 </div>
 
@@ -217,14 +213,14 @@ bar
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="inspect.html"
-                        title="前の章へ">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> &#8212; 活動中のオブジェクトの情報を取得する</a></p>
+                        title="前の章へ">28.13. <code class="docutils literal"><span class="pre">inspect</span></code> — 活動中のオブジェクトの情報を取得する</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="user.html"
-                        title="次の章へ">28.15. <code class="docutils literal"><span class="pre">user</span></code> &#8212; ユーザー設定のフック</a></p>
+                        title="次の章へ">28.15. <code class="docutils literal"><span class="pre">user</span></code> — ユーザー設定のフック</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/site.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/site.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -276,10 +272,10 @@ bar
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

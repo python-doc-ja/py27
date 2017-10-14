@@ -1,23 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>17.5. popen2 — アクセス可能な I/O ストリームを持つサブプロセス生成 &#8212; Python 2.7.13 ドキュメント</title>
-    
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '2.7.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -32,8 +30,6 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="top" title="Python 2.7.13 ドキュメント" href="../contents.html" />
-    <link rel="up" title="17. プロセス間通信とネットワーク" href="ipc.html" />
     <link rel="next" title="17.6. asyncore — 非同期ソケットハンドラ" href="asyncore.html" />
     <link rel="prev" title="17.4. signal — 非同期イベントにハンドラを設定する" href="signal.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
@@ -46,7 +42,7 @@
     
 
   </head>
-  <body role="document">  
+  <body>  
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
@@ -81,15 +77,15 @@
           <div class="body" role="main">
             
   <div class="section" id="module-popen2">
-<span id="popen2-subprocesses-with-accessible-i-o-streams"></span><h1>17.5. <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> &#8212; アクセス可能な I/O ストリームを持つサブプロセス生成<a class="headerlink" href="#module-popen2" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="popen2-subprocesses-with-accessible-i-o-streams"></span><h1>17.5. <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> — アクセス可能な I/O ストリームを持つサブプロセス生成<a class="headerlink" href="#module-popen2" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="deprecated">
 <p><span class="versionmodified">バージョン 2.6 で撤廃: </span>このモジュールは時代遅れです。 <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを利用してください。特に <a class="reference internal" href="subprocess.html#subprocess-replacements"><span class="std std-ref">古い関数を subprocess モジュールで置き換える</span></a> 節を参照してください。</p>
 </div>
 <p>このモジュールにより、Unix および Windows でプロセスを起動し、その入力／出力／エラー出力パイプに接続し、そのリターンコードを取得することができます。</p>
-<p><a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールは、新しいプロセスを実行して結果を取得するためのより強力な機能を提供しています。  <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> の代わりに <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを利用することが推奨されています。</p>
+<p><a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールは、新しいプロセスを実行して結果を取得するためのより強力な機能を提供しています。  <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> の代わりに <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュールを利用することが推奨されています。</p>
 <p>このモジュールで提供されている第一のインタフェースは 3 つのファクトリ関数です。これらの関数のいずれも、 <em>bufsize</em> を指定した場合、 I/O パイプのバッファサイズを決定します。 <em>mode</em> を指定する場合、文字列 <code class="docutils literal"><span class="pre">'b'</span></code> または <code class="docutils literal"><span class="pre">'t'</span></code> でなければなりません; Windows では、ファイルオブジェクトをバイナリあるいはテキストモードのどちらで開くかを決めなければなりません。 <em>mode</em> の標準の値は <code class="docutils literal"><span class="pre">'t'</span></code> です。</p>
 <p>Unix では <em>cmd</em> はシーケンスでもよく、その場合には (<a class="reference internal" href="os.html#os.spawnv" title="os.spawnv"><code class="xref py py-func docutils literal"><span class="pre">os.spawnv()</span></code></a> のように) 引数はシェルを介在させずプログラムに直接渡されます。 <em>cmd</em> が文字列の場合、(<a class="reference internal" href="os.html#os.system" title="os.system"><code class="xref py py-func docutils literal"><span class="pre">os.system()</span></code></a> のように) シェルに渡されます。</p>
-<p>子プロセスからのリターンコードを取得するには、 <a class="reference internal" href="#popen2.Popen3" title="popen2.Popen3"><code class="xref py py-class docutils literal"><span class="pre">Popen3</span></code></a> および <a class="reference internal" href="#popen2.Popen4" title="popen2.Popen4"><code class="xref py py-class docutils literal"><span class="pre">Popen4</span></code></a> クラスの <code class="xref py py-meth docutils literal"><span class="pre">poll()</span></code> あるいは <code class="xref py py-meth docutils literal"><span class="pre">wait()</span></code> メソッドを使うしかありません; これらの機能は Unix でしか利用できません。この情報は <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">popen2()</span></code></a> 、 <a class="reference internal" href="#popen2.popen3" title="popen2.popen3"><code class="xref py py-func docutils literal"><span class="pre">popen3()</span></code></a> 、および <a class="reference internal" href="#popen2.popen4" title="popen2.popen4"><code class="xref py py-func docutils literal"><span class="pre">popen4()</span></code></a> 関数、あるいは <a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールにおける同等の関数の使用によっては得ることができません。 (<a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールの関数から返されるタプルは <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (撤廃)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> モジュールの関数から返されるものとは違う順序です。)</p>
+<p>子プロセスからのリターンコードを取得するには、 <a class="reference internal" href="#popen2.Popen3" title="popen2.Popen3"><code class="xref py py-class docutils literal"><span class="pre">Popen3</span></code></a> および <a class="reference internal" href="#popen2.Popen4" title="popen2.Popen4"><code class="xref py py-class docutils literal"><span class="pre">Popen4</span></code></a> クラスの <code class="xref py py-meth docutils literal"><span class="pre">poll()</span></code> あるいは <code class="xref py py-meth docutils literal"><span class="pre">wait()</span></code> メソッドを使うしかありません; これらの機能は Unix でしか利用できません。この情報は <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">popen2()</span></code></a> 、 <a class="reference internal" href="#popen2.popen3" title="popen2.popen3"><code class="xref py py-func docutils literal"><span class="pre">popen3()</span></code></a> 、および <a class="reference internal" href="#popen2.popen4" title="popen2.popen4"><code class="xref py py-func docutils literal"><span class="pre">popen4()</span></code></a> 関数、あるいは <a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールにおける同等の関数の使用によっては得ることができません。 (<a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal"><span class="pre">os</span></code></a> モジュールの関数から返されるタプルは <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (非推奨)"><code class="xref py py-mod docutils literal"><span class="pre">popen2</span></code></a> モジュールの関数から返されるものとは違う順序です。)</p>
 <dl class="function">
 <dt id="popen2.popen2">
 <code class="descclassname">popen2.</code><code class="descname">popen2</code><span class="sig-paren">(</span><em>cmd</em><span class="optional">[</span>, <em>bufsize</em><span class="optional">[</span>, <em>mode</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#popen2.popen2" title="この定義へのパーマリンク">¶</a></dt>
@@ -115,7 +111,7 @@
 <dl class="class">
 <dt id="popen2.Popen3">
 <em class="property">class </em><code class="descclassname">popen2.</code><code class="descname">Popen3</code><span class="sig-paren">(</span><em>cmd</em><span class="optional">[</span>, <em>capturestderr</em><span class="optional">[</span>, <em>bufsize</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#popen2.Popen3" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このクラスは子プロセスを表現します。通常、 <a class="reference internal" href="#popen2.Popen3" title="popen2.Popen3"><code class="xref py py-class docutils literal"><span class="pre">Popen3</span></code></a> インスタンスは上で述べた <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (撤廃)"><code class="xref py py-func docutils literal"><span class="pre">popen2()</span></code></a> および <a class="reference internal" href="#popen2.popen3" title="popen2.popen3"><code class="xref py py-func docutils literal"><span class="pre">popen3()</span></code></a> ファクトリ関数を使って生成されます。</p>
+<dd><p>このクラスは子プロセスを表現します。通常、 <a class="reference internal" href="#popen2.Popen3" title="popen2.Popen3"><code class="xref py py-class docutils literal"><span class="pre">Popen3</span></code></a> インスタンスは上で述べた <a class="reference internal" href="#module-popen2" title="popen2: Subprocesses with accessible standard I/O streams. (非推奨)"><code class="xref py py-func docutils literal"><span class="pre">popen2()</span></code></a> および <a class="reference internal" href="#popen2.popen3" title="popen2.popen3"><code class="xref py py-func docutils literal"><span class="pre">popen3()</span></code></a> ファクトリ関数を使って生成されます。</p>
 <p><a class="reference internal" href="#popen2.Popen3" title="popen2.Popen3"><code class="xref py py-class docutils literal"><span class="pre">Popen3</span></code></a> オブジェクトを生成するためにいずれかのヘルパー関数を使っていないのなら、 <em>cmd</em> パラメタはサブプロセスで実行するシェルコマンドになります。 <em>capturestderr</em> フラグに真を与えることで、このオブジェクトが子プロセスの標準エラー出力をキャプチャすべきであることを指示します。標準の値は偽です。 <em>bufsize</em> パラメタを指定すると、子プロセスへの／からの I/O バッファサイズとして使われます。</p>
 </dd></dl>
 
@@ -203,8 +199,7 @@
 <p class="first admonition-title">参考</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal"><span class="pre">subprocess</span></code></a> モジュール</dt>
-<dd><p class="first last">サブプロセスの生成と管理のためのモジュール。</p>
-</dd>
+<dd>サブプロセスの生成と管理のためのモジュール。</dd>
 </dl>
 </div>
 </div>
@@ -218,7 +213,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../contents.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> &#8212; アクセス可能な I/O ストリームを持つサブプロセス生成</a><ul>
+<li><a class="reference internal" href="#">17.5. <code class="docutils literal"><span class="pre">popen2</span></code> — アクセス可能な I/O ストリームを持つサブプロセス生成</a><ul>
 <li><a class="reference internal" href="#popen3-and-popen4-objects">17.5.1. Popen3 および Popen4 オブジェクト</a></li>
 <li><a class="reference internal" href="#flow-control-issues">17.5.2. フロー制御の問題</a></li>
 </ul>
@@ -227,14 +222,14 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="signal.html"
-                        title="前の章へ">17.4. <code class="docutils literal"><span class="pre">signal</span></code> &#8212; 非同期イベントにハンドラを設定する</a></p>
+                        title="前の章へ">17.4. <code class="docutils literal"><span class="pre">signal</span></code> — 非同期イベントにハンドラを設定する</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="asyncore.html"
-                        title="次の章へ">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> &#8212; 非同期ソケットハンドラ</a></p>
+                        title="次の章へ">17.6. <code class="docutils literal"><span class="pre">asyncore</span></code> — 非同期ソケットハンドラ</a></p>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/popen2.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/popen2.rst.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -286,10 +281,10 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-13
+    最終更新日時: 2017-10-14
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
-    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9 を使って作成されました。
+    このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。
     </div>
 
   </body>

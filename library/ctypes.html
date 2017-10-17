@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>15.17. ctypes — Pythonのための外部関数ライブラリ &#8212; Python 2.7.13 ドキュメント</title>
+    <title>15.17. ctypes — Pythonのための外部関数ライブラリ &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -36,6 +36,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/library/ctypes.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -62,7 +63,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -121,7 +122,7 @@
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">MyOwnFunction</span>     
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;ctypes.py&quot;</span>, line <span class="m">239</span>, in <span class="n">__getattr__</span>
     <span class="n">func</span> <span class="o">=</span> <span class="n">_StdcallFuncPtr</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 <span class="gr">AttributeError</span>: <span class="n">function &#39;MyOwnFunction&#39; not found</span>
@@ -147,7 +148,7 @@
 <span class="go">&lt;_FuncPtr object at 0x...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;ctypes.py&quot;</span>, line <span class="m">310</span>, in <span class="n">__getitem__</span>
     <span class="n">func</span> <span class="o">=</span> <span class="n">_StdcallFuncPtr</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 <span class="gr">AttributeError</span>: <span class="n">function ordinal 0 not found</span>
@@ -169,11 +170,11 @@
 <p><a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は引数の数を間違えたり、あるいは呼び出し規約を間違えた関数呼び出しからあなたを守ろうとします。残念ながら、これは Windows でしか機能しません。関数が返った後にスタックを調べることでこれを行います。したがって、エラーは発生しますが、その関数は呼び出された <em>後です</em>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">()</span>      
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with not enough arguments (4 bytes missing)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with too many arguments (4 bytes in excess)</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -181,13 +182,13 @@
 <p>同じ例外が <code class="docutils literal"><span class="pre">cdecl</span></code> 呼び出し規約を使って <code class="docutils literal"><span class="pre">stdcall</span></code> 関数を呼び出したときに送出されますし、逆の場合も同様です。:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with not enough arguments (4 bytes missing)</span>
 <span class="go">&gt;&gt;&gt;</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">msvcrt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;spam&quot;</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ValueError</span>: <span class="n">Procedure probably called with too many arguments (4 bytes in excess)</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -196,7 +197,7 @@
 <p>Windows では、関数が無効な引数とともに呼び出された場合の一般保護例外によるクラッシュを防ぐために、 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は win32 構造化例外処理を使います:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">GetModuleHandleA</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">WindowsError</span>: <span class="n">exception: access violation reading 0x00000020</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -373,7 +374,7 @@
 <span class="go">19</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> bottles of beer</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mf">42.5</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ArgumentError</span>: <span class="n">argument 2: exceptions.TypeError: Don&#39;t know how to convert parameter 2</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -416,7 +417,7 @@
 <p>(C の関数のプロトタイプのように) 書式を指定すると互換性のない引数型になるのを防ぎ、引数を有効な型へ変換しようとします。:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ArgumentError</span>: <span class="n">argument 2: exceptions.TypeError: wrong type</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">X 2 3.000000</span>
@@ -448,7 +449,7 @@
 <span class="go">&#39;def&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="s2">&quot;def&quot;</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ArgumentError</span>: <span class="n">argument 2: exceptions.TypeError: one character string expected</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">strchr</span><span class="p">(</span><span class="s2">&quot;abcdef&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="go">None</span>
@@ -470,7 +471,7 @@
 <span class="go">486539264</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">GetModuleHandle</span><span class="p">(</span><span class="s2">&quot;something silly&quot;</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">3</span>, in <span class="n">ValidHandle</span>
 <span class="gr">WindowsError</span>: <span class="n">[Errno 126] The specified module could not be found.</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -515,7 +516,7 @@
 <span class="go">0 5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">POINT</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">ValueError</span>: <span class="n">too many initializers</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -667,7 +668,7 @@
 <span class="go">&lt;class &#39;ctypes.LP_c_long&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">PI</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">expected c_long instead of int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">PI</span><span class="p">(</span><span class="n">c_int</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
 <span class="go">&lt;ctypes.LP_c_long object at 0x...&gt;</span>
@@ -723,7 +724,7 @@
 <p>時には、非互換な型のインスタンスであることもあります。 C では、ある型を他の型へキャストすることができます。 <a class="reference internal" href="#module-ctypes" title="ctypes: A foreign function library for Python."><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> は同じやり方で使える <a class="reference internal" href="#ctypes.cast" title="ctypes.cast"><code class="xref py py-func docutils literal"><span class="pre">cast()</span></code></a> 関数を提供しています。上で定義した <code class="docutils literal"><span class="pre">Bar</span></code> 構造体は <code class="docutils literal"><span class="pre">POINTER(c_int)</span></code> ポインタまたは <a class="reference internal" href="#ctypes.c_int" title="ctypes.c_int"><code class="xref py py-class docutils literal"><span class="pre">c_int</span></code></a> 配列を <code class="docutils literal"><span class="pre">values</span></code> フィールドに対して受け取り、他の型のインスタンスは受け取りません:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_byte</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)()</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">incompatible types, c_byte_Array_4 instance instead of LP_c_long instance</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -762,7 +763,7 @@
 <span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;next&quot;</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">cell</span><span class="p">))]</span>
 <span class="gp">...</span>
 <span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">?</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">cell</span>
 <span class="gr">NameError</span>: <span class="n">name &#39;cell&#39; is not defined</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -2056,7 +2057,7 @@ POSIX システムでは RTLD_NOW が常に追加され、設定変更はでき�
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ctypes.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ctypes.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -2094,7 +2095,7 @@ POSIX システムでは RTLD_NOW が常に追加され、設定変更はでき�
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -2108,7 +2109,7 @@ POSIX システムでは RTLD_NOW が常に追加され、設定変更はでき�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

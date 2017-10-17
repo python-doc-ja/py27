@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>1. コマンドラインと環境 &#8212; Python 2.7.13 ドキュメント</title>
+    <title>1. コマンドラインと環境 &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -36,6 +36,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/using/cmdline.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -62,7 +63,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -84,7 +85,7 @@
 <div class="section" id="command-line">
 <span id="using-on-cmdline"></span><h2>1.1. コマンドライン<a class="headerlink" href="#command-line" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python を起動するとき、以下のうち任意のオプションを指定できます:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>python <span class="o">[</span>-BdEiOQsRStuUvVWxX3?<span class="o">]</span> <span class="o">[</span>-c <span class="nb">command</span> <span class="p">|</span> -m module-name <span class="p">|</span> script <span class="p">|</span> - <span class="o">]</span> <span class="o">[</span>args<span class="o">]</span>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>python <span class="o">[</span>-bBdEiOQsRStuUvVWxX3?<span class="o">]</span> <span class="o">[</span>-c <span class="nb">command</span> <span class="p">|</span> -m module-name <span class="p">|</span> script <span class="p">|</span> - <span class="o">]</span> <span class="o">[</span>args<span class="o">]</span>
 </pre></div>
 </div>
 <p>もちろん、もっとも一般的な利用方法は、単純にスクリプトを起動することです:</p>
@@ -211,7 +212,21 @@ python -mtimeit -h <span class="c1"># for details</span>
 <h3>1.1.3. その他のオプション<a class="headerlink" href="#miscellaneous-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="cmdoption">
 <dt id="cmdoption-b">
-<code class="descname">-B</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-b" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">-b</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-b" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Issue a warning when comparing <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> with <a class="reference internal" href="../library/functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a>.
+Issue an error when the option is given twice (<code class="xref std std-option docutils literal"><span class="pre">-bb</span></code>).</p>
+<p>Note that, unlike the corresponding Python 3.x flag, this will <strong>not</strong> emit
+warnings for comparisons between <a class="reference internal" href="../library/functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> and <a class="reference internal" href="../library/functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a>.
+Instead, the <code class="docutils literal"><span class="pre">str</span></code> instance will be implicitly decoded to <code class="docutils literal"><span class="pre">unicode</span></code> and
+Unicode comparison used.</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="id1">
+<code class="descname">-B</code><code class="descclassname"></code><a class="headerlink" href="#id1" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Python は import したソースモジュールの <code class="docutils literal"><span class="pre">.pyc</span></code> や <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルの作成を試みません。 <span class="target" id="index-47"></span><a class="reference internal" href="#envvar-PYTHONDONTWRITEBYTECODE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDONTWRITEBYTECODE</span></code></a> 環境変数も参照してください。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
@@ -302,8 +317,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="id1">
-<code class="descname">-S</code><code class="descclassname"></code><a class="headerlink" href="#id1" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id2">
+<code class="descname">-S</code><code class="descclassname"></code><a class="headerlink" href="#id2" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> モジュールのインポートを無効にし、そのモジュールで行われている場所独自の <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> 操作を無効にします。</p>
 </dd></dl>
 
@@ -322,8 +337,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="id2">
-<code class="descname">-v</code><code class="descclassname"></code><a class="headerlink" href="#id2" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id3">
+<code class="descname">-v</code><code class="descclassname"></code><a class="headerlink" href="#id3" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>モジュールが初期化されるたびに、それがどこ(ファイル名やビルトインモジュール) からロードされたのかを示すメッセージを出力します。 二重に指定された場合(<code class="xref std std-option docutils literal"><span class="pre">-vv</span></code>)は、モジュールを検索するときにチェックされた各ファイルに対してメッセージを出力します。また、終了時のモジュールクリーンアップに関する情報も提供します。 <span class="target" id="index-57"></span><a class="reference internal" href="#envvar-PYTHONVERBOSE"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONVERBOSE</span></code></a> も参照してください。</p>
 </dd></dl>
 
@@ -379,10 +394,13 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="cmdoption">
 <dt id="cmdoption-3">
 <code class="descname">-3</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-3" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Python 3 で削除されたか大きな変更があった機能についての潜在的 Python 3.x 非互換についての警告 <a class="reference internal" href="../library/exceptions.html#exceptions.DeprecationWarning" title="exceptions.DeprecationWarning"><code class="xref py py-exc docutils literal"><span class="pre">DeprecationWarning</span></code></a>  を発生させます。</p>
+<dd><p>Warn about Python 3.x possible incompatibilities by emitting a
+<a class="reference internal" href="../library/exceptions.html#exceptions.DeprecationWarning" title="exceptions.DeprecationWarning"><code class="xref py py-exc docutils literal"><span class="pre">DeprecationWarning</span></code></a> for features that are removed or significantly
+changed in Python 3 and can’t be detected using static code analysis.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
+<p>See <a class="reference internal" href="../howto/pyporting.html"><span class="doc">Python 2 から Python 3 への移植</span></a> for more details.</p>
 </dd></dl>
 
 </div>
@@ -395,8 +413,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="id3">
-<code class="descname">-U</code><code class="descclassname"></code><a class="headerlink" href="#id3" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id4">
+<code class="descname">-U</code><code class="descclassname"></code><a class="headerlink" href="#id4" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>全ての文字列リテラルを、全部 unicode にします。このオプションはあなたの世界を破壊してしまうかもしれないので、このオプションを使おうとしないでください。これは、通常とは違うマジックナンバーを使って <code class="docutils literal"><span class="pre">.pyc</span></code> ファイルを生成します。ファイルの先頭に次のように書いて、このオプションの代わりにモジュール単位で unicode リテラルを有効にできます。</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>from __future__ import unicode_literals
 </pre></div>
@@ -405,8 +423,8 @@ python -mtimeit -h <span class="c1"># for details</span>
 </dd></dl>
 
 <dl class="cmdoption">
-<dt id="id4">
-<code class="descname">-X</code><code class="descclassname"></code><a class="headerlink" href="#id4" title="この定義へのパーマリンク">¶</a></dt>
+<dt id="id5">
+<code class="descname">-X</code><code class="descclassname"></code><a class="headerlink" href="#id5" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>別の Python の実装が独自の目的で利用するために予約されています。</p>
 </dd></dl>
 
@@ -471,7 +489,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONVERBOSE">
 <code class="descname">PYTHONVERBOSE</code><a class="headerlink" href="#envvar-PYTHONVERBOSE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#id2"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#id2"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> を複数回指定したのと同じになります。</p>
+<dd><p>この変数に空でない文字列を設定するのは <a class="reference internal" href="#id3"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> オプションを指定するのと等価です。整数を設定した場合、 <a class="reference internal" href="#id3"><code class="xref std std-option docutils literal"><span class="pre">-v</span></code></a> を複数回指定したのと同じになります。</p>
 </dd></dl>
 
 <dl class="envvar">
@@ -483,7 +501,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <dl class="envvar">
 <dt id="envvar-PYTHONDONTWRITEBYTECODE">
 <code class="descname">PYTHONDONTWRITEBYTECODE</code><a class="headerlink" href="#envvar-PYTHONDONTWRITEBYTECODE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>この環境変数が設定されていると、 Python はソースモジュールの import 時に <code class="docutils literal"><span class="pre">.pyc</span></code>, <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。これは <a class="reference internal" href="#cmdoption-b"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> オプションを指定したのと等価です。</p>
+<dd><p>この環境変数が設定されていると、 Python はソースモジュールの import 時に <code class="docutils literal"><span class="pre">.pyc</span></code>, <code class="docutils literal"><span class="pre">.pyo</span></code> ファイルを生成しません。これは <a class="reference internal" href="#id1"><code class="xref std std-option docutils literal"><span class="pre">-B</span></code></a> オプションを指定したのと等価です。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
@@ -619,7 +637,7 @@ python -mtimeit -h <span class="c1"># for details</span>
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/using/cmdline.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/using/cmdline.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -657,7 +675,7 @@ python -mtimeit -h <span class="c1"># for details</span>
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -670,7 +688,7 @@ python -mtimeit -h <span class="c1"># for details</span>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

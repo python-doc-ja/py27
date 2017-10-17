@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>17.3. ssl — ソケットオブジェクトに対する TLS/SSL ラッパー &#8212; Python 2.7.13 ドキュメント</title>
+    <title>17.3. ssl — ソケットオブジェクトに対する TLS/SSL ラッパー &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -36,6 +36,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/library/ssl.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -62,7 +63,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -222,7 +223,7 @@
 <td>no</td>
 <td>no</td>
 </tr>
-<tr class="row-even"><td><em>SSLv23</em></td>
+<tr class="row-even"><td><em>SSLv23</em> <a class="footnote-reference" href="#id2" id="id1">[1]</a></td>
 <td>no</td>
 <td>yes</td>
 <td>yes</td>
@@ -257,11 +258,21 @@
 </tbody>
 </table>
 </div></blockquote>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>TLS 1.3 protocol will be available with <a class="reference internal" href="#ssl.PROTOCOL_SSLv23" title="ssl.PROTOCOL_SSLv23"><code class="xref py py-data docutils literal"><span class="pre">PROTOCOL_SSLv23</span></code></a> in
+OpenSSL &gt;= 1.1.1. There is no dedicated PROTOCOL constant for just
+TLS 1.3.</td></tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">どの接続が成功するかは、 OpenSSL のバージョンに依存して大きく変わります。例えば、OpenSSL 1.0.0 以前は、SSLv23 クライアントは常に SSLv2 接続を試みていました。</p>
 </div>
-<p><em>ciphers</em> 引数はこの SSL オブジェクトで利用可能な暗号化アルゴリズム群を指定します。これは、 <a class="reference external" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER-LIST-FORMAT">OpenSSL cipher list format</a> 形式で書かれた文字列でなければなりません。</p>
+<p>The <em>ciphers</em> parameter sets the available ciphers for this SSL object.
+It should be a string in the <a class="reference external" href="https://wiki.openssl.org/index.php/Manual:Ciphers(1)#CIPHER_LIST_FORMAT">OpenSSL cipher list format</a>.</p>
 <p><code class="docutils literal"><span class="pre">do_handshake_on_connect</span></code> 引数は、 <code class="xref py py-meth docutils literal"><span class="pre">socket.connect()</span></code> の後に自動的に SSLハンドシェイクを行うか、それともアプリケーションが明示的に <a class="reference internal" href="#ssl.SSLSocket.do_handshake" title="ssl.SSLSocket.do_handshake"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.do_handshake()</span></code></a> メソッドを実行するかを指定します。 <a class="reference internal" href="#ssl.SSLSocket.do_handshake" title="ssl.SSLSocket.do_handshake"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.do_handshake()</span></code></a> を明示的に呼びだすことで、ハンドシェイクによるソケットI/Oのブロッキング動作を制御できます。</p>
 <p><code class="docutils literal"><span class="pre">suppress_ragged_eofs</span></code> 引数は、 <code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.read()</span></code> メソッドが、接続先から予期しないEOF を受け取った時に通知する方法を指定します。 <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> (デフォルト) の場合、下位のソケットレイヤーから予期せぬEOFエラーが来た場合、通常のEOF (空のバイト列オブジェクト)を返します。 <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> の場合、呼び出し元に例外を投げて通知します。</p>
 <div class="versionchanged">
@@ -301,6 +312,10 @@
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.7.13 で変更: </span>デフォルトの暗号化文字列に ChaCha20/Poly1305 が追加されました。</p>
 <p>デフォルトの暗号化文字列から 3DES が除かれました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7.15 で変更: </span>TLS 1.3 cipher suites TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384,
+and TLS_CHACHA20_POLY1305_SHA256 were added to the default cipher string.</p>
 </div>
 </dd></dl>
 
@@ -687,6 +702,19 @@ protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_
 </dd></dl>
 
 <dl class="data">
+<dt id="ssl.OP_NO_TLSv1_3">
+<code class="descclassname">ssl.</code><code class="descname">OP_NO_TLSv1_3</code><a class="headerlink" href="#ssl.OP_NO_TLSv1_3" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Prevents a TLSv1.3 connection. This option is only applicable in conjunction
+with <a class="reference internal" href="#ssl.PROTOCOL_TLS" title="ssl.PROTOCOL_TLS"><code class="xref py py-const docutils literal"><span class="pre">PROTOCOL_TLS</span></code></a>. It prevents the peers from choosing TLSv1.3 as
+the protocol version. TLS 1.3 is available with OpenSSL 1.1.1 or later.
+When Python has been compiled against an older version of OpenSSL, the
+flag defaults to <em>0</em>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7.15 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
 <dt id="ssl.OP_CIPHER_SERVER_PREFERENCE">
 <code class="descclassname">ssl.</code><code class="descname">OP_CIPHER_SERVER_PREFERENCE</code><a class="headerlink" href="#ssl.OP_CIPHER_SERVER_PREFERENCE" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>暗号の優先順位として、クライアントのものではなくサーバのものを使います。このオプションはクライアントソケットと SSLv2 のサーバソケットでは効果はありません。</p>
@@ -756,6 +784,15 @@ protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_
 <dd><p>OpenSSL ライブラリが、組み込みで、<a class="reference external" href="https://tools.ietf.org/html/draft-agl-tls-nextprotoneg">NPN draft specification</a> で記述されている <em>Next Protocol Negotiation</em> をサポートしているかどうか。 true であれば、サポートしたいプロトコルを <a class="reference internal" href="#ssl.SSLContext.set_npn_protocols" title="ssl.SSLContext.set_npn_protocols"><code class="xref py py-meth docutils literal"><span class="pre">SSLContext.set_npn_protocols()</span></code></a> メソッドで提示することができます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.9 で追加.</span></p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="ssl.HAS_TLSv1_3">
+<code class="descclassname">ssl.</code><code class="descname">HAS_TLSv1_3</code><a class="headerlink" href="#ssl.HAS_TLSv1_3" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Whether the OpenSSL library has built-in support for the TLS 1.3 protocol.</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 2.7.15 で追加.</span></p>
 </div>
 </dd></dl>
 
@@ -1055,7 +1092,11 @@ protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_
 <dl class="method">
 <dt id="ssl.SSLContext.set_ciphers">
 <code class="descclassname">SSLContext.</code><code class="descname">set_ciphers</code><span class="sig-paren">(</span><em>ciphers</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_ciphers" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このコンテキストによって作られるソケットで利用できる暗号を設定します。 <a class="reference external" href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER-LIST-FORMAT">OpenSSL cipher list format</a> に書かれている形式の文字列でなければなりません。 (OpenSSL のコンパイル時オプションや他の設定がそれらすべての暗号の使用を禁止しているなどの理由で) どの暗号も選べない場合、 <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-class docutils literal"><span class="pre">SSLError</span></code></a> が送出されます。</p>
+<dd><p>Set the available ciphers for sockets created with this context.
+It should be a string in the <a class="reference external" href="https://wiki.openssl.org/index.php/Manual:Ciphers(1)#CIPHER_LIST_FORMAT">OpenSSL cipher list format</a>.
+If no cipher can be selected (because compile-time options or other
+configuration forbids use of all the specified ciphers), an
+<a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-class docutils literal"><span class="pre">SSLError</span></code></a> will be raised.</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">接続時に SSL ソケットの <a class="reference internal" href="#ssl.SSLSocket.cipher" title="ssl.SSLSocket.cipher"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.cipher()</span></code></a> メソッドが、現在選択されているその暗号を使います。</p>
@@ -1067,7 +1108,9 @@ protocol with flags like <code class="docutils literal"><span class="pre">OP_NO_
 <code class="descclassname">SSLContext.</code><code class="descname">set_alpn_protocols</code><span class="sig-paren">(</span><em>protocols</em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext.set_alpn_protocols" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>SSL/TLS ハンドシェイク時にソケットが提示すべきプロトコルを指定します。 <code class="docutils literal"><span class="pre">['http/1.1',</span> <span class="pre">'spdy/2']</span></code> のような推奨順に並べた ASII 文字列のリストでなければなりません。プロトコルの選択は <span class="target" id="index-39"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7301.html"><strong>RFC 7301</strong></a> に従いハンドシェイクの中で行われます。ハンドシェイクが正常に終了後、 <a class="reference internal" href="#ssl.SSLSocket.selected_alpn_protocol" title="ssl.SSLSocket.selected_alpn_protocol"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.selected_alpn_protocol()</span></code></a> メソッドは合意されたプロトコルを返します。</p>
 <p>このメソッドは <a class="reference internal" href="#ssl.HAS_ALPN" title="ssl.HAS_ALPN"><code class="xref py py-data docutils literal"><span class="pre">HAS_ALPN</span></code></a> が偽の場合 <a class="reference internal" href="exceptions.html#exceptions.NotImplementedError" title="exceptions.NotImplementedError"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code></a> を送出します。</p>
-<p>両者が ALPN をサポートしているが、使用するプロトコルで合意できない場合、OpenSSL 1.1.0+ はハンドシェイクを中断し、 <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal"><span class="pre">SSLError</span></code></a> を送出します。</p>
+<p>OpenSSL 1.1.0 to 1.1.0e will abort the handshake and raise <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal"><span class="pre">SSLError</span></code></a>
+when both sides support ALPN but cannot agree on a protocol. 1.1.0f+
+behaves like 1.0.2, <a class="reference internal" href="#ssl.SSLSocket.selected_alpn_protocol" title="ssl.SSLSocket.selected_alpn_protocol"><code class="xref py py-meth docutils literal"><span class="pre">SSLSocket.selected_alpn_protocol()</span></code></a> returns None.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.7.10 で追加.</span></p>
 </div>
@@ -1495,6 +1538,10 @@ If you want to check which ciphers are enabled by a given cipher list, use the
 <dd>D. Eastlake</dd>
 <dt><a class="reference external" href="https://www.iana.org/assignments/tls-parameters/tls-parameters.xml">IANA TLS: Transport Layer Security (TLS) Parameters</a></dt>
 <dd>IANA</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7525">RFC 7525: Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)</a></dt>
+<dd>IETF</dd>
+<dt><a class="reference external" href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla’s Server Side TLS recommendations</a></dt>
+<dd>Mozilla</dd>
 </dl>
 </div>
 </div>
@@ -1558,7 +1605,7 @@ If you want to check which ciphers are enabled by a given cipher list, use the
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ssl.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/ssl.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -1596,7 +1643,7 @@ If you want to check which ciphers are enabled by a given cipher list, use the
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -1610,7 +1657,7 @@ If you want to check which ciphers are enabled by a given cipher list, use the
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

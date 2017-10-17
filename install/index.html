@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Python モジュールのインストール (旧版) &#8212; Python 2.7.13 ドキュメント</title>
+    <title>Python モジュールのインストール (旧版) &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -35,6 +35,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/install/index.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -58,7 +59,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
  
@@ -520,7 +521,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <p>ローカルでインストールされるパッケージは、 <code class="file docutils literal"><em><span class="pre">…</span></em><span class="pre">/site-packages/</span></code> ディレクトリに入るのが決まりですが、ユーザはどこか任意のディレクトリに Python モジュールをインストールしたいと思うかもしれません。例えば、自分のサイトでは、 web サーバに関連する全てのソフトウェアを <code class="file docutils literal"><span class="pre">/www</span></code> に置くという決まりがあるかもしれません。そこで、アドオンの Python モジュールが <code class="file docutils literal"><span class="pre">/www/python</span></code> 置かれることになると、モジュールを import するためにはディレクトリを <code class="docutils literal"><span class="pre">sys.path</span></code> に追加せねばなりません。ディレクトリを検索パスに追加するには、いくつかの異なる方法が存在します。</p>
 <p>最も手軽な方法は、パス設定ファイルをすでに Python の検索パスに含まれるディレクトリ、通常は <code class="file docutils literal"><span class="pre">.../site-packages/</span></code> ディレクトリに置くというものです。パス設定ファイルは拡張子が <code class="file docutils literal"><span class="pre">.pth</span></code> で、ファイルには <code class="docutils literal"><span class="pre">sys.path</span></code> に追加するパスを一行に一つづつ記述しなければなりません。 (新たなパスは今の <code class="docutils literal"><span class="pre">sys.path</span></code> の後ろに追加されるので、追加されたディレクトリ内にあるモジュールが標準のモジュールセットを上書きすることはありません。つまり、このメカニズムを使って、標準モジュールに対する修正版のインストールはできないということです。)</p>
 <p>パスは絶対パスでも相対パスでもよく、相対パスの場合には <code class="file docutils literal"><span class="pre">.pth</span></code> ファイルのあるパスからの相対になります。詳しくは <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal"><span class="pre">site</span></code></a> モジュールを参照してください。</p>
-<p>やや便利さには欠けますが、Python の標準ライブラリ中にある  <code class="file docutils literal"><span class="pre">site.py</span></code> ファイルを編集することでも、 <code class="docutils literal"><span class="pre">sys.path</span></code> を変更できます。 <code class="file docutils literal"><span class="pre">site.py</span></code> は、 <a class="reference internal" href="../using/cmdline.html#id1"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a> スイッチを与えて抑制しないかぎり、Python インタプリタが実行される際に自動的に import  されます。ただし、設定するには、単に <code class="file docutils literal"><span class="pre">site.py</span></code> を編集して、例えば以下のような二行を加えます:</p>
+<p>やや便利さには欠けますが、Python の標準ライブラリ中にある  <code class="file docutils literal"><span class="pre">site.py</span></code> ファイルを編集することでも、 <code class="docutils literal"><span class="pre">sys.path</span></code> を変更できます。 <code class="file docutils literal"><span class="pre">site.py</span></code> は、 <a class="reference internal" href="../using/cmdline.html#id2"><code class="xref std std-option docutils literal"><span class="pre">-S</span></code></a> スイッチを与えて抑制しないかぎり、Python インタプリタが実行される際に自動的に import  されます。ただし、設定するには、単に <code class="file docutils literal"><span class="pre">site.py</span></code> を編集して、例えば以下のような二行を加えます:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>import sys
 sys.path.append(&#39;/www/python/&#39;)
 </pre></div>
@@ -810,7 +811,7 @@ force=1
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/install/index.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/install/index.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -845,7 +846,7 @@ force=1
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
  
@@ -857,7 +858,7 @@ force=1
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>デザインと歴史 FAQ &#8212; Python 2.7.13 ドキュメント</title>
+    <title>デザインと歴史 FAQ &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -36,6 +36,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/faq/design.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -62,7 +63,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -274,12 +275,11 @@
 </div>
 <div class="section" id="can-python-be-compiled-to-machine-code-c-or-some-other-language">
 <h2>Python は C やその他の言語のように機械語にコンパイルできますか？<a class="headerlink" href="#can-python-be-compiled-to-machine-code-c-or-some-other-language" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>簡単にはできません。Python の高水準データ型、動的な型付け、(<a class="reference internal" href="../library/functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> や <code class="xref py py-func docutils literal"><span class="pre">exec()</span></code> を使った) インタプリタの実行時呼び出しがあるということは、「コンパイルされた」Python のプログラムのほとんどが、 <code class="docutils literal"><span class="pre">x+1</span></code> のような一見簡単な演算でさえ、Python のランタイムシステムへの呼び出しで成り立っているであろうことを意味します。</p>
-<p>Python ニュースグループや過去の <a class="reference external" href="https://www.python.org/community/workshops/">Python conferences</a> で説明されたいくつかのプロジェクトを見ると、現在の速度の向上は緩やかでしかない (たとえば 2 倍) ですが、このやり方はうまくいきそうです。Jython は Java バイトコードにコンパイルするという同様の方法を使っています。(Jim Hugunin の論証によれば、プログラム全体の解析と組み合わせることで、小さなデモプログラムでは 1000 倍の速度向上が見込めます。詳しくは <a class="reference external" href="http://legacy.python.org/workshops/1997-10/proceedings/">1997 Python conference</a>  の議事録を参照してください。)</p>
-<p>内部的には、Python のソースコードはいつもバイトコード表現に翻訳されていて、そのバイトコードが Python の仮想マシンによって実行されます。めったに変更されないモジュールの解析が繰り返されることによるオーバーヘッドを避けるため、このバイトコードはモジュールが解析されるたびに名前が 「.pic」 で終わるファイルに書きこまれます。対応する .py ファイルが変更されたとき、そのファイルは再び解析および翻訳されて .pyc ファイルは書き直されます。</p>
-<p>一旦 .pyc ファイルが読み込まれればパフォーマンスの差はなく、 .pyc ファイルから読み込まれたバイトコードも、直接の変換により生成されたバイトコードも全く同じです。唯一の違いは、.pyc ファイルからコードを読み込むのは .py ファイルを解析して翻訳するのよりも速いことなので、予めコンパイルされた .pyc ファイルがあると Python スクリプトの起動時間が改善します。必要なら、 Lib/compileall.py モジュールで、与えられたモジュール群の適切な .pyc ファイルを生成できます。</p>
-<p>なお、Python によって実行されるメインスクリプトは、たとえそのファイル名が .py で終わっていても、.pyc ファイルにコンパイルされません。バイトコードには変換されますが、そのバイトコードはファイルに保存されません。たいていメインスクリプトはとても短いので、これでも大きく速度を落とすことにはなりません。</p>
-<p>Python と C のコードを様々な方法で混合して簡単にパフォーマンスを向上させるプログラムがいくつかあります。例えば <a class="reference external" href="http://cython.org/">Cython</a> , <a class="reference external" href="http://psyco.sourceforge.net/">Psyco</a> , <a class="reference external" href="https://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/">Pyrex</a> , <a class="reference external" href="http://pyinline.sourceforge.net/">PyInline</a> , <a class="reference external" href="http://sourceforge.net/projects/py2cmod/">Py2Cmod</a> , <a class="reference external" href="https://docs.scipy.org/doc/scipy-dev/reference/tutorial/weave.html">Weave</a> を参照してください。</p>
+<p><a class="reference external" href="http://cython.org/">Cython</a> compiles a modified version of Python with
+optional annotations into C extensions.  <a class="reference external" href="http://www.nuitka.net/">Nuitka</a> is
+an up-and-coming compiler of Python into C++ code, aiming to support the full
+Python language. For compiling to Java you can consider
+<a class="reference external" href="https://voc.readthedocs.io">VOC</a>.</p>
 </div>
 <div class="section" id="how-does-python-manage-memory">
 <h2>Python はメモリをどのように管理するのですか？<a class="headerlink" href="#how-does-python-manage-memory" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -546,7 +546,7 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/faq/design.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/faq/design.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -584,7 +584,7 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -597,7 +597,7 @@ B 木と比べて、ほとんどの条件下で (特に一般的な演算であ�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

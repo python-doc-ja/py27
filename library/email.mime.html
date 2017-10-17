@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成 &#8212; Python 2.7.13 ドキュメント</title>
+    <title>18.1.4. email.mime: ゼロからのメールと MIME オブジェクトの作成 &#8212; Python 2.7.14 ドキュメント</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.7.13',
+        VERSION:     '2.7.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Python 2.7.13 ドキュメント 内を検索"
+          title="Python 2.7.14 ドキュメント 内を検索"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="このドキュメントについて" href="../about.html" />
     <link rel="index" title="索引" href="../genindex.html" />
@@ -36,6 +36,7 @@
     <link rel="canonical" href="https://docs.python.jp/3/library/email.mime.html" />
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/_jp.js"></script>
+    
     
     <script type="text/javascript" src="../_static/version_switch.js"></script>
  
@@ -62,7 +63,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -160,7 +161,15 @@
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.4 で変更: </span>以前、推奨されない引数であった <em>_encoding</em> は削除されました。 <em>_charset</em> 引数を基にして Content Transfer Encodnig が暗黙に決定されます。</p>
 </div>
-<p><code class="docutils literal"><span class="pre">_charset</span></code> パラメータに明示的に <code class="docutils literal"><span class="pre">None</span></code> をセットしない限りは、作成される MIMEText オブジェクトは <code class="docutils literal"><span class="pre">charset</span></code> の付いた <em class="mailheader">Content-Type</em> ヘッダと <em class="mailheader">Content-Transfer-Endcoding</em> ヘッダの両方を持ちます。これは後続の <code class="docutils literal"><span class="pre">set_payload</span></code> 呼び出しが、 <code class="docutils literal"><span class="pre">set_payload</span></code> コマンドに charset が渡したとしてもエンコードされたペイロードにはならないことを意味します。 <code class="docutils literal"><span class="pre">Content-Transfer-Encoding</span></code> ヘッダを削除することでこの振る舞いを「リセット」出来ます。これにより <code class="docutils literal"><span class="pre">set_payload</span></code> 呼び出しが新たなペイロードを自動的にエンコード (そして新たな <em class="mailheader">Content-Transfer-Encoding</em> ヘッダを追加) します。</p>
+<p>Unless the <code class="docutils literal"><span class="pre">_charset</span></code> parameter is explicitly set to <code class="docutils literal"><span class="pre">None</span></code>, the
+MIMEText object created will have both a <em class="mailheader">Content-Type</em> header
+with a <code class="docutils literal"><span class="pre">charset</span></code> parameter, and a <em class="mailheader">Content-Transfer-Encoding</em>
+header.  This means that a subsequent <code class="docutils literal"><span class="pre">set_payload</span></code> call will not result
+in an encoded payload, even if a charset is passed in the <code class="docutils literal"><span class="pre">set_payload</span></code>
+command.  You can 「reset」 this behavior by deleting the
+<code class="docutils literal"><span class="pre">Content-Transfer-Encoding</span></code> header, after which a <code class="docutils literal"><span class="pre">set_payload</span></code> call
+will automatically encode the new payload (and add a new
+<em class="mailheader">Content-Transfer-Encoding</em> header).</p>
 </dd></dl>
 
 </div>
@@ -180,7 +189,7 @@
 <h3>このページ</h3>
 <ul class="this-page-menu">
   <li><a href="../bugs.html">バグ報告</a></li>
-  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.mime.rst.rst"
+  <li><a href="https://github.com/python/cpython/blob/2.7/Doc/library/email.mime.rst"
          rel="nofollow">ソースの表示</a>
   </li>
 </ul>
@@ -218,7 +227,7 @@
                  style="vertical-align: middle; margin-top: -1px"/></li>
         <li><a href="http://www.python.jp/">Python</a> &#187;</li>
         <li>
-          <span class="version_switcher_placeholder">2.7.13</span>
+          <span class="version_switcher_placeholder">2.7.14</span>
           <a href="../index.html">ドキュメント</a> &#187;
         </li>
 
@@ -233,7 +242,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-15
+    最終更新日時: 2017-10-17
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

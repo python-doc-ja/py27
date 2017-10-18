@@ -167,7 +167,7 @@
 <dd><p>このクラスは URL リクエストを抽象化したものです。</p>
 <p><em>url</em> は有効な URL を指す文字列でなくてはなりません。</p>
 <p><em>data</em> はサーバに送信する追加のデータを示す文字列か、そのようなデータが無ければ <em>None</em> を指定します。現時点でHTTP リクエストは <em>data</em> をサポートする唯一のリクエスト形式です; <em>data</em> パラメタが指定が指定された場合、HTTP リクエストは GET でなく POST になります。 <em>data</em> は標準的な <em class="mimetype">application/x-www-form-urlencoded</em> 形式のバッファでなくてはなりません。 <a class="reference internal" href="urllib.html#urllib.urlencode" title="urllib.urlencode"><code class="xref py py-func docutils literal"><span class="pre">urllib.urlencode()</span></code></a> 関数はマップ型か2タプルのシーケンスを取り、この形式の文字列を返します。</p>
-<p><em>headers</em> は辞書である必要があり、辞書のそれぞれのキーと値を引数として <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a> を呼び出したのと同じように扱われます。この引数は、多くの場合ブラウザーが何であるかを特定する <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーの値を 「偽装」 するために用いられます。これは一部の HTTP サーバーが、スクリプトからのアクセスを禁止するために一般的なブラウザーの <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーしか許可しないためです。例えば、 Mozilla Firefox は <code class="docutils literal"><span class="pre">User-Agent</span></code> に <code class="docutils literal"><span class="pre">&quot;Mozilla/5.0</span> <span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code> のように設定し、 <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> はデフォルトで <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (Python 2.6の場合) と設定します。</p>
+<p><em>headers</em> は辞書である必要があり、辞書のそれぞれのキーと値を引数として <a class="reference internal" href="#urllib2.Request.add_header" title="urllib2.Request.add_header"><code class="xref py py-meth docutils literal"><span class="pre">add_header()</span></code></a> を呼び出したのと同じように扱われます。この引数は、多くの場合ブラウザーが何であるかを特定する <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーの値を &quot;偽装&quot; するために用いられます。これは一部の HTTP サーバーが、スクリプトからのアクセスを禁止するために一般的なブラウザーの <code class="docutils literal"><span class="pre">User-Agent</span></code> ヘッダーしか許可しないためです。例えば、 Mozilla Firefox は <code class="docutils literal"><span class="pre">User-Agent</span></code> に <code class="docutils literal"><span class="pre">&quot;Mozilla/5.0</span> <span class="pre">(X11;</span> <span class="pre">U;</span> <span class="pre">Linux</span> <span class="pre">i686)</span> <span class="pre">Gecko/20071127</span> <span class="pre">Firefox/2.0.0.11&quot;</span></code> のように設定し、 <a class="reference internal" href="#module-urllib2" title="urllib2: Next generation URL opening library."><code class="xref py py-mod docutils literal"><span class="pre">urllib2</span></code></a> はデフォルトで <code class="docutils literal"><span class="pre">&quot;Python-urllib/2.6&quot;</span></code> (Python 2.6の場合) と設定します。</p>
 <p>最後の二つの引数は、サードパーティの HTTP クッキーを正しく扱いたい場合にのみ関係してきます:</p>
 <p><em>origin_req_host</em> は、 <span class="target" id="index-18"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> で定義されている元のトランザクションにおけるリクエストホスト (request-host of the origin transaction) です。デフォルトの値は <code class="docutils literal"><span class="pre">cookielib.request_host(self)</span></code> です。 この値は、ユーザによって開始された元々のリクエストにおけるホスト名や IP アドレスです。例えば、もしリクエストがある HTML ドキュメント内の画像を指していれば、この値は画像を含んでいるページへのリクエストにおけるリクエストホストになるはずです。</p>
 <p><em>unverifiable</em> は、 <span class="target" id="index-19"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2965.html"><strong>RFC 2965</strong></a> の定義において、該当するリクエストが証明不能 (unverifiable) であるかどうかを示します。デフォルトの値は <code class="docutils literal"><span class="pre">False</span></code> です。証明不能なリクエストとは、ユーザが受け入れの可否を選択できないような URL を持つリクエストのことです。例えば、リクエストが HTML ドキュメント中の画像であり、ユーザがこの画像を自動的に取得するか どうかを選択できない場合には、証明不能フラグは True になります。</p>
@@ -497,7 +497,7 @@
 <dl class="method">
 <dt>
 <code class="descclassname">BaseHandler.</code><code class="descname">protocol_open</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span></dt>
-<dd><p>(「protocol」 は実際にはプロトコル名です)</p>
+<dd><p>(&quot;protocol&quot; は実際にはプロトコル名です)</p>
 <p>このメソッドは <a class="reference internal" href="#urllib2.BaseHandler" title="urllib2.BaseHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHandler</span></code></a> では定義されて <em>いません</em> 。しかし <em>protocol</em> の URL をキャッチしたいなら、サブクラスで定義する必要があります。</p>
 <p>このメソッドが定義されていた場合、 <a class="reference internal" href="#urllib2.OpenerDirector" title="urllib2.OpenerDirector"><code class="xref py py-class docutils literal"><span class="pre">OpenerDirector</span></code></a> から呼び出されます。戻り値は <a class="reference internal" href="#urllib2.BaseHandler.default_open" title="urllib2.BaseHandler.default_open"><code class="xref py py-meth docutils literal"><span class="pre">default_open()</span></code></a> と同じでなければなりません。</p>
 </dd></dl>
@@ -528,7 +528,7 @@
 <dl class="method">
 <dt>
 <code class="descclassname">BaseHandler.</code><code class="descname">protocol_request</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span></dt>
-<dd><p>(「protocol」 は実際にはプロトコル名です)</p>
+<dd><p>(&quot;protocol&quot; は実際にはプロトコル名です)</p>
 <p>このメソッドは <a class="reference internal" href="#urllib2.BaseHandler" title="urllib2.BaseHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHandler</span></code></a> では <em>定義されていません</em> が、サブクラスで特定の <em>protocol</em> のリクエストのプリプロセスを行いたい場合には定義する必要があります。</p>
 <p>このメソッドが定義されていると、親となる <a class="reference internal" href="#urllib2.OpenerDirector" title="urllib2.OpenerDirector"><code class="xref py py-class docutils literal"><span class="pre">OpenerDirector</span></code></a> から呼び出されます。その際、 <em>req</em> は <a class="reference internal" href="#urllib2.Request" title="urllib2.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> オブジェクトになります。戻り値は <a class="reference internal" href="#urllib2.Request" title="urllib2.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> オブジェクトでなければなりません。</p>
 </dd></dl>
@@ -536,7 +536,7 @@
 <dl class="method">
 <dt>
 <code class="descclassname">BaseHandler.</code><code class="descname">protocol_response</code><span class="sig-paren">(</span><em>req</em>, <em>response</em><span class="sig-paren">)</span></dt>
-<dd><p>(「protocol」 は実際にはプロトコル名です)</p>
+<dd><p>(&quot;protocol&quot; は実際にはプロトコル名です)</p>
 <p>このメソッドは <a class="reference internal" href="#urllib2.BaseHandler" title="urllib2.BaseHandler"><code class="xref py py-class docutils literal"><span class="pre">BaseHandler</span></code></a> では <em>定義されていません</em> が、サブクラスで特定の <em>protocol</em> のリクエストのポストプロセスを行いたい場合には定義する必要があります。</p>
 <p>このメソッドが定義されていると、親となる <a class="reference internal" href="#urllib2.OpenerDirector" title="urllib2.OpenerDirector"><code class="xref py py-class docutils literal"><span class="pre">OpenerDirector</span></code></a> から呼び出されます。その際、 <em>req</em> は <a class="reference internal" href="#urllib2.Request" title="urllib2.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> オブジェクトになります。 <em>response</em> は <a class="reference internal" href="#urllib2.urlopen" title="urllib2.urlopen"><code class="xref py py-func docutils literal"><span class="pre">urlopen()</span></code></a> の戻り値と同じインタフェースを 実装したオブジェクトになります。戻り値もまた、 <a class="reference internal" href="#urllib2.urlopen" title="urllib2.urlopen"><code class="xref py py-func docutils literal"><span class="pre">urlopen()</span></code></a> の戻り値と同じインタフェースを実装したオブジェクトでなければなりません。</p>
 </dd></dl>
@@ -561,25 +561,25 @@
 <dl class="method">
 <dt id="urllib2.HTTPRedirectHandler.http_error_301">
 <code class="descclassname">HTTPRedirectHandler.</code><code class="descname">http_error_301</code><span class="sig-paren">(</span><em>req</em>, <em>fp</em>, <em>code</em>, <em>msg</em>, <em>hdrs</em><span class="sig-paren">)</span><a class="headerlink" href="#urllib2.HTTPRedirectHandler.http_error_301" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><code class="docutils literal"><span class="pre">Location:</span></code> か <code class="docutils literal"><span class="pre">URI:</span></code> のURL にリダイレクトします。このメソッドは HTTP  における 『moved permanently』 レスポンスを取得した際に 親オブジェクトとなる <a class="reference internal" href="#urllib2.OpenerDirector" title="urllib2.OpenerDirector"><code class="xref py py-class docutils literal"><span class="pre">OpenerDirector</span></code></a> によって呼び出されます。</p>
+<dd><p><code class="docutils literal"><span class="pre">Location:</span></code> か <code class="docutils literal"><span class="pre">URI:</span></code> のURL にリダイレクトします。このメソッドは HTTP  における 'moved permanently' レスポンスを取得した際に 親オブジェクトとなる <a class="reference internal" href="#urllib2.OpenerDirector" title="urllib2.OpenerDirector"><code class="xref py py-class docutils literal"><span class="pre">OpenerDirector</span></code></a> によって呼び出されます。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="urllib2.HTTPRedirectHandler.http_error_302">
 <code class="descclassname">HTTPRedirectHandler.</code><code class="descname">http_error_302</code><span class="sig-paren">(</span><em>req</em>, <em>fp</em>, <em>code</em>, <em>msg</em>, <em>hdrs</em><span class="sig-paren">)</span><a class="headerlink" href="#urllib2.HTTPRedirectHandler.http_error_302" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、』found』 レスポンスに対して呼び出されます。</p>
+<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、'found' レスポンスに対して呼び出されます。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="urllib2.HTTPRedirectHandler.http_error_303">
 <code class="descclassname">HTTPRedirectHandler.</code><code class="descname">http_error_303</code><span class="sig-paren">(</span><em>req</em>, <em>fp</em>, <em>code</em>, <em>msg</em>, <em>hdrs</em><span class="sig-paren">)</span><a class="headerlink" href="#urllib2.HTTPRedirectHandler.http_error_303" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、』see other』 レスポンスに対して呼び出されます。</p>
+<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、'see other' レスポンスに対して呼び出されます。</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="urllib2.HTTPRedirectHandler.http_error_307">
 <code class="descclassname">HTTPRedirectHandler.</code><code class="descname">http_error_307</code><span class="sig-paren">(</span><em>req</em>, <em>fp</em>, <em>code</em>, <em>msg</em>, <em>hdrs</em><span class="sig-paren">)</span><a class="headerlink" href="#urllib2.HTTPRedirectHandler.http_error_307" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、』temporary redirect』  レスポンスに対して呼び出されます。</p>
+<dd><p><a class="reference internal" href="#urllib2.HTTPRedirectHandler.http_error_301" title="urllib2.HTTPRedirectHandler.http_error_301"><code class="xref py py-meth docutils literal"><span class="pre">http_error_301()</span></code></a> と同じですが、'temporary redirect'  レスポンスに対して呼び出されます。</p>
 </dd></dl>
 
 </div>
@@ -601,7 +601,7 @@
 <dl class="method">
 <dt>
 <code class="descclassname">ProxyHandler.</code><code class="descname">protocol_open</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span></dt>
-<dd><p>(「protocol」 は実際にはプロトコル名です)</p>
+<dd><p>(&quot;protocol&quot; は実際にはプロトコル名です)</p>
 <p><a class="reference internal" href="#urllib2.ProxyHandler" title="urllib2.ProxyHandler"><code class="xref py py-class docutils literal"><span class="pre">ProxyHandler</span></code></a> は、コンストラクタで与えた辞書 <em>proxies</em> にプロキシが設定されているような <em>protocol</em> 全てについて、メソッド  <code class="samp docutils literal"><em><span class="pre">protocol</span></em><span class="pre">_open</span></code> を持つことになります。このメソッドは <code class="docutils literal"><span class="pre">request.set_proxy()</span></code> を呼び出して、リクエストがプロキシを通過できるように修正します。その後連鎖するハンドラの中から次のハンドラを呼び出して実際にプロトコルを実行します。</p>
 </dd></dl>
 
@@ -928,7 +928,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

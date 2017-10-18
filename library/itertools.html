@@ -83,7 +83,7 @@
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
 <p>このモジュールではイテレータ(<a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a>)を構築する部品を実装しています。プログラム言語 APL, Haskell, SML からアイデアを得ていますが、 Python に適した形に修正されています。</p>
-<p>このモジュールは、高速でメモリ効率に優れ、単独でも組合せても使用することのできるツールを標準化したものです。同時に、このツール群は 「イテレータの代数」 を構成していて、pure Python で簡潔かつ効率的なツールを作れるようにしています。</p>
+<p>このモジュールは、高速でメモリ効率に優れ、単独でも組合せても使用することのできるツールを標準化したものです。同時に、このツール群は &quot;イテレータの代数&quot; を構成していて、pure Python で簡潔かつ効率的なツールを作れるようにしています。</p>
 <p>例えば、SML の作表ツール <code class="docutils literal"><span class="pre">tabulate(f)</span></code> は <code class="docutils literal"><span class="pre">f(0),</span> <span class="pre">f(1),</span> <span class="pre">...</span></code> のシーケンスを作成します。同じことを Python では <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> と <a class="reference internal" href="#itertools.count" title="itertools.count"><code class="xref py py-func docutils literal"><span class="pre">count()</span></code></a> を組合せて <code class="docutils literal"><span class="pre">imap(f,</span> <span class="pre">count())</span></code> という形で実現できます。</p>
 <p>これらのツールと組み込み関数は <a class="reference internal" href="operator.html#module-operator" title="operator: Functions corresponding to the standard operators."><code class="xref py py-mod docutils literal"><span class="pre">operator</span></code></a> モジュール内の高速な関数とともに使うことで見事に動作します。例えば、乗算演算子を2つのベクタにまたがってマップして効率的な内積計算が実現できます: <code class="docutils literal"><span class="pre">sum(imap(operator.mul,</span> <span class="pre">vector1,</span> <span class="pre">vector2))</span></code> 。</p>
 <p><strong>無限イテレータ:</strong></p>
@@ -700,7 +700,7 @@
 <dt id="itertools.starmap">
 <code class="descclassname">itertools.</code><code class="descname">starmap</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.starmap" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>iterable の要素を引数として function を計算するイテレータを作成します。
-function の引数が一つの iterable からタプルに既にグループ化されている (データが 「zip済み」) 場合、<a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の代わりに使用します。
+function の引数が一つの iterable からタプルに既にグループ化されている (データが &quot;zip済み&quot;) 場合、<a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> の代わりに使用します。
 <a class="reference internal" href="#itertools.imap" title="itertools.imap"><code class="xref py py-func docutils literal"><span class="pre">imap()</span></code></a> と <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal"><span class="pre">starmap()</span></code></a> の違いは <code class="docutils literal"><span class="pre">function(a,b)</span></code> と <code class="docutils literal"><span class="pre">function(*c)</span></code> の差に似ています。およそ次と等価です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">starmap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="c1"># starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000</span>
@@ -756,7 +756,7 @@ function の引数が一つの iterable からタプルに既にグループ化�
 <div class="section" id="recipes">
 <span id="itertools-recipes"></span><h2>9.7.2. レシピ<a class="headerlink" href="#recipes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>この節では、既存の itertools を素材としてツールセットを拡張するためのレシピを示します。</p>
-<p>iterable 全体を一度にメモリ上に置くよりも、要素を一つづつ処理する方がメモリ効率上の有利さを保てます。関数形式のままツールをリンクしてゆくと、コードのサイズを減らし、一時変数を減らす助けになります。インタプリタのオーバヘッドをもたらす for ループやジェネレータ(<a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a>) を使わずに、 「ベクトル化された」 ビルディングブロックを使うと、高速な処理を実現できます。</p>
+<p>iterable 全体を一度にメモリ上に置くよりも、要素を一つづつ処理する方がメモリ効率上の有利さを保てます。関数形式のままツールをリンクしてゆくと、コードのサイズを減らし、一時変数を減らす助けになります。インタプリタのオーバヘッドをもたらす for ループやジェネレータ(<a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a>) を使わずに、 &quot;ベクトル化された&quot; ビルディングブロックを使うと、高速な処理を実現できます。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
     <span class="s2">&quot;Return first n items of the iterable as a list&quot;</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
@@ -1014,7 +1014,7 @@ function の引数が一つの iterable からタプルに既にグループ化�
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

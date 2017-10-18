@@ -102,13 +102,13 @@
 <dt><code class="docutils literal"><span class="pre">'^'</span></code></dt>
 <dd>(キャレット) 文字列の先頭とマッチします。 <a class="reference internal" href="#re.MULTILINE" title="re.MULTILINE"><code class="xref py py-const docutils literal"><span class="pre">MULTILINE</span></code></a> モードでは各改行の直後にマッチします。</dd>
 <dt><code class="docutils literal"><span class="pre">'$'</span></code></dt>
-<dd>文字列の末尾、あるいは文字列の末尾の改行の直前にマッチします。例えば、 <code class="docutils literal"><span class="pre">foo</span></code> は 『foo』 と 『foobar』 の両方にマッチします。一方、正規表現 <code class="docutils literal"><span class="pre">foo$</span></code> は 『foo』 だけとマッチします。興味深いことに、 <code class="docutils literal"><span class="pre">'foo1\nfoo2\n'</span></code> を <code class="docutils literal"><span class="pre">foo.$</span></code> で検索した場合、通常のモードでは 『foo2』 だけにマッチし、 <a class="reference internal" href="#re.MULTILINE" title="re.MULTILINE"><code class="xref py py-const docutils literal"><span class="pre">MULTILINE</span></code></a> モードでは 『foo1』 にもマッチします。 <code class="docutils literal"><span class="pre">$</span></code> だけで <code class="docutils literal"><span class="pre">'foo\n'</span></code> を検索した場合、2箇所 (内容は空) でマッチします: 1つは、改行の直前で、もう1つは、文字列の最後です。</dd>
+<dd>文字列の末尾、あるいは文字列の末尾の改行の直前にマッチします。例えば、 <code class="docutils literal"><span class="pre">foo</span></code> は 'foo' と 'foobar' の両方にマッチします。一方、正規表現 <code class="docutils literal"><span class="pre">foo$</span></code> は 'foo' だけとマッチします。興味深いことに、 <code class="docutils literal"><span class="pre">'foo1\nfoo2\n'</span></code> を <code class="docutils literal"><span class="pre">foo.$</span></code> で検索した場合、通常のモードでは 'foo2' だけにマッチし、 <a class="reference internal" href="#re.MULTILINE" title="re.MULTILINE"><code class="xref py py-const docutils literal"><span class="pre">MULTILINE</span></code></a> モードでは 'foo1' にもマッチします。 <code class="docutils literal"><span class="pre">$</span></code> だけで <code class="docutils literal"><span class="pre">'foo\n'</span></code> を検索した場合、2箇所 (内容は空) でマッチします: 1つは、改行の直前で、もう1つは、文字列の最後です。</dd>
 <dt><code class="docutils literal"><span class="pre">'*'</span></code></dt>
-<dd>直前にある RE に作用して、 RE を 0 回以上できるだけ多く繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab*</span></code> は 『a』、』ab』、あるいは 『a』 に任意個数の’b』 を続けたものにマッチします。</dd>
+<dd>直前にある RE に作用して、 RE を 0 回以上できるだけ多く繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab*</span></code> は 'a'、'ab'、あるいは 'a' に任意個数の’b' を続けたものにマッチします。</dd>
 <dt><code class="docutils literal"><span class="pre">'+'</span></code></dt>
-<dd>直前にある RE に作用して、 RE を、1 回以上繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab+</span></code> は 『a』 に一つ以上の 『b』 が続いたものにマッチし、 『a』 単体にはマッチしません。</dd>
+<dd>直前にある RE に作用して、 RE を、1 回以上繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab+</span></code> は 'a' に一つ以上の 'b' が続いたものにマッチし、 'a' 単体にはマッチしません。</dd>
 <dt><code class="docutils literal"><span class="pre">'?'</span></code></dt>
-<dd>直前にある RE に作用して、 RE を 0 回か 1 回繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab?</span></code> は 『a』 あるいは 『ab』 にマッチします。</dd>
+<dd>直前にある RE に作用して、 RE を 0 回か 1 回繰り返したものにマッチさせるようにします。例えば <code class="docutils literal"><span class="pre">ab?</span></code> は 'a' あるいは 'ab' にマッチします。</dd>
 <dt><code class="docutils literal"><span class="pre">*?</span></code>, <code class="docutils literal"><span class="pre">+?</span></code>, <code class="docutils literal"><span class="pre">??</span></code></dt>
 <dd><code class="docutils literal"><span class="pre">'*'</span></code> 、 <code class="docutils literal"><span class="pre">'+'</span></code> 、 <code class="docutils literal"><span class="pre">'?'</span></code> といった修飾子は、すべて <em class="dfn">貪欲 (greedy)</em> マッチ、すなわちできるだけ多くのテキストにマッチするようになっています。時にはこの動作が望ましくない場合もあります。例えば正規表現 <code class="docutils literal"><span class="pre">&lt;.*&gt;</span></code> を <code class="docutils literal"><span class="pre">&lt;a&gt;</span> <span class="pre">b</span> <span class="pre">&lt;c&gt;</span></code> にマッチさせると、 <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> だけにマッチするのではなく全文字列にマッチしてしまいます。 <code class="docutils literal"><span class="pre">?</span></code> を修飾子の後に追加すると、 <em class="dfn">非貪欲 (non-greedy)</em> あるいは <em class="dfn">最小一致 (minimal)</em> のマッチになり、できるだけ <em>少ない</em> 文字数のマッチになります。例えば正規表現 <code class="docutils literal"><span class="pre">&lt;.*?&gt;</span></code> を使うと <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> だけにマッチします。</dd>
 <dt><code class="docutils literal"><span class="pre">{m}</span></code></dt>
@@ -153,7 +153,7 @@
 <col width="47%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">グループ 「quote」 を参照するコンテキスト</th>
+<tr class="row-odd"><th class="head">グループ &quot;quote&quot; を参照するコンテキスト</th>
 <th class="head">参照方法</th>
 </tr>
 </thead>
@@ -744,7 +744,7 @@ have regular expression metacharacters in it.  For example:</p>
     <span class="k">return</span> <span class="s1">&#39;&lt;Match: </span><span class="si">%r</span><span class="s1">, groups=</span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>あなたがポーカープログラムを書いているとします。プレイヤーの持ち札はそれぞれの文字が1枚のカードを意味する5文字の文字列によって表現されます。 「a」 はエース、 「k」 はキング、 「q」 はクイーン、 「j」 はジャック 「t」 は10、そして 「2」 から 「9」 はそれぞれの数字のカードを表します。</p>
+<p>あなたがポーカープログラムを書いているとします。プレイヤーの持ち札はそれぞれの文字が1枚のカードを意味する5文字の文字列によって表現されます。 &quot;a&quot; はエース、 &quot;k&quot; はキング、 &quot;q&quot; はクイーン、 &quot;j&quot; はジャック &quot;t&quot; は10、そして &quot;2&quot; から &quot;9&quot; はそれぞれの数字のカードを表します。</p>
 <p>与えられた文字列が、持ち札として有効かを確認するために、下記のようにするかも知れません。 :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">valid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a2-9tjqk]</span><span class="si">{5}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">displaymatch</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;akt5q&quot;</span><span class="p">))</span>  <span class="c1"># Valid.</span>
@@ -900,7 +900,7 @@ have regular expression metacharacters in it.  For example:</p>
 </div>
 <div class="section" id="text-munging">
 <h3>7.2.5.5. テキストの秘匿<a class="headerlink" href="#text-munging" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> はパターンにマッチした部分を文字列や関数の返り値で置き換えます。この例では、」秘匿」 する文字列に、関数と共に <a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> を適用する例を示します。言い換えると、最初と最後の文字を除く、単語中の文字の位置をランダム化します。</p>
+<p><a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> はパターンにマッチした部分を文字列や関数の返り値で置き換えます。この例では、&quot;秘匿&quot; する文字列に、関数と共に <a class="reference internal" href="#re.sub" title="re.sub"><code class="xref py py-func docutils literal"><span class="pre">sub()</span></code></a> を適用する例を示します。言い換えると、最初と最後の文字を除く、単語中の文字の位置をランダム化します。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">repl</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">inner_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">... </span>    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">inner_word</span><span class="p">)</span>
@@ -1042,7 +1042,7 @@ have regular expression metacharacters in it.  For example:</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

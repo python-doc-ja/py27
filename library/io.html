@@ -85,7 +85,7 @@
 <p><a class="reference internal" href="#module-io" title="io: Core tools for working with streams."><code class="xref py py-mod docutils literal"><span class="pre">io</span></code></a> モジュールはストリーム処理を行う Python インタフェースを提供します。 Python 2.x では、これは組み込みの <a class="reference internal" href="functions.html#file" title="file"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></a> オブジェクトの代わりとして提案されていますが、Python 3.x では、これがファイルやストリームのデフォルトインタフェースです。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">このモジュールはもともと、Python 3.x のために設計されたものなので、このドキュメントの中で使われるすべての 「bytes」 は (<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> がエイリアスとなる) <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> 型のことで、すべての 「text」 は <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> 型のことです。さらに、 <a class="reference internal" href="#module-io" title="io: Core tools for working with streams."><code class="xref py py-mod docutils literal"><span class="pre">io</span></code></a> API では、この 2 つの型は入れ替えられません。</p>
+<p class="last">このモジュールはもともと、Python 3.x のために設計されたものなので、このドキュメントの中で使われるすべての &quot;bytes&quot; は (<code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> がエイリアスとなる) <a class="reference internal" href="functions.html#str" title="str"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> 型のことで、すべての &quot;text&quot; は <a class="reference internal" href="functions.html#unicode" title="unicode"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></a> 型のことです。さらに、 <a class="reference internal" href="#module-io" title="io: Core tools for working with streams."><code class="xref py py-mod docutils literal"><span class="pre">io</span></code></a> API では、この 2 つの型は入れ替えられません。</p>
 </div>
 <p>I/O 階層の最上位には抽象基底クラスの <a class="reference internal" href="#io.IOBase" title="io.IOBase"><code class="xref py py-class docutils literal"><span class="pre">IOBase</span></code></a> があります。 <a class="reference internal" href="#io.IOBase" title="io.IOBase"><code class="xref py py-class docutils literal"><span class="pre">IOBase</span></code></a> ではストリームに対して基本的なインタフェースを定義しています。しかしながら、ストリームに対する読み込みと書き込みが分離されていないことに注意してください。実装においては与えられた操作をサポートしない場合は <a class="reference internal" href="exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> を送出することが許されています。</p>
 <p><a class="reference internal" href="#io.IOBase" title="io.IOBase"><code class="xref py py-class docutils literal"><span class="pre">IOBase</span></code></a> の拡張は、単純なストリームに対する生のバイト列の読み書きを扱う <a class="reference internal" href="#io.RawIOBase" title="io.RawIOBase"><code class="xref py py-class docutils literal"><span class="pre">RawIOBase</span></code></a> です。 <a class="reference internal" href="#io.FileIO" title="io.FileIO"><code class="xref py py-class docutils literal"><span class="pre">FileIO</span></code></a> は、 <a class="reference internal" href="#io.RawIOBase" title="io.RawIOBase"><code class="xref py py-class docutils literal"><span class="pre">RawIOBase</span></code></a> を継承してマシンのファイルシステム中のファイルへのインタフェースを提供します。</p>
@@ -379,7 +379,7 @@
 <dt id="io.BufferedIOBase.readinto">
 <code class="descname">readinto</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#io.BufferedIOBase.readinto" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>b</em> に最大 len(b) バイト分読み込み、読み込んだバイト数を返します。オブジェクト <em>b</em> はメモリ確保済みの書き込み可能なバイト配列、 <a class="reference internal" href="functions.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal"><span class="pre">bytearray</span></code></a> もしくは <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal"><span class="pre">memoryview</span></code></a> である必要があります。</p>
-<p><a class="reference internal" href="#io.BufferedIOBase.read" title="io.BufferedIOBase.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> と同様、元になる生ストリームが 『対話的』 でない限り、複数回の read が発行されるかもしれません。</p>
+<p><a class="reference internal" href="#io.BufferedIOBase.read" title="io.BufferedIOBase.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> と同様、元になる生ストリームが '対話的' でない限り、複数回の read が発行されるかもしれません。</p>
 <p>元になる生ストリームがノンブロッキングモードで、呼び出された時点でデータを持っていなければ、 <a class="reference internal" href="#io.BlockingIOError" title="io.BlockingIOError"><code class="xref py py-exc docutils literal"><span class="pre">BlockingIOError</span></code></a> が送出されます。</p>
 </dd></dl>
 
@@ -583,7 +583,7 @@
 <dd><p>指定された <em>offset</em> にストリーム位置を変更します。 挙動は <em>whence</em> 引数によります。 <em>whence</em> のデフォルト値は <code class="xref py py-data docutils literal"><span class="pre">SEEK_SET</span></code> です。:</p>
 <ul class="simple">
 <li><code class="xref py py-data docutils literal"><span class="pre">SEEK_SET</span></code> または <code class="docutils literal"><span class="pre">0</span></code>: ストリームの先頭からシークします (デフォルト)。 <em>offset</em> は <a class="reference internal" href="#io.TextIOBase.tell" title="io.TextIOBase.tell"><code class="xref py py-meth docutils literal"><span class="pre">TextIOBase.tell()</span></code></a> が返す数か0のどちらかでなければなりません。それ以外の <em>offset</em> 値は未定義の挙動を起こします。</li>
-<li><code class="xref py py-data docutils literal"><span class="pre">SEEK_CUR</span></code> または <code class="docutils literal"><span class="pre">1</span></code>: 現在の位置に 「シークします」。 <em>offset</em> は 0 でなければなりません。つまり何もしません (他の値はサポートされていません)。</li>
+<li><code class="xref py py-data docutils literal"><span class="pre">SEEK_CUR</span></code> または <code class="docutils literal"><span class="pre">1</span></code>: 現在の位置に &quot;シークします&quot;。 <em>offset</em> は 0 でなければなりません。つまり何もしません (他の値はサポートされていません)。</li>
 <li><code class="xref py py-data docutils literal"><span class="pre">SEEK_END</span></code> または <code class="docutils literal"><span class="pre">2</span></code>: ストリーム終端へシークします。 <em>offset</em> は 0 でなければなりません (他の値はサポートされていません)．</li>
 </ul>
 <p>新しい絶対位置を、不透明な数値で返します。</p>
@@ -783,7 +783,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

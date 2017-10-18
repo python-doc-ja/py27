@@ -153,7 +153,7 @@
     <span class="n">fib</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
 </div>
-<p>このコードを追加することで、このファイルが import できるモジュールであると同時にスクリプトとしても使えるようになります。なぜならモジュールが 「main」 ファイルとして起動されたときだけ、コマンドラインを解釈するコードが実行されるからです:</p>
+<p>このコードを追加することで、このファイルが import できるモジュールであると同時にスクリプトとしても使えるようになります。なぜならモジュールが &quot;main&quot; ファイルとして起動されたときだけ、コマンドラインを解釈するコードが実行されるからです:</p>
 <div class="highlight-shell-session"><div class="highlight"><pre><span></span><span class="gp">$</span> python fibo.py <span class="m">50</span>
 <span class="go">1 1 2 3 5 8 13 21 34</span>
 </pre></div>
@@ -176,8 +176,8 @@
 <p>初期化された後、 Python プログラムは <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal"><span class="pre">sys.path</span></code></a> を修正することができます。スクリプトファイルを含むディレクトリが検索パスの先頭、標準ライブラリパスよりも前に追加されます。なので、ライブラリのディレクトリにあるファイルよりも、そのディレクトリにある同じ名前のスクリプトが優先してインポートされます。これは、標準ライブラリを意図して置き換えているのでない限りは間違いのもとです。より詳しい情報は <a class="reference internal" href="#tut-standardmodules"><span class="std std-ref">標準モジュール</span></a> を参照してください。</p>
 </div>
 <div class="section" id="compiled-python-files">
-<h3>6.1.3. 「コンパイル」 された Python ファイル<a class="headerlink" href="#compiled-python-files" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>たくさんの標準モジュールを使うような短いプログラムの起動時間を大きく高速化するために、 <code class="file docutils literal"><span class="pre">spam.py</span></code> が見つかったディレクトリに <code class="file docutils literal"><span class="pre">spam.pyc</span></code> という名前のファイルがあった場合には、このファイルをモジュール <code class="xref py py-mod docutils literal"><span class="pre">spam</span></code> の 「バイトコンパイルされた」 バージョンであると仮定します。 <code class="file docutils literal"><span class="pre">spam.pyc</span></code> を生成するのに使われたバージョンの <code class="file docutils literal"><span class="pre">spam.py</span></code> のファイル修正時刻が <code class="file docutils literal"><span class="pre">spam.pyc</span></code> に記録されており、この値が一致しなければ <code class="file docutils literal"><span class="pre">spam.pyc</span></code> ファイルは無視されます。</p>
+<h3>6.1.3. &quot;コンパイル&quot; された Python ファイル<a class="headerlink" href="#compiled-python-files" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>たくさんの標準モジュールを使うような短いプログラムの起動時間を大きく高速化するために、 <code class="file docutils literal"><span class="pre">spam.py</span></code> が見つかったディレクトリに <code class="file docutils literal"><span class="pre">spam.pyc</span></code> という名前のファイルがあった場合には、このファイルをモジュール <code class="xref py py-mod docutils literal"><span class="pre">spam</span></code> の &quot;バイトコンパイルされた&quot; バージョンであると仮定します。 <code class="file docutils literal"><span class="pre">spam.pyc</span></code> を生成するのに使われたバージョンの <code class="file docutils literal"><span class="pre">spam.py</span></code> のファイル修正時刻が <code class="file docutils literal"><span class="pre">spam.pyc</span></code> に記録されており、この値が一致しなければ <code class="file docutils literal"><span class="pre">spam.pyc</span></code> ファイルは無視されます。</p>
 <p>通常、 <code class="file docutils literal"><span class="pre">spam.pyc</span></code> ファイルを生成するために何かをする必要はありません。 <code class="file docutils literal"><span class="pre">spam.py</span></code> が無事コンパイルされると、常にコンパイルされたバージョンを <code class="file docutils literal"><span class="pre">spam.pyc</span></code> へ書き出すよう試みます。この試みが失敗してもエラーにはなりません。何らかの理由でファイルが完全に書き出されなかった場合、作成された <code class="file docutils literal"><span class="pre">smap.pyc</span></code> は無効であるとみなされ、それ以後無視されます。 <code class="file docutils literal"><span class="pre">spam.pyc</span></code> ファイルの内容はプラットフォームに依存しないので、 Python のモジュールのディレクトリは異なるアーキテクチャのマシン間で共有することができます。</p>
 <p>エキスパート向けのTips:</p>
 <ul>
@@ -284,8 +284,8 @@
 </div>
 <div class="section" id="packages">
 <span id="tut-packages"></span><h2>6.4. パッケージ<a class="headerlink" href="#packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>パッケージ (package) は、Python のモジュール名前空間を 「ドット付きモジュール名」 を使って構造化する手段です。例えば、モジュール名 <code class="xref py py-mod docutils literal"><span class="pre">A.B</span></code> は、 <code class="docutils literal"><span class="pre">A</span></code> というパッケージのサブモジュール <code class="docutils literal"><span class="pre">B</span></code> を表します。ちょうど、モジュールを利用すると、別々のモジュールの著者が互いのグローバル変数名について心配しなくても済むようになるのと同じように、ドット付きモジュール名を利用すると、 NumPy や Python Imaging Library のように複数モジュールからなるパッケージの著者が、互いのモジュール名について心配しなくても済むようになります。</p>
-<p>音声ファイルや音声データを一様に扱うためのモジュールのコレクション (「パッケージ」) を設計したいと仮定しましょう。 音声ファイルには多くの異なった形式がある (通常は拡張子、 例えば <code class="file docutils literal"><span class="pre">.wav</span></code>, <code class="file docutils literal"><span class="pre">.aiff</span></code>, <code class="file docutils literal"><span class="pre">.au</span></code> などで認識されます) ので、増え続ける様々なファイル形式を相互変換するモジュールを、 作成したりメンテナンスしたりする必要があるかもしれません。 また、 音声データに対して実行したい様々な独自の操作 (ミキシング、 エコーの追加、 イコライザ関数の適用、 人工的なステレオ効果の作成など) があるかもしれません。 そうなると、 こうした操作を実行するモジュールを果てしなく書くことになるでしょう。 以下に (階層的なファイルシステムで表現した) パッケージの構造案を示します:</p>
+<p>パッケージ (package) は、Python のモジュール名前空間を &quot;ドット付きモジュール名&quot; を使って構造化する手段です。例えば、モジュール名 <code class="xref py py-mod docutils literal"><span class="pre">A.B</span></code> は、 <code class="docutils literal"><span class="pre">A</span></code> というパッケージのサブモジュール <code class="docutils literal"><span class="pre">B</span></code> を表します。ちょうど、モジュールを利用すると、別々のモジュールの著者が互いのグローバル変数名について心配しなくても済むようになるのと同じように、ドット付きモジュール名を利用すると、 NumPy や Python Imaging Library のように複数モジュールからなるパッケージの著者が、互いのモジュール名について心配しなくても済むようになります。</p>
+<p>音声ファイルや音声データを一様に扱うためのモジュールのコレクション (&quot;パッケージ&quot;) を設計したいと仮定しましょう。 音声ファイルには多くの異なった形式がある (通常は拡張子、 例えば <code class="file docutils literal"><span class="pre">.wav</span></code>, <code class="file docutils literal"><span class="pre">.aiff</span></code>, <code class="file docutils literal"><span class="pre">.au</span></code> などで認識されます) ので、増え続ける様々なファイル形式を相互変換するモジュールを、 作成したりメンテナンスしたりする必要があるかもしれません。 また、 音声データに対して実行したい様々な独自の操作 (ミキシング、 エコーの追加、 イコライザ関数の適用、 人工的なステレオ効果の作成など) があるかもしれません。 そうなると、 こうした操作を実行するモジュールを果てしなく書くことになるでしょう。 以下に (階層的なファイルシステムで表現した) パッケージの構造案を示します:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>sound/                          Top-level package
       __init__.py               Initialize the sound package
       formats/                  Subpackage for file format conversions
@@ -377,7 +377,7 @@
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>実際には、関数定義も 『実行』 される 『文』 です。モジュールレベルの関数定義を実行すると、関数名はモジュールのグローバルなシンボルテーブルに入ります。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>実際には、関数定義も '実行' される '文' です。モジュールレベルの関数定義を実行すると、関数名はモジュールのグローバルなシンボルテーブルに入ります。</td></tr>
 </tbody>
 </table>
 </div>
@@ -396,7 +396,7 @@
 <li><a class="reference internal" href="#more-on-modules">6.1. モジュールについてもうすこし</a><ul>
 <li><a class="reference internal" href="#executing-modules-as-scripts">6.1.1. モジュールをスクリプトとして実行する</a></li>
 <li><a class="reference internal" href="#the-module-search-path">6.1.2. モジュール検索パス</a></li>
-<li><a class="reference internal" href="#compiled-python-files">6.1.3. 「コンパイル」 された Python ファイル</a></li>
+<li><a class="reference internal" href="#compiled-python-files">6.1.3. &quot;コンパイル&quot; された Python ファイル</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#standard-modules">6.2. 標準モジュール</a></li>
@@ -471,7 +471,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

@@ -211,7 +211,7 @@
 <span id="typesnumeric"></span><h2>5.4. 数値型 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-class docutils literal"><span class="pre">long</span></code></a>, <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-class docutils literal"><span class="pre">complex</span></code></a><a class="headerlink" href="#numeric-types-int-float-long-complex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p id="index-13">4 つの異なる数値型があります: <em class="dfn">通常の整数型</em>, <em class="dfn">長整数型</em>, <em class="dfn">浮動小数点型</em>, <em class="dfn">複素数型</em> です。さらに、真偽値(Boolean)型も通常の整数型のサブタイプです。通常の整数 (単に <em class="dfn">整数型</em> とも呼ばれます) は C言語の <code class="xref c c-type docutils literal"><span class="pre">long</span></code> 型を使って実装されており、少なくとも 32 ビットの精度があります (<code class="docutils literal"><span class="pre">sys.maxint</span></code> は常に通常の整数の各プラットフォームにおける最大値にセットされており、最小値は <code class="docutils literal"><span class="pre">-sys.maxint</span> <span class="pre">-</span> <span class="pre">1</span></code> になります)。長整数型には精度の制限がありません。浮動小数点型はたいていは C の <code class="xref c c-type docutils literal"><span class="pre">double</span></code> を使って実装されています; あなたのプログラムが動作するマシンでの浮動小数点型の精度と内部表現は、 <a class="reference internal" href="sys.html#sys.float_info" title="sys.float_info"><code class="xref py py-data docutils literal"><span class="pre">sys.float_info</span></code></a> から利用できます。複素数型は実部と虚部を持ち、それぞれ浮動小数点数です。複素数 <em>z</em> から実部および虚部を取り出すには、 <code class="docutils literal"><span class="pre">z.real</span></code> および <code class="docutils literal"><span class="pre">z.imag</span></code> を使ってください。 (標準ライブラリには、追加の数値型、分数を保持する <a class="reference internal" href="fractions.html#module-fractions" title="fractions: Rational numbers."><code class="xref py py-mod docutils literal"><span class="pre">fractions</span></code></a> や、ユーザ定義の精度の浮動小数点数を保持する <a class="reference internal" href="decimal.html#module-decimal" title="decimal: Implementation of the General Decimal Arithmetic  Specification."><code class="xref py py-mod docutils literal"><span class="pre">decimal</span></code></a> があります。)</p>
 <p id="index-14">数値は、数値リテラルや組み込み関数や演算子の戻り値として生成されます。修飾のない整数リテラル ( 2 進表現や、 16 進表現や 8 進表現の値も含みます) は、通常の整数値を表します。値が通常の整数で表すには大きすぎる場合、 <code class="docutils literal"><span class="pre">'L'</span></code> または <code class="docutils literal"><span class="pre">'l'</span></code> が末尾につく整数リテラルは長整数型を表します (<code class="docutils literal"><span class="pre">'L'</span></code> が望ましいです。というのは <code class="docutils literal"><span class="pre">1l</span></code> は 11 と非常に紛らわしいからです!)。小数点または指数表記のある数値リテラルは浮動小数点数を表します。数値リテラルに <code class="docutils literal"><span class="pre">'j'</span></code> または <code class="docutils literal"><span class="pre">'J'</span></code> をつけると虚数 (実数部がゼロの複素数) を表し、それと整数や浮動小数点数を足すと実部と虚部を持つ複素数が得られます。</p>
-<p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より 「制限された」 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
+<p id="index-15">Python は型混合の演算を完全にサポートします: ある 2 項演算子が互いに異なる数値型の被演算子を持つ場合、より &quot;制限された&quot; 型の被演算子は他方の型に合わせて広げられます。ここで通常の整数は長整数より制限されており、長整数は浮動小数点数より制限されており、浮動小数点は複素数より制限されています。型混合の数値間での比較も同じ規則に従います。 <a class="footnote-reference" href="#id13" id="id2">[2]</a> コンストラクタ <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a>, <a class="reference internal" href="functions.html#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a>, および <a class="reference internal" href="functions.html#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a> を使って、特定の型の数を生成することができます。</p>
 <p>全ての組み込み数値型は以下の演算をサポートします。演算子の優先度については、 <a class="reference internal" href="../reference/expressions.html#power"><span class="std std-ref">べき乗演算 (power operator)</span></a>,および、あとのセクションを参照下さい。</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -310,7 +310,7 @@
 </li>
 <li><p class="first">整数の除算とも呼ばれます。結果の型は整数型とは限りませんが、結果の値は整数です。</p>
 </li>
-<li><p class="first">浮動小数点数は、文字列 「nan」 と 「inf」 を、必要なら接頭辞 「+」 または 「-」 と共に、非数 (Not a Number (NaN)) や正、負の無限大として受け付けます。</p>
+<li><p class="first">浮動小数点数は、文字列 &quot;nan&quot; と &quot;inf&quot; を、必要なら接頭辞 &quot;+&quot; または &quot;-&quot; と共に、非数 (Not a Number (NaN)) や正、負の無限大として受け付けます。</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.6 で追加.</span></p>
 </div>
@@ -628,7 +628,7 @@
 </li>
 <li><p class="first"><em>s</em> の <em>i</em> から <em>j</em> へのスライスは <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> となるようなインデクス <em>k</em> を持つ要素からなるシーケンスとして定義されます。 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> よりも大きい場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">0</span></code> を使います。 <em>j</em> が省略されるか <code class="docutils literal"><span class="pre">None</span></code> だった場合、 <code class="docutils literal"><span class="pre">len(s)</span></code> を使います。 <em>i</em> が <em>j</em> 以上の場合、スライスは空のシーケンスになります。</p>
 </li>
-<li><p class="first"><em>s</em> の「 <em>i</em> から <em>j</em> まででステップが <em>k</em> のスライス」は、インデックス <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> （ただし n は <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code> を満たす任意の整数）を持つ要素からなるシーケンスとして定義されます。言い換えるとインデックスは <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> と続き、 <em>j</em> に達したところでストップします (ただし <em>j</em> は含みません)。 <em>k</em> が正の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span></code> を代わりに使用します。 <em>k</em> が負の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> を代わりに使用します。 <em>i</em> または <em>j</em> を省略または <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 「端」 (どちらの端かは <em>k</em> の符号に依存) の値を代わりに使用します。なお <em>k</em> はゼロにできないので注意してください。また <em>k</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 <code class="docutils literal"><span class="pre">1</span></code> が指定されたものとして扱われます。</p>
+<li><p class="first"><em>s</em> の「 <em>i</em> から <em>j</em> まででステップが <em>k</em> のスライス」は、インデックス <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">n*k</span></code> （ただし n は <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">(j-i)/k</span></code> を満たす任意の整数）を持つ要素からなるシーケンスとして定義されます。言い換えるとインデックスは <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">i+k</span></code>, <code class="docutils literal"><span class="pre">i+2*k</span></code>, <code class="docutils literal"><span class="pre">i+3*k</span></code> と続き、 <em>j</em> に達したところでストップします (ただし <em>j</em> は含みません)。 <em>k</em> が正の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span></code> を代わりに使用します。 <em>k</em> が負の数である場合、 <em>i</em> または <em>j</em> が <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> より大きければ <code class="docutils literal"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code> を代わりに使用します。 <em>i</em> または <em>j</em> を省略または <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 &quot;端&quot; (どちらの端かは <em>k</em> の符号に依存) の値を代わりに使用します。なお <em>k</em> はゼロにできないので注意してください。また <em>k</em> に <code class="docutils literal"><span class="pre">None</span></code> を指定すると、 <code class="docutils literal"><span class="pre">1</span></code> が指定されたものとして扱われます。</p>
 </li>
 <li><div class="impl-detail first compound">
 <p><strong>CPython 実装の詳細:</strong> <em>s</em> と <em>t</em> の両者が文字列であるとき、 CPython のようないくつかの Python 実装では、 <code class="docutils literal"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">s</span> <span class="pre">+</span> <span class="pre">t</span></code> や <code class="docutils literal"><span class="pre">s</span> <span class="pre">+=</span> <span class="pre">t</span></code> という書式で代入をするのに in-place optimization が働きます。このような時、最適化は二乗の実行時間の低減をもたらします。この最適化はバージョンや実装に依存します。実行効率が必要なコードでは、バージョンと実装が変わっても、連結の線形的実行効率を保証する <a class="reference internal" href="#str.join" title="str.join"><code class="xref py py-meth docutils literal"><span class="pre">str.join()</span></code></a> を使うのがより望ましいでしょう。</p>
@@ -1073,7 +1073,7 @@ elements is the string providing this method.</p>
 <dl class="method">
 <dt id="str.upper">
 <code class="descclassname">str.</code><code class="descname">upper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#str.upper" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>全ての大小文字の区別のある文字 <a class="footnote-reference" href="#id15" id="id9">[4]</a> が大文字に変換された、文字列のコピーを返します。なお <code class="docutils literal"><span class="pre">str.upper().isupper()</span></code> は、 <code class="docutils literal"><span class="pre">s</span></code> が大小文字の区別のある文字を含まなかったり、結果の文字の Unicode カテゴリが 「Lu」 ではなく例えば 「Lt」 (Letter, titlecase) などであったら、 <code class="docutils literal"><span class="pre">False</span></code> になりえます。</p>
+<dd><p>全ての大小文字の区別のある文字 <a class="footnote-reference" href="#id15" id="id9">[4]</a> が大文字に変換された、文字列のコピーを返します。なお <code class="docutils literal"><span class="pre">str.upper().isupper()</span></code> は、 <code class="docutils literal"><span class="pre">s</span></code> が大小文字の区別のある文字を含まなかったり、結果の文字の Unicode カテゴリが &quot;Lu&quot; ではなく例えば &quot;Lt&quot; (Letter, titlecase) などであったら、 <code class="docutils literal"><span class="pre">False</span></code> になりえます。</p>
 <p>8ビット文字列では、メソッドはロケール依存になります。</p>
 </dd></dl>
 
@@ -1134,7 +1134,7 @@ elements is the string providing this method.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'#'</span></code></td>
-<td>値の変換に (下で定義されている) 「別の形式」 を使います。</td>
+<td>値の変換に (下で定義されている) &quot;別の形式&quot; を使います。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">'0'</span></code></td>
 <td>数値型に対してゼロによるパディングを行います。</td>
@@ -1146,7 +1146,7 @@ elements is the string providing this method.</p>
 <td>(スペース) 符号付きの変換で正の数の場合、前に一つスペースを空けます (そうでない場合は空文字になります) 。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">'+'</span></code></td>
-<td>変換の先頭に符号文字 (<code class="docutils literal"><span class="pre">'+'</span></code> または <code class="docutils literal"><span class="pre">'-'</span></code>) を付けます(「スペース」 フラグを上書きします) 。</td>
+<td>変換の先頭に符号文字 (<code class="docutils literal"><span class="pre">'+'</span></code> または <code class="docutils literal"><span class="pre">'-'</span></code>) を付けます(&quot;スペース&quot; フラグを上書きします) 。</td>
 </tr>
 </tbody>
 </table>
@@ -1868,7 +1868,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
 <dd><p><em>x</em> が下にある辞書のキー、値、または項目 (項目の場合、 <em>x</em> は <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> タプルであるべきです) にあるとき <code class="docutils literal"><span class="pre">True</span></code> を返します。</p>
 </dd></dl>
 
-<p>キーのビューは、項目が一意的でハッシュ可能であるという点で、集合に似ています。すべての値がハッシュ可能なら、 <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> 対も一意的でハッシュ可能なので、要素のビューも集合に似ています。(値のビューは、要素が一般に一意的でないことから、集合に似ているとは考えられません。) これによりこれらへの集合演算が利用出来ます (「other」 はもう一つのビューか集合です):</p>
+<p>キーのビューは、項目が一意的でハッシュ可能であるという点で、集合に似ています。すべての値がハッシュ可能なら、 <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> 対も一意的でハッシュ可能なので、要素のビューも集合に似ています。(値のビューは、要素が一般に一意的でないことから、集合に似ているとは考えられません。) これによりこれらへの集合演算が利用出来ます (&quot;other&quot; はもう一つのビューか集合です):</p>
 <dl class="describe">
 <dt>
 <code class="descname">dictview &amp; other</code></dt>
@@ -1952,7 +1952,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">全ての Python の 「ファイル的」 型が <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文用のコンテキストマネージャとして使えるわけではありません。もし、全てのファイル的オブジェクトで動くようにコードを書きたいのならば、オブジェクトを直接使うのではなく <a class="reference internal" href="contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> にある <a class="reference internal" href="contextlib.html#contextlib.closing" title="contextlib.closing"><code class="xref py py-func docutils literal"><span class="pre">contextlib.closing()</span></code></a> 関数を使うと良いでしょう。</p>
+<p class="last">全ての Python の &quot;ファイル的&quot; 型が <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal"><span class="pre">with</span></code></a> 文用のコンテキストマネージャとして使えるわけではありません。もし、全てのファイル的オブジェクトで動くようにコードを書きたいのならば、オブジェクトを直接使うのではなく <a class="reference internal" href="contextlib.html#module-contextlib" title="contextlib: Utilities for with-statement contexts."><code class="xref py py-mod docutils literal"><span class="pre">contextlib</span></code></a> にある <a class="reference internal" href="contextlib.html#contextlib.closing" title="contextlib.closing"><code class="xref py py-func docutils literal"><span class="pre">contextlib.closing()</span></code></a> 関数を使うと良いでしょう。</p>
 </div>
 </dd></dl>
 
@@ -1969,7 +1969,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
 <dl class="method">
 <dt id="file.fileno">
 <code class="descclassname">file.</code><code class="descname">fileno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.fileno" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p id="index-35">背後にある実装系がオペレーティングシステムに I/O 操作を要求するために用いる、整数の 「ファイル記述子」 (ファイルデスクリプタ) を返します。この値は他の用途として、 <a class="reference internal" href="fcntl.html#module-fcntl" title="fcntl: The fcntl() and ioctl() system calls. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">fcntl</span></code></a> モジュールや <a class="reference internal" href="os.html#os.read" title="os.read"><code class="xref py py-func docutils literal"><span class="pre">os.read()</span></code></a> やその仲間のような、ファイル記述子を必要とする低レベルのインタフェースで役に立ちます。</p>
+<dd><p id="index-35">背後にある実装系がオペレーティングシステムに I/O 操作を要求するために用いる、整数の &quot;ファイル記述子&quot; (ファイルデスクリプタ) を返します。この値は他の用途として、 <a class="reference internal" href="fcntl.html#module-fcntl" title="fcntl: The fcntl() and ioctl() system calls. (Unix)"><code class="xref py py-mod docutils literal"><span class="pre">fcntl</span></code></a> モジュールや <a class="reference internal" href="os.html#os.read" title="os.read"><code class="xref py py-func docutils literal"><span class="pre">os.read()</span></code></a> やその仲間のような、ファイル記述子を必要とする低レベルのインタフェースで役に立ちます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">本物のファイルデスクリプタを持たないファイル類似のオブジェクトは、このメソッドを提供すべきでは <em>ありません</em> 。</p>
@@ -2302,7 +2302,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
 </div>
 <div class="section" id="code-objects">
 <span id="bltin-code-objects"></span><span id="index-39"></span><h3>5.12.5. コードオブジェクト<a class="headerlink" href="#code-objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p id="index-40">コードオブジェクトは、関数本体のような 「擬似コンパイルされた」 Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
+<p id="index-40">コードオブジェクトは、関数本体のような &quot;擬似コンパイルされた&quot; Python の実行可能コードを表すために実装系によって使われます。コードオブジェクトはグローバルな実行環境への参照を持たない点で関数オブジェクトとは異なります。コードオブジェクトは組み込み関数 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> によって返され、また関数オブジェクトの <code class="xref py py-attr docutils literal"><span class="pre">func_code</span></code> 属性として取り出せます。 <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal"><span class="pre">code</span></code></a> モジュールも参照下さい。</p>
 <p id="index-41">コードオブジェクトは、 <code class="xref py py-func docutils literal"><span class="pre">exec()</span></code> 文や組み込み関数 <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> に (ソース文字列の代わりに) 渡すことで、実行や評価できます。</p>
 <p>詳細は、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照下さい。</p>
 </div>
@@ -2424,7 +2424,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
 <table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[4]</td><td><em>(<a class="fn-backref" href="#id6">1</a>, <a class="fn-backref" href="#id7">2</a>, <a class="fn-backref" href="#id8">3</a>, <a class="fn-backref" href="#id9">4</a>)</em> 大小文字の区別のある文字とは、一般カテゴリプロパティが 「Lu」 (Letter, uppercase (大文字))、 「Ll」 (Letter, lowercase (小文字))、 「Lt」 (Letter、titlecase (先頭が大文字)) のいずれかであるものです。</td></tr>
+<tr><td class="label">[4]</td><td><em>(<a class="fn-backref" href="#id6">1</a>, <a class="fn-backref" href="#id7">2</a>, <a class="fn-backref" href="#id8">3</a>, <a class="fn-backref" href="#id9">4</a>)</em> 大小文字の区別のある文字とは、一般カテゴリプロパティが &quot;Lu&quot; (Letter, uppercase (大文字))、 &quot;Ll&quot; (Letter, lowercase (小文字))、 &quot;Lt&quot; (Letter、titlecase (先頭が大文字)) のいずれかであるものです。</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id16" rules="none">
@@ -2558,7 +2558,7 @@ frozenset, a temporary one is created from <em>elem</em>.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

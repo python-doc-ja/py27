@@ -91,12 +91,12 @@
 <dt id="abc.ABCMeta">
 <em class="property">class </em><code class="descclassname">abc.</code><code class="descname">ABCMeta</code><a class="headerlink" href="#abc.ABCMeta" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>抽象基底クラス(ABC)を定義するためのメタクラス。</p>
-<p>ABC を作るときにこのメタクラスを使います。ABC は直接的にサブクラス化することができ、ミックスイン(mix-in)クラスのように振る舞います。また、無関係な具象クラス(組み込み型でも構いません)と無関係な ABC を 「仮想的サブクラス」 として登録できます – これらとその子孫は組み込み関数 <a class="reference internal" href="functions.html#issubclass" title="issubclass"><code class="xref py py-func docutils literal"><span class="pre">issubclass()</span></code></a> によって登録した ABC のサブクラスと判定されますが、登録した ABC は MRO (Method Resolution Order, メソッド解決順)には現れませんし、この ABC のメソッド実装が(<a class="reference internal" href="functions.html#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> を通してだけでなく)呼び出し可能になるわけでもありません。 <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<p>ABC を作るときにこのメタクラスを使います。ABC は直接的にサブクラス化することができ、ミックスイン(mix-in)クラスのように振る舞います。また、無関係な具象クラス(組み込み型でも構いません)と無関係な ABC を &quot;仮想的サブクラス&quot; として登録できます – これらとその子孫は組み込み関数 <a class="reference internal" href="functions.html#issubclass" title="issubclass"><code class="xref py py-func docutils literal"><span class="pre">issubclass()</span></code></a> によって登録した ABC のサブクラスと判定されますが、登録した ABC は MRO (Method Resolution Order, メソッド解決順)には現れませんし、この ABC のメソッド実装が(<a class="reference internal" href="functions.html#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a> を通してだけでなく)呼び出し可能になるわけでもありません。 <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
 <p>メタクラス <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> を使って作られたクラスには以下のメソッドがあります:</p>
 <dl class="method">
 <dt id="abc.ABCMeta.register">
 <code class="descname">register</code><span class="sig-paren">(</span><em>subclass</em><span class="sig-paren">)</span><a class="headerlink" href="#abc.ABCMeta.register" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>subclass</em> を 「仮想的サブクラス」 としてこの ABC に登録します。たとえば:</p>
+<dd><p><em>subclass</em> を &quot;仮想的サブクラス&quot; としてこの ABC に登録します。たとえば:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span>
 
 <span class="k">class</span> <span class="nc">MyABC</span><span class="p">:</span>
@@ -159,8 +159,8 @@
 <dt id="abc.abstractmethod">
 <code class="descclassname">abc.</code><code class="descname">abstractmethod</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#abc.abstractmethod" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>抽象メソッドを示すデコレータです。</p>
-<p>このデコレータを使うにはクラスのメタクラスが <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> であるかまたは派生したものであることが求められます。 <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> から派生したメタクラスを持つクラスは全ての抽象メソッドおよびプロパティをオーバーライドしない限りインスタンス化できません。抽象メソッドは普通の 『super』 呼び出し機構を使って呼び出すことができます。</p>
-<p>クラスに動的に抽象メソッドを追加する、あるいはメソッドやクラスが作られた後から抽象的かどうかの状態を変更しようと試みることは、サポートされません。 <a class="reference internal" href="#abc.abstractmethod" title="abc.abstractmethod"><code class="xref py py-func docutils literal"><span class="pre">abstractmethod()</span></code></a> が影響を与えるのは正規の継承により派生したサブクラスのみで、ABC の <code class="xref py py-meth docutils literal"><span class="pre">register()</span></code> メソッドで登録された 「仮想的サブクラス」 は影響されません。</p>
+<p>このデコレータを使うにはクラスのメタクラスが <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> であるかまたは派生したものであることが求められます。 <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> から派生したメタクラスを持つクラスは全ての抽象メソッドおよびプロパティをオーバーライドしない限りインスタンス化できません。抽象メソッドは普通の 'super' 呼び出し機構を使って呼び出すことができます。</p>
+<p>クラスに動的に抽象メソッドを追加する、あるいはメソッドやクラスが作られた後から抽象的かどうかの状態を変更しようと試みることは、サポートされません。 <a class="reference internal" href="#abc.abstractmethod" title="abc.abstractmethod"><code class="xref py py-func docutils literal"><span class="pre">abstractmethod()</span></code></a> が影響を与えるのは正規の継承により派生したサブクラスのみで、ABC の <code class="xref py py-meth docutils literal"><span class="pre">register()</span></code> メソッドで登録された &quot;仮想的サブクラス&quot; は影響されません。</p>
 <p>使用法:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -179,7 +179,7 @@
 <dt id="abc.abstractproperty">
 <code class="descclassname">abc.</code><code class="descname">abstractproperty</code><span class="sig-paren">(</span><span class="optional">[</span><em>fget</em><span class="optional">[</span>, <em>fset</em><span class="optional">[</span>, <em>fdel</em><span class="optional">[</span>, <em>doc</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#abc.abstractproperty" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>組み込みの <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal"><span class="pre">property()</span></code></a> のサブクラスで、抽象プロパティであることを示します。</p>
-<p>この関数を使うにはクラスのメタクラスが <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> であるかまたは派生したものであることが求められます。 <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> から派生したメタクラスを持つクラスは全ての抽象メソッドおよびプロパティをオーバーライドしない限りインスタンス化できません。抽象プロパティは普通の 『super』 呼び出し機構を使って呼び出すことができます。</p>
+<p>この関数を使うにはクラスのメタクラスが <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> であるかまたは派生したものであることが求められます。 <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal"><span class="pre">ABCMeta</span></code></a> から派生したメタクラスを持つクラスは全ての抽象メソッドおよびプロパティをオーバーライドしない限りインスタンス化できません。抽象プロパティは普通の 'super' 呼び出し機構を使って呼び出すことができます。</p>
 <p>使用法:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -274,7 +274,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

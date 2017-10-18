@@ -520,7 +520,7 @@
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">Noddy_new</span><span class="p">,</span>                 <span class="cm">/* tp_new */</span>
 </pre></div>
 </div>
-<p>この新しいメンバはその型のオブジェクトを (初期化するのではなく) 作成する責任を負っています。Python ではこのメンバは <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドとして見えています。 <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドについての詳しい議論は 「Unifying types and classes in Python」 という題名の論文を見てください。 new メソッドを実装する理由のひとつは、インスタンス変数の初期値を保証するためです。この例でやりたいのは new メソッドが <code class="xref py py-attr docutils literal"><span class="pre">first</span></code> メンバと  <code class="xref py py-attr docutils literal"><span class="pre">last</span></code> メンバの値を <em>NULL</em> でないようにするということです。もしこれらの初期値が <em>NULL</em> でもよいのであれば、先の例でやったように、new メソッドとして <a class="reference internal" href="../c-api/type.html#c.PyType_GenericNew" title="PyType_GenericNew"><code class="xref c c-func docutils literal"><span class="pre">PyType_GenericNew()</span></code></a> を使うこともできたでしょう。 <a class="reference internal" href="../c-api/type.html#c.PyType_GenericNew" title="PyType_GenericNew"><code class="xref c c-func docutils literal"><span class="pre">PyType_GenericNew()</span></code></a> はすべてのインスタンス変数のメンバを <em>NULL</em> にします。</p>
+<p>この新しいメンバはその型のオブジェクトを (初期化するのではなく) 作成する責任を負っています。Python ではこのメンバは <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドとして見えています。 <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal"><span class="pre">__new__()</span></code></a> メソッドについての詳しい議論は &quot;Unifying types and classes in Python&quot; という題名の論文を見てください。 new メソッドを実装する理由のひとつは、インスタンス変数の初期値を保証するためです。この例でやりたいのは new メソッドが <code class="xref py py-attr docutils literal"><span class="pre">first</span></code> メンバと  <code class="xref py py-attr docutils literal"><span class="pre">last</span></code> メンバの値を <em>NULL</em> でないようにするということです。もしこれらの初期値が <em>NULL</em> でもよいのであれば、先の例でやったように、new メソッドとして <a class="reference internal" href="../c-api/type.html#c.PyType_GenericNew" title="PyType_GenericNew"><code class="xref c c-func docutils literal"><span class="pre">PyType_GenericNew()</span></code></a> を使うこともできたでしょう。 <a class="reference internal" href="../c-api/type.html#c.PyType_GenericNew" title="PyType_GenericNew"><code class="xref c c-func docutils literal"><span class="pre">PyType_GenericNew()</span></code></a> はすべてのインスタンス変数のメンバを <em>NULL</em> にします。</p>
 <p>この new メソッドは静的なメソッドで、インスタンスを生成するときにその型と、型が呼び出されたときの引数が渡され、新しいオブジェクトを作成して返します。new メソッドはつねに、あらかじめ固定引数 (positional argument) とキーワード引数を取りますが、これらのメソッドはしばしばそれらの引数は無視して初期化メソッドにそのまま渡します。new メソッドはメモリ割り当てのために <a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_alloc" title="PyTypeObject.tp_alloc"><code class="xref c c-member docutils literal"><span class="pre">tp_alloc</span></code></a> メンバを呼び出します。 <a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_alloc" title="PyTypeObject.tp_alloc"><code class="xref c c-member docutils literal"><span class="pre">tp_alloc</span></code></a> をこちらで初期化する必要はありません。これは <a class="reference internal" href="../c-api/type.html#c.PyType_Ready" title="PyType_Ready"><code class="xref c c-func docutils literal"><span class="pre">PyType_Ready()</span></code></a> が基底クラス (デフォルトでは <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) をもとに埋めるものです。ほとんどの型ではデフォルトのメモリ割り当てを使っています。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
@@ -592,7 +592,7 @@
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">Noddy_members</span><span class="p">,</span>             <span class="cm">/* tp_members */</span>
 </pre></div>
 </div>
-<p>各メンバの定義はそれぞれ、メンバの名前、型、オフセット、アクセスフラグおよび docstring です。詳しくは後の 「総称的な属性を管理する」 (<a class="reference internal" href="#generic-attribute-management"><span class="std std-ref">総称的な属性を管理する</span></a>) の節をご覧ください。</p>
+<p>各メンバの定義はそれぞれ、メンバの名前、型、オフセット、アクセスフラグおよび docstring です。詳しくは後の &quot;総称的な属性を管理する&quot; (<a class="reference internal" href="#generic-attribute-management"><span class="std std-ref">総称的な属性を管理する</span></a>) の節をご覧ください。</p>
 <p>この方法の欠点は、Python 属性に代入できるオブジェクトの型を制限する方法がないことです。ここではファーストネーム first とラストネーム last に、ともに文字列が入るよう期待していますが、今のやり方ではどんな Python オブジェクトも代入できてしまいます。加えてこの属性は削除 (del) できてしまい、その場合、 C のポインタには <em>NULL</em> が設定されます。たとえもしメンバが <em>NULL</em> 以外の値に初期化されるようにしてあったとしても、属性が削除されればメンバは <em>NULL</em> になってしまいます。</p>
 <p>ここでは <code class="xref py py-meth docutils literal"><span class="pre">name()</span></code> と呼ばれるメソッドを定義しましょう。これはファーストネーム first とラストネーム last を連結した文字列をそのオブジェクトの名前として返します。</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
@@ -1653,7 +1653,7 @@ before clearing members. Here is reimplemented deallocator which uses
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>print ハンドラは Python がその型のインスタンスを「print する」必要のあるときに毎回呼ばれます。たとえば 『node』 が TreeNode 型のインスタンスだとすると、print ハンドラは Python が以下を実行したときに呼ばれます:</p>
+<p>print ハンドラは Python がその型のインスタンスを「print する」必要のあるときに毎回呼ばれます。たとえば 'node' が TreeNode 型のインスタンスだとすると、print ハンドラは Python が以下を実行したときに呼ばれます:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">print</span> <span class="n">node</span>
 </pre></div>
 </div>
@@ -2084,7 +2084,7 @@ with the next section.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

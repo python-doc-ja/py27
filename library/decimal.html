@@ -131,7 +131,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">7</span>       <span class="c1"># Set a new precision</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">Decimal</span></code></a> インスタンスは、整数、文字列、浮動小数点数、またはタプルから構成できます。整数や浮動小数点数からの構成は、整数や浮動小数点数の値を正確に変換します。 <a class="reference internal" href="#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">Decimal</span></code></a> は 「数値ではない (Not a Number)」 を表す <code class="xref py py-const docutils literal"><span class="pre">NaN</span></code> や正負の <code class="xref py py-const docutils literal"><span class="pre">Infinity</span></code> (無限大)、 <code class="xref py py-const docutils literal"><span class="pre">-0</span></code> といった特殊な値も表現できます:</p>
+<p><a class="reference internal" href="#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">Decimal</span></code></a> インスタンスは、整数、文字列、浮動小数点数、またはタプルから構成できます。整数や浮動小数点数からの構成は、整数や浮動小数点数の値を正確に変換します。 <a class="reference internal" href="#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">Decimal</span></code></a> は &quot;数値ではない (Not a Number)&quot; を表す <code class="xref py py-const docutils literal"><span class="pre">NaN</span></code> や正負の <code class="xref py py-const docutils literal"><span class="pre">Infinity</span></code> (無限大)、 <code class="xref py py-const docutils literal"><span class="pre">-0</span></code> といった特殊な値も表現できます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">28</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="go">Decimal(&#39;10&#39;)</span>
@@ -441,7 +441,7 @@
 <dt id="decimal.Decimal.from_float">
 <code class="descname">from_float</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#decimal.Decimal.from_float" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>浮動小数点数を正確に小数に変換するクラスメソッドです。</p>
-<p>なお、<cite>Decimal.from_float(0.1)</cite> は <cite>Decimal(『0.1』)</cite> と同じではありません。0.1 は二進浮動小数点数で正確に表せないので、その値は表現できる最も近い値、<cite>0x1.999999999999ap-4</cite> として記憶されます。浮動小数点数での等価な値は <cite>0.1000000000000000055511151231257827021181583404541015625</cite> です。</p>
+<p>なお、<cite>Decimal.from_float(0.1)</cite> は <cite>Decimal('0.1')</cite> と同じではありません。0.1 は二進浮動小数点数で正確に表せないので、その値は表現できる最も近い値、<cite>0x1.999999999999ap-4</cite> として記憶されます。浮動小数点数での等価な値は <cite>0.1000000000000000055511151231257827021181583404541015625</cite> です。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">Python 2.7 以降では、 <a class="reference internal" href="#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal"><span class="pre">Decimal</span></code></a> インスタンスは <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> から直接構築できるようになりました。</p>
@@ -1247,14 +1247,14 @@
 <dt id="decimal.Context.power">
 <code class="descname">power</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="optional">[</span>, <em>modulo</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decimal.Context.power" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">x</span></code> の <code class="docutils literal"><span class="pre">y</span></code> 乗を計算します。<code class="docutils literal"><span class="pre">modulo</span></code> が指定されていればモジュロを取ります。</p>
-<p>二引数であれば <code class="docutils literal"><span class="pre">x**y</span></code> を計算します。 <code class="docutils literal"><span class="pre">x</span></code> が負であれば <code class="docutils literal"><span class="pre">y</span></code> は整でなければなりません。結果は <code class="docutils literal"><span class="pre">y</span></code> が整数であって結果が有限になり 『precision』 桁で正確に表現できるのでなければ不正確になります。その結果は現スレッドのコンテキストの丸めモードを使って正しく丸められます。</p>
+<p>二引数であれば <code class="docutils literal"><span class="pre">x**y</span></code> を計算します。 <code class="docutils literal"><span class="pre">x</span></code> が負であれば <code class="docutils literal"><span class="pre">y</span></code> は整でなければなりません。結果は <code class="docutils literal"><span class="pre">y</span></code> が整数であって結果が有限になり 'precision' 桁で正確に表現できるのでなければ不正確になります。その結果は現スレッドのコンテキストの丸めモードを使って正しく丸められます。</p>
 <p>三引数であれば <code class="docutils literal"><span class="pre">(x**y)</span> <span class="pre">%</span> <span class="pre">modulo</span></code> を計算します。この形式の場合、以下の制限が引数に掛かります:</p>
 <blockquote>
 <div><ul class="simple">
 <li>全ての引数は整</li>
 <li><code class="docutils literal"><span class="pre">y</span></code> は非負でなければならない</li>
 <li><code class="docutils literal"><span class="pre">x</span></code> と <code class="docutils literal"><span class="pre">y</span></code> の少なくともどちらかはゼロでない</li>
-<li><code class="docutils literal"><span class="pre">modulo</span></code> は非零で大きくても 『precision』 桁</li>
+<li><code class="docutils literal"><span class="pre">modulo</span></code> は非零で大きくても 'precision' 桁</li>
 </ul>
 </div></blockquote>
 <p><code class="docutils literal"><span class="pre">Context.power(x,</span> <span class="pre">y,</span> <span class="pre">modulo)</span></code> で得られる値は <code class="docutils literal"><span class="pre">(x**y)</span> <span class="pre">%</span> <span class="pre">modulo</span></code> を精度無制限で計算して得られるものと同じ値ですが、より効率的に計算されます。結果の指数は <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">modulo</span></code> の指数に関係なくゼロです。この計算は常に正確です。</p>
@@ -1746,7 +1746,7 @@
 <p>Q. 複雑な計算の中で、精度不足や丸めの異常で間違った結果になっていないことをどうやって保証すれば良いでしょうか。</p>
 <p>A. decimal モジュールでは検算は容易です。一番良い方法は、大きめの精度や様々な丸めモードで再計算してみることです。大きく異なった結果が出てきたら、精度不足や丸めの問題や悪条件の入力、または数値計算的に不安定なアルゴリズムを示唆しています。</p>
 <p>Q. コンテキストの精度は計算結果には適用されていますが入力には適用されていないようです。様々に異なる精度の入力値を混ぜて計算する時に注意すべきことはありますか?</p>
-<p>A. はい。原則として入力値は正確であると見做しておりそれらの値を使った計算も同様です。結果だけが丸められます。入力の強みは 「what you type is what you get」 (打ち込んだ値が得られる値)という点にあります。入力が丸められないということを忘れていると結果が奇妙に見えるというのは弱点です:</p>
+<p>A. はい。原則として入力値は正確であると見做しておりそれらの値を使った計算も同様です。結果だけが丸められます。入力の強みは &quot;what you type is what you get&quot; (打ち込んだ値が得られる値)という点にあります。入力が丸められないということを忘れていると結果が奇妙に見えるというのは弱点です:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.104&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2.104&#39;</span><span class="p">)</span>
 <span class="go">Decimal(&#39;5.21&#39;)</span>
@@ -1857,7 +1857,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

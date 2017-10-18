@@ -111,7 +111,7 @@
 <code class="descclassname">compiler.</code><code class="descname">compile</code><span class="sig-paren">(</span><em>source</em>, <em>filename</em>, <em>mode</em>, <em>flags=None</em>, <em>dont_inherit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#compiler.compile" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>文字列 <em>source</em> 、Python モジュール、文あるいは式を <a class="reference internal" href="../reference/simple_stmts.html#exec"><code class="xref std std-keyword docutils literal"><span class="pre">exec</span></code></a> 文あるいは <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> 関数で実行可能なバイトコードオブジェクトにコンパイルします。この関数は組み込みの <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a> 関数を置き換えるものです。</p>
 <p><em>filename</em> は実行時のエラーメッセージに使用されます。</p>
-<p><em>mode</em> は、モジュールをコンパイルする場合は 『exec』、 (対話的に実行される) 単一の文をコンパイルする場合は 『single』、式をコンパイルする場合には 『eval』 を渡します。</p>
+<p><em>mode</em> は、モジュールをコンパイルする場合は 'exec'、 (対話的に実行される) 単一の文をコンパイルする場合は 'single'、式をコンパイルする場合には 'eval' を渡します。</p>
 <p>引数 <em>flags</em> および <em>dont_inherit</em> は将来的に使用される文に影響しますが、いまのところはサポートされていません。</p>
 </dd></dl>
 
@@ -799,7 +799,7 @@
 <dl class="class">
 <dt id="compiler.visitor.ASTVisitor">
 <em class="property">class </em><code class="descclassname">compiler.visitor.</code><code class="descname">ASTVisitor</code><a class="headerlink" href="#compiler.visitor.ASTVisitor" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> は構文木を正しい順序でわたり歩くようにします。それぞれのノードはまず <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> の呼び出しではじまります。各ノードに対して、これは 『visitNodeType』 という名前のメソッドに対する <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> 関数への <em>visitor</em> 引数をチェックします。ここで NodeType の部分はそのノードのクラス名です。たとえば <code class="xref py py-class docutils literal"><span class="pre">While</span></code> ノードなら、 <code class="xref py py-meth docutils literal"><span class="pre">visitWhile()</span></code> が呼ばれるわけです。もしそのメソッドが存在している場合、それはそのノードを第一引数として呼び出されます。</p>
+<dd><p><a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> は構文木を正しい順序でわたり歩くようにします。それぞれのノードはまず <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> の呼び出しではじまります。各ノードに対して、これは 'visitNodeType' という名前のメソッドに対する <a class="reference internal" href="#compiler.visitor.ASTVisitor.preorder" title="compiler.visitor.ASTVisitor.preorder"><code class="xref py py-meth docutils literal"><span class="pre">preorder()</span></code></a> 関数への <em>visitor</em> 引数をチェックします。ここで NodeType の部分はそのノードのクラス名です。たとえば <code class="xref py py-class docutils literal"><span class="pre">While</span></code> ノードなら、 <code class="xref py py-meth docutils literal"><span class="pre">visitWhile()</span></code> が呼ばれるわけです。もしそのメソッドが存在している場合、それはそのノードを第一引数として呼び出されます。</p>
 <p>ある特定のノード型に対する visitor メソッドでは、その子ノードをどのようにわたり歩くかが制御できます。 <a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> は visitor に visit メソッドを追加することで、その visitor 引数を修正します; このメソッドは特定の子ノードを訪問するのに使われるでしょう。特定のノード型に対する visitor が存在しない場合、 <a class="reference internal" href="#compiler.visitor.ASTVisitor.default" title="compiler.visitor.ASTVisitor.default"><code class="xref py py-meth docutils literal"><span class="pre">default()</span></code></a> メソッドが呼び出されます。</p>
 <p><a class="reference internal" href="#compiler.visitor.ASTVisitor" title="compiler.visitor.ASTVisitor"><code class="xref py py-class docutils literal"><span class="pre">ASTVisitor</span></code></a> オブジェクトには以下のようなメソッドがあります:</p>
 <p>XXX 追加の引数を記述</p>
@@ -910,7 +910,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

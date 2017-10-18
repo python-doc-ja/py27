@@ -231,7 +231,7 @@ def       for       lambda    try
 <dt><code class="docutils literal"><span class="pre">__*__</span></code></dt>
 <dd>システムで定義された (system-defined) 名前です。これらの名前はインタプリタと (標準ライブラリを含む) 実装上で定義されています; 現行のシステムでの名前は <a class="reference internal" href="datamodel.html#specialnames"><span class="std std-ref">特殊メソッド名</span></a> などで話題に挙げられています。 Python の将来のバージョンではより多くの名前が定義されることになります。このドキュメントで明記されている用法に従わない、 <em>あらゆる</em> <code class="docutils literal"><span class="pre">__*__</span></code> の名前は、いかなる文脈における利用でも、警告無く損害を引き起こすことがあります。</dd>
 <dt><code class="docutils literal"><span class="pre">__*</span></code></dt>
-<dd>クラスプライベート (class-private) な名前です。このカテゴリに属する名前は、クラス定義のコンテキスト上で用いられた場合、基底クラスと派生クラスの 「プライベートな」 属性間で名前衝突が起こるのを防ぐために書き直されます。 <a class="reference internal" href="expressions.html#atom-identifiers"><span class="std std-ref">識別子 (identifier、または名前 (name))</span></a> を参照してください。</dd>
+<dd>クラスプライベート (class-private) な名前です。このカテゴリに属する名前は、クラス定義のコンテキスト上で用いられた場合、基底クラスと派生クラスの &quot;プライベートな&quot; 属性間で名前衝突が起こるのを防ぐために書き直されます。 <a class="reference internal" href="expressions.html#atom-identifiers"><span class="std std-ref">識別子 (identifier、または名前 (name))</span></a> を参照してください。</dd>
 </dl>
 </div>
 </div>
@@ -256,7 +256,7 @@ def       for       lambda    try
 </pre>
 <p>上記の生成規則で示されていない文法的な制限が一つあります。それは文字列リテラルの <a class="reference internal" href="#grammar-token-stringprefix"><code class="xref std std-token docutils literal"><span class="pre">stringprefix</span></code></a> と残りの部分の間に空白を入れてはならないということです。ソースコード文字セット (source character set) はエンコード宣言で決まります．エンコード宣言がない場合には ASCII になります． <a class="reference internal" href="#encodings"><span class="std std-ref">エンコード宣言 (encoding declaration)</span></a> 節を参照してください．</p>
 <p id="index-14">より平易な説明: 文字列リテラルは、対応する一重引用符 (<code class="docutils literal"><span class="pre">'</span></code>) または二重引用符 (<code class="docutils literal"><span class="pre">&quot;</span></code>) で囲われます。また、対応する三連の一重引用符や二重引用符で囲うこともできます (通常、 <em>三重クオート文字列: triple-quoted string</em> として参照されます)。バックスラッシュ (<code class="docutils literal"><span class="pre">\</span></code>) 文字を使って、ある文字を例えば改行文字やバックスラッシュ自体、クオート文字といった別の意味を持つようにエスケープすることができます。文字列リテラルの前には、オプションとして <code class="docutils literal"><span class="pre">'r'</span></code> または <code class="docutils literal"><span class="pre">'R'</span></code> 一文字を接頭してもかまいません; このような文字列は <em class="dfn">raw 文字列 (raw string)</em> と呼ばれ、バックスラッシュによるエスケープシーケンスの解釈規則が異なります。 <code class="docutils literal"><span class="pre">'u'</span></code> や <code class="docutils literal"><span class="pre">'U'</span></code> を接頭すると、文字列は Unicode 文字列 (Unicode string) になります。Unicode 文字列は Unicode コンソーシアムおよび ISO 10646 で定義されている Unicode 文字セットを使います。Unicode 文字列では、文字セットに加えて、以下で説明するようなエスケープシーケンスを利用できます。 <code class="docutils literal"><span class="pre">'b'</span></code> または <code class="docutils literal"><span class="pre">'B'</span></code> の接頭辞は Python 2 では無視されます。これは、(例えば、コードが 2to3 で自動的に変換されるときなどに) Python 3 でバイト列リテラルとなるべきであることを示します。 <code class="docutils literal"><span class="pre">'u'</span></code> または <code class="docutils literal"><span class="pre">'b'</span></code> 接頭辞のあとに <code class="docutils literal"><span class="pre">'r'</span></code> 接頭辞を続けることもできます。</p>
-<p>三重クオート文字列中には、三連のエスケープされないクオート文字で文字列を終端してしまわないかぎり、エスケープされていない改行やクオートを書くことができます (さらに、それらはそのまま文字列中に残ります)。 (ここでいう 「クオート」 とは、文字列の囲みを開始するときに使った文字を示し、 <code class="docutils literal"><span class="pre">'</span></code> か <code class="docutils literal"><span class="pre">&quot;</span></code> のいずれかです)。</p>
+<p>三重クオート文字列中には、三連のエスケープされないクオート文字で文字列を終端してしまわないかぎり、エスケープされていない改行やクオートを書くことができます (さらに、それらはそのまま文字列中に残ります)。 (ここでいう &quot;クオート&quot; とは、文字列の囲みを開始するときに使った文字を示し、 <code class="docutils literal"><span class="pre">'</span></code> か <code class="docutils literal"><span class="pre">&quot;</span></code> のいずれかです)。</p>
 <p id="index-15"><code class="docutils literal"><span class="pre">'r'</span></code> または <code class="docutils literal"><span class="pre">'R'</span></code> 接頭文字がつかないかぎり、文字列中のエスケープシーケンスは標準 C で使われているのと同様の法則にしたがって解釈されます。以下に Python で認識されるエスケープシーケンスを示します:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -345,9 +345,9 @@ def       for       lambda    try
 <li>標準 C とは違い、ちょうど 2 桁の 16 進数しか受理されません。</li>
 <li>文字列リテラル中では， 16 進および 8 進エスケープはエスケープの示すバイト文字になります．そのバイト文字がソース文字セットでエンコードされている保証はありません．Unicode リテラル中では，エスケープ文字はエスケープ文字の表現する値を持つ Unicode 文字になります．</li>
 </ol>
-<p id="index-17">標準の C とは違い、認識されなかったエスケープシーケンスはそのまま文字列中に残されます。すなわち。 <em>バックスラッシュも文字列中に残ります。</em> (この挙動はデバッグの際に便利です: エスケープシーケンスを誤入力した場合、その結果として出力に失敗しているのが用意にわかります) テーブル中で 「(Unicode のみ)」 と書かれたエスケープシーケンスは、非 Unicode 文字列リテラル中では認識されないエスケープシーケンスのカテゴリに分類されるので注意してください。</p>
+<p id="index-17">標準の C とは違い、認識されなかったエスケープシーケンスはそのまま文字列中に残されます。すなわち。 <em>バックスラッシュも文字列中に残ります。</em> (この挙動はデバッグの際に便利です: エスケープシーケンスを誤入力した場合、その結果として出力に失敗しているのが用意にわかります) テーブル中で &quot;(Unicode のみ)&quot; と書かれたエスケープシーケンスは、非 Unicode 文字列リテラル中では認識されないエスケープシーケンスのカテゴリに分類されるので注意してください。</p>
 <p>接頭文字 <code class="docutils literal"><span class="pre">'r'</span></code> または <code class="docutils literal"><span class="pre">'R'</span></code> がある場合、バックスラッシュの後にくる文字はそのまま文字列中に入り、 <em>バックスラッシュは全て文字列中に残されます</em> 。例えば、文字列リテラル <code class="docutils literal"><span class="pre">r&quot;\n&quot;</span></code> は二つの文字: バックスラッシュと小文字の <code class="docutils literal"><span class="pre">'n'</span></code> からなる文字列を表すことになります。引用符はバックスラッシュでエスケープすることができますが、バックスラッシュ自体も残ってしまいます; 例えば、 <code class="docutils literal"><span class="pre">r&quot;\&quot;&quot;</span></code> は不正でない文字列リテラルで、バックスラッシュと二重引用符からなる文字列を表します; <code class="docutils literal"><span class="pre">r&quot;\&quot;</span></code> は正しくない文字列リテラルです (raw 文字列を奇数個連なったバックスラッシュで終わらせることはできません)。厳密にいえば、 (バックスラッシュが直後のクオート文字をエスケープしてしまうため) <em>raw文字列を単一のバックスラッシュで終わらせることはできない</em> ということになります。また、バックスラッシュの直後に改行がきても、行継続を意味する <em>のではなく</em> 、それら二つの文字として解釈されるので注意してください。</p>
-<p><code class="docutils literal"><span class="pre">'r'</span></code> および <code class="docutils literal"><span class="pre">'R'</span></code> 接頭文字を <code class="docutils literal"><span class="pre">'u'</span></code> や <code class="docutils literal"><span class="pre">'U'</span></code> と合わせて使った場合、 <code class="docutils literal"><span class="pre">\uXXXX</span></code> および <code class="docutils literal"><span class="pre">\UXXXXXXXX</span></code> エスケープシーケンスは処理されますが、 <em>その他のバックスラッシュはすべて文字列中に残されます</em> 。例えば、文字列リテラル <code class="docutils literal"><span class="pre">ur&quot;\u0062\n&quot;</span></code> は、3つの Unicode 文字: 『LATIN SMALL LETTER B』 (ラテン小文字 B)、』REVERSE SOLIDUS』 (逆向き斜線)、および 『LATIN SMALL LETTER N』 (ラテン小文字 N) を表します。バックスラッシュの前にバックスラッシュをつけてエスケープすることはできます; しかし、バックスラッシュは両方とも文字列中に残されます。その結果、 <code class="docutils literal"><span class="pre">\uXXXX</span></code> エスケープシーケンスは、バックスラッシュが奇数個連なっている場合にのみ認識されます。</p>
+<p><code class="docutils literal"><span class="pre">'r'</span></code> および <code class="docutils literal"><span class="pre">'R'</span></code> 接頭文字を <code class="docutils literal"><span class="pre">'u'</span></code> や <code class="docutils literal"><span class="pre">'U'</span></code> と合わせて使った場合、 <code class="docutils literal"><span class="pre">\uXXXX</span></code> および <code class="docutils literal"><span class="pre">\UXXXXXXXX</span></code> エスケープシーケンスは処理されますが、 <em>その他のバックスラッシュはすべて文字列中に残されます</em> 。例えば、文字列リテラル <code class="docutils literal"><span class="pre">ur&quot;\u0062\n&quot;</span></code> は、3つの Unicode 文字: 'LATIN SMALL LETTER B' (ラテン小文字 B)、'REVERSE SOLIDUS' (逆向き斜線)、および 'LATIN SMALL LETTER N' (ラテン小文字 N) を表します。バックスラッシュの前にバックスラッシュをつけてエスケープすることはできます; しかし、バックスラッシュは両方とも文字列中に残されます。その結果、 <code class="docutils literal"><span class="pre">\uXXXX</span></code> エスケープシーケンスは、バックスラッシュが奇数個連なっている場合にのみ認識されます。</p>
 </div>
 <div class="section" id="string-literal-concatenation">
 <span id="string-catenation"></span><h3>2.4.2. 文字列リテラルの結合 (concatenation)<a class="headerlink" href="#string-literal-concatenation" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -357,12 +357,12 @@ def       for       lambda    try
           <span class="p">)</span>
 </pre></div>
 </div>
-<p>この機能は文法レベルで定義されていますが、スクリプトをコンパイルする際の処理として実現されることに注意してください。実行時に文字列表現を結合したければ、 『+』 演算子を使わなければなりません。また、リテラルの結合においては、結合する各要素に異なる引用符形式を使える (raw 文字列と三重引用符を混ぜることさえできます) ので注意してください。</p>
+<p>この機能は文法レベルで定義されていますが、スクリプトをコンパイルする際の処理として実現されることに注意してください。実行時に文字列表現を結合したければ、 '+' 演算子を使わなければなりません。また、リテラルの結合においては、結合する各要素に異なる引用符形式を使える (raw 文字列と三重引用符を混ぜることさえできます) ので注意してください。</p>
 </div>
 <div class="section" id="numeric-literals">
 <span id="numbers"></span><h3>2.4.3. 数値リテラル<a class="headerlink" href="#numeric-literals" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p id="index-18">数値リテラルは 4 種類あります: 整数 (plain integer)、長整数 (long integer)、浮動小数点数 (floating point number)、そして虚数 (imaginary number) です。複素数のためのリテラルはありません (複素数は実数と虚数の和で作ることができます)。</p>
-<p>数値リテラルには符号が含まれていないことに注意してください; <code class="docutils literal"><span class="pre">-1</span></code> のような句は、実際には単項演算子 (unary operator) 『<code class="docutils literal"><span class="pre">-</span></code>『 とリテラル <code class="docutils literal"><span class="pre">1</span></code> を組み合わせたものです。</p>
+<p>数値リテラルには符号が含まれていないことに注意してください; <code class="docutils literal"><span class="pre">-1</span></code> のような句は、実際には単項演算子 (unary operator) '<code class="docutils literal"><span class="pre">-</span></code>' とリテラル <code class="docutils literal"><span class="pre">1</span></code> を組み合わせたものです。</p>
 </div>
 <div class="section" id="integer-and-long-integer-literals">
 <span id="integers"></span><h3>2.4.4. 整数および長整数リテラル<a class="headerlink" href="#integer-and-long-integer-literals" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -403,7 +403,7 @@ def       for       lambda    try
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">3.14</span>    <span class="mf">10.</span>    <span class="o">.</span><span class="mi">001</span>    <span class="mf">1e100</span>    <span class="mf">3.14e-10</span>    <span class="mf">0e0</span>
 </pre></div>
 </div>
-<p>数値リテラルには符号が含まれていないことに注意してください; <code class="docutils literal"><span class="pre">-1</span></code> のような句は、実際には単項演算子 (unary operator) 『<code class="docutils literal"><span class="pre">-</span></code>『 とリテラル <code class="docutils literal"><span class="pre">1</span></code> を組み合わせたものです。</p>
+<p>数値リテラルには符号が含まれていないことに注意してください; <code class="docutils literal"><span class="pre">-1</span></code> のような句は、実際には単項演算子 (unary operator) '<code class="docutils literal"><span class="pre">-</span></code>' とリテラル <code class="docutils literal"><span class="pre">1</span></code> を組み合わせたものです。</p>
 </div>
 <div class="section" id="imaginary-literals">
 <span id="imaginary"></span><h3>2.4.6. 虚数 (imaginary) リテラル<a class="headerlink" href="#imaginary-literals" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -557,7 +557,7 @@ def       for       lambda    try
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

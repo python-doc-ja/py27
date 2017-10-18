@@ -91,7 +91,7 @@
 <p>このドキュメントは Python を web 向けに使う方法を示します。
 Python を web サーバとともに利用するためのいくつかの方法や web サイトを開発する際の一般的なプラクティスを示します。</p>
 </div>
-<p>web サイトのコンテンツをユーザが作るということに焦点を当てた 「Web 2.0」 の提起以来 Web プログラミングは人気の話題となっています。
+<p>web サイトのコンテンツをユーザが作るということに焦点を当てた &quot;Web 2.0&quot; の提起以来 Web プログラミングは人気の話題となっています。
 Python を使って web サイトを作れましたが、それはやや退屈な作業でした。そのため、開発者がサイトを速く、頑強に作るのを助けるために多くのフレームワークと補助ツールが作成されました。この HOWTO では動的なコンテンツを作成するために Python と web サーバを結合させるいくつかの方法について述べます。この話題は非常に広過ぎてドキュメント 1 つだけでは網羅しきれないため、この HOWTO を完全な入門書とするつもりはありません。ここでは最も人気のあるライブラリの簡単な概要を述べます。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
@@ -106,7 +106,7 @@ Python での web 開発は急速に発展しています、そのため Wiki �
 <p>全ての web サーバが全てのインターフェースをサポートしているわけではありません。多くの web サーバは古い、現在では撤廃されたインターフェースのみをサポートしています; しかし、多くの場合にはサードパーティーモジュールを利用して新しいインターフェースをサポートするように拡張できます。</p>
 <div class="section" id="common-gateway-interface">
 <h3>Common Gateway Interface<a class="headerlink" href="#common-gateway-interface" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>一般に 「CGI」 と呼ばれるこのインターフェースは最も古く、ほとんどの web サーバでサポートされ、すぐに使うことができます。
+<p>一般に &quot;CGI&quot; と呼ばれるこのインターフェースは最も古く、ほとんどの web サーバでサポートされ、すぐに使うことができます。
 CGI を利用して web サーバと通信するプログラムはリクエスト毎に起動される必要があります。そのため毎回のリクエストは新しい Python インタプリタを起動します – このため起動にいくらか時間がかかります – そしてこのインターフェースは負荷が低い状況にのみ向いています。</p>
 <p>CGI の利点は単純だということです – CGI を利用するプログラムを書くのは3行のコードを書くだけです。しかし、この単純さは後で高くつきます; 開発者を少ししか助けてくれません。</p>
 <p>CGI プログラムを書くことは可能ではありますが、もはや推奨されません。
@@ -116,7 +116,7 @@ CGI を利用して web サーバと通信するプログラムはリクエス�
 <p>Python の標準ライブラリには簡素な CGI プログラムを作成するのを助けるいくつかのモジュールが含まれています:</p>
 <ul class="simple">
 <li><a class="reference internal" href="../library/cgi.html#module-cgi" title="cgi: Helpers for running Python scripts via the Common Gateway Interface."><code class="xref py py-mod docutils literal"><span class="pre">cgi</span></code></a> – CGI スクリプトでのユーザ入力を扱います</li>
-<li><a class="reference internal" href="../library/cgitb.html#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">cgitb</span></code></a> – CGI アプリケーションの中でエラーが発生した場合に、 「500 Internal Server Error」 メッセージの代わりに親切なトレースバックを表示します</li>
+<li><a class="reference internal" href="../library/cgitb.html#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts."><code class="xref py py-mod docutils literal"><span class="pre">cgitb</span></code></a> – CGI アプリケーションの中でエラーが発生した場合に、 &quot;500 Internal Server Error&quot; メッセージの代わりに親切なトレースバックを表示します</li>
 </ul>
 <p class="last">Python wiki では <a class="reference external" href="https://wiki.python.org/moin/CgiScripts">CGI scripts</a> にあるページに Python での CGI に関して追加情報を取り上げています。</p>
 </div>
@@ -137,7 +137,7 @@ CGI を利用して web サーバと通信するプログラムはリクエス�
 </pre></div>
 </div>
 <p>web サーバの設定に依存して、このコードを <code class="docutils literal"><span class="pre">.py</span></code> もしくは <code class="docutils literal"><span class="pre">.cgi</span></code> 拡張子をつけたファイルに書く必要があります。それに加えて、セキュリティ上の理由のため、ファイルは <code class="docutils literal"><span class="pre">cgi-bin</span></code> フォルダ内に置く必要があるかもしれません。</p>
-<p><code class="docutils literal"><span class="pre">cgitb</span></code> 行が何なのか疑問に思うかもしれません。この行は、クラッシュしてブラウザで 「Internal Server Error」 と表示する代わりに、親切なトレースバックを表示できるようにします。これはデバッグの際に便利ですが、いくつかの機密データをユーザにさらけ出すリスクにもなりえます。そういった理由で、スクリプトを完成品として利用する準備ができたら <code class="docutils literal"><span class="pre">cgitb</span></code> は使ってはいけません。さらに、<em>常に</em> 例外を捕捉し、適切なエラーページを表示するようにしなければいけません – エンドユーザは得体の知れない 「Internal Server Errors」 をブラウザで見ることを好みません。</p>
+<p><code class="docutils literal"><span class="pre">cgitb</span></code> 行が何なのか疑問に思うかもしれません。この行は、クラッシュしてブラウザで &quot;Internal Server Error&quot; と表示する代わりに、親切なトレースバックを表示できるようにします。これはデバッグの際に便利ですが、いくつかの機密データをユーザにさらけ出すリスクにもなりえます。そういった理由で、スクリプトを完成品として利用する準備ができたら <code class="docutils literal"><span class="pre">cgitb</span></code> は使ってはいけません。さらに、<em>常に</em> 例外を捕捉し、適切なエラーページを表示するようにしなければいけません – エンドユーザは得体の知れない &quot;Internal Server Errors&quot; をブラウザで見ることを好みません。</p>
 </div>
 <div class="section" id="setting-up-cgi-on-your-own-server">
 <h4>自身のサーバで CGI を立ち上げる<a class="headerlink" href="#setting-up-cgi-on-your-own-server" title="このヘッドラインへのパーマリンク">¶</a></h4>
@@ -182,7 +182,7 @@ BOM は shebang 行に影響するので、エディタが BOM を書き込ま�
 <code class="docutils literal"><span class="pre">mod_python</span></code> が行なうことは Apache プロセスへのインタプリタの埋め込みで、そのためリクエストごとに Python インタプリタを起動させる必要が無いので、リクエストに対する速度が向上します。一方で PHP でよくやるような「HTML への Python の埋め込み」とはかけ離れています。
 Python でそれと同等なことをするのはテンプレートエンジンです。
 <code class="docutils literal"><span class="pre">mod_python</span></code> 自身はより強力で Apache 内部に対してより多くのアクセスを提供します。
-CGI をエミュレートし、JSP に似た「HTML への Python 埋め込み」である 「Python Server Pages」 モードで動作でき、全てのリクエストを一つのファイルで受け付けて何を実行するを決める 「Publisher」 を持っています。</p>
+CGI をエミュレートし、JSP に似た「HTML への Python 埋め込み」である &quot;Python Server Pages&quot; モードで動作でき、全てのリクエストを一つのファイルで受け付けて何を実行するを決める &quot;Publisher&quot; を持っています。</p>
 <p>しかし、<code class="docutils literal"><span class="pre">mod_python</span></code> はいくつかの問題も抱えています。
 PHP インタプリタと違い Python インタプリタはファイル実行時にキャッシュを利用するため、ファイルの変更時にはアップデートするには web サーバ全体を再起動する必要があります。もう一つの問題は基本的なコンセプトにあります – Apache はリクエストを扱うためにいくつかの子プロセスを起動し、不幸にも全ての子プロセスが Python インタプリタ全体を、利用しない場合であっても、読み込む必要があるのです。このせいで web サーバ全体が遅くなります。別の問題は <code class="docutils literal"><span class="pre">mod_python</span></code> は特定のバージョンの <code class="docutils literal"><span class="pre">libpython</span></code> に対してリンクされるため、<code class="docutils literal"><span class="pre">mod_python</span></code> を再コンパイルせずに古いバージョンから新しいバージョンに切り替える (例えば 2.4 から 2.5) ことはできません。さらに <code class="docutils literal"><span class="pre">mod_python</span></code> は Apache web サーバとも結び付いているため <code class="docutils literal"><span class="pre">mod_python</span></code> 用に書かれたプログラムは他の web サーバで簡単に動かすことはできません。</p>
 <p>これらが新しくプログラムを書く際に <code class="docutils literal"><span class="pre">mod_python</span></code> を避けるべき理由です。いくつかの状況では <code class="docutils literal"><span class="pre">mod_python</span></code> を利用するのはよいアイデアでしょうが、WSGI は <code class="docutils literal"><span class="pre">mod_python</span></code> 下でも WSGI プログラムを同様に動かせます。</p>
@@ -191,7 +191,7 @@ PHP インタプリタと違い Python インタプリタはファイル実行�
 <h3>FastCGI と SCGI<a class="headerlink" href="#fastcgi-and-scgi" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>FastCGI と SCGI は CGI のパフォーマンス上の問題を別の方法で解決しようという試みです。
 web サーバにインタプリタを組み込む代わりに、バックグラウンドで長時間実行されるプロセスを生成します。さらに web サーバ上にはいくつかのモジュールがあり、それらは web サーバとバックグラウンドプロセスが「話す」ことを可能にします。バックグラウンドプロセスはサーバと独立しているため、 Python を含んだ、任意の言語で書くことができます。言語に必要なのは web サーバとの通信を扱うライブラリだけです。</p>
-<p>FastCGI と SCGI の違いはささいなもので、SCGI は基本的に 「simpler FastCGI」 です。しかし、SCGI をサポートする web サーバは限定されているため、多くの人々は代わりに同様に動作する FastCGI を利用します。SCGI に適用されるほとんど全てのものは FastCGI にも適用できるので、 FastCGI だけについて解説します。</p>
+<p>FastCGI と SCGI の違いはささいなもので、SCGI は基本的に &quot;simpler FastCGI&quot; です。しかし、SCGI をサポートする web サーバは限定されているため、多くの人々は代わりに同様に動作する FastCGI を利用します。SCGI に適用されるほとんど全てのものは FastCGI にも適用できるので、 FastCGI だけについて解説します。</p>
 <p>最近では FastCGI を直接使うことはありません。
 <code class="docutils literal"><span class="pre">mod_python</span></code> のように WSGI アプリケーションの配置のためだけに FastCGI が利用されています。</p>
 <div class="section" id="setting-up-fastcgi">
@@ -333,7 +333,7 @@ Python wiki には <a class="reference external" href="https://wiki.python.org/m
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
 <p class="last">たくさんのテンプレートエンジンが注目を集めようと競っています。というのも、 Python でテンプレートエンジンを作るのが非常に簡単だからです。
-wiki の <a class="reference external" href="https://wiki.python.org/moin/Templating">Templating</a> ページには、大量の今も増え続けるテンプレートエンジンの一覧が載っています。上で挙げた 3 つのテンプレートエンジンは 「次世代の」 テンプレートエンジンと見なされていて、始めるのに良いものです。</p>
+wiki の <a class="reference external" href="https://wiki.python.org/moin/Templating">Templating</a> ページには、大量の今も増え続けるテンプレートエンジンの一覧が載っています。上で挙げた 3 つのテンプレートエンジンは &quot;次世代の&quot; テンプレートエンジンと見なされていて、始めるのに良いものです。</p>
 </div>
 </div>
 <div class="section" id="data-persistence">
@@ -343,8 +343,8 @@ wiki の <a class="reference external" href="https://wiki.python.org/moin/Templa
 <p>関係データベースには <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> と呼ばれる言語を利用して <em>問い合わせ (query)</em> ます。一般的に Python プログラマは SQL があまり好きではなく、オブジェクトで動作する方を好みます。
 <a class="reference external" href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> (Object Relational Mapping) と呼ばれる技術を使うことで、 Python オブジェクトをデータベースに保存できます。
 ORM は内部でオブジェクト指向的アクセスを SQL コードに変換するので、ユーザはそのことを意識せずに済みます。ほとんどの <a class="reference internal" href="#framework">framework</a> は ORMs を利用し、とてもうまくいっています.</p>
-<p>第2の可能性は通常のプレーンテキストのファイル (しばしば 「フラットファイル」 と呼ばれます) で保存することです。この方法は単純なサイトでは非常に簡単ですが、 web サイトが保存されたデータへの更新がたくさん行われる場合、ちゃんと動くようにするのは難しくなってきます。</p>
-<p>第3の可能性はオブジェクト指向データベースです (「オブジェクトデータベース」 とも呼ばれます)。このデータベースは、プログラムの実行中のメモリ上での構成とほぼ同じ形式でオブジェクトのデータを保存します。
+<p>第2の可能性は通常のプレーンテキストのファイル (しばしば &quot;フラットファイル&quot; と呼ばれます) で保存することです。この方法は単純なサイトでは非常に簡単ですが、 web サイトが保存されたデータへの更新がたくさん行われる場合、ちゃんと動くようにするのは難しくなってきます。</p>
+<p>第3の可能性はオブジェクト指向データベースです (&quot;オブジェクトデータベース&quot; とも呼ばれます)。このデータベースは、プログラムの実行中のメモリ上での構成とほぼ同じ形式でオブジェクトのデータを保存します。
 (対照的に、 ORM はオブジェクトデータをテーブルの行と行どうしの関係として保存します。)
 オブジェクトを直接保存することには、ほぼ全てのオブジェクトを単純な方法で保存できるという優位点があり、これは表現するのが非常に難しいオブジェクトがある関係データベースには無い特徴です。</p>
 <p><a class="reference internal" href="#framework">framework</a> はしばしばどのデータストレージ方法を選べばよいかのヒントを与えてくれます。代わりとなるストレージ機構を使った方がアプリケーションの特別な要件によりよく合うのでない限り、普通はフレームワークが推奨しているデータストアを使い続けるのがよい考えです。</p>
@@ -362,12 +362,12 @@ ORM は内部でオブジェクト指向的アクセスを SQL コードに変�
 </div>
 <div class="section" id="frameworks">
 <span id="framework"></span><h2>フレームワーク<a class="headerlink" href="#frameworks" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>web サイトを動かずコードを作成するプロセスは様々なサービスを提供するコードを書く作業を伴います。あるサービスを提供するコードは、当該の web サイトの複雑さや目的に関わらず、たいてい同じような動作をします。共通のソリューションを抽象化し再利用可能なコードにすると、 web 開発で 「フレームワーク」 と呼ばれるものが生み出されます。おそらく最も知られている web 開発のフレームワークは Ruby on Rails ですが、 Python には独自のフレームワークがあります。その中には部分的に Rails にインスパイアされたり、アイディアを拝借したものもありましたが、多くのものは Rails よりずっと前から存在していました。</p>
+<p>web サイトを動かずコードを作成するプロセスは様々なサービスを提供するコードを書く作業を伴います。あるサービスを提供するコードは、当該の web サイトの複雑さや目的に関わらず、たいてい同じような動作をします。共通のソリューションを抽象化し再利用可能なコードにすると、 web 開発で &quot;フレームワーク&quot; と呼ばれるものが生み出されます。おそらく最も知られている web 開発のフレームワークは Ruby on Rails ですが、 Python には独自のフレームワークがあります。その中には部分的に Rails にインスパイアされたり、アイディアを拝借したものもありましたが、多くのものは Rails よりずっと前から存在していました。</p>
 <p>もともと Python の web フレームワークには、 web サイトを開発するのに必要な全てのサービスを1つにまとめて、巨大な集約されたツールの集まりを作る傾向がありました。どの2つの web フレームワークも互換性はありませんでした:
-あるフレームワーク用に開発したプログラムは、かなりの再設計作業をしないと他のフレームワークには配置できませんでした。この状況が 「ミニマリスト」 web フレームワークの開発につながり、そういったフレームワークは Python コードと http プロトコルの間のやり取りをするツールだけを提供し、他の全てのサービスを別々のコンポーネントとしてフレームワーク上に追加するものでした。場当たり的な標準が開発され、制限はあるものの、異なるテンプレートエンジンを交換可能にする標準のような、フレームワークどうしの互換性も生まれました。</p>
+あるフレームワーク用に開発したプログラムは、かなりの再設計作業をしないと他のフレームワークには配置できませんでした。この状況が &quot;ミニマリスト&quot; web フレームワークの開発につながり、そういったフレームワークは Python コードと http プロトコルの間のやり取りをするツールだけを提供し、他の全てのサービスを別々のコンポーネントとしてフレームワーク上に追加するものでした。場当たり的な標準が開発され、制限はあるものの、異なるテンプレートエンジンを交換可能にする標準のような、フレームワークどうしの互換性も生まれました。</p>
 <p>WSGI の出現から Python の web フレームワークの世界は、 WSGI 標準に基づいた互換性に向かって進化していきました。
-(最も複雑な web サイトを配置するのに必要な全てのツールを提供する) 「フルスタック」 であれ、ミニマリストであれ、その中間であれ、今や多くの web フレームワークが複数のフレームワークで使える再利用可能なコンポーネントで構築されています。</p>
-<p>大多数のユーザはおそらくコミュニティが活発な 「フルスタック」 フレームワークを選びたいでしょう。これらのフレームワークはきちんとドキュメントが書かれ、機能を完全に揃えた web サイトを最小の時間で作る簡単な道が提供されている傾向があります。</p>
+(最も複雑な web サイトを配置するのに必要な全てのツールを提供する) &quot;フルスタック&quot; であれ、ミニマリストであれ、その中間であれ、今や多くの web フレームワークが複数のフレームワークで使える再利用可能なコンポーネントで構築されています。</p>
+<p>大多数のユーザはおそらくコミュニティが活発な &quot;フルスタック&quot; フレームワークを選びたいでしょう。これらのフレームワークはきちんとドキュメントが書かれ、機能を完全に揃えた web サイトを最小の時間で作る簡単な道が提供されている傾向があります。</p>
 <div class="section" id="some-notable-frameworks">
 <h3>いくつかの注目に値するフレームワーク<a class="headerlink" href="#some-notable-frameworks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>膨大な数のフレームワークがあるので、全てについて記述することは不可能です。その代わりに最も人気のあるもののいくつかに簡単に触れます。</p>
@@ -395,7 +395,7 @@ TurboGears 2 は <a class="reference external" href="http://www.pylonsproject.or
 </div>
 <div class="section" id="zope">
 <h4>Zope<a class="headerlink" href="#zope" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>Zope フレームワークは 「古い原始の」 フレームワークの1つです。
+<p>Zope フレームワークは &quot;古い原始の&quot; フレームワークの1つです。
 Zope2 の現在の姿は、固く結合されたフルスタックなフレームワークです。
 Zope の最も興味深い機能の1つは、本体に固く結合されている <a class="reference external" href="https://launchpad.net/zodb">ZODB</a> (Zope Object Database) と呼ばれる強力なオブジェクトデータベースです。この固く結合されている性質のために、 Zope はいくぶん孤立したエコシステムが形成されることとなりました: Zope 用に書かれたコードは Zope 以外の場所ではあまり使えず、逆向きも同様です。この問題を解決するために Zope 3 への取り組みが始まりました。
 Zope 3 では、より綺麗に分離されたコンポーネントの集合体として Zope を再設計します。この取り組みは WSGI 標準が考案されるより前に始まりましたが、 <a class="reference external" href="http://repoze.org/">Repoze</a> プロジェクトによって Zope 3 のための WSGI サポートが提供されています。
@@ -529,7 +529,7 @@ Pylons は <a class="reference external" href="http://pythonpaste.org/">Paste</a
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

@@ -189,7 +189,7 @@
 <p>注釈:</p>
 <ol class="arabic simple">
 <li>パディングは構造体のメンバの並びの中にだけ自動で追加されます。最初や最後にパディングが追加されることはありません。</li>
-<li>ネイティブでないサイズおよびアラインメントが使われる場合にはパディングは行われません (たとえば 『&lt;』, 『&gt;』, 『=』, 『!』 を使った場合です)。</li>
+<li>ネイティブでないサイズおよびアラインメントが使われる場合にはパディングは行われません (たとえば '&lt;', '&gt;', '=', '!' を使った場合です)。</li>
 <li>特定の型によるアラインメント要求に従うように構造体の末端をそろえるには、繰り返し回数をゼロにした特定の型でフォーマットを終端します。 <a class="reference internal" href="#struct-examples"><span class="std std-ref">例</span></a> を参照して下さい。</li>
 </ol>
 </div>
@@ -352,7 +352,7 @@
 <p>フォーマット文字の前に整数をつけ、繰り返し回数 (count) を指定することができます。例えば、フォーマット文字列 <code class="docutils literal"><span class="pre">'4h'</span></code> は <code class="docutils literal"><span class="pre">'hhhh'</span></code> と全く同じ意味です。</p>
 <p>フォーマット文字間の空白文字は無視されます; count とフォーマット文字の間にはスペースを入れてはいけません。</p>
 <p>フォーマット文字 <code class="docutils literal"><span class="pre">'s'</span></code> では、count は文字列のサイズとして扱われます。他のフォーマット文字のように繰り返し回数ではありません; 例えば、 <code class="docutils literal"><span class="pre">'10c'</span></code> が 10 個のキャラクタを表すのに対して、 <code class="docutils literal"><span class="pre">'10s'</span></code> は 10 バイトの長さを持った 1 個の文字列です。count の指定がない場合のデフォルトは 1 です。文字列をパックする際には、指定した長さにフィットするように、必要に応じて切り詰められたりヌル文字で穴埋めされたりします。アンパック時は、取り出される文字列は正確に指定サイズのサイズを持ちます。また特殊なケースとして、(<code class="docutils literal"><span class="pre">'0c'</span></code> が 0 個のキャラクタを表すのに対して) <code class="docutils literal"><span class="pre">'0s'</span></code> は 1 個の空文字列を意味します。</p>
-<p>フォーマット文字 <code class="docutils literal"><span class="pre">'p'</span></code> は 「Pascal 文字列 (pascal string)」  をコードします。Pascal 文字列は count で与えられる <em>固定長のバイト列</em> に収められた短い可変長の文字列です。このデータの先頭の 1 バイトには文字列の長さか255 のうち、小さい方の数が収められます。その後に文字列のバイトデータが続きます。 <a class="reference internal" href="#struct.pack" title="struct.pack"><code class="xref py py-func docutils literal"><span class="pre">pack()</span></code></a> に渡された Pascal 文字列の長さが長すぎた (count-1 よりも長い) 場合、先頭の <code class="docutils literal"><span class="pre">count-1</span></code> バイトが書き込まれます。文字列が <code class="docutils literal"><span class="pre">count-1</span></code> よりも短い場合、指定した count バイトに達するまでの残りの部分はヌルで埋められます。 <a class="reference internal" href="#struct.unpack" title="struct.unpack"><code class="xref py py-func docutils literal"><span class="pre">unpack()</span></code></a> では、フォーマット文字 <code class="docutils literal"><span class="pre">'p'</span></code> は指定された <code class="docutils literal"><span class="pre">count</span></code> バイトだけデータを読み込みますが、返される文字列は決して 255 文字を超えることはないので注意してください。</p>
+<p>フォーマット文字 <code class="docutils literal"><span class="pre">'p'</span></code> は &quot;Pascal 文字列 (pascal string)&quot;  をコードします。Pascal 文字列は count で与えられる <em>固定長のバイト列</em> に収められた短い可変長の文字列です。このデータの先頭の 1 バイトには文字列の長さか255 のうち、小さい方の数が収められます。その後に文字列のバイトデータが続きます。 <a class="reference internal" href="#struct.pack" title="struct.pack"><code class="xref py py-func docutils literal"><span class="pre">pack()</span></code></a> に渡された Pascal 文字列の長さが長すぎた (count-1 よりも長い) 場合、先頭の <code class="docutils literal"><span class="pre">count-1</span></code> バイトが書き込まれます。文字列が <code class="docutils literal"><span class="pre">count-1</span></code> よりも短い場合、指定した count バイトに達するまでの残りの部分はヌルで埋められます。 <a class="reference internal" href="#struct.unpack" title="struct.unpack"><code class="xref py py-func docutils literal"><span class="pre">unpack()</span></code></a> では、フォーマット文字 <code class="docutils literal"><span class="pre">'p'</span></code> は指定された <code class="docutils literal"><span class="pre">count</span></code> バイトだけデータを読み込みますが、返される文字列は決して 255 文字を超えることはないので注意してください。</p>
 <p>フォーマット文字 <code class="docutils literal"><span class="pre">'P'</span></code> では、返される値は Python 整数型または long 整数型で、これはポインタの値を Python での整数にキャストする際に、値を保持するために必要なサイズに依存します。 <em>NULL</em> ポインタは常に Python 整数型の <code class="docutils literal"><span class="pre">0</span></code> になります。ポインタ型のサイズを持った値をパックする際には、Python 整数型か long 整数型オブジェクトのどちらかが使われます。例えば、 Alpha および Merced プロセッサは 64 bit のポインタ値を使いますが、これはポインタを保持するために Python long 整数型が使われることを意味します; 32 bit ポインタを使う他のプラットフォームでは Python 整数型が使われます。</p>
 <p><code class="docutils literal"><span class="pre">'?'</span></code> フォーマット文字では、返り値は <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal"><span class="pre">True</span></code></a> または <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal"><span class="pre">False</span></code></a> です。パックするときには、引数オブジェクトの論理値としての値が使われます。 0 または 1 のネイティブや標準の真偽値表現でパックされ、アンパックされるときはゼロでない値は <code class="docutils literal"><span class="pre">True</span></code> になります。</p>
 </div>
@@ -544,7 +544,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

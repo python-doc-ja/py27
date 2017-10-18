@@ -85,7 +85,7 @@
 </div>
 <p><strong>ソースコード:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/2.7/Lib/urlparse.py">Lib/urlparse.py</a></p>
 <hr class="docutils" />
-<p>このモジュールでは URL (Uniform Resource Locator) 文字列をその構成要素 (アドレススキーム、ネットワーク上の位置、パスその他) に分解したり、構成要素を URL に組みなおしたり、」相対 URL (relative URL)」 を指定した 「基底 URL (base URL)」 に基づいて絶対 URL に変換するための標準的なインタフェースを定義しています。</p>
+<p>このモジュールでは URL (Uniform Resource Locator) 文字列をその構成要素 (アドレススキーム、ネットワーク上の位置、パスその他) に分解したり、構成要素を URL に組みなおしたり、&quot;相対 URL (relative URL)&quot; を指定した &quot;基底 URL (base URL)&quot; に基づいて絶対 URL に変換するための標準的なインタフェースを定義しています。</p>
 <p>このモジュールは Relative Uniform Resource Locators (相対 URL) に関する RFC に適合するよう設計されていおり、次のスキームをサポートしています: <code class="docutils literal"><span class="pre">file</span></code>, <code class="docutils literal"><span class="pre">ftp</span></code>, <code class="docutils literal"><span class="pre">gopher</span></code>, <code class="docutils literal"><span class="pre">hdl</span></code>, <code class="docutils literal"><span class="pre">http</span></code>, <code class="docutils literal"><span class="pre">https</span></code>, <code class="docutils literal"><span class="pre">imap</span></code>, <code class="docutils literal"><span class="pre">mailto</span></code>, <code class="docutils literal"><span class="pre">mms</span></code>, <code class="docutils literal"><span class="pre">news</span></code>, <code class="docutils literal"><span class="pre">nntp</span></code>, <code class="docutils literal"><span class="pre">prospero</span></code>, <code class="docutils literal"><span class="pre">rsync</span></code>, <code class="docutils literal"><span class="pre">rtsp</span></code>, <code class="docutils literal"><span class="pre">rtspu</span></code>, <code class="docutils literal"><span class="pre">sftp</span></code>, <code class="docutils literal"><span class="pre">shttp</span></code>, <code class="docutils literal"><span class="pre">sip</span></code>, <code class="docutils literal"><span class="pre">sips</span></code>, <code class="docutils literal"><span class="pre">snews</span></code>, <code class="docutils literal"><span class="pre">svn</span></code>, <code class="docutils literal"><span class="pre">svn+ssh</span></code>, <code class="docutils literal"><span class="pre">telnet</span></code>, <code class="docutils literal"><span class="pre">wais</span></code>.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.5 で追加: </span><code class="docutils literal"><span class="pre">sftp</span></code> および <code class="docutils literal"><span class="pre">sips</span></code> スキームのサポートが追加されました。</p>
@@ -108,7 +108,7 @@
 <span class="go">&#39;http://www.cwi.nl:80/%7Eguido/Python.html&#39;</span>
 </pre></div>
 </div>
-<p><span class="target" id="index-11"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> にある文法仕様に基づき、urlparse は 『//』 で始まる場合にのみ netloc を認識します。それ以外の場合は、入力は相対URLであると推定され、path 部分で始まることになります。</p>
+<p><span class="target" id="index-11"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> にある文法仕様に基づき、urlparse は '//' で始まる場合にのみ netloc を認識します。それ以外の場合は、入力は相対URLであると推定され、path 部分で始まることになります。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">urlparse</span><span class="p">(</span><span class="s1">&#39;//www.cwi.nl:80/</span><span class="si">%7E</span><span class="s1">guido/Python.html&#39;</span><span class="p">)</span>
 <span class="go">ParseResult(scheme=&#39;&#39;, netloc=&#39;www.cwi.nl:80&#39;, path=&#39;/%7Eguido/Python.html&#39;,</span>
@@ -318,7 +318,7 @@
 <dl class="function">
 <dt id="urlparse.urljoin">
 <code class="descclassname">urlparse.</code><code class="descname">urljoin</code><span class="sig-paren">(</span><em>base</em>, <em>url</em><span class="optional">[</span>, <em>allow_fragments</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#urlparse.urljoin" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>「基底 URL」(<em>base</em>)と別のURL(<em>url</em>)を組み合わせて、完全な URL (「絶対 URL」) を構成します。ぶっちゃけ、この関数は基底 URL の要素、特にアドレススキーム、ネットワーク上の位置、およびパス (の一部) を使って、相対 URL にない要素を提供します。以下の例のようになります:</p>
+<dd><p>&quot;基底 URL&quot;(<em>base</em>)と別のURL(<em>url</em>)を組み合わせて、完全な URL (&quot;絶対 URL&quot;) を構成します。ぶっちゃけ、この関数は基底 URL の要素、特にアドレススキーム、ネットワーク上の位置、およびパス (の一部) を使って、相対 URL にない要素を提供します。以下の例のようになります:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urljoin</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">urljoin</span><span class="p">(</span><span class="s1">&#39;http://www.cwi.nl/</span><span class="si">%7E</span><span class="s1">guido/Python.html&#39;</span><span class="p">,</span> <span class="s1">&#39;FAQ.html&#39;</span><span class="p">)</span>
 <span class="go">&#39;http://www.cwi.nl/%7Eguido/FAQ.html&#39;</span>
@@ -355,7 +355,7 @@
 <dt><span class="target" id="index-6"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc2368.html"><strong>RFC 2368</strong></a> - The mailto URL scheme.</dt>
 <dd>mailto URL スキームに対する文法的要求事項です。</dd>
 <dt><span class="target" id="index-7"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1808.html"><strong>RFC 1808</strong></a> - Relative Uniform Resource Locators</dt>
-<dd>この RFC には絶対 URL と相対 URL を結合するための規則がボーダケースの取扱い方を決定する 「異常な例」 つきで収められています。</dd>
+<dd>この RFC には絶対 URL と相対 URL を結合するための規則がボーダケースの取扱い方を決定する &quot;異常な例&quot; つきで収められています。</dd>
 <dt><span class="target" id="index-8"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1738.html"><strong>RFC 1738</strong></a> - Uniform Resource Locators (URL)</dt>
 <dd>この RFC では絶対 URL の形式的な文法と意味付けを仕様化しています。</dd>
 </dl>
@@ -478,7 +478,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2017-10-17
+    最終更新日時: 2017-10-18
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.4 を使って作成されました。

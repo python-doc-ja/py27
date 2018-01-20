@@ -340,7 +340,13 @@ enables non-ASCII matching for <a class="reference internal" href="#re.IGNORECAS
 <code class="descclassname">re.</code><code class="descname">X</code><a class="headerlink" href="#re.X" title="この定義へのパーマリンク">¶</a></dt>
 <dt id="re.VERBOSE">
 <code class="descclassname">re.</code><code class="descname">VERBOSE</code><a class="headerlink" href="#re.VERBOSE" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>このフラグによって、より良い正規表現を書くことができます。それはパターンの論理的なセクションを視覚的に区切り、コメントも入れることが出来ることによって、より読みやすいものとすることが出来ます。パターン内の空白は、文字クラス内にあるかエスケープされていないバックスラッシュが前にある時以外は無視されます。また、行に、文字クラス内にもなく、エスケープされていないバックスラッシュが前にもない <code class="docutils literal"><span class="pre">'#'</span></code> がある時は、そのような <code class="docutils literal"><span class="pre">'#'</span></code> の左端からその行の末尾までが無視されます。</p>
+<dd><p>This flag allows you to write regular expressions that look nicer and are
+more readable by allowing you to visually separate logical sections of the
+pattern and add comments. Whitespace within the pattern is ignored, except
+when in a character class or when preceded by an unescaped backslash.
+When a line contains a <code class="docutils literal"><span class="pre">#</span></code> that is not in a character class and is not
+preceded by an unescaped backslash, all characters from the leftmost such
+<code class="docutils literal"><span class="pre">#</span></code> through the end of the line are ignored.</p>
 <p>つまり、数字にマッチする下記のふたつの正規表現オブジェクトは、機能的に等価です。:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;\d +  # the integral part</span>
 <span class="s2">                   \.    # the decimal point</span>
@@ -399,7 +405,12 @@ enables non-ASCII matching for <a class="reference internal" href="#re.IGNORECAS
 <dl class="function">
 <dt id="re.findall">
 <code class="descclassname">re.</code><code class="descname">findall</code><span class="sig-paren">(</span><em>pattern</em>, <em>string</em>, <em>flags=0</em><span class="sig-paren">)</span><a class="headerlink" href="#re.findall" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>pattern</em> の <em>string</em> へのマッチのうち、重複しない全てのマッチを文字列のリストとして返します。 <em>string</em> は左から右へと走査され、マッチは見つかった順番で返されます。パターン中に何らかのグループがある場合、グループのリストを返します。グループが複数定義されていた場合、タプルのリストになります。他のマッチの開始部分に接触しないかぎり、空のマッチも結果に含められます。</p>
+<dd><p>Return all non-overlapping matches of <em>pattern</em> in <em>string</em>, as a list of
+strings.  The <em>string</em> is scanned left-to-right, and matches are returned in
+the order found.  If one or more groups are present in the pattern, return a
+list of groups; this will be a list of tuples if the pattern has more than
+one group.  Empty matches are included in the result unless they touch the
+beginning of another match.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 1.5.2 で追加.</span></p>
 </div>
@@ -411,7 +422,11 @@ enables non-ASCII matching for <a class="reference internal" href="#re.IGNORECAS
 <dl class="function">
 <dt id="re.finditer">
 <code class="descclassname">re.</code><code class="descname">finditer</code><span class="sig-paren">(</span><em>pattern</em>, <em>string</em>, <em>flags=0</em><span class="sig-paren">)</span><a class="headerlink" href="#re.finditer" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><em>string</em> 内の RE <em>pattern</em> の重複しないマッチを <a class="reference internal" href="#re.MatchObject" title="re.MatchObject"><code class="xref py py-class docutils literal"><span class="pre">MatchObject</span></code></a> インスタンスを返す <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> を返します。 <em>string</em> は左から右へと走査され、マッチは見つかった順番で返されます。他のマッチの開始部分に接触しないかぎり、空のマッチも結果に含められます。</p>
+<dd><p>Return an <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> yielding <a class="reference internal" href="#re.MatchObject" title="re.MatchObject"><code class="xref py py-class docutils literal"><span class="pre">MatchObject</span></code></a> instances over all
+non-overlapping matches for the RE <em>pattern</em> in <em>string</em>.  The <em>string</em> is
+scanned left-to-right, and matches are returned in the order found.  Empty
+matches are included in the result unless they touch the beginning of another
+match.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
@@ -1042,7 +1057,7 @@ have regular expression metacharacters in it.  For example:</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-01-20
+    最終更新日時: 2018-01-21
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

@@ -188,7 +188,13 @@
 </div>
 <div class="section" id="class-based-api">
 <h2>22.1.2. クラスに基づいた API<a class="headerlink" href="#class-based-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>クラス形式の <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal"><span class="pre">gettext</span></code></a> モジュールのAPI は GNU <strong class="program">gettext</strong> API よりも高い柔軟性と利便性を持っています。 Python のアプリケーションやモジュールを地域化するにはこちらを使う方を勧めます。 <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal"><span class="pre">gettext</span></code></a> では、GNU <code class="file docutils literal"><span class="pre">.mo</span></code> 形式のファイルを解釈し、標準の 8 ビット文字列または Unicode 文字列形式でメッセージを返す &quot;翻訳&quot; クラスを定義しています。この &quot;翻訳&quot; クラスのインスタンスも、組み込み名前空間に関数 <code class="xref py py-func docutils literal"><span class="pre">_()</span></code> として組みこみ (install) できます。</p>
+<p>The class-based API of the <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal"><span class="pre">gettext</span></code></a> module gives you more flexibility and
+greater convenience than the GNU <strong class="program">gettext</strong> API.  It is the recommended
+way of localizing your Python applications and modules.  <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal"><span class="pre">gettext</span></code></a> defines
+a &quot;translations&quot; class which implements the parsing of GNU <code class="file docutils literal"><span class="pre">.mo</span></code> format
+files, and has methods for returning either standard 8-bit strings or Unicode
+strings. Instances of this &quot;translations&quot; class can also install themselves  in
+the built-in namespace as the function <code class="xref py py-func docutils literal"><span class="pre">_()</span></code>.</p>
 <dl class="function">
 <dt id="gettext.find">
 <code class="descclassname">gettext.</code><code class="descname">find</code><span class="sig-paren">(</span><em>domain</em><span class="optional">[</span>, <em>localedir</em><span class="optional">[</span>, <em>languages</em><span class="optional">[</span>, <em>all</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gettext.find" title="この定義へのパーマリンク">¶</a></dt>
@@ -230,7 +236,11 @@
 
 <div class="section" id="the-nulltranslations-class">
 <h3>22.1.2.1. <a class="reference internal" href="#gettext.NullTranslations" title="gettext.NullTranslations"><code class="xref py py-class docutils literal"><span class="pre">NullTranslations</span></code></a> クラス<a class="headerlink" href="#the-nulltranslations-class" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>翻訳クラスは、元のソースファイル中のメッセージ文字列から翻訳されたメッセージ文字列への変換を実際に実装しているクラスです。全ての翻訳クラスが基底クラスとして用いるクラスが <a class="reference internal" href="#gettext.NullTranslations" title="gettext.NullTranslations"><code class="xref py py-class docutils literal"><span class="pre">NullTranslations</span></code></a> です; このクラスでは独自の特殊な翻訳クラスを実装するために使うことができる基本的なインタフェースを以下に <a class="reference internal" href="#gettext.NullTranslations" title="gettext.NullTranslations"><code class="xref py py-class docutils literal"><span class="pre">NullTranslations</span></code></a> のメソッドを示します:</p>
+<p>Translation classes are what actually implement the translation of original
+source file message strings to translated message strings. The base class used
+by all translation classes is <a class="reference internal" href="#gettext.NullTranslations" title="gettext.NullTranslations"><code class="xref py py-class docutils literal"><span class="pre">NullTranslations</span></code></a>; this provides the basic
+interface you can use to write your own specialized translation classes.  Here
+are the methods of <a class="reference internal" href="#gettext.NullTranslations" title="gettext.NullTranslations"><code class="xref py py-class docutils literal"><span class="pre">NullTranslations</span></code></a>:</p>
 <dl class="class">
 <dt id="gettext.NullTranslations">
 <em class="property">class </em><code class="descclassname">gettext.</code><code class="descname">NullTranslations</code><span class="sig-paren">(</span><span class="optional">[</span><em>fp</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations" title="この定義へのパーマリンク">¶</a></dt>
@@ -250,13 +260,17 @@
 <dl class="method">
 <dt id="gettext.NullTranslations.gettext">
 <code class="descname">gettext</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.gettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-meth docutils literal"><span class="pre">gettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-meth docutils literal"><span class="pre">gettext()</span></code></a> to the
+fallback. Otherwise, return the translated message.  Overridden in derived
+classes.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gettext.NullTranslations.lgettext">
 <code class="descname">lgettext</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.lgettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#gettext.lgettext" title="gettext.lgettext"><code class="xref py py-meth docutils literal"><span class="pre">lgettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#gettext.lgettext" title="gettext.lgettext"><code class="xref py py-meth docutils literal"><span class="pre">lgettext()</span></code></a> to the
+fallback. Otherwise, return the translated message.  Overridden in derived
+classes.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
 </div>
@@ -265,13 +279,17 @@
 <dl class="method">
 <dt id="gettext.NullTranslations.ugettext">
 <code class="descname">ugettext</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.ugettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-meth docutils literal"><span class="pre">gettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを Unicode 文字列で返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#gettext.NullTranslations.ugettext" title="gettext.NullTranslations.ugettext"><code class="xref py py-meth docutils literal"><span class="pre">ugettext()</span></code></a> to the
+fallback. Otherwise, return the translated message as a Unicode
+string. Overridden in derived classes.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gettext.NullTranslations.ngettext">
 <code class="descname">ngettext</code><span class="sig-paren">(</span><em>singular</em>, <em>plural</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.ngettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#gettext.ngettext" title="gettext.ngettext"><code class="xref py py-meth docutils literal"><span class="pre">ngettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#gettext.ngettext" title="gettext.ngettext"><code class="xref py py-meth docutils literal"><span class="pre">ngettext()</span></code></a> to the
+fallback. Otherwise, return the translated message.  Overridden in derived
+classes.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
@@ -280,7 +298,9 @@
 <dl class="method">
 <dt id="gettext.NullTranslations.lngettext">
 <code class="descname">lngettext</code><span class="sig-paren">(</span><em>singular</em>, <em>plural</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.lngettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#gettext.lngettext" title="gettext.lngettext"><code class="xref py py-meth docutils literal"><span class="pre">lngettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#gettext.lngettext" title="gettext.lngettext"><code class="xref py py-meth docutils literal"><span class="pre">lngettext()</span></code></a> to the
+fallback. Otherwise, return the translated message.  Overridden in derived
+classes.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.4 で追加.</span></p>
 </div>
@@ -289,7 +309,9 @@
 <dl class="method">
 <dt id="gettext.NullTranslations.ungettext">
 <code class="descname">ungettext</code><span class="sig-paren">(</span><em>singular</em>, <em>plural</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#gettext.NullTranslations.ungettext" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>代替オブジェクトが設定されている場合、 <a class="reference internal" href="#gettext.NullTranslations.ungettext" title="gettext.NullTranslations.ungettext"><code class="xref py py-meth docutils literal"><span class="pre">ungettext()</span></code></a> を代替オブジェクトに転送します。そうでない場合、翻訳されたメッセージを Unicode 文字列で返します。派生クラスで上書きするメソッドです。</p>
+<dd><p>If a fallback has been set, forward <a class="reference internal" href="#gettext.NullTranslations.ungettext" title="gettext.NullTranslations.ungettext"><code class="xref py py-meth docutils literal"><span class="pre">ungettext()</span></code></a> to the fallback.
+Otherwise, return the translated message as a Unicode string. Overridden
+in derived classes.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.3 で追加.</span></p>
 </div>
@@ -696,7 +718,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-01-20
+    最終更新日時: 2018-01-21
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

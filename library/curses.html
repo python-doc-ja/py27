@@ -708,7 +708,12 @@ Alt キーと組み合わせたキー (128–255) の名前は、先頭に 'M-' 
 <code class="descclassname">window.</code><code class="descname">chgat</code><span class="sig-paren">(</span><em>y</em>, <em>x</em>, <em>attr</em><span class="sig-paren">)</span></dt>
 <dt>
 <code class="descclassname">window.</code><code class="descname">chgat</code><span class="sig-paren">(</span><em>y</em>, <em>x</em>, <em>num</em>, <em>attr</em><span class="sig-paren">)</span></dt>
-<dd><p>現在のカーソルのポジションか、引数が指定された場合は <code class="docutils literal"><span class="pre">(y,</span> <span class="pre">x)</span></code> から、<em>num</em> 文字の属性を設定します。<em>num</em> が指定されない、または <em>num</em> = -1 の場合は、属性はその行の終わりまでのすべての文字に適用されます。この関数はカーソルを移動しません。変更された行に対して <a class="reference internal" href="#curses.window.touchline" title="curses.window.touchline"><code class="xref py py-meth docutils literal"><span class="pre">touchline()</span></code></a> メソッドが呼び出されるので、その行の内容は次のwindow refreshの時に再描画されます。</p>
+<dd><p>Set the attributes of <em>num</em> characters at the current cursor position, or at
+position <code class="docutils literal"><span class="pre">(y,</span> <span class="pre">x)</span></code> if supplied. If no value of <em>num</em> is given or <em>num</em> = -1,
+the attribute will  be set on all the characters to the end of the line.  This
+function does not move the cursor. The changed line will be touched using the
+<a class="reference internal" href="#curses.window.touchline" title="curses.window.touchline"><code class="xref py py-meth docutils literal"><span class="pre">touchline()</span></code></a> method so that the contents will be redisplayed by the next
+window refresh.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1952,7 +1957,7 @@ color-pair field information</td>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-01-20
+    最終更新日時: 2018-01-21
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

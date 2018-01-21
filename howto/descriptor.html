@@ -190,7 +190,7 @@
 <span class="mi">5</span>
 </pre></div>
 </div>
-<p>このプロトコルは単純ですが、ワクワクする可能性も秘めています。ユースケースの中には、あまりに一般的なので個別の関数の呼び出しにまとめられたものもあります。プロパティ、束縛および非束縛のメソッド、静的メソッド、そしてクラスメソッドは、全てディスクリプタプロトコルに基づいています。</p>
+<p>このプロトコルは単純ですが、ワクワクする可能性も秘めています。ユースケースの中には、あまりに一般的なので個別の関数の呼び出しにまとめられたものもあります。プロパティ、束縛および非束縛のメソッド、静的メソッド、そしてクラスメソッドは、全てデスクリプタプロトコルに基づいています。</p>
 </div>
 <div class="section" id="properties">
 <h2><a class="toc-backref" href="#id8">プロパティ</a><a class="headerlink" href="#properties" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -261,7 +261,7 @@
 <h2><a class="toc-backref" href="#id9">関数とメソッド</a><a class="headerlink" href="#functions-and-methods" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Python のオブジェクト指向機能は、関数に基づく環境の上に構築されています。非データディスクリプタを使って、この 2 つはシームレスに組み合わされています。</p>
 <p>クラス辞書は、メソッドを関数として保存します。クラス定義内で、メソッドは、関数を使うのに便利なツール、 <a class="reference internal" href="../reference/compound_stmts.html#def"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a> や <a class="reference internal" href="../reference/expressions.html#lambda"><code class="xref std std-keyword docutils literal"><span class="pre">lambda</span></code></a> を使って書かれます。標準の関数との唯一の違いは、第一引数がオブジェクトインスタンスのために予約されていることです。 Python の慣習では、このインスタンスの参照は <em>self</em> と呼ばれますが、 <em>this</em> その他の好きな変数名で呼び出せます。</p>
-<p>メソッドの呼び出しをサポートするために、関数の <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> メソッドは属性アクセス時にメソッドを束縛します。これにより、すべての関数は、それが呼び出されたのがオブジェクトかクラスかによって、束縛か非束縛メソッドを返す非データディスクリプタになります。pure Python では、これはこのようにはたらきます:</p>
+<p>メソッドの呼び出しをサポートするために、関数の <a class="reference internal" href="../reference/datamodel.html#object.__get__" title="object.__get__"><code class="xref py py-meth docutils literal"><span class="pre">__get__()</span></code></a> メソッドは属性アクセス時にメソッドを束縛します。これにより、すべての関数は、それが呼び出されたのがオブジェクトかクラスかによって、束縛か非束縛メソッドを返す非データデスクリプタになります。pure Python では、これはこのようにはたらきます:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Function</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

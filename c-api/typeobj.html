@@ -170,7 +170,7 @@ cmpfunc, reprfunc, hashfunc</p>
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject._ob_next</code><a class="headerlink" href="#c.PyObject._ob_next" title="この定義へのパーマリンク">¶</a></dt>
 <dt id="c.PyObject._ob_prev">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="descname">PyObject._ob_prev</code><a class="headerlink" href="#c.PyObject._ob_prev" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>これらのフィールドはマクロ <code class="docutils literal"><span class="pre">Py_TRACE_REFS</span></code> が定義されている場合のみ存在します。 <code class="docutils literal"><span class="pre">PyObject_HEAD_INIT</span></code> マクロを使うと、フィールドを <em>NULL</em> に初期化します。静的にメモリ確保されているオブジェクトでは、これらのフィールドは常に <em>NULL</em> のままです。動的にメモリ確保されるオブジェクトの場合、これら二つのフィールドは、ヒープ上の <em>全ての</em> 存続中のオブジェクトからなる二重リンクリストでオブジェクトをリンクする際に使われます。このことは様々なデバッグ目的に利用できます; 現状では、環境変数 <span class="target" id="index-5"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONDUMPREFS"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDUMPREFS</span></code></a> が設定されているときに、プログラムの実行終了時点で存続しているオブジェクトを出力するのが唯一の用例です。</p>
+<dd><p>これらのフィールドはマクロ <code class="docutils literal"><span class="pre">Py_TRACE_REFS</span></code> が定義されている場合のみ存在します。 <code class="docutils literal"><span class="pre">PyObject_HEAD_INIT</span></code> マクロを使うと、フィールドを <em>NULL</em> に初期化します。静的にメモリ確保されているオブジェクトでは、これらのフィールドは常に <em>NULL</em> のままです。動的にメモリ確保されるオブジェクトの場合、これら二つのフィールドは、ヒープ上の <em>全ての</em> 存続中のオブジェクトからなる二重リンクリストでオブジェクトをリンクする際に使われます。このことは様々なデバッグ目的に利用できます; 現状では、環境変数 <span class="target" id="index-6"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONDUMPREFS"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONDUMPREFS</span></code></a> が設定されているときに、プログラムの実行終了時点で存続しているオブジェクトを出力するのが唯一の用例です。</p>
 <p>サブタイプはこのフィールドを継承しません。</p>
 </dd></dl>
 
@@ -762,7 +762,7 @@ destructor <code class="descname">PyTypeObject.tp_free</code><a class="headerlin
 <p>The remaining fields are only defined if the feature test macro
 <code class="xref py py-const docutils literal"><span class="pre">COUNT_ALLOCS</span></code> is defined, and are for internal use only. They are
 documented here for completeness.  None of these fields are inherited by
-subtypes.</p>
+subtypes. See the <span class="target" id="index-3"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSHOWALLOCCOUNT"><code class="xref std std-envvar docutils literal"><span class="pre">PYTHONSHOWALLOCCOUNT</span></code></a> environment variable.</p>
 <dl class="member">
 <dt id="c.PyTypeObject.tp_allocs">
 Py_ssize_t <code class="descname">PyTypeObject.tp_allocs</code><a class="headerlink" href="#c.PyTypeObject.tp_allocs" title="この定義へのパーマリンク">¶</a></dt>
@@ -971,7 +971,7 @@ allow writing into its returned buffers.</p>
 This slot must not be <em>NULL</em> and is used to inform the caller how many segments
 the object contains.  Simple objects such as <a class="reference internal" href="string.html#c.PyString_Type" title="PyString_Type"><code class="xref c c-type docutils literal"><span class="pre">PyString_Type</span></code></a> and
 <a class="reference internal" href="buffer.html#c.PyBuffer_Type" title="PyBuffer_Type"><code class="xref c c-type docutils literal"><span class="pre">PyBuffer_Type</span></code></a> objects contain a single segment.</p>
-<p id="index-3">The last slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code>, of type <a class="reference internal" href="#c.charbufferproc" title="charbufferproc"><code class="xref c c-type docutils literal"><span class="pre">charbufferproc</span></code></a>.
+<p id="index-4">The last slot is <code class="xref py py-attr docutils literal"><span class="pre">bf_getcharbuffer</span></code>, of type <a class="reference internal" href="#c.charbufferproc" title="charbufferproc"><code class="xref c c-type docutils literal"><span class="pre">charbufferproc</span></code></a>.
 This slot will only be present if the <a class="reference internal" href="#Py_TPFLAGS_HAVE_GETCHARBUFFER" title="Py_TPFLAGS_HAVE_GETCHARBUFFER"><code class="xref py py-const docutils literal"><span class="pre">Py_TPFLAGS_HAVE_GETCHARBUFFER</span></code></a>
 flag is present in the <a class="reference internal" href="#c.PyTypeObject.tp_flags" title="PyTypeObject.tp_flags"><code class="xref c c-member docutils literal"><span class="pre">tp_flags</span></code></a> field of the object’s
 <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal"><span class="pre">PyTypeObject</span></code></a>. Before using this slot, the caller should test whether it
@@ -1098,7 +1098,7 @@ Py_ssize_t <code class="descname">(*charbufferproc)</code><span class="sig-paren
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

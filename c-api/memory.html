@@ -142,6 +142,73 @@ void <code class="descname">PyMem_Del</code><span class="sig-paren">(</span>void
 <p><code class="xref c c-func docutils literal"><span class="pre">PyMem_MALLOC()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">PyMem_REALLOC()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">PyMem_FREE()</span></code> 。</p>
 <p><code class="xref c c-func docutils literal"><span class="pre">PyMem_NEW()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">PyMem_RESIZE()</span></code> 、 <code class="xref c c-func docutils literal"><span class="pre">PyMem_DEL()</span></code> 。</p>
 </div>
+<div class="section" id="object-allocators">
+<h2>Object allocators<a class="headerlink" href="#object-allocators" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の関数群が利用して Python ヒープに対してメモリを確保したり解放したり出来ます。これらの関数は ANSI C 標準に従ってモデル化されていますが、0 バイトを要求した際の動作についても定義しています:</p>
+<p>デフォルトではこれらの関数は <a class="reference internal" href="#pymalloc"><span class="std std-ref">pymalloc メモリアロケータ</span></a> を利用します。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">これらの関数を呼ぶときには、 <a class="reference internal" href="../glossary.html#term-global-interpreter-lock"><span class="xref std std-term">GIL</span></a> を保持しておく必要があります。</p>
+</div>
+<dl class="function">
+<dt id="c.PyObject_Malloc">
+void* <code class="descname">PyObject_Malloc</code><span class="sig-paren">(</span>size_t<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Malloc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>n</em> バイトを割り当て、そのメモリを指す <code class="xref c c-type docutils literal"><span class="pre">void*</span></code> 型のポインタを返します。要求が失敗した場合 <em>NULL</em> を返します。</p>
+<p>Requesting zero bytes returns a distinct non-<em>NULL</em> pointer if possible, as
+if <code class="docutils literal"><span class="pre">PyObject_Malloc(1)</span></code> had been called instead. The memory will not have
+been initialized in any way.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Realloc">
+void* <code class="descname">PyObject_Realloc</code><span class="sig-paren">(</span>void<em>&nbsp;*p</em>, size_t<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Realloc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><em>p</em> が指すメモリブロックを <em>n</em> バイトにリサイズします。古いサイズと新しいサイズの小さい方までの内容は変更されません。</p>
+<p>If <em>p</em> is <em>NULL</em>, the call is equivalent to <code class="docutils literal"><span class="pre">PyObject_Malloc(n)</span></code>; else if <em>n</em>
+is equal to zero, the memory block is resized but is not freed, and the
+returned pointer is non-<em>NULL</em>.</p>
+<p>Unless <em>p</em> is <em>NULL</em>, it must have been returned by a previous call to
+<a class="reference internal" href="#c.PyObject_Malloc" title="PyObject_Malloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Malloc()</span></code></a>, <a class="reference internal" href="#c.PyObject_Realloc" title="PyObject_Realloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Realloc()</span></code></a> or <code class="xref c c-func docutils literal"><span class="pre">PyObject_Calloc()</span></code>.</p>
+<p>If the request fails, <a class="reference internal" href="#c.PyObject_Realloc" title="PyObject_Realloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Realloc()</span></code></a> returns <em>NULL</em> and <em>p</em> remains
+a valid pointer to the previous memory area.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Free">
+void <code class="descname">PyObject_Free</code><span class="sig-paren">(</span>void<em>&nbsp;*p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Free" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Frees the memory block pointed to by <em>p</em>, which must have been returned by a
+previous call to <a class="reference internal" href="#c.PyObject_Malloc" title="PyObject_Malloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Malloc()</span></code></a>, <a class="reference internal" href="#c.PyObject_Realloc" title="PyObject_Realloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Realloc()</span></code></a> or
+<code class="xref c c-func docutils literal"><span class="pre">PyObject_Calloc()</span></code>.  Otherwise, or if <code class="docutils literal"><span class="pre">PyObject_Free(p)</span></code> has been called
+before, undefined behavior occurs.</p>
+<p><em>p</em> が <em>NULL</em> の場合何もしません。</p>
+</dd></dl>
+
+<p>In addition, the following macro sets are provided:</p>
+<ul class="simple">
+<li><code class="xref c c-func docutils literal"><span class="pre">PyObject_MALLOC()</span></code>: alias to <a class="reference internal" href="#c.PyObject_Malloc" title="PyObject_Malloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Malloc()</span></code></a></li>
+<li><code class="xref c c-func docutils literal"><span class="pre">PyObject_REALLOC()</span></code>: alias to <a class="reference internal" href="#c.PyObject_Realloc" title="PyObject_Realloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Realloc()</span></code></a></li>
+<li><code class="xref c c-func docutils literal"><span class="pre">PyObject_FREE()</span></code>: alias to <a class="reference internal" href="#c.PyObject_Free" title="PyObject_Free"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Free()</span></code></a></li>
+<li><a class="reference internal" href="allocation.html#c.PyObject_Del" title="PyObject_Del"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Del()</span></code></a>: alias to <a class="reference internal" href="#c.PyObject_Free" title="PyObject_Free"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Free()</span></code></a></li>
+<li><code class="xref c c-func docutils literal"><span class="pre">PyObject_DEL()</span></code>: alias to <code class="xref c c-func docutils literal"><span class="pre">PyObject_FREE()</span></code> (so finally an alias
+to <a class="reference internal" href="#c.PyObject_Free" title="PyObject_Free"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Free()</span></code></a>)</li>
+</ul>
+</div>
+<div class="section" id="the-pymalloc-allocator">
+<span id="pymalloc"></span><h2>pymalloc アロケータ<a class="headerlink" href="#the-pymalloc-allocator" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Python has a <em>pymalloc</em> allocator optimized for small objects (smaller or equal
+to 512 bytes) with a short lifetime. It uses memory mappings called &quot;arenas&quot;
+with a fixed size of 256 KiB. It falls back to <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> and
+<code class="xref c c-func docutils literal"><span class="pre">realloc()</span></code> for allocations larger than 512 bytes.</p>
+<p><em>pymalloc</em> is the default allocator of <a class="reference internal" href="#c.PyObject_Malloc" title="PyObject_Malloc"><code class="xref c c-func docutils literal"><span class="pre">PyObject_Malloc()</span></code></a>.</p>
+<p>アリーナアロケータは、次の関数を使います:</p>
+<ul class="simple">
+<li>利用できる場合、<code class="xref c c-func docutils literal"><span class="pre">mmap()</span></code> と <code class="xref c c-func docutils literal"><span class="pre">munmap()</span></code>、</li>
+<li>それ以外の場合は <code class="xref c c-func docutils literal"><span class="pre">malloc()</span></code> と <code class="xref c c-func docutils literal"><span class="pre">free()</span></code>。</li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified">バージョン 2.7.7 で変更: </span>The threshold changed from 256 to 512 bytes. The arena allocator now
+uses <code class="xref c c-func docutils literal"><span class="pre">mmap()</span></code> if available.</p>
+</div>
+</div>
 <div class="section" id="examples">
 <span id="memoryexamples"></span><h2>例<a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>最初に述べた関数セットを使って、 <a class="reference internal" href="#memoryoverview"><span class="std std-ref">概要</span></a> 節の例を Python ヒープに I/O バッファをメモリ確保するように書き換えたものを以下に示します:</p>
@@ -194,6 +261,8 @@ void <code class="descname">PyMem_Del</code><span class="sig-paren">(</span>void
 <li><a class="reference internal" href="#">メモリ管理</a><ul>
 <li><a class="reference internal" href="#overview">概要</a></li>
 <li><a class="reference internal" href="#memory-interface">メモリインタフェース</a></li>
+<li><a class="reference internal" href="#object-allocators">Object allocators</a></li>
+<li><a class="reference internal" href="#the-pymalloc-allocator">pymalloc アロケータ</a></li>
 <li><a class="reference internal" href="#examples">例</a></li>
 </ul>
 </li>
@@ -259,7 +328,7 @@ void <code class="descname">PyMem_Del</code><span class="sig-paren">(</span>void
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

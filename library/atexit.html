@@ -90,7 +90,7 @@
 <p><strong>注意</strong>: <code class="docutils literal"><span class="pre">sys.exitfunc</span></code> を設定する他のコードとともに使用した場合には、このモジュールは正しく動作しないでしょう。特に、他のコア Python モジュールでは、プログラマの意図を知らなくても <a class="reference internal" href="#module-atexit" title="atexit: Register and execute cleanup functions."><code class="xref py py-mod docutils literal"><span class="pre">atexit</span></code></a> を自由に使えます。 <code class="docutils literal"><span class="pre">sys.exitfunc</span></code> を使っている人は、代わりに <a class="reference internal" href="#module-atexit" title="atexit: Register and execute cleanup functions."><code class="xref py py-mod docutils literal"><span class="pre">atexit</span></code></a> を使うコードに変換してください。 <code class="docutils literal"><span class="pre">sys.exitfunc</span></code> を設定するコードを変換するには、 <a class="reference internal" href="#module-atexit" title="atexit: Register and execute cleanup functions."><code class="xref py py-mod docutils literal"><span class="pre">atexit</span></code></a> を import し、 <code class="docutils literal"><span class="pre">sys.exitfunc</span></code> へ束縛されていた関数を登録するのが最も簡単です。</p>
 <dl class="function">
 <dt id="atexit.register">
-<code class="descclassname">atexit.</code><code class="descname">register</code><span class="sig-paren">(</span><em>func</em><span class="optional">[</span>, <em>*args</em><span class="optional">[</span>, <em>**kargs</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#atexit.register" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descclassname">atexit.</code><code class="descname">register</code><span class="sig-paren">(</span><em>func</em><span class="optional">[</span>, <em>*args</em><span class="optional">[</span>, <em>**kwargs</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#atexit.register" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p><em>func</em> を終了時に実行する関数として登録します。<em>func</em> に渡す引数は <a class="reference internal" href="#atexit.register" title="atexit.register"><code class="xref py py-func docutils literal"><span class="pre">register()</span></code></a> の引数として指定しなければなりません。同じ関数を同じ引数で複数回登録できます。</p>
 <p>通常のプログラムの終了時、例えば <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></code></a> が呼び出されるとき、あるいは、メインモジュールの実行が完了したときに、登録された全ての関数を、最後に登録されたものから順に呼び出します。通常、より低レベルのモジュールはより高レベルのモジュールより前に import されるので、後で後始末が行われるという仮定に基づいています。</p>
 <p>終了ハンドラの実行中に例外が発生すると、(<a class="reference internal" href="exceptions.html#exceptions.SystemExit" title="exceptions.SystemExit"><code class="xref py py-exc docutils literal"><span class="pre">SystemExit</span></code></a> 以外の場合は)トレースバックを表示して、例外の情報を保存します。全ての終了ハンドラに動作するチャンスを与えた後に、最後に送出された例外を再送出します。</p>
@@ -223,7 +223,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

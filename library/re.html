@@ -343,7 +343,8 @@ enables non-ASCII matching for <a class="reference internal" href="#re.IGNORECAS
 <dd><p>This flag allows you to write regular expressions that look nicer and are
 more readable by allowing you to visually separate logical sections of the
 pattern and add comments. Whitespace within the pattern is ignored, except
-when in a character class or when preceded by an unescaped backslash.
+when in a character class, or when preceded by an unescaped backslash,
+or within tokens like <code class="docutils literal"><span class="pre">*?</span></code>, <code class="docutils literal"><span class="pre">(?:</span></code> or <code class="docutils literal"><span class="pre">(?P&lt;...&gt;</span></code>.
 When a line contains a <code class="docutils literal"><span class="pre">#</span></code> that is not in a character class and is not
 preceded by an unescaped backslash, all characters from the leftmost such
 <code class="docutils literal"><span class="pre">#</span></code> through the end of the line are ignored.</p>
@@ -409,8 +410,14 @@ preceded by an unescaped backslash, all characters from the leftmost such
 strings.  The <em>string</em> is scanned left-to-right, and matches are returned in
 the order found.  If one or more groups are present in the pattern, return a
 list of groups; this will be a list of tuples if the pattern has more than
-one group.  Empty matches are included in the result unless they touch the
-beginning of another match.</p>
+one group.  Empty matches are included in the result.</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">Due to the limitation of the current implementation the character
+following an empty match is not included in a next match, so
+<code class="docutils literal"><span class="pre">findall(r'^|\w+',</span> <span class="pre">'two</span> <span class="pre">words')</span></code> returns <code class="docutils literal"><span class="pre">['',</span> <span class="pre">'wo',</span> <span class="pre">'words']</span></code>
+(note missed &quot;t&quot;).  This is changed in Python 3.7.</p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 1.5.2 で追加.</span></p>
 </div>
@@ -425,8 +432,7 @@ beginning of another match.</p>
 <dd><p>Return an <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> yielding <a class="reference internal" href="#re.MatchObject" title="re.MatchObject"><code class="xref py py-class docutils literal"><span class="pre">MatchObject</span></code></a> instances over all
 non-overlapping matches for the RE <em>pattern</em> in <em>string</em>.  The <em>string</em> is
 scanned left-to-right, and matches are returned in the order found.  Empty
-matches are included in the result unless they touch the beginning of another
-match.</p>
+matches are included in the result.  See also the note about <a class="reference internal" href="#re.findall" title="re.findall"><code class="xref py py-func docutils literal"><span class="pre">findall()</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 2.2 で追加.</span></p>
 </div>
@@ -1057,7 +1063,7 @@ have regular expression metacharacters in it.  For example:</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

@@ -620,7 +620,7 @@
 </div>
 <p>パターン中で後方参照を利用することで、前に取り出されたグループが文字列の中の現在位置で見つかるように指定できます。例えば、<code class="docutils literal"><span class="pre">\1</span></code> はグループ1の内容が現在位置で見つかった場合成功し、それ以外の場合に失敗します。Python の文字列リテラルでもバックスラッシュに続く数字は任意の文字を文字列に含めるために使われるということを心に留めておいて下さい、そのため正規表現で後方参照を含む場合には raw string を必ず利用して下さい。</p>
 <p>例えば、以下の正規表現は二重になった単語を検出します。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\b\w+)\s+\1&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b(\w+)\s+\1\b&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Paris in the the spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 <span class="go">&#39;the the&#39;</span>
 </pre></div>
@@ -669,8 +669,8 @@ number of the group.  There’s naturally a variant that uses the group name
 instead of the number. This is another Python extension: <code class="docutils literal"><span class="pre">(?P=name)</span></code> indicates
 that the contents of the group called <em>name</em> should again be matched at the
 current point.  The regular expression for finding doubled words,
-<code class="docutils literal"><span class="pre">(\b\w+)\s+\1</span></code> can also be written as <code class="docutils literal"><span class="pre">(?P&lt;word&gt;\b\w+)\s+(?P=word)</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;word&gt;\b\w+)\s+(?P=word)&#39;</span><span class="p">)</span>
+<code class="docutils literal"><span class="pre">\b(\w+)\s+\1\b</span></code> can also be written as <code class="docutils literal"><span class="pre">\b(?P&lt;word&gt;\w+)\s+(?P=word)\b</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b(?P&lt;word&gt;\w+)\s+(?P=word)\b&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Paris in the the spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 <span class="go">&#39;the the&#39;</span>
 </pre></div>
@@ -1018,7 +1018,7 @@ current point.  The regular expression for finding doubled words,
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

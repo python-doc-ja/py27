@@ -178,13 +178,13 @@ DB API を実装するモジュールとのインタフェースを可能な限�
 <p><a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal"><span class="pre">csv</span></code></a> モジュールでは以下のクラスを定義しています:</p>
 <dl class="class">
 <dt id="csv.DictReader">
-<em class="property">class </em><code class="descclassname">csv.</code><code class="descname">DictReader</code><span class="sig-paren">(</span><em>csvfile</em>, <em>fieldnames=None</em>, <em>restkey=None</em>, <em>restval=None</em>, <em>dialect='excel'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictReader" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><code class="descclassname">csv.</code><code class="descname">DictReader</code><span class="sig-paren">(</span><em>f</em>, <em>fieldnames=None</em>, <em>restkey=None</em>, <em>restval=None</em>, <em>dialect='excel'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictReader" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Create an object which operates like a regular reader but maps the
 information read into a dict whose keys are given by the optional
 <em>fieldnames</em> parameter.  The <em>fieldnames</em> parameter is a <a class="reference internal" href="collections.html#collections-abstract-base-classes"><span class="std std-ref">sequence</span></a> whose elements are associated with the
 fields of the input data in order. These elements become the keys of the
 resulting dictionary.  If the <em>fieldnames</em> parameter is omitted, the values
-in the first row of the <em>csvfile</em> will be used as the fieldnames.  If the
+in the first row of the file <em>f</em> will be used as the fieldnames.  If the
 row read has more fields than the fieldnames sequence, the remaining data is
 added as a sequence keyed by the value of <em>restkey</em>.  If the row read has
 fewer fields than the fieldnames sequence, the remaining keys take the value
@@ -206,11 +206,11 @@ arguments are passed to the underlying <a class="reference internal" href="#csv.
 
 <dl class="class">
 <dt id="csv.DictWriter">
-<em class="property">class </em><code class="descclassname">csv.</code><code class="descname">DictWriter</code><span class="sig-paren">(</span><em>csvfile</em>, <em>fieldnames</em>, <em>restval=''</em>, <em>extrasaction='raise'</em>, <em>dialect='excel'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><code class="descclassname">csv.</code><code class="descname">DictWriter</code><span class="sig-paren">(</span><em>f</em>, <em>fieldnames</em>, <em>restval=''</em>, <em>extrasaction='raise'</em>, <em>dialect='excel'</em>, <em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Create an object which operates like a regular writer but maps dictionaries
 onto output rows.  The <em>fieldnames</em> parameter is a <a class="reference internal" href="collections.html#collections-abstract-base-classes"><span class="std std-ref">sequence</span></a> of keys that identify the order in
 which values in the dictionary passed to the <code class="xref py py-meth docutils literal"><span class="pre">writerow()</span></code> method are
-written to the <em>csvfile</em>.  The optional <em>restval</em> parameter specifies the
+written to the file <em>f</em>.  The optional <em>restval</em> parameter specifies the
 value to be written if the dictionary is missing a key in <em>fieldnames</em>.  If
 the dictionary passed to the <code class="xref py py-meth docutils literal"><span class="pre">writerow()</span></code> method contains a key not
 found in <em>fieldnames</em>, the optional <em>extrasaction</em> parameter indicates what
@@ -221,7 +221,7 @@ Any other optional or keyword arguments are passed to the underlying
 <p>Note that unlike the <a class="reference internal" href="#csv.DictReader" title="csv.DictReader"><code class="xref py py-class docutils literal"><span class="pre">DictReader</span></code></a> class, the <em>fieldnames</em> parameter
 of the <a class="reference internal" href="#csv.DictWriter" title="csv.DictWriter"><code class="xref py py-class docutils literal"><span class="pre">DictWriter</span></code></a> is not optional.  Since Python’s <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>
 objects are not ordered, there is not enough information available to deduce
-the order in which the row should be written to the <em>csvfile</em>.</p>
+the order in which the row should be written to the file <em>f</em>.</p>
 <p>短い利用例:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
 
@@ -656,7 +656,7 @@ the order in which the row should be written to the <em>csvfile</em>.</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

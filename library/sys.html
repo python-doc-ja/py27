@@ -827,12 +827,32 @@
 <dd><p id="index-12">Set the system’s profile function, which allows you to implement a Python source
 code profiler in Python.  See chapter <a class="reference internal" href="profile.html#profile"><span class="std std-ref">Python プロファイラ</span></a> for more information on the
 Python profiler.  The system’s profile function is called similarly to the
-system’s trace function (see <a class="reference internal" href="#sys.settrace" title="sys.settrace"><code class="xref py py-func docutils literal"><span class="pre">settrace()</span></code></a>), but it isn’t called for each
-executed line of code (only on call and return, but the return event is reported
-even when an exception has been set).  The function is thread-specific, but
-there is no way for the profiler to know about context switches between threads,
-so it does not make sense to use this in the presence of multiple threads. Also,
+system’s trace function (see <a class="reference internal" href="#sys.settrace" title="sys.settrace"><code class="xref py py-func docutils literal"><span class="pre">settrace()</span></code></a>), but it is called with different events,
+for example it isn’t called for each executed line of code (only on call and return,
+but the return event is reported even when an exception has been set). The function is
+thread-specific, but there is no way for the profiler to know about context switches between
+threads, so it does not make sense to use this in the presence of multiple threads. Also,
 its return value is not used, so it can simply return <code class="docutils literal"><span class="pre">None</span></code>.</p>
+<p>Profile functions should have three arguments: <em>frame</em>, <em>event</em>, and
+<em>arg</em>. <em>frame</em> is the current stack frame.  <em>event</em> is a string: <code class="docutils literal"><span class="pre">'call'</span></code>,
+<code class="docutils literal"><span class="pre">'return'</span></code>, <code class="docutils literal"><span class="pre">'c_call'</span></code>, <code class="docutils literal"><span class="pre">'c_return'</span></code>, or <code class="docutils literal"><span class="pre">'c_exception'</span></code>. <em>arg</em> depends
+on the event type.</p>
+<p><em>event</em> には以下の意味があります。</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">'call'</span></code></dt>
+<dd>A function is called (or some other code block entered).  The
+profile function is called; <em>arg</em> is <code class="docutils literal"><span class="pre">None</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">'return'</span></code></dt>
+<dd>A function (or other code block) is about to return.  The profile
+function is called; <em>arg</em> is the value that will be returned, or <code class="docutils literal"><span class="pre">None</span></code>
+if the event is caused by an exception being raised.</dd>
+<dt><code class="docutils literal"><span class="pre">'c_call'</span></code></dt>
+<dd>C 関数(拡張関数かビルトイン関数)が呼ばれようとしている。 <em>arg</em> は C 関数オブジェクト。</dd>
+<dt><code class="docutils literal"><span class="pre">'c_return'</span></code></dt>
+<dd>C 関数から戻った。 <em>arg</em> は C の関数オブジェクト。</dd>
+<dt><code class="docutils literal"><span class="pre">'c_exception'</span></code></dt>
+<dd>C 関数が例外を発生させた。 <em>arg</em> は C の関数オブジェクト。</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -848,8 +868,8 @@ its return value is not used, so it can simply return <code class="docutils lite
 <dd><p id="index-13">システムのトレース関数を登録します。トレース関数は Python のソースデバッガを実装するために使用できます。トレース関数はスレッド毎に設定することができるので、デバッグを行うすべてのスレッドで <a class="reference internal" href="#sys.settrace" title="sys.settrace"><code class="xref py py-func docutils literal"><span class="pre">settrace()</span></code></a> を呼び出し、トレース関数を登録してください。</p>
 <p>Trace functions should have three arguments: <em>frame</em>, <em>event</em>, and
 <em>arg</em>. <em>frame</em> is the current stack frame.  <em>event</em> is a string: <code class="docutils literal"><span class="pre">'call'</span></code>,
-<code class="docutils literal"><span class="pre">'line'</span></code>, <code class="docutils literal"><span class="pre">'return'</span></code>, <code class="docutils literal"><span class="pre">'exception'</span></code>, <code class="docutils literal"><span class="pre">'c_call'</span></code>, <code class="docutils literal"><span class="pre">'c_return'</span></code>, or
-<code class="docutils literal"><span class="pre">'c_exception'</span></code>. <em>arg</em> depends on the event type.</p>
+<code class="docutils literal"><span class="pre">'line'</span></code>, <code class="docutils literal"><span class="pre">'return'</span></code> or <code class="docutils literal"><span class="pre">'exception'</span></code>.  <em>arg</em> depends on
+the event type.</p>
 <p>trace 関数は (<em>event</em> に <code class="docutils literal"><span class="pre">'call'</span></code> を渡された状態で) 新しいローカルスコープに入るたびに呼ばれます。この場合、そのスコープで利用するローカルの trace 関数への参照か、そのスコープを trace しないのであれば <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
 <p>ローカル trace 関数は自身への参照 (もしくはそのスコープの以降の trace を行う別の関数) を返すべきです。もしくは、そのスコープの trace を止めるために <code class="docutils literal"><span class="pre">None</span></code> を返します。</p>
 <p><em>event</em> には以下の意味があります。</p>
@@ -862,12 +882,6 @@ its return value is not used, so it can simply return <code class="docutils lite
 <dd>関数(あるいは別のコードブロック)から戻ろうとしている。ローカルの trace 関数が呼ばれる。 <em>arg</em> は返されようとしている値、または、このイベントが例外が送出されることによって起こったなら <code class="docutils literal"><span class="pre">None</span></code> 。 trace 関数の戻り値は無視される。</dd>
 <dt><code class="docutils literal"><span class="pre">'exception'</span></code></dt>
 <dd>例外が発生した。ローカルの trace 関数が呼ばれる。 <em>arg</em> は <code class="docutils literal"><span class="pre">(exception,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></code> のタプル。戻り値は新しいローカルの trace 関数。</dd>
-<dt><code class="docutils literal"><span class="pre">'c_call'</span></code></dt>
-<dd>C 関数(拡張関数かビルトイン関数)が呼ばれようとしている。 <em>arg</em> は C 関数オブジェクト。</dd>
-<dt><code class="docutils literal"><span class="pre">'c_return'</span></code></dt>
-<dd>C 関数から戻った。 <em>arg</em> は C の関数オブジェクト。</dd>
-<dt><code class="docutils literal"><span class="pre">'c_exception'</span></code></dt>
-<dd>C 関数が例外を発生させた。 <em>arg</em> は C の関数オブジェクト。</dd>
 </dl>
 <p>例外が呼び出しチェインを辿って伝播していくことに注意してください。 <code class="docutils literal"><span class="pre">'exception'</span></code> イベントは各レベルで発生します。</p>
 <p>code と frame オブジェクトについては、 <a class="reference internal" href="../reference/datamodel.html#types"><span class="std std-ref">標準型の階層</span></a> を参照してください。</p>
@@ -1043,7 +1057,7 @@ its return value is not used, so it can simply return <code class="docutils lite
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-02-20
+    最終更新日時: 2018-02-23
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

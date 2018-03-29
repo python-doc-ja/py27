@@ -1414,8 +1414,7 @@ support added by Raymond Hettinger.)</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/tkinter.html#module-Tkinter" title="Tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal"><span class="pre">Tkinter</span></code></a> モジュールが、オプションとしてリストとタプルを受け付けるようになっています。Tcl/Tk へは空白区切りの文字列にして渡されます。 (Contributed by Guilherme Polo; <a class="reference external" href="https://bugs.python.org/issue2906">bpo-2906</a>.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/turtle.html#module-turtle" title="turtle: Turtle graphics for Tk"><code class="xref py py-mod docutils literal"><span class="pre">turtle</span></code></a> module for turtle graphics was greatly enhanced by
-Gregor Lingl.  New features in the module include:</p>
+<li><p class="first">タートルグラフィックスのための <a class="reference internal" href="../library/turtle.html#module-turtle" title="turtle: Turtle graphics for Tk"><code class="xref py py-mod docutils literal"><span class="pre">turtle</span></code></a> モジュールが Gregor Lingl により大幅に拡張されました。モジュールの新しい機能は次の通りです:</p>
 <ul class="simple">
 <li>亀の移動と回転のアニメーションの改善。</li>
 <li>Control over turtle movement using the new <code class="xref py py-meth docutils literal"><span class="pre">delay()</span></code>,
@@ -1464,15 +1463,8 @@ because the tracebacks might reveal passwords or other sensitive
 information.  (Contributed by Alan McIntyre as part of his
 project for Google’s Summer of Code 2007.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> module no longer automatically converts
-<a class="reference internal" href="../library/datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal"><span class="pre">datetime.date</span></code></a> and <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">datetime.time</span></code></a> to the
-<a class="reference internal" href="../library/xmlrpclib.html#xmlrpclib.DateTime" title="xmlrpclib.DateTime"><code class="xref py py-class docutils literal"><span class="pre">xmlrpclib.DateTime</span></code></a> type; the conversion semantics were
-not necessarily correct for all applications.  Code using
-<a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> should convert <code class="xref py py-class docutils literal"><span class="pre">date</span></code> and <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">time</span></code></a>
-instances. (<a class="reference external" href="https://bugs.python.org/issue1330538">bpo-1330538</a>)  The code can also handle
-dates before 1900 (contributed by Ralf Schmitt; <a class="reference external" href="https://bugs.python.org/issue2014">bpo-2014</a>)
-and 64-bit integers represented by using <code class="docutils literal"><span class="pre">&lt;i8&gt;</span></code> in XML-RPC responses
-(contributed by Riku Lindblad; <a class="reference external" href="https://bugs.python.org/issue2985">bpo-2985</a>).</p>
+<li><p class="first"><a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> モジュールが自動的に <a class="reference internal" href="../library/datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal"><span class="pre">datetime.date</span></code></a> と <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">datetime.time</span></code></a> を <a class="reference internal" href="../library/xmlrpclib.html#xmlrpclib.DateTime" title="xmlrpclib.DateTime"><code class="xref py py-class docutils literal"><span class="pre">xmlrpclib.DateTime</span></code></a> 型に変換することはなくなりました; 変換のセマンティクスが必ずしも全てのアプリケーションで正しいわけではありませんでした。 (<a class="reference external" href="https://bugs.python.org/issue1330538">bpo-1330538</a>)
+<a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> を使うコードは自分で <code class="xref py py-class docutils literal"><span class="pre">date</span></code> インスタンスと <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">time</span></code></a> インスタンスを変換すべきです。そうしておくと、 1900 年以前の日付 (contributed by Ralf Schmitt; <a class="reference external" href="https://bugs.python.org/issue2014">bpo-2014</a>) と、XML-RPC レスポンス内で <code class="docutils literal"><span class="pre">&lt;i8&gt;</span></code> を使った 64 ビット整数表現 (contributed by Riku Lindblad; <a class="reference external" href="https://bugs.python.org/issue2985">bpo-2985</a>) を処理できます。</p>
 </li>
 <li><p class="first"><a class="reference internal" href="../library/zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><code class="xref py py-mod docutils literal"><span class="pre">zipfile</span></code></a> モジュールの <code class="xref py py-class docutils literal"><span class="pre">ZipFile</span></code> クラスに <code class="xref py py-meth docutils literal"><span class="pre">extract()</span></code> メソッドと <code class="xref py py-meth docutils literal"><span class="pre">extractall()</span></code> メソッドが追加されました。アーカイブ内の、それぞれ単一ファイル、全てのファイルを、カレントディレクトリか指定のディレクトリに展開します:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;python-251.zip&#39;</span><span class="p">)</span>
@@ -1618,14 +1610,7 @@ and 64-bit integers represented by using <code class="docutils literal"><span cl
 </div>
 <div class="section" id="improved-ssl-support">
 <h3>SSL サポートの改善<a class="headerlink" href="#improved-ssl-support" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Bill Janssen made extensive improvements to Python 2.6’s support for
-the Secure Sockets Layer by adding a new module, <a class="reference internal" href="../library/ssl.html#module-ssl" title="ssl: TLS/SSL wrapper for socket objects"><code class="xref py py-mod docutils literal"><span class="pre">ssl</span></code></a>, that’s
-built atop the <a class="reference external" href="https://www.openssl.org/">OpenSSL</a> library.
-This new module provides more control over the protocol negotiated,
-the X.509 certificates used, and has better support for writing SSL
-servers (as opposed to clients) in Python.  The existing SSL support
-in the <a class="reference internal" href="../library/socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> module hasn’t been removed and continues to work,
-though it will be removed in Python 3.0.</p>
+<p>Bill Janssen は Python 2.6 の Secure Sockets Layer サポートを大掛かりに改善しました。行われたのは新モジュール <a class="reference internal" href="../library/ssl.html#module-ssl" title="ssl: TLS/SSL wrapper for socket objects"><code class="xref py py-mod docutils literal"><span class="pre">ssl</span></code></a> の追加です。これは <a class="reference external" href="https://www.openssl.org/">OpenSSL</a> ライブラリの上に構築されています。この新しいモジュールはプロトコルのネゴシエイトのさらなる制御、X.509 証明書の使用、そして SSL サーバ (クライアントの対語としての) を Python で書くためのより良いサポートを提供しています。既存の <a class="reference internal" href="../library/socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールにある SSL サポートは削除されずにそのまま使えますが、Python 3.0 では削除されます。</p>
 <p>この新たなモジュールを使うには、まず最初にいつものやり方で TCP コネクションを作らなければなりません。そしてその上でそれを <a class="reference internal" href="../library/ssl.html#ssl.wrap_socket" title="ssl.wrap_socket"><code class="xref py py-func docutils literal"><span class="pre">ssl.wrap_socket()</span></code></a> 関数に渡します (—訳注: 2.7.9 ではさらに進化した <code class="docutils literal"><span class="pre">SSLContext.wrap_socket</span></code> が使えます —)。証明書が必要かどうかを指定することが出来、証明書の情報を <code class="xref py py-meth docutils literal"><span class="pre">getpeercert()</span></code> メソッドで取得することも出来ます。</p>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
@@ -1669,12 +1654,7 @@ though it will be removed in Python 3.0.</p>
 </li>
 <li><p class="first">Python 2.6 は Microsoft Visual Studio 2008 (version 9.0) でビルド出来ます。そしてこれが新しいデフォルトコンパイラです。 <code class="file docutils literal"><span class="pre">PCbuild</span></code> ディレクトリのビルドファイルを参照して下さい。 (Implemented by Christian Heimes.)</p>
 </li>
-<li><p class="first">On Mac OS X, Python 2.6 can be compiled as a 4-way universal build.
-The <strong class="program">configure</strong> script
-can take a <code class="xref std std-option docutils literal"><span class="pre">--with-universal-archs=[32-bit|64-bit|all]</span></code>
-switch, controlling whether the binaries are built for 32-bit
-architectures (x86, PowerPC), 64-bit (x86-64 and PPC-64), or both.
-(Contributed by Ronald Oussoren.)</p>
+<li><p class="first">Mac OS X では、Python 2.6 は 4 種類のユニバーサルビルドでコンパイル出来ます。 <strong class="program">configure</strong> スクリプトは <code class="xref std std-option docutils literal"><span class="pre">--with-universal-archs=[32-bit|64-bit|all]</span></code> スイッチを取って、32-bit アーキテクチャ (x86, PowerPC), 64-bit (x86-64 and PPC-64), あるいは両方のバイナリをビルド出来ます。 (Contributed by Ronald Oussoren.)</p>
 </li>
 <li><p class="first">BerkeleyDB モジュールが C API オブジェクトを公開しています。 <code class="docutils literal"><span class="pre">bsddb.db.api</span></code> として利用可能です。このモジュールは <a class="reference internal" href="../library/bsddb.html#module-bsddb" title="bsddb: Interface to Berkeley DB database library"><code class="xref py py-mod docutils literal"><span class="pre">bsddb</span></code></a> モジュールを自身の独自の目的で使いたいほかの C 拡張で使えます。 (Contributed by Duncan Grisby.)</p>
 </li>
@@ -1725,10 +1705,7 @@ architectures (x86, PowerPC), 64-bit (x86-64 and PPC-64), or both.
 <div class="section" id="port-specific-changes-mac-os-x">
 <h3>ポート特有の変更: Mac OS X<a class="headerlink" href="#port-specific-changes-mac-os-x" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li>When compiling a framework build of Python, you can now specify the
-framework name to be used by providing the
-<code class="xref std std-option docutils literal"><span class="pre">--with-framework-name=</span></code> option to the
-<strong class="program">configure</strong> script.</li>
+<li>Python をフレームワークビルドでコンパイルする際に、 <strong class="program">configure</strong> スクリプトに <code class="xref std std-option docutils literal"><span class="pre">--with-framework-name</span></code> オプションでフレームワーク名を指定出来るようになりました。</li>
 <li><code class="xref py py-mod docutils literal"><span class="pre">macfs</span></code> モジュールは削除されました。これは同様に <a class="reference internal" href="../library/macostools.html#macostools.touched" title="macostools.touched"><code class="xref py py-func docutils literal"><span class="pre">macostools.touched()</span></code></a> 関数の削除を必要としました。それが  <code class="xref py py-mod docutils literal"><span class="pre">macfs</span></code> モジュールに依存していたので。  (<a class="reference external" href="https://bugs.python.org/issue1490190">bpo-1490190</a>)</li>
 <li>Many other Mac OS modules have been deprecated and will be removed in
 Python 3.0:
@@ -1798,12 +1775,7 @@ Python 3.0:
 </li>
 <li><p class="first"><a class="reference internal" href="../library/socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> モジュールの例外 <a class="reference internal" href="../library/socket.html#socket.error" title="socket.error"><code class="xref py py-exc docutils literal"><span class="pre">socket.error</span></code></a> が <a class="reference internal" href="../library/exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> 派生になっています。以前は <a class="reference internal" href="../library/exceptions.html#exceptions.StandardError" title="exceptions.StandardError"><code class="xref py py-exc docutils literal"><span class="pre">StandardError</span></code></a> のサブクラスではありませんでしたが今は <a class="reference internal" href="../library/exceptions.html#exceptions.IOError" title="exceptions.IOError"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code></a> を通じてそれのサブクラスです。 (Implemented by Gregory P. Smith; <a class="reference external" href="https://bugs.python.org/issue1706815">bpo-1706815</a>.)</p>
 </li>
-<li><p class="first">The <a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> module no longer automatically converts
-<a class="reference internal" href="../library/datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal"><span class="pre">datetime.date</span></code></a> and <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">datetime.time</span></code></a> to the
-<a class="reference internal" href="../library/xmlrpclib.html#xmlrpclib.DateTime" title="xmlrpclib.DateTime"><code class="xref py py-class docutils literal"><span class="pre">xmlrpclib.DateTime</span></code></a> type; the conversion semantics were
-not necessarily correct for all applications.  Code using
-<a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> should convert <code class="xref py py-class docutils literal"><span class="pre">date</span></code> and <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">time</span></code></a>
-instances. (<a class="reference external" href="https://bugs.python.org/issue1330538">bpo-1330538</a>)</p>
+<li><p class="first"><a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> モジュールが自動的に <a class="reference internal" href="../library/datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal"><span class="pre">datetime.date</span></code></a> と <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">datetime.time</span></code></a> を <a class="reference internal" href="../library/xmlrpclib.html#xmlrpclib.DateTime" title="xmlrpclib.DateTime"><code class="xref py py-class docutils literal"><span class="pre">xmlrpclib.DateTime</span></code></a> 型に変換することは、もう二度としません; 変換のセマンティクスは必ずしも全てのアプリケーションで正しいわけではなかったのです。 <a class="reference internal" href="../library/xmlrpclib.html#module-xmlrpclib" title="xmlrpclib: XML-RPC client access."><code class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></code></a> を使うコードは自分で <code class="xref py py-class docutils literal"><span class="pre">date</span></code> と <a class="reference internal" href="../library/datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal"><span class="pre">time</span></code></a> インスタンスを変換すべきです。(<a class="reference external" href="https://bugs.python.org/issue1330538">bpo-1330538</a>)</p>
 </li>
 <li><p class="first">(3.0 警告モード) <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code> クラスはスライスやインデクスアクセスで警告を出します; <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code> のタプルのような振る舞いはのちに取り除かれます。</p>
 </li>
@@ -1941,7 +1913,7 @@ instances. (<a class="reference external" href="https://bugs.python.org/issue133
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-03-28
+    最終更新日時: 2018-03-29
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

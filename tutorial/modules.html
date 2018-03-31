@@ -137,6 +137,20 @@
 </div>
 <p>上の操作は、アンダースコア (<code class="docutils literal"><span class="pre">_</span></code>) で開始する名前以外の全ての名前を import します。</p>
 <p>一般的には、モジュールやパッケージから <code class="docutils literal"><span class="pre">*</span></code> を import するというやり方には賛同できません。というのは、この操作を行うとしばしば可読性に乏しいコードになるからです。しかし、対話セッションでキータイプの量を減らすために使うのは構わないでしょう。</p>
+<p>モジュール名の後に <a class="reference internal" href="../reference/compound_stmts.html#as"><code class="xref std std-keyword docutils literal"><span class="pre">as</span></code></a> が続いていた場合は、 <a class="reference internal" href="../reference/compound_stmts.html#as"><code class="xref std std-keyword docutils literal"><span class="pre">as</span></code></a> の後ろの名前を直接、インポートされたモジュールが束縛します。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fibo</span> <span class="k">as</span> <span class="nn">fib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="go">0 1 1 2 3 5 8 13 21 34 55 89 144 233 377</span>
+</pre></div>
+</div>
+<p>This is effectively importing the module in the same way that <code class="docutils literal"><span class="pre">import</span> <span class="pre">fibo</span></code>
+will do, with the only difference of it being available as <code class="docutils literal"><span class="pre">fib</span></code>.</p>
+<p>このインポート方法は <a class="reference internal" href="../reference/simple_stmts.html#from"><code class="xref std std-keyword docutils literal"><span class="pre">from</span></code></a> が付いていても使え、同じ効果が得られます:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fibo</span> <span class="k">import</span> <span class="n">fib</span> <span class="k">as</span> <span class="n">fibonacci</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fibonacci</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="go">0 1 1 2 3 5 8 13 21 34 55 89 144 233 377</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">実行効率上の理由で、各モジュールはインタープリタの 1 セッションごとに 1 回だけ import されます。従って、モジュールを修正した場合には、インタープリタを再起動させなければなりません – もしくは、その場で手直ししてテストしたいモジュールが 1 つだった場合には、例えば <code class="docutils literal"><span class="pre">reload(modulename)</span></code> のように <a class="reference internal" href="../library/functions.html#reload" title="reload"><code class="xref py py-func docutils literal"><span class="pre">reload()</span></code></a> を使ってください。</p>
@@ -471,7 +485,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-03-31
+    最終更新日時: 2018-04-01
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

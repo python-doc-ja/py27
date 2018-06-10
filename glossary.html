@@ -188,7 +188,14 @@
 <dt id="term-garbage-collection">garbage collection</dt>
 <dd>(ガベージコレクション) それ以上使われなくなったメモリを解放する処理です。Pythonは、参照カウントと、循環参照を見つけて破壊する循環ガベージコレクタと、を使ってガベージコレクションを行います。</dd>
 <dt id="index-3"><span id="term-generator"></span>generator</dt>
-<dd>(ジェネレータ) イテレータを返す関数です。通常の関数に似ていますが、代わりに for ループで使ったり <a class="reference internal" href="library/functions.html#next" title="next"><code class="xref py py-func docutils literal"><span class="pre">next()</span></code></a> 関数で1つずつ取り出せる値の列を生成するために <a class="reference internal" href="reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> 文を使います。 <a class="reference internal" href="reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> 文に到達するたびに関数の実行は実行状態 (ローカル変数や実行中の try 文などを含む) を保存して中断されます。ジェネレータが再開されるとき、(通常の関数が実行の度に初期状態から開始するのに対して) 中断した状態から実行を開始します。</dd>
+<dd>A function which returns an iterator.  It looks like a normal function
+except that it contains <a class="reference internal" href="reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> statements for producing a series
+of values usable in a for-loop or that can be retrieved one at a time with
+the <a class="reference internal" href="library/functions.html#next" title="next"><code class="xref py py-func docutils literal"><span class="pre">next()</span></code></a> function. Each <a class="reference internal" href="reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal"><span class="pre">yield</span></code></a> temporarily suspends
+processing, remembering the location execution state (including local
+variables and pending try-statements).  When the generator resumes, it
+picks-up where it left-off (in contrast to functions which start fresh on
+every invocation).</dd>
 <dt id="index-4"><span id="term-generator-expression"></span>generator expression</dt>
 <dd><p class="first">(ジェネレータ式) イテレータを返す式です。普通の式に、ループ変数を定義する <a class="reference internal" href="reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal"><span class="pre">for</span></code></a> 式、範囲、そして省略可能な <a class="reference internal" href="reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal"><span class="pre">if</span></code></a> 式がつづいているように見えます。こうして構成された式は、外側の関数に向けて値を生成します:</p>
 <div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>         <span class="c1"># sum of squares 0, 1, 4, ... 81</span>

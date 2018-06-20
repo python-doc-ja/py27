@@ -231,7 +231,13 @@
 <dl class="function">
 <dt id="time.strftime">
 <code class="descclassname">time.</code><code class="descname">strftime</code><span class="sig-paren">(</span><em>format</em><span class="optional">[</span>, <em>t</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#time.strftime" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p><a class="reference internal" href="#time.gmtime" title="time.gmtime"><code class="xref py py-func docutils literal"><span class="pre">gmtime()</span></code></a> や <a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> が返す時刻値タプル又は <a class="reference internal" href="#time.struct_time" title="time.struct_time"><code class="xref py py-class docutils literal"><span class="pre">struct_time</span></code></a> を、 <em>format</em> で指定した文字列形式に変換します。 <em>t</em> が与えられていない場合、 <a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> が返す現在の時刻が使われます。 <em>format</em> は文字列でなくてはなりません。 <em>t</em> のいずれかのフィールドが許容範囲外の数値であった場合、 <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> を送出します。 <a class="reference internal" href="#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal"><span class="pre">strftime()</span></code></a> はロケール依存のバイト文字列を返します; 結果は <code class="docutils literal"><span class="pre">strftime(&lt;myformat&gt;).decode(locale.getlocale()[1])</span></code> によって Unicode に変換出来ます。</p>
+<dd><p>Convert a tuple or <a class="reference internal" href="#time.struct_time" title="time.struct_time"><code class="xref py py-class docutils literal"><span class="pre">struct_time</span></code></a> representing a time as returned by
+<a class="reference internal" href="#time.gmtime" title="time.gmtime"><code class="xref py py-func docutils literal"><span class="pre">gmtime()</span></code></a> or <a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> to a string as specified by the <em>format</em>
+argument.  If <em>t</em> is not provided, the current time as returned by
+<a class="reference internal" href="#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal"><span class="pre">localtime()</span></code></a> is used.  <em>format</em> must be a string.  <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> is
+raised if any field in <em>t</em> is outside of the allowed range. <a class="reference internal" href="#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal"><span class="pre">strftime()</span></code></a>
+returns a locale depedent byte string; the result may be converted to unicode
+by doing <code class="docutils literal"><span class="pre">strftime(&lt;myformat&gt;).decode(locale.getlocale()[1])</span></code>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.1 で変更: </span><em>t</em> が省略可能になりました。</p>
 </div>
@@ -610,7 +616,7 @@ applies).</p>
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-06-17
+    最終更新日時: 2018-06-20
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

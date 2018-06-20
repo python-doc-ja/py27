@@ -304,7 +304,12 @@
 </pre>
 <p>プライマリの値評価結果は、シーケンス型かマップ型のオブジェクトでなければなりません。</p>
 <p>プライマリがマップであれば、式リストの値評価結果はマップ内のいずれかのキー値に相当するオブジェクトにならなければなりません。添字表記は、そのキーに対応するマップ内の値 (value) を選択します。 (式リストの要素が単独である場合を除き、式リストはタプルでなければなりません。)</p>
-<p>プライマリがシーケンスの場合、式 (リスト) の値評価結果は (通常の) 整数でなければなりません。値が負の場合、シーケンスの長さが加算されます (<code class="docutils literal"><span class="pre">x[-1]</span></code> が <code class="docutils literal"><span class="pre">x</span></code> の最後の要素を指すことになります)。加算結果はシーケンス内の要素数よりも小さな非負の整数とならなければなりません。添字表記は、添字と同じシーケンス中の (ゼロから数えた) インデクスを持つ要素を選択します。</p>
+<p>If the primary is a sequence, the expression (list) must evaluate to a plain
+integer.  If this value is negative, the length of the sequence is added to it
+(so that, e.g., <code class="docutils literal"><span class="pre">x[-1]</span></code> selects the last item of <code class="docutils literal"><span class="pre">x</span></code>.)  The resulting value
+must be a nonnegative integer less than the number of items in the sequence, and
+the subscription selects the item whose index is that value (counting from
+zero).</p>
 <p id="index-33">文字列型の要素は文字 (character) です。文字は個別の型ではなく、 1 文字だけからなる文字列です。</p>
 </div>
 <div class="section" id="slicings">
@@ -854,7 +859,7 @@ Unicode のほとんどの抽象文字は 1 つのコードポイントだけを
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-06-17
+    最終更新日時: 2018-06-20
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。

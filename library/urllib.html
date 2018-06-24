@@ -147,7 +147,14 @@
 <dt id="urllib.urlretrieve">
 <code class="descclassname">urllib.</code><code class="descname">urlretrieve</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>filename</em><span class="optional">[</span>, <em>reporthook</em><span class="optional">[</span>, <em>data</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#urllib.urlretrieve" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>URL で表されるネットワーク上のオブジェクトを、必要に応じてローカルなファイルにコピーします。URL がローカルなファイルを指定していたり、オブジェクトのコピーが正しくキャッシュされていれば、そのオブジェクトはコピーされません。タプル <code class="docutils literal"><span class="pre">(filename,</span> <span class="pre">headers)</span></code> を返し、 <em>filename</em> はローカルで見つかったオブジェクトに対するファイル名で、 <em>headers</em> は <a class="reference internal" href="#urllib.urlopen" title="urllib.urlopen"><code class="xref py py-func docutils literal"><span class="pre">urlopen()</span></code></a> が返した (おそらくキャッシュされているリモートの) オブジェクトに <code class="xref py py-meth docutils literal"><span class="pre">info()</span></code> を適用して得られるものになります。 <a class="reference internal" href="#urllib.urlopen" title="urllib.urlopen"><code class="xref py py-func docutils literal"><span class="pre">urlopen()</span></code></a> と同じ例外を送出します。</p>
-<p>2 つめの引数がある場合、オブジェクトのコピー先となるファイルの位置を指定します (もしなければ、ファイルの場所は一時ファイル (tmpfile) の置き場になり、名前は適当につけられます)。 3 つめの引数がある場合、ネットワークとの接続が確立された際に一度呼び出され、以降データのブロックが読み出されるたびに呼び出されるフック関数 (hook function) を指定します。フック関数には 3 つの引数が渡されます; これまで転送されたブロック数のカウント、バイト単位で表されたブロックサイズ、ファイルの総サイズです。3 つ目のファイルの総サイズは、ファイル取得の際の応答時にファイルサイズを返さない古い FTP サーバでは <code class="docutils literal"><span class="pre">-1</span></code> になります。</p>
+<p>The second argument, if present, specifies the file location to copy to (if
+absent, the location will be a tempfile with a generated name). The third
+argument, if present, is a hook function that will be called once on
+establishment of the network connection and once after each block read
+thereafter.  The hook will be passed three arguments; a count of blocks
+transferred so far, a block size in bytes, and the total size of the file.  The
+third argument may be <code class="docutils literal"><span class="pre">-1</span></code> on older FTP servers which do not return a file
+size in response to a retrieval request.</p>
 <p><em>url</em> が <code class="file docutils literal"><span class="pre">http:</span></code> スキーム識別子を使っていた場合、オプション引数 <em>data</em> を与えることで <code class="docutils literal"><span class="pre">POST</span></code> リクエストを行うよう指定することができます (通常リクエストの形式は <code class="docutils literal"><span class="pre">GET</span></code> です)。 <em>data</em> 引数は標準の <em class="mimetype">application/x-www-form-urlencoded</em> 形式でなくてはなりません; 以下の <a class="reference internal" href="#urllib.urlencode" title="urllib.urlencode"><code class="xref py py-func docutils literal"><span class="pre">urlencode()</span></code></a> 関数を参照してください。</p>
 <div class="versionchanged">
 <p><span class="versionmodified">バージョン 2.5 で変更: </span><a class="reference internal" href="#urllib.urlretrieve" title="urllib.urlretrieve"><code class="xref py py-func docutils literal"><span class="pre">urlretrieve()</span></code></a> は、予想 (これは <em>Content-Length</em> ヘッダにより通知されるサイズです) よりも取得できるデータ量が少ないことを検知した場合、 <a class="reference internal" href="#urllib.ContentTooShortError" title="urllib.ContentTooShortError"><code class="xref py py-exc docutils literal"><span class="pre">ContentTooShortError</span></code></a> を発生します。これは、例えば、ダウンロードが中断された場合などに発生します。</p>
@@ -449,7 +456,7 @@
     Python Software Foundation は非営利団体です。
     <a href="https://www.python.org/psf/donations/">寄付</a>
     <br />
-    最終更新日時: 2018-06-23
+    最終更新日時: 2018-06-24
     <a href="../bugs.html">バグを見つけたら</a>?
     <br />
     このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.5 を使って作成されました。
